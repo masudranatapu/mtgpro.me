@@ -1,19 +1,9 @@
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
 
 html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
 }
-
-/*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Customize the background color to match your design.
- */
 
 ::-moz-selection {
     background: #b3d4fc;
@@ -38,12 +28,6 @@ hr {
     padding: 0;
 }
 
-/*
- * Remove the gap between audio, canvas, iframes,
- * images, videos and the bottom of their containers:
- * https://github.com/h5bp/html5-boilerplate/issues/440
- */
-
 audio,
 canvas,
 iframe,
@@ -53,9 +37,6 @@ video {
     vertical-align: middle;
 }
 
-/*
- * Remove default fieldset styles.
- */
 
 fieldset {
     border: 0;
@@ -63,9 +44,6 @@ fieldset {
     padding: 0;
 }
 
-/*
- * Allow only vertical resizing of textareas.
- */
 
 a {
     text-decoration: none;
@@ -101,10 +79,15 @@ body {
 }
 
 /* ========================= Header =============================== */
+
+.header {
+    box-shadow: rgb(0 0 0 / 5%) 0px 1px 4px;
+}
+
 .header .nav-link {
     font-size: 14px;
     color: var(--secondary);
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     padding: 1px 28px !important;
     text-transform: uppercase;
     font-weight: 500;
@@ -112,6 +95,11 @@ body {
 
 .header .nav-link:hover {
     color: var(--primary);
+}
+
+.header .nav-link svg {
+    margin-right: 3px;
+    vertical-align: middle;
 }
 
 .section {
@@ -124,8 +112,8 @@ body {
     padding: 4px 13px !important;
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
     outline: none !important;
+    margin-top: 13px;
 }
-
 /* ========================= Banner =============================== */
 
 .banner_content h2 {
@@ -134,7 +122,7 @@ body {
     color: var(--secondary);
     margin-bottom: 22px;
     font-weight: 700;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     text-shadow: 2px 2px #00000029;
 }
 
@@ -176,7 +164,7 @@ body {
 
 .feature_wrapper .feature_name h3 {
     font-size: 23px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 12px;
@@ -242,7 +230,7 @@ body {
 }
 
 .plan_price span {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-size: 23px;
     width: 120px;
     height: 120px;
@@ -263,7 +251,7 @@ body {
     font-size: 24px;
     font-weight: 600;
     color: #333;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     padding-bottom: 1px;
 }
 
@@ -298,7 +286,7 @@ body {
     color: var(--white);
     padding: 11px 10px;
     font-size: 16px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     border-radius: 50px;
     transition: all 0.3s ease;
@@ -389,7 +377,7 @@ body {
 
 .testimonial_sec .review_user h3 {
     font-size: 19px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: var(--black);
     margin: 0;
@@ -458,7 +446,7 @@ body {
 
 .faq_sec .accordion-header button {
     font-size: 15px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     color: var(--black);
 }
 
@@ -488,24 +476,97 @@ body {
     margin: 0;
 }
 
+.footer_menu ul li {
+    display: inline-block;
+    padding: 0px 10px;
+}
+
+.footer_menu ul li a {
+    color: var(--white);
+    font-size: 14px;
+    font-family:'Inter';
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.footer_menu ul li a:hover{
+    color:var(--primary);
+}
+
+.footer_menu ul li:first-child {
+    border-right: 1px solid var(--white);
+}
+
+.footer_menu ul li:last-child {
+    padding-right: 0;
+}
+
+/* ========================= Privacy Policy =============================== */
+
+.page_title h3 {
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.page_content p {
+    font-size: 15px;
+    color: #666;
+    line-height: 28px;
+    margin-bottom: 20px;
+    text-align: justify;
+}
 
 
+/* ========================= Login =============================== */
+ 
+.login_form .form-label {
+    font-size: 14px;
+    color: var(--black);
+    font-family:'Inter';
+    font-weight: 600;
+}
 
+.login_form .form-control {
+    height: 50px;
+    border-radius: 4px;
+    border: 1px solid #dddd;
+    outline: none !important;
+    box-shadow: none !important;
+}
 
+.login_form .form-control::placeholder {
+    color: #CCC;
+}
 
+.login_form .btn-primary {
+    border: none;
+    border-radius: 500px;
+    padding: 11px 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    background: var(--black);
+}
 
+.login_form .btn-primary:hover {
+    background: var(--primary);
+}
 
+.login_form {
+    padding: 26px 20px;
+    background: #fff;
+    box-shadow: rgb(17 17 26 / 10%) 0px 0px 16px;
+}
 
-
-
-
-
-
-
-
-
-
-
+.login_title h3 {
+    font-size: 23px;
+    color: var(--black);
+    font-weight: 600;
+}
 
 
 
