@@ -1,0 +1,29 @@
+@media screen and (max-width:991px) {
+    .header .nav-link {
+        padding: 7px 0px !important;
+    }
+}
+
+@media screen and (max-width:765px) {
+    .feature_wrapper .feature_name h3 {
+        font-size: 20px;
+    }
+
+}
+
+
+@media screen and (max-width:575px) {
+    .banner_content h2 {
+        font-size: 29px;
+        line-height: 42px;
+    }
+}
+
+
+
+@media screen and (max-width:400px) {
+    .banner_content h2 {
+        font-size: 25px;
+        line-height: 32px;
+    }
+}
