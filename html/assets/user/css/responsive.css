@@ -1,0 +1,44 @@
+/* min width: 992px  */
+@media screen and (min-width:992px) {
+    .card_step_form {
+        height: 100vh;
+         border-radius: 0px 40px 40px 0px;
+    }
+
+    .sw-theme-basic>.nav .nav-link {
+        margin: 0px 15px;
+    }
+
+    .sw>.tab-content {
+        padding-top: 150px;
+    }
+}
+
+/* max width: 991px  */
+
+@media screen and (max-width:991px) {
+    .card_preview_wrapper {
+        margin: 40px 0px;
+    }
+}
+
+
+/* max width: 450 */
+
+@media screen and (max-width:450px) {
+    .card_step_form {
+        padding: 50px 10px;
+    }
+
+    #smartwizard .btn.sw-btn-prev.sw-btn {
+        position: inherit;
+    }
+
+    .sw .toolbar>.sw-btn {
+        padding: 8px 42px !important;
+    }
+
+    #smartwizard .nav {
+        position: inherit;
+    }
+}

@@ -21,7 +21,7 @@
     }
 }
 
-@media screen and (max-width:765px) {
+@media screen and (max-width:767px) {
     .feature_wrapper .feature_name h3 {
         font-size: 20px;
     }
@@ -29,6 +29,13 @@
         font-size: 30px;
     }
 
+    .footer{
+        text-align: center;
+    }
+
+    .copyright {
+        margin-bottom: 8px;
+    }
 }
 
 
