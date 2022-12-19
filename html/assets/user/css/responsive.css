@@ -1,8 +1,18 @@
+/* min width: 1400px */
+
+@media screen and (min-width:1400px){
+    .setting_tab_contetn {
+      padding: 0px 110px;
+    }  
+}
+
+
+
 /* min width: 992px  */
 @media screen and (min-width:992px) {
     .card_step_form {
         height: 100vh;
-         border-radius: 0px 40px 40px 0px;
+        border-radius: 0px 40px 40px 0px;
     }
 
     .sw-theme-basic>.nav .nav-link {
@@ -12,6 +22,20 @@
     .sw>.tab-content {
         padding-top: 150px;
     }
+
+    .content-wrapper>.content{
+        padding:0 3.5rem;
+    }
+    .content-header {
+        padding: 44px 0px 22px 3.5rem !important;
+    }
+
+    nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+        display: none;
+    }
+    .add_content_modal .modal-lg{
+        max-width: 880px;
+    }
 }
 
 /* max width: 991px  */
@@ -20,7 +44,26 @@
     .card_preview_wrapper {
         margin: 40px 0px;
     }
+    .setting_tab_contetn {
+      padding: 0px 90px;
+    }
 }
+
+/* max width: 767px  */
+@media screen and (max-width: 767px) {
+    .account_setting .nav-tabs.flex-column {
+        border-right:none !important;
+        border-bottom: 1px solid #EEE !important;
+        padding-bottom: 16px;
+    }
+    #vert-tabs-tabContent {
+     margin-top: 32px;
+    }
+    .setting_tab_contetn {
+      padding: 0px 40px;
+    }
+}
+
 
 
 /* max width: 450 */
@@ -40,5 +83,8 @@
 
     #smartwizard .nav {
         position: inherit;
+    }
+    .setting_tab_contetn {
+      padding: 0px 0px;
     }
 }

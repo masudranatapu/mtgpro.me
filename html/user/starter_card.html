@@ -243,7 +243,8 @@
         image.src = URL.createObjectURL(event.target.files[0]);
         // image.innerHTML       = "class='preview_img'";
     };
-    // step form
+
+    // step form validation
     $(function() {
         $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
             // Validate only on forward movement  
@@ -265,7 +266,7 @@
         $('#smartwizard').smartWizard({
             transition: {
                   animation: 'slideSwing', 
-              },
+              }
         });
     });
     </script>

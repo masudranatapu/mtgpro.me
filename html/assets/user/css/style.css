@@ -17,6 +17,7 @@ body {
     font-family: 'DM Sans', sans-serif;
     background-size: cover;
     background-position: center;
+    background: #F7F7F7;
 }
 
 .card_step_form {
@@ -49,11 +50,13 @@ body {
     color: #BBB;
 }
 
-.form-control.is-invalid, .was-validated .form-control:invalid {
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
     border-color: #dc3545 !important;
 }
 
-.form-control.is-valid, .was-validated .form-control:valid {
+.form-control.is-valid,
+.was-validated .form-control:valid {
     border-color: #28a745 !important;
 }
 
@@ -116,8 +119,8 @@ body {
     font-weight: 400;
 }
 
- .card_preview_wrapper .card_wrapper {
-    width: 280px;
+.card_preview_wrapper .card_wrapper {
+    max-width: 280px;
     height: 550px;
     border: 4px solid #E0E0E0;
     box-shadow: 0px 24px 60px rgb(0 0 0 / 10%);
@@ -125,12 +128,25 @@ body {
     margin: 0 auto;
     background: #fff;
 }
+
+.card_preview_wrapper .card_overflow {
+    height: 511px;
+    overflow: hidden;
+    overflow-y: auto !important;
+}
+.card_preview_wrapper .card_overflow::-webkit-scrollbar {
+    width: 0;
+    height: 0
+}
+
+
 .card_preview_wrapper .shape_icon {
     margin-top: -4px;
 }
 
-.card_preview_wrapper .card_header{
+.card_preview_wrapper .card_header {
     position: relative;
+    padding-bottom: 11px;
 }
 
 .card_preview_wrapper .clock {
@@ -156,6 +172,7 @@ body {
     box-shadow: rgb(100 100 111 / 10%) 0px 7px 29px 0px;
     background: #fff;
 }
+
 .card_preview_wrapper .card_banner {
     position: relative;
     height: 100px;
@@ -180,6 +197,13 @@ body {
     margin-bottom: 3px;
 }
 
+.profile_name p {
+    font-size: 12px;
+    color: #888;
+    font-family: 'DM Sans';
+    margin: 0;
+}
+
 .card_preview_wrapper .save_contact a {
     background: #111111;
     color: #fff;
@@ -192,7 +216,7 @@ body {
 
 .card_preview_wrapper .social_icon ul li {
     display: inline-block;
-    margin: 0px 10px;
+    margin: 5px 10px;
 }
 
 .card_preview_wrapper .social_icon ul li a span {
@@ -204,23 +228,32 @@ body {
     font-weight: 400;
 }
 
+.card_preview_wrapper .view_btn a {
+    border: 1px solid #dadada;
+    color: #777;
+    padding: 7px 23px;
+    display: inline-block;
+    border-radius: 100px;
+    font-size: 13px;
+    font-family: 'DM Sans';
+    font-weight: 500;
+}
 .dashboard_card {
     margin-bottom: 1rem;
     background-color: #fff;
     box-shadow: none;
-    padding: 20px 21px;
-    height: 284px;
+    height: 300px;
     align-items: center;
     border-radius: 18px;
     flex-direction: column;
     justify-content: center;
     display: flex;
+    overflow: hidden;
 }
 
-.dashboard_card .card_body .plus_icon svg {
-    width: 39px;
-    height: 39px;
-    color: #CCC;
+.dashboard_card .card_body .plus_icon img {
+    width: 34px;
+    height: 34px;
 }
 
 .dashboard_card .card_body .plus_icon {
@@ -229,7 +262,7 @@ body {
     background: #f5f5f5;
     display: inline-block;
     border-radius: 49px;
-    padding-top: 11px;
+    padding-top: 13px;
 }
 
 .card_body p {
@@ -239,3 +272,467 @@ body {
     font-weight: 400;
     padding-top: 12px;
 }
+
+
+.user-panel,
+.user-panel .info a {
+    font-size: 14px;
+    color: #111;
+    font-family: 'Inter';
+}
+
+.user-panel,
+.user-panel .info span {
+    font-size: 13px;
+    color: #999;
+}
+
+.user-panel {
+    position: absolute;
+    bottom: 85px;
+    left: 0;
+    right: 0;
+    margin: 0px 31px;
+}
+
+
+.plan_upgrade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0px 31px;
+}
+
+.plan_upgrade a {
+    background: rgb(23, 23, 23);
+    color: #fff !important;
+    font-size: 12px;
+    font-family: 'Inter';
+    padding: 10px 20px !important;
+    border-radius: 10px;
+    font-weight: 700;
+    display: block;
+    box-shadow: rgb(0 0 0 / 47%) 0px 1px 4px;
+}
+
+
+.page_content {
+    background: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 16px;
+}
+
+.account_setting .nav-tabs.flex-column {
+    border-right: 1px solid #EEE !important;
+}
+
+.account_setting .nav-tabs.flex-column .nav-item.show .nav-link,
+.account_setting .nav-tabs.flex-column .nav-link.active {
+    border: none !important;
+    background: #F5F5F5;
+}
+
+.account_setting .nav-tabs.flex-column .nav-link {
+    font-size: 13px;
+    font-family: 'Inter';
+    color: #111;
+    border-radius: 10px;
+    margin-right: 20px;
+    padding: 14px 20px;
+    border: none !important;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.account_setting .nav-tabs.flex-column .nav-link:focus,
+.account_setting .nav-tabs.flex-column .nav-link:hover {
+    border: none !important;
+}
+
+.account_setting .heading h3 {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: 'Inter';
+    font-weight: 400;
+}
+
+.account_setting .heading p {
+    font-size: 13px;
+    color: #434343;
+    font-weight: 500 !important;
+    font-family: 'DM Sans';
+}
+
+.account_setting label {
+    font-size: 13px;
+    color: #434343;
+    font-weight: 500 !important;
+    font-family: 'DM Sans';
+}
+
+.account_setting .form-control {
+    padding: 13px 24px;
+    align-items: center;
+    background-color: #F7F7F7 !important;
+    border: none;
+    border-radius: 9px;
+    height: 48px;
+    font-size: 14px;
+    color: #111;
+}
+
+.btn-primary {
+    background: #212121;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 8px 44px;
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    background-color: #212121;
+}
+
+.btn-primary.focus,
+.btn-primary:focus {
+    color: #fff;
+    background-color: #212121 !important;
+    border-color: #212121 !important;
+    box-shadow: 0 0 0 0 rgb(38 143 255 / 50%);
+}
+
+.dashboard_card.user_card{
+    display: block;
+}
+
+.dashboard_card.user_card .card_cover_bg {
+    position: relative;
+}
+
+.dashboard_card.user_card .cover_photo img {
+    height: 137px;
+    width: 100% !important;
+}
+
+.dashboard_card.user_card .user_card_profile {
+    position: absolute;
+    bottom: -51px;
+    right: 0;
+    left: 0;
+}
+
+.dashboard_card.user_card .profile_image img {
+    width: 90px;
+    height: 90px;
+    border-radius: 100px;
+    border: 4px solid #fff;
+    box-shadow: rgb(100 100 111 / 10%) 0px 7px 29px 0px;
+    background: #fff;
+}
+.dashboard_card.user_card .logo img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 100px !important;
+    box-shadow: rgb(0 0 0 / 15%) 0px 4px 12px;
+}
+
+.dashboard_card.user_card .logo {
+    position: absolute;
+    right: -67px;
+    bottom: -5px;
+    left: 0;
+}
+
+
+.dashboard_card.user_card .card_info {
+    margin-top: 69px !important;
+}
+
+.dashboard_card.user_card .profile_name h3 {
+    font-size: 15px;
+    color: #444;
+    font-family: 'Inter';
+    margin-bottom: 3px;
+}
+.dashboard_card.user_card .profile_name h5 {
+    font-size: 11px;
+    color: #454545;
+    font-family: 'Inter';
+}
+
+.dashboard_card.user_card .card_btn .btn-sm {
+    border-radius: 50px;
+    padding: 5px 13px;
+    font-size: 11px;
+    background: #fff;
+    color: rgb(23, 23, 23);
+    border: 1px solid #DDD;
+}
+
+.back_btn {
+    color: #909090;
+    font-size: 18px;
+    vertical-align: middle;
+    border-right: 1px solid #ddd;
+    padding-right: 11px;
+    margin-right: 10px;
+}
+
+.create_card_wrapper .card_preview_wrapper {
+    border-left: 2px solid #f5f5f5;
+    padding: 30px;
+}
+
+.card_preview_wrapper .profile_image .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    position: absolute;
+    right: -71px;
+}
+
+.create_card_wrapper {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+}
+
+.create_card_wrapper .tab-content {
+    max-height: 610px;
+    padding: 30px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.create_card_wrapper .nav-tabs.flex-column {
+    border-right: 2px solid #f5f5f5 !important;
+    padding: 30px 20px;
+}
+
+.create_card_wrapper .nav-tabs.flex-column .nav-link{
+    margin-right: 0px !important;
+}
+
+.create_card_wrapper .btn-primary {
+    padding: 8px 21px;
+    font-size: 12px;
+    font-weight: 200 !important;
+    font-family: 'DM Sans';
+}
+
+.social_media_list {
+    overflow: hidden;
+    clear: both;
+}
+
+.social_media_list .single_list {
+    background: rgb(247, 247, 247);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 16px 16px;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.social_media_list .social_media_name img {
+    width: 35px;
+    margin-left: 15px;
+}
+
+.social_media_list .social_media_name {
+    position: absolute;
+    margin-left: 9px;
+}
+
+.social_media_list .social_media_name span {
+    font-size: 14px;
+    font-family: 'Inter';
+    color: #777;
+    padding-left: 6px;
+}
+
+.social_media_list .media_btn .btn-danger {
+    border: none;
+    border-radius: 50px;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    color: #fff;
+}
+
+.social_media_list .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #111;
+    background-color: #111;
+    box-shadow: none;
+}
+.social_media_list .custom-control-label {
+    outline: none !important;
+    box-shadow: none !important;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.social_media_list .custom-switch .custom-control-label::before {
+    width: 31px;
+    height: 17px;
+}
+
+.social_media_list .custom-switch .custom-control-label::after {
+    width: calc(1rem - 3px);
+    height: calc(1rem - 3px);
+}
+
+.social_media_list .drag_drap {
+    cursor: grab;
+}
+
+
+.add_content_modal .modal {
+    backdrop-filter: blur(4px);
+    background: linear-gradient(315deg, rgb(255 255 255 / 50%) 0%, rgb(255 255 255 / 30%) 100%);
+    backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.show{
+    opacity: 0;
+}
+
+.add_content_modal .modal-content {
+    border: none;
+    box-shadow: 0px 12px 40px rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    padding: 30px 30px 14px 30px;
+    height: 660px;
+}
+
+.add_content_modal .close {
+    position: absolute;
+    top: 25px;
+    right: 23px;
+    border: 1px solid #e2e2e2;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    line-height: 2px;
+    text-align: center;
+    padding: 0 !important;
+}
+
+.add_content_modal .modal-header {
+    border: none;
+    display: block;
+    padding: 0px 4px;
+}
+
+.add_content_modal .modal-header .form-control {
+    background: #F5F5F5;
+    border: none;
+    height: 41px;
+    font-size: 14px;
+    font-family: 'DM Sans';
+    border-radius: 6px;
+}
+
+.add_content_modal .modal-header .input-type-text{
+    border: none;
+    border-radius: 0px 6px 6px 0px;
+}
+
+.add_content_modal .modal-header h5 {
+    display: block;
+    font-size: 18px;
+    font-family: 'Inter';
+    color: #111;
+    font-weight: 400;
+}
+
+.add_content_modal .modal-header p {
+    font-size: 14px;
+    font-family: 'DM Sans';
+    color: #888;
+    font-weight: 300 !important;
+}
+
+.add_content_modal .add_list_wrap {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 495px;
+    padding:0px 4px;
+}
+
+.add_content_modal ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px
+}
+.add_content_modal ::-webkit-scrollbar-button {
+    background: #fff;
+}
+.add_content_modal ::-webkit-scrollbar-track-piece {
+    background: #fff;
+}
+.add_content_modal ::-webkit-scrollbar-thumb {
+    background: #ddd;
+}
+
+.add_content_modal .add_list_wrap .icon_wrap {
+    background: #F7F7F7;
+    border-radius: 12px;
+    padding: 13px 12px;
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+}
+
+.add_content_modal .add_list_wrap .icon_wrap:hover {
+    background: #fff;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+
+.add_content_modal .heading h3 {
+    font-size: 13px;
+    font-family: 'Inter';
+    color: #888;
+}
+
+.add_content_modal .add_list_wrap .icon_info img {
+    width: 39px;
+}
+
+.add_content_modal .add_list_wrap .icon {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+}
+
+.add_content_modal .add_list_wrap .icon i {
+    color: #999;
+    background: #fff;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    border-radius: 50px;
+    line-height: 34px;
+    border: 1px solid #EEE;
+    border-radius: 50px;
+}
+
+.add_content_modal .add_list_wrap .icon_info span {
+    font-size: 14px;
+    font-family: 'Inter';
+    color: #111;
+    font-weight: 500;
+    padding-left: 4px;
+}
+
+
+
+
+
+
+
