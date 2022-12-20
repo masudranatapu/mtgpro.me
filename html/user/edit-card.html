@@ -84,8 +84,8 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">
                                 <a href="dashboard.html" class="back_btn"><i class="fa fa-angle-left"></i></a>
-                                <img src="../assets/user/images/default.png" width="50" class="img-circle mr-2" alt="image">
-                                Card Name
+                                <img src="../assets/user/images/user2.jpg" width="50" class="img-circle mr-2" alt="image">
+                                My Card
                             </h1>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                      <label for="card_title" class="form-label">Card Title</label>
-                                                                     <input type="text" name="card_title" id="title" class="form-control" placeholder="Card Title" required>
+                                                                     <input type="text" name="card_title" id="title" class="form-control" value="My Card" placeholder="Card Title" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -265,7 +265,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">Profile picture</label>
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="../assets/user/images/default.png" alt="profile image">
+                                                                                <img id="profilePic" src="../assets/user/images/user2.jpg" alt="profile image">
                                                                              </label>
                                                                              <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
@@ -274,7 +274,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">Cover photo</label><br/>
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="../assets/user/images/cover-bg.png" alt="logo">
+                                                                                  <img id="coverpic" src="../assets/user/images/cover.png" alt="logo">
                                                                              </label>
                                                                              <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
@@ -282,7 +282,7 @@
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
                                                                          <label class="form-label">Company Logo</label>
                                                                          <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="../assets/user/images/default-logo.png" alt="logo">
+                                                                             <img id="showlogo" src="../assets/user/images/card-logo.png" alt="logo">
                                                                          </label>
                                                                          <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> 
                                                                     </div>
@@ -330,36 +330,36 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="name" class="form-label">Name</label>
-                                                                     <input type="text" name="name" id="name" class="form-control" placeholder="name" required>
+                                                                     <input type="text" name="name" id="name" value="User Name" class="form-control" placeholder="name" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="location" class="form-label">Location</label>
-                                                                     <input type="text" name="location" id="location" class="form-control" placeholder="location" required>
+                                                                     <input type="text" name="location" value="Dhaka" id="location" class="form-control" placeholder="location" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="job" class="form-label">Job Title</label>
-                                                                     <input type="text" name="job" id="job" class="form-control" placeholder="job" required>
+                                                                     <input type="text" name="job" value="Developer" id="job" class="form-control" placeholder="job" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="company" class="form-label">Company</label>
-                                                                     <input type="text" name="company" id="company" class="form-control" placeholder="company" required>
+                                                                     <input type="text" name="company" id="company" value="Arobil" class="form-control" placeholder="company" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                      <label for="bio" class="form-label">Bio</label>
-                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="Bio"></textarea>
+                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="Bio">Hlw,Lorem ipsum dolor sit, amet consectetur, adipisicing elit.</textarea>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="float-right">
-                                                                     <button type="submit" class="btn btn-primary">Save</button>
+                                                                     <button type="submit" class="btn btn-primary">Update</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -403,10 +403,10 @@
                                             </div>
                                             <div class="card_overflow">
                                                 <!-- cover image -->
-                                                <div class="card_banner mb-5" style="background-image: url('../assets/user/images/card-banner.png');">
+                                                <div class="card_banner mb-5" style="background-image: url('../assets/user/images/cover.png');">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="../assets/user/images/default.png" width="100" alt="image">
+                                                        <img src="../assets/user/images/user2.jpg" width="100" alt="image">
                                                         <!-- logo -->
                                                         <img class="logo" src="../assets/user/images/card-logo.png" alt="image">
                                                     </div>
