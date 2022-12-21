@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Card</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/user/css/adminlte.min.css">
     <link rel="stylesheet" href="../assets/user/css/card-style.css">
 </head>
@@ -16,10 +16,10 @@
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2;">
             <div class="card_cover">
-                <div class="cover_img">
+                <div class="cover_img" data-aos="zoom-in">
                     <img src="../assets/user/images/cover.png" alt="image">
                 </div>
-                <div class="card_profile">
+                <div class="card_profile" data-aos="zoom-in">
                     <img class="profile_pic" src="../assets/user/images/user2.jpg" alt="image">
                     <img class="logo" src="../assets/user/images/card-logo.png" alt="image">
                 </div>
@@ -189,6 +189,10 @@
      <script src="../assets/user/js/jquery.min.js"></script>
     <script src="../assets/user/js/bootstrap.min.js"></script>
     <script src="../assets/user/js/adminlte.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
 </body>
 
 </html>

@@ -956,8 +956,8 @@ body {
 /*  color */
 
 .bg_btn .form-check label{
-    width: 25px;
-    height: 25px;
+    width: 23px;
+    height: 23px;
     border-radius: 50px;
     position: relative;
     margin: 0px 2px;
@@ -971,7 +971,7 @@ body {
 }
 
 .bg_btn .form-check {
-    padding: 0 6px;
+    padding: 0 10px;
     margin: 0;
     display: inline-block;
     vertical-align: middle;
@@ -983,8 +983,8 @@ body {
     content: "";
     top: -4px;
     left: -4px;
-    width: 33px;
-    height: 33px;
+    width: 31px;
+    height: 31px;
     opacity: 0;
     transition: all 0.2s ease;
     -webkit-transition: all 0.2s ease;
@@ -1001,36 +1001,36 @@ body {
     transform: scale(1);
 }
 
-.btn-colorOne {
-    background-color: #F45A57 !important;
+.colorOne {
+    background-color: #eaeaea !important;
 }
 
-.btn-colorTwo {
-    background-color: #FB9241 !important;
+.colorTwo {
+    background-color: #000000 !important;
 }
 
-.btn-colorThree {
-    background-color: #FAC000 !important;
+.colorThree {
+    background-color: #EB5757 !important;
 }
 
-.btn-colorFour {
-    background-color: #C8A358 !important;
+.colorFour {
+    background-color: #F2994A !important;
 }
 
-.btn-colorFive {
-    background-color: #3DB512 !important;
+.colorFive {
+    background-color: #F2C94C !important;
 }
 
-.btn-colorSix {
-    background-color: #00E0BB !important;
+.colorSix {
+    background-color: #219653 !important;
 }
 
-.btn-colorSeven {
-    background-color: #0F9BFF !important;
+.colorSeven {
+    background-color: #2F80ED !important;
 }
 
-.btn-colorEight {
-    background-color: #3A4AF8 !important;
+.colorEight {
+    background-color: #9B51E0 !important;
 }
 
 

@@ -294,40 +294,40 @@
                                                                         <label class="form-label">Card Color</label><br/>
                                                                          <label for="color" class="colorcode">
                                                                              <img src="../assets/user/images/icon/color.svg" alt="svg">
-                                                                             <input type="color" name="color" id="color">
+                                                                             <input type="color" name="color" value="#fff" id="colorPicker">
                                                                          </label>
                                                                          <!-- color -->
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1">
-                                                                            <label for="color1" class="btn-colorOne"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white')">
+                                                                            <label for="color1" class="colorOne"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2">
-                                                                            <label for="color2" class="btn-colorTwo"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('black')">
+                                                                            <label for="color2" class="colorTwo"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3">
-                                                                            <label for="color3" class="btn-colorThree"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)')">
+                                                                            <label for="color3" class="colorThree"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4">
-                                                                            <label for="color4" class="btn-colorFour"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)')">
+                                                                            <label for="color4" class="colorFour"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5">
-                                                                            <label for="color5" class="btn-colorFive"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)')">
+                                                                            <label for="color5" class="colorFive"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6">
-                                                                            <label for="color6" class="btn-colorSix"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)')">
+                                                                            <label for="color6" class="colorSix"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7">
-                                                                            <label for="color7" class="btn-colorSeven"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)')">
+                                                                            <label for="color7" class="colorSeven"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8">
-                                                                            <label for="color8" class="btn-colorEight"></label>
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)')">
+                                                                            <label for="color8" class="colorEight"></label>
                                                                         </div>
                                                                     </div>
                                                                  </div>
@@ -383,7 +383,7 @@
                                 <!-- card preview -->
                                 <div class="card_preview_wrapper">
                                     <div class="card_preview">
-                                        <div class="card_wrapper">
+                                        <div class="card_wrapper" id="clrBg">
                                             <div class="card_header text-center">
                                                 <div class="card_header_top">
                                                     <!-- icon -->
@@ -433,7 +433,7 @@
                                                     <div class="social_icon">
                                                         <ul>
                                                             <li>
-                                                                <a href="mailto:rabin1@gmail.com" target="_blank">
+                                                                <a href="#" target="_blank">
                                                                     <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <g filter="url(#filterc9)">
                                                                             <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
@@ -490,7 +490,7 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="mailto:rabin1@gmail.com" target="_blank">
+                                                                <a href="#" target="_blank">
                                                                     <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <g filter="url(#filterc9)">
                                                                             <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
@@ -844,7 +844,7 @@
                                                             <div class="social_icon">
                                                                 <ul>
                                                                     <li>
-                                                                        <a href="mailto:rabin1@gmail.com" target="_blank">
+                                                                        <a href="#" target="_blank">
                                                                             <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <g filter="url(#filterc9)">
                                                                                     <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
@@ -901,7 +901,7 @@
                                                                         </a>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="mailto:rabin1@gmail.com" target="_blank">
+                                                                        <a href="#" target="_blank">
                                                                             <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <g filter="url(#filterc9)">
                                                                                     <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
@@ -1018,6 +1018,15 @@
         $('.tab_body .add_link').removeClass('d-none');
         $('.tab_body .social_media_list').removeClass('d-none');
     });
+
+
+    // color change
+    function changeColor(color){
+        var element = document.getElementById("clrBg");
+        element.style.backgroundColor = color;
+    }
+
+
     </script>
 </body>
 
