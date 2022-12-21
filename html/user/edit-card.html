@@ -303,7 +303,7 @@
                                                                             <label for="color1" class="colorOne"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('black')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)')">
                                                                             <label for="color2" class="colorTwo"></label>
                                                                         </div>
                                                                         <div class="form-check">
@@ -1023,6 +1023,12 @@
         var element = document.getElementById("clrBg");
         element.style.backgroundColor = color;
     }
+    $(document).on('input','#colorPicker',function(){
+        let color = $(this).val();
+        var element = document.getElementById("clrBg");
+        element.style.backgroundColor = color;
+    })
+
 
     </script>
 </body>
