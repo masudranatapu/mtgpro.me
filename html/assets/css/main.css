@@ -487,15 +487,9 @@ body {
 
 .footer {
     background: var(--black);
-    padding: 44px 0px;
+    padding: 44px 0px 15px 0px;
 }
-.copyright p {
-    color: #fff;
-    font-size: 14px;
-    font-weight: 400;
-    font-family: "Inter";
-    margin: 0;
-}
+
 
 .footer_menu ul li a {
     color: var(--white);
@@ -509,11 +503,11 @@ body {
 }
 
 .footer_menu ul li a:hover {
-    color: var(--primary);
+   color: var(--white);
 }
 
 .footer_article p {
-    color: #fff;
+    color: #999;
     font-size: 14px;
     line-height: 25px;
     margin: 24px 0px;
@@ -528,7 +522,7 @@ body {
 }
 
 .footer_menu ul li a {
-    color: var(--white);
+    color: #999;
     font-size: 14px;
     font-family: 'Inter';
     transition: all 0.3s ease;
@@ -539,7 +533,7 @@ body {
 }
 
 .social_media ul li a {
-    color: #fff;
+    color: #999;
     font-size: 16px;
     width: 40px;
     height: 40px;
@@ -558,6 +552,7 @@ body {
 
 .social_media ul li a:hover {
     background: #222;
+    color: var(--white);
 }
 
 .widget_title h3 {
@@ -567,7 +562,18 @@ body {
     font-weight: 500;
 }
 
+.copyright p {
+    color: #999;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+    margin: 0;
+}
 
+.copyright {
+    border-top: 1px solid #222;
+    padding-top: 17px;
+}
 
 /* ========================= Privacy Policy =============================== */
 
