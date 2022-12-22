@@ -1,0 +1,1002 @@
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #111;
+    background-image: url(../images/site-bg.webp);
+}
+
+:root {
+    --primary: #C62F00;
+    --secondary: #070707;
+    --black: #121212;
+    --white: #ffffff;
+}
+
+/* ========================= Header Top =============================== */
+
+.header_top {
+    background: #111;
+    padding: 15px 0px;
+}
+
+.warning_text h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+    font-family: 'Inter';
+    font-weight: 500;
+}
+
+.navbar-brand img {
+    width: 126px;
+}
+
+
+/* ========================= Header =============================== */
+
+.header {
+    box-shadow: rgb(0 0 0 / 5%) 0px 1px 4px;
+    background: #fff;
+    padding:5px 0px;
+}
+
+.header .nav-link {
+    font-size: 14px;
+    color: var(--secondary);
+    font-family: 'Inter', sans-serif;
+    padding: 1px 28px !important;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.header .nav-link:hover {
+    color: var(--primary);
+}
+
+.header .nav-link svg {
+    margin-right: 3px;
+    vertical-align: middle;
+}
+
+.section {
+    margin: 80px 0px;
+}
+
+.header .navbar-toggler {
+    border-radius: 3px !important;
+    border: 1px solid #EEE !important;
+    padding: 4px 13px !important;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    outline: none !important;
+    margin-top: 13px;
+}
+
+/* ========================= Banner =============================== */
+
+.banner_content h2 {
+    font-size: 36px;
+    line-height: 49px;
+    color: var(--secondary);
+    margin-bottom: 22px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 2px 2px #00000029;
+}
+
+.banner_content h2 span {
+    font-style: italic;
+    color: var(--primary);
+}
+
+.banner_content p {
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #777;
+    line-height: 29px;
+}
+
+.banner_content .btn-dark {
+    outline: none;
+    box-shadow: none;
+    padding: 10px 44px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none !important;
+    background: var(--primary)
+}
+
+
+.banner_content .btn-dark:hover {
+    background: var(--black) !important;
+}
+
+
+/* ========================= Feature =============================== */
+
+.feature_wrapper {
+    padding: 20px 10px;
+    height: 100%;
+}
+
+.feature_wrapper .feature_name h3 {
+    font-size: 23px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.feature_wrapper .feature_name p {
+    margin: 0;
+    font-size: 15px;
+    color: #777;
+}
+
+/* ========================= Pricing =============================== */
+
+.section_title h4 {
+    font-size: 30px;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.pricing {
+    background: #F8F9FC;
+}
+
+.plan_wrapper {
+    background: var(--white);
+    padding: 50px 30px 35px 30px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.pricing .custom-shape-divider-top-1671081492 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+    border-radius: 10px;
+}
+
+.pricing .custom-shape-divider-top-1671081492 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 80px;
+    transform: rotateY(180deg);
+}
+
+.pricing .custom-shape-divider-top-1671081492 .shape-fill {
+    fill: #FFFFFF;
+}
+
+.middle_plan {
+    border: 2px solid var(--primary);
+    background: #c62f0017;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.plan_price {
+    position: relative;
+    z-index: 1;
+}
+
+.plan_price span {
+    font-family: 'Inter', sans-serif;
+    font-size: 23px;
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    background: #f9f9f9;
+    border-radius: 100px;
+    line-height: 117px;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.middle_plan .plan_price span {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.plan_name h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    padding-bottom: 1px;
+}
+
+.plan_name span {
+    font-size: 14px;
+    color: #444;
+}
+
+.plan_feature ul li {
+    font-size: 15px;
+    padding: 9px 0px;
+    color: #222;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.plan_feature ul li i {
+    margin-right: 5px;
+}
+
+.plan_feature ul li .fa-check {
+    color: var(--primary);
+}
+
+.plan_feature ul li .fa-times {
+    color: #dc3545;
+    opacity: .5;
+}
+
+.plan_btn a {
+    display: block;
+    background: var(--primary);
+    color: var(--white);
+    padding: 11px 10px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.plan_btn a:hover {
+    background: #111;
+    color: var(--white);
+}
+
+.middle_plan .plan_feature ul li {
+    border-color: #74da441c;
+}
+
+.plan_feature ul li del {
+    color: #AAA;
+}
+
+.middle_plan .plan_btn a {
+    background: var(--white) !important;
+    color: var(--primary);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.middle_plan .plan_btn a:hover {
+    background: var(--primary) !important;
+    color: var(--white);
+}
+
+.middle_plan .plan_feature ul li del {
+    color: #0000006e !important;
+}
+
+/* ========================= Video =============================== */
+
+.video_sec {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.video_iframe .video_link {
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    border-radius: 20px;
+}
+
+/* ========================= Review =============================== */
+
+.testimonial_sec .review_wrap {
+    position: relative;
+}
+
+.testimonial_sec .review_item {
+    background: #fff;
+    padding: 28px 15px 48px 15px;
+    border-radius: 12px;
+    margin: 10px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+}
+
+.testimonial_sec .review_user img {
+    width: 70px !important;
+    border-radius: 100px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border: 2px solid #EEE;
+}
+
+.testimonial_sec .review_item .icon {
+    font-size: 44px;
+    color: #eeeeee;
+}
+
+.testimonial_sec .review_item p {
+    font-size: 15px;
+    color: #555;
+    line-height: 25px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.testimonial_sec .review_user {
+    transform: translate(0px, -40px);
+}
+
+.testimonial_sec .review_user h3 {
+    font-size: 19px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: var(--black);
+    margin: 0;
+    padding-bottom: 1px;
+}
+
+.testimonial_sec .review_user span {
+    font-size: 14px;
+    color: #666;
+}
+
+.testimonial_sec .owl-nav {
+    position: absolute;
+    top: 34%;
+    left: 0;
+    width: 100%;
+}
+
+.testimonial_sec .owl-next {
+    float: right;
+}
+
+.testimonial_sec .owl-nav button i {
+    font-size: 21px;
+    text-align: center;
+    color: #AAA;
+    transition: all 0.3s;
+}
+
+.testimonial_sec .owl-nav button i:hover {
+    color: var(--primary);
+}
+
+.testimonial_sec .owl-dots button span {
+    width: 25px;
+    height: 2px;
+    background: #dcdcdc;
+    display: inline-block;
+    margin: 0px 3px;
+}
+
+.testimonial_sec .owl-dots {
+    text-align: center;
+}
+
+.owl-dot.active span {
+    background: var(--primary) !important;
+}
+
+/* ========================= Faq =============================== */
+
+.faq_sec .accordion-item {
+    background: #fff;
+    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.faq_sec .accordion-header button {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.faq_sec .accordion-header {
+    font-size: 21px !important;
+}
+
+.faq_sec .accordion-header button {
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+}
+
+
+.faq_sec .accordion-body {
+    padding: 19px 20px;
+}
+
+.faq_sec .accordion-body p {
+    font-size: 15px;
+    line-height: 27px;
+    color: var(--black);
+}
+
+/* ========================= Footer =============================== */
+
+.footer {
+    background: var(--black);
+    padding: 44px 0px 15px 0px;
+}
+
+
+.footer_menu ul li a {
+    color: var(--white);
+    font-size: 14px;
+    font-family: 'Inter';
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.footer_menu ul li a:hover {
+   color: var(--white);
+}
+
+.footer_article p {
+    color: #999;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 24px 0px;
+}
+
+.social_media ul li {
+    display: inline-block;
+}
+
+.footer_menu ul li {
+    padding: 4px 0px;
+}
+
+.footer_menu ul li a {
+    color: #999;
+    font-size: 14px;
+    font-family: 'Inter';
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.social_media ul li a {
+    color: #999;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    display: block;
+    border: 1px solid #222;
+    text-align: center;
+    padding-top: 8px;
+    border-radius: 50px;
+    margin: 0px 8px 0px 0px;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.social_media ul li a:hover {
+    background: #222;
+    color: var(--white);
+}
+
+.widget_title h3 {
+    font-size: 18px;
+    color: #d4d3d3;
+    font-family: 'Inter';
+    font-weight: 500;
+}
+
+.copyright p {
+    color: #999;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+    margin: 0;
+}
+
+.copyright {
+    border-top: 1px solid #222;
+    padding-top: 17px;
+}
+
+/* ========================= Privacy Policy =============================== */
+
+.page_title h3 {
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.page_content p {
+    font-size: 15px;
+    color: #666;
+    line-height: 28px;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+
+/* ========================= Login =============================== */
+
+.login_form .form-label {
+    font-size: 14px;
+    color: var(--black);
+    font-family: 'Inter';
+    font-weight: 600;
+}
+
+.login_form {
+    padding: 26px 20px;
+    background: #fff;
+    border-radius: 8px;
+    border-left: 1px dashed var(--primary);
+    border-right: 1px dashed var(--primary);
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+
+.login_form .form-control {
+    height: 50px;
+    border-radius: 4px;
+    border: 1px solid #dddd;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.login_form .form-control::placeholder {
+    color: #CCC;
+}
+
+.login_form .btn-primary {
+    border: none;
+    border-radius: 2px;
+    padding: 11px 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    background: var(--black);
+    width: 100%;
+}
+
+.login_form .btn-primary:hover {
+    background: var(--primary);
+}
+
+
+.login_title h3 {
+    font-size: 23px;
+    color: var(--black);
+    font-weight: 600;
+}
+
+.login_form .divider {
+    position: relative;
+}
+
+.login_form .divider:before {
+    position: absolute;
+    content: "";
+    bottom: 14px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #f0f0f0;
+}
+
+.login_form .divider span {
+    font-size: 19px;
+    font-family: "Inter";
+    background: #fff;
+    z-index: 1;
+    position: relative;
+    padding: 0px 18px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.login_form .social_login a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #ddd;
+    border-radius: 50px;
+    margin: 0px 4px;
+    color: #fff;
+    font-size: 15px;
+    line-height: 39px;
+}
+
+.login_form .fa_facebook {
+    background: #0D8AF0 !important;
+}
+
+.login_form .fa_twitter {
+    background: #1D9BF0 !important;
+}
+
+.login_form .fa_google {
+    background: #EB4436 !important;
+}
+
+.login_form .bottom p {
+    margin: 0;
+    font-size: 15px;
+    color: #444;
+}
+
+.login_form .bottom p a {
+    color: var(--primary);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden,
+[hidden] {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    /* 1 */
+}
+
+/*
+ * Extends the .visually-hidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visually-hidden.focusable:active,
+.visually-hidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    white-space: inherit;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * The use of `table` rather than `block` is only necessary if using
+ * `::before` to contain the top-margins of child elements.
+ */
+
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    display: table;
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+
+    *,
+    *::before,
+    *::after {
+        background: #fff !important;
+        color: #000 !important;
+        /* Black prints faster */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]::after {
+        content: " ("attr(href) ")";
+    }
+
+    abbr[title]::after {
+        content: " ("attr(title) ")";
+    }
+
+    /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+        content: "";
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
