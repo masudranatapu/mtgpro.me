@@ -81,7 +81,19 @@ body {
 
 .header_top {
     background: #111;
-    padding: 5px 0px;
+    padding: 15px 0px;
+}
+
+.warning_text h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+    font-family: 'Inter';
+    font-weight: 500;
+}
+
+.navbar-brand img {
+    width: 126px;
 }
 
 
@@ -89,6 +101,8 @@ body {
 
 .header {
     box-shadow: rgb(0 0 0 / 5%) 0px 1px 4px;
+    background: #fff;
+    padding:5px 0px;
 }
 
 .header .nav-link {
@@ -473,20 +487,14 @@ body {
 
 .footer {
     background: var(--black);
-    padding: 16px 0px;
+    padding: 44px 0px;
 }
-
 .copyright p {
     color: #fff;
     font-size: 14px;
     font-weight: 400;
     font-family: "Inter";
     margin: 0;
-}
-
-.footer_menu ul li {
-    display: inline-block;
-    padding: 0px 10px;
 }
 
 .footer_menu ul li a {
@@ -504,13 +512,62 @@ body {
     color: var(--primary);
 }
 
-.footer_menu ul li:first-child {
-    border-right: 1px solid var(--white);
+.footer_article p {
+    color: #fff;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 24px 0px;
 }
 
-.footer_menu ul li:last-child {
-    padding-right: 0;
+.social_media ul li {
+    display: inline-block;
 }
+
+.footer_menu ul li {
+    padding: 4px 0px;
+}
+
+.footer_menu ul li a {
+    color: var(--white);
+    font-size: 14px;
+    font-family: 'Inter';
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.social_media ul li a {
+    color: #fff;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    display: block;
+    border: 1px solid #222;
+    text-align: center;
+    padding-top: 8px;
+    border-radius: 50px;
+    margin: 0px 8px 0px 0px;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.social_media ul li a:hover {
+    background: #222;
+}
+
+.widget_title h3 {
+    font-size: 18px;
+    color: #fff;
+    font-family: 'Inter';
+    font-weight: 500;
+}
+
+
 
 /* ========================= Privacy Policy =============================== */
 
