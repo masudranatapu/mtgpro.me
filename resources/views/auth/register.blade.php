@@ -19,9 +19,9 @@
                                 @csrf
 
                                 <div class="social_login mb-5 mt-5 text-center">
-                                    <a href="#" class="fa_facebook"><i class="fab fa-facebook"></i></a>
-                                    <a href="#" class="fa_google"><i class="fab fa-google"></i></a>
-                                    <a href="#" class="fa_twitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="{{ route('social.login', 'facebook') }}" class="fa_facebook"><i class="fab fa-facebook"></i></a>
+                                    <a href="{{ route('social.login', 'google') }}" class="fa_google"><i class="fab fa-google"></i></a>
+                                    <a href="{{ route('social.login', 'twitter') }}" class="fa_twitter"><i class="fab fa-twitter"></i></a>
                                 </div>
                                 <div class="divider mb-5 text-center">
                                     <span>Or</span>

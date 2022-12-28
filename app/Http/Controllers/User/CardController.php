@@ -231,10 +231,9 @@ class CardController extends Controller
     }
 
 
-    public function Newcard()
+    public function getInitCard()
     {
-         $icons = SocialIcon::orderBy('order_id','desc')->get();
-         return view('user.card.new_card',compact('icons'));
+         return view('user.starter_card');
     }
 
 

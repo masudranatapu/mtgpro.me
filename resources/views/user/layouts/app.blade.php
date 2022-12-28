@@ -7,13 +7,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="../assets/user/css/adminlte.min.css">
-    <link rel="stylesheet" href="../assets/user/css/style.css">
-    <link rel="stylesheet" href="../assets/user/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
     <!-- Scripts -->
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -25,17 +24,16 @@
     @include('user.layouts.sidebar')
     @yield('content')
     </div>
-    <script src="../assets/user/js/jquery.min.js"></script>
-    <script src="../assets/user/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap4.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <script src="../assets/user/js/adminlte.min.js"></script>
+    <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
     <script>
     // preview icon
     var loadFile = function(event) {
         var image = document.getElementById('previewIcon');
         image.src = URL.createObjectURL(event.target.files[0]);
     };
-
     // preview profile photo
     var profileloadFile = function(event) {
         var profile = document.getElementById('profilePic');
@@ -53,7 +51,6 @@
         var cover  = document.getElementById('coverpic');
         cover.src  = URL.createObjectURL(event.target.files[0]);
     };
-
 
     // drag and drop
     const dropItems = document.getElementById('drop-items')
@@ -77,7 +74,6 @@
         $('.second_modal').addClass('d-none');
     });
 
-
     // edit social content
     $('.editLink').on('click', function() {
         $('.tab_body .back').removeClass('d-none');
@@ -92,7 +88,6 @@
         $('.tab_body .social_media_list').removeClass('d-none');
     });
 
-
     // color change
     function changeColor(color){
         var element = document.getElementById("clrBg");
@@ -103,7 +98,6 @@
         var element = document.getElementById("clrBg");
         element.style.backgroundColor = color;
     })
-
 
     </script>
 </body>

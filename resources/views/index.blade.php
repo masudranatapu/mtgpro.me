@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('home','active')
 <?php
-$rows = $data ?? [];
+    $rows = $data ?? [];
 ?>
 @section('title') : Your Digital Business Card @endsection
 @push('custom_css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <style>
-
 </style>
 @endpush
 @section('meta_tag')
@@ -44,7 +43,7 @@ $rows = $data ?? [];
             </div>
             <div class="col-lg-7">
                 <div class="banner_logo text-center" data-aos="zoom-in">
-                    <img src="{{ asset('assets/images/banner-img.png') }}" class="img-fluid" alt="image">
+                    <img src="{{ asset('assets/img/banner-img.png') }}" class="img-fluid" alt="image">
                 </div>
             </div>
         </div>
@@ -60,7 +59,7 @@ $rows = $data ?? [];
         <div class="row">
             <!-- section heading -->
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>Features</h4>
+                <h4>{{ __('Features') }}</h4>
             </div>
             <!-- section heading -->
             <!-- feature item -->
@@ -68,11 +67,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/team.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Share With Anyone</h3>
-                            <p>Others don’t need an app or a Popl device</p>
+                            <h3>{{ __('Share With Anyone') }}</h3>
+                            <p>{{ __('Others don’t need an app or a Popl device') }}</p>
                         </div>
                     </div>
                 </div>
@@ -82,11 +81,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/team.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Brand Consistency</h3>
-                            <p>Use templates and bulk edits to maintain cards at scale</p>
+                            <h3>{{ __('Brand Consistency') }}</h3>
+                            <p>{{ __('Use templates and bulk edits to maintain cards at scale') }}</p>
                         </div>
                     </div>
                 </div>
@@ -96,11 +95,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/security.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/security.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Security is Key</h3>
-                            <p>We protect your privacy at all times and never share.</p>
+                            <h3>{{ __('Security is Key') }}</h3>
+                            <p>{{ __('We protect your privacy at all times and never share.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -110,11 +109,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/support.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/support.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>24/7 Support</h3>
-                            <p>We’re here to help with free setup, onboarding, and more.</p>
+                            <h3>{{ __('24/7 Support') }}</h3>
+                            <p>{{ __('We’re here to help with free setup, onboarding, and more.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -124,11 +123,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/card.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/card.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Unlimited Cards</h3>
-                            <p>As your team grows, we grow with you.</p>
+                            <h3>{{ __('Unlimited Cards') }}</h3>
+                            <p>{{ __('As your team grows, we grow with you.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -138,11 +137,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/team.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Free Smart Products</h3>
-                            <p>Lorem, ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                            <h3>{{ __('Free Smart Products') }}</h3>
+                            <p>{{ __('Lorem, ipsum dolor, sit amet consectetur adipisicing elit.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -152,11 +151,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/team.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Share With Anyone</h3>
-                            <p>Lorem, ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                            <h3>{{ __('Share With Anyone') }}</h3>
+                            <p>{{ __('Lorem, ipsum dolor, sit amet consectetur adipisicing elit.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -166,11 +165,11 @@ $rows = $data ?? [];
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/images/icon/team.png') }}" alt="image">
+                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>Share With Anyone</h3>
-                            <p>Lorem, ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                            <h3>{{ __('Share With Anyone') }}</h3>
+                            <p>{{ __('Lorem, ipsum dolor, sit amet consectetur adipisicing elit.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -188,7 +187,7 @@ $rows = $data ?? [];
         <div class="row">
             <!-- section heading -->
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>Choose your best plan</h4>
+                <h4>{{ __('Choose your best plan') }}</h4>
             </div>
             <!-- section heading -->
             <!-- plan -->
@@ -199,40 +198,40 @@ $rows = $data ?? [];
                             <span>$ 0.00</span>
                         </div>
                         <div class="plan_name">
-                            <h2>Free Plan</h2>
-                            <span>For free absic card feature</span>
+                            <h2>{{ __('Free Plan') }}</h2>
+                            <span>{{ __('For free absic card feature') }}</span>
                         </div>
                     </div>
                     <div class="plan_feature">
                         <ul>
                             <li>
                                 <i class="fa fa-check"></i>
-                                <span>5 GB of free space</span>
+                                <span>{{ __('5 GB of free space') }}</span>
                             </li>
                             <li>
                                 <i class="fa fa-check"></i>
-                                <span>30 days for free services</span>
+                                <span>{{ __('30 days for free services') }}</span>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>All time support services 24/7</del>
+                                <del>{{ __('All time support services 24/7') }}</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur.') }}</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur.') }}</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                         </ul>
                     </div>
                     <div class="plan_btn text-center mt-5">
-                        <a href="#">Select Plan</a>
+                        <a href="#">{{ __('Select Plan') }}</a>
                     </div>
                 </div>
             </div>
@@ -244,8 +243,8 @@ $rows = $data ?? [];
                             <span>$ 99.99</span>
                         </div>
                         <div class="plan_name">
-                            <h2>Professional Plan</h2>
-                            <span>For minumal card feature</span>
+                            <h2>{{ __('Professional Plan') }}</h2>
+                            <span>{{ __('For minumal card feature') }}</span>
                         </div>
                         <!-- shape divider -->
                         <div class="custom-shape-divider-top-1671081492">
@@ -258,32 +257,32 @@ $rows = $data ?? [];
                         <ul>
                             <li>
                                 <i class="fa fa-check"></i>
-                                <span>5 GB of free space</span>
+                                <span>{{ __('5 GB of free space') }}</span>
                             </li>
                             <li>
                                 <i class="fa fa-check"></i>
-                                <span>30 days for free services</span>
+                                <span>{{ __('30 days for free services') }}</span>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>All time support services 24/7</del>
+                                <del>{{ __('All time support services 24/7') }}</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                         </ul>
                     </div>
                     <div class="plan_btn text-center mt-5">
-                        <a href="#">Select Plan</a>
+                        <a href="#">{{ __('Select Plan') }}</a>
                     </div>
                 </div>
             </div>
@@ -295,40 +294,40 @@ $rows = $data ?? [];
                             <span>$ 199.99</span>
                         </div>
                         <div class="plan_name">
-                            <h2>Enterprice Plan</h2>
-                            <span>For full incrediable card feature</span>
+                            <h2>{{ __('Enterprice Plan') }}</h2>
+                            <span>{{ __('For full incrediable card feature') }}</span>
                         </div>
                     </div>
                     <div class="plan_feature">
                         <ul>
                             <li>
                                 <i class="fa fa-check"></i>
-                                <span>5 GB of free space</span>
+                                <span>{{ __('5 GB of free space') }}</span>
                             </li>
                             <li>
                                 <i class="fa fa-check"></i>
-                                <span>30 days for free services</span>
+                                <span>{{ __('30 days for free services') }}</span>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>All time support services 24/7</del>
+                                <del>{{ __('All time support services 24/7') }}</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                             <li>
                                 <i class="fa fa-times"></i>
-                                <del>Lorem ipsum dolor sit amet consectetur.</del>
+                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
                             </li>
                         </ul>
                     </div>
                     <div class="plan_btn text-center mt-5">
-                        <a href="#">Select Plan</a>
+                        <a href="#">{{ __('Select Plan') }}</a>
                     </div>
                 </div>
             </div>
@@ -345,7 +344,7 @@ $rows = $data ?? [];
         <div class="row d-flex justify-content-center">
             <!-- section heading -->
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>What is Contacts Solutions</h4>
+                <h4>{{ __('What is Contacts Solutions') }}</h4>
             </div>
             <!-- section heading -->
             <div class="col-lg-9">
@@ -366,7 +365,7 @@ $rows = $data ?? [];
         <div class="row d-flex justify-content-center">
             <!-- section heading -->
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>See What Teams are Saying</h4>
+                <h4>{{ __('See What Teams are Saying') }}</h4>
             </div>
             <!-- section heading -->
             <div class="review_wrapper owl-carousel">
@@ -374,60 +373,60 @@ $rows = $data ?? [];
                 <div class="item review_wrap text-center" data-aos="zoom-in">
                     <div class="review_item">
                         <span class="icon"><i class="fa fa-quote-left"></i></span>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!</p>
+                        <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
                     </div>
                     <div class="review_user">
-                        <img src="{{ asset('assets/images/user/1.jpg') }}" alt="image">
-                        <h3>John Doe</h3>
-                        <span>ui/ux Designer</span>
+                        <img src="{{ asset('assets/img/user/1.jpg') }}" alt="image">
+                        <h3>{{ __('John Doe') }}</h3>
+                        <span>{{ __('ui/ux Designer') }}</span>
                     </div>
                 </div>
                 <!-- review -->
                 <div class="item review_wrap text-center" data-aos="zoom-in">
                     <div class="review_item">
                         <span class="icon"><i class="fa fa-quote-left"></i></span>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!</p>
+                        <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
                     </div>
                     <div class="review_user">
-                        <img src="{{ asset('assets/images/user/2.jpg') }}" alt="image">
-                        <h3>John Doe</h3>
-                        <span>ui/ux Designer</span>
+                        <img src="{{ asset('assets/img/user/2.jpg') }}" alt="image">
+                        <h3>{{ __('John Doe') }}</h3>
+                        <span>{{ __('ui/ux Designer') }}</span>
                     </div>
                 </div>
                 <!-- review -->
                 <div class="item review_wrap text-center" data-aos="zoom-in">
                     <div class="review_item">
                         <span class="icon"><i class="fa fa-quote-left"></i></span>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!</p>
+                        <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
                     </div>
                     <div class="review_user">
-                        <img src="{{ asset('assets/images/user/3.jpg') }}" alt="image">
-                        <h3>John Doe</h3>
-                        <span>ui/ux Designer</span>
+                        <img src="{{ asset('assets/img/user/3.jpg') }}" alt="image">
+                        <h3>{{ __('John Doe') }}</h3>
+                        <span>{{ __('ui/ux Designer') }}</span>
                     </div>
                 </div>
                 <!-- review -->
                 <div class="item review_wrap text-center" data-aos="zoom-in">
                     <div class="review_item">
                         <span class="icon"><i class="fa fa-quote-left"></i></span>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!</p>
+                        <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
                     </div>
                     <div class="review_user">
-                        <img src="{{ asset('assets/images/user/2.jpg') }}" alt="image">
-                        <h3>John Doe</h3>
-                        <span>ui/ux Designer</span>
+                        <img src="{{ asset('assets/img/user/2.jpg') }}" alt="image">
+                        <h3>{{ __('John Doe') }}</h3>
+                        <span>{{ __('ui/ux Designer') }}</span>
                     </div>
                 </div>
                 <!-- review -->
                 <div class="item review_wrap text-center" data-aos="zoom-in">
                     <div class="review_item">
                         <span class="icon"><i class="fa fa-quote-left"></i></span>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!</p>
+                        <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
                     </div>
                     <div class="review_user">
-                        <img src="{{ asset('assets/images/user/1.jpg') }}" alt="image">
-                        <h3>John Doe</h3>
-                        <span>ui/ux Designer</span>
+                        <img src="{{ asset('assets/img/user/1.jpg') }}" alt="image">
+                        <h3>{{ __('John Doe') }}</h3>
+                        <span>{{ __('ui/ux Designer') }}</span>
                     </div>
                 </div>
             </div>
@@ -442,7 +441,7 @@ $rows = $data ?? [];
         <div class="row d-flex justify-content-center">
             <!-- section heading -->
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>Frequently Asked Questions</h4>
+                <h4>{{ __('Frequently Asked Questions') }}</h4>
             </div>
             <!-- section heading -->
             <div class="col-lg-9">
@@ -452,12 +451,12 @@ $rows = $data ?? [];
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    What is Lorem Ipsum?
+                                    {{ __('What is Lorem Ipsum?') }}
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                                    <p>{{ __('The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -465,12 +464,12 @@ $rows = $data ?? [];
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                    Why do we use it?
+                                    {{ __('Why do we use it?') }}
                                 </button>
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                                    <p>{{ __('The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -478,12 +477,12 @@ $rows = $data ?? [];
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                    Where does it come from?
+                                    {{ __('Where does it come from?') }}
                                 </button>
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                                    <p>{{ __('The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -491,12 +490,12 @@ $rows = $data ?? [];
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingFour">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                    Where does it come from?
+                                    {{ __('Where does it come from?') }}
                                 </button>
                             </h2>
                             <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                                    <p>{{ __('The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -504,12 +503,12 @@ $rows = $data ?? [];
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingFive">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                                    Where does it come from?
+                                    {{ __('Where does it come from?') }}
                                 </button>
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                                    <p>{{ __('The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.') }}</p>
                                 </div>
                             </div>
                         </div>

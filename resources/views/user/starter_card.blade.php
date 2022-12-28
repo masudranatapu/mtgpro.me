@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starter Card</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="../assets/user/css/smart_wizard.css">
-    <link rel="stylesheet" href="../assets/user/css/adminlte.min.css">
-    <link rel="stylesheet" href="../assets/user/css/style.css">
-    <link rel="stylesheet" href="../assets/user/css/responsive.css">
-</head>
-
-<body style="background-image: url('../assets/user/images/site-bg.jpg');">
+@extends('user.layouts.app')
+@section('title') {{ __('Create card') }}  @endsection
+@push('custom_css')
+@endpush
+@section('card','active')
+@section('content')
     <div class="card_starter_wrapper">
         <div class="container-fluid p-0">
             <div class="row no-gutters align-items-center">
@@ -23,7 +14,7 @@
                             <ul class="nav">
                                 <li class="nav-item">
                                     <a class="nav-link" href="#step-1">
-                                        <div class="num">1</div>
+                                        <div class="num">{{ __('1') }}</div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -49,17 +40,17 @@
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="name" class="form-label">Name</label>
-                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name" required="">
-                                                    <div class="invalid-feedback">Enter your name</div>
+                                                    <label for="name" class="form-label">{{ __('Name') }}</label>
+                                                    <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('Name') }}" required="">
+                                                    <div class="invalid-feedback">{{ __('Enter your name') }}</div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="phone_number" class="form-label">Phone Number</label>
-                                                    <input type="number" name="phone_number" id="phone_number" class="form-control" placeholder="Phone Number" required="">
-                                                    <div class="invalid-feedback">Enter your phone number</div>
+                                                    <label for="phone_number" class="form-label">{{ __('Phone Number') }}</label>
+                                                    <input type="number" name="phone_number" id="phone_number" class="form-control" placeholder="{{ __('Phone Number') }}" required="">
+                                                    <div class="invalid-feedback">{{ __('Enter your phone number') }}</div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span>Adding a phone number allows people to connect with you by text message or phone call</span>
+                                                    <span>{{ __('Adding a phone number allows people to connect with you by text message or phone call') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,14 +62,14 @@
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="job" class="form-label">Job</label>
-                                                    <input type="text" name="job" id="job" class="form-control" placeholder="Job" required="">
-                                                    <div class="invalid-feedback">Enter your job title</div>
+                                                    <label for="job" class="form-label">{{ __('Job') }}</label>
+                                                    <input type="text" name="job" id="job" class="form-control" placeholder="{{ __('Job') }}" required="">
+                                                    <div class="invalid-feedback">{{ __('Enter your job title') }}</div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="company" class="form-label">Company</label>
-                                                    <input type="text" name="company" id="company" class="form-control" placeholder=" Company" required="">
-                                                    <div class="invalid-feedback">Enter your company name</div>
+                                                    <label for="company" class="form-label">{{ __('Company') }}</label>
+                                                    <input type="text" name="company" id="company" class="form-control" placeholder="{{ __('Company') }}" required="">
+                                                    <div class="invalid-feedback">{{ __('Enter your company name') }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,14 +83,14 @@
                                                 <div class="text-center">
                                                     <div class="upload_photo">
                                                         <label for="photo">
-                                                            <img id="preview" src="../assets/user/images/default.png" alt="preview image">
+                                                            <img id="preview" src="{{ asset('assets/img/default.png') }}" alt="preview image">
                                                         </label>
                                                     </div>
                                                     <div class="upload_photo_text">
-                                                        <p>Make your card more personalized by adding a profile picture</p>
+                                                        <p>{{ __('Make your card more personalized by adding a profile picture') }}</p>
                                                         <input type="file" class="d-none" onchange="loadFile(event)" name="photo" id="photo" required>
-                                                        <label for="photo">Upload photo</label>
-                                                        <div class="invalid-feedback">Select your profile photo</div>
+                                                        <label for="photo">{{ __('Upload photo') }}</label>
+                                                        <div class="invalid-feedback">{{ __('Select your profile photo') }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,7 +100,7 @@
                                 <!-- step 4 -->
                                 <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
                                     <form id="form-4">
-                                         
+
                                     </form>
                                 </div>
                             </div>
@@ -120,7 +111,7 @@
                     <!-- card preview -->
                     <div class="card_preview_wrapper">
                         <div class="header mb-4 text-center">
-                            <h5>Profile live preview</h5>
+                            <h5>{{ __('Profile live preview') }}</h5>
                         </div>
                         <div class="card_preview">
                             <div class="card_wrapper">
@@ -151,18 +142,18 @@
                                     </div>
                                 </div>
                                 <!-- banner -->
-                                <div class="card_banner mt-3 mb-5" style="background-image: url('../assets/user/images/card-banner.png');">
+                                <div class="card_banner mt-3 mb-5" style="background-image: url({{ asset('assets/img/card-banner.png')}})">
                                     <div class="profile_image">
-                                        <img src="../assets/user/images/default.png" width="100" alt="image">
+                                        <img src="{{ asset('assets/img/default.png') }}" width="100" alt="image">
                                     </div>
                                 </div>
                                 <div class="card_content text-center">
                                     <div class="profile_name mt-2">
-                                        <h3>Rabin Mia</h3>
-                                        <h5>Developer at Arobil</h5>
+                                        <h3>{{ __('Rabin Mia')}}</h3>
+                                        <h5>{{ __('Developer at Arobil')}}</h5>
                                     </div>
                                     <div class="save_contact mt-4 mb-4">
-                                        <a href="#">Save Contact</a>
+                                        <a href="#">{{ __('Save Contact')}}</a>
                                     </div>
                                     <div class="social_icon">
                                         <ul>
@@ -193,7 +184,7 @@
                                                             </linearGradient>
                                                         </defs>
                                                     </svg>
-                                                    <span>Email</span>
+                                                    <span>{{ __('Email')}}</span>
                                                 </a>
                                             </li>
                                             <li>
@@ -220,7 +211,7 @@
                                                             </linearGradient>
                                                         </defs>
                                                     </svg>
-                                                    <span>Phone</span>
+                                                    <span>{{ __('Phone')}}</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -233,42 +224,40 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="../assets/user/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../assets/user/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../assets/user/js/smartWizard.min.js"></script>
-    <script>
-    // preview image
-    var loadFile = function(event) {
-        var image = document.getElementById('preview');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
+@endsection
+@push('custom_js')
+<script type="text/javascript" src="assets/js/smartWizard.min.js"></script>
+<script>
+// preview image
+var loadFile = function(event) {
+    var image = document.getElementById('preview');
+    image.src = URL.createObjectURL(event.target.files[0]);
+};
 
-    // step form validation
-    $(function() {
-        $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
-            // Validate only on forward movement  
-            if (stepDirection == 'forward') {
-                let form = document.getElementById('form-' + (currentStepIdx + 1));
-                if (form) {
-                    if (!form.checkValidity()) {
-                        form.classList.add('was-validated');
-                        $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-                        $("#smartwizard").smartWizard('fixHeight');
-                        return false;
-                    }
-                    $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
+// step form validation
+$(function() {
+    $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
+        // Validate only on forward movement
+        if (stepDirection == 'forward') {
+            let form = document.getElementById('form-' + (currentStepIdx + 1));
+            if (form) {
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
+                    $("#smartwizard").smartWizard('fixHeight');
+                    return false;
                 }
+                $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
             }
-        });
-
-        // Smart Wizard
-        $('#smartwizard').smartWizard({
-            transition: {
-                  animation: 'slideSwing', 
-              }
-        });
+        }
     });
-    </script>
-</body>
 
-</html>
+    // Smart Wizard
+    $('#smartwizard').smartWizard({
+        transition: {
+              animation: 'slideSwing',
+          }
+    });
+});
+</script>
+@endpush

@@ -1,80 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="../assets/user/css/adminlte.min.css">
-    <link rel="stylesheet" href="../assets/user/css/style.css">
-    <link rel="stylesheet" href="../assets/user/css/responsive.css">
-</head>
-
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <!-- top bar menu -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-        </nav>
-        <!-- sidebar menu -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="dashboard.html" class="brand-link">
-                <span class="brand-text font-weight-light">
-                    <img src="../assets/user/images/logo.png" width="150" alt="logo">
-                </span>
-            </a>
-            <div class="sidebar">
-                <nav class="mt-4">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                         <li class="nav-item">
-                            <a href="dashboard.html" class="nav-link">
-                                <span class="icon">
-                                    <img src="../assets/user/images/icon/user.svg" alt="icon">
-                                </span>
-                                My Cards
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="insights.html" class="nav-link">
-                                <span class="icon">
-                                    <img src="../assets/user/images/icon/insights.svg" alt="icon">
-                                </span>
-                                Insights
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="setting.html" class="nav-link active">
-                                <span class="icon">
-                                     <img src="../assets/user/images/icon/settings.svg" alt="icon">
-                                </span>
-                                Settings
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- user profile -->
-                <div class="user-panel align-items-center mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <a href="#">
-                            <img src="../assets/user/images/user.jpg" class="img-circle elevation-2" alt="User Image">
-                        </a>
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Rabin</a>
-                        <span>User</span>
-                    </div>
-                </div>
-                <!-- upgrade plan -->
-                <div class="plan_upgrade text-center mb-5">
-                    <a href="#">Upgrade now</a>
-                </div>
-            </div>
-        </aside>
+@extends('user.layouts.app')
+@section('title') {{ __('Settings') }}  @endsection
+@push('custom_css')
+@endpush
+@section('settings','active')
+@section('content')
         <!-- main content -->
         <div class="content-wrapper">
             <div class="content">
@@ -87,24 +16,27 @@
                                         <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                                             <!-- account settings -->
                                             <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
-                                                <img src="../assets/user/images/icon/settings.svg" alt="icon">
-                                                Account Settings
+                                                <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="icon">
+                                                {{ __('Account Settings') }}
                                             </a>
                                             <!-- support -->
                                             <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
-                                                <img src="../assets/user/images/icon/support.svg" alt="icon">
-                                                Support
+                                                <img src="{{ asset('assets/img/icon/support.svg') }}" alt="icon">
+                                                {{ __('Support') }}
                                             </a>
                                             <!-- request a feature -->
                                             <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">
-                                                <img src="../assets/user/images/icon/request.svg" alt="icon">
-                                                Request a Feature
+                                                <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
+                                                {{ __('Request a Feature') }}
                                             </a>
                                             <!-- logout -->
-                                            <a class="nav-link" href="#">
-                                                <img src="../assets/user/images/icon/logout.svg" alt="icon">
-                                                Logout
-                                            </a>
+
+                                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();" title="{{ __('Logout') }}"><img src="{{ asset('assets/img/icon/logout.svg') }}" alt="icon">
+                                                {{ __('Logout') }}</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="col-lg-8 col-xl-9">
@@ -113,25 +45,25 @@
                                             <div class="tab-pane text-left fade active show" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                                                 <div class="setting_tab_contetn">
                                                     <div class="heading mb-4">
-                                                        <h3>Account Settings</h3>
+                                                        <h3>{{ __('Account Settings') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
                                                         <form action="#" method="post">
                                                             <div class="form-group">
                                                                 <label for="profile_url" class="form-label">
-                                                                    Profile URL
+                                                                    {{ __('Profile URL') }}
                                                                     <a href="#">
-                                                                        <img src="../assets/user/images/icon/copy.svg" alt="icon">
+                                                                        <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="icon">
                                                                     </a>
                                                                 </label>
                                                                 <input type="text" name="profile_url" id="profile_url" class="form-control" value="contactsolutions/">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="email" class="form-label">Email</label>
+                                                                <label for="email" class="form-label">{{ __('Email') }}</label>
                                                                 <input type="email" name="email" id="email" class="form-control" value="rabin@gmail.com">
                                                             </div>
                                                             <div class="form-group mt-4">
-                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -141,24 +73,24 @@
                                                 <!-- Support -->
                                                 <div class="setting_tab_contetn">
                                                     <div class="heading mb-4">
-                                                        <h3>Support</h3>
+                                                        <h3>{{ __('Support') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
                                                         <form action="#" method="post">
                                                             <div class="form-group">
-                                                                <label for="emalil_to" class="form-label">To</label>
+                                                                <label for="emalil_to" class="form-label">{{ __('To') }}</label>
                                                                 <input type="text" name="emalil_to" id="emalil_to" class="form-control" value="support@contactsolutions.com" readonly="">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="subject" class="form-label">Subject <span class="text-dark">*</span></label>
+                                                                <label for="subject" class="form-label">{{ __('Subject') }} <span class="text-dark">*</span></label>
                                                                 <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject" required>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="message" class="form-label">Message <span class="text-dark">*</span></label>
+                                                                <label for="message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
                                                                 <textarea name="message" id="message" cols="30" rows="7" placeholder="Message" class="form-control" required style="height:120px;"></textarea>
                                                             </div>
                                                             <div class="form-group mt-4">
-                                                                <button type="submit" class="btn btn-primary">Send</button>
+                                                                <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -167,17 +99,17 @@
                                             <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
                                                 <div class="setting_tab_contetn">
                                                     <div class="heading mb-4">
-                                                        <h3>Request a Feature</h3>
-                                                        <p>Do you have an idea for a feature that would make Popl even better for you? Let us know!</p>
+                                                        <h3>{{ __('Request a Feature') }}</h3>
+                                                        <p>{{ __('Do you have an idea for a feature that would make Popl even better for you? Let us know!') }}</p>
                                                     </div>
                                                     <div class="setting_form">
                                                         <form action="#" method="post">
                                                             <div class="form-group">
-                                                                <label for="request_message" class="form-label">Message <span class="text-dark">*</span></label>
+                                                                <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
                                                                 <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="Message" class="form-control" required style="height:120px;"></textarea>
                                                             </div>
                                                             <div class="form-group mt-4">
-                                                                <button type="submit" class="btn btn-primary">Send Feedback</button>
+                                                                <button type="submit" class="btn btn-primary">{{ __('Send Feedback') }}</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -193,9 +125,7 @@
             </div>
         </div>
     </div>
-    <script src="../assets/user/js/jquery.min.js"></script>
-    <script src="../assets/user/js/bootstrap.min.js"></script>
-    <script src="../assets/user/js/adminlte.min.js"></script>
-</body>
 
-</html>
+    @endsection
+    @push('custom_js')
+    @endpush

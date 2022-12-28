@@ -5,20 +5,17 @@ namespace App\Http\Controllers\User;
 use DB;
 use Auth;
 use App\User;
-use App\Setting;
 use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Plan;
 use App\BusinessCard;
 use Stripe\StripeClient;
-use Stripe\PaymentIntent;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 
 class StripeController extends Controller
 {
@@ -29,7 +26,6 @@ class StripeController extends Controller
     }
     public function stripeCheckout(Request $request)
     {
-        dd($request->all());
             try {
                 $planId = $request->plan_id;
                 $config = DB::table('config')->get();

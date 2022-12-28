@@ -7,10 +7,10 @@
                 <div class="col-md-6 col-lg-6">
                     <div class="footer_widget pe-lg-5">
                         <div class="widget_title mb-4">
-                            <h3>ContactSolutions</h3>
+                            <h3>{{ __('ContactSolutions') }}</h3>
                         </div>
                         <div class="footer_article">
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing, elit. Cum aliquid, nam sint voluptates et aliquam</p>
+                            <p>{{ __('Lorem ipsum dolor sit, amet consectetur adipisicing, elit. Cum aliquid, nam sint voluptates et aliquam') }}</p>
                         </div>
                         <div class="social_media">
                             <ul>
@@ -46,14 +46,14 @@
                 <div class="col-6 col-lg-3">
                     <div class="footer_widget">
                         <div class="widget_title mb-4">
-                            <h3>Quick Links</h3>
+                            <h3>{{ __('Quick Links') }}</h3>
                         </div>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#">Cards</a></li>
-                                <li><a href="#">Data Protection</a></li>
-                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                                <li><a href="{{ route('user.dashboard') }}">{{ __('Cards') }}</a></li>
+                                <li><a href="#">{{ __('Data Protection') }}</a></li>
+                                <li><a href="{{ route('privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
+                                <li><a href="{{ route('terms-conditions') }}">{{ __('Terms & Conditions') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -61,23 +61,22 @@
                 <div class="col-6 col-lg-3">
                     <div class="footer_widget">
                         <div class="widget_title mb-4">
-                            <h3>Pages</h3>
+                            <h3>{{ __('Pages') }}</h3>
                         </div>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#">Tutorials</a></li>
-                                <li><a href="#">Help</a></li>
-                                <li><a href="#">User Login</a></li>
-                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">{{ __('Tutorials') }}</a></li>
+                                <li><a href="#">{{ __('Help') }}</a></li>
+                                <li><a href="{{ route('login') }}">{{ __('User Login') }}</a></li>
+                                <li><a href="#">{{ __('Blog') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- row -->
-
             <div class="copyright text-center mt-4">
-                <p>&copy; Copyright 2022. All Rights Reserved.</p>
+                <p>&copy; {{ __('Copyright') }} {{ date('Y') }}. {{ __('All Rights Reserved') }}. Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
             </div>
         </div>
         <!-- container -->

@@ -4,7 +4,7 @@
         <!-- container -->
         <div class="container">
             <div class="warning_text text-center">
-                <h3>Get a free traial of ContactSolutions</h3>
+                <h3>{{ __('Get a free traial of ContactSolutions') }}</h3>
             </div>
         </div>
         <!-- container -->
@@ -16,8 +16,8 @@
             <nav class="navbar navbar-expand-lg p-0">
                 <div class="container-fluid">
                     <!-- logo -->
-                    <a class="navbar-brand p-0" href="index.html">
-                        <img src="assets/images/logo.png" alt="logo">
+                    <a class="navbar-brand p-0" href="{{ route('home') }}">
+                        <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
                     </a>
                     <!-- toggle bar -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
@@ -27,16 +27,16 @@
                     <div class="collapse navbar-collapse d-none d-lg-block" id="navbarNav">
                         <ul class="navbar-nav mt-4 mt-lg-0 ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">Home</a>
+                                <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('about-us') }}">About Us</a>
+                                <a class="nav-link" href="{{ route('about-us') }}">{{ __('About Us') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('pricing') }}">Pricing</a>
+                                <a class="nav-link" href="{{ route('pricing') }}">{{ __('Pricing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                                <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
                             </li>
                             @auth
                                 <li class="nav-item">
@@ -54,6 +54,9 @@
                                             <svg class="svg-iconstyled__Svg-app__sc-1nwmz4s-0 gbXkHP user-menustyled__MenuToggleIcon-app__sc-1evcoxz-4 gJGrXh" aria-hidden="true" focusable="false" style="fill:currentColor;height:1em;overflow:visible;width:1em" viewBox="0 0 8 13" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="rotate(90 4 6.5)"><path d="M1.33333 13L8 6.5L1.33333 0L0 1.3L5.33333 6.5L0 11.7L1.33333 13Z"></path></g></svg>
                                         </div>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('user.card') }}">{{ __('Card') }}</a>
+                                            </li>
                                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">{{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -72,7 +75,7 @@
                                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                                             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                         </svg>
-                                        Sign In
+                                        {{ __('Sign In') }}
                                     </a>
                                 </li>
                                 @endauth
@@ -86,16 +89,16 @@
                         <div class="offcanvas-body mt-3">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('home') }}">Home</a>
+                                    <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('about-us') }}">About Us</a>
+                                    <a class="nav-link" href="{{ route('about-us') }}">{{ __('About Us') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('pricing') }}">Pricing</a>
+                                    <a class="nav-link" href="{{ route('pricing') }}">{{ __('Pricing') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                                    <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
                                 </li>
                                 @auth
                                 <li class="nav-item">
@@ -113,6 +116,9 @@
                                             <svg class="svg-iconstyled__Svg-app__sc-1nwmz4s-0 gbXkHP user-menustyled__MenuToggleIcon-app__sc-1evcoxz-4 gJGrXh" aria-hidden="true" focusable="false" style="fill:currentColor;height:1em;overflow:visible;width:1em" viewBox="0 0 8 13" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="rotate(90 4 6.5)"><path d="M1.33333 13L8 6.5L1.33333 0L0 1.3L5.33333 6.5L0 11.7L1.33333 13Z"></path></g></svg>
                                         </div>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('user.card') }}">{{ __('Card') }}</a>
+                                            </li>
                                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">{{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -131,7 +137,7 @@
                                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                                             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                         </svg>
-                                        Sign In
+                                        {{ __('Sign In') }}
                                     </a>
                                 </li>
                                 @endauth

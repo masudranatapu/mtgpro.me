@@ -1,81 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="../assets/user/css/adminlte.min.css">
-    <link rel="stylesheet" href="../assets/user/css/style.css">
-    <link rel="stylesheet" href="../assets/user/css/responsive.css">
-</head>
-
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <!-- top bar menu -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-        </nav>
-        <!-- sidebar menu -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="dashboard.html" class="brand-link">
-                <span class="brand-text font-weight-light">
-                    <img src="../assets/user/images/logo.png" width="150" alt="logo">
-                </span>
-            </a>
-            <div class="sidebar">
-                <nav class="mt-4">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="dashboard.html" class="nav-link active">
-                                <span class="icon">
-                                    <img src="../assets/user/images/icon/user.svg" alt="icon">
-                                </span>
-                                My Cards
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="insights.html" class="nav-link">
-                                <span class="icon">
-                                    <img src="../assets/user/images/icon/insights.svg" alt="icon">
-                                </span>
-                                Insights
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="setting.html" class="nav-link">
-                                <span class="icon">
-                                    <img src="../assets/user/images/icon/settings.svg" alt="icon">
-                                </span>
-                                Settings
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- user profile -->
-                <div class="user-panel align-items-center mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <a href="#">
-                            <img src="../assets/user/images/user.jpg" class="img-circle elevation-2" alt="User Image">
-                        </a>
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Rabin</a>
-                        <span>User</span>
-                    </div>
-                </div>
-                <!-- upgrade plan -->
-                <div class="plan_upgrade text-center mb-5">
-                    <a href="#">Upgrade now</a>
-                </div>
-            </div>
-        </aside>
-
+@extends('user.layouts.app')
+@section('title') {{ __('Edit card') }}  @endsection
+@push('custom_css')
+@endpush
+@section('card','active')
+@section('content')
         <!-- main content -->
         <div class="content-wrapper">
             <div class="content-header">
@@ -83,9 +11,9 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                <a href="dashboard.html" class="back_btn"><i class="fa fa-angle-left"></i></a>
-                                <img src="../assets/user/images/user2.jpg" width="50" class="img-circle mr-2" alt="image">
-                                My Card
+                                <a href="{{ route('user.dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
+                                <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="image">
+                                {{ __('My Card') }}
                             </h1>
                         </div>
                     </div>
@@ -101,14 +29,14 @@
                                     <div class="col-md-4 col-xl-3">
                                         <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                                             <!-- content -->
-                                            <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
-                                                <img src="../assets/user/images/icon/bar.svg" alt="icon">
-                                                Content
+                                            <a class="nav-link @yield('content')" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
+                                                <img src="{{ asset('assets/img/icon/bar.svg') }}" alt="icon">
+                                                {{ __('Content') }}
                                             </a>
                                             <!-- about -->
-                                            <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
-                                                <img src="../assets/user/images/icon/user.svg" alt="icon">
-                                                About
+                                            <a class="nav-link @yield('about')" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
+                                                <img src="{{ asset('assets/img/icon/user.svg') }}" alt="icon">
+                                                {{ __('About') }}
                                             </a>
                                         </div>
                                     </div>
@@ -120,13 +48,13 @@
                                                     <!-- back button -->
                                                     <div class="back d-none mb-4 float-left">
                                                         <a href="#">
-                                                            <i class="fa fa-angle-left"></i>Back
+                                                            <i class="fa fa-angle-left"></i>{{ __('Back')}}
                                                         </a>
                                                     </div>
                                                     <!-- add link button -->
                                                     <div class="add_link mb-4 float-right">
                                                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#socialMedia">
-                                                            <i class="fa fa-plus"></i> Add Links and Contact Info
+                                                            <i class="fa fa-plus"></i> {{ __('Add Links and Contact Info')}}
                                                         </a>
                                                     </div>
                                                     <!-- social media link -->
@@ -135,11 +63,11 @@
                                                         <div class="single_list media position-relative">
                                                             <a href="#" class="editLink">
                                                                 <div class="drag_drap">
-                                                                    <img src="../assets/user/images/icon/bar-2.svg" alt="icon">
+                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="../assets/user/images/icon/facebook.svg" alt="facebook">
-                                                                    <span>facebook</span>
+                                                                    <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
+                                                                    <span>{{ __('facebook') }}</span>
                                                                 </div>
                                                             </a>
                                                             <div class="media_btn float-right">
@@ -153,11 +81,11 @@
                                                         <div class="single_list media position-relative">
                                                             <a href="#" class="editLink">
                                                                 <div class="drag_drap">
-                                                                    <img src="../assets/user/images/icon/bar-2.svg" alt="icon">
+                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="../assets/user/images/icon/instagram.svg" alt="facebook">
-                                                                    <span>Instagram</span>
+                                                                    <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="facebook">
+                                                                    <span>{{ __('Instagram') }}</span>
                                                                 </div>
                                                             </a>
                                                             <div class="media_btn float-right">
@@ -171,11 +99,11 @@
                                                         <div class="single_list media position-relative">
                                                             <a href="#" class="editLink">
                                                                 <div class="drag_drap">
-                                                                    <img src="../assets/user/images/icon/bar-2.svg" alt="icon">
+                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="../assets/user/images/icon/number.svg" alt="facebook">
-                                                                    <span>Number</span>
+                                                                    <img src="{{ asset('assets/img/icon/number.svg') }}" alt="facebook">
+                                                                    <span>{{ __('Number') }}</span>
                                                                 </div>
                                                             </a>
                                                             <div class="media_btn float-right">
@@ -189,11 +117,11 @@
                                                         <div class="single_list media position-relative">
                                                             <a href="#" class="editLink">
                                                                 <div class="drag_drap">
-                                                                    <img src="../assets/user/images/icon/bar-2.svg" alt="icon">
+                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="../assets/user/images/icon/soundcloud.svg" alt="facebook">
-                                                                    <span>soundcloud</span>
+                                                                    <img src="{{ asset('assets/img/icon/soundcloud.svg') }}" alt="facebook">
+                                                                    <span>{{ __('Soundcloud') }}</span>
                                                                 </div>
                                                             </a>
                                                             <div class="media_btn float-right">
@@ -210,22 +138,22 @@
                                                             <form action="#" method="post">
                                                                 <div class="form-group">
                                                                     <label class="imgLabel" for="logo">
-                                                                        <img id="previewIcon" src="../assets/user/images/icon/facebook.svg" alt="">
+                                                                        <img id="previewIcon" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
                                                                         <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
                                                                         <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="facebook" class="form-label">Facebook profile link <span class="text-dark">*</span></label>
+                                                                    <label for="facebook" class="form-label">{{ __('Facebook profile link') }} <span class="text-dark">*</span></label>
                                                                     <input type="text" name="facebook" id="facebook" class="form-control" placeholder="Facebook profile link" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="title" class="form-label">Link title</label>
+                                                                    <label for="title" class="form-label">{{ __('Link title') }}</label>
                                                                     <input type="text" name="title" id="title" class="form-control" placeholder="Facebook">
                                                                 </div>
                                                                 <div class="form-group mb-4">
                                                                     <a href="#" target="_blank">
-                                                                        Test your link
+                                                                        {{ __('Test your link') }}
                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#03a9f4">
                                                                             <path d="M384 320c-17.67 0-32 14.33-32 32v96H64V160h96c17.67 0 32-14.32 32-32s-14.33-32-32-32L64 96c-35.35 0-64 28.65-64 64V448c0 35.34 28.65 64 64 64h288c35.35 0 64-28.66 64-64v-96C416 334.3 401.7 320 384 320zM488 0H352c-12.94 0-24.62 7.797-29.56 19.75c-4.969 11.97-2.219 25.72 6.938 34.88L370.8 96L169.4 297.4c-12.5 12.5-12.5 32.75 0 45.25C175.6 348.9 183.8 352 192 352s16.38-3.125 22.62-9.375L416 141.3l41.38 41.38c9.156 9.141 22.88 11.84 34.88 6.938C504.2 184.6 512 172.9 512 160V24C512 10.74 501.3 0 488 0z"></path>
                                                                         </svg>
@@ -235,12 +163,12 @@
                                                                     <div class="float-left">
                                                                         <button type="button" class="text-danger">
                                                                             <i class="fa fa-trash"></i>
-                                                                            Remove
+                                                                            {{ __('Remove') }}
                                                                         </button>
                                                                     </div>
                                                                     <div class="float-right">
-                                                                        <button type="button" class="btn btn-secondary mr-2 back">Cancel</button>
-                                                                        <button type="submit" class="btn btn-primary">Update</button>
+                                                                        <button type="button" class="btn btn-secondary mr-2 back">{{ __('Cancel') }}</button>
+                                                                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -255,17 +183,17 @@
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
-                                                                     <label for="card_title" class="form-label">Card Title</label>
-                                                                     <input type="text" name="card_title" id="title" class="form-control" value="My Card" placeholder="Card Title" required>
+                                                                     <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
+                                                                     <input type="text" name="card_title" id="title" class="form-control" value="My Card" placeholder="{{ __('Card Title') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group">
-                                                                             <label class="form-label">Profile picture</label>
+                                                                             <label class="form-label">{{ __('Profile picture') }}</label>
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="../assets/user/images/user2.jpg" alt="profile image">
+                                                                                <img id="profilePic" src="{{ asset('assets/img/user2.jpg') }}" alt="profile image">
                                                                              </label>
                                                                              <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
@@ -274,7 +202,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">Cover photo</label><br/>
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="../assets/user/images/cover.png" alt="logo">
+                                                                                  <img id="coverpic" src="{{ asset('assets/img/cover.png') }}" alt="logo">
                                                                              </label>
                                                                              <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
@@ -282,18 +210,18 @@
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
                                                                          <label class="form-label">Company Logo</label>
                                                                          <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="../assets/user/images/card-logo.png" alt="logo">
+                                                                             <img id="showlogo" src="{{ asset('assets/img/card-logo.png') }}" alt="logo">
                                                                          </label>
-                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> 
+                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 color_group">
                                                                 <div class="form-group colorform">
                                                                      <div class="bg_btn">
-                                                                        <label class="form-label">Card Color</label><br/>
+                                                                        <label class="form-label">{{ __('Card Color') }}</label><br/>
                                                                          <label for="color" class="colorcode">
-                                                                             <img src="../assets/user/images/icon/color.svg" alt="svg">
+                                                                             <img src="{{ asset('assets/img/icon/color.svg') }}" alt="svg">
                                                                              <input type="color" name="color" id="color">
                                                                          </label>
                                                                          <!-- color -->
@@ -334,42 +262,42 @@
                                                                  </div>
                                                                 <div class="form-control custom-switch form-group">
                                                                     <input type="checkbox" name="colorlink" id="customSwitch1" class="custom-control-input" id="customSwitch1">
-                                                                    <label class="custom-control-label" for="customSwitch1">Color Link Icons</label>
+                                                                    <label class="custom-control-label" for="customSwitch1">{{ __('Color Link Icons') }}</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="name" class="form-label">Name</label>
-                                                                     <input type="text" name="name" id="name" value="User Name" class="form-control" placeholder="name" required>
+                                                                     <label for="name" class="form-label">{{ __('Name') }}</label>
+                                                                     <input type="text" name="name" id="name" value="User Name" class="form-control" placeholder="{{ __('name') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="location" class="form-label">Location</label>
-                                                                     <input type="text" name="location" value="Dhaka" id="location" class="form-control" placeholder="location" required>
+                                                                     <label for="location" class="form-label">{{ __('Location') }}</label>
+                                                                     <input type="text" name="location" value="Dhaka" id="location" class="form-control" placeholder="{{ __('location') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="job" class="form-label">Job Title</label>
-                                                                     <input type="text" name="job" value="Developer" id="job" class="form-control" placeholder="job" required>
+                                                                     <label for="job" class="form-label">{{ __('Job Title') }}</label>
+                                                                     <input type="text" name="job" value="Developer" id="job" class="form-control" placeholder="{{ __('job') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="company" class="form-label">Company</label>
-                                                                     <input type="text" name="company" id="company" value="Arobil" class="form-control" placeholder="company" required>
+                                                                     <label for="company" class="form-label">{{ __('Company') }}</label>
+                                                                     <input type="text" name="company" id="company" value="Arobil" class="form-control" placeholder="{{ __('company') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-group">
-                                                                     <label for="bio" class="form-label">Bio</label>
-                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="Bio">Hlw,Lorem ipsum dolor sit, amet consectetur, adipisicing elit.</textarea>
+                                                                     <label for="bio" class="form-label">{{ __('Bio') }}</label>
+                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="{{ __('Bio') }}">Hlw,Lorem ipsum dolor sit, amet consectetur, adipisicing elit.</textarea>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="float-right">
-                                                                     <button type="submit" class="btn btn-primary">Update</button>
+                                                                     <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -413,12 +341,12 @@
                                             </div>
                                             <div class="card_overflow">
                                                 <!-- cover image -->
-                                                <div class="card_banner mb-5" style="background-image: url('../assets/user/images/cover.png');">
+                                                <div class="card_banner mb-5" style="background-image: url('{{ asset('assets/img/cover.png') }}');">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="../assets/user/images/user2.jpg" width="100" alt="image">
+                                                        <img src="{{ asset('assets/img/user2.jpg') }}" width="100" alt="image">
                                                         <!-- logo -->
-                                                        <img class="logo" src="../assets/user/images/card-logo.png" alt="image">
+                                                        <img class="logo" src="{{ asset('assets/img/card-logo.png') }}" alt="image">
                                                     </div>
                                                 </div>
                                                 <div class="card_content text-center">
@@ -581,7 +509,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/number.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/number.svg') }}" alt="image">
                                                 <span>Text</span>
                                             </div>
                                             <div class="icon float-right">
@@ -594,7 +522,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/email.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/email.svg') }}" alt="image">
                                                 <span>Email</span>
                                             </div>
                                             <div class="icon float-right">
@@ -607,7 +535,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/instagram.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="image">
                                                 <span>Instagram</span>
                                             </div>
                                             <div class="icon float-right">
@@ -620,7 +548,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/safari.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/safari.svg') }}" alt="image">
                                                 <span>Website</span>
                                             </div>
                                             <div class="icon float-right">
@@ -633,7 +561,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/linkedin.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/linkedin.svg') }}" alt="image">
                                                 <span>Linkedin</span>
                                             </div>
                                             <div class="icon float-right">
@@ -646,7 +574,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/contactcard.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/contactcard.svg') }}" alt="image">
                                                 <span>Contact Card</span>
                                             </div>
                                             <div class="icon float-right">
@@ -665,7 +593,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/number.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/number.svg') }}" alt="image">
                                                 <span>Text</span>
                                             </div>
                                             <div class="icon float-right">
@@ -678,7 +606,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/call.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/call.svg') }}" alt="image">
                                                 <span>Call</span>
                                             </div>
                                             <div class="icon float-right">
@@ -691,7 +619,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/email.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/email.svg') }}" alt="image">
                                                 <span>Email</span>
                                             </div>
                                             <div class="icon float-right">
@@ -704,7 +632,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/contactcard.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/contactcard.svg') }}" alt="image">
                                                 <span>Contact Card</span>
                                             </div>
                                             <div class="icon float-right">
@@ -717,7 +645,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/address.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/address.svg') }}" alt="image">
                                                 <span>address</span>
                                             </div>
                                             <div class="icon float-right">
@@ -730,7 +658,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/facetime.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/facetime.svg') }}" alt="image">
                                                 <span>FaceTime</span>
                                             </div>
                                             <div class="icon float-right">
@@ -743,7 +671,7 @@
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
                                             <div class="icon_info">
-                                                <img src="../assets/user/images/icon/whatsapp.svg" alt="image">
+                                                <img src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="image">
                                                 <span>Whatsapp</span>
                                             </div>
                                             <div class="icon float-right">
@@ -762,7 +690,7 @@
                                         <form action="#" method="post">
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
-                                                    <img id="previewIcon" src="../assets/user/images/icon/facebook.svg" alt="">
+                                                    <img id="previewIcon" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
                                                     <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                 </label>
@@ -824,12 +752,12 @@
                                                     </div>
                                                     <div class="card_overflow">
                                                         <!-- cover image -->
-                                                        <div class="card_banner mb-5" style="background-image: url('../assets/user/images/card-banner.png');">
+                                                        <div class="card_banner mb-5" style="background-image: url('{{ asset('assets/img/card-banner.png') }}');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="../assets/user/images/default.png" width="100" alt="image">
+                                                                <img src="{{ asset('assets/img/default.png') }}" width="100" alt="image">
                                                                 <!-- logo -->
-                                                                <img class="logo" src="../assets/user/images/card-logo.png" alt="image">
+                                                                <img class="logo" src="{{ asset('assets/img/card-logo.png') }}" alt="image">
                                                             </div>
                                                         </div>
                                                         <div class="card_content text-center">
@@ -947,90 +875,84 @@
             </div>
         </div>
     </div>
+@endsection
+@push('custom_js')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+// preview icon
+var loadFile = function(event) {
+    var image = document.getElementById('previewIcon');
+    image.src = URL.createObjectURL(event.target.files[0]);
+};
+
+// preview profile photo
+var profileloadFile = function(event) {
+    var profile = document.getElementById('profilePic');
+    profile.src = URL.createObjectURL(event.target.files[0]);
+};
+
+// preview company logo
+var companyloadFile = function(event) {
+    var logo = document.getElementById('showlogo');
+    logo.src = URL.createObjectURL(event.target.files[0]);
+};
+
+// preview cover photo
+var coverFile = function(event) {
+    var cover  = document.getElementById('coverpic');
+    cover.src  = URL.createObjectURL(event.target.files[0]);
+};
 
 
+// drag and drop
+const dropItems = document.getElementById('drop-items')
+new Sortable(dropItems, {
+    animation: 350,
+    chosenClass: "sortable-chosen",
+    dragClass: "sortable-drag"
+});
 
-    <script src="../assets/user/js/jquery.min.js"></script>
-    <script src="../assets/user/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <script src="../assets/user/js/adminlte.min.js"></script>
-    <script>
-    // preview icon
-    var loadFile = function(event) {
-        var image = document.getElementById('previewIcon');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
-
-    // preview profile photo
-    var profileloadFile = function(event) {
-        var profile = document.getElementById('profilePic');
-        profile.src = URL.createObjectURL(event.target.files[0]);
-    };
-
-    // preview company logo
-    var companyloadFile = function(event) {
-        var logo = document.getElementById('showlogo');
-        logo.src = URL.createObjectURL(event.target.files[0]);
-    };
-
-    // preview cover photo
-    var coverFile = function(event) {
-        var cover  = document.getElementById('coverpic');
-        cover.src  = URL.createObjectURL(event.target.files[0]);
-    };
+// social content modal
+$('.onclickIcon').on('click', function() {
+    $('.first_modal').addClass('d-none');
+    $('.second_modal').removeClass('d-none');
+});
+$('.backfirstModal').on('click', function() {
+    $('.first_modal').removeClass('d-none');
+    $('.second_modal').addClass('d-none');
+});
+$('.modalClose').on('click', function() {
+    $('.first_modal').removeClass('d-none');
+    $('.second_modal').addClass('d-none');
+});
 
 
-    // drag and drop
-    const dropItems = document.getElementById('drop-items')
-    new Sortable(dropItems, {
-        animation: 350,
-        chosenClass: "sortable-chosen",
-        dragClass: "sortable-drag"
-    });
-
-    // social content modal
-    $('.onclickIcon').on('click', function() {
-        $('.first_modal').addClass('d-none');
-        $('.second_modal').removeClass('d-none');
-    });
-    $('.backfirstModal').on('click', function() {
-        $('.first_modal').removeClass('d-none');
-        $('.second_modal').addClass('d-none');
-    });
-    $('.modalClose').on('click', function() {
-        $('.first_modal').removeClass('d-none');
-        $('.second_modal').addClass('d-none');
-    });
+// edit social content
+$('.editLink').on('click', function() {
+    $('.tab_body .back').removeClass('d-none');
+    $('.tab_body .edit_social_form').removeClass('d-none');
+    $('.tab_body .add_link').addClass('d-none');
+    $('.tab_body .social_media_list').addClass('d-none');
+});
+$('.tab_body .back').on('click', function() {
+    $('.tab_body .back').addClass('d-none');
+    $('.tab_body .edit_social_form').addClass('d-none');
+    $('.tab_body .add_link').removeClass('d-none');
+    $('.tab_body .social_media_list').removeClass('d-none');
+});
 
 
-    // edit social content
-    $('.editLink').on('click', function() {
-        $('.tab_body .back').removeClass('d-none');
-        $('.tab_body .edit_social_form').removeClass('d-none');
-        $('.tab_body .add_link').addClass('d-none');
-        $('.tab_body .social_media_list').addClass('d-none');
-    });
-    $('.tab_body .back').on('click', function() {
-        $('.tab_body .back').addClass('d-none');
-        $('.tab_body .edit_social_form').addClass('d-none');
-        $('.tab_body .add_link').removeClass('d-none');
-        $('.tab_body .social_media_list').removeClass('d-none');
-    });
+// color change
+function changeColor(color){
+    var element = document.getElementById("clrBg");
+    element.style.backgroundColor = color;
+}
+$(document).on('input','#colorPicker',function(){
+    let color = $(this).val();
+    var element = document.getElementById("clrBg");
+    element.style.backgroundColor = color;
+})
 
 
-    // color change
-    function changeColor(color){
-        var element = document.getElementById("clrBg");
-        element.style.backgroundColor = color;
-    }
-    $(document).on('input','#colorPicker',function(){
-        let color = $(this).val();
-        var element = document.getElementById("clrBg");
-        element.style.backgroundColor = color;
-    })
-
-
-    </script>
-</body>
-
-</html>
+</script>
+@endpush

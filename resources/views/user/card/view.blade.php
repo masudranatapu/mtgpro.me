@@ -1,36 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Card</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/user/css/adminlte.min.css">
-    <link rel="stylesheet" href="../assets/user/css/card-style.css">
-</head>
-
-<body>
-     
-
+@extends('user.layouts.app')
+@section('title') {{ __('View Card') }}  @endsection
+@push('custom_css')
+@endpush
+@section('card','active')
+@section('content')
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2;">
             <div class="card_cover">
                 <div class="cover_img" data-aos="zoom-in">
-                    <img src="../assets/user/images/cover.png" alt="image">
+                    <img src="{{ asset('assets/img/cover.png') }}" alt="image">
                 </div>
                 <div class="card_profile" data-aos="zoom-in">
-                    <img class="profile_pic" src="../assets/user/images/user2.jpg" alt="image">
-                    <img class="logo" src="../assets/user/images/card-logo.png" alt="image">
+                    <img class="profile_pic" src="{{ asset('assets/img/user2.jpg') }}" alt="image">
+                    <img class="logo" src="{{ asset('assets/img/card-logo.png') }}" alt="image">
                 </div>
             </div>
             <div class="card_view_body">
                 <div class="content text-center">
                     <div class="profile_info mt-4">
-                        <h2>Rabin</h2>
-                        <h4>Developer at Arobil</h4>
-                        <h6>Dhaka</h6>
-                        <p>Lorem ipsum, dolor sit amet, consectetur adipisicing elit. Asperiores iusto, nulla. Voluptatibus dolores ab culpa molestiae sunt ipsam deserunt perferendis, eius nam quia laboriosam assumenda officia exercitationem nihil? Veritatis, voluptas.</p>
+                        <h2>{{ __('Rabin') }}</h2>
+                        <h4>{{ __('Developer at Arobil') }}</h4>
+                        <h6>{{ __('Dhaka') }}</h6>
+                        <p>{{ __('Lorem ipsum, dolor sit amet, consectetur adipisicing elit. Asperiores iusto, nulla. Voluptatibus dolores ab culpa molestiae sunt ipsam deserunt perferendis, eius nam quia laboriosam assumenda officia exercitationem nihil? Veritatis, voluptas.') }}</p>
                     </div>
                     <div class="save_contact mt-5 mb-5">
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#contactModal">Save Contact</a>
@@ -40,25 +31,25 @@
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#1877F2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g clip-path="url(#facebook_monochrome_svg__facebook)" filter="url(#facebook_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M55.924 51.531l1.797-11.734H46.482v-7.615c0-3.21 1.57-6.34 6.604-6.34h5.11v-9.99s-4.637-.793-9.071-.793c-9.257 0-15.306 5.62-15.306 15.794v8.944h-10.29V51.53h10.29v28.86l6.331.001h6.332v-28.86h9.442z" fill="#fff"></path></g><defs><clipPath id="facebook_monochrome_svg__facebook"><path fill="#fff" d="M0 0h80v80H0z"></path></clipPath><filter id="facebook_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Facebook</span>
+                                    <span>{{ __('Facebook') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#0077B5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g filter="url(#linkedin_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M15.898 31.635h10.551V64.94H15.898V31.635zm5.278-16.576c1.21 0 2.394.352 3.4 1.012a6.028 6.028 0 012.253 2.694 5.896 5.896 0 01.347 3.468 5.967 5.967 0 01-1.676 3.073 6.155 6.155 0 01-3.134 1.642 6.227 6.227 0 01-3.535-.344 6.093 6.093 0 01-2.744-2.213 5.921 5.921 0 01-1.028-3.336 5.945 5.945 0 011.793-4.24 6.179 6.179 0 014.324-1.756zM32 31.86h10.127V36.4h.14c1.411-2.6 4.853-5.342 9.992-5.342 10.699-.023 12.682 6.83 12.682 15.715V64.94H54.377V48.846c0-3.832-.07-8.766-5.49-8.766-5.419 0-6.34 4.179-6.34 8.516v16.345H32V31.86z" fill="#fff"></path></g><defs><filter id="linkedin_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Linkedin</span>
+                                    <span>{{ __('Linkedin') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#F41314" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g clip-path="url(#facebook_monochrome_svg__facebook)" filter="url(#facebook_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M55.924 51.531l1.797-11.734H46.482v-7.615c0-3.21 1.57-6.34 6.604-6.34h5.11v-9.99s-4.637-.793-9.071-.793c-9.257 0-15.306 5.62-15.306 15.794v8.944h-10.29V51.53h10.29v28.86l6.331.001h6.332v-28.86h9.442z" fill="#fff"></path></g><defs><clipPath id="facebook_monochrome_svg__facebook"><path fill="#fff" d="M0 0h80v80H0z"></path></clipPath><filter id="facebook_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Youtube</span>
+                                    <span>{{ __('Youtube') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#C92591" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g filter="url(#instagram_monochrome_svg__filter0_i_3117_2479911)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M38.762 10.476H50.19c2.381 0 4.858.19 7.239.857 4.19 1.143 7.428 3.524 9.619 7.238 1.333 2.286 1.904 4.762 2.19 7.334.19 2.285.286 4.571.286 6.857v16.952c0 2.572-.19 5.143-.857 7.715-1.429 5.142-4.572 8.761-9.524 10.666-2.381.953-4.953 1.238-7.524 1.334-6.286.095-12.571.19-18.857.19-2.667 0-5.429-.095-8-.476-3.714-.476-6.953-1.905-9.62-4.667-2.475-2.571-3.809-5.714-4.285-9.238-.571-4.762-.476-9.524-.476-14.38 0-4 .095-7.906.095-11.906.095-2.762.286-5.524 1.333-8.19 1.905-4.953 5.43-8 10.572-9.429 2.38-.666 4.857-.762 7.333-.857h9.048zm25.524 29.62c0-2.287.095-4.477 0-6.763-.096-2.762-.19-5.619-.477-8.38a9.298 9.298 0 00-2.285-5.239c-2.19-2.571-5.048-3.714-8.286-3.905-3.143-.19-6.38-.285-9.524-.285-5.714 0-11.428.095-17.143.285-2.095.096-4.095.572-5.904 1.715-2.953 1.81-4.477 4.571-4.762 7.904-.286 2.858-.381 5.715-.476 8.572 0 5.524 0 10.952.095 16.476 0 1.905.286 3.905.667 5.714.57 2.477 2 4.477 4.095 5.905 2.095 1.429 4.571 1.905 7.047 2 2.953.095 5.81.19 8.762.19 5.62 0 11.238-.095 16.857-.19C55.333 64 57.62 63.43 59.524 62c2.38-1.714 3.81-4.095 4.19-6.953.286-2.095.381-4.19.477-6.285.095-2.857.095-5.715.095-8.667z" fill="#fff"></path><path d="M54.954 40c0 8.476-6.762 15.143-15.238 15.143-8.286 0-15.048-6.857-15.048-15.238 0-8.286 6.857-15.143 15.238-15.143 8.286.095 15.048 6.857 15.048 15.238zm-25.048 0c0 5.524 4.476 10 10 10s10-4.476 10-10c0-5.428-4.476-9.905-10-9.905-5.619 0-10 4.381-10 9.905zM55.618 20.762c2 0 3.524 1.524 3.524 3.428 0 1.905-1.524 3.524-3.429 3.524-1.904 0-3.523-1.523-3.523-3.428 0-2 1.523-3.524 3.428-3.524z" fill="#fff"></path></g><defs><filter id="instagram_monochrome_svg__filter0_i_3117_2479911" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Instagram</span>
+                                    <span>{{ __('Instagram') }}</span>
                                 </a>
                             </li>
                             <li>
@@ -85,7 +76,7 @@
                                             </linearGradient>
                                         </defs>
                                     </svg>
-                                    <span>Phone</span>
+                                    <span>{{ __('Phone') }}</span>
                                 </a>
                             </li>
                             <li>
@@ -115,29 +106,29 @@
                                             </linearGradient>
                                         </defs>
                                     </svg>
-                                    <span>Email</span>
+                                    <span>{{ __('Email') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#1877F2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g clip-path="url(#facebook_monochrome_svg__facebook)" filter="url(#facebook_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M55.924 51.531l1.797-11.734H46.482v-7.615c0-3.21 1.57-6.34 6.604-6.34h5.11v-9.99s-4.637-.793-9.071-.793c-9.257 0-15.306 5.62-15.306 15.794v8.944h-10.29V51.53h10.29v28.86l6.331.001h6.332v-28.86h9.442z" fill="#fff"></path></g><defs><clipPath id="facebook_monochrome_svg__facebook"><path fill="#fff" d="M0 0h80v80H0z"></path></clipPath><filter id="facebook_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Facebook</span>
+                                    <span>{{ __('Facebook') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#0077B5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g filter="url(#linkedin_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M15.898 31.635h10.551V64.94H15.898V31.635zm5.278-16.576c1.21 0 2.394.352 3.4 1.012a6.028 6.028 0 012.253 2.694 5.896 5.896 0 01.347 3.468 5.967 5.967 0 01-1.676 3.073 6.155 6.155 0 01-3.134 1.642 6.227 6.227 0 01-3.535-.344 6.093 6.093 0 01-2.744-2.213 5.921 5.921 0 01-1.028-3.336 5.945 5.945 0 011.793-4.24 6.179 6.179 0 014.324-1.756zM32 31.86h10.127V36.4h.14c1.411-2.6 4.853-5.342 9.992-5.342 10.699-.023 12.682 6.83 12.682 15.715V64.94H54.377V48.846c0-3.832-.07-8.766-5.49-8.766-5.419 0-6.34 4.179-6.34 8.516v16.345H32V31.86z" fill="#fff"></path></g><defs><filter id="linkedin_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Linkedin</span>
+                                    <span>{{ __('Linkedin') }}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                      <svg width="75" height="75" fill="#F41314" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g clip-path="url(#facebook_monochrome_svg__facebook)" filter="url(#facebook_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M55.924 51.531l1.797-11.734H46.482v-7.615c0-3.21 1.57-6.34 6.604-6.34h5.11v-9.99s-4.637-.793-9.071-.793c-9.257 0-15.306 5.62-15.306 15.794v8.944h-10.29V51.53h10.29v28.86l6.331.001h6.332v-28.86h9.442z" fill="#fff"></path></g><defs><clipPath id="facebook_monochrome_svg__facebook"><path fill="#fff" d="M0 0h80v80H0z"></path></clipPath><filter id="facebook_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
-                                    <span>Youtube</span>
+                                    <span>{{ __('Youtube') }}</span>
                                 </a>
                             </li>
                         </ul>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,48 +142,42 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal_logo">
-                        <img src="../assets/user/images/user2.jpg" alt="image">
+                        <img src="{{ asset('assets/img/user2.jpg') }}" alt="image">
                     </div>
                 </div>
                 <div class="contact_body">
                     <form action="#" method="post">
                         <div class="heading mb-4 text-center">
-                            <h4>Share your info back with rabin</h4>
+                            <h4>{{ __('Share your info back with rabin') }}</h4>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('Name') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="email" id="email" class="form-control" placeholder="Email" required>
+                            <input type="text" name="email" id="email" class="form-control" placeholder="{{ __('Email') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone Number" required>
+                            <input type="tel" name="phone" id="phone" class="form-control" placeholder="{{ __('Phone Number') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="job_title" id="job_title" class="form-control" placeholder="Job Title" required>
+                            <input type="text" name="job_title" id="job_title" class="form-control" placeholder="{{ __('Job Title') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="company" id="company" class="form-control" placeholder="Company" required>
+                            <input type="text" name="company" id="company" class="form-control" placeholder="{{ __('Company') }}" required>
                         </div>
                         <div class="form-group">
-                            <textarea name="note" id="note" cols="30" rows="5" class="form-control" placeholder="Notes on this interaction"></textarea>
+                            <textarea name="note" id="note" cols="30" rows="5" class="form-control" placeholder="{{ __('Notes on this interaction') }}"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100" style="background: #111 !important;">Connect</button>
+                        <button type="submit" class="btn btn-primary w-100" style="background: #111 !important;">{{ __('Connect') }}</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-     <script src="../assets/user/js/jquery.min.js"></script>
-    <script src="../assets/user/js/bootstrap.min.js"></script>
-    <script src="../assets/user/js/adminlte.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      AOS.init();
-    </script>
-</body>
-
-</html>
+@endsection
+@push('custom_js')
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+  </script>
+@endpush

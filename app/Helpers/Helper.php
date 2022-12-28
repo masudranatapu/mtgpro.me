@@ -2,18 +2,6 @@
 
 use Illuminate\Support\Facades\DB;
 
-if (!function_exists('isMobile')) {
-    function isMobile(){
-        if(stristr($_SERVER['HTTP_USER_AGENT'],'Mobile')){
-            return true;
-        }else{
-            return false;
-        }
-        // return true;
-    }
-}
-
-
 if (!function_exists('getSetting')) {
     function getSetting(){
         return DB::table('settings')->orderBy('id','DESC')->first();
@@ -131,8 +119,8 @@ if (!function_exists('getSocialIcon')) {
     }
 }
 
-if (!function_exists('Format')) {
-    function Format($number, $decimal = 1) { // cents: 0=never, 1=if needed, 2=always
+if (!function_exists('CurrencyFormat')) {
+    function CurrencyFormat($number, $decimal = 1) { // cents: 0=never, 1=if needed, 2=always
         if (is_numeric($number)) { // a number
             if (!$number) { // zero
             $money = ($decimal == 2 ? '0.00' : '0.00'); // output zero
