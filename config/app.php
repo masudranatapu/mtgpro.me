@@ -106,6 +106,49 @@ return [
     |
     */
 
+
+        /*
+    |--------------------------------------------------------------------------
+    | Available locales
+    |--------------------------------------------------------------------------
+    |
+    | List all locales that your application works with
+    |
+    */
+    'available_locales' => [
+        'English' => 'en',
+        'Russian' => 'ru',
+        'French' => 'fr',
+    ],
+     'languages' => [
+        'ar' => 'Arabic',
+        'bn' => 'Bangla',
+        'bg' => 'Bulgarian',
+        'zh' => 'Chinese',
+        'en' => 'English',
+        'fr' => 'French',
+        'de' => 'German',
+        'hi' => 'Hindi',
+        'he' => 'Hebrew',
+        'it' => 'Italian',
+        'ja' => 'Japanese',
+        'lt' => 'Lithuanian',
+        'ms' => 'Malay',
+        'pt' => 'Portuguese',
+        'pl' => 'Polish',
+        'ro' => 'Romanian',
+        'ru' => 'Russian',
+        'es' => 'Spanish',
+        'si' => 'Sinhala',
+        'sv' => 'Swedish',
+        'ta' => 'Tamil',
+        'th' => 'Thai',
+        'tr' => 'Turkish',
+        'ur' => 'Urdu',
+        'vi' => 'Vietnamese'
+    ],
+
+
     'faker_locale' => 'en_US',
 
     /*
