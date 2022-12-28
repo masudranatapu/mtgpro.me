@@ -1,7 +1,7 @@
 <?php
 namespace App\Traits;
 
-trait ApiResponse {
+trait AjaxResponse {
 
     private $version = ['version' => '1.0'];
 
