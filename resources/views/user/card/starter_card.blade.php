@@ -400,10 +400,20 @@ $(document).on('click', '.crop_logo', function(event){
 
         // Smart Wizard
         $('#smartwizard').smartWizard({
+            onFinish: onFinishCallback,
+            labelFinish:'Finish',  // label for Finish button
+            labelCancel:'Cancel',
             transition: {
                   animation: 'slideSwing',
               }
         });
+        function onFinishCallback(){
+
+            $("#form-1").submit();
+
+
+        }
+
     });
     </script>
 </body>
