@@ -43,6 +43,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);
     Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting',['as'=>'setting','uses'=>'DashboardControler@getSetting']);
+    Route::get('plans',['as'=>'plans','uses'=>'CardController@plans']);
 
 });
 

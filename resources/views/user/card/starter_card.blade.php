@@ -57,10 +57,11 @@ $tabIndex = 1;
                                     </a>
                                 </li> --}}
                             </ul>
+                            <form id="form-1" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
+
                             <div class="tab-content">
                                 <!-- step 1 -->
                                 <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
-                                    <form id="form-1" class="needs-validation" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
                                         <input type="hidden" name="upload_avatar_url" id="upload_avatar_url" value="{{ route('user.card.upload_avatar') }}" />
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
@@ -85,11 +86,9 @@ $tabIndex = 1;
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
                                 </div>
                                 <!-- step 2 -->
                                 <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
-                                    <form id="form-2" class="needs-validation" novalidate>
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
@@ -110,11 +109,9 @@ $tabIndex = 1;
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
                                 </div>
                                 <!-- step 3 -->
                                 <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
-                                    <form id="form-3" class="needs-validation" novalidate>
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="text-center">
@@ -126,22 +123,25 @@ $tabIndex = 1;
                                                     <div class="upload_photo_text">
                                                         <p>{{ __('Make your card more personalized by adding a profile picture') }}</p>
                                                         {{-- <input type="file" class="d-none" onchange="loadFile(event)" name="photo" id="photo" required tabindex="{{ $tabIndex++ }}"> --}}
-                                                        <input type="file" class="d-none" name="photo" id="photo" required tabindex="{{ $tabIndex++ }}">
+                                                        <input type="file" class="d-none" name="photo" id="photo" tabindex="{{ $tabIndex++ }}">
                                                         <label for="photo">{{ __('Upload photo') }}</label>
                                                         <div class="invalid-feedback">{{ __('Select your profile photo') }}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <!-- step 4 -->
-                                {{-- <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
-                                    <form id="form-4">
+                                        {{-- <button type="submit" class="btn btn-info">Submit</button> --}}
 
+                                </div>
+
+                             <!-- step 4 -->
+                               {{-- <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                                    <form id="form-4">
                                     </form>
                                 </div> --}}
+
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -361,7 +361,7 @@ $(document).on('click', '.crop_logo', function(event){
                 $('.logo-crop-spinner').removeClass('active');
             },
             error: function (jqXHR, exception) {
-                toastr.error('Something wrong');
+                // toastr.error('Something wrong');
                 $('.logo-crop-spinner').removeClass('active');
             },
             complete: function (response) {
@@ -372,8 +372,6 @@ $(document).on('click', '.crop_logo', function(event){
     })
 });
 
-
-
     // // preview image
     // var loadFile = function(event) {
     //     var image = document.getElementById('preview');
@@ -381,39 +379,89 @@ $(document).on('click', '.crop_logo', function(event){
     // };
 
     // step form validation
-    $(function() {
-        $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
-            // Validate only on forward movement
-            if (stepDirection == 'forward') {
-                let form = document.getElementById('form-' + (currentStepIdx + 1));
-                if (form) {
-                    if (!form.checkValidity()) {
-                        form.classList.add('was-validated');
-                        $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-                        $("#smartwizard").smartWizard('fixHeight');
-                        return false;
-                    }
-                    $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
-                }
+    // $(function() {
+    //     $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
+    //         // Validate only on forward movement
+    //         if (stepDirection == 'forward') {
+    //             let form = document.getElementById('form-' + (currentStepIdx + 1));
+    //             if (form) {
+    //                 if (!form.checkValidity()) {
+    //                     form.classList.add('was-validated');
+    //                     $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
+    //                     $("#smartwizard").smartWizard('fixHeight');
+    //                     return false;
+    //                 }
+    //                 $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
+    //             }
+    //         }
+    //     });
+    //     // Smart Wizard
+    //     $('#smartwizard').smartWizard({
+    //         transition: {
+    //               animation: 'slideSwing',
+    //           },
+    //           onLeaveStep: function() {
+    //             alert(1);
+    //         }
+    //     });
+    // });
+
+    // Function to fetch the ajax content
+        function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
+        // You can use stepDirection to get ajax content on the forward movement and stepPosition to identify the step position
+        if (stepDirection == 'forward' && stepPosition == 'middle') {
+        let ajaxURL = "YOUR AJAX URL";
+        $.ajax({
+            method  : "GET",
+            url     : ajaxURL,
+            beforeSend: function( xhr ) {
+                // Show the loader
+                $('#smartwizard').smartWizard("loader", "show");
             }
+        }).done(function( res ) {
+             // Hide the loader
+            $('#smartwizard').smartWizard("loader", "hide");
+        }).fail(function(err) {
+            // Handle ajax error
+            // Hide the loader
+            $('#smartwizard').smartWizard("loader", "hide");
         });
-
-        // Smart Wizard
-        $('#smartwizard').smartWizard({
-            onFinish: onFinishCallback,
-            labelFinish:'Finish',  // label for Finish button
-            labelCancel:'Cancel',
-            transition: {
-                  animation: 'slideSwing',
-              }
-        });
-        function onFinishCallback(){
-
-            $("#form-1").submit();
-
-
+        }
+        // The callback must called in any case to procced the steps
+        // The empty callback will not apply any dynamic contents to the steps
+        callback();
         }
 
-    });
+
+        // SmartWizard initialize with step content callback
+        $('#smartwizard').smartWizard({
+        getContent: provideContent
+        });
+
+        // $(document).ready(function () {
+        //     $('#smartwizard').smartWizard({
+        //         transitionEffect: 'fade',
+        //         transitionSpeed: '400',
+        //         toolbarSettings: {
+        //             toolbarButtonPosition: 'left',
+        //             showNextButton: true,
+        //             showPreviousButton: true
+        //         }
+        //     })
+
+        //     $('#smartwizard').on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+
+        //         var elmForm = $("#form-step-" + stepNumber);
+        //         if (stepDirection === 'forward' && elmForm) {
+        //             elmForm.validator('validate');
+        //             var elmErr = elmForm.children('.has-error');
+        //             if (elmErr && elmErr.length > 0) {
+        //                 return false;
+        //             }
+        //         }
+        //         return true;
+        //     })
+        // })
+
     </script>
 </body>

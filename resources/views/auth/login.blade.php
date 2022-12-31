@@ -13,7 +13,7 @@
                 <div class="col-11 col-sm-8 col-md-7 col-lg-6 col-xl-4">
                     <div class="login_form">
                         <div class="login_title mb-4 text-center">
-                            <h3>Sign In</h3>
+                            <h3>{{ __('Sign In') }}</h3>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
@@ -26,28 +26,24 @@
                                 <span>Or</span>
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Username or Email Address</label>
-                                <input type="text" name="email" id="email" class="form-control" tabindex="1" placeholder="Username or Email address" required>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                <label for="email" class="form-label">{{ __('Username or Email Address') }}</label>
+                                <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" tabindex="1" placeholder="{{ __('Username or Email address') }}" required>
+                                @if($errors->has('email'))
+                                <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" id="password" class="form-control" tabindex="2" placeholder="Password" required>
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" tabindex="2" placeholder="{{ __('Password') }}" required>
+                                @if($errors->has('password'))
+                                <span class="help-block text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Sign In</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Sign In') }}</button>
                             </div>
                             <div class="bottom text-center">
-                                <p>Don't have an account? <a href="{{ route('register') }}">Sign Up</a></p>
+                                <p>{{ __("Don't have an account?") }} <a href="{{ route('register') }}" title="{{ __('Sign Up') }}">{{ __('Sign Up') }}</a></p>
                             </div>
                         </form>
                     </div>
