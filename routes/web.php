@@ -31,7 +31,8 @@ Route::get('auth/{provider}/callback', ['as' => 'social.login.callback', 'uses' 
 Auth::routes();
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'], 'where' => ['locale' => '[a-zA-Z]{2}']], function () {
-    Route::get('card/init-card',['as'=>'init-card','uses'=>'CardController@getInitCard']);
+    Route::get('card/init-card',['as'=>'init-card','uses'=>'CardController@getInitCard']);//static
+    Route::post('card/upload_avatar',['as'=>'card.upload_avatar','uses'=>'CardController@uploadCardAvatar']);
     Route::get('card',['as'=>'card','uses'=>'CardController@getIndex']);
     Route::get('card/create',['as'=>'card.create','uses'=>'CardController@getCreate']);
     Route::post('card/store',['as'=>'card.store','uses'=>'CardController@postStore']);

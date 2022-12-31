@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/croppie.css') }}" />
+    <style>
+
+        .loading-spinner {
+            display: none;
+        }
+
+        .loading-spinner.active {
+            display: inline-block;
+        }
+    </style>
 </head>
 <?php
 
@@ -40,16 +51,17 @@ $tabIndex = 1;
                                         <span class="num">{{ __('3') }}</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link " href="#step-4">
                                         <span class="num">{{ __('4') }}</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                             <div class="tab-content">
                                 <!-- step 1 -->
                                 <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
-                                    <form id="form-1" class="needs-validation" novalidate>
+                                    <form id="form-1" class="needs-validation" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
+                                        <input type="hidden" name="upload_avatar_url" id="upload_avatar_url" value="{{ route('user.card.upload_avatar') }}" />
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
@@ -107,13 +119,14 @@ $tabIndex = 1;
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="text-center">
                                                     <div class="upload_photo">
-                                                        <label for="photo">
+                                                        <label for="photo" class="preview_logo_div">
                                                             <img id="preview" src="{{ asset('assets/img/default.png') }}" alt="preview image">
                                                         </label>
                                                     </div>
                                                     <div class="upload_photo_text">
                                                         <p>{{ __('Make your card more personalized by adding a profile picture') }}</p>
-                                                        <input type="file" class="d-none" onchange="loadFile(event)" name="photo" id="photo" required tabindex="{{ $tabIndex++ }}">
+                                                        {{-- <input type="file" class="d-none" onchange="loadFile(event)" name="photo" id="photo" required tabindex="{{ $tabIndex++ }}"> --}}
+                                                        <input type="file" class="d-none" name="photo" id="photo" required tabindex="{{ $tabIndex++ }}">
                                                         <label for="photo">{{ __('Upload photo') }}</label>
                                                         <div class="invalid-feedback">{{ __('Select your profile photo') }}</div>
                                                     </div>
@@ -123,11 +136,11 @@ $tabIndex = 1;
                                     </form>
                                 </div>
                                 <!-- step 4 -->
-                                <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                                {{-- <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
                                     <form id="form-4">
 
                                     </form>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -169,7 +182,7 @@ $tabIndex = 1;
                                 <!-- banner -->
                                 <div class="card_banner mt-3 mb-5" style="background-image: url({{ asset('assets/img/card-banner.png')}})">
                                     <div class="profile_image">
-                                        <img src="{{ asset('assets/img/default.png') }}" width="100" alt="image">
+                                        <img src="{{ asset('assets/img/default.png') }}" class="profile_image_src" width="100" alt="image">
                                     </div>
                                 </div>
                                 <div class="card_content text-center">
@@ -249,16 +262,123 @@ $tabIndex = 1;
             </div>
         </div>
     </div>
+
+
+    <div id="uploadAvatarModal" class="modal" role="dialog" data-keyboard="false" data-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                              <div id="logo_demo" style="margin-top:30px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success crop_logo">
+                        <i class="loading-spinner logo-crop-spinner fa-lg fas fa-spinner fa-spin"></i>
+                        <span class="btn-txt">{{ __('Crop & Upload logo') }}</span>
+                    </button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">{{ __('Close')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
     <script>
-    // preview image
-    var loadFile = function(event) {
-        var image = document.getElementById('preview');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
+    $(document).ready(function(){
+        $logo_crop = $('#logo_demo').croppie({
+            enableExif: true,
+            showZoomer: true,
+            viewport: {
+                width:200,
+                height:200,
+                type:'square' //circle
+            },
+            boundary:{
+                width:250,
+                height:250
+            }
+        });
+        var boundaryWidth = 600;
+        var boundaryHeight = boundaryWidth / 1;
+        var viewportWidth = boundaryWidth - (boundaryWidth/100*25);
+        var viewportHeight = boundaryHeight - (boundaryHeight/100*25);
+        $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+                width: viewportWidth, height: viewportHeight,
+                type:'square' //circle
+            },
+            boundary:{
+                width: boundaryWidth, height: boundaryHeight
+            },
+            enableOrientation: true,
+        });
+
+    });
+
+    $(document).on('change', '#photo', function(){
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            $logo_crop.croppie('bind', {
+                url: event.target.result
+            }).then(function(){
+                console.log('jQuery bind complete');
+            });
+        }
+        reader.readAsDataURL(this.files[0]);
+        $('.loading-spinner').removeClass('active');
+        $('#uploadAvatarModal').modal('show');
+    });
+
+$(document).on('click', '.crop_logo', function(event){
+    var upload_avatar_url = $('#upload_avatar_url').val();
+    $('.logo-crop-spinner').toggleClass('active');
+    $logo_crop.croppie('result', {
+        type: 'canvas',
+        size: 'viewport'
+    }).then(function(response){
+        $.ajax({
+            url: upload_avatar_url,
+            type: "POST",
+            data:{"image": response,"_token": "{{ csrf_token() }}",},
+            success:function(data)
+            {
+                console.log(data);
+                $('.preview_logo_div').html(data.html);
+                // $('.profile_image_src').html(data.html);
+                $(".profile_image_src").attr("src",data.image);
+                $('#uploadAvatarModal').modal('hide');
+                $('#photo').val(1);
+                // $('.preview_logo').attr('src',data);
+                $('.logo-crop-spinner').removeClass('active');
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+                $('.logo-crop-spinner').removeClass('active');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+                $('.logo-crop-spinner').removeClass('active');
+            }
+        });
+    })
+});
+
+
+
+    // // preview image
+    // var loadFile = function(event) {
+    //     var image = document.getElementById('preview');
+    //     image.src = URL.createObjectURL(event.target.files[0]);
+    // };
 
     // step form validation
     $(function() {
