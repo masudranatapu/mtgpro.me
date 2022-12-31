@@ -58,7 +58,6 @@ $tabIndex = 1;
                                 </li> --}}
                             </ul>
                             <form id="cerate-first-card" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
-
                             <div class="tab-content">
                                 <!-- step 1 -->
                                 <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
@@ -360,15 +359,12 @@ $(document).on('click', '.crop_logo', function(event){
             {
                 console.log(data);
                 $('.preview_logo_div').html(data.html);
-                // $('.profile_image_src').html(data.html);
                 $(".profile_image_src").attr("src",data.image);
                 $('#uploadAvatarModal').modal('hide');
                 $('#photo').val(1);
-                // $('.preview_logo').attr('src',data);
                 $('.logo-crop-spinner').removeClass('active');
             },
             error: function (jqXHR, exception) {
-                // toastr.error('Something wrong');
                 $('.logo-crop-spinner').removeClass('active');
             },
             complete: function (response) {
@@ -415,8 +411,8 @@ $(document).on('click', '.crop_logo', function(event){
 
     // Function to fetch the ajax content
         function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
-            console.log(stepPosition);
-            console.log(stepDirection);
+            // console.log(stepPosition);
+            // console.log(stepDirection);
             var form = $("#cerate-first-card");
             if (stepDirection == 'forward' && stepPosition == 'last') {
                 let ajaxURL = form.attr('action');
