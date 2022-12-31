@@ -24,7 +24,7 @@
                         <p>{{ __('Lorem ipsum, dolor sit amet, consectetur adipisicing elit. Asperiores iusto, nulla. Voluptatibus dolores ab culpa molestiae sunt ipsam deserunt perferendis, eius nam quia laboriosam assumenda officia exercitationem nihil? Veritatis, voluptas.') }}</p>
                     </div>
                     <div class="save_contact mt-5 mb-5">
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#contactModal">Save Contact</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#contactModal">{{__('Save Contact') }}</a>
                     </div>
                     <div class="social_media">
                          <ul>

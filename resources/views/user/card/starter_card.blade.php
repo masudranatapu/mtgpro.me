@@ -1,9 +1,17 @@
-@extends('user.layouts.app')
-@section('title') {{ __('Create card') }}  @endsection
-@push('custom_css')
-@endpush
-@section('card','active')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starter Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/smart_wizard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
+</head>
+<body style="background-image: url({{ asset('assets/img/site-bg.jpg') }});">
     <div class="card_starter_wrapper">
         <div class="container-fluid p-0">
             <div class="row no-gutters align-items-center">
@@ -19,17 +27,17 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#step-2">
-                                        <span class="num">2</span>
+                                        <span class="num">{{ __('2') }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#step-3">
-                                        <span class="num">3</span>
+                                        <span class="num">{{ __('3') }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link " href="#step-4">
-                                        <span class="num">4</span>
+                                        <span class="num">{{ __('4') }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -224,40 +232,40 @@
             </div>
         </div>
     </div>
-@endsection
-@push('custom_js')
-<script type="text/javascript" src="assets/js/smartWizard.min.js"></script>
-<script>
-// preview image
-var loadFile = function(event) {
-    var image = document.getElementById('preview');
-    image.src = URL.createObjectURL(event.target.files[0]);
-};
+    <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
+    <script>
+    // preview image
+    var loadFile = function(event) {
+        var image = document.getElementById('preview');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
 
-// step form validation
-$(function() {
-    $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
-        // Validate only on forward movement
-        if (stepDirection == 'forward') {
-            let form = document.getElementById('form-' + (currentStepIdx + 1));
-            if (form) {
-                if (!form.checkValidity()) {
-                    form.classList.add('was-validated');
-                    $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-                    $("#smartwizard").smartWizard('fixHeight');
-                    return false;
+    // step form validation
+    $(function() {
+        $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
+            // Validate only on forward movement
+            if (stepDirection == 'forward') {
+                let form = document.getElementById('form-' + (currentStepIdx + 1));
+                if (form) {
+                    if (!form.checkValidity()) {
+                        form.classList.add('was-validated');
+                        $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
+                        $("#smartwizard").smartWizard('fixHeight');
+                        return false;
+                    }
+                    $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
                 }
-                $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
             }
-        }
-    });
+        });
 
-    // Smart Wizard
-    $('#smartwizard').smartWizard({
-        transition: {
-              animation: 'slideSwing',
-          }
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+            transition: {
+                  animation: 'slideSwing',
+              }
+        });
     });
-});
-</script>
-@endpush
+    </script>
+</body>

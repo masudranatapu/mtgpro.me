@@ -14,6 +14,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    @stack('custom_css')
 </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
@@ -98,5 +99,6 @@
     })
 
     </script>
+    @stack('custom_js')
 </body>
 </html>
