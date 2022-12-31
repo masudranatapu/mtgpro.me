@@ -6,7 +6,7 @@ use App\Models\Setting;
 use App\Models\Currency;
 use Carbon\Carbon;
 use App\Models\Transaction;
-use App\Models\BusinessCard;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -148,7 +148,7 @@ class TransactionsController extends Controller
                 } else {
 
                     // Making all cards inactive, For Plan change
-                    BusinessCard::where('user_id', $user_details->user_id)->update([
+                    Card::where('user_id', $user_details->user_id)->update([
                         'card_status' => 'inactive',
                     ]);
 

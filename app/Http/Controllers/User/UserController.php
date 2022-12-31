@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Review;
 use App\Mail\ResetEmail;
 use App\Mail\ChangeEmail;
-use App\Models\BusinessCard;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use App\Mail\AccountDeletion;
 use App\Models\BusinessField;
@@ -216,14 +216,14 @@ class UserController extends Controller
             $data = [];
             if($request->confirm=='delete'){
 
-                $user_cards = BusinessCard::where('user_id', Auth::user()->id)->get();
+                $user_cards = Card::where('user_id', Auth::user()->id)->get();
 
                 foreach ($user_cards as $key => $value) {
                     BusinessField::where('card_id', $value->id)->update([
                         'status'=> 2,
                     ]);
                 }
-                BusinessCard::where('user_id', Auth::user()->id)->update([
+                Card::where('user_id', Auth::user()->id)->update([
                     'status'=> 2,
                     'is_deleted' => 1,
                     'deleted_at' => date('Y-m-d H:i:s'),

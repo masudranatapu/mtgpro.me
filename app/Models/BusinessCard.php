@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+
 class BusinessCard extends Model
 {
     use RepoResponse;
@@ -176,7 +177,7 @@ class BusinessCard extends Model
         $content = null;
         DB::beginTransaction();
         try {
-            $card = BusinessCard::findOrFail($id);
+            $card = Card::findOrFail($id);
             $card->user_id      = Auth::id();
             $card->card_lang    = 'en';
             $card->card_url     = $request->personalized_link;

@@ -172,110 +172,24 @@ $(document).on('click','.testimonial_sec_delete', function(e){
 
 $(document).ready(function () {
 
-    // jQuery.validator.addMethod('username_rule', function (value, element) {
-    //     if (/^[a-zA-Z0-9_-]+$/.test(value)) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     };
+    // $('#cardCreateFrom').validate({
+    //     submitHandler: function(form) {
+    //         $('.save-card-spinner').addClass('active');
+    //         $(this).find('.save-card').prop('disabled', true);
+    //         $(".btn-txt").text("Processing ...");
+    //         setTimeout(function(){
+    //             $(".save-card-spinner").removeClass("active");
+    //             $('.save-card').attr("disabled", false);
+    //             $(".btn-txt").text("Save");
+    //         }, 50000);
+    //         form.submit();
+    //       }
     // });
-
-    // $.validator.addMethod('email_rule', function (value, element) {
-    //     if (/^([a-zA-Z0-9_\-\.]+)\+?([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(value)) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     };
-    // });
-
-    $('#cardCreateFrom').validate({
-        // rules: {
-        //     'email': {
-        //         required: true,
-        //         email_rule: true
-        //     },
-        //     'card_name': {
-        //         required: true,
-        //     },
-        //     'profil': {
-        //         required: true,
-        //     },
-        // },
-        // messages: {
-        //     'join[email]': "Please enter a valid email address.",
-        //     'firstName': "Please type your first name.",
-        //     'lastName': "Please type your last name."
-        // }
-        // submitHandler: function (form) {
-        //     return true;
-        // }
-        submitHandler: function(form) {
-            $('.save-card-spinner').addClass('active');
-            $(this).find('.save-card').prop('disabled', true);
-            $(".btn-txt").text("Processing ...");
-            setTimeout(function(){
-                $(".save-card-spinner").removeClass("active");
-                $('.save-card').attr("disabled", false);
-                $(".btn-txt").text("Save");
-            }, 50000);
-            form.submit();
-          }
-    });
 
 });
 
 
 
-
-
-
-// $(document).on('keyup','#about_content', function() {
-//     previewProfileInfo('about_content',$(this).val());
-// }).keyup();
-
-// $(document).on('keyup','#company_name', function() {
-//     previewProfileInfo('company_name',$(this).val());
-// }).keyup();
-
-// $(document).on('keyup','#about_title', function() {
-//     previewProfileInfo('about_title',$(this).val());
-// }).keyup();
-
-// $(document).on('keyup','#firstname', function() {
-//     previewProfileInfo('firstname',$(this).val());
-// }).keyup();
-
-// $(document).on('keyup','#lastname', function() {
-//    var last_name = $(this).val();
-//    previewProfileInfo('lastname',last_name);
-// }).keyup();
-
-// function previewProfileInfo(input_name,value) {
-//    $('#preview_'+input_name).html(value);
-// }
-
-
-// $(document).on('click', '.open-modal', function () {
-//     $.ajax({
-//         type: 'get',
-//         url: get_url + '/ajax/customer/new',
-//         async: true,
-//         beforeSend: function () {
-//             $("body").css("cursor", "progress");
-//         },
-//         success: function (response) {
-//             console.log(response.data);
-//             if (response.status == 1) {
-//                 $('#customerModalBody').empty();
-//                 $('#addressModal').modal('show');
-//                 $('#customerModalBody').append(response.data);
-//             }
-//         },
-//         complete: function (data) {
-//             $("body").css("cursor", "default");
-//         }
-//     });
-// })
 
 $(document).on('click','.section_del',function(e){
     var delid = $(this).data('delid');

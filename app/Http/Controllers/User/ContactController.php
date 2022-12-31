@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\BusinessCard;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -34,7 +34,7 @@ class ContactController extends Controller
         $data = $data->paginate(10);
         foreach ($data as $value) {
             $value->user = DB::table('users')->where('id', $value->user_id)->first();
-            $value->card = BusinessCard::where('card_id', $value->card_id)->first();
+            $value->card = Card::where('card_id', $value->card_id)->first();
         }
         if(isMobile()){
             return view('mobile.contact', compact('data'));

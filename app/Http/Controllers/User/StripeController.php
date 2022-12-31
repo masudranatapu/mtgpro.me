@@ -8,7 +8,7 @@ use App\User;
 use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Plan;
-use App\BusinessCard;
+use App\Card;
 use Stripe\StripeClient;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
@@ -280,7 +280,7 @@ class StripeController extends Controller
                     } else {
 
                         // Making all cards inactive, For Plan change
-                        BusinessCard::where('user_id', Auth::user()->user_id)->update([
+                        Card::where('user_id', Auth::user()->user_id)->update([
                             'card_status' => 'inactive',
                         ]);
 

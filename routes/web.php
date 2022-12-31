@@ -31,18 +31,19 @@ Route::get('auth/{provider}/callback', ['as' => 'social.login.callback', 'uses' 
 Auth::routes();
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'], 'where' => ['locale' => '[a-zA-Z]{2}']], function () {
-    Route::get('card/init-card',['as'=>'init-card','uses'=>'CardController@getInitCard']);//static
-    Route::post('card/upload_avatar',['as'=>'card.upload_avatar','uses'=>'CardController@uploadCardAvatar']);
-    Route::get('card',['as'=>'card','uses'=>'CardController@getIndex']);
-    Route::get('card/create',['as'=>'card.create','uses'=>'CardController@getCreate']);
-    Route::post('card/store',['as'=>'card.store','uses'=>'CardController@postStore']);
-    Route::get('card/{id}/view',['as'=>'card.view','uses'=>'CardController@getView']);
-    Route::get('card/{id}/edit',['as'=>'card.edit','uses'=>'CardController@getEdit']);
-    Route::post('card/{id}/update',['as'=>'card.update','uses'=>'CardController@postUpdate']);
-    Route::get('card/{id}/delete',['as'=>'card.delete','uses'=>'CardController@getDelete']);
+    Route::get('card/init-card',['as'=>'init-card','uses'=>'Card@getInitCard']);//static
+    Route::post('card/upload_avatar',['as'=>'card.upload_avatar','uses'=>'Card@uploadCardAvatar']);
+    Route::get('card',['as'=>'card','uses'=>'Card@getIndex']);
+    Route::get('card/create',['as'=>'card.create','uses'=>'Card@getCreate']);
+    Route::post('card/store',['as'=>'card.store','uses'=>'Card@postStore']);
+    Route::get('card/{id}/view',['as'=>'card.view','uses'=>'Card@getView']);
+    Route::get('card/{id}/edit',['as'=>'card.edit','uses'=>'Card@getEdit']);
+    Route::post('card/{id}/update',['as'=>'card.update','uses'=>'Card@postUpdate']);
+    Route::get('card/{id}/delete',['as'=>'card.delete','uses'=>'Card@getDelete']);
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);
     Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting',['as'=>'setting','uses'=>'DashboardControler@getSetting']);
+    Route::get('plans',['as'=>'plans','uses'=>'Card@plans']);
 
 });
 

@@ -1,6 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\SocialIcon;
+use App\Models\BusinessCard;
+use Share;
+
 class HomeController extends Controller
 {
 

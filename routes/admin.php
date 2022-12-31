@@ -130,12 +130,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('faq/{id}/delete',['as'=>'faq.delete','uses'=>'FaqController@getDelete']);
 
 
-    Route::get('cards', 'CardController@index')->name('cards');
-    Route::get('card/trash', 'CardController@getTrashList')->name('card.trash');
-    Route::get('card/edit/{card_id}', 'CardController@edit')->name('card.edit');
-    Route::get('card/delete/{card_id}', 'CardController@delete')->name('card.delete');
-    Route::get('card/change-status/{card_id}', 'CardController@changeStatus')->name('card.change-status');
-    Route::get('card/active/{card_id}', 'CardController@activeCard')->name('card.active');
+    Route::get('cards', 'Card@index')->name('cards');
+    Route::get('card/trash', 'Card@getTrashList')->name('card.trash');
+    Route::get('card/edit/{card_id}', 'Card@edit')->name('card.edit');
+    Route::get('card/delete/{card_id}', 'Card@delete')->name('card.delete');
+    Route::get('card/change-status/{card_id}', 'Card@changeStatus')->name('card.change-status');
+    Route::get('card/active/{card_id}', 'Card@activeCard')->name('card.active');
 
     Route::get('admin-users',['as'=>'admin-users','uses'=>'AccountController@getAdminUser']);
     Route::get('admin-users/create',['as'=>'admin-users.create','uses'=>'AccountController@getCreate']);

@@ -7,7 +7,7 @@ use App\Models\Gateway;
 use App\Models\Setting;
 use App\Models\Currency;
 use App\Models\Transaction;
-use App\Models\BusinessCard;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\TemplateContent;
@@ -52,8 +52,8 @@ class DashboardController extends Controller
             // $themes = Theme::where('status', 1)->count();
             $plans = Plan::where('status', 1)->count();
             $gateways = Gateway::where('status', 1)->count();
-            $whatsapp_stores = BusinessCard::where('card_type', 'store')->count();
-            $card_count  = BusinessCard::where('status',1)->count();
+            $whatsapp_stores = Card::where('card_type', 'store')->count();
+            $card_count  = Card::where('status',1)->count();
             // $signatures = TemplateContent::count();
 
 
@@ -63,7 +63,7 @@ class DashboardController extends Controller
         }else{
 
             $user_id = Auth::id();
-            $cards = BusinessCard::where('user_id',$user_id)->get();
+            $cards = Card::where('user_id',$user_id)->get();
 
             if(count($cards) == 0 ){
                 return redirect()->route('user.card.create');

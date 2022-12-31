@@ -37,11 +37,9 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
-
         if(count($cards)<1){
             return redirect()->route('user.init-card');
         }
-
         return view('user.dashboard', compact('cards'));
     }
 
@@ -50,9 +48,9 @@ class CardController extends Controller
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
         $icons = SocialIcon::orderBy('order_id','desc')->get();
-        if(count($cards) == 0 ){
-            return view('user.card.first_card',compact('cards'));
-        }
+        // if(count($cards) == 0 ){
+        //     return view('user.card.first_card',compact('cards'));
+        // }
         //validity
         $validity = checkPackageValidity(Auth::id());
         if($validity == false){
