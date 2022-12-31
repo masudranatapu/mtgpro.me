@@ -4,7 +4,7 @@
 
 
     <!-- ======================= Sign Up  =========================== -->
-    <div class="login_sec section">
+    <div class="login_sec section" style="margin:35px 0px;">
         <!-- container -->
         <div class="container">
             <div class="login_wrapper">
@@ -18,12 +18,12 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
-                                <div class="social_login mb-5 mt-5 text-center">
+                                <div class="social_login mb-2 mt-2 text-center">
                                     <a href="{{ route('social.login', 'facebook') }}" class="fa_facebook"><i class="fab fa-facebook"></i></a>
                                     <a href="{{ route('social.login', 'google') }}" class="fa_google"><i class="fab fa-google"></i></a>
                                     <a href="{{ route('social.login', 'twitter') }}" class="fa_twitter"><i class="fab fa-twitter"></i></a>
                                 </div>
-                                <div class="divider mb-5 text-center">
+                                <div class="divider mb-3 text-center">
                                     <span>Or</span>
                                 </div>
                                 <div class="mb-3">
