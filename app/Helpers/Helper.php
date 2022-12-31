@@ -83,10 +83,10 @@ if (!function_exists('getPhoto')) {
             if(file_exists($ppath)){
               return asset($path);
             } else {
-                return asset('assets/images/card/personal.png');
+                return asset('assets/img/card/personal.png');
            }
         }else{
-            return asset('assets/images/card/personal.png');
+            return asset('assets/img/card/personal.png');
         }
     }
 }
@@ -97,7 +97,7 @@ if (!function_exists('getAvatar')) {
         if(!empty($path)){
               return $path;
             } else {
-            return asset('assets/images/card/personal.png');
+            return asset('assets/img/card/personal.png');
         }
 
     }

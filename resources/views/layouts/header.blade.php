@@ -1,3 +1,13 @@
+<?php
+    $setting  = getSetting();
+    if(Auth::check()){
+        $user = DB::table('users')->where('id',Auth::user()->id)->first();
+    }
+    else{
+        $user = [];
+    }
+?>
+
 <header class="header_section sticky-top">
     <!-- Header top -->
     <div class="header_top">
@@ -17,7 +27,13 @@
                 <div class="container-fluid">
                     <!-- logo -->
                     <a class="navbar-brand p-0" href="{{ route('home') }}">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
+
+                    @if ($setting->site_logo)
+                        <img src="{{ asset($setting->site_logo) }}"  alt="{{ $setting->site_name }}">
+                    @else
+                        <img src="{{ asset('assets/img/logo.png') }}"  alt="{{ $setting->site_name }}">
+                    @endif
+
                     </a>
                     <!-- toggle bar -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
@@ -44,7 +60,7 @@
                                         <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link d-flex p-0">
                                             <span class="avatar">
                                                 @if (Auth::check())
-                                                    <img src="{{ Auth::user()->profile_image }}" class="rounded-circle" width="40" alt="{{ auth::user()->name }}">
+                                                    <img src="{{ getAvatar(Auth::user()->profile_image) }}" class="rounded-circle" width="40" alt="{{ auth::user()->name }}">
                                                 @endif
                                             </span>
                                             <div class="ps-2">
@@ -54,9 +70,18 @@
                                             <svg class="svg-iconstyled__Svg-app__sc-1nwmz4s-0 gbXkHP user-menustyled__MenuToggleIcon-app__sc-1evcoxz-4 gJGrXh" aria-hidden="true" focusable="false" style="fill:currentColor;height:1em;overflow:visible;width:1em" viewBox="0 0 8 13" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="rotate(90 4 6.5)"><path d="M1.33333 13L8 6.5L1.33333 0L0 1.3L5.33333 6.5L0 11.7L1.33333 13Z"></path></g></svg>
                                         </div>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li>
+                                            {{-- <li>
                                                 <a class="dropdown-item" href="{{ route('user.card') }}">{{ __('Card') }}</a>
-                                            </li>
+                                            </li> --}}
+
+                                            @if(Auth::user()->user_type == 1)
+                                            <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Dashboard')}}">{{ __('Dashboard')}}</a></li>
+                                            @else
+                                            <li><a class="dropdown-item" href="{{ route('user.card') }}" title="{{ __('Card')}}">{{ __('Card')}}</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Settings')}}">{{ __('Settings')}}</a></li>
+                                            @endif
+
+
                                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">{{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -116,9 +141,19 @@
                                             <svg class="svg-iconstyled__Svg-app__sc-1nwmz4s-0 gbXkHP user-menustyled__MenuToggleIcon-app__sc-1evcoxz-4 gJGrXh" aria-hidden="true" focusable="false" style="fill:currentColor;height:1em;overflow:visible;width:1em" viewBox="0 0 8 13" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="rotate(90 4 6.5)"><path d="M1.33333 13L8 6.5L1.33333 0L0 1.3L5.33333 6.5L0 11.7L1.33333 13Z"></path></g></svg>
                                         </div>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li>
+
+                                            {{-- <li>
                                                 <a class="dropdown-item" href="{{ route('user.card') }}">{{ __('Card') }}</a>
-                                            </li>
+                                            </li> --}}
+
+                                            @if(Auth::user()->user_type == 1)
+                                            <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Dashboard')}}">{{ __('Dashboard')}}</a></li>
+                                            @else
+                                            <li><a class="dropdown-item" href="{{ route('user.card') }}" title="{{ __('Card')}}">{{ __('Card')}}</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Settings')}}">{{ __('Settings')}}</a></li>
+                                            @endif
+
+
                                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">{{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

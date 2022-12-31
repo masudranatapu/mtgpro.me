@@ -59,14 +59,14 @@
                                     <div class="col-md-4 col-xl-4">
                                         <div class="mb-3">
                                             <label class="form-label required" for="timezone">{{ __('Timezone') }}</label>
-                                            <select name="app_type" id="timezone" class="form-control" required>
+                                            <select name="timezone" id="timezone" class="form-control" required>
                                                 @foreach (timezone_identifiers_list() as $timezone)
                                                 <option value="{{ $timezone }}"
                                                     {{ $config[2]->config_value == $timezone ? ' selected' : '' }}>
                                                 {{ $timezone }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('app_type')
+                                            @error('timezone')
                                                 <span class="help-block text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>

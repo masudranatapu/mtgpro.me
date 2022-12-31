@@ -77,8 +77,8 @@
                             </span>
                         </a>
                     </li>
-                    <li
-                    class="nav-item dropdown @yield('blogs')">
+
+                    {{-- <li class="nav-item dropdown @yield('blogs')">
                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
                         aria-expanded="false">
                         <span class="nav-link-title">
@@ -93,7 +93,7 @@
                             {{ __('Post Category') }}
                         </a>
                     </div>
-                </li>
+                </li> --}}
 
 
                 <li class="nav-item @yield('subscribers')">
@@ -106,7 +106,8 @@
                         <span class="nav-link-title">{{ __('Subscribers') }}</span>
                     </a>
                 </li>
-                <li class="nav-item @yield('reviews')">
+
+                {{-- <li class="nav-item @yield('reviews')">
                     <a class="nav-link" href="{{ route('admin.review.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
@@ -115,7 +116,8 @@
                         </span>
                         <span class="nav-link-title">{{ __('Reviews') }}</span>
                     </a>
-                </li>
+                </li> --}}
+
                     {{-- <li class="nav-item  @yield('guide')">
                         <a class="nav-link" href="{{ route('admin.user.guide') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
