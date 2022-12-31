@@ -79,7 +79,7 @@ class HomeController extends Controller
                 Toastr::warning('This card has been deleted');
                 return redirect()->back();
             }
-            return view('desktop.card_preview', compact('cardinfo', 'icons', 'shareComponent'));
+            return view('card_preview', compact('cardinfo', 'icons', 'shareComponent'));
         }else{
 
             Toastr::warning('This card is not available please create your desired card');

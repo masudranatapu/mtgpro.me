@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Theme;
 use App\Models\Setting;
-use App\Models\Card;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class Card extends Controller
+class CardController extends Controller
 {
 
     public function __construct()
@@ -123,13 +123,13 @@ class Card extends Controller
         // Update status
         public function changeStatus(Request $request,$id)
         {
-            $user_details = Card::where('id', $id)->first();
+            $user_details = BusinessCard::where('id', $id)->first();
             if ($user_details->status == 0) {
                 $status = 1;
             }else {
                 $status = 0;
             }
-            Card::where('id', $id)->update(['status' => $status]);
+            BusinessCard::where('id', $id)->update(['status' => $status]);
             Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
             return redirect()->route('admin.cards');
         }
@@ -137,7 +137,7 @@ class Card extends Controller
         // Update status
         public function activeCard(Request $request,$id)
         {
-            Card::where('id', $id)->update([
+            BusinessCard::where('id', $id)->update([
                 'status' => 1,
                 'deleted_at' => NULL,
                 'deleted_by' => NULL,
