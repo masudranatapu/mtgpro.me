@@ -176,6 +176,26 @@ body {
     background: var(--black) !important;
 }
 
+.dropdown.user_dropdown button {
+    background: transparent;
+    border: 1px solid #EEE !important;
+    border-radius: 10px;
+    padding: 3px 10px;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+
+.user_dropdown .dropdown-menu {
+    border: 1px solid #EEE;
+    width: 100%;
+    font-size: 14px;
+}
+
 
 /* ========================= Feature =============================== */
 

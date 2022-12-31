@@ -41,7 +41,7 @@
                     </button>
                     <!-- desktop menu -->
                     <div class="collapse navbar-collapse d-none d-lg-block" id="navbarNav">
-                        <ul class="navbar-nav mt-4 mt-lg-0 ms-auto">
+                        <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
@@ -54,10 +54,10 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
                             </li>
+
                             @auth
-                                <li class="nav-item">
-                                    <div class="dropdown">
-                                        <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link d-flex p-0">
+                            <div class="dropdown user_dropdown">
+                                      <button class="dropdown-toggle d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span class="avatar">
                                                 @if (Auth::check())
                                                     <img src="{{ getAvatar(Auth::user()->profile_image) }}" class="rounded-circle" width="40" alt="{{ auth::user()->name }}">
@@ -67,13 +67,8 @@
                                                 <div>{{ Auth::user()->name }}</div>
                                                 <div class=" small text-muted">{{ Auth::user()->email }}</div>
                                             </div>
-                                            <svg class="svg-iconstyled__Svg-app__sc-1nwmz4s-0 gbXkHP user-menustyled__MenuToggleIcon-app__sc-1evcoxz-4 gJGrXh" aria-hidden="true" focusable="false" style="fill:currentColor;height:1em;overflow:visible;width:1em" viewBox="0 0 8 13" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="rotate(90 4 6.5)"><path d="M1.33333 13L8 6.5L1.33333 0L0 1.3L5.33333 6.5L0 11.7L1.33333 13Z"></path></g></svg>
-                                        </div>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            {{-- <li>
-                                                <a class="dropdown-item" href="{{ route('user.card') }}">{{ __('Card') }}</a>
-                                            </li> --}}
-
+                                      </button>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @if(Auth::user()->user_type == 1)
                                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Dashboard')}}">{{ __('Dashboard')}}</a></li>
                                             @else
@@ -88,10 +83,9 @@
                                                         @csrf
                                                 </form>
                                             </li>
-                                        </ul>
+                                      </ul>
                                     </div>
-                                </li>
-                                @else
+                                    @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c62f00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel">
@@ -104,6 +98,14 @@
                                     </a>
                                 </li>
                                 @endauth
+
+
+
+
+
+
+
+                                 
                         </ul>
                     </div>
                     <!-- mobile menu -->
