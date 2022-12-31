@@ -37,6 +37,10 @@ class CardController extends Controller
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
 
+        if(count($cards)<1){
+            return redirect()->route('user.init-card');
+        }
+
         return view('user.dashboard', compact('cards'));
     }
 
@@ -233,7 +237,7 @@ class CardController extends Controller
 
     public function getInitCard()
     {
-         return view('user.starter_card');
+         return view('user.card.starter_card');
     }
 
 

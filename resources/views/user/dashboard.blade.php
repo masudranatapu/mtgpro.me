@@ -4,17 +4,16 @@
 @endpush
 @section('dashboard','active')
 @section('content')
-        <!-- main content -->
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">{{ __('My Cards') }} <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a></h1>
-                        </div>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">{{ __('My Cards') }} <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a></h1>
                     </div>
                 </div>
             </div>
+        </div>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -76,5 +75,4 @@
     </div>
 @endsection
 @push('custom_js')
-
 @endpush
