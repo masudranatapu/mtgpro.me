@@ -54,8 +54,6 @@ class CustomPage extends Model
             $page->created_at       = date('Y-m-d H:i:s');
             $page->save();
         } catch (\Exception $e) {
-            dd($e->getMessage());
-
               DB::rollback();
             return $this->formatResponse(false, 'Unable to create page !', 'admin.custom-page.create');
         }

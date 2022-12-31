@@ -1,22 +1,18 @@
 <?php
 namespace App\Http\Controllers\User;
 use DB;
-use App\Models\Card;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use App\Models\BusinessField;
-use App\Mail\EmailToCardOwner;
 use App\Http\Requests\CardRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Validator;
 
 class CardController extends Controller
 {
@@ -35,7 +31,9 @@ class CardController extends Controller
 
     public function getIndex(Request $request)
     {
+
         $this->resp = $this->businessCard->getPaginatedList($request);
+
         $cards = $this->resp->data;
         if(count($cards)<1){
             return redirect()->route('user.init-card');

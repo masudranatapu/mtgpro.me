@@ -410,9 +410,9 @@ $(document).on('click', '.crop_logo', function(event){
     // });
 
     // Function to fetch the ajax content
-        function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
+        function provideContent(e, stepDirection,stepNumber, stepPosition, selStep, callback) {
             // console.log(stepPosition);
-            // console.log(stepDirection);
+            console.log(stepNumber);
             var form = $("#cerate-first-card");
             if (stepDirection == 'forward' && stepPosition == 'last') {
                 let ajaxURL = form.attr('action');
