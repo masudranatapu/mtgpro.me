@@ -57,7 +57,7 @@ $tabIndex = 1;
                                     </a>
                                 </li> --}}
                             </ul>
-                            <form id="form-1" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
+                            <form id="cerate-first-card" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
 
                             <div class="tab-content">
                                 <!-- step 1 -->
@@ -292,6 +292,13 @@ $tabIndex = 1;
     <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
     <script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $(document).ready(function(){
         $logo_crop = $('#logo_demo').croppie({
             enableExif: true,
@@ -408,34 +415,32 @@ $(document).on('click', '.crop_logo', function(event){
 
     // Function to fetch the ajax content
         function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
-        // You can use stepDirection to get ajax content on the forward movement and stepPosition to identify the step position
-        if (stepDirection == 'forward' && stepPosition == 'middle') {
-        let ajaxURL = "YOUR AJAX URL";
-        $.ajax({
-            method  : "GET",
-            url     : ajaxURL,
-            beforeSend: function( xhr ) {
-                // Show the loader
-                $('#smartwizard').smartWizard("loader", "show");
+            console.log(stepPosition);
+            console.log(stepDirection);
+            var form = $("#cerate-first-card");
+            if (stepDirection == 'forward' && stepPosition == 'last') {
+                let ajaxURL = form.attr('action');
+                $.ajax({
+                    method  : "POST",
+                    url     : ajaxURL,
+                    beforeSend: function( xhr ) {
+                        $('#smartwizard').smartWizard("loader", "show");
+                    }
+                }).done(function( res ) {
+                    $('#smartwizard').smartWizard("loader", "hide");
+                }).fail(function(err) {
+                    $('#smartwizard').smartWizard("loader", "hide");
+                });
             }
-        }).done(function( res ) {
-             // Hide the loader
-            $('#smartwizard').smartWizard("loader", "hide");
-        }).fail(function(err) {
-            // Handle ajax error
-            // Hide the loader
-            $('#smartwizard').smartWizard("loader", "hide");
-        });
+            callback();
         }
-        // The callback must called in any case to procced the steps
-        // The empty callback will not apply any dynamic contents to the steps
-        callback();
-        }
-
 
         // SmartWizard initialize with step content callback
         $('#smartwizard').smartWizard({
-        getContent: provideContent
+              transition: {
+                  animation: 'slideSwing',
+              },
+            getContent: provideContent
         });
 
         // $(document).ready(function () {
