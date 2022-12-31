@@ -46,3 +46,18 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
 
 });
 
+
+
+Route::group(['namespace' => 'Auth', 'middleware' => ['auth']], function () {
+    Route::get('delete-account',['as'=>'user.delete-account','uses'=>'AuthController@getDeactivationForm']);
+    Route::get('change-password',['as'=>'user.change-password','uses'=>'AuthController@getChangePassword']);
+    Route::post('change-password/update',['as'=>'user.change-password.update','uses'=>'AuthController@putChangePassword']);
+    Route::get('settings',['as'=>'dashboard','uses'=>'DashboardController@index']);
+    Route::get('profile', ['as'=>'profile','uses'=>'DashboardController@profile']);
+    Route::post('profile/update',['as'=>'profile.update','uses'=>'DashboardController@profileUpdate']);
+});
+Route::post('sendcard/mail/{id}', ['as'=>'sendcard.mail','uses'=>'HomeController@sendCardMail']);
+Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');
+Route::post('getConnect', 'HomeController@getConnect')->name('getConnect');
+Route::get('{cardurl}', ['as'=>'card.preview', 'uses'=>'HomeController@getPreview']);
+

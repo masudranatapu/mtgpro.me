@@ -1,0 +1,22 @@
+
+@media screen and (max-width:500px){
+    .solopreneur_plan label {
+        display: block;
+    }
+}
+
+
+@media screen and (max-width: 430px) {
+    .footer_menu ul li {
+        width: 18%;
+    }
+
+    .footer_menu ul li a {
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .footer_menu ul li a i {
+        font-size: 14px;
+    }
+}
