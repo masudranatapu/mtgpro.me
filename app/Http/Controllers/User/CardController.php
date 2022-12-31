@@ -13,6 +13,7 @@ use App\Http\Requests\CardRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
@@ -239,6 +240,31 @@ class CardController extends Controller
     {
          return view('user.card.starter_card');
     }
+
+
+
+
+    public function uploadCardAvatar(Request $request){
+        $data = $request->image;
+        $image_array_1 = explode(";", $data);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $data = base64_decode($image_array_2[1]);
+        $imageName = time() . '.png';
+        $imagePath = 'assets/uploads/avatar/';
+        if (!File::exists($imagePath)) {
+            File::makeDirectory($imagePath, 777, true);
+        }
+       Image::make($data)->save($imagePath.$imageName);
+        $imagePath_ = asset($imagePath. $imageName);
+        $imagePath2 = $imagePath. $imageName;
+        return response()->json([
+            'html'=> '<img src="'.$imagePath_.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">',
+            'image' =>$imagePath_
+        ]);
+        // return response()->json('<img src="'.$imagePath.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">');
+
+    }
+
 
 
 
