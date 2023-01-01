@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/smart_wizard.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/croppie.css') }}" />
@@ -81,7 +82,7 @@ $tabIndex = 1;
                                                 <div class="form-group">
                                                     <label for="name" class="form-label">{{ __('Name') }}</label>
                                                     <input type="text" name="name" id="name" class="form-control cin @error('name') is-invalid @enderror" data-preview="preview_name" placeholder="{{ __('Name') }}" required="" tabindex="{{ $tabIndex++ }}">
-                                                    <div class="invalid-feedback">{{ __('Enter your name') }}</div>
+                                                    <div class="invalid-feedback" id="msg_name"> {{ __('Enter your name') }}</div>
                                                     @if($errors->has('name'))
                                                         <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
@@ -297,7 +298,8 @@ $tabIndex = 1;
             </div>
         </div>
     </div>
-    <script>
+<script src="{{asset('assets/js/toastr.js')}}"></script>
+<script>
 
     $.ajaxSetup({
         headers: {
@@ -554,6 +556,7 @@ $(function() {
       }
 
       function onFinishCallback(){
+        alert(1);
        if(validateAllSteps()){
         $('#cerate-first-card').submit();
        }
@@ -564,22 +567,21 @@ $(function() {
     function validateAllSteps(){
        var isStepValid = true;
 
-    //    if(validateStep1() == false){
-    //      isStepValid = false;
-    //      $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:true});
-    //    }else{
-    //      $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:false});
-    //    }
-    //    if(validateStep3() == false){
-    //      isStepValid = false;
-    //      $('#smartwizard').smartWizard('setError',{stepnum:3,iserror:true});
-    //    }else{
-    //      $('#smartwizard').smartWizard('setError',{stepnum:3,iserror:false});
-    //    }
-    //    if(!isStepValid){
-    //       $('#smartwizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
-    //    }
-    //    return isStepValid;
+       if(validateStep1() == false){
+         isStepValid = false;
+         $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:true});
+       }else{
+         $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:false});
+       }
+       if(validateStep3() == false){
+         isStepValid = false;
+         $('#smartwizard').smartWizard('setError',{stepnum:3,iserror:true});
+       }else{
+         $('#smartwizard').smartWizard('setError',{stepnum:3,iserror:false});
+       }
+       if(!isStepValid){
+          $('#smartwizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
+       }
 
        return isStepValid;
     }
@@ -620,9 +622,9 @@ $(function() {
        var un = $('#name').val();
        if(!un && un.length <= 0){
          isValid = false;
-         $('#msg_username').html('Please fill name').show();
+         $('#msg_name').html('Please fill name').show();
        }else{
-         $('#msg_username').html('').hide();
+         $('#msg_name').html('').hide();
        }
 
        // validate password
@@ -679,7 +681,17 @@ $(function() {
       return pattern.test(emailAddress);
     }
 
-
+</script>
+{!! Toastr::message() !!}
+<script>
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.error('{{ $error }}','Error',{
+                closeButton:true,
+                progressBar:true,
+            });
+        @endforeach
+    @endif
 </script>
 
 </body>

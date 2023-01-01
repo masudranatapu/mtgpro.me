@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}" />
+    <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+
     <!-- Scripts -->
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,6 +28,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{asset('assets/js/toastr.js')}}"></script>
     <script>
     // aos animation
     AOS.init({
@@ -57,5 +60,17 @@
         }
     });
     </script>
+
+{!! Toastr::message() !!}
+<script>
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.error('{{ $error }}','Error',{
+                closeButton:true,
+                progressBar:true,
+            });
+        @endforeach
+    @endif
+</script>
 </body>
 </html>
