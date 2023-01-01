@@ -21,6 +21,11 @@
             display: inline-block;
         }
     </style>
+        <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 </head>
 <?php
 
@@ -30,6 +35,12 @@ $tabIndex = 1;
 <body style="background-image: url({{ asset('assets/img/site-bg.jpg') }});">
     <div class="card_starter_wrapper">
         <div class="container-fluid p-0">
+            <?php
+            if(isset($_REQUEST['issubmit'])){
+                echo "<strong>form is sumbitted</strong>";
+            }
+
+            ?>
             <div class="row no-gutters align-items-center">
                 <div class="col-lg-6 col-xl-5">
                     <!-- card step form -->
@@ -58,7 +69,10 @@ $tabIndex = 1;
                                 </li> --}}
                             </ul>
                             <form id="cerate-first-card" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
-                            <div class="tab-content">
+                                @csrf
+                                <input type='hidden' name="issubmit" value="1">
+
+                                <div class="tab-content">
                                 <!-- step 1 -->
                                 <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
                                         <input type="hidden" name="upload_avatar_url" id="upload_avatar_url" value="{{ route('user.card.upload_avatar') }}" />
@@ -283,13 +297,6 @@ $tabIndex = 1;
             </div>
         </div>
     </div>
-
-
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
     <script>
 
     $.ajaxSetup({
@@ -361,7 +368,7 @@ $(document).on('click', '.crop_logo', function(event){
                 $('.preview_logo_div').html(data.html);
                 $(".profile_image_src").attr("src",data.image);
                 $('#uploadAvatarModal').modal('hide');
-                $('#photo').val(1);
+                // $('#photo').val(1);
                 $('.logo-crop-spinner').removeClass('active');
             },
             error: function (jqXHR, exception) {
@@ -410,34 +417,34 @@ $(document).on('click', '.crop_logo', function(event){
     // });
 
     // Function to fetch the ajax content
-        function provideContent(e, stepDirection,stepNumber, stepPosition, selStep, callback) {
-            // console.log(stepPosition);
-            console.log(stepNumber);
-            var form = $("#cerate-first-card");
-            if (stepDirection == 'forward' && stepPosition == 'last') {
-                let ajaxURL = form.attr('action');
-                $.ajax({
-                    method  : "POST",
-                    url     : ajaxURL,
-                    beforeSend: function( xhr ) {
-                        $('#smartwizard').smartWizard("loader", "show");
-                    }
-                }).done(function( res ) {
-                    $('#smartwizard').smartWizard("loader", "hide");
-                }).fail(function(err) {
-                    $('#smartwizard').smartWizard("loader", "hide");
-                });
-            }
-            callback();
-        }
+        // function provideContent(e, stepDirection,stepNumber, stepPosition, selStep, callback) {
+        //     // console.log(stepPosition);
+        //     console.log(stepNumber);
+        //     var form = $("#cerate-first-card");
+        //     if (stepDirection == 'forward' && stepPosition == 'last') {
+        //         let ajaxURL = form.attr('action');
+        //         $.ajax({
+        //             method  : "POST",
+        //             url     : ajaxURL,
+        //             beforeSend: function( xhr ) {
+        //                 $('#smartwizard').smartWizard("loader", "show");
+        //             }
+        //         }).done(function( res ) {
+        //             $('#smartwizard').smartWizard("loader", "hide");
+        //         }).fail(function(err) {
+        //             $('#smartwizard').smartWizard("loader", "hide");
+        //         });
+        //     }
+        //     callback();
+        // }
 
         // SmartWizard initialize with step content callback
-        $('#smartwizard').smartWizard({
-              transition: {
-                  animation: 'slideSwing',
-              },
-            getContent: provideContent
-        });
+        // $('#smartwizard').smartWizard({
+        //       transition: {
+        //           animation: 'slideSwing',
+        //       },
+        //     // getContent: provideContent
+        // });
 
         // $(document).ready(function () {
         //     $('#smartwizard').smartWizard({
@@ -465,4 +472,214 @@ $(document).on('click', '.crop_logo', function(event){
         // })
 
     </script>
+
+<script type="text/javascript">
+
+
+$(function() {
+
+    $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
+                // Validate only on forward movement
+                if (stepDirection == 'forward') {
+                  let form = document.getElementById('form-' + (currentStepIdx + 1));
+                  if (form) {
+                    if (!form.checkValidity()) {
+                      form.classList.add('was-validated');
+                      $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
+                      $("#smartwizard").smartWizard('fixHeight');
+                      return false;
+                    }
+                    $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
+                  }
+                }
+            });
+     // Step show event
+            $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
+                $("#prev-btn").removeClass('disabled').prop('disabled', false);
+                $("#next-btn").removeClass('disabled').prop('disabled', false);
+                if(stepPosition === 'first') {
+                    $("#prev-btn").addClass('disabled').prop('disabled', true);
+                } else if(stepPosition === 'last') {
+                    $("#next-btn").addClass('disabled').prop('disabled', true);
+                } else {
+                    $("#prev-btn").removeClass('disabled').prop('disabled', false);
+                    $("#next-btn").removeClass('disabled').prop('disabled', false);
+                }
+
+                // Get step info from Smart Wizard
+                let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
+                $("#sw-current-step").text(stepInfo.currentStep + 1);
+                $("#sw-total-step").text(stepInfo.totalSteps);
+
+                if (stepPosition == 'last') {
+                //   showConfirm();
+                  $(".sw-btn-next").addClass('d-none');
+                  $("#btnFinish").removeClass('d-none');
+                  $("#btnFinish").prop('disabled', false);
+                } else {
+                  $("#btnFinish").prop('disabled', true);
+                }
+
+                // Focus first name
+                if (stepIndex == 1) {
+                  setTimeout(() => {
+                    $('#name').focus();
+                  }, 0);
+                }
+            });
+
+});
+
+    $(document).ready(function(){
+    	// Smart Wizard
+  		$('#smartwizard').smartWizard({
+             transition: {
+                  animation: 'slideSwing',
+              },
+              toolbar: {
+                  showNextButton: true, // show/hide a Next button
+                  showPreviousButton: true, // show/hide a Previous button
+                  position: 'bottom', // none/ top/ both bottom
+                  extraHtml: `<button class="btn btn-success d-none" id="btnFinish" disabled onclick="onConfirm()">{{ __('Finish') }}</button>`
+                },
+            // onLeaveStep:leaveAStepCallback,
+            onFinish:onFinishCallback,
+            enableFinishButton:true
+        });
+
+      function leaveAStepCallback(obj){
+        var step_num= obj.attr('rel');
+        console.log(step_num);
+        return validateSteps(step_num);
+      }
+
+      function onFinishCallback(){
+       if(validateAllSteps()){
+        $('#cerate-first-card').submit();
+       }
+      }
+
+		});
+
+    function validateAllSteps(){
+       var isStepValid = true;
+
+    //    if(validateStep1() == false){
+    //      isStepValid = false;
+    //      $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:true});
+    //    }else{
+    //      $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:false});
+    //    }
+    //    if(validateStep3() == false){
+    //      isStepValid = false;
+    //      $('#smartwizard').smartWizard('setError',{stepnum:3,iserror:true});
+    //    }else{
+    //      $('#smartwizard').smartWizard('setError',{stepnum:3,iserror:false});
+    //    }
+    //    if(!isStepValid){
+    //       $('#smartwizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
+    //    }
+    //    return isStepValid;
+
+       return isStepValid;
+    }
+
+
+		function validateSteps(step){
+		  var isStepValid = true;
+      // validate step 1
+      if(step == 1){
+        if(validateStep1() == false ){
+          isStepValid = false;
+          $('#smartwizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
+          $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:true});
+        }else{
+          $('#smartwizard').smartWizard('hideMessage');
+          $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:false});
+        }
+      }
+
+      // validate step3
+      if(step == 3){
+        if(validateStep3() == false ){
+          isStepValid = false;
+          $('#smartwizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
+          $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:true});
+        }else{
+          $('#smartwizard').smartWizard('hideMessage');
+          $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:false});
+        }
+      }
+
+      return isStepValid;
+    }
+
+		function validateStep1(){
+       var isValid = true;
+       // Validate Username
+       var un = $('#name').val();
+       if(!un && un.length <= 0){
+         isValid = false;
+         $('#msg_username').html('Please fill name').show();
+       }else{
+         $('#msg_username').html('').hide();
+       }
+
+       // validate password
+       var pw = $('#password').val();
+       if(!pw && pw.length <= 0){
+         isValid = false;
+         $('#msg_password').html('Please fill password').show();
+       }else{
+         $('#msg_password').html('').hide();
+       }
+
+       // validate confirm password
+       var cpw = $('#cpassword').val();
+       if(!cpw && cpw.length <= 0){
+         isValid = false;
+         $('#msg_cpassword').html('Please fill confirm password').show();
+       }else{
+         $('#msg_cpassword').html('').hide();
+       }
+
+       // validate password match
+       if(pw && pw.length > 0 && cpw && cpw.length > 0){
+         if(pw != cpw){
+           isValid = false;
+           $('#msg_cpassword').html('Password mismatch').show();
+         }else{
+           $('#msg_cpassword').html('').hide();
+         }
+       }
+       return isValid;
+    }
+
+    function validateStep3(){
+      var isValid = true;
+      //validate email  email
+      var email = $('#email').val();
+       if(email && email.length > 0){
+         if(!isValidEmailAddress(email)){
+           isValid = false;
+           $('#msg_email').html('Email is invalid').show();
+         }else{
+          $('#msg_email').html('').hide();
+         }
+       }else{
+         isValid = false;
+         $('#msg_email').html('Please enter email').show();
+       }
+      return isValid;
+    }
+
+    // Email Validation
+    function isValidEmailAddress(emailAddress) {
+      var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      return pattern.test(emailAddress);
+    }
+
+
+</script>
+
 </body>

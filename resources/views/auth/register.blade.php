@@ -27,14 +27,14 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">{{ __('Full Name') }}</label>
-                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" tabindex="1" placeholder="{{ __('Full Name') }}" required>
+                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" tabindex="1" placeholder="{{ __('Full Name') }}" required>
                                     @if($errors->has('name'))
                                     <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                     @endif
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                    <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" tabindex="2" placeholder="{{ __('Email address') }}" required>
+                                    <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" tabindex="2" placeholder="{{ __('Email address') }}" required>
                                     @if($errors->has('email'))
                                     <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                                     @endif
