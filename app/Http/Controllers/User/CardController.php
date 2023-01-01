@@ -303,15 +303,11 @@ class CardController extends Controller
         }
         $card = $this->businessCard->getView($request,$card->id);
         Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
-
-
-
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
             Toastr::error(trans('Unable to create Card ! Please try again'), 'Success', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
-
         }
         DB::commit();
         Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-right"]);

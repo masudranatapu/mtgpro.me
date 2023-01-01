@@ -42,7 +42,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('card/{id}/update',['as'=>'card.update','uses'=>'CardController@postUpdate']);
     Route::get('card/{id}/delete',['as'=>'card.delete','uses'=>'CardController@getDelete']);
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);
-    Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
+    // Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting',['as'=>'setting','uses'=>'DashboardControler@getSetting']);
     Route::get('plans',['as'=>'plans','uses'=>'CardController@plans']);
 
