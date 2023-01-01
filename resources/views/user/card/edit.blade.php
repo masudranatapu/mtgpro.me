@@ -13,7 +13,7 @@
                             <h1 class="m-0">
                                 <a href="{{ route('user.card') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="image">
-                                {{ __('My Card') }}
+                                {{ $card->card_for ?? '' }}
                             </h1>
                         </div>
                     </div>
@@ -322,7 +322,7 @@
                                                         </svg>
                                                     </div>
                                                     <!-- time -->
-                                                    <div class="clock">2:39</div>
+                                                    <div class="clock">{{ date('H:i') }}</div>
                                                     <!-- mobile icon -->
                                                     <div class="mobile_icon">
                                                         <svg width="16" height="9" fill="none" viewBox="0 0 12 9">
@@ -341,20 +341,20 @@
                                             </div>
                                             <div class="card_overflow">
                                                 <!-- cover image -->
-                                                <div class="card_banner mb-5" style="background-image: url('{{ asset('assets/img/cover.png') }}');">
+                                                <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ asset('assets/img/user2.jpg') }}" width="100" alt="image">
+                                                        <img src="{{ getProfile($card->profile) }}" width="100" alt="image">
                                                         <!-- logo -->
-                                                        <img class="logo" src="{{ asset('assets/img/card-logo.png') }}" alt="image">
+                                                        <img class="logo" src="{{ getLogo($card->logo) }}" alt="image">
                                                     </div>
                                                 </div>
                                                 <div class="card_content text-center">
                                                     <div class="profile_name mt-2">
-                                                        <h3>Rabin Mia</h3>
-                                                        <h5>Developer at Arobil</h5>
-                                                        <h6>Dhaka</h6>
-                                                        <p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit.</p>
+                                                        <h3 id="name_show">{{ $card->title }}</h3>
+                                                        <h5 id="desig_comp_show">{{ getDesigComp($card->designation,$card->company_name) }}</h5>
+                                                        <h6 id="location_show">Dhaka</h6>
+                                                        <p id="bio_show">Lorem ipsum, dolor sit, amet consectetur adipisicing elit.</p>
                                                     </div>
                                                     <div class="save_contact mt-4 mb-4">
                                                         <a href="#">Save Contact</a>

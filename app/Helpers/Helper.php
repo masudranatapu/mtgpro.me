@@ -99,7 +99,6 @@ if (!function_exists('getAvatar')) {
             } else {
             return asset('assets/img/card/personal.png');
         }
-
     }
 }
 
@@ -116,14 +115,11 @@ if (!function_exists('getCover')) {
         }else{
             return asset('assets/img/default-cover.png');
         }
-
-
     }
 }
 if (!function_exists('getProfile')) {
     function getProfile($path = null)
     {
-
         if($path){
             $ppath = public_path($path);
             if(file_exists($ppath)){
@@ -141,7 +137,6 @@ if (!function_exists('getLogo')) {
     function getLogo($path = null)
     {
 
-
         if($path){
             $ppath = public_path($path);
             if(file_exists($ppath)){
@@ -155,7 +150,6 @@ if (!function_exists('getLogo')) {
 
     }
 }
-
 
 
 
