@@ -34,9 +34,7 @@ class CardController extends Controller
 
     public function getIndex(Request $request)
     {
-
         $this->resp = $this->businessCard->getPaginatedList($request);
-
         $cards = $this->resp->data;
         if(count($cards)<1){
             return redirect()->route('user.init-card');
@@ -237,6 +235,10 @@ class CardController extends Controller
 
     public function getInitCard()
     {
+        $card = $this->businessCard->where('user_id',Auth::user()->id)->first();
+        if(!empty($card)){
+            return redirect()->route('user.card');
+        }
          return view('user.card.starter_card');
     }
 
@@ -268,6 +270,10 @@ class CardController extends Controller
     {
         DB::beginTransaction();
         try {
+            $card = $this->businessCard->where('user_id',Auth::user()->id)->first();
+            if(!empty($card)){
+                return redirect()->route('user.card');
+            }
           //validity
           $validity = checkPackageValidity(Auth::id());
         //   if($validity == false){
