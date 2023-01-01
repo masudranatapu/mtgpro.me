@@ -362,88 +362,19 @@
                                                         <ul id="social_icon_list">
                                                             <li>
                                                                 <a href="#" target="_blank">
-                                                                    <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <g filter="url(#filterc9)">
-                                                                            <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
-                                                                            <path d="M66.0163 22H14.4268C13.9581 22 13.5169 22.1379 13.1309 22.3585L13.6823 22.9099L36.8163 46.0714C38.6913 47.9464 41.7519 47.9464 43.6269 46.0714L67.3399 22.386C66.9538 22.1379 66.4851 22 66.0163 22Z" fill="white"></path>
-                                                                            <path d="M68.4695 24.454C68.4695 23.9853 68.3316 23.5441 68.111 23.1581L51.0156 40.4189L68.1662 57.5143C68.3592 57.1559 68.4695 56.7423 68.4695 56.3287V24.454Z" fill="white"></path>
-                                                                            <path d="M12 24.454C12 23.9853 12.1379 23.5441 12.3585 23.1581L29.4539 40.4189L12.3033 57.5143C12.1103 57.1559 12 56.7423 12 56.3287V24.454Z" fill="white"></path>
-                                                                            <path d="M50.1066 41.2185L44.1232 47.2019C41.9725 49.3526 38.4431 49.3526 36.2924 47.2019L30.309 41.2461L13.1309 58.3967C13.5169 58.6173 13.9305 58.7551 14.3992 58.7551H65.9888C66.4575 58.7551 66.8987 58.6173 67.2571 58.3967L66.2369 57.3765L50.1066 41.2185Z" fill="white"></path>
-                                                                        </g>
-                                                                        <defs>
-                                                                            <filter id="filterc9" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                                                <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                                                                                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                                                                                <feOffset dy="-1"></feOffset>
-                                                                                <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
-                                                                                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-                                                                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                                                                                <feBlend mode="normal" in2="shape" result="effect1_innerShadow"></feBlend>
-                                                                            </filter>
-                                                                            <linearGradient id="paint0_linearc9" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-                                                                                <stop stop-color="#1E51EE"></stop>
-                                                                                <stop offset="1" stop-color="#19E4FF"></stop>
-                                                                            </linearGradient>
-                                                                        </defs>
-                                                                    </svg>
-                                                                    <span>Email</span>
+                                                                    <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
+                                                                    <span>Facebook</span>
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a href="#" target="_blank">
-                                                                    <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <g filter="url(#filterc8)">
-                                                                            <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc8)"></path>
-                                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M40 61.1864C56.0163 61.1864 69 50.6234 69 37.5932C69 24.563 56.0163 14 40 14C23.9837 14 11 24.563 11 37.5932C11 46.2476 16.7276 53.8136 25.2671 57.9193C25.3744 59.7932 24.641 63.5944 20.8305 65.1186C23.2461 65.2797 28.9855 63.6996 32.4483 60.3785C34.8561 60.9054 37.3877 61.1864 40 61.1864Z" fill="white"></path>
-                                                                        </g>
-                                                                        <defs>
-                                                                            <filter id="filterc8" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                                                <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                                                                                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                                                                                <feOffset dy="-1"></feOffset>
-                                                                                <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
-                                                                                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-                                                                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                                                                                <feBlend mode="normal" in2="shape" result="effect1_innerShadow"></feBlend>
-                                                                            </filter>
-                                                                            <linearGradient id="paint0_linearc8" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-                                                                                <stop stop-color="#8BFB6B"></stop>
-                                                                                <stop offset="1" stop-color="#19DB1C"></stop>
-                                                                            </linearGradient>
-                                                                        </defs>
-                                                                    </svg>
+                                                                    <img src="{{ asset('assets/img/icon/call.svg') }}" alt="phone">
                                                                     <span>Phone</span>
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a href="#" target="_blank">
-                                                                    <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <g filter="url(#filterc9)">
-                                                                            <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
-                                                                            <path d="M66.0163 22H14.4268C13.9581 22 13.5169 22.1379 13.1309 22.3585L13.6823 22.9099L36.8163 46.0714C38.6913 47.9464 41.7519 47.9464 43.6269 46.0714L67.3399 22.386C66.9538 22.1379 66.4851 22 66.0163 22Z" fill="white"></path>
-                                                                            <path d="M68.4695 24.454C68.4695 23.9853 68.3316 23.5441 68.111 23.1581L51.0156 40.4189L68.1662 57.5143C68.3592 57.1559 68.4695 56.7423 68.4695 56.3287V24.454Z" fill="white"></path>
-                                                                            <path d="M12 24.454C12 23.9853 12.1379 23.5441 12.3585 23.1581L29.4539 40.4189L12.3033 57.5143C12.1103 57.1559 12 56.7423 12 56.3287V24.454Z" fill="white"></path>
-                                                                            <path d="M50.1066 41.2185L44.1232 47.2019C41.9725 49.3526 38.4431 49.3526 36.2924 47.2019L30.309 41.2461L13.1309 58.3967C13.5169 58.6173 13.9305 58.7551 14.3992 58.7551H65.9888C66.4575 58.7551 66.8987 58.6173 67.2571 58.3967L66.2369 57.3765L50.1066 41.2185Z" fill="white"></path>
-                                                                        </g>
-                                                                        <defs>
-                                                                            <filter id="filterc9" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                                                <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                                                                                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                                                                                <feOffset dy="-1"></feOffset>
-                                                                                <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
-                                                                                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-                                                                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                                                                                <feBlend mode="normal" in2="shape" result="effect1_innerShadow"></feBlend>
-                                                                            </filter>
-                                                                            <linearGradient id="paint0_linearc9" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-                                                                                <stop stop-color="#1E51EE"></stop>
-                                                                                <stop offset="1" stop-color="#19E4FF"></stop>
-                                                                            </linearGradient>
-                                                                        </defs>
-                                                                    </svg>
+                                                                    <img src="{{ asset('assets/img/icon/email.svg') }}" alt="email">
                                                                     <span>Email</span>
                                                                 </a>
                                                             </li>
@@ -1485,88 +1416,19 @@
                                                                 <ul>
                                                                     <li>
                                                                         <a href="#" target="_blank">
-                                                                            <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <g filter="url(#filterc9)">
-                                                                                    <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
-                                                                                    <path d="M66.0163 22H14.4268C13.9581 22 13.5169 22.1379 13.1309 22.3585L13.6823 22.9099L36.8163 46.0714C38.6913 47.9464 41.7519 47.9464 43.6269 46.0714L67.3399 22.386C66.9538 22.1379 66.4851 22 66.0163 22Z" fill="white"></path>
-                                                                                    <path d="M68.4695 24.454C68.4695 23.9853 68.3316 23.5441 68.111 23.1581L51.0156 40.4189L68.1662 57.5143C68.3592 57.1559 68.4695 56.7423 68.4695 56.3287V24.454Z" fill="white"></path>
-                                                                                    <path d="M12 24.454C12 23.9853 12.1379 23.5441 12.3585 23.1581L29.4539 40.4189L12.3033 57.5143C12.1103 57.1559 12 56.7423 12 56.3287V24.454Z" fill="white"></path>
-                                                                                    <path d="M50.1066 41.2185L44.1232 47.2019C41.9725 49.3526 38.4431 49.3526 36.2924 47.2019L30.309 41.2461L13.1309 58.3967C13.5169 58.6173 13.9305 58.7551 14.3992 58.7551H65.9888C66.4575 58.7551 66.8987 58.6173 67.2571 58.3967L66.2369 57.3765L50.1066 41.2185Z" fill="white"></path>
-                                                                                </g>
-                                                                                <defs>
-                                                                                    <filter id="filterc9" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                                                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                                                                                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                                                                                        <feOffset dy="-1"></feOffset>
-                                                                                        <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
-                                                                                        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-                                                                                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                                                                                        <feBlend mode="normal" in2="shape" result="effect1_innerShadow"></feBlend>
-                                                                                    </filter>
-                                                                                    <linearGradient id="paint0_linearc9" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-                                                                                        <stop stop-color="#1E51EE"></stop>
-                                                                                        <stop offset="1" stop-color="#19E4FF"></stop>
-                                                                                    </linearGradient>
-                                                                                </defs>
-                                                                            </svg>
-                                                                            <span>Email</span>
+                                                                            <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
+                                                                            <span>Facebook</span>
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="#" target="_blank">
-                                                                            <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <g filter="url(#filterc8)">
-                                                                                    <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc8)"></path>
-                                                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M40 61.1864C56.0163 61.1864 69 50.6234 69 37.5932C69 24.563 56.0163 14 40 14C23.9837 14 11 24.563 11 37.5932C11 46.2476 16.7276 53.8136 25.2671 57.9193C25.3744 59.7932 24.641 63.5944 20.8305 65.1186C23.2461 65.2797 28.9855 63.6996 32.4483 60.3785C34.8561 60.9054 37.3877 61.1864 40 61.1864Z" fill="white"></path>
-                                                                                </g>
-                                                                                <defs>
-                                                                                    <filter id="filterc8" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                                                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                                                                                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                                                                                        <feOffset dy="-1"></feOffset>
-                                                                                        <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
-                                                                                        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-                                                                                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                                                                                        <feBlend mode="normal" in2="shape" result="effect1_innerShadow"></feBlend>
-                                                                                    </filter>
-                                                                                    <linearGradient id="paint0_linearc8" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-                                                                                        <stop stop-color="#8BFB6B"></stop>
-                                                                                        <stop offset="1" stop-color="#19DB1C"></stop>
-                                                                                    </linearGradient>
-                                                                                </defs>
-                                                                            </svg>
+                                                                            <img src="{{ asset('assets/img/icon/call.svg') }}" alt="phone">
                                                                             <span>Phone</span>
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="#" target="_blank">
-                                                                            <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <g filter="url(#filterc9)">
-                                                                                    <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
-                                                                                    <path d="M66.0163 22H14.4268C13.9581 22 13.5169 22.1379 13.1309 22.3585L13.6823 22.9099L36.8163 46.0714C38.6913 47.9464 41.7519 47.9464 43.6269 46.0714L67.3399 22.386C66.9538 22.1379 66.4851 22 66.0163 22Z" fill="white"></path>
-                                                                                    <path d="M68.4695 24.454C68.4695 23.9853 68.3316 23.5441 68.111 23.1581L51.0156 40.4189L68.1662 57.5143C68.3592 57.1559 68.4695 56.7423 68.4695 56.3287V24.454Z" fill="white"></path>
-                                                                                    <path d="M12 24.454C12 23.9853 12.1379 23.5441 12.3585 23.1581L29.4539 40.4189L12.3033 57.5143C12.1103 57.1559 12 56.7423 12 56.3287V24.454Z" fill="white"></path>
-                                                                                    <path d="M50.1066 41.2185L44.1232 47.2019C41.9725 49.3526 38.4431 49.3526 36.2924 47.2019L30.309 41.2461L13.1309 58.3967C13.5169 58.6173 13.9305 58.7551 14.3992 58.7551H65.9888C66.4575 58.7551 66.8987 58.6173 67.2571 58.3967L66.2369 57.3765L50.1066 41.2185Z" fill="white"></path>
-                                                                                </g>
-                                                                                <defs>
-                                                                                    <filter id="filterc9" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                                                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                                                                                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                                                                                        <feOffset dy="-1"></feOffset>
-                                                                                        <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
-                                                                                        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-                                                                                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
-                                                                                        <feBlend mode="normal" in2="shape" result="effect1_innerShadow"></feBlend>
-                                                                                    </filter>
-                                                                                    <linearGradient id="paint0_linearc9" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-                                                                                        <stop stop-color="#1E51EE"></stop>
-                                                                                        <stop offset="1" stop-color="#19E4FF"></stop>
-                                                                                    </linearGradient>
-                                                                                </defs>
-                                                                            </svg>
+                                                                            <img src="{{ asset('assets/img/icon/email.svg') }}" alt="email">
                                                                             <span>Email</span>
                                                                         </a>
                                                                     </li>
