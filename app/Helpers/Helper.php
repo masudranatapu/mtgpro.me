@@ -136,7 +136,6 @@ if (!function_exists('getProfile')) {
 if (!function_exists('getLogo')) {
     function getLogo($path = null)
     {
-
         if($path){
             $ppath = public_path($path);
             if(file_exists($ppath)){
@@ -151,8 +150,17 @@ if (!function_exists('getLogo')) {
     }
 }
 
+if (!function_exists('getDesigComp')) {
+    function getDesigComp($desig,$comp)
+    {
+        if($desig != '' & $comp != '' ){
+            return  $desig.' At '.$comp;
+        }else{
+            return  $desig.' '.$comp;
+        }
 
-
+    }
+}
 
 
 if (!function_exists('makeUrl')) {
@@ -164,6 +172,7 @@ if (!function_exists('makeUrl')) {
         return $url;
     }
 }
+
 if (!function_exists('getSocialIcon')) {
     function getSocialIcon($ikey)
     {

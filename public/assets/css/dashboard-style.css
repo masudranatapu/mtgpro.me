@@ -220,6 +220,7 @@ body {
     font-weight: 300;
     border-radius: 50px;
     font-size: 13px;
+    border: 1px solid;
 }
 
 .card_preview_wrapper .social_icon ul li {
@@ -907,7 +908,7 @@ body {
     display: block;
 }
 
- 
+
 .colorform .colorcode {
     border: 1px solid #ddd;
     width: 28px;
@@ -1040,7 +1041,7 @@ body {
 
 
 
- 
+
 
 
 

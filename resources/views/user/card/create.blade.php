@@ -279,13 +279,13 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="designation" class="form-label">{{ __('Job Title') }}</label>
-                                                                     <input type="text" name="designation" class="form-control desig_comp" placeholder="{{ __('job') }}" required data-preview="designation_show">
+                                                                     <input type="text" name="designation" class="form-control cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="company" class="form-label">{{ __('Company') }}</label>
-                                                                     <input type="text" name="company" class="form-control desig_comp" placeholder="{{ __('company') }}" required data-preview="company_show">
+                                                                     <label for="company_name" class="form-label">{{ __('Company') }}</label>
+                                                                     <input type="text" name="company_name" class="form-control cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -1537,10 +1537,11 @@ function changeColor(bgcolor,color){
     var element = $("#clrBg");
     element.css("background-color", bgcolor);
     $('.save_contact a').css("background-color", color);
-    $('#social_icon_list li a').css("background-color", color);
+
 
     // .save_contact a
 }
+
 $(document).on('input','#colorPicker',function(){
     let color = $(this).val();
     var element = document.getElementById("clrBg");

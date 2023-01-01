@@ -1,6 +1,11 @@
 @extends('user.layouts.app')
 @section('title') {{ __('Edit card') }}  @endsection
+
+
 @push('custom_css')
+
+
+
 @endpush
 @section('card','active')
 @section('content')
@@ -184,7 +189,7 @@
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                      <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_title" id="title" class="form-control" value="My Card" placeholder="{{ __('Card Title') }}" required>
+                                                                     <input type="text" name="card_title" id="title" class="form-control" value="{{ $card->card_for }}" placeholder="{{ __('Card Title') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -193,7 +198,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">{{ __('Profile picture') }}</label>
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="{{ asset('assets/img/user2.jpg') }}" alt="profile image">
+                                                                                <img id="profilePic" src="{{ getProfile($card->profile) }}" alt="profile image">
                                                                              </label>
                                                                              <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
@@ -202,7 +207,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">Cover photo</label><br/>
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="{{ asset('assets/img/cover.png') }}" alt="logo">
+                                                                                  <img id="coverpic" src="{{ getCover($card->cover) }}" alt="logo">
                                                                              </label>
                                                                              <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
@@ -210,7 +215,7 @@
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
                                                                          <label class="form-label">Company Logo</label>
                                                                          <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="{{ asset('assets/img/card-logo.png') }}" alt="logo">
+                                                                             <img id="showlogo" src="{{ getLogo($card->logo) }}" alt="logo">
                                                                          </label>
                                                                          <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo">
                                                                     </div>
@@ -220,79 +225,79 @@
                                                                 <div class="form-group colorform">
                                                                      <div class="bg_btn">
                                                                         <label class="form-label">{{ __('Card Color') }}</label><br/>
-                                                                         <label for="color" class="colorcode">
+                                                                         {{-- <label for="color" class="colorcode">
                                                                              <img src="{{ asset('assets/img/icon/color.svg') }}" alt="svg">
                                                                              <input type="color" name="color" id="color">
-                                                                         </label>
+                                                                         </label> --}}
                                                                          <!-- color -->
                                                                          <!-- color -->
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white','#fff')" {{ $card->theme_color == '#fff' ? 'checked' : '' }} >
                                                                             <label for="color1" class="colorOne"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)','#000')" {{ $card->theme_color == '#000' ? 'checked' : '' }}>
                                                                             <label for="color2" class="colorTwo"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)','#EB5757')" {{ $card->theme_color == '#EB5757' ? 'checked' : '' }}>
                                                                             <label for="color3" class="colorThree"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)','#F2994A')" {{ $card->theme_color == '#F2994A' ? 'checked' : '' }} >
                                                                             <label for="color4" class="colorFour"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)','#F2C94C')" {{ $card->theme_color == '#F2C94C' ? 'checked' : '' }} >
                                                                             <label for="color5" class="colorFive"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)','#219653')" {{ $card->theme_color == '#219653' ? 'checked' : '' }} >
                                                                             <label for="color6" class="colorSix"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)','#2F80ED')" {{ $card->theme_color == '#2F80ED' ? 'checked' : '' }} >
                                                                             <label for="color7" class="colorSeven"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)','#9B51E0')" {{ $card->theme_color == '#9B51E0' ? 'checked' : '' }} >
                                                                             <label for="color8" class="colorEight"></label>
                                                                         </div>
                                                                     </div>
                                                                  </div>
-                                                                <div class="form-control custom-switch form-group">
+                                                                {{-- <div class="form-control custom-switch form-group">
                                                                     <input type="checkbox" name="colorlink" id="customSwitch1" class="custom-control-input" id="customSwitch1">
                                                                     <label class="custom-control-label" for="customSwitch1">{{ __('Color Link Icons') }}</label>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="name" class="form-label">{{ __('Name') }}</label>
-                                                                     <input type="text" name="name" id="name" value="User Name" class="form-control" placeholder="{{ __('name') }}" required>
+                                                                     <input type="text" name="name" value="{{ $card->title }}" class="form-control cin" placeholder="{{ __('name') }}" required data-preview="name_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                     <input type="text" name="location" value="Dhaka" id="location" class="form-control" placeholder="{{ __('location') }}" required>
+                                                                     <input type="text" name="location" value="{{ $card->location }}" class="form-control cin" placeholder="{{ __('location') }}" required data-preview="location_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="job" class="form-label">{{ __('Job Title') }}</label>
-                                                                     <input type="text" name="job" value="Developer" id="job" class="form-control" placeholder="{{ __('job') }}" required>
+                                                                     <label for="designation" class="form-label">{{ __('Job Title') }}</label>
+                                                                     <input type="text" name="designation" value="{{ $card->designation }}" id="designation" class="form-control cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="company" class="form-label">{{ __('Company') }}</label>
-                                                                     <input type="text" name="company" id="company" value="Arobil" class="form-control" placeholder="{{ __('company') }}" required>
+                                                                     <label for="company_name" class="form-label">{{ __('Company') }}</label>
+                                                                     <input type="text" name="company_name" id="company_name" value="{{ $card->company_name }}" class="form-control cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                      <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="{{ __('Bio') }}">Hlw,Lorem ipsum dolor sit, amet consectetur, adipisicing elit.</textarea>
+                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" >{{ $card->bio }}</textarea>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -353,11 +358,11 @@
                                                     <div class="profile_name mt-2">
                                                         <h3 id="name_show">{{ $card->title }}</h3>
                                                         <h5 id="desig_comp_show">{{ getDesigComp($card->designation,$card->company_name) }}</h5>
-                                                        <h6 id="location_show">Dhaka</h6>
-                                                        <p id="bio_show">Lorem ipsum, dolor sit, amet consectetur adipisicing elit.</p>
+                                                        <h6 id="location_show">{{ $card->location }}</h6>
+                                                        <p id="bio_show">{{ $card->bio }}</p>
                                                     </div>
                                                     <div class="save_contact mt-4 mb-4">
-                                                        <a href="#">Save Contact</a>
+                                                        <a href="#" >Save Contact</a>
                                                     </div>
                                                     <div class="social_icon">
                                                         <ul>
@@ -1180,6 +1185,7 @@
                                         </form>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <!-- card preview on modal -->
                                     <div class="live_preview">
@@ -1195,7 +1201,7 @@
                                                                 </svg>
                                                             </div>
                                                             <!-- time -->
-                                                            <div class="clock">2:39</div>
+                                                            <div class="clock">{{ date('H:i') }}</div>
                                                             <!-- mobile icon -->
                                                             <div class="mobile_icon">
                                                                 <svg width="16" height="9" fill="none" viewBox="0 0 12 9">
@@ -1214,20 +1220,20 @@
                                                     </div>
                                                     <div class="card_overflow">
                                                         <!-- cover image -->
-                                                        <div class="card_banner mb-5" style="background-image: url('{{ asset('assets/img/card-banner.png') }}');">
+                                                        <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ asset('assets/img/default.png') }}" width="100" alt="image">
+                                                                <img src="{{ getProfile($card->profile) }}" width="100" alt="image">
                                                                 <!-- logo -->
-                                                                <img class="logo" src="{{ asset('assets/img/card-logo.png') }}" alt="image">
+                                                                <img class="logo" src="{{ getLogo($card->logo) }}" alt="image">
                                                             </div>
                                                         </div>
                                                         <div class="card_content text-center">
                                                             <div class="profile_name mt-2">
-                                                                <h3>Rabin Mia</h3>
-                                                                <h5>Developer at Arobil</h5>
-                                                                <h6>Dhaka</h6>
-                                                                <p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit.</p>
+                                                                <h3>{{ $card->title }}</h3>
+                                                                <h5>{{ getDesigComp($card->designation,$card->company_name) }}</h5>
+                                                                <h6>{{ $card->location }}</h6>
+                                                                <p>{{ $card->bio }}</p>
                                                             </div>
                                                             <div class="save_contact mt-4 mb-4">
                                                                 <a href="#">Save Contact</a>
@@ -1270,7 +1276,16 @@
     </div>
 @endsection
 @push('custom_js')
+@if($card->theme_color )
+<style>
+.card_preview_wrapper .save_contact a{
+    background:{{ $card->theme_color }}
+}
+</style>
+
+@endif
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
 // preview icon
 var loadFile = function(event) {
@@ -1336,9 +1351,27 @@ $('.tab_body .back').on('click', function() {
 
 
 // color change
-function changeColor(color){
-    var element = document.getElementById("clrBg");
-    element.style.backgroundColor = color;
+function changeColor(bgcolor,color){
+    // var element = document.getElementById("clrBg");
+    // element.style.backgroundColor = color;
+
+    var element = $("#clrBg");
+    element.css("background-color", bgcolor);
+
+    if(color == '#fff'){
+        $('.save_contact a').css("color", '#000');
+        $('.save_contact a').css("border-color", '#000');
+        $('.save_contact a').css("background-color", '#fff');
+    }else if(color == '#000'){
+        $('.save_contact a').css("color", '#fff');
+        $('.save_contact a').css("border-color", '#fff');
+        $('.save_contact a').css("background-color", '#000');
+    } else {
+        $('.save_contact a').css("color", '#fff');
+        $('.save_contact a').css("border-color", color);
+        $('.save_contact a').css("background-color", color);
+    }
+
 }
 $(document).on('input','#colorPicker',function(){
     let color = $(this).val();
