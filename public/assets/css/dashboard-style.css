@@ -227,6 +227,10 @@ body {
     margin: 5px 10px;
 }
 
+.card_preview_wrapper .social_icon ul li img {
+    width: 50px;
+}
+
 .card_preview_wrapper .social_icon ul li a span {
     display: block;
     font-size: 12px;
