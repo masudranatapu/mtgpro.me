@@ -1043,16 +1043,17 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#btnFinish {
+    border-radius: 50px;
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 500;
+    background: #111111;
+    border: none !important;
+    padding: 8px 42px;
+    margin: 6px 11px;
+    color: #fff;
+}
+.sw-btn#btnFinish  {
+    padding: 12px 90px !important;
+}

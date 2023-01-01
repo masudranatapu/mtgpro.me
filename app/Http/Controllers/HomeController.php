@@ -1,9 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
+use Share;
+use App\Mail\ConnectMail;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
-use Share;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\ConnectRequest;
 
 class HomeController extends Controller
 {
@@ -27,35 +33,41 @@ class HomeController extends Controller
         return view('pages.terms-conditions');
     }
 
-
-
-
     public function getConnect(ConnectRequest $request)
     {
-        $data['name' ]         = $request->name;
-        $data['title']         = $request->title;
-        $data['email']         = $request->email;
-        $data['ccode']         = $request->ccode;
-        $data['phone']         = $request->phone;
-        $data['company_name']  = $request->company_name;
-        $data['message']       = $request->message;
-        $card = BusinessCard::where('id', $request->card_id)->first();
-        // if(Auth::user()){
-        //     $user_id =  Auth::id();
-        //     if($card->user_id == $user_id){
-        //         Toastr::error('Not possible to send message to your card');
-        //         return redirect()->back();
-        //     }
-        // }
-        $data['card_id'] = $card->id;
-        $data['user_id'] = $card->user_id;
-        $connect = DB::table('connects')->insert($data);
-        $data['card_id'] = $card->card_id;
+        // dd($request->all());
+        DB::beginTransaction();
+        try {
+            $data['name' ]         = $request->name;
+            // $data['title']      = $request->title;
+            $data['email']         = $request->email;
+            $data['phone']         = $request->phone;
+            $data['title']         = $request->job_title;
+            $data['company_name']  = $request->company;
+            $data['message']       = $request->note;
+            $card = BusinessCard::where('id', $request->card_id)->first();
+            // if(Auth::user()){
+            //     $user_id =  Auth::id();
+            //     if($card->user_id == $user_id){
+            //         Toastr::error('Not possible to send message to your card');
+            //         return redirect()->back();
+            //     }
+            // }
+            $data['card_id'] = $card->id;
+            $data['user_id'] = $card->user_id;
+            $connect = DB::table('connects')->insert($data);
+            $data['card_id'] = $card->card_id;
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            DB::rollback();
+            Toastr::error('Something wrong ! please try again');
+            return redirect()->back();
+        }
+        DB::commit();
         if ($connect) {
             Mail::to($card->card_email)->send(new ConnectMail($data));
         }
         Toastr::success('Connection send successfully');
-
         return redirect()->back();
 
     }
@@ -71,6 +83,7 @@ class HomeController extends Controller
             $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
             $shareComponent = Share::page($url,'Hello! This is my vCard.',)->facebook()->twitter()->linkedin()->telegram()->whatsapp();
+            // dd($shareComponent);
             if($cardinfo->status == 0){
                 Toastr::warning('This card is not active now');
                 return redirect()->back();
