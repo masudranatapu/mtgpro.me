@@ -14,6 +14,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <style>
+        .fa-exclamation-circle{color: #ccc;}
+    </style>
     @stack('custom_css')
 </head>
     <body class="hold-transition sidebar-mini">
@@ -40,10 +43,10 @@
     };
 
     // preview company logo
-    var companyloadFile = function(event) {
-        var logo = document.getElementById('showlogo');
-        logo.src = URL.createObjectURL(event.target.files[0]);
-    };
+    // var companyloadFile = function(event) {
+    //     var logo = document.getElementById('showlogo');
+    //     logo.src = URL.createObjectURL(event.target.files[0]);
+    // };
 
     // preview cover photo
     var coverFile = function(event) {
@@ -52,12 +55,12 @@
     };
 
     // drag and drop
-    const dropItems = document.getElementById('drop-items')
-    new Sortable(dropItems, {
-        animation: 350,
-        chosenClass: "sortable-chosen",
-        dragClass: "sortable-drag"
-    });
+    // const dropItems = document.getElementById('drop-items')
+    // new Sortable(dropItems, {
+    //     animation: 350,
+    //     chosenClass: "sortable-chosen",
+    //     dragClass: "sortable-drag"
+    // });
 
     // social content modal
     $('.onclickIcon').on('click', function() {
