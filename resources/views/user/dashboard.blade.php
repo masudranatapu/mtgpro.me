@@ -3,6 +3,7 @@
 @push('custom_css')
 @endpush
 @section('dashboard','active')
+
 @section('content')
     <div class="content-wrapper">
         <div class="content-header">
@@ -17,25 +18,28 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
+                        @if(isset($cards) && count($cards)>0)
+                        @foreach($cards as $key => $item)
+
                         <div class="col-md-6 col-xl-4">
                             <!-- user card -->
-                             <a href="{{ route('user.card.edit',1) }}">
+
                                 <div class="dashboard_card user_card" style="background-color: #E8F4ED;">
                                     <div class="card_body">
                                         <div class="card_cover_bg">
                                             <!-- cover image -->
                                             <div class="cover_photo">
-                                                <img src="{{ asset('assets/img/cover.png') }}" class="img-fluid" alt="image">
+                                                <img src="{{ getCover($item->cover) }}" class="img-fluid" alt="image">
                                             </div>
                                             <div class="user_card_profile text-center">
                                                 <div class="profile_image">
                                                     <!-- profile image -->
                                                     <div class="profile_photo">
-                                                        <img src="{{ asset('assets/img/user2.jpg') }}" class="img-fluid" alt="image">
+                                                        <img src="{{ getProfile($item->profile) }}" class="img-fluid" alt="image">
                                                     </div>
                                                     <!-- logo -->
                                                     <div class="logo">
-                                                        <img src="{{ asset('assets/img/card-logo.png') }}" alt="image">
+                                                        <img src="{{ getLogo($item->logo) }}" alt="image">
                                                     </div>
                                                 </div>
                                             </div>
@@ -43,18 +47,20 @@
                                         <!-- user card info -->
                                         <div class="card_info mt-4 text-center">
                                             <div class="profile_name">
-                                                <h3>{{ __('Rabin Mia') }}</h3>
-                                                <h5>{{ __('Developer at Arobil') }}</h5>
+                                                <h3>{{ $item->name }}</h3>
+                                                <h5>{{ $item->designation }}</h5>
                                             </div>
                                             <div class="card_btn mt-3 mb-4">
-                                                <button class="btn-sm btn-secondary">{{ __('Edit Card') }}</button>
-                                                <button class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</button>
+                                                <a href="{{ route('user.card.edit',$item->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
+                                                <a href="{{ route('card.preview',$item->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                             </a>
+
                         </div>
+                        @endforeach
+                        @endif
                         <div class="col-md-6 col-xl-4">
                             <!-- create new card -->
                             <a href="{{ route('user.card.create') }}">

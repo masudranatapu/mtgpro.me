@@ -103,6 +103,64 @@ if (!function_exists('getAvatar')) {
     }
 }
 
+if (!function_exists('getCover')) {
+    function getCover($path = null)
+    {
+        if($path){
+            $ppath = public_path($path);
+            if(file_exists($ppath)){
+              return asset($path);
+            } else {
+                return asset('assets/img/default-cover.png');
+           }
+        }else{
+            return asset('assets/img/default-cover.png');
+        }
+
+
+    }
+}
+if (!function_exists('getProfile')) {
+    function getProfile($path = null)
+    {
+
+        if($path){
+            $ppath = public_path($path);
+            if(file_exists($ppath)){
+              return asset($path);
+            } else {
+                return asset('assets/img/default-profile.png');
+           }
+        }else{
+            return asset('assets/img/default-profile.png');
+        }
+
+    }
+}
+if (!function_exists('getLogo')) {
+    function getLogo($path = null)
+    {
+
+
+        if($path){
+            $ppath = public_path($path);
+            if(file_exists($ppath)){
+              return asset($path);
+            } else {
+                return asset('assets/img/default-logo.png');
+           }
+        }else{
+            return asset('assets/img/default-logo.png');
+        }
+
+    }
+}
+
+
+
+
+
+
 if (!function_exists('makeUrl')) {
     function makeUrl($url)
     {

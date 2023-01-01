@@ -12,7 +12,7 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">
                                 <a href="{{ route('user.dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
-                                <img src="{{ asset('assets/img/default.png') }}" width="50" class="img-circle mr-2" alt="image">
+                                <img src="{{ getProfile() }}" width="50" class="img-circle mr-2" alt="image">
                                 {{ __('Card Name') }}
                             </h1>
                         </div>
@@ -138,7 +138,7 @@
                                                             <form action="#" method="post">
                                                                 <div class="form-group">
                                                                     <label class="imgLabel" for="logo">
-                                                                        <img id="previewIcon" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
+                                                                        <img id="previewIcon" src="{{ getLogo() }}" alt="">
                                                                         <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
                                                                         <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                                     </label>
@@ -149,7 +149,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="title" class="form-label">{{ __('Link title') }}</label>
-                                                                    <input type="text" name="title" id="title" class="form-control" placeholder="Facebook">
+                                                                    <input type="text" name="title"  class="form-control" placeholder="Facebook">
                                                                 </div>
                                                                 <div class="form-group mb-4">
                                                                     <a href="#" target="_blank">
@@ -184,7 +184,7 @@
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                      <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_title" id="title" class="form-control" placeholder="{{ __('Card Title') }}" required>
+                                                                     <input type="text" name="card_title"  class="form-control" placeholder="{{ __('Card Title') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -193,7 +193,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">{{ __('Profile picture') }}</label>
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="{{ asset('assets/img/default.png') }}" alt="profile image">
+                                                                                <img id="profilePic" src="{{ getProfile() }}" alt="profile image">
                                                                              </label>
                                                                              <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
@@ -202,7 +202,7 @@
                                                                         <div class="form-group">
                                                                              <label class="form-label">{{ __('Cover photo') }}</label><br/>
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="{{ asset('assets/img/cover-bg.png') }}" alt="logo">
+                                                                                  <img id="coverpic" src="{{ getCover() }}" alt="logo">
                                                                              </label>
                                                                              <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
@@ -700,7 +700,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="title" class="form-label">Link title</label>
-                                                <input type="text" name="title" id="title" class="form-control" placeholder="Facebook">
+                                                <input type="text" name="title"  class="form-control" placeholder="Facebook">
                                             </div>
                                             <div class="form-group mb-4">
                                                 <a href="#" target="_blank">
