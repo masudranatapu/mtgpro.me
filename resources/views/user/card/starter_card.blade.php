@@ -81,7 +81,7 @@ $tabIndex = 1;
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
                                                     <label for="name" class="form-label">{{ __('Name') }}</label>
-                                                    <input type="text" name="name" id="name" class="form-control cin @error('name') is-invalid @enderror" data-preview="preview_name" placeholder="{{ __('Name') }}" required="" tabindex="{{ $tabIndex++ }}">
+                                                    <input type="text" name="name" id="name" value="{{ Auth::user()->name }}" class="form-control cin @error('name') is-invalid @enderror" data-preview="preview_name" placeholder="{{ __('Name') }}" required tabindex="{{ $tabIndex++ }}">
                                                     <div class="invalid-feedback" id="msg_name"> {{ __('Enter your name') }}</div>
                                                     @if($errors->has('name'))
                                                         <span class="help-block text-danger">{{ $errors->first('name') }}</span>
@@ -89,7 +89,7 @@ $tabIndex = 1;
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="phone_number" class="form-label">{{ __('Phone Number') }}</label>
-                                                    <input type="number" name="phone_number" id="phone_number" class="form-control cin @error('phone_number') is-invalid @enderror" data-preview="preview_phone_number" placeholder="{{ __('Phone Number') }}" required="" tabindex="{{ $tabIndex++ }}">
+                                                    <input type="number" name="phone_number" id="phone_number" value="{{ Auth::user()->billing_phone }}" class="form-control cin @error('phone_number') is-invalid @enderror" data-preview="preview_phone_number" placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabIndex++ }}">
                                                     <div class="invalid-feedback">{{ __('Enter your phone number') }}</div>
                                                     @if($errors->has('phone_number'))
                                                         <span class="help-block text-danger">{{ $errors->first('phone_number') }}</span>
@@ -106,19 +106,19 @@ $tabIndex = 1;
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="job" class="form-label">{{ __('Job') }}</label>
-                                                    <input type="text" name="job" id="job" class="form-control cin @error('job') is-invalid @enderror" data-preview="preview_job" placeholder="{{ __('Job') }}" required="" tabindex="{{ $tabIndex++ }}">
+                                                    <label for="designation" class="form-label">{{ __('Job') }}</label>
+                                                    <input type="text" name="designation" id="designation" class="form-control cin @error('designation') is-invalid @enderror" data-preview="preview_designation" placeholder="{{ __('Designation') }}" required tabindex="{{ $tabIndex++ }}">
                                                     <div class="invalid-feedback">{{ __('Enter your job title') }}</div>
-                                                    @if($errors->has('job'))
-                                                        <span class="help-block text-danger">{{ $errors->first('job') }}</span>
+                                                    @if($errors->has('designation'))
+                                                        <span class="help-block text-danger">{{ $errors->first('designation') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="company" class="form-label">{{ __('Company') }}</label>
-                                                    <input type="text" name="company" id="company" class="form-control cin @error('company') is-invalid @enderror" data-preview="preview_company" placeholder="{{ __('Company') }}" required="" tabindex="{{ $tabIndex++ }}">
+                                                    <label for="company_name" class="form-label">{{ __('Company') }}</label>
+                                                    <input type="text" name="company_name" id="company_name" class="form-control cin @error('company_name') is-invalid @enderror" data-preview="preview_company_name" placeholder="{{ __('Company') }}" required tabindex="{{ $tabIndex++ }}">
                                                     <div class="invalid-feedback">{{ __('Enter your company name') }}</div>
-                                                    @if($errors->has('company'))
-                                                        <span class="help-block text-danger">{{ $errors->first('company') }}</span>
+                                                    @if($errors->has('company_name'))
+                                                        <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -144,8 +144,6 @@ $tabIndex = 1;
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <button type="submit" class="btn btn-info">Submit</button> --}}
-
                                 </div>
 
                              <!-- step 4 -->
@@ -202,7 +200,7 @@ $tabIndex = 1;
                                 <div class="card_content text-center">
                                     <div class="profile_name mt-2">
                                         <h3 id="preview_name">{{ __('Rabin Mia')}}</h3>
-                                        <h5><span id="preview_job">{{ __('Developer') }}</span> <span style="padding: 0px 3px;">{{ __('at') }}</span> <span id="preview_company">{{ __('Arobil')}}</span></h5>
+                                        <h5><span id="preview_designation">{{ __('Developer') }}</span> <span style="padding: 0px 3px;">{{ __('at') }}</span> <span id="preview_company_name">{{ __('Arobil')}}</span></h5>
                                     </div>
                                     <div class="save_contact mt-4 mb-4">
                                         <a href="#">{{ __('Save Contact')}}</a>
@@ -481,11 +479,11 @@ $(document).on('click', '.crop_logo', function(event){
 $(function() {
 
     $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
-                // Validate only on forward movement
-                if (stepDirection == 'forward') {
-                  let form = document.getElementById('form-' + (currentStepIdx + 1));
-                  if (form) {
-                    if (!form.checkValidity()) {
+        // Validate only on forward movement
+            if (stepDirection == 'forward') {
+                let form = document.getElementById('form-' + (currentStepIdx + 1));
+            if (form) {
+                if (!form.checkValidity()) {
                       form.classList.add('was-validated');
                       $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
                       $("#smartwizard").smartWizard('fixHeight');

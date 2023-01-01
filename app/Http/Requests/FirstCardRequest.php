@@ -25,10 +25,10 @@ class FirstCardRequest extends FormRequest
     {
 
         $rules = [
-            'name'            => 'required|string|max:124',//
-            'phone_number'          => 'required|string|max:20',//
-            'designation'            => 'required|email|max:124',//
-            'company_name'             => 'required|string|max:124',//
+            'name'            => 'required|string|max:124',
+            'phone_number'          => 'required|string|max:20',
+            'designation'            => 'required|email|max:124',
+            'company_name'             => 'required|string|max:124',
         ];
         return $rules;
     }
@@ -36,9 +36,9 @@ class FirstCardRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'   => 'This field is required',
+            'name.required'            => 'This field is required',
             'phone_number.required'    => 'This field is required',
-            'designation.required'      => 'This field is required',
+            'designation.required'     => 'This field is required',
             'company_name.required'    => 'This field is required',
         ];
     }
