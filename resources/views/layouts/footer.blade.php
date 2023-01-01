@@ -50,7 +50,7 @@
                         </div>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="{{ route('user.dashboard') }}">{{ __('Cards') }}</a></li>
+                                <li><a href="{{ route('user.card') }}">{{ __('Cards') }}</a></li>
                                 <li><a href="#">{{ __('Data Protection') }}</a></li>
                                 <li><a href="{{ route('privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
                                 <li><a href="{{ route('terms-conditions') }}">{{ __('Terms & Conditions') }}</a></li>

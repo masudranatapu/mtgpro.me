@@ -256,7 +256,6 @@ class HomeController extends Controller
         $data['your_message'] = $request->your_message;
         Mail::to($this->settings->support_email)->send(new SendContact($data));
         Toastr::success(trans('Message Successfully Send!'), 'Success', ["positionClass" => "toast-top-right"]);
-
         return redirect()->back();
     }
 

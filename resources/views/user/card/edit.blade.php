@@ -11,7 +11,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                <a href="{{ route('user.dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
+                                <a href="{{ route('user.card') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="image">
                                 {{ __('My Card') }}
                             </h1>

@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Requests;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FirstCardRequest extends FormRequest
@@ -25,10 +24,10 @@ class FirstCardRequest extends FormRequest
     {
 
         $rules = [
-            'name'            => 'required|string|max:124',//
-            'phone_number'          => 'required|string|max:20',//
-            'designation'            => 'required|email|max:124',//
-            'company_name'             => 'required|string|max:124',//
+            'name'            => 'required|string|max:124',
+            'phone_number'    => 'required|string|max:20',
+            'designation'     => 'required|max:124',
+            'company_name'    => 'required|string|max:124',
         ];
         return $rules;
     }
@@ -36,10 +35,10 @@ class FirstCardRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'   => 'This field is required',
-            'phone_number.required'    => 'This field is required',
-            'designation.required'      => 'This field is required',
-            'company_name.required'    => 'This field is required',
+            'name.required'            => 'Name field is required',
+            'phone_number.required'    => 'Phone number field is required',
+            'designation.required'     => 'Designation field is required',
+            'company_name.required'    => 'Company name field is required',
         ];
     }
 }

@@ -4,7 +4,7 @@ $settings = getSetting();
 
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="{{ route('user.dashboard') }}" class="brand-link">
+    <a href="{{ route('user.card') }}" class="brand-link">
         <span class="brand-text font-weight-light">
         @if (!empty($settings->site_logo))
         <img src="{{ asset($settings->site_logo) }}" width="150" alt="logo">
@@ -17,7 +17,7 @@ $settings = getSetting();
         <nav class="mt-4">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('user.dashboard') }}" class="nav-link @yield('dashboard')">
+                    <a href="{{ route('user.card') }}" class="nav-link @yield('dashboard')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Cards') }}">
                         </span>
