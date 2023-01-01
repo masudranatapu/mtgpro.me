@@ -208,37 +208,37 @@
                             <h4>{{ __('Share your info back with') }} {{ $user_name }}</h4>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" required tabindex="{{$tabindex++}}">
+                            <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" required tabindex="{{$tabindex++}}">
                             @if($errors->has('name'))
                             <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}" required tabindex="{{$tabindex++}}">
+                            <input type="text" name="email" id="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}" required tabindex="{{$tabindex++}}">
                             @if($errors->has('email'))
                             <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <input type="tel" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="{{ __('Phone Number') }}" required tabindex="{{$tabindex++}}">
+                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror" placeholder="{{ __('Phone Number') }}" required tabindex="{{$tabindex++}}">
                             @if($errors->has('phone'))
                             <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="job_title" id="job_title" class="form-control @error('job_title') is-invalid @enderror" placeholder="{{ __('Job Title') }}" required tabindex="{{$tabindex++}}">
+                            <input type="text" name="job_title" id="job_title" value="{{ old('job_title') }}" class="form-control @error('job_title') is-invalid @enderror" placeholder="{{ __('Job Title') }}" required tabindex="{{$tabindex++}}">
                             @if($errors->has('job_title'))
                             <span class="help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="company" id="company" class="form-control @error('company') is-invalid @enderror" placeholder="{{ __('Company') }}" required tabindex="{{$tabindex++}}">
+                            <input type="text" name="company" id="company" value="{{ old('company') }}" class="form-control @error('company') is-invalid @enderror" placeholder="{{ __('Company') }}" required tabindex="{{$tabindex++}}">
                             @if($errors->has('company'))
                             <span class="help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <textarea name="note" id="note" cols="30" rows="5" class="form-control @error('note') is-invalid @enderror" placeholder="{{ __('Notes on this interaction') }}" tabindex="{{$tabindex++}}"></textarea>
+                            <textarea name="note" id="note" cols="30" rows="5" value="{{ old('note') }}" class="form-control @error('note') is-invalid @enderror" placeholder="{{ __('Notes on this interaction') }}" tabindex="{{$tabindex++}}"></textarea>
                             @if($errors->has('note'))
                             <span class="help-block text-danger">{{ $errors->first('note') }}</span>
                             @endif

@@ -488,7 +488,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="purchase_heading">Phone Number: </td>
-                                                <td class="purchase_item">{{ $data['ccode'] . $data['phone'] }} </td>
+                                                <td class="purchase_item">{{$data['phone'] }} </td>
                                             </tr>
                                             @if (isset($data['company_name']))
 

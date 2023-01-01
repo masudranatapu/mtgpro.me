@@ -20,7 +20,6 @@ class ConnectRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
             '_token'      => 'required',
             'card_id'     => 'required|string|max:124',

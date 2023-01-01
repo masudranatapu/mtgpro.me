@@ -2,9 +2,13 @@
 namespace App\Http\Controllers;
 
 use Share;
+use App\Mail\ConnectMail;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
 
 class HomeController extends Controller
@@ -29,18 +33,18 @@ class HomeController extends Controller
         return view('pages.terms-conditions');
     }
 
-    public function getConnect(Request $request)
+    public function getConnect(ConnectRequest $request)
     {
-        dd($request->all());
+        // dd($request->all());
         DB::beginTransaction();
         try {
             $data['name' ]         = $request->name;
-            $data['title']         = $request->title;
+            // $data['title']      = $request->title;
             $data['email']         = $request->email;
-            $data['ccode']         = $request->ccode;
             $data['phone']         = $request->phone;
-            $data['company_name']  = $request->company_name;
-            $data['message']       = $request->message;
+            $data['title']         = $request->job_title;
+            $data['company_name']  = $request->company;
+            $data['message']       = $request->note;
             $card = BusinessCard::where('id', $request->card_id)->first();
             // if(Auth::user()){
             //     $user_id =  Auth::id();
