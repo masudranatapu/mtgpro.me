@@ -637,45 +637,36 @@
                 }
                return isValid;
              }
-
-
-
-
-
-
-        $(document).on('submit', "#cerate-first-card", function (e) {
-        // $(document).on('click', "#btnFinish", function (e) {
-            e.preventDefault();
-            // validateAllSteps();
-            var form = $("#cerate-first-card");
-            $.ajax({
-                type: 'post',
-                data: form.serialize(),
-                url: form.attr('action'),
-                async: true,
-                beforeSend: function () {
-                    $("body").css("cursor", "progress");
-                },
-                success: function (response) {
-                    if (response.status == 1) {
-                        toastr.success(response.message);
-                        $('#cerate-first-card')[0].reset();
-                        // location.href = "https://www.w3schools.com";
-                    } else {
-                        toastr.error(response.message);
-                    }
-                },
-                error: function (jqXHR, exception) {
-                    toastr.error('Something wrong');
-                },
-                complete: function (response) {
-                    $("body").css("cursor", "default");
-                }
-            });
-        });
-
-
-
+        // $(document).on('submit', "#cerate-first-card", function (e) {
+        // // $(document).on('click', "#btnFinish", function (e) {
+        //     e.preventDefault();
+        //     // validateAllSteps();
+        //     var form = $("#cerate-first-card");
+        //     $.ajax({
+        //         type: 'post',
+        //         data: form.serialize(),
+        //         url: form.attr('action'),
+        //         async: true,
+        //         beforeSend: function () {
+        //             $("body").css("cursor", "progress");
+        //         },
+        //         success: function (response) {
+        //             if (response.status == 1) {
+        //                 toastr.success(response.message);
+        //                 $('#cerate-first-card')[0].reset();
+        //                 // location.href = "https://www.w3schools.com";
+        //             } else {
+        //                 toastr.error(response.message);
+        //             }
+        //         },
+        //         error: function (jqXHR, exception) {
+        //             toastr.error('Something wrong');
+        //         },
+        //         complete: function (response) {
+        //             $("body").css("cursor", "default");
+        //         }
+        //     });
+        // });
       </script>
       {!! Toastr::message() !!}
       <script>
