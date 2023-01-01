@@ -11,6 +11,16 @@ $(document).on('keyup','.cin', function() {
     $('#'+preview).text(cin);
 }).keyup();
 
+$(document).on('keyup','.desig_comp',function(){
+    var desig = $("input[name=designation]").val();
+    var comp = $("input[name=company]").val();
+    if(desig != '' && comp != ''){
+        $('#desig_comp_show').text(desig +' at '+ comp);
+    }else{
+        $('#desig_comp_show').text(desig +' '+ comp);
+    }
+})
+
 
 function getFullStr(concat_cls){
     var cin = '';

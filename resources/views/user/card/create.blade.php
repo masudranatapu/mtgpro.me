@@ -13,7 +13,7 @@
                             <h1 class="m-0">
                                 <a href="{{ route('user.dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ getProfile() }}" width="50" class="img-circle mr-2" alt="image">
-                                {{ __('Card Name') }}
+                                <span id="card_title_show">{{ __('Card Name') }}</span>
                             </h1>
                         </div>
                     </div>
@@ -184,14 +184,14 @@
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                      <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_title"  class="form-control" placeholder="{{ __('Card Title') }}" required>
+                                                                     <input type="text" name="card_title"  class="form-control cin" data-preview="card_title_show" placeholder="{{ __('Card Title') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group">
-                                                                             <label class="form-label">{{ __('Profile picture') }}</label>
+                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i> </label>
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
                                                                                 <img id="profilePic" src="{{ getProfile() }}" alt="profile image">
                                                                              </label>
@@ -200,7 +200,7 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group">
-                                                                             <label class="form-label">{{ __('Cover photo') }}</label><br/>
+                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
                                                                                   <img id="coverpic" src="{{ getCover() }}" alt="logo">
                                                                              </label>
@@ -208,9 +208,9 @@
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
-                                                                         <label class="form-label">{{ __('Company Logo') }}</label>
+                                                                         <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i> </label>
                                                                          <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="{{ asset('assets/img/default-logo.png') }}" alt="logo">
+                                                                             <img id="showlogo" src="{{ getLogo() }}" alt="logo">
                                                                          </label>
                                                                          <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo">
                                                                     </div>
@@ -226,35 +226,35 @@
                                                                          </label>
                                                                          <!-- color -->
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white','#fff')">
                                                                             <label for="color1" class="colorOne"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)','#000')">
                                                                             <label for="color2" class="colorTwo"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)','#EB5757')">
                                                                             <label for="color3" class="colorThree"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)','#F2994A')">
                                                                             <label for="color4" class="colorFour"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)','#F2C94C')">
                                                                             <label for="color5" class="colorFive"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)','#219653')">
                                                                             <label for="color6" class="colorSix"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)','#2F80ED')">
                                                                             <label for="color7" class="colorSeven"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)','#9B51E0')">
                                                                             <label for="color8" class="colorEight"></label>
                                                                         </div>
                                                                     </div>
@@ -267,31 +267,31 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="name" class="form-label">{{ __('Name') }}</label>
-                                                                     <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('name') }}" required>
+                                                                     <input type="text" name="name" class="form-control cin" placeholder="{{ __('name') }}" required data-preview="name_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                     <input type="text" name="location" id="location" class="form-control" placeholder="{{ __('location') }}" required>
+                                                                     <input type="text" name="location" class="form-control cin" placeholder="{{ __('location') }}" required data-preview="location_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="job" class="form-label">{{ __('Job Title') }}</label>
-                                                                     <input type="text" name="job" id="job" class="form-control" placeholder="{{ __('job') }}" required>
+                                                                     <label for="designation" class="form-label">{{ __('Job Title') }}</label>
+                                                                     <input type="text" name="designation" class="form-control desig_comp" placeholder="{{ __('job') }}" required data-preview="designation_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="company" class="form-label">{{ __('Company') }}</label>
-                                                                     <input type="text" name="company" id="company" class="form-control" placeholder="{{ __('company') }}" required>
+                                                                     <input type="text" name="company" class="form-control desig_comp" placeholder="{{ __('company') }}" required data-preview="company_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                      <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                     <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="{{ __('Bio') }}"></textarea>
+                                                                     <textarea name="bio" cols="30" rows="10" class="form-control cin" placeholder="{{ __('Bio') }}" data-preview="bio_show"></textarea>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -340,26 +340,26 @@
                                             </div>
                                             <div class="card_overflow">
                                                 <!-- cover image -->
-                                                <div class="card_banner mb-5" style="background-image: url('{{ asset('') }}assets/img/card-banner.png');">
+                                                <div class="card_banner mb-5" style="background-image: url('{{ getCover() }}');" id="coverpic_2">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ asset('') }}assets/img/default.png" width="100" alt="image">
+                                                        <img src="{{ getProfile() }}" width="100" alt="image" id="profilePic_2">
                                                         <!-- logo -->
-                                                        <img class="logo" src="{{ asset('') }}assets/img/card-logo.png" alt="image">
+                                                        <img class="logo" src="{{ getlogo() }}" alt="image" id="showlogo_2">
                                                     </div>
                                                 </div>
                                                 <div class="card_content text-center">
                                                     <div class="profile_name mt-2">
-                                                        <h3>Rabin Mia</h3>
-                                                        <h5>Developer at Arobil</h5>
-                                                        <h6>Dhaka</h6>
-                                                        <p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit.</p>
+                                                        <h3 id="name_show">Rabin Mia</h3>
+                                                        <h5 id="desig_comp_show">Developer at Arobil</h5>
+                                                        <h6 id="location_show">Dhaka</h6>
+                                                        <p id="bio_show">Lorem ipsum, dolor sit, amet consectetur adipisicing elit.</p>
                                                     </div>
                                                     <div class="save_contact mt-4 mb-4">
-                                                        <a href="#">Save Contact</a>
+                                                        <a href="javascript:void(0)">Save Contact</a>
                                                     </div>
                                                     <div class="social_icon">
-                                                        <ul>
+                                                        <ul id="social_icon_list">
                                                             <li>
                                                                 <a href="#" target="_blank">
                                                                     <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -754,9 +754,9 @@
                                                         <div class="card_banner mb-5" style="background-image: url('{{ asset('') }}assets/img/card-banner.png');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ asset('') }}assets/img/default.png" width="100" alt="image">
+                                                                <img src="{{ getProfile() }}" width="100" alt="image">
                                                                 <!-- logo -->
-                                                                <img class="logo" src="{{ asset('') }}assets/img/card-logo.png" alt="image">
+                                                                <img class="logo" src="{{ getLogo() }}" alt="image" >
                                                             </div>
                                                         </div>
                                                         <div class="card_content text-center">
@@ -878,6 +878,7 @@
 @endsection
 @push('custom_js')
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
 // preview icon
 var loadFile = function(event) {
@@ -889,18 +890,30 @@ var loadFile = function(event) {
 var profileloadFile = function(event) {
     var profile = document.getElementById('profilePic');
     profile.src = URL.createObjectURL(event.target.files[0]);
+
+    var profile2 = document.getElementById('profilePic_2');
+    profile2.src = URL.createObjectURL(event.target.files[0]);
 };
 
 // preview company logo
 var companyloadFile = function(event) {
     var logo = document.getElementById('showlogo');
     logo.src = URL.createObjectURL(event.target.files[0]);
+
+    var logo2 = document.getElementById('showlogo_2');
+    logo2.src = URL.createObjectURL(event.target.files[0]);
+
+
 };
 
 // preview cover photo
 var coverFile = function(event) {
     var cover  = document.getElementById('coverpic');
     cover.src  = URL.createObjectURL(event.target.files[0]);
+
+    var cover2  = document.getElementById('coverpic_2');
+    var cover2_url  = URL.createObjectURL(event.target.files[0]);
+    cover2.style.backgroundImage = "url("+cover2_url+")";
 };
 
 
@@ -943,9 +956,16 @@ $('.tab_body .back').on('click', function() {
 
 
 // color change
-function changeColor(color){
-    var element = document.getElementById("clrBg");
-    element.style.backgroundColor = color;
+function changeColor(bgcolor,color){
+    // var element = document.getElementById("clrBg");
+    // element.style.backgroundColor = bgcolor;
+
+    var element = $("#clrBg");
+    element.css("background-color", bgcolor);
+    $('.save_contact a').css("background-color", color);
+    $('#social_icon_list li a').css("background-color", color);
+
+    // .save_contact a
 }
 $(document).on('input','#colorPicker',function(){
     let color = $(this).val();
