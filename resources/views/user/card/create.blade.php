@@ -500,7 +500,7 @@
                     <div class="modal_body">
                         <div class="add_list_wrap first_modal">
                             <!-- recommended icon -->
-                            <div class="heading mb-3">
+                            <!-- <div class="heading mb-3">
                                 <h3>Recommended</h3>
                             </div>
                             <div class="row align-item-center">
@@ -582,9 +582,9 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- Contact icon -->
-                            <div class="heading mt-4 mb-3">
+                            <!-- <div class="heading mt-4 mb-3">
                                 <h3>Contact</h3>
                             </div>
                             <div class="row align-item-center">
@@ -672,6 +672,718 @@
                                             <div class="icon_info">
                                                 <img src="{{ asset('') }}assets/img/icon/whatsapp.svg" alt="image">
                                                 <span>Whatsapp</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div> -->
+                            <!-- recommended icon -->
+                            <div class="heading mb-3">
+                                <h3>Recommended</h3>
+                            </div>
+                            <div class="row align-item-center">
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/number.svg') }}" alt="image">
+                                                <span>Text</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/email.svg') }}" alt="image">
+                                                <span>Email</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="image">
+                                                <span>Instagram</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/safari.svg') }}" alt="image">
+                                                <span>Website</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/linkedin.svg') }}" alt="image">
+                                                <span>Linkedin</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/contactcard.svg') }}" alt="image">
+                                                <span>Contact Card</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Contact icon -->
+                            <div class="heading mt-4 mb-3">
+                                <h3>Contact</h3>
+                            </div>
+                            <div class="row align-item-center">
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/number.svg') }}" alt="image">
+                                                <span>Text</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/call.svg') }}" alt="image">
+                                                <span>Call</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/email.svg') }}" alt="image">
+                                                <span>Email</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/contactcard.svg') }}" alt="image">
+                                                <span>Contact Card</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/address.svg') }}" alt="image">
+                                                <span>address</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/facetime.svg') }}" alt="image">
+                                                <span>FaceTime</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="image">
+                                                <span>Whatsapp</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Social Media -->
+                            <div class="heading mt-4 mb-3">
+                                <h3>Social Media</h3>
+                            </div>
+                            <div class="row align-item-center">
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="image">
+                                                <span>Instagram</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/snapchat.svg') }}" alt="image">
+                                                <span>Snapchat</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/tiktok.svg') }}" alt="image">
+                                                <span>Tiktok</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="image">
+                                                <span>Facebook</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/linkedin.svg') }}" alt="image">
+                                                <span>Linkedin</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/twitter.svg') }}" alt="image">
+                                                <span>Twitter</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/youtube.svg') }}" alt="image">
+                                                <span>Youtube</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/Twitch.svg') }}" alt="image">
+                                                <span>Twitch</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/pinterest.svg') }}" alt="image">
+                                                <span>Pinterest</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/wechat.svg') }}" alt="image">
+                                                <span>WeChat</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/discord.svg') }}" alt="image">
+                                                <span>Discord</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/telegram.svg') }}" alt="image">
+                                                <span>Telegram</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Music icon -->
+                            <div class="heading mt-4 mb-3">
+                                <h3>Music Media</h3>
+                            </div>
+                            <div class="row align-item-center">
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/spotify.svg') }}" alt="image">
+                                                <span>Spotify</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/apple.svg') }}" alt="image">
+                                                <span>Apple Music</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/soundcloud.svg') }}" alt="image">
+                                                <span>SoundCloud</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Payment -->
+                            <div class="heading mt-4 mb-3">
+                                <h3>Payment</h3>
+                            </div>
+                            <div class="row align-item-center">
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/cashapp.svg') }}" alt="image">
+                                                <span>Cash App</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/venmo.svg') }}" alt="image">
+                                                <span>Venmo</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/paypal.svg') }}" alt="image">
+                                                <span>Paypal</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/zelle.svg') }}" alt="image">
+                                                <span>Zelle</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- More -->
+                            <div class="heading mt-4 mb-3">
+                                <h3>More</h3>
+                            </div>
+                            <div class="row align-item-center">
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/safari.svg') }}" alt="image">
+                                                <span>Website</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/customlink.svg') }}" alt="image">
+                                                <span>Custom Link</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/file.svg') }}" alt="image">
+                                                <span>File</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/linktree.svg') }}" alt="image">
+                                                <span>Linktree</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/calendly.svg') }}" alt="image">
+                                                <span>Calendly</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/podcasts.svg') }}" alt="image">
+                                                <span>Podcasts</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/clubhouse.svg') }}" alt="image">
+                                                <span>Clubhouse</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/yelp.svg') }}" alt="image">
+                                                <span>Yelp</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/embeddedvideo.svg') }}" alt="image">
+                                                <span>Embedded Video</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/hoobe.svg') }}" alt="image">
+                                                <span>hoo.be</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/square.svg') }}" alt="image">
+                                                <span>Square</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/etsy.svg') }}" alt="image">
+                                                <span>Etsy</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/reviews.svg') }}" alt="image">
+                                                <span>Reviews</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/mediakits.svg') }}" alt="image">
+                                                <span>MediaKits</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/opensea_color.svg') }}" alt="image">
+                                                <span>OpenSea</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/app_link.svg') }}" alt="image">
+                                                <span>App Link</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/booksy.svg') }}" alt="image">
+                                                <span>Booksy</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/dropdown.svg') }}" alt="image">
+                                                <span>Dropdown</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/textSection.svg') }}" alt="image">
+                                                <span>Text Section</span>
+                                            </div>
+                                            <div class="icon float-right">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <a href="#" class="onclickIcon">
+                                        <div class="icon_wrap media position-relative mb-3">
+                                            <div class="icon_info">
+                                                <img src="{{ asset('assets/img/icon/featured.svg') }}" alt="image">
+                                                <span>Featured</span>
                                             </div>
                                             <div class="icon float-right">
                                                 <i class="fa fa-plus"></i>
