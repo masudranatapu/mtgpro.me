@@ -36,6 +36,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('card',['as'=>'card','uses'=>'CardController@getIndex']);
     Route::get('card/create',['as'=>'card.create','uses'=>'CardController@getCreate']);
     Route::post('card/store',['as'=>'card.store','uses'=>'CardController@postStore']);
+    Route::post('card/store-first-card',['as'=>'card.store-first-card','uses'=>'CardController@saveBusinessCard']);
     Route::get('card/{id}/view',['as'=>'card.view','uses'=>'CardController@getView']);
     Route::get('card/{id}/edit',['as'=>'card.edit','uses'=>'CardController@getEdit']);
     Route::post('card/{id}/update',['as'=>'card.update','uses'=>'CardController@postUpdate']);

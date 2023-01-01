@@ -36,12 +36,6 @@ $tabIndex = 1;
 <body style="background-image: url({{ asset('assets/img/site-bg.jpg') }});">
     <div class="card_starter_wrapper">
         <div class="container-fluid p-0">
-            <?php
-            if(isset($_REQUEST['issubmit'])){
-                echo "<strong>form is sumbitted</strong>";
-            }
-
-            ?>
             <div class="row no-gutters align-items-center">
                 <div class="col-lg-6 col-xl-5">
                     <!-- card step form -->
@@ -69,7 +63,7 @@ $tabIndex = 1;
                                     </a>
                                 </li> --}}
                             </ul>
-                            <form id="cerate-first-card" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
+                            <form id="cerate-first-card" class="needs-validation mt-md-5 pt-md-5" action="{{ route('user.card.store-first-card') }}" id="cardCreateFrom" method="POST" enctype="multipart/form-data" novalidate="novalidate" >
                                 @csrf
                                 <input type='hidden' name="issubmit" value="1">
 
@@ -480,53 +474,52 @@ $(function() {
 
     $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
         // Validate only on forward movement
-            if (stepDirection == 'forward') {
-                let form = document.getElementById('form-' + (currentStepIdx + 1));
+        if (stepDirection == 'forward') {
+            let form = document.getElementById('form-' + (currentStepIdx + 1));
             if (form) {
                 if (!form.checkValidity()) {
-                      form.classList.add('was-validated');
-                      $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-                      $("#smartwizard").smartWizard('fixHeight');
-                      return false;
-                    }
-                    $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
-                  }
+                    form.classList.add('was-validated');
+                    $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
+                    $("#smartwizard").smartWizard('fixHeight');
+                    return false;
                 }
-            });
+                $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
+            }
+        }
+    });
      // Step show event
-            $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
-                $("#prev-btn").removeClass('disabled').prop('disabled', false);
-                $("#next-btn").removeClass('disabled').prop('disabled', false);
-                if(stepPosition === 'first') {
-                    $("#prev-btn").addClass('disabled').prop('disabled', true);
-                } else if(stepPosition === 'last') {
-                    $("#next-btn").addClass('disabled').prop('disabled', true);
-                } else {
-                    $("#prev-btn").removeClass('disabled').prop('disabled', false);
-                    $("#next-btn").removeClass('disabled').prop('disabled', false);
-                }
+    $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
+        $("#prev-btn").removeClass('disabled').prop('disabled', false);
+        $("#next-btn").removeClass('disabled').prop('disabled', false);
+        if(stepPosition === 'first') {
+            $("#prev-btn").addClass('disabled').prop('disabled', true);
+        } else if(stepPosition === 'last') {
+            $("#next-btn").addClass('disabled').prop('disabled', true);
+            $("#next-btn").hide(300);
+        } else {
+            $("#prev-btn").removeClass('disabled').prop('disabled', false);
+            $("#next-btn").removeClass('disabled').prop('disabled', false);
+        }
+         // Get step info from Smart Wizard
+        let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
+        $("#sw-current-step").text(stepInfo.currentStep + 1);
+        $("#sw-total-step").text(stepInfo.totalSteps);
 
-                // Get step info from Smart Wizard
-                let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
-                $("#sw-current-step").text(stepInfo.currentStep + 1);
-                $("#sw-total-step").text(stepInfo.totalSteps);
-
-                if (stepPosition == 'last') {
-                //   showConfirm();
-                  $(".sw-btn-next").addClass('d-none');
-                  $("#btnFinish").removeClass('d-none');
-                  $("#btnFinish").prop('disabled', false);
-                } else {
-                  $("#btnFinish").prop('disabled', true);
-                }
-
+        if (stepPosition == 'last') {
+            //   showConfirm();
+            $(".sw-btn-next").addClass('d-none');
+            $("#btnFinish").removeClass('d-none');
+            $("#btnFinish").prop('disabled', false);
+        } else {
+            $("#btnFinish").prop('disabled', true);
+        }
                 // Focus first name
-                if (stepIndex == 1) {
-                  setTimeout(() => {
+            if (stepIndex == 1) {
+                setTimeout(() => {
                     $('#name').focus();
-                  }, 0);
-                }
-            });
+                }, 0);
+            }
+        });
 
 });
 

@@ -7,12 +7,15 @@ use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use App\Models\BusinessField;
+use App\Mail\EmailToCardOwner;
 use App\Http\Requests\CardRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
+use App\Http\Requests\FirstCardRequest;
 
 class CardController extends Controller
 {
@@ -260,6 +263,61 @@ class CardController extends Controller
         // return response()->json('<img src="'.$imagePath.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">');
 
     }
+
+    public function saveBusinessCard(FirstCardRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+          //validity
+          $validity = checkPackageValidity(Auth::id());
+        //   if($validity == false){
+        //       Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+        //       return redirect()->route('user.plans');
+        //   }
+
+        //   $check = checkCardLimit(Auth::id());
+        //   if($check == false){
+        //       Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+        //       return redirect()->back();
+        //   }
+        $card               = new BusinessCard();
+        $card->card_id      = uniqid();
+        $card->user_id      = Auth::id();
+        $card->theme_id     = 1;
+        $card->theme_color  = '#fff';
+        $card->card_lang    = 'en';
+        $card->card_url     = uniqid();
+        $card->card_type    = 'vcard';
+        $card->profile      = $request->avatar_path ?? null;
+        $card->title        = $request->name;
+        $card->designation  = $request->designation;
+        $card->company_name = $request->company_name;
+        $card->phone_number = $request->phone_number;
+        $card->ccode        = $request->ccode;
+        $card->card_email   = $request->card_email ?? Auth::user()->email;
+        $card->card_for     = 'Work';
+        $card->save();
+        $user = User::where('id',Auth::id())->first();
+        if($user->name == null){
+            User::where('id',Auth::id())->update(['name' => $request->name]);
+        }
+        $card = $this->businessCard->getView($request,$card->id);
+        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+
+
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error(trans('Unable to create Card ! Please try again'), 'Success', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+
+        }
+        DB::commit();
+        Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->route('user.card');
+        }
+
 
 
 
