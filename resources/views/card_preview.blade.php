@@ -109,7 +109,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">
+                                <a class="text-decoration-none" href="#" target="_blank">
                                     <svg class="icon-shadow" width="75" height="75" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g filter="url(#filterc8)">
                                             <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc8)"></path>
@@ -136,7 +136,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:rabin1@gmail.com" target="_blank">
+                                <a class="text-decoration-none" href="mailto:rabin1@gmail.com" target="_blank">
                                     <svg class="icon-shadow" width="75" height="75" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g filter="url(#filterc9)">
                                             <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc9)"></path>
@@ -166,19 +166,19 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">
+                                <a class="text-decoration-none" href="#" target="_blank">
                                      <svg width="75" height="75" fill="#1877F2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g clip-path="url(#facebook_monochrome_svg__facebook)" filter="url(#facebook_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M55.924 51.531l1.797-11.734H46.482v-7.615c0-3.21 1.57-6.34 6.604-6.34h5.11v-9.99s-4.637-.793-9.071-.793c-9.257 0-15.306 5.62-15.306 15.794v8.944h-10.29V51.53h10.29v28.86l6.331.001h6.332v-28.86h9.442z" fill="#fff"></path></g><defs><clipPath id="facebook_monochrome_svg__facebook"><path fill="#fff" d="M0 0h80v80H0z"></path></clipPath><filter id="facebook_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
                                     <span>Facebook</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">
+                                <a class="text-decoration-none" href="#" target="_blank">
                                      <svg width="75" height="75" fill="#0077B5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g filter="url(#linkedin_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M15.898 31.635h10.551V64.94H15.898V31.635zm5.278-16.576c1.21 0 2.394.352 3.4 1.012a6.028 6.028 0 012.253 2.694 5.896 5.896 0 01.347 3.468 5.967 5.967 0 01-1.676 3.073 6.155 6.155 0 01-3.134 1.642 6.227 6.227 0 01-3.535-.344 6.093 6.093 0 01-2.744-2.213 5.921 5.921 0 01-1.028-3.336 5.945 5.945 0 011.793-4.24 6.179 6.179 0 014.324-1.756zM32 31.86h10.127V36.4h.14c1.411-2.6 4.853-5.342 9.992-5.342 10.699-.023 12.682 6.83 12.682 15.715V64.94H54.377V48.846c0-3.832-.07-8.766-5.49-8.766-5.419 0-6.34 4.179-6.34 8.516v16.345H32V31.86z" fill="#fff"></path></g><defs><filter id="linkedin_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
                                     <span>Linkedin</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">
+                                <a class="text-decoration-none" href="#" target="_blank">
                                      <svg width="75" height="75" fill="#F41314" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><g clip-path="url(#facebook_monochrome_svg__facebook)" filter="url(#facebook_monochrome_svg__filter0_i)"><path d="M18.095 0h43.81C71.905 0 80 8.095 80 18.095v43.81C80 71.905 71.905 80 61.905 80h-43.81C8.095 80 0 71.905 0 61.905v-43.81C0 8.095 8.095 0 18.095 0z"></path><path d="M55.924 51.531l1.797-11.734H46.482v-7.615c0-3.21 1.57-6.34 6.604-6.34h5.11v-9.99s-4.637-.793-9.071-.793c-9.257 0-15.306 5.62-15.306 15.794v8.944h-10.29V51.53h10.29v28.86l6.331.001h6.332v-28.86h9.442z" fill="#fff"></path></g><defs><clipPath id="facebook_monochrome_svg__facebook"><path fill="#fff" d="M0 0h80v80H0z"></path></clipPath><filter id="facebook_monochrome_svg__filter0_i" x="0" y="-1" width="80" height="81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="-1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow"></feBlend></filter></defs></svg>
                                     <span>Youtube</span>
                                 </a>
