@@ -46,11 +46,7 @@ $settings = getSetting();
         <div class="user-panel align-items-center mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <a href="#">
-                    @if (Auth::user()->profile_image)
-                    <img src="{{ Auth::user()->profile_image }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
-                    @else
-                    <img src="{{ asset('assets/img/user.jpg') }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
-                    @endif
+                    <img src="{{ getProfile(Auth::user()->profile) }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
                 </a>
             </div>
             <div class="info">

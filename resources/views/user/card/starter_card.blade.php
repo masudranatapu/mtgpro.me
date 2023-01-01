@@ -97,7 +97,7 @@
                                     <div class="col-sm-8 col-lg-12 col-xl-8">
                                        <div class="form-group">
                                           <label for="designation" class="form-label">{{ __('Job') }}</label>
-                                          <input type="text" name="designation" id="designation" class="form-control cin @error('designation') is-invalid @enderror" data-preview="preview_designation" placeholder="{{ __('Designation') }}" required tabindex="{{ $tabIndex++ }}">
+                                          <input type="text" name="designation" id="designation" class="form-control cin_desig_comp @error('designation') is-invalid @enderror" data-preview="desig_comp_show" placeholder="{{ __('Designation') }}" required tabindex="{{ $tabIndex++ }}">
                                           <div class="invalid-feedback">{{ __('Enter your job title') }}</div>
                                           @if($errors->has('designation'))
                                           <span class="help-block text-danger">{{ $errors->first('designation') }}</span>
@@ -105,7 +105,7 @@
                                        </div>
                                        <div class="form-group">
                                           <label for="company_name" class="form-label">{{ __('Company') }}</label>
-                                          <input type="text" name="company_name" id="company_name" class="form-control cin @error('company_name') is-invalid @enderror" data-preview="preview_company_name" placeholder="{{ __('Company') }}" required tabindex="{{ $tabIndex++ }}">
+                                          <input type="text" name="company_name" id="company_name" class="form-control cin_desig_comp @error('company_name') is-invalid @enderror" data-preview="desig_comp_show" placeholder="{{ __('Company') }}" required tabindex="{{ $tabIndex++ }}">
                                           <div class="invalid-feedback">{{ __('Enter your company name') }}</div>
                                           @if($errors->has('company_name'))
                                           <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
@@ -188,11 +188,11 @@
                            </div>
                            <div class="card_content text-center">
                               <div class="profile_name mt-2">
-                                 <h3 id="preview_name">{{ __('Rabin Mia')}}</h3>
-                                 <h5><span id="preview_designation">{{ __('Developer') }}</span> <span style="padding: 0px 3px;">{{ __('at') }}</span> <span id="preview_company_name">{{ __('Arobil')}}</span></h5>
+                                 <h3 id="preview_name">{{  Auth::user()->name ?? 'Rabin Mia' }}</h3>
+                                 <h5 id="desig_comp_show">{{ __('Manager at Arobil')}}</h5>
                               </div>
                               <div class="save_contact mt-4 mb-4">
-                                 <a href="#">{{ __('Save Contact')}}</a>
+                                 <a href="javascript:void(0)">{{ __('Save Contact')}}</a>
                               </div>
                               <div class="social_icon">
                                  <ul>
@@ -227,7 +227,7 @@
                                        </a>
                                     </li>
                                     <li>
-                                       <a href="#" target="_blank">
+                                       <a href="javascript:void(0)" target="_blank">
                                           <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                              <g filter="url(#filterc8)">
                                                 <path d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z" fill="url(#paint0_linearc8)"></path>

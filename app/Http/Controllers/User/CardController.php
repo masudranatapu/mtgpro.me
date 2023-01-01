@@ -308,7 +308,7 @@ class CardController extends Controller
             User::where('id',Auth::id())->update(['name' => $request->name]);
         }
         $card = $this->businessCard->getView($request,$card->id);
-        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+        // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
