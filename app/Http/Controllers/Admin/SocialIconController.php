@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use Carbon\Carbon;
+use File;
+use App\Models\SocialIcon;
 
 class SocialIconController extends Controller
 {
@@ -43,6 +45,7 @@ class SocialIconController extends Controller
     {
         //
         $this->validate($request, [
+            'icon_image' => 'required',
             'icon_group' => 'required',
             'icon_name' => 'required',
             'icon_fa' => 'required',
@@ -50,6 +53,7 @@ class SocialIconController extends Controller
             'example_text' => 'required',
             'order_id' => 'required',
         ],[
+            'icon_image.required' => 'Icon image is required',
             'icon_group.required' => 'Icon group is required',
             'icon_name.required' => 'Icon name is required',
             'icon_fa.required' => 'Icon fa is required',
@@ -58,7 +62,15 @@ class SocialIconController extends Controller
             'order_id.required' => 'Order by id is required',
         ]);
 
+        if ($request->file('icon_image')) {
+            $image = $request->file('icon_image');
+            $name  = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img/icon/'), $name);
+            $icon_image = 'assets/img/icon/' . $name;
+        };
+
         DB::table('social_icon')->insert([
+            'icon_image' => $icon_image,
             'icon_group' => $request->icon_group,
             'icon_name' => $request->icon_name,
             'icon_fa' => $request->icon_fa,
@@ -68,6 +80,8 @@ class SocialIconController extends Controller
             'order_id' => $request->order_id,
             'created_at' => Carbon::now(),
         ]);
+
+        
 
         Toastr::success('Social icon successfully save :-)','Success');
         return redirect()->back();
@@ -107,6 +121,7 @@ class SocialIconController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         //
         $this->validate($request, [
             'icon_group' => 'required',
@@ -124,7 +139,25 @@ class SocialIconController extends Controller
             'order_id.required' => 'Order by id is required',
         ]);
 
+
+        $old_iconImg = DB::table('social_icon')->where('id', $id)->first();
+
+        if ($request->file('icon_image')) {
+            // delete old logo
+            $imagePath  = public_path($old_iconImg->icon_image);
+            if(File::exists($imagePath)){
+                File::delete($imagePath);
+            }
+            // add new
+            $image = $request->file('icon_image');
+            $name  = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img/icon/'), $name);
+            $add_icon_image = 'assets/img/icon/' . $name;
+        };
+
+
         DB::table('social_icon')->where('id', $id)->update([
+            'icon_image' => $add_icon_image ?? $old_iconImg->icon_image,
             'icon_group' => $request->icon_group,
             'icon_name' => $request->icon_name,
             'icon_fa' => $request->icon_fa,
@@ -136,7 +169,7 @@ class SocialIconController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        Toastr::info('Social icon successfully updated :-)','Success');
+        Toastr::success('Social icon successfully updated :-)','Success');
         return redirect()->route('admin.social-icon.index');
 
     }
@@ -149,8 +182,13 @@ class SocialIconController extends Controller
      */
     public function destroy($id)
     {
-        //
-        DB::table('social_icon')->where('id', $id)->delete();
+    
+        $SocialIcon = SocialIcon::find($id);
+        if (file_exists($SocialIcon->icon_image)) {
+            File::delete($SocialIcon->icon_image);
+        }
+        $SocialIcon->delete();
+
         Toastr::success('Social icon successfully deleted :-)','Info');
         return redirect()->back();
 
