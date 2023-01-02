@@ -250,6 +250,34 @@ $(document).on('input','#personalized_link', function() {
 
 }).keyup();
 
+//icon search
+$(document).on('keyup', '#filter', function(){
+    var filter = $(this).val(), count = 0;
+    $(".add_list_wrap .icon_each").each(function(){
+        if ($(this).data('name').search(new RegExp(filter, "i")) < 0) {
+            $(this).fadeOut();
+        } else {
+            $(this).show();
+            count++;
+        }
+    });
+    var numberItems = count;
+    $("#filter-count").text('('+count+')');
+
+});
+
+// social content modal
+$(document).on('click', '.onclickIcon' ,function() {
+    var name = $(this).data('name');
+    var title = $(this).data('title');
+    var image = $(this).data('image');
+    $('#content_icon').attr('src',image);
+    $('#content_link').text(title+ ' profile link');
+    $('#content_title').val(title);
+    $('.first_modal').addClass('d-none');
+    $('.second_modal').removeClass('d-none');
+});
+
 
 
 

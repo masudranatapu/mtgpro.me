@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\FirstCardRequest;
+use App\Http\Requests\CardUpdateRequest;
 
 class CardController extends Controller
 {
@@ -194,9 +195,11 @@ class CardController extends Controller
     }
 
 
-    public function postUpdate(CardRequest $request, $id)
+    public function postUpdate(CardUpdateRequest $request, $id)
     {
+
         $this->resp = $this->businessCard->postUpdate($request, $id);
+
         if (!$this->resp->status) {
             Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);

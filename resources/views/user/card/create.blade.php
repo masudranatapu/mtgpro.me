@@ -553,17 +553,7 @@ new Sortable(dropItems, {
     dragClass: "sortable-drag"
 });
 
-// social content modal
-$('.onclickIcon').on('click', function() {
-    var name = $(this).data('name');
-    var title = $(this).data('title');
-    var image = $(this).data('image');
-    $('#content_icon').attr('src',image);
-    $('#content_link').text(title+ ' profile link');
-    $('#content_title').val(title);
-    $('.first_modal').addClass('d-none');
-    $('.second_modal').removeClass('d-none');
-});
+
 $('.backfirstModal').on('click', function() {
     $('.first_modal').removeClass('d-none');
     $('.second_modal').addClass('d-none');
@@ -608,21 +598,7 @@ $(document).on('input','#colorPicker',function(){
     element.style.backgroundColor = color;
 })
 
-//icon search
-$(document).on('keyup', '#filter', function(){
-    var filter = $(this).val(), count = 0;
-    $(".add_list_wrap .icon_each").each(function(){
-        if ($(this).data('name').search(new RegExp(filter, "i")) < 0) {
-            $(this).fadeOut();
-        } else {
-            $(this).show();
-            count++;
-        }
-    });
-    var numberItems = count;
-    $("#filter-count").text('('+count+')');
 
-});
 
 </script>
 @endpush
