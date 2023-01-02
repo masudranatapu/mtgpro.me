@@ -69,15 +69,28 @@
                                                     </div>
                                                     <!-- social media link -->
                                                     <div class="social_media_list" id="drop-items">
-
-                                                    </div>
-
-                                                    <!-- edit social link form -->
-                                                    <div class="edit_social_form add_form_wrap d-none" style="padding-top:14px;">
-                                                        <div class="social_add_form">
-
+                                                        <div class="edit_social_form add_form_wrap" style="padding-top:14px;">
+                                                            <div class="single_list media position-relative sicon_single_list_{{ $user_email->id }}">
+                                                                <a href="javascript:void(0)" class="editLink" data-id="{{ $user_email->id }}">
+                                                                    <div class="drag_drap">
+                                                                        <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
+                                                                    </div>
+                                                                    <div class="social_media_name">
+                                                                        <img src="{{ getIcon($user_email->icon_image) }}" alt="{{ $user_email->icon }}">
+                                                                        <span>{{ $user_email->label }}</span>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="media_btn float-right">
+                                                                    <div class="custom-control custom-switch d-inline">
+                                                                        <input type="checkbox" class="custom-control-input sicon_control" id="{{ $user_email->icon.'_'.$user_email->id }}" value="{{ $user_email->id }}" {{ $user_email->status == 1 ? 'checked' : '' }} >
+                                                                        <label class="custom-control-label" for="{{ $user_email->icon.'_'.$user_email->id }}"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <!-- about -->
@@ -265,24 +278,13 @@
                                                     </div>
                                                     <div class="social_icon">
                                                         <ul id="social_icon_list">
-                                                            <li>
-                                                                <a href="#" target="_blank">
-                                                                    <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
-                                                                    <span>Facebook</span>
-                                                                </a>
-                                                            </li>
-                                                            {{-- <li>
-                                                                <a href="#" target="_blank">
-                                                                    <img src="{{ asset('assets/img/icon/call.svg') }}" alt="phone">
-                                                                    <span>Phone</span>
-                                                                </a>
-                                                            </li>
+
                                                             <li>
                                                                 <a href="#" target="_blank">
                                                                     <img src="{{ asset('assets/img/icon/email.svg') }}" alt="email">
                                                                     <span>Email</span>
                                                                 </a>
-                                                            </li> --}}
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -374,7 +376,7 @@
                             <div class="row no-gutters">
                                 <div class="col-lg-8">
                                     <div class="social_add_form">
-                                        <form action="#" method="post">
+                                        <form onsubmit="alert('Please complete the about section'); return false;">
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
