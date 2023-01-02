@@ -495,7 +495,7 @@ $(document).ready(function(){
             }
         })
 
-        var countryCode = '';
+        var countryCode = 'us';
         var input = document.querySelector("#billing_phone");
         window.intlTelInput(input, {
             // allowDropdown: false,
@@ -504,8 +504,8 @@ $(document).ready(function(){
             dropdownContainer: document.body,
             formatOnDisplay: true,
             geoIpLookup: function(callback) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "";
+                $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "us";
                     callback(countryCode);
                 });
             },

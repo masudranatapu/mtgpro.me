@@ -1426,36 +1426,5 @@ $("input:checkbox.sicon_control").click(function() {
     });
 });
 
-
-// preview icon
-var loadFile = function(event) {
-    var image = document.getElementById('previewIcon');
-    image.src = URL.createObjectURL(event.target.files[0]);
-    if($(this).is('input[type="file"]')){
-      if (isImage($(this).val())){
-        if(this.files[0].size > 5000000) {
-            toastr.error("Please upload file less than 5MB. Thanks!!", 'Error', {
-            closeButton: true,
-            progressBar: true,
-            });
-            return false;
-        }
-      }
-      else
-      {
-        toastr.error("Only image files are allowed to upload.", 'Error', {
-            closeButton: true,
-            progressBar: true,
-        });
-      }
-    }else{
-
-    }
-};
-
-
-
-
-
 </script>
 @endpush
