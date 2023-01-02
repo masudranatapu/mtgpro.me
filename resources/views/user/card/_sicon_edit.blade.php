@@ -5,7 +5,8 @@
     <div class="form-group">
         <label class="imgLabel" for="logo">
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
-            <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
+            {{-- <input type="file" onchange="loadFile(event)" class="upload_icon" name="logo" id="logo" hidden> --}}
+            <input type="file" class="upload_icon" name="logo" id="logo" hidden>
             <span>Select photo here or drag and drop <br /> one in place of current</span>
         </label>
         @if($errors->has('logo'))
@@ -47,6 +48,49 @@
         </div>
     </div>
 </form>
+
+
+<script>
+  $('.upload_icon').on('change', function(){
+        if (isImage($(this).val())){
+            if(this.files[0].size > 10000) {
+                toastr.error("Please upload file less than 100KB. Thanks!!", 'Error', {
+                closeButton: true,
+                progressBar: true,
+                });
+                return false;
+            }
+            $(this).siblings('#previewIcon').attr('src', URL.createObjectURL(this.files[0]));
+        }
+        else
+        {
+            toastr.error("Only image files are allowed to upload.", 'Error', {
+                closeButton: true,
+                progressBar: true,
+            });
+        }
+    });
+
+// If user tries to upload videos other than these extension , it will throw error.
+function isImage(filename) {
+    var ext = getExtension(filename);
+    switch (ext.toLowerCase()) {
+    case 'jpeg':
+    case 'jpg':
+    case 'png':
+    case 'webp':
+    case 'gif':
+    case 'svg':
+    return true;
+    }
+    return false;
+}
+function getExtension(filename) {
+var parts = filename.split('.');
+return parts[parts.length - 1];
+}
+</script>
+
 
 @push('custom_js')
 
