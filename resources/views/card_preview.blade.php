@@ -77,11 +77,34 @@
                     </div>
                     <div class="social_media">
                          <ul>
+                            <?php
+                            $android = stripos($_SERVER['HTTP_USER_AGENT'], "android");
+                            $iphone = stripos($_SERVER['HTTP_USER_AGENT'], "iphone");
+                            $ipad = stripos($_SERVER['HTTP_USER_AGENT'], "ipad");
+                              ?>
                             @if (!empty($carddetails))
                             @foreach ($carddetails as $contact)
                             <li>
+                                @if ($contact->type=='address')
+                                <a title="" class="text-decoration-none" href="{{'https://www.google.com/maps?q='.$contact->content }}" target="_blank">
+                                @elseif ($contact->type=='email')
+                                <a class="text-decoration-none" href="mailto:{{$contact->content }}" target="_blank">
+                                @elseif ($contact->type=='phone')
+                                <a class="text-decoration-none" href="tel:{{$contact->content }}" target="_blank">
+                                @elseif ($contact->type=='text')
                                 <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
-                                    <img class="img-fluid" src="{{ asset($contact->icon_image) }}" alt="{{ $contact->label }}">
+                                @elseif ($contact->type=='whatsapp')
+                                @if($android !== false || $ipad !== false || $iphone !== false)
+                                <a class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
+                                @else
+                                <a class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
+                                @endif
+
+                                @else
+                                <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
+
+                                @endif
+                                    <img class="img-fluid" src="{{ asset($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75" >
                                     <span>{{ $contact->label }}</span>
                                 </a>
                             </li>

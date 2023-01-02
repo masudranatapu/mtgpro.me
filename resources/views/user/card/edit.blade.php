@@ -387,26 +387,38 @@
                             <div class="row no-gutters">
                                 <div class="col-lg-8">
                                     <div class="social_add_form">
-                                        <form action="{{ route('user.card.add_icon') }}" >
+                                        <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm"  method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="card_id" value="{{ $card->id }}">
+                                            <input type="hidden" name="icon_id" id="icon_id" value="">
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
                                                     <input type="file" name="logo" id="logo" hidden>
-                                                    <span>Select photo here or drag and drop <br /> one in place of current</span>
+                                                    <span>Select photo here or drag and drop <br /> one in place of current 465464646464</span>
+                                                    @if($errors->has('logo'))
+                                                        <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+                                                    @endif
                                                 </label>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label"><span id="content_link">Facebook profile link</span> <span class="text-dark">*</span></label>
+                                                <label class="form-label"><span id="content_link">{{ __('Facebook profile link') }}</span> <span class="text-dark">*</span></label>
                                                 <input type="text" name="content" class="form-control" placeholder="link" required>
+                                                @if($errors->has('logo'))
+                                                    <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+                                                @endif
                                             </div>
                                             <div class="form-group">
-                                                <label for="title" class="form-label">Link title</label>
-                                                <input type="text" name="title" class="form-control mcin" data-preview="link_title_show" placeholder="Title" required id="content_title" data-id="" maxlength="20">
+                                                <label for="label" class="form-label">{{ __('Link title') }}</label>
+                                                <input type="text" name="label" class="form-control mcin" data-preview="link_title_show" placeholder="Title" required id="content_title" data-id="" maxlength="20">
+                                                @if($errors->has('logo'))
+                                                    <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+                                                @endif
                                             </div>
 
                                             <div class="form-group text-center float-lg-right">
-                                                <button type="button" class="btn btn-secondary backfirstModal mr-2">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Add Link</button>
+                                                <button type="button" class="btn btn-secondary backfirstModal mr-2">{{ __('Cancel') }}</button>
+                                                <button type="submit" class="btn btn-primary">{{ __('Add Link') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -576,6 +588,8 @@ new Sortable(dropItems, {
 // social content modal
 $('.onclickIcon').on('click', function() {
     $('.first_modal').addClass('d-none');
+    var icon_id = $(this).attr('data-id');
+    $('#icon_id').val(icon_id);
     $('.second_modal').removeClass('d-none');
 });
 $('.backfirstModal').on('click', function() {
@@ -732,6 +746,39 @@ $("input:checkbox.sicon_control").click(function() {
                $('.sicon_' + response.data.id).find('.icon_label').html(response.data.label);
                $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('img').attr("src", response.data.logo);
                $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('span').html(response.data.label);
+                toastr.success(response.message);
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        error: function (jqXHR, exception) {
+            toastr.error('Something wrong');
+        },
+        complete: function (response) {
+            $("body").css("cursor", "default");
+        }
+    });
+});
+  $(document).on('submit', "#iconCreateForm", function (e) {
+    e.preventDefault();
+    var form = $("#iconUpdateForm");
+    $.ajax({
+        url: $(this).attr("action"),
+        type: $(this).attr("method"),
+        dataType: "JSON",
+        data: new FormData(this),
+        async: true,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $("body").css("cursor", "progress");
+        },
+        success: function (response) {
+            if (response.status == 1) {
+            $('#drop-items').append(response.data.html);
+            $('#iconCreateForm')[0].reset();
+            $('.second_modal').addClass('d-none');
+            $('.first_modal').removeClass('d-none');
                 toastr.success(response.message);
             } else {
                 toastr.error(response.message);

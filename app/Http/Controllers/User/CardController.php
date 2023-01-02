@@ -85,6 +85,11 @@ class CardController extends Controller
         $data = $this->businessCard->siconUpdate($request);
         return response()->json($data);
     }
+    public function addCardIcon(Request $request)
+    {
+        $data = $this->businessCard->addCardIcon($request);
+        return response()->json($data);
+    }
 
     public function siconEdit(Request $request)
     {
