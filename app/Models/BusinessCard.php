@@ -271,6 +271,59 @@ class BusinessCard extends Model
 
 
 
+    public function addCardIcon($request){
+        // dd($request->all());
+        $data = [];
+        DB::beginTransaction();
+        try {
+                $rules = array(
+                    'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
+                    'content'   => 'required|max:255',
+                    'label'     => 'required|max:255',
+                );
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return $this->successResponse(200, 'Information not updated! Please try again', '', 0);
+                }
+                $social_icon    = SocialIcon::findOrFail($request->icon_id);
+                $icon           = new BusinessField();
+                $icon->card_id  = $request->card_id;
+                $icon->type     = $request->type ?? 'link';
+                $icon->position = BusinessField::where('card_id',$request->card_id)->max('position')+1;
+                $icon->status   = 1;
+                $icon->icon     = $social_icon->icon_name;
+                $icon->icon_id  = $social_icon->id;
+                $icon->created_at = date('Y-m-d H:i:s');
+                $icon->content  = $request->content;
+                $icon->label    =  $request->label;
+                if(!is_null($request->file('logo')))
+                {
+                  $icon_ = $request->file('logo');
+                  $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                  $base_name = explode(' ', $base_name);
+                  $base_name = implode('-', $base_name);
+                  $base_name = Str::lower($base_name);
+                  $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                  $file_path = 'assets/img/icon/custom_icon/';
+                  if (!File::exists($file_path)) {
+                    File::makeDirectory($file_path, 777, true);
+                  }
+                 $icon_->move($file_path, $image_name);
+                 $icon->icon_image = $file_path.$image_name;
+                }
+                else{
+                    $icon->icon_image = $social_icon->icon_image;
+                }
+                $icon->save();
+                $data['html'] = view('user.card.partial._social_icon', compact('icon'))->render();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            return $this->successResponse(200, 'Information not created! Please try again', $data, 0);
+        }
+            DB::commit();
+            return $this->successResponse(200, 'Information successfully created', $data, 1);
+    }
     public function siconUpdate($request){
 
         $data = [];

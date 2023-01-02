@@ -92,8 +92,11 @@ class HomeController extends Controller
                 Toastr::warning('This card has been deleted');
                 return redirect()->back();
             }
-            $carddetails = DB::table('business_fields')->where('card_id', $cardinfo->id)->where('status',1)->orderBy('position','ASC')->get();
-
+            $carddetails = DB::table('business_fields')
+            ->select('business_fields.*')
+            // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
+            ->where('business_fields.card_id', $cardinfo->id)
+            ->where('business_fields.status',1)->orderBy('business_fields.position','ASC')->get();
             return view('card_preview', compact('cardinfo', 'icons', 'shareComponent','carddetails'));
         }else{
 

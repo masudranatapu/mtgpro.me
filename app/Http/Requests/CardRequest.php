@@ -42,19 +42,18 @@ class CardRequest extends FormRequest
                 $rules[$value->icon_name.'.*'] = 'nullable|string|max:224';
             }
         }
-
         return $rules;
     }
 
     public function messages()
     {
         return [
-            'card_for.required'   => 'This field is required',
-            'bgcolor.required'    => 'This field is required',
-            'name.required'      => 'This field is required',
-            'location.required'    => 'This field is required',
+            'card_for.required'     => 'This field is required',
+            'bgcolor.required'      => 'This field is required',
+            'name.required'         => 'This field is required',
+            'location.required'     => 'This field is required',
             'designation.required'  => 'This field is required',
-            'company_name.required'        => 'This field is required',
+            'company_name.required' => 'This field is required',
             'email.required'        => 'This field is required',
         ];
     }
