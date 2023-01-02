@@ -49,31 +49,45 @@
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon Name')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon Group')}}</label>
+                                                <select name="icon_group" id="icon_group" class="form-control">
+                                                     <option value="" class="d-none">-- Choose --</option>
+                                                     <option value="Recommended">Recommended</option>
+                                                     <option value="Contact">Contact</option>
+                                                     <option value="Social Media">Social Media</option>
+                                                     <option value="Music Media">Music Media</option>
+                                                     <option value="Payment">Payment</option>
+                                                     <option value="More">More</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">{{ __('Icon Name')}}</label>
                                                 <input type="text" name="icon_name" class="form-control" placeholder="{{ __('Icon name')}}">
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon fa')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon fa')}}</label>
                                                 <input type="text" name="icon_fa" class="form-control" placeholder="{{ __('Icon  name fa')}}">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon Title')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon Title')}}</label>
                                                 <input type="text" name="icon_title" class="form-control" placeholder="{{ __('Icon Title')}}">
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon Example')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon Example')}}</label>
                                                 <input type="text" name="example_text" class="form-control" placeholder="{{ __('Icon Example')}}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">{{ __('Order Id')}}</label>
+                                                <input type="number" name="order_id" class="form-control" placeholder="{{ __('Order id')}}">
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Order Id')}}</label>
-                                                <input type="text" name="order_id" class="form-control" placeholder="{{ __('Order id')}}">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="">{{ __('Status')}}</label>
+                                                <label for="" class="form-label">{{ __('Status')}}</label>
                                                 <select name="status"  class="form-control">
                                                     <option disabled>{{ __('Select One')}}</option>
                                                     <option value="1" selected>{{ __('Active')}}</option>
