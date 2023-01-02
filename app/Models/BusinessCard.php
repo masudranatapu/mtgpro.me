@@ -2,8 +2,10 @@
 
 namespace App\Models;
 use File;
+use Image;
 use App\Models\SocialIcon;
 use App\Traits\ApiResponse;
+use Illuminate\Support\Str;
 use App\Traits\RepoResponse;
 use App\Helpers\StorageHelper;
 use App\Mail\EmailToCardOwner;
@@ -302,6 +304,9 @@ class BusinessCard extends Model
 
 
     public function siconUpdate($request){
+
+        $data = [];
+
         DB::beginTransaction();
         try {
             $sid = $request->id;
@@ -309,15 +314,53 @@ class BusinessCard extends Model
                 $status = $request->status == 'checked' ? 1 : 0;
                 DB::table('business_fields')->where('id',$sid)->update(['status'=>$status]);
             }
+            else{
+                $rules = array(
+                    'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
+                    'content'   => 'required|max:255',
+                    'label'     => 'required|max:255',
+                );
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return $this->successResponse(200, 'Information not updated! Please try again', '', 0);
+                }
+                $icon = BusinessField::findOrFail($request->id);
+                $icon->content = $request->content;
+                $icon->label =  $request->label;
+                if(!is_null($request->file('logo')))
+                {
+                    if(File::exists($icon->icon_image)) {
+                        File::delete($icon->icon_image);
+                    }
+                  $icon_ = $request->file('logo');
+                  $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                  $base_name = explode(' ', $base_name);
+                  $base_name = implode('-', $base_name);
+                  $base_name = Str::lower($base_name);
+                  $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                  $file_path = 'assets/img/icon/custom_icon/';
+                  if (!File::exists($file_path)) {
+                    File::makeDirectory($file_path, 777, true);
+                  }
+                 $icon_->move($file_path, $image_name);
+                 $icon->icon_image = $file_path.$image_name;
+                }
+                $icon->update();
 
+                $data['logo'] = asset($icon->icon_image);
+                $data['content'] = $icon->content;
+                $data['label'] = $icon->label;
+                $data['status'] = $icon->status;
+                $data['id'] = $icon->id;
+            }
 
         } catch (\Exception $e) {
-            // dd($e->getMessage());
+            dd($e->getMessage());
             DB::rollback();
-            return $this->successResponse($e->getCode(), 'Content not updated', '', 0);
+            return $this->successResponse(200, 'Information not updated! Please try again', $data, 0);
         }
             DB::commit();
-            return $this->successResponse(200, 'Content updated successfully', null, 1);
+            return $this->successResponse(200, 'Information successfully updated', $data, 1);
     }
 
     public function siconEdit($request){
