@@ -76,6 +76,14 @@ class CardController extends Controller
         return view('user.card.edit',compact('card','icons'));
     }
 
+    public function siconUpdate(Request $request)
+    {
+        $data = $this->businessCard->siconUpdate($request);
+        return response()->json($data);
+    }
+
+
+
     public function getVideoDelete($id,$index)
     {
         DB::beginTransaction();

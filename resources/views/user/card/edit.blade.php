@@ -80,7 +80,7 @@
                                                             </a>
                                                             <div class="media_btn float-right">
                                                                 <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input sicon_control" checked="" id="{{ $icon->icon.'_'.$icon->id }}" value="{{ $icon->id }}" >
+                                                                    <input type="checkbox" class="custom-control-input sicon_control" id="{{ $icon->icon.'_'.$icon->id }}" value="{{ $icon->id }}" {{ $icon->status == 1 ? 'checked' : '' }} >
                                                                     <label class="custom-control-label" for="{{ $icon->icon.'_'.$icon->id }}"></label>
                                                                 </div>
                                                             </div>
@@ -320,7 +320,8 @@
                                                         <ul>
                                                             @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                             @foreach ($card->business_card_fields as $key => $icon )
-                                                            <li class="sicon_{{ $icon->id }}" >
+
+                                                            <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                 <a href="{{ makeUrl($icon->content) }}" target="_blank">
                                                                     <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
                                                                     <span>{{ $icon->label }}</span>
@@ -1365,9 +1366,9 @@ $("input:checkbox.sicon_control").click(function() {
     }
 
     $.ajax({
-         url: `{{ route('user.card.sicon_edit') }}`,
+         url: `{{ route('user.card.sicon_update') }}`,
          type: "post",
-         data:{"image": response,"_token": "{{ csrf_token() }}",},
+         data:{"id": id,"status":status,"_token": "{{ csrf_token() }}",},
          success:function(data)
          {
              console.log(data);

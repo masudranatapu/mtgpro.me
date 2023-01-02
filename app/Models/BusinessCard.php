@@ -299,6 +299,27 @@ class BusinessCard extends Model
     return $this->formatResponse(true, 'Successfully updated', 'user.card',[]);
     }
 
+
+
+    public function siconUpdate($request){
+        DB::beginTransaction();
+        try {
+            $sid = $request->id;
+            if($request->status){
+                $status = $request->status == 'checked' ? 1 : 0;
+                DB::table('business_fields')->where('id',$sid)->update(['status'=>$status]);
+            }
+
+
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            DB::rollback();
+            return $this->successResponse($e->getCode(), 'Content not updated', '', 0);
+        }
+            DB::commit();
+            return $this->successResponse(200, 'Content updated successfully', null, 1);
+    }
+
     public function getCardShareInfo($request,$id){
         DB::beginTransaction();
         try {

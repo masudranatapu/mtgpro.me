@@ -39,7 +39,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('card/store-first-card',['as'=>'card.store-first-card','uses'=>'CardController@saveBusinessCard']);
     Route::get('card/{id}/view',['as'=>'card.view','uses'=>'CardController@getView']);
     Route::get('card/{id}/edit',['as'=>'card.edit','uses'=>'CardController@getEdit']);
-    Route::post('card/sicon_edit',['as'=>'card.sicon_edit','uses'=>'CardController@siconEdit']);
+    Route::post('card/sicon_update',['as'=>'card.sicon_update','uses'=>'CardController@siconUpdate']);
     Route::post('card/{id}/update',['as'=>'card.update','uses'=>'CardController@postUpdate']);
     Route::get('card/{id}/delete',['as'=>'card.delete','uses'=>'CardController@getDelete']);
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);
