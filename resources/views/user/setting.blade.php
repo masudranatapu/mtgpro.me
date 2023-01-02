@@ -48,7 +48,7 @@
                                                         <h3>{{ __('Account Settings') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form action="#" method="post">
+                                                        <form onsubmit="return false;">
                                                             <div class="form-group">
                                                                 <label for="profile_url" class="form-label">
                                                                     {{ __('Profile URL') }}
@@ -56,7 +56,7 @@
                                                                         <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="icon">
                                                                     </a>
                                                                 </label>
-                                                                <input type="text" name="profile_url" id="profile_url" class="form-control" value="contactsolutions/">
+                                                                <input type="text" name="profile_url" id="profile_url" class="form-control" value="mtgpr/">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="email" class="form-label">{{ __('Email') }}</label>
@@ -76,7 +76,7 @@
                                                         <h3>{{ __('Support') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form action="#" method="post">
+                                                        <form onsubmit="return false;">
                                                             <div class="form-group">
                                                                 <label for="emalil_to" class="form-label">{{ __('To') }}</label>
                                                                 <input type="text" name="emalil_to" id="emalil_to" class="form-control" value="support@contactsolutions.com" readonly="">
@@ -103,7 +103,7 @@
                                                         <p>{{ __('Do you have an idea for a feature that would make Popl even better for you? Let us know!') }}</p>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form action="#" method="post">
+                                                        <form onsubmit="return false;">
                                                             <div class="form-group">
                                                                 <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
                                                                 <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="Message" class="form-control" required style="height:120px;"></textarea>

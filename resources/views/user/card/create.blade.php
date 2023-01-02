@@ -195,7 +195,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="name" class="form-label">{{ __('Name') }}</label>
-                                                                    <input type="text" name="name" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('name') }}" required data-preview="name_show" value="{{ old('name') }}">
+                                                                    <input type="text" name="name" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('name') }}" required data-preview="name_show" value="{{ old('name') }}" maxlength="50">
                                                                     @if($errors->has('name'))
                                                                         <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                                                     @endif
@@ -204,7 +204,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                    <input type="text" name="location" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('location') }}" required data-preview="location_show" value="{{ old('location') }}">
+                                                                    <input type="text" name="location" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('location') }}" required data-preview="location_show" value="{{ old('location') }}" maxlength="50">
                                                                     @if($errors->has('location'))
                                                                         <span class="help-block text-danger">{{ $errors->first('location') }}</span>
                                                                     @endif
@@ -213,7 +213,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="designation" class="form-label">{{ __('Job Title') }}</label>
-                                                                    <input type="text" name="designation" class="form-control @error('designation') is-invalid @enderror cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show" value="{{ old('designation') }}">
+                                                                    <input type="text" name="designation" class="form-control @error('designation') is-invalid @enderror cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show" value="{{ old('designation') }}" maxlength="50">
                                                                     @if($errors->has('designation'))
                                                                         <span class="help-block text-danger">{{ $errors->first('designation') }}</span>
                                                                     @endif
@@ -222,7 +222,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="company_name" class="form-label">{{ __('Company') }}</label>
-                                                                    <input type="text" name="company_name" class="form-control @error('company_name') is-invalid @enderror cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show" value="{{ old('company_name') }}">
+                                                                    <input type="text" name="company_name" class="form-control @error('company_name') is-invalid @enderror cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show" value="{{ old('company_name') }}" maxlength="50">
                                                                     @if($errors->has('company_name'))
                                                                         <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                                                     @endif
@@ -231,12 +231,24 @@
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                     <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show">{{ old('bio') }}</textarea>
+                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" maxlength="150">{{ old('bio') }}</textarea>
                                                                     @if($errors->has('bio'))
                                                                         <span class="help-block text-danger">{{ $errors->first('bio') }}</span>
                                                                     @endif
                                                                  </div>
                                                             </div>
+                                                            <div class="col-12 mb-3">
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                  <span class="input-group-text" id="card_url-addon3" style="border: none">{{ route('home') }}/</span>
+                                                                </div>
+                                                                <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{ old('card_url') }}" >
+                                                              </div>
+                                                              @if($errors->has('card_url'))
+                                                              <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
+                                                                @endif
+                                                            </div>
+
                                                             <div class="col-12">
                                                                 <div class="float-right">
                                                                      <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>

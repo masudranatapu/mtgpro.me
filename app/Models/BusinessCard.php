@@ -56,7 +56,7 @@ class BusinessCard extends Model
         try {
             $card_id = uniqid();
             $card['card_id']      = $card_id;
-            $card['card_url']      = $card_id;
+            // $card['card_url']      = $card_id;
             $card['user_id']      = Auth::id();
             $card['card_lang']    = 'en';
             $card['card_type']    = 'vcard';
@@ -72,7 +72,7 @@ class BusinessCard extends Model
             $card['theme_id']     = $request->theme_id ?? 1;
             $card['designation']  = $request->designation;
             $card['company_name'] = $request->company_name;
-            $card['company_websitelink'] = $request->company_websitelink;
+            $card['card_url']     = $request->card_url;
             $card['phone_number'] = $request->phone_number;
             $card['ccode']        = $request->ccode;
             $card['card_email']   = $request->card_email ?? Auth::user()->email;

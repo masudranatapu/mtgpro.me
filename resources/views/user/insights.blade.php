@@ -20,7 +20,7 @@
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ __('10') }}</h3>
+                            <h3>{{ $total_card ?? 0 }}</h3>
                             <p>{{ __('Total Cards') }}</p>
                         </div>
                         <div class="icon">
@@ -31,7 +31,7 @@
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="small-box bg-primary">
                                 <div class="inner">
-                                    <h3>{{ __('05') }}</h3>
+                                    <h3>{{ $total_card_share ?? 0 }}</h3>
                                     <p>{{ __('Total Card Share') }}</p>
                                 </div>
                                 <div class="icon">

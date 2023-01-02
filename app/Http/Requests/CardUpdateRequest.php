@@ -31,7 +31,7 @@ class CardUpdateRequest extends FormRequest
             'location'              => 'required|string|max:124',
             'designation'           => 'required|string|max:124',
             'company_name'          => 'nullable|string|max:124',
-            // 'personalized_link'  => 'required|unique:users,email|string|max:124',
+            // 'card_url'  => 'required|unique:users,email|string|max:124',
             'bio'                   => 'nullable|string|max:124',
 
         ];
@@ -48,7 +48,7 @@ class CardUpdateRequest extends FormRequest
             'name.required'    => 'This field is required',
             'location.required'  => 'This field is required',
             'designation.required'        => 'This field is required',
-            'personalized_link.required' => 'This field is required',
+            'card_url.required' => 'This field is required',
             'company_name.required' => 'This field is required',
             'bio.required'        => 'This field is required',
         ];
