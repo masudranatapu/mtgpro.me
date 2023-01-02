@@ -16,12 +16,10 @@
                 <input type="hidden" name="billing_country" value="" id="stp_billing_country">
                 <input type="hidden" name="vat_number" value="" id="stp_vat_number">
                 <input type="hidden" name="type" value="" id="stp_type">
-
                 <div class="modal-header">
                     <h6 class="modal-title" id="paymentStripeLabel"> {{ __('Card Information')}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
                     <div class="card">
                         <div class="card-body">

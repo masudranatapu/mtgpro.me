@@ -1,7 +1,5 @@
 @extends('user.layouts.app')
 @section('title') {{ __('My Cards') }}  @endsection
-@push('custom_css')
-@endpush
 @section('dashboard','active')
 
 @section('content')

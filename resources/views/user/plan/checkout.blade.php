@@ -261,9 +261,9 @@ input.country_selector,.country_selector button {
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">{{ __('Upgrade / Renewal Plan')}}</h6>
-                    <div class="card-table table-responsive">
-                        <table class="table table-vcenter">
-                            <thead>
+                    <div class="card-table">
+                        <table class="table">
+                            <thead class="bg-white">
                                 <tr>
                                     <th class="w-1">{{ __('Description')}}</th>
                                     <th class="w-1">{{ __('Price')}}</th>
@@ -376,15 +376,6 @@ input.country_selector,.country_selector button {
                                     </div>
                                     <div class="col-md-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('Tax Number')}} </label>
-                                            <input type="text" class="form-control @error('vat_number') is-invalid @enderror" name="vat_number" placeholder="{{ __('Tax Number')}}..." value="{{$user->vat_number}}">
-                                            @if($errors->has('vat_number'))
-                                            <span class="help-block text-danger">{{ $errors->first('vat_number') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
                                             <label class="form-label">{{ __('Type')}} <span class="text-danger">*</span></label>
                                             <select name="type" id="type" class="form-control @error('type') is-invalid @enderror">
                                                 <option value="personal" {{ Auth::user()->type == 'personal' ? 'selected' : '' }}>{{ __('Personal')}}</option>
@@ -436,16 +427,14 @@ input.country_selector,.country_selector button {
                                 @endif
                                 <div class="col-12">
                                     <button type="submit" id="continuePaypalBtn" class="btn btn-primary">{{ __('Continue for payment') }}</button>
-                                    {{-- <input type="submit" id="continuePaypalBtn" value="{{ __('Continue for payment') }}" class="btn default-btn"> --}}
-                                   {{-- <a type="button" class="btn btn-primary" id="continueStripeBtn" data-bs-toggle="modal" data-bs-target="#planModal">{{ __('Continue for payment') }}</a> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-            </form>
+                </form>
+            </div>
         </div>
-</div>
-</div>
+    </div>
 </div>
 @include('user.plan._partial-pay-with-stripe')
 @endsection
