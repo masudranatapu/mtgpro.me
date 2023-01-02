@@ -80,11 +80,8 @@ class SocialIconController extends Controller
             'order_id' => $request->order_id,
             'created_at' => Carbon::now(),
         ]);
-
-        
-
         Toastr::success('Social icon successfully save :-)','Success');
-        return redirect()->back();
+        return redirect()->route('admin.social-icon.index');
     }
 
     /**
