@@ -46,7 +46,8 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
-        $icons = SocialIcon::orderBy('order_id','desc')->get();
+        $icons = SocialIcon::where('status',1)->orderBy('order_id','desc')->get();
+
         // if(count($cards) == 0 ){
         //     return view('user.card.first_card',compact('cards'));
         // }
@@ -71,7 +72,7 @@ class CardController extends Controller
     {
         $user_id = Auth::id();
         $card = $this->businessCard->getView($request,$id);
-        $icons = SocialIcon::all();
+        $icons = SocialIcon::where('status',1)->orderBy('order_id','desc')->get();
         // dd($card->business_card_fields);
         return view('user.card.edit',compact('card','icons'));
     }
