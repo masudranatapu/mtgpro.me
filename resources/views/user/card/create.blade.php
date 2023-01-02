@@ -11,7 +11,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                <a href="{{ route('user.dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
+                                <a href="{{ route('dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ getProfile() }}" width="50" class="img-circle mr-2" alt="image">
                                 <span id="card_title_show">{{ __('Card Name') }}</span>
                             </h1>
@@ -77,60 +77,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="facebook">
-                                                                    <span>{{ __('Instagram') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" id="visiable2">
-                                                                    <label class="custom-control-label" for="visiable2"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/number.svg') }}" alt="facebook">
-                                                                    <span>{{ __('Number') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" checked="" id="visiable3">
-                                                                    <label class="custom-control-label" for="visiable3"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/soundcloud.svg') }}" alt="facebook">
-                                                                    <span>{{ __('soundcloud') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" id="visiable3">
-                                                                    <label class="custom-control-label" for="visiable3"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
+
                                                     </div>
                                                     <!-- edit social link form -->
                                                     <div class="edit_social_form add_form_wrap d-none" style="padding-top:14px;">
