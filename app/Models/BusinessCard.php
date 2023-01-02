@@ -320,6 +320,40 @@ class BusinessCard extends Model
             return $this->successResponse(200, 'Content updated successfully', null, 1);
     }
 
+    public function siconEdit($request){
+        $data = null;
+        DB::beginTransaction();
+        try {
+            $sid = $request->id;
+            $icon = BusinessField::where('id',$sid)->first();
+            $data['html'] = view('user.card._sicon_edit', compact('icon'))->render();
+
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            DB::rollback();
+            return $this->successResponse($e->getCode(), 'Content not found', '', 0);
+        }
+            DB::commit();
+            return $this->successResponse(200, 'Content found', $data, 1);
+    }
+
+
+    public function siconRemove($request){
+        $data = null;
+        DB::beginTransaction();
+        try {
+            $sid = $request->id;
+            BusinessField::where('id',$sid)->delete();
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            DB::rollback();
+            return $this->successResponse($e->getCode(), 'Content not deleted', '', 0);
+        }
+            DB::commit();
+            return $this->successResponse(200, 'Content deleted successfully', $data, 1);
+    }
+
+
     public function getCardShareInfo($request,$id){
         DB::beginTransaction();
         try {

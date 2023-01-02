@@ -82,6 +82,16 @@ class CardController extends Controller
         return response()->json($data);
     }
 
+    public function siconEdit(Request $request)
+    {
+        $data = $this->businessCard->siconEdit($request);
+        return response()->json($data);
+    }
+    public function siconRemove(Request $request)
+    {
+        $data = $this->businessCard->siconRemove($request);
+        return response()->json($data);
+    }
 
 
     public function getVideoDelete($id,$index)

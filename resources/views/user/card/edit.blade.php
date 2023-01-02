@@ -64,12 +64,10 @@
                                                     </div>
                                                     <!-- social media link -->
                                                     <div class="social_media_list" id="drop-items">
-
                                                     @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                         @foreach ($card->business_card_fields as $key => $icon )
-
-                                                        <div class="single_list media position-relative">
-                                                            <a href="javascript:void(0)" class="editLink">
+                                                        <div class="single_list media position-relative sicon_single_list_{{ $icon->id }}">
+                                                            <a href="javascript:void(0)" class="editLink" data-id="{{ $icon->id }}">
                                                                 <div class="drag_drap">
                                                                     <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
@@ -90,45 +88,10 @@
 
                                                     </div>
                                                     <!-- edit social link form -->
+
                                                     <div class="edit_social_form add_form_wrap d-none" style="padding-top:14px;">
                                                         <div class="social_add_form">
-                                                            <form action="#" method="post">
-                                                                <div class="form-group">
-                                                                    <label class="imgLabel" for="logo">
-                                                                        <img id="previewIcon" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
-                                                                        <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
-                                                                        <span>Select photo here or drag and drop <br /> one in place of current</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="facebook" class="form-label">{{ __('Facebook profile link') }} <span class="text-dark">*</span></label>
-                                                                    <input type="text" name="facebook" id="facebook" class="form-control" placeholder="Facebook profile link" required>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="title" class="form-label">{{ __('Link title') }}</label>
-                                                                    <input type="text" name="title" id="title" class="form-control" placeholder="Facebook">
-                                                                </div>
-                                                                <div class="form-group mb-4">
-                                                                    <a href="#" target="_blank">
-                                                                        {{ __('Test your link') }}
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#03a9f4">
-                                                                            <path d="M384 320c-17.67 0-32 14.33-32 32v96H64V160h96c17.67 0 32-14.32 32-32s-14.33-32-32-32L64 96c-35.35 0-64 28.65-64 64V448c0 35.34 28.65 64 64 64h288c35.35 0 64-28.66 64-64v-96C416 334.3 401.7 320 384 320zM488 0H352c-12.94 0-24.62 7.797-29.56 19.75c-4.969 11.97-2.219 25.72 6.938 34.88L370.8 96L169.4 297.4c-12.5 12.5-12.5 32.75 0 45.25C175.6 348.9 183.8 352 192 352s16.38-3.125 22.62-9.375L416 141.3l41.38 41.38c9.156 9.141 22.88 11.84 34.88 6.938C504.2 184.6 512 172.9 512 160V24C512 10.74 501.3 0 488 0z"></path>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div class="float-left">
-                                                                        <button type="button" class="text-danger">
-                                                                            <i class="fa fa-trash"></i>
-                                                                            {{ __('Remove') }}
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="float-right">
-                                                                        <button type="button" class="btn btn-secondary mr-2 back">{{ __('Cancel') }}</button>
-                                                                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                          <!-- dynamic content push here -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1308,13 +1271,61 @@ $('.modalClose').on('click', function() {
 });
 
 
-// edit social content
+// Show content for edit
 $('.editLink').on('click', function() {
     $('.tab_body .back').removeClass('d-none');
     $('.tab_body .edit_social_form').removeClass('d-none');
     $('.tab_body .add_link').addClass('d-none');
     $('.tab_body .social_media_list').addClass('d-none');
+    var id = $(this).data('id');
+
+    $.ajax({
+         url: `{{ route('user.card.sicon_edit') }}`,
+         type: "get",
+         data:{id},
+         success:function(data)
+         {
+            if(data.success){
+                $('.social_add_form').html(data.data.html);
+            }else{
+                alert('Please reload and try again');
+            }
+         },
+         error: function (jqXHR, exception) {
+         },
+         complete: function (response) {}
+     });
 });
+
+
+
+//Icon content remove
+$(document).on('click', '.scion_remove', function() {
+    var url = $(this).data('url');
+    var id = $(this).data('id');
+    $.ajax({
+         url: url,
+         type: "post",
+         data:{"id": id,"_token": "{{ csrf_token() }}",},
+         success:function(data)
+         {
+            if(data.success){
+                $('.tab_body .back').addClass('d-none');
+                $('.tab_body .edit_social_form').addClass('d-none');
+                $('.tab_body .add_link').removeClass('d-none');
+                $('.tab_body .social_media_list').removeClass('d-none');
+                $('.sicon_single_list_'+id).hide();
+            }else{
+                alert('Please reload and try again');
+            }
+         },
+         error: function (jqXHR, exception) {
+         },
+         complete: function (response) {}
+     });
+
+});
+
 $('.tab_body .back').on('click', function() {
     $('.tab_body .back').addClass('d-none');
     $('.tab_body .edit_social_form').addClass('d-none');
@@ -1353,6 +1364,7 @@ $(document).on('input','#colorPicker',function(){
 })
 
 
+//Active/Inactive Content
 $("input:checkbox.sicon_control").click(function() {
     var id = $(this).val();
     var status = '';
@@ -1364,26 +1376,19 @@ $("input:checkbox.sicon_control").click(function() {
         $('.sicon_'+id).show();
         status = 'checked';
     }
-
     $.ajax({
          url: `{{ route('user.card.sicon_update') }}`,
          type: "post",
          data:{"id": id,"status":status,"_token": "{{ csrf_token() }}",},
          success:function(data)
          {
-             console.log(data);
-            //  $('.preview_logo_div').html(data.html);
-            //  $(".profile_image_src").attr("src",data.image);
-            //  $('#uploadAvatarModal').modal('hide');
-            //  // $('#photo').val(1);
-            //  $('.logo-crop-spinner').removeClass('active');
+            // console.log(data);
          },
          error: function (jqXHR, exception) {
-            //  $('.logo-crop-spinner').removeClass('active');
+
          },
          complete: function (response) {
-            //  $("body").css("cursor", "default");
-            //  $('.logo-crop-spinner').removeClass('active');
+
          }
      });
 
