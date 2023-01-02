@@ -418,7 +418,7 @@ input.country_selector,.country_selector button {
                                                     </div>
                                                     <div>
                                                         <span class="payment payment-provider-{{ $gateway->payment_gateway_name == 'Paypal' ? 'paypal' : 'visa' }} payment-xs me-2">
-                                                        <img width="36" src="{{ url('/') }}{{ $gateway->payment_gateway_logo }}" alt="">
+                                                        <img width="36" src="{{ asset($gateway->payment_gateway_logo) }}" alt="{{ $gateway->display_name }}">
                                                         </span>
                                                         {{ $gateway->display_name }} <strong></strong>
                                                     </div>
@@ -430,7 +430,7 @@ input.country_selector,.country_selector button {
                                 @endforeach
                                 @endif
                                 <div class="col-12">
-                                    <button type="submit" id="continuePaypalBtn" class="btn btn-primary">{{ __('Continue for payment') }}</button>
+                                    <button type="submit" id="continuePaypalBtn" class="btn btn-dark">{{ __('Continue for payment') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -442,6 +442,10 @@ input.country_selector,.country_selector button {
 </div>
 @include('user.plan._partial-pay-with-stripe')
 @endsection
+
+{{-- @dd($config[9]->config_value) --}}
+
+
 @push('custom_js')
 <script src="{{ asset('assets/js/countrySelect.min.js') }}"></script>
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
@@ -500,7 +504,7 @@ $(document).ready(function(){
             dropdownContainer: document.body,
             formatOnDisplay: true,
             geoIpLookup: function(callback) {
-                $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
                     var countryCode = (resp && resp.country) ? resp.country : "";
                     callback(countryCode);
                 });
