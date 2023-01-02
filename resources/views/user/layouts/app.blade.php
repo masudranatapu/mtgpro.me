@@ -33,6 +33,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
     <script src="{{asset('assets/js/toastr.js')}}"></script>
+    {!! Toastr::message() !!}
 
     <script>
     // preview icon

@@ -5,10 +5,8 @@
 @endpush
 
 @php
-
     $icon_group = Config::get('app.icon_group');
-
-
+    $tabindex = 1;
 @endphp
 
 @section('card','active')
@@ -96,13 +94,16 @@
                                             <!-- about -->
                                             <div class="tab-pane fade active show" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
                                                 <div class="tab_body about_user">
-                                                     <form action="#" method="post" enctype="multipart/form-data">
+                                                        <form action="{{ route('user.card.store') }}" method="post" id="cardCreate" enctype="multipart/form-data">
+                                                            @csrf
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                     <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_for" id="card_title" class="form-control cin" value="{{ old('card_for') }}" placeholder="{{ __('Card Title') }}" required data-preview="card_for_show">
-
+                                                                     <input type="text" name="card_for" id="card_title" class="form-control @error('card_title') is-invalid @enderror cin" placeholder="{{ __('Card Title') }}" required data-preview="card_for_show" tabindex="{{ $tabindex++ }}" value="{{ old('card_title') }}">
+                                                                     @if($errors->has('card_for'))
+                                                                     <span class="help-block text-danger">{{ $errors->first('card_for') }}</span>
+                                                                     @endif
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -113,7 +114,10 @@
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
                                                                                 <img id="profilePic" src="{{ getProfile() }}" alt="profile image">
                                                                              </label>
-                                                                             <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic">
+                                                                             <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}">
+                                                                             @if($errors->has('profile_pic'))
+                                                                             <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
+                                                                             @endif
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
@@ -122,7 +126,10 @@
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
                                                                                   <img id="coverpic" src="{{ getCover() }}" alt="logo">
                                                                              </label>
-                                                                             <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden>
+                                                                             <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden value="{{ old('cover_pic') }}">
+                                                                             @if($errors->has('cover_pic'))
+                                                                             <span class="help-block text-danger">{{ $errors->first('cover_pic') }}</span>
+                                                                             @endif
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
@@ -130,7 +137,10 @@
                                                                          <label id="logofile" for="company_logo">
                                                                              <img id="showlogo" src="{{ getLogo() }}" alt="logo">
                                                                          </label>
-                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo">
+                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo" value="{{ old('company_logo') }}">
+                                                                        @if($errors->has('company_logo'))
+                                                                             <span class="help-block text-danger">{{ $errors->first('company_logo') }}</span>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -144,35 +154,35 @@
                                                                          </label> --}}
                                                                          <!-- color -->
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white','#fff')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" checked id="color1" onclick="changeColor('white','#fff')" value="#fff">
                                                                             <label for="color1" class="colorOne"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)','#000')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color2" onclick="changeColor('rgb(0, 0, 0)','#000')" value="#000">
                                                                             <label for="color2" class="colorTwo"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)','#EB5757')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color3" onclick="changeColor('rgba(235, 87, 87, 0.1)','#EB5757')" value="#EB5757">
                                                                             <label for="color3" class="colorThree"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)','#F2994A')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color4" onclick="changeColor('rgba(242, 153, 74, 0.1)','#F2994A')" value="#F2994A">
                                                                             <label for="color4" class="colorFour"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)','#F2C94C')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color5" onclick="changeColor('rgba(242, 201, 76, 0.1)','#F2C94C')" value="#F2C94C">
                                                                             <label for="color5" class="colorFive"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)','#219653')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color6" onclick="changeColor('rgba(33, 150, 83, 0.1)','#219653')" value="#219653">
                                                                             <label for="color6" class="colorSix"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)','#2F80ED')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color7" onclick="changeColor('rgba(47, 128, 237, 0.1)','#2F80ED')" value="#2F80ED">
                                                                             <label for="color7" class="colorSeven"></label>
                                                                         </div>
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)','#9B51E0')">
+                                                                            <input class="form-check-input" type="radio" name="bgcolor" id="color8" onclick="changeColor('rgba(155, 81, 224, 0.1)','#9B51E0')" value="#9B51E0">
                                                                             <label for="color8" class="colorEight"></label>
                                                                         </div>
                                                                     </div>
@@ -184,32 +194,47 @@
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="name" class="form-label">{{ __('Name') }}</label>
-                                                                     <input type="text" name="name" class="form-control cin" placeholder="{{ __('name') }}" required data-preview="name_show">
+                                                                    <label for="name" class="form-label">{{ __('Name') }}</label>
+                                                                    <input type="text" name="name" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('name') }}" required data-preview="name_show" value="{{ old('name') }}">
+                                                                    @if($errors->has('name'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label for="location" class="form-label">{{ __('Location') }}</label>
+                                                                    <input type="text" name="location" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('location') }}" required data-preview="location_show" value="{{ old('location') }}">
+                                                                    @if($errors->has('location'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('location') }}</span>
+                                                                    @endif
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                     <input type="text" name="location" class="form-control cin" placeholder="{{ __('location') }}" required data-preview="location_show">
+                                                                    <label for="designation" class="form-label">{{ __('Job Title') }}</label>
+                                                                    <input type="text" name="designation" class="form-control @error('designation') is-invalid @enderror cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show" value="{{ old('designation') }}">
+                                                                    @if($errors->has('designation'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('designation') }}</span>
+                                                                    @endif
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="designation" class="form-label">{{ __('Job Title') }}</label>
-                                                                     <input type="text" name="designation" class="form-control cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show">
-                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                     <label for="company_name" class="form-label">{{ __('Company') }}</label>
-                                                                     <input type="text" name="company_name" class="form-control cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show">
+                                                                    <label for="company_name" class="form-label">{{ __('Company') }}</label>
+                                                                    <input type="text" name="company_name" class="form-control @error('company_name') is-invalid @enderror cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show" value="{{ old('company_name') }}">
+                                                                    @if($errors->has('company_name'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
+                                                                    @endif
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-group">
-                                                                     <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                     <textarea name="bio" cols="30" rows="10" class="form-control cin" placeholder="{{ __('Bio') }}" data-preview="bio_show"></textarea>
+                                                                    <label for="bio" class="form-label">{{ __('Bio') }}</label>
+                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show">{{ old('bio') }}</textarea>
+                                                                    @if($errors->has('bio'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('bio') }}</span>
+                                                                    @endif
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -261,7 +286,7 @@
                                                 <div class="card_banner mb-5" style="background-image: url('{{ getCover() }}');" id="coverpic_2">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ getProfile() }}" width="100" alt="image" id="profilePic_2">
+                                                        <img src="{{ getProfile() }}" width="100" height="100" alt="image" id="profilePic_2">
                                                         <!-- logo -->
                                                         <img class="logo" src="{{ getlogo() }}" alt="image" id="showlogo_2">
                                                     </div>
@@ -437,7 +462,7 @@
                                                         <div class="card_banner mb-5" style="background-image: url('{{ asset('') }}assets/img/card-banner.png');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ getProfile() }}" width="100" alt="image">
+                                                                <img src="{{ getProfile() }}" width="100" height="100" alt="image">
                                                                 <!-- logo -->
                                                                 <img class="logo" src="{{ getLogo() }}" alt="image" >
                                                             </div>
