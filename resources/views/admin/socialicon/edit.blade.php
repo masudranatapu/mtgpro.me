@@ -44,9 +44,19 @@
                         <div class="card-body">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                    <form action="{{route('admin.social-icon.update', $socileicons->id)}}" method="POST">
+                                    <form action="{{route('admin.social-icon.update', $socileicons->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
+                                            <div class="col-12">
+                                                 <label for="" class="form-label">Preview Image</label>
+                                                 <img id="output" src="{{ asset($socileicons->icon_image ?? 'assets/img/no-image.jpg') }}" class="border rounded" width="80" height="80" alt="image">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                    <label for="" class="form-label">{{ __('Icon Image')}}</label>
+                                                <input type="file" name="icon_image" onchange="loadFile(event)" class="form-control" placeholder="{{ __('Icon image')}}">
+                                            </div>
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Icon Group')}}</label>
                                                 <select name="icon_group" id="icon_group" class="form-control">
@@ -58,32 +68,32 @@
                                                      <option value="More" {{$socileicons->icon_group == 'More' ? 'selected' : '' }}>More</option>
                                                 </select>
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Icon Name')}}</label>
                                                 <input type="text" name="icon_name" class="form-control" value="{{$socileicons->icon_name}}" placeholder="Icon name">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Icon fa')}}</label>
                                                 <input type="text" name="icon_fa" class="form-control" value="{{$socileicons->icon_fa}}" placeholder="Icon  name fa">
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Icon Title')}}</label>
                                                 <input type="text" name="icon_title" class="form-control" value="{{$socileicons->icon_title}}" placeholder="Icon Title">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Icon Exampl')}}e</label>
                                                 <input type="text" name="example_text" class="form-control" value="{{$socileicons->example_text}}" placeholder="Icon Example">
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Order Id')}}</label>
                                                 <input type="number" name="order_id" class="form-control" value="{{$socileicons->order_id}}" placeholder="Order id">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <label for="" class="form-label">{{ __('Status')}}</label>
                                                 <select name="status"  class="form-control">
@@ -110,4 +120,11 @@
     </div>
     @include('admin.includes.footer')
 </div>
+<!-- Preview image -->
+<script>
+    var loadFile = function(event) {
+       var image = document.getElementById('output');
+       image.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
 @endsection

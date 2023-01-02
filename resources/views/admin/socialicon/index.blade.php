@@ -48,6 +48,7 @@
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
                                             <th>{{ __('Icon Group') }}</th>
+                                            <th>{{ __('Icon Image') }}</th>
                                             <th>{{ __('Icon Name') }}</th>
                                             <th>{{ __('Icon fa ') }}</th>
                                             <th>{{ __('Icon Title') }}</th>
@@ -61,6 +62,7 @@
                                         <tr>
                                             <td>{{$key + 1}}</td>
                                             <td>{{$socile->icon_group}}</td>
+                                            <td><img src="{{ asset($socile->icon_image) }}" width="35" alt="icon image"></td>
                                             <td>{{$socile->icon_name}}</td>
                                             <td><i class="{{ $socile->icon_fa }}"></i></td>
                                             <td>{{$socile->icon_title}}</td>
