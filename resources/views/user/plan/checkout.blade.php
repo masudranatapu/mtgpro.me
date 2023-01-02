@@ -7,11 +7,13 @@
 <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/countrySelect.min.css') }}" rel="stylesheet" />
 <link rel="stylesheet" href="{{ asset('assets/css/intlTelInput.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
 <style>
-    .card {
+.card {
     box-shadow: rgb(35 46 60 / 4%) 0 2px 4px 0;
     border: 1px solid rgba(101, 109, 119, .16);
-}
+    }
 
 .card {
     position: relative;
@@ -215,27 +217,29 @@ input.country_selector,.country_selector button {
 	font-size: 100%;
 	color: inherit; }
 	input[disabled], button[disabled] {
-		background-color: #eee; }
+		background-color: #eee;
+    }
+    ::-webkit-input-placeholder {
+        color: #BBB; }
 
-::-webkit-input-placeholder {
-	color: #BBB; }
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #BBB;
+        opacity: 1;
+    }
 
-::-moz-placeholder {
-	/* Firefox 19+ */
-	color: #BBB;
-	opacity: 1; }
+    :-ms-input-placeholder {
+        color: #BBB;
+    }
+    #result {
+        margin-bottom: 100px; }
+        .country-select.inside {
+        width: 100%!important;
+    }
 
-:-ms-input-placeholder {
-	color: #BBB; }
-#result {
-	margin-bottom: 100px; }
-    .country-select.inside {
-    width: 100%!important;
-}
-
-.iti.iti--allow-dropdown {
-    width: 100%;
-}
+    .iti.iti--allow-dropdown {
+        width: 100%;
+    }
 </style>
 @endpush
 <?php
@@ -261,9 +265,9 @@ input.country_selector,.country_selector button {
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">{{ __('Upgrade / Renewal Plan')}}</h6>
-                    <div class="card-table table-responsive">
-                        <table class="table table-vcenter">
-                            <thead>
+                    <div class="card-table">
+                        <table class="table">
+                            <thead class="bg-white">
                                 <tr>
                                     <th class="w-1">{{ __('Description')}}</th>
                                     <th class="w-1">{{ __('Price')}}</th>
@@ -376,15 +380,6 @@ input.country_selector,.country_selector button {
                                     </div>
                                     <div class="col-md-4 col-xl-4">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('Tax Number')}} </label>
-                                            <input type="text" class="form-control @error('vat_number') is-invalid @enderror" name="vat_number" placeholder="{{ __('Tax Number')}}..." value="{{$user->vat_number}}">
-                                            @if($errors->has('vat_number'))
-                                            <span class="help-block text-danger">{{ $errors->first('vat_number') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
                                             <label class="form-label">{{ __('Type')}} <span class="text-danger">*</span></label>
                                             <select name="type" id="type" class="form-control @error('type') is-invalid @enderror">
                                                 <option value="personal" {{ Auth::user()->type == 'personal' ? 'selected' : '' }}>{{ __('Personal')}}</option>
@@ -423,7 +418,7 @@ input.country_selector,.country_selector button {
                                                     </div>
                                                     <div>
                                                         <span class="payment payment-provider-{{ $gateway->payment_gateway_name == 'Paypal' ? 'paypal' : 'visa' }} payment-xs me-2">
-                                                        <img width="36" src="{{ url('/') }}{{ $gateway->payment_gateway_logo }}" alt="">
+                                                        <img width="36" src="{{ asset($gateway->payment_gateway_logo) }}" alt="{{ $gateway->display_name }}">
                                                         </span>
                                                         {{ $gateway->display_name }} <strong></strong>
                                                     </div>
@@ -435,25 +430,29 @@ input.country_selector,.country_selector button {
                                 @endforeach
                                 @endif
                                 <div class="col-12">
-                                    <button type="submit" id="continuePaypalBtn" class="btn btn-primary">{{ __('Continue for payment') }}</button>
-                                    {{-- <input type="submit" id="continuePaypalBtn" value="{{ __('Continue for payment') }}" class="btn default-btn"> --}}
-                                   {{-- <a type="button" class="btn btn-primary" id="continueStripeBtn" data-bs-toggle="modal" data-bs-target="#planModal">{{ __('Continue for payment') }}</a> --}}
+                                    <button type="submit" id="continuePaypalBtn" class="btn btn-dark">{{ __('Continue for payment') }}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-            </form>
+                </form>
+            </div>
         </div>
-</div>
-</div>
+    </div>
 </div>
 @include('user.plan._partial-pay-with-stripe')
 @endsection
+
+{{-- @dd($config[9]->config_value) --}}
+
+
 @push('custom_js')
 <script src="{{ asset('assets/js/countrySelect.min.js') }}"></script>
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/js/jqBootstrapValidation.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+
 <script>
 
 $(document).ready(function(){
@@ -505,7 +504,7 @@ $(document).ready(function(){
             dropdownContainer: document.body,
             formatOnDisplay: true,
             geoIpLookup: function(callback) {
-                $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
                     var countryCode = (resp && resp.country) ? resp.country : "";
                     callback(countryCode);
                 });

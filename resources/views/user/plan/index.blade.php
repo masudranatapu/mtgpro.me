@@ -6,6 +6,7 @@
 My Plans
 @endsection
 @section('meta_tag')@endsection
+@push('custom_css')
 <style>
     .pricing-card{
         /* width: 319px; */
@@ -14,9 +15,8 @@ My Plans
     height: 728px;
     /* display: flex; */
     padding: 24px;
-    /* margin-right: 15px; */
+    margin-right: 15px;
     border-radius: 20px;
-    /* flex-direction: column; */
     background-color: #fff;
     }
     .pricing-card:hover{
@@ -24,7 +24,7 @@ My Plans
         filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.11));
     }
 </style>
-
+@endpush
 
 @section('content')
 <div class="content-wrapper">
@@ -33,46 +33,35 @@ My Plans
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">{{ __('Choose a plan') }}</h1>
-
-                    <div>
-                        <div class="info">Checkbox Shown &amp; <strong>Checked</strong>
-                            <input type="checkbox" class="show" checked>
-                        </div>
-                        <div class="Switch">
-                            <div class="Toggle"></div>
-                            <span class="On">ON</span> <span class="Off">OFF</span> </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section_title text-center mb-2">
-                            <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
-                        </div>
-                        <div class="switchBtn text-center mb-4">
-                            <div class="form-check form-switch">
-                                <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title text-center mb-2">
+                        <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
+                    </div>
+                    <div class="switchBtn text-center mb-4">
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
                                     {{ __('Monthly | Annual')}}</label>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-md-center">
-
-                    @if (!empty($plans) && count($plans) > 0)
-                        @foreach($plans as $plan)
-                    @php
-                        $planfeatures = json_decode($plan->features);
-                    @endphp
-                    <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
-                        <div class="pricing-card card card-md">
-                            <div class="card-body text-center">
-                                <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}
-                                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                @if (!empty($plans) && count($plans) > 0)
+                    @foreach($plans as $plan)
+                @php
+                    $planfeatures = json_decode($plan->features);
+                @endphp
+                <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                    <div class="pricing-card card card-md">
+                        <div class="card-body text-center">
+                            <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}</div>
                                 @if (Auth::user()->plan_id==$plan->id && $plan->is_free==1)
                                 <div class="text-center mt-4">
                                 <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
@@ -96,12 +85,12 @@ My Plans
                                         </li>
                                     @endforeach
                                 </ul>
-                            </div>
                         </div>
                     </div>
-                    @endforeach
-                    @endif
                 </div>
+                @endforeach
+                @endif
+            </div>
             </div>
         </div>
     </div>
@@ -147,6 +136,7 @@ My Plans
     </div>
 </div>
 </div>
+
 @endsection
 @push('custom_js')
 <script>
