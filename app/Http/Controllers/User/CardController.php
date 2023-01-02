@@ -172,6 +172,18 @@ class CardController extends Controller
 
     public function postStore(CardRequest $request)
     {
+        $validity = checkPackageValidity(Auth::id());
+        if($validity == false){
+            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('user.plans');
+        }
+
+
+        $check = checkCardLimit(Auth::id());
+        if($check == false){
+            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
         $this->resp = $this->businessCard->postStore($request);
         if (!$this->resp->status) {
             Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);

@@ -17,7 +17,7 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">
                                 <a href="{{ route('user.card') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
-                                <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="image">
+                                <img src="{{ getProfile($card->profile) }}" width="50" class="img-circle mr-2" alt="image">
                                 {{ $card->card_for ?? '' }}
                             </h1>
                         </div>
