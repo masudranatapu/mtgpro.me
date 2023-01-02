@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
+
     <!-- Scripts -->
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -30,6 +32,8 @@
     <script src="{{ asset('assets/js/bootstrap4.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
+    <script src="{{asset('assets/js/toastr.js')}}"></script>
+
     <script>
     // preview icon
     var loadFile = function(event) {

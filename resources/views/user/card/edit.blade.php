@@ -285,9 +285,9 @@
                                                             @foreach ($card->business_card_fields as $key => $icon )
 
                                                             <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
-                                                                <a href="{{ makeUrl($icon->content) }}" target="_blank">
-                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
-                                                                    <span>{{ $icon->label }}</span>
+                                                                <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
+                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
+                                                                    <span class="icon_label">{{ $icon->label }}</span>
                                                                 </a>
                                                             </li>
                                                             @endforeach
@@ -1393,6 +1393,89 @@ $("input:checkbox.sicon_control").click(function() {
      });
 
 });
+
+  $(document).on('submit', "#iconUpdateForm", function (e) {
+    e.preventDefault();
+    var form = $("#iconUpdateForm");
+    $.ajax({
+        url: $(this).attr("action"),
+        type: $(this).attr("method"),
+        dataType: "JSON",
+        data: new FormData(this),
+        async: true,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $("body").css("cursor", "progress");
+        },
+        success: function (response) {
+            if (response.status == 1) {
+               $('.sicon_' + response.data.id).find('.social_link').attr("href", response.data.content);
+               $('.sicon_' + response.data.id).find('.social_logo').attr("src", response.data.logo);
+               $('.sicon_' + response.data.id).find('.icon_label').html(response.data.label);
+               $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('img').attr("src", response.data.logo);
+               $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('span').html(response.data.label);
+                toastr.success(response.message);
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        error: function (jqXHR, exception) {
+            toastr.error('Something wrong');
+        },
+        complete: function (response) {
+            $("body").css("cursor", "default");
+        }
+    });
+});
+
+
+
+    $('#logo').on('change', function(){
+
+        alert(1);
+
+        // $(this).is('input[type="file"]');
+    if($(this).is('input[type="file"]')){
+      if (isImage($(this).val())){
+        if(this.files[0].size > 5000000) {
+            toastr.error("Please upload file less than 5MB. Thanks!!", 'Error', {
+            closeButton: true,
+            progressBar: true,
+            });
+            return false;
+        }
+        // $(this).siblings('.video_src').val(URL.createObjectURL(this.files[0]));
+      }
+      else
+      {
+        toastr.error("Only image files are allowed to upload.", 'Error', {
+            closeButton: true,
+            progressBar: true,
+        });
+      }
+    }else{
+
+    }
+    });
+
+// If user tries to upload videos other than these extension , it will throw error.
+function isImage(filename) {
+    var ext = getExtension(filename);
+    switch (ext.toLowerCase()) {
+    case 'jpeg':
+    case 'jpg':
+    case 'png':
+    case 'webp':
+    case 'gif':
+        return true;
+    }
+    return false;
+}
+function getExtension(filename) {
+    var parts = filename.split('.');
+    return parts[parts.length - 1];
+}
 
 </script>
 @endpush

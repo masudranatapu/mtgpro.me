@@ -1,18 +1,30 @@
-<form action="{{ route('user.card.sicon_update') }}" method="post" enctype="multipart/form-data">
+
+<form action="{{ route('user.card.sicon_update') }}" method="post" id="iconUpdateForm" enctype="multipart/form-data">
+    @csrf
+    <input id="id" type="hidden" name="id" value="{{ $icon->id }}">
     <div class="form-group">
         <label class="imgLabel" for="logo">
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
             <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
             <span>Select photo here or drag and drop <br /> one in place of current</span>
         </label>
+        @if($errors->has('logo'))
+        <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+        @endif
     </div>
     <div class="form-group">
         <label class="form-label" style="text-transform: capitalize;">{{ $icon->icon.' profile link' }} <span class="text-dark">*</span></label>
         <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' profile link' }}" required value="{{ $icon->content }}">
+        @if($errors->has('content'))
+        <span class="help-block text-danger">{{ $errors->first('content') }}</span>
+        @endif
     </div>
     <div class="form-group">
         <label class="form-label">{{ __('Link title') }}</label>
         <input type="text" name="label" class="form-control" placeholder="Title" value="{{ $icon->label ?? $icon->icon }}" required>
+        @if($errors->has('label'))
+        <span class="help-block text-danger">{{ $errors->first('label') }}</span>
+        @endif
     </div>
     {{-- <div class="form-group mb-4">
         <a href="#" target="_blank">
@@ -35,3 +47,9 @@
         </div>
     </div>
 </form>
+
+@push('custom_js')
+
+@endpush
+
+
