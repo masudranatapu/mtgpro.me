@@ -296,6 +296,42 @@ $(document).on('click', '.onclickIcon' ,function() {
 
 
 
+$(document).on('input','#card_url', function() {
+    var get_url = $('#base_url').val();
+    var minLength = 2;
+    var maxLength = 100;
+    var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
+    $('#card_url').val(value);
+    $("#card_url_help").addClass('text-danger');
+    if(value.length == 0){ $("#card_url_help").html(''); return false;}
+
+    if (value.length < minLength){
+        $("#card_url_help").html("Text is short");
+    }
+    else if (value.length > maxLength)
+    {
+        $("#card_url_help").html("Text is long");
+    }else{
+        $.ajax({
+            type: 'get',
+            url: get_url + '/user/card/check_link/'+value,
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                $("#card_url_help").html(response.message).removeClass('text-danger').addClass('text-success');
+            },
+            complete: function (data) {
+                $("body").css("cursor", "default");
+            }
+        });
+    }
+
+}).keyup();
+
+
+
 
 
 

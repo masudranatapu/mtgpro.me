@@ -148,5 +148,20 @@ class CardController extends Controller
             return redirect()->route('admin.cards');
         }
 
+        public function checkPerLink(Request $request,$link_text){
+            $reserve_word = config('app.reserve_word');
+            $data['status'] = false;
+            $data['message'] = 'This link is not available';
+            if(!in_array($link_text,$reserve_word)){
+                //check in database business_cards card_url
+                $card_url = BusinessCard::where('card_url',$link_text)->first();
+                if($card_url == null){
+                    $data['status'] = true;
+                    $data['message'] = 'This link is available';
+                }
+            }
+            return response()->json($data);
+        }
+
 
 }

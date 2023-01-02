@@ -287,4 +287,7 @@ return [
 
     ],
 
+    'reserve_word' => ['dashboard','cart','card','user','admin','profile','clear','forgot-password','login','auth','checkout','scan','pricing','feature','theme','contact'],
+
+
 ];

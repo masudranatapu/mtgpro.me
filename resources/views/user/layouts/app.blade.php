@@ -20,7 +20,10 @@
         .fa-exclamation-circle{color: #ccc;}
     </style>
     @stack('custom_css')
-</head>
+    <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
+
+    </head>
+
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
             <!-- top bar menu -->

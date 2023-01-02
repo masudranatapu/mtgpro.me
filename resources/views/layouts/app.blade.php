@@ -18,6 +18,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
 </head>
 <body>
     @include('layouts.header')

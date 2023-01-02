@@ -221,6 +221,18 @@
                                                                      <textarea name="bio" id="bio" cols="30" rows="10" class="form-control cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" >{{ $card->bio }}</textarea>
                                                                  </div>
                                                             </div>
+                                                            <div class="col-12 mb-3">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                      <span class="input-group-text" id="card_url-addon3" style="border: none">{{ route('home') }}/</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{$card->card_url }}" >
+                                                                  </div>
+                                                                  <span class="help-block text-danger" id="personalized_link_help">{{ $errors->first('personalized_link') }}</span>
+                                                                  @if($errors->has('card_url'))
+                                                                  <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
+                                                                    @endif
+                                                                </div>
                                                             <div class="col-12">
                                                                 <div class="float-right">
                                                                      <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>

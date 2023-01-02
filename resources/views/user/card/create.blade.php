@@ -244,6 +244,7 @@
                                                                 </div>
                                                                 <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{ old('card_url') }}" >
                                                               </div>
+                                                              <span class="help-block text-danger" id="personalized_link_help">{{ $errors->first('personalized_link') }}</span>
                                                               @if($errors->has('card_url'))
                                                               <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
                                                                 @endif

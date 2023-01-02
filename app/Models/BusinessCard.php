@@ -195,6 +195,19 @@ class BusinessCard extends Model
             //     $fields['created_at'] = date('Y-m-d H:i:s');
             //     DB::table('business_fields')->insert($fields);
             // }
+
+                $fields['card_id'] = $card_id;
+                $fields['type'] = 'email';
+                $fields['icon'] = 'json';
+                $fields['label'] = 'Email';
+                $fields['content'] = Auth::user()->email;
+                $fields['position'] = 1;
+                $fields['icon_image'] = 'assets/img/icon/email.svg';
+                $fields['status'] = 1;
+                $fields['created_at'] = date('Y-m-d H:i:s');
+
+                DB::table('business_fields')->insert($fields);
+
             $card_info = DB::table('business_cards')->where('id',$card_id)->first();
             Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card_info));
         } catch (\Exception $e) {
@@ -231,7 +244,7 @@ class BusinessCard extends Model
             $card = BusinessCard::findOrFail($id);
             $card->user_id      = Auth::id();
             $card->card_lang    = 'en';
-            // $card->card_url     = $request->personalized_link;
+            $card->card_url     = $request->card_url;
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
             $card->card_status  = 'activated';

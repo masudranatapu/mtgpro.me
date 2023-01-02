@@ -34,7 +34,10 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('card/init-card',['as'=>'init-card','uses'=>'CardController@getInitCard']);//static
     Route::post('card/upload_avatar',['as'=>'card.upload_avatar','uses'=>'CardController@uploadCardAvatar']);
     Route::get('card',['as'=>'card','uses'=>'CardController@getIndex']);
+    Route::get('card/check_link/{text}',['as'=>'card.check_link','uses'=>'CardController@checkPerLink']);
+
     Route::get('card/create',['as'=>'card.create','uses'=>'CardController@getCreate']);
+
     Route::post('card/store',['as'=>'card.store','uses'=>'CardController@postStore']);
     Route::post('card/store-first-card',['as'=>'card.store-first-card','uses'=>'CardController@saveBusinessCard']);
     Route::get('card/{id}/view',['as'=>'card.view','uses'=>'CardController@getView']);
@@ -52,6 +55,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('checkout',['as'=>'checkout','uses'=>'CheckoutController@checkout']);
     Route::post('checkout/paypal',['as'=>'checkout.post-transection','uses'=>'CheckoutController@postTransection']);
     Route::post('checkout/stripe',[ 'as' => 'payment.stripe', 'uses' =>'StripeController@stripeCheckout']);
+
 
 });
 
