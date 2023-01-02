@@ -65,7 +65,9 @@ class CardController extends Controller
             return redirect()->back();
         }
         $plan_details = User::where('id',Auth::user()->id)->first();
-        return view('user.card.create',compact('cards','icons','plan_details'));
+        $user_email = SocialIcon::where('icon_name','email')->first();
+
+        return view('user.card.create',compact('cards','icons','plan_details','user_email'));
     }
 
     public function getEdit(Request $request,$id)
