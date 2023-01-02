@@ -52,17 +52,6 @@ class BusinessCard extends Model
 
 
     public function postStore($request){
-
-        // "card_for" => "Business Card"
-        // "bgcolor" => "on"
-        // "name" => "Arifur Rahman"
-        // "location" => "Dhaka"
-        // "designation" => "Web Developer"
-        // "company_name" => "Arobil Limited"
-        // "bio" => "asasasasasasas"
-        // "profile_pic" => Illuminate\Http\UploadedFile {#476 ▶}
-        // "cover_pic" => Illuminate\Http\UploadedFile {#1221 ▶}
-        // "company_logo" => Illuminate\Http\UploadedFile {#817 ▶}
         DB::beginTransaction();
         try {
             $card_id = uniqid();
@@ -97,7 +86,7 @@ class BusinessCard extends Model
               $base_name = implode('-', $base_name);
               $base_name = Str::lower($base_name);
               $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
-              $file_path = 'uploads/avatar/';
+              $file_path = 'assets/uploads/avatar/';
               if (!File::exists($file_path)) {
                 File::makeDirectory($file_path, 777, true);
               }
@@ -114,16 +103,13 @@ class BusinessCard extends Model
               $base_name = implode('-', $base_name);
               $base_name = Str::lower($base_name);
               $image_name = $base_name."-".uniqid().".".$cover_pic->getClientOriginalExtension();
-              $file_path = 'uploads/cover/';
+              $file_path = 'assets/uploads/cover/';
               if (!File::exists($file_path)) {
                 File::makeDirectory($file_path, 777, true);
               }
              $cover_pic->move($file_path, $image_name);
              $card['cover'] = $file_path.$image_name;
-
             }
-
-
             if(!is_null($request->file('company_logo')))
             {
               $company_logo = $request->file('company_logo');
@@ -132,7 +118,7 @@ class BusinessCard extends Model
               $base_name = implode('-', $base_name);
               $base_name = Str::lower($base_name);
               $image_name = $base_name."-".uniqid().".".$company_logo->getClientOriginalExtension();
-              $file_path = 'uploads/logo/';
+              $file_path = 'assets/uploads/logo/';
               if (!File::exists($file_path)) {
                 File::makeDirectory($file_path, 777, true);
               }
