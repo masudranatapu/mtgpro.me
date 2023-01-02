@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('user.layouts.app')
 @section('title') {{ __('Checkout')}} @endsection
 @section('plan','active')
 @section('meta_tag')
@@ -229,29 +229,33 @@ input.country_selector,.country_selector button {
 	color: #BBB; }
 #result {
 	margin-bottom: 100px; }
+    .country-select.inside {
+    width: 100%!important;
+}
 
+.iti.iti--allow-dropdown {
+    width: 100%;
+}
 </style>
 @endpush
 <?php
     $country_code = Config::get('app.country_code') ?? [];
-    $countries = \App\Helpers\CountryHelper::CountryCodes();
 ?>
 @section('content')
-{{-- <div class="container">
-    <div class="page-header breadcrumb_section d-print-none mt-2 mb-3">
-        <div class="row align-items-center">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">{{ __('Overview')}}</li>
-                    <li class="breadcrumb-item active">{{ __('Checkout')}}</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div> --}}
 
-<div style="my-md-4">
-<div class="container">
+<div class="content-wrapper py-4">
+    {{-- <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ __('My Cards') }} <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a></h1>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+        <div class="content">
+
+<div class="container-fluid">
     <div class="row g-4">
         <div class="col-lg-4">
             <div class="card">
@@ -288,17 +292,17 @@ input.country_selector,.country_selector button {
                 </div>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 col-12">
             <form action="{{ route('user.checkout.post-transection') }}" id="order-form" method="post">
                 @csrf
                 <input type="hidden" name="plan_id" value="{{$plan->id}}">
                 <input type="hidden" name="is_yearly" value="{{$plan->is_yearly ?? 0}}">
-                <div class="col-lg-12 mb-3">
                     <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title mb-3">{{ __('Billing Details')}}</h6>
+                        </div>
                         <div class="card-body">
-                            <div class="row">
                                 <div class="row">
-                                    <h6 class="card-title text-danger mb-3">{{ __('Billing Details')}}</h6>
                                     <div class="col-md-4 col-xl-4">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('Name')}} <span class="text-danger">*</span></label>
@@ -320,7 +324,8 @@ input.country_selector,.country_selector button {
                                     <div class="col-md-4 col-xl-4">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('Billing Address')}} <span class="text-danger">*</span></label>
-                                            <textarea class="form-control @error('billing_address') is-invalid @enderror" name="billing_address" cols="10" rows="3" placeholder="{{ __('Billing Address')}}..."  required>{{$user->billing_address}}</textarea>
+                                            <textarea class="form-control validated @error('billing_address') is-invalid @enderror" name="billing_address" cols="10" rows="3" placeholder="{{ __('Billing Address')}}..."  required data-validation-required-message=
+                                            "Please enter your address">{{$user->billing_address}}</textarea>
                                             @if($errors->has('billing_address'))
                                             <span class="help-block text-danger">{{ $errors->first('billing_address') }}</span>
                                             @endif
@@ -364,14 +369,6 @@ input.country_selector,.country_selector button {
                                                 <input type="text" id="country_selector_code" name="country_selector_code" data-countrycodeinput="1" readonly="readonly" placeholder="Selected country code will appear here" />
                                                 <label for="country_selector_code">...and the selected country code will be updated here</label>
                                             </div>
-                                           {{-- <select name="billing_country" class="form-control select2 @error('billing_country') is-invalid @enderror" required>
-                                                <option value="" selected disabled>{{ __('Choose Country')}}</option>
-                                                @if(isset($countries) && count($countries) > 0 )
-                                                @foreach ($countries as $ke =>  $val )
-                                                    <option value="{{ $ke }}" {{ $ke==Auth::user()->billing_country ? 'selected':'' }}>{{ Str::ucfirst($val)}}</option>
-                                                @endforeach
-                                                @endif
-                                            </select> --}}
                                             @if($errors->has('billing_country'))
                                             <span class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
                                             @endif
@@ -398,35 +395,20 @@ input.country_selector,.country_selector button {
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-xl-6">
+                                    <div class="col-md-4 col-xl-4">
                                         <div class="mb-3">
                                             <label for="billing_phone" class="form-label d-block">{{ __('Phone')}} <span class="text-danger">*</span></label>
                                             <input id="billing_phone" name="billing_phone"  class="form-control" type="tel" required>
-                                            {{-- <input id="ccode" name="ccode" value=""  class="form-control" type="text"> --}}
-                                            {{-- <input id="full_number" name="full_number" value=""  class="form-control" type="text"> --}}
-                                            {{-- <div class="input-group ">
-                                                <div class="input-group-prepend">
-                                                    <select name="billing_country" class="input-group-text @error('billing_country') is-invalid @enderror" required id="basic-addon1">
-                                                        @if(isset($country_code) && count($country_code) > 0 )
-                                                        @foreach ($country_code as $ke =>  $val )
-                                                        <option value="{{ $ke }}" {{ $ke==Auth::user()->ccode ? 'selected':'' }}>{{ Str::ucfirst($val) }}</option>
-                                                        @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                                <input type="text" class="form-control @error('billing_phone') is-invalid @enderror" placeholder="{{ __('Phone')}}" aria-label="billing_phone" aria-describedby="basic-addon1" name="billing_phone">
-                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title">{{ __('Payment method')}}</h6>
+                        </div>
                         <div class="card-body">
-                            <h6 class="card-title text-danger">{{ __('Payment method')}}</h6>
                             <div class="row">
                                 @if (!empty($gateways) && count($gateways) > 0)
                                 @foreach ($gateways as $gateway)
@@ -453,25 +435,40 @@ input.country_selector,.country_selector button {
                                 @endforeach
                                 @endif
                                 <div class="col-12">
-                                    <input type="submit" id="continuePaypalBtn" value="{{ __('Continue for payment') }}" class="btn default-btn">
+                                    <button type="submit" id="continuePaypalBtn" class="btn btn-primary">{{ __('Continue for payment') }}</button>
+                                    {{-- <input type="submit" id="continuePaypalBtn" value="{{ __('Continue for payment') }}" class="btn default-btn"> --}}
                                    {{-- <a type="button" class="btn btn-primary" id="continueStripeBtn" data-bs-toggle="modal" data-bs-target="#planModal">{{ __('Continue for payment') }}</a> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </form>
         </div>
-    </div>
 </div>
 </div>
-@include('desktop.plan._partial-pay-with-stripe')
+</div>
+@include('user.plan._partial-pay-with-stripe')
 @endsection
 @push('custom_js')
 <script src="{{ asset('assets/js/countrySelect.min.js') }}"></script>
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/js/jqBootstrapValidation.js') }}"></script>
 <script>
+
+$(document).ready(function(){
+
+ $('#simple_form input, #simple_form textarea').jqBootstrapValidation({
+  preventSubmit: true,
+ });
+
+});
+
+        // $(function(){$(".validated").jqBootstrapValidation();});
+
+    // $(function(){
+    //     $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
+    // });
     $(document).ready(function() {
         $('.select2').select2({});
     });

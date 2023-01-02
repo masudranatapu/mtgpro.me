@@ -33,21 +33,16 @@ class CheckoutController extends Controller
 
     public function __construct()
     {
-
         /** PayPal api context **/
-
-        $paypal_configuration = DB::table('config')->get();
-
-        $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
-        $this->apiContext->setConfig(array(
-            'mode' => $paypal_configuration[3]->config_value,
-            'http.ConnectionTimeOut' => 30,
-            'log.LogEnabled' => true,
-            'log.FileName' => storage_path() . '/logs/paypal.log',
-            'log.LogLevel' => 'DEBUG',
-        ));
-
-
+        // $paypal_configuration = DB::table('config')->get();
+        // $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
+        // $this->apiContext->setConfig(array(
+        //     'mode' => $paypal_configuration[3]->config_value,
+        //     'http.ConnectionTimeOut' => 30,
+        //     'log.LogEnabled' => true,
+        //     'log.FileName' => storage_path() . '/logs/paypal.log',
+        //     'log.LogLevel' => 'DEBUG',
+        // ));
     }
 
     public function checkout(Request $request)
@@ -97,7 +92,7 @@ class CheckoutController extends Controller
             else{
                 $plan->is_yearly = $is_yearly;
                 $gateways = DB::table('gateways')->where('status', 1)->get();
-                return view('desktop.plan.checkout', compact('plan', 'gateways','user','config'));
+                return view('user.plan.checkout', compact('plan', 'gateways','user','config'));
             }
         }
         else {

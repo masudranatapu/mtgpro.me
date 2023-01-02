@@ -215,13 +215,6 @@ class CardController extends Controller
 
     }
 
-    public function plans(Request $request)
-    {
-       $this->resp =  $this->plan->getPlanList($request);
-       $plans =  $this->resp->data;
-       $user_plan = DB::table('plans')->where('id', Auth::user()->plan_id)->latest()->first();
-        return view('user.plan.index', compact('user_plan','plans'));
-    }
 
 
     public function getCardShareInfo(Request $request,$id)

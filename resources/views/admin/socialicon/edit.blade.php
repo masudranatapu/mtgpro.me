@@ -48,31 +48,44 @@
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon Name')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon Group')}}</label>
+                                                <select name="icon_group" id="icon_group" class="form-control">
+                                                     <option value="Recommended" {{$socileicons->icon_group == 'Recommended' ? 'selected' : '' }}>Recommended</option>
+                                                     <option value="Contact" {{$socileicons->icon_group == 'Contact' ? 'selected' : '' }}>Contact</option>
+                                                     <option value="Social Media" {{$socileicons->icon_group == 'Social Media' ? 'selected' : '' }}>Social Media</option>
+                                                     <option value="Music Media" {{$socileicons->icon_group == 'Music Media' ? 'selected' : '' }}>Music Media</option>
+                                                     <option value="Payment" {{$socileicons->icon_group == 'Payment' ? 'selected' : '' }}>Payment</option>
+                                                     <option value="More" {{$socileicons->icon_group == 'More' ? 'selected' : '' }}>More</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">{{ __('Icon Name')}}</label>
                                                 <input type="text" name="icon_name" class="form-control" value="{{$socileicons->icon_name}}" placeholder="Icon name">
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon fa')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon fa')}}</label>
                                                 <input type="text" name="icon_fa" class="form-control" value="{{$socileicons->icon_fa}}" placeholder="Icon  name fa">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon Title')}}</label>
+                                                <label for="" class="form-label">{{ __('Icon Title')}}</label>
                                                 <input type="text" name="icon_title" class="form-control" value="{{$socileicons->icon_title}}" placeholder="Icon Title">
                                             </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Icon Exampl')}}e</label>
+                                                <label for="" class="form-label">{{ __('Icon Exampl')}}e</label>
                                                 <input type="text" name="example_text" class="form-control" value="{{$socileicons->example_text}}" placeholder="Icon Example">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">{{ __('Order Id')}}</label>
+                                                <input type="number" name="order_id" class="form-control" value="{{$socileicons->order_id}}" placeholder="Order id">
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-md-6">
-                                                <label for="">{{ __('Order Id')}}</label>
-                                                <input type="text" name="order_id" class="form-control" value="{{$socileicons->order_id}}" placeholder="Order id">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="">{{ __('Status')}}</label>
+                                                <label for="" class="form-label">{{ __('Status')}}</label>
                                                 <select name="status"  class="form-control">
                                                     <option disabled>Select One</option>
                                                     <option @if($socileicons->status == 1) selected @endif value="1" selected>{{ __('Active')}}</option>
