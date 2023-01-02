@@ -178,119 +178,41 @@ class BusinessCard extends Model
 
     public function postUpdate($request, $id)
     {
-        $content = null;
+        // dd($request->all());
+        // $content = null;
         DB::beginTransaction();
         try {
-            $card = Card::findOrFail($id);
+            $card = BusinessCard::findOrFail($id);
             $card->user_id      = Auth::id();
             $card->card_lang    = 'en';
-            $card->card_url     = $request->personalized_link;
+            // $card->card_url     = $request->personalized_link;
             $card->card_type    = 'vcard';
-            $card->card_for     = $request->card_name;
+            $card->card_for     = $request->card_for;
             $card->card_status  = 'activated';
             $card->status       = 1;
-            $card->title        = $request->first_name;
-            $card->title2       = $request->last_name;
-            $card->sub_title    = $request->sub_title;
-            $card->theme_color  = $request->theme_color ?? '#fff';
+            $card->title        = $request->name;
+            // $card->title2       = $request->last_name;
+            // $card->sub_title    = $request->sub_title;
+            $card->theme_color  = $request->bgcolor ?? '#fff';
             $card->theme_id     = $request->theme_id ?? 1;
             $card->designation  = $request->designation;
+            $card->location     = $request->location;
+            $card->bio          = $request->bio;
             $card->company_name = $request->company_name;
-            $card->phone_number = $request->phone_number;
-            $card->ccode        = $request->ccode;
-            $card->card_email   = $request->card_email;
-            $card->company_websitelink   = $request->company_websitelink;
+            // $card->phone_number = $request->phone_number;
+            // $card->ccode        = $request->ccode;
+            // $card->card_email   = $request->card_email;
+            // $card->company_websitelink   = $request->company_websitelink;
             $card->updated_at   = date('Y-m-d H:i:s');
-            if($request->profile_image_path){
-                $card->profile = $request->profile_image_path;
-            }
-            if($request->logo_path){
-                $card->logo = $request->logo_path;
-            }
-            $card->update();
-            $request_arr = $request->all();
-            $all_sicon = SocialIcon::where('status',1)->pluck('icon_name')->toArray();
-            $section_video = $section_testimonial = [];
-            if($request_arr){
-                foreach ($request_arr as $key => $value) {
-                    $icon = SocialIcon::where('status',1)->where('icon_name',$key)->pluck('icon_name')->toArray();
-                    if(!empty($icon)){
-                        if(in_array($key,$icon)){
-                            $content[$key] = $request_arr[$key];
-                        }
-                    }
-                }
-            }
-            //section about
-            if($request->about_content){
-                $content['section_about'] = ['about_title' => $request->about_title, 'about_content' => $request->about_content];
-            }
-            //section video
-            if($request->video_file){
-                if((!isset($content['section_video'])) || (count($content['section_video']) == 0 ) ){
-                    $content['section_video'] = [];
-                }
-                // foreach ($request->video_file as $vkey => $video) {
-                foreach ($request->video_file as $vkey => $video) {
-                    $new_section_video = null;
-                    if($video){
-                        $video_file =  null;
-                        if($request->video_type[$vkey]=='file'){
-                            $_video = $request->file('video_file')[$vkey];
-                            $base_name = preg_replace('/\..+$/', '', $_video->getClientOriginalName());
-                            $video_name = $base_name . "-" . uniqid() . "." .$_video->getClientOriginalExtension();
-                            $file_path = 'upload/video';
-                            if (! File::exists($file_path)) {
-                                File::makeDirectory($file_path);
-                            }
-                            $_video->move($file_path, $video_name);
-                            $video_file = asset($file_path.'/'.$video_name);
-                        }else{
-                            $video_file = $this->getYoutubeEmbad($request->video_file[$vkey]);
-                        }
-                        $new_section_video['video_title'] = $request->video_title[$vkey] ?? null;
-                        // $new_section_video['video_type'] = $request->video_type[$vkey] ?? null;
-                        $new_section_video['video_type'] = 'link';
-                        $new_section_video['video_description'] = $request->video_description[$vkey] ?? null;
-                        $new_section_video['video_file'] = $video_file;
-                        array_push($content['section_video'],$new_section_video);
-                    }
-                }
-            }
-            //section testimonial
-            if($request->testimonial_content){
-                if((!isset($content['section_testimonial'])) || (count($content['section_testimonial']) == 0 ) ){
-                    $content['section_testimonial'] = [];
-                }
-                foreach ($request->testimonial_content as $tkey => $testimonial) {
-                    $section_testimonial = null;
-                    if($testimonial){
-                        $new_section_testimonial['testimonial_content'] = $request->testimonial_content[$tkey] ?? null;
-                        $new_section_testimonial['testimonial_name'] = $request->testimonial_name[$tkey] ?? null;
-                        array_push($content['section_testimonial'],$new_section_testimonial);
-                    }
-                }
-            }
 
-            //insert to business_fields
-            if($content){
-                if($card->business_card_fields){
-                    $fields['content'] = json_encode($content);
-                    $fields['updated_at'] = date('Y-m-d H:i:s');
-                    DB::table('business_fields')->where('card_id',$id)->update($fields);
-                }else{
-                    // dd(2);
-                    $fields['card_id'] = $id;
-                    $fields['type'] = 'json';
-                    $fields['icon'] = 'json';
-                    $fields['label'] = 'json';
-                    $fields['content'] = json_encode($content);
-                    $fields['position'] = 1;
-                    $fields['status'] = 1;
-                    $fields['created_at'] = date('Y-m-d H:i:s');
-                    DB::table('business_fields')->insert($fields);
-                }
-            }
+            // if($request->profile_image_path){
+            //     $card->profile = $request->profile_image_path;
+            // }
+            // if($request->logo_path){
+            //     $card->logo = $request->logo_path;
+            // }
+            $card->update();
+
 
     } catch (\Exception $e) {
         dd($e);
