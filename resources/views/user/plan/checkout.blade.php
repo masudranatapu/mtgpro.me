@@ -7,11 +7,13 @@
 <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/countrySelect.min.css') }}" rel="stylesheet" />
 <link rel="stylesheet" href="{{ asset('assets/css/intlTelInput.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
 <style>
-    .card {
+.card {
     box-shadow: rgb(35 46 60 / 4%) 0 2px 4px 0;
     border: 1px solid rgba(101, 109, 119, .16);
-}
+    }
 
 .card {
     position: relative;
@@ -215,27 +217,29 @@ input.country_selector,.country_selector button {
 	font-size: 100%;
 	color: inherit; }
 	input[disabled], button[disabled] {
-		background-color: #eee; }
+		background-color: #eee;
+    }
+    ::-webkit-input-placeholder {
+        color: #BBB; }
 
-::-webkit-input-placeholder {
-	color: #BBB; }
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #BBB;
+        opacity: 1;
+    }
 
-::-moz-placeholder {
-	/* Firefox 19+ */
-	color: #BBB;
-	opacity: 1; }
+    :-ms-input-placeholder {
+        color: #BBB;
+    }
+    #result {
+        margin-bottom: 100px; }
+        .country-select.inside {
+        width: 100%!important;
+    }
 
-:-ms-input-placeholder {
-	color: #BBB; }
-#result {
-	margin-bottom: 100px; }
-    .country-select.inside {
-    width: 100%!important;
-}
-
-.iti.iti--allow-dropdown {
-    width: 100%;
-}
+    .iti.iti--allow-dropdown {
+        width: 100%;
+    }
 </style>
 @endpush
 <?php
@@ -443,6 +447,8 @@ input.country_selector,.country_selector button {
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/js/jqBootstrapValidation.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+
 <script>
 
 $(document).ready(function(){

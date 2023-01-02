@@ -34,16 +34,16 @@ class PlanController extends Controller
 
         /** PayPal api context **/
 
-        $paypal_configuration = DB::table('config')->get();
+        // $paypal_configuration = DB::table('config')->get();
 
-        $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
-        $this->apiContext->setConfig(array(
-            'mode' => $paypal_configuration[3]->config_value,
-            'http.ConnectionTimeOut' => 30,
-            'log.LogEnabled' => true,
-            'log.FileName' => storage_path() . '/logs/paypal.log',
-            'log.LogLevel' => 'DEBUG',
-        ));
+        // $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
+        // $this->apiContext->setConfig(array(
+        //     'mode' => $paypal_configuration[3]->config_value,
+        //     'http.ConnectionTimeOut' => 30,
+        //     'log.LogEnabled' => true,
+        //     'log.FileName' => storage_path() . '/logs/paypal.log',
+        //     'log.LogLevel' => 'DEBUG',
+        // ));
     }
     // All Plans
     public function plans()
