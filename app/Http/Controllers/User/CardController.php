@@ -72,6 +72,7 @@ class CardController extends Controller
         $user_id = Auth::id();
         $card = $this->businessCard->getView($request,$id);
         $icons = SocialIcon::all();
+        // dd($card->business_card_fields);
         return view('user.card.edit',compact('card','icons'));
     }
 

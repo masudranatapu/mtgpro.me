@@ -37,8 +37,10 @@ class BusinessCard extends Model
 
     public function business_card_fields()
     {
-        return $this->hasOne(BusinessField::class, 'card_id');
+        return $this->hasMany(BusinessField::class, 'card_id')->orderBy('position','asc');
     }
+
+
 
 
     public function theme()
