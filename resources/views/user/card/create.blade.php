@@ -231,7 +231,7 @@
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                     <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" value="{{ old('bio') }}"></textarea>
+                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show">{{ old('bio') }}</textarea>
                                                                     @if($errors->has('bio'))
                                                                         <span class="help-block text-danger">{{ $errors->first('bio') }}</span>
                                                                     @endif
