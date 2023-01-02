@@ -183,7 +183,7 @@
                            <!-- banner -->
                            <div class="card_banner mt-3 mb-5" style="background-image: url({{ getCover()}})">
                               <div class="profile_image">
-                                 <img src="{{ getProfile() }}" class="profile_image_src" width="100" alt="image">
+                                 <img src="{{ getProfile() }}" class="profile_image_src" width="100" height="100" alt="image">
                               </div>
                            </div>
                            <div class="card_content text-center">

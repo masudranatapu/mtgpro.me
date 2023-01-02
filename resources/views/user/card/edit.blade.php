@@ -301,7 +301,7 @@
                                                 <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ getProfile($card->profile) }}" width="100" alt="image">
+                                                        <img src="{{ getProfile($card->profile) }}" width="100" height="100" alt="image">
                                                         <!-- logo -->
                                                         <img class="logo" src="{{ getLogo($card->logo) }}" alt="image">
                                                     </div>
@@ -1170,7 +1170,7 @@
                                                         <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ getProfile($card->profile) }}" width="100" alt="image">
+                                                                <img src="{{ getProfile($card->profile) }}" height="100" width="100" alt="image">
                                                                 <!-- logo -->
                                                                 <img class="logo" src="{{ getLogo($card->logo) }}" alt="image">
                                                             </div>

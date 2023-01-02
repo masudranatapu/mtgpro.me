@@ -343,7 +343,7 @@
                                                 <div class="card_banner mb-5" style="background-image: url('{{ getCover() }}');" id="coverpic_2">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ getProfile() }}" width="100" alt="image" id="profilePic_2">
+                                                        <img src="{{ getProfile() }}" width="100" height="100" alt="image" id="profilePic_2">
                                                         <!-- logo -->
                                                         <img class="logo" src="{{ getlogo() }}" alt="image" id="showlogo_2">
                                                     </div>
@@ -1397,7 +1397,7 @@
                                                         <div class="card_banner mb-5" style="background-image: url('{{ asset('') }}assets/img/card-banner.png');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ getProfile() }}" width="100" alt="image">
+                                                                <img src="{{ getProfile() }}" width="100" height="100" alt="image">
                                                                 <!-- logo -->
                                                                 <img class="logo" src="{{ getLogo() }}" alt="image" >
                                                             </div>
