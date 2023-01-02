@@ -65,18 +65,20 @@
                     <div class="profile_info mt-4">
                         <h2>{{ $cardinfo->title }}</h2>
                         <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
+                        @if (!empty($cardinfo->location))
                         <h6>{{ $cardinfo->location }}</h6>
+                        @endif
+                        @if (!empty($cardinfo->location))
                         <p>{{ $cardinfo->bio }}</p>
+                        @endif
                     </div>
                     <div class="save_contact mt-5 mb-5">
                         <a href="javascript:void(0)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#contactModal">Save Contact</a>
                     </div>
                     <div class="social_media">
                          <ul>
-
                             @if (!empty($carddetails))
                             @foreach ($carddetails as $contact)
-
                             <li>
                                 <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
                                     <img class="img-fluid" src="{{ asset($contact->icon_image) }}" alt="{{ $contact->label }}">
