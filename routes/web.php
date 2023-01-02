@@ -42,6 +42,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('card/sicon_update',['as'=>'card.sicon_update','uses'=>'CardController@siconUpdate']);
     Route::get('card/sicon_edit',['as'=>'card.sicon_edit','uses'=>'CardController@siconEdit']);
     Route::post('card/sicon_remove',['as'=>'card.sicon_remove','uses'=>'CardController@siconRemove']);
+    Route::post('card/add_icon',['as'=>'card.add_icon','uses'=>'CardController@addIcon']);
     Route::post('card/{id}/update',['as'=>'card.update','uses'=>'CardController@postUpdate']);
     Route::get('card/{id}/delete',['as'=>'card.delete','uses'=>'CardController@getDelete']);
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);

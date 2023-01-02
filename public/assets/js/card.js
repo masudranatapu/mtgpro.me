@@ -11,6 +11,16 @@ $(document).on('keyup','.cin', function() {
     $('#'+preview).text(cin);
 }).keyup();
 
+$(document).on('keyup','.mcin', function() {
+    var mcin = $(this).val();
+    var id = $(this).data('id');
+    var preview = $(this).data('preview');
+    var class1 = '.sicon_'+id+' .'+preview;
+    $(class1).text(mcin);
+}).keyup();
+
+
+
 $(document).on('keyup','.cin_desig_comp',function(){
     var desig = $("input[name=designation]").val();
     var comp = $("input[name=company_name]").val();
@@ -271,9 +281,15 @@ $(document).on('click', '.onclickIcon' ,function() {
     var name = $(this).data('name');
     var title = $(this).data('title');
     var image = $(this).data('image');
+    var id = $(this).data('id');
+
+    var html = '<li class="sicon_'+id+'"><a class="social_link" href="" target="_blank"><img src="'+image+'" alt="email" class="social_logo"><span class="icon_label link_title_show">'+title+'</span></a></li>';
+    $('.social_icon ul').append(html);
+
     $('#content_icon').attr('src',image);
     $('#content_link').text(title+ ' profile link');
     $('#content_title').val(title);
+    $('#content_title').attr('data-id', id);
     $('.first_modal').addClass('d-none');
     $('.second_modal').removeClass('d-none');
 });
