@@ -1069,6 +1069,7 @@
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
                                                     <img id="previewIcon" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
+                                                    {{-- <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden> --}}
                                                     <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                 </label>
@@ -1223,11 +1224,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
-// preview icon
-var loadFile = function(event) {
-    var image = document.getElementById('previewIcon');
-    image.src = URL.createObjectURL(event.target.files[0]);
-};
+
 
 // preview profile photo
 var profileloadFile = function(event) {
@@ -1430,12 +1427,10 @@ $("input:checkbox.sicon_control").click(function() {
 });
 
 
-
-    $('#logo').on('change', function(){
-
-        alert(1);
-
-        // $(this).is('input[type="file"]');
+// preview icon
+var loadFile = function(event) {
+    var image = document.getElementById('previewIcon');
+    image.src = URL.createObjectURL(event.target.files[0]);
     if($(this).is('input[type="file"]')){
       if (isImage($(this).val())){
         if(this.files[0].size > 5000000) {
@@ -1445,7 +1440,6 @@ $("input:checkbox.sicon_control").click(function() {
             });
             return false;
         }
-        // $(this).siblings('.video_src').val(URL.createObjectURL(this.files[0]));
       }
       else
       {
@@ -1457,25 +1451,11 @@ $("input:checkbox.sicon_control").click(function() {
     }else{
 
     }
-    });
+};
 
-// If user tries to upload videos other than these extension , it will throw error.
-function isImage(filename) {
-    var ext = getExtension(filename);
-    switch (ext.toLowerCase()) {
-    case 'jpeg':
-    case 'jpg':
-    case 'png':
-    case 'webp':
-    case 'gif':
-        return true;
-    }
-    return false;
-}
-function getExtension(filename) {
-    var parts = filename.split('.');
-    return parts[parts.length - 1];
-}
+
+
+
 
 </script>
 @endpush
