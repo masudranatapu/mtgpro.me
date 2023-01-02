@@ -33,7 +33,7 @@ class DashboardControler extends Controller
     public function getSetting(Request $request)
     {
 
-    return view('user.setting');
+        return view('user.setting');
     }
 
 }

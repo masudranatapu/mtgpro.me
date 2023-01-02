@@ -45,12 +45,12 @@ $settings = getSetting();
         <!-- user profile -->
         <div class="user-panel align-items-center mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <a href="#">
+                <a href="{{ route('user.setting') }}">
                     <img src="{{ getProfile(Auth::user()->profile) }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
                 </a>
             </div>
             <div class="info">
-                <a href="#" class="d-block" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</a>
+                <a href="{{ route('user.setting') }}" class="d-block" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</a>
                 <span>{{ __('User') }}</span>
             </div>
         </div>
