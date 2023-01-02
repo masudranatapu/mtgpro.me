@@ -43,12 +43,14 @@ class SocialIconController extends Controller
     {
         //
         $this->validate($request, [
+            'icon_group' => 'required',
             'icon_name' => 'required',
             'icon_fa' => 'required',
             'icon_title' => 'required',
             'example_text' => 'required',
             'order_id' => 'required',
         ],[
+            'icon_group.required' => 'Icon group is required',
             'icon_name.required' => 'Icon name is required',
             'icon_fa.required' => 'Icon fa is required',
             'icon_title.required' => 'Icon title is required',
@@ -57,6 +59,7 @@ class SocialIconController extends Controller
         ]);
 
         DB::table('social_icon')->insert([
+            'icon_group' => $request->icon_group,
             'icon_name' => $request->icon_name,
             'icon_fa' => $request->icon_fa,
             'icon_title' => $request->icon_title,
@@ -106,12 +109,14 @@ class SocialIconController extends Controller
     {
         //
         $this->validate($request, [
+            'icon_group' => 'required',
             'icon_name' => 'required',
             'icon_fa' => 'required',
             'icon_title' => 'required',
             'example_text' => 'required',
             'order_id' => 'required',
         ],[
+            'icon_group.required' => 'Icon group is required',
             'icon_name.required' => 'Icon name is required',
             'icon_fa.required' => 'Icon fa is required',
             'icon_title.required' => 'Icon title is required',
@@ -120,6 +125,7 @@ class SocialIconController extends Controller
         ]);
 
         DB::table('social_icon')->where('id', $id)->update([
+            'icon_group' => $request->icon_group,
             'icon_name' => $request->icon_name,
             'icon_fa' => $request->icon_fa,
             'icon_title' => $request->icon_title,
@@ -145,7 +151,7 @@ class SocialIconController extends Controller
     {
         //
         DB::table('social_icon')->where('id', $id)->delete();
-        Toastr::warning('Social icon successfully deleted :-)','Info');
+        Toastr::success('Social icon successfully deleted :-)','Info');
         return redirect()->back();
 
     }
