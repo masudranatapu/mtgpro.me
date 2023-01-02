@@ -62,23 +62,9 @@ class DashboardController extends Controller
 
         }else{
 
-            $user_id = Auth::id();
-            $cards = BusinessCard::where('user_id',$user_id)->get();
-
-            if(count($cards) == 0 ){
-                return redirect()->route('user.card.create');
-            }
-
-            $user = User::where('id',$user_id)->first();
 
 
-            if(isMobile()){
-                return view('mobile.dashboard',compact('user'));
-            }
-
-
-
-            return view('desktop.dashboard',compact('user'));
+            return redirect()->route('user.setting');
 
         }
 
