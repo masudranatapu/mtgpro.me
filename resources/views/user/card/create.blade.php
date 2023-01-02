@@ -3,6 +3,14 @@
 @section('title') {{ __('Create Card') }}  @endsection
 @push('custom_css')
 @endpush
+
+@php
+
+    $icon_group = Config::get('app.icon_group');
+
+
+@endphp
+
 @section('card','active')
         <!-- main content -->
         <div class="content-wrapper">
@@ -13,7 +21,7 @@
                             <h1 class="m-0">
                                 <a href="{{ route('dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ getProfile() }}" width="50" class="img-circle mr-2" alt="image">
-                                <span id="card_title_show">{{ __('Card Name') }}</span>
+                                <span id="card_for_show">{{ __('Card Name') }}</span>
                             </h1>
                         </div>
                     </div>
@@ -28,22 +36,24 @@
                                     <!-- tabs button -->
                                     <div class="col-md-4 col-xl-3">
                                         <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                                            <!-- content -->
-                                            <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
-                                                <img src="{{ asset('assets/img/icon/bar.svg') }}" alt="icon">
-                                                {{ __('Content') }}
-                                            </a>
-                                            <!-- about -->
-                                            <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
+                                             <!-- about -->
+                                             <a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
                                                 <img src="{{ asset('assets/img/icon/user.svg') }}" alt="icon">
                                                 {{ __('About') }}
                                             </a>
+
+                                            <!-- content -->
+                                            <a class="nav-link" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
+                                                <img src="{{ asset('assets/img/icon/bar.svg') }}" alt="icon">
+                                                {{ __('Content') }}
+                                            </a>
+
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-xl-9">
                                         <div class="tab-content" id="vert-tabs-tabContent">
                                             <!-- content -->
-                                            <div class="tab-pane text-left fade active show" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
+                                            <div class="tab-pane text-left fade" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                                                 <div class="tab_body">
                                                     <!-- back button -->
                                                     <div class="back d-none mb-4 float-left">
@@ -59,80 +69,27 @@
                                                     </div>
                                                     <!-- social media link -->
                                                     <div class="social_media_list" id="drop-items">
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
-                                                                    <span>{{ __('facebook') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" checked="" id="visiable">
-                                                                    <label class="custom-control-label" for="visiable"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
 
                                                     </div>
+
                                                     <!-- edit social link form -->
                                                     <div class="edit_social_form add_form_wrap d-none" style="padding-top:14px;">
                                                         <div class="social_add_form">
-                                                            <form action="#" method="post">
-                                                                <div class="form-group">
-                                                                    <label class="imgLabel" for="logo">
-                                                                        <img id="previewIcon" src="{{ getLogo() }}" alt="">
-                                                                        <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
-                                                                        <span>Select photo here or drag and drop <br /> one in place of current</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="facebook" class="form-label">{{ __('Facebook profile link') }} <span class="text-dark">*</span></label>
-                                                                    <input type="text" name="facebook" id="facebook" class="form-control" placeholder="Facebook profile link" required>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="title" class="form-label">{{ __('Link title') }}</label>
-                                                                    <input type="text" name="title"  class="form-control" placeholder="Facebook">
-                                                                </div>
-                                                                <div class="form-group mb-4">
-                                                                    <a href="#" target="_blank">
-                                                                        {{ __('Test your link') }}
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#03a9f4">
-                                                                            <path d="M384 320c-17.67 0-32 14.33-32 32v96H64V160h96c17.67 0 32-14.32 32-32s-14.33-32-32-32L64 96c-35.35 0-64 28.65-64 64V448c0 35.34 28.65 64 64 64h288c35.35 0 64-28.66 64-64v-96C416 334.3 401.7 320 384 320zM488 0H352c-12.94 0-24.62 7.797-29.56 19.75c-4.969 11.97-2.219 25.72 6.938 34.88L370.8 96L169.4 297.4c-12.5 12.5-12.5 32.75 0 45.25C175.6 348.9 183.8 352 192 352s16.38-3.125 22.62-9.375L416 141.3l41.38 41.38c9.156 9.141 22.88 11.84 34.88 6.938C504.2 184.6 512 172.9 512 160V24C512 10.74 501.3 0 488 0z"></path>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div class="float-left">
-                                                                        <button type="button" class="text-danger">
-                                                                            <i class="fa fa-trash"></i>
-                                                                            {{ __('Remove') }}
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="float-right">
-                                                                        <button type="button" class="btn btn-secondary mr-2 back">{{ __('Cancel') }}</button>
-                                                                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- about -->
-                                            <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
+                                            <div class="tab-pane fade active show" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
                                                 <div class="tab_body about_user">
                                                      <form action="#" method="post" enctype="multipart/form-data">
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
-                                                                     <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_title"  class="form-control cin" data-preview="card_title_show" placeholder="{{ __('Card Title') }}" required>
+                                                                    <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
+                                                                     <input type="text" name="card_for" id="card_title" class="form-control cin" value="{{ old('card_for') }}" placeholder="{{ __('Card Title') }}" required data-preview="card_for_show">
+
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
@@ -168,10 +125,10 @@
                                                                 <div class="form-group colorform">
                                                                      <div class="bg_btn">
                                                                         <label class="form-label">{{ __('Card Color') }}</label><br/>
-                                                                         <label for="color" class="colorcode">
+                                                                         {{-- <label for="color" class="colorcode">
                                                                              <img src="{{ asset('assets/img/icon/color.svg') }}" alt="svg">
                                                                              <input type="color" name="color" value="#fff" id="colorPicker">
-                                                                         </label>
+                                                                         </label> --}}
                                                                          <!-- color -->
                                                                         <div class="form-check">
                                                                             <input class="form-check-input" type="radio" name="bgcolor" id="color1" onclick="changeColor('white','#fff')">
@@ -207,10 +164,10 @@
                                                                         </div>
                                                                     </div>
                                                                  </div>
-                                                                <div class="form-control custom-switch form-group">
+                                                                {{-- <div class="form-control custom-switch form-group">
                                                                     <input type="checkbox" name="colorlink" id="customSwitch1" class="custom-control-input" id="customSwitch1">
                                                                     <label class="custom-control-label" for="customSwitch1">{{ __('Color Link Icons') }}</label>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
@@ -269,7 +226,7 @@
                                                         </svg>
                                                     </div>
                                                     <!-- time -->
-                                                    <div class="clock">2:39</div>
+                                                    <div class="clock">{{ date('H:i') }}</div>
                                                     <!-- mobile icon -->
                                                     <div class="mobile_icon">
                                                         <svg width="16" height="9" fill="none" viewBox="0 0 12 9">
@@ -314,7 +271,7 @@
                                                                     <span>Facebook</span>
                                                                 </a>
                                                             </li>
-                                                            <li>
+                                                            {{-- <li>
                                                                 <a href="#" target="_blank">
                                                                     <img src="{{ asset('assets/img/icon/call.svg') }}" alt="phone">
                                                                     <span>Phone</span>
@@ -325,7 +282,7 @@
                                                                     <img src="{{ asset('assets/img/icon/email.svg') }}" alt="email">
                                                                     <span>Email</span>
                                                                 </a>
-                                                            </li>
+                                                            </li> --}}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -359,17 +316,17 @@
                     <!-- modal header -->
                     <div class="modal-header mb-4">
                         <div class="first_modal">
-                            <h5>Add content</h5>
-                            <p>Select from our wide variety of links and contact info below.</p>
-                            <form action="#" method="post">
+                            <h5>{{ __('Add content') }}</h5>
+                            <p>{{ __('Select from our wide variety of links and contact info below.') }} <span id="filter-count">({{ $icons->count() ?? 0 }})</span> </p>
+                            <form onsubmit="return false;">
                                 <div class="input-group">
-                                    <input type="text" name="search" id="search" class="form-control" placeholder="Search Content" required>
+                                    <input type="text" name="search" id="filter" class="form-control" placeholder="Search Content" required>
                                     <button type="submit" class="input-type-text btn btn-dark"><i class="fa fa-search"></i></button>
                                 </div>
                             </form>
                         </div>
                         <div class="second_modal d-none">
-                            <h5><a href="#" class="backfirstModal"><i class="fa fa-angle-left"></i> Back</a></h5>
+                            <h5><a href="#" class="backfirstModal"><i class="fa fa-angle-left"></i> {{ __('Back') }}</a></h5>
                         </div>
                         <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -378,900 +335,40 @@
                     <!-- modal body -->
                     <div class="modal_body">
                         <div class="add_list_wrap first_modal">
-                            <!-- recommended icon -->
-                            <!-- <div class="heading mb-3">
-                                <h3>Recommended</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/number.svg" alt="image">
-                                                <span>Text</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/email.svg" alt="image">
-                                                <span>Email</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/instagram.svg" alt="image">
-                                                <span>Instagram</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/safari.svg" alt="image">
-                                                <span>Website</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/linkedin.svg" alt="image">
-                                                <span>Linkedin</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/contactcard.svg" alt="image">
-                                                <span>Contact Card</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div> -->
-                            <!-- Contact icon -->
-                            <!-- <div class="heading mt-4 mb-3">
-                                <h3>Contact</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/number.svg" alt="image">
-                                                <span>Text</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/call.svg" alt="image">
-                                                <span>Call</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/email.svg" alt="image">
-                                                <span>Email</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/contactcard.svg" alt="image">
-                                                <span>Contact Card</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/address.svg" alt="image">
-                                                <span>address</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/facetime.svg" alt="image">
-                                                <span>FaceTime</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('') }}assets/img/icon/whatsapp.svg" alt="image">
-                                                <span>Whatsapp</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div> -->
-                            <!-- recommended icon -->
-                            <div class="heading mb-3">
-                                <h3>Recommended</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/number.svg') }}" alt="image">
-                                                <span>Text</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/email.svg') }}" alt="image">
-                                                <span>Email</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="image">
-                                                <span>Instagram</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/safari.svg') }}" alt="image">
-                                                <span>Website</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/linkedin.svg') }}" alt="image">
-                                                <span>Linkedin</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/contactcard.svg') }}" alt="image">
-                                                <span>Contact Card</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Contact icon -->
-                            <div class="heading mt-4 mb-3">
-                                <h3>Contact</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/number.svg') }}" alt="image">
-                                                <span>Text</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/call.svg') }}" alt="image">
-                                                <span>Call</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/email.svg') }}" alt="image">
-                                                <span>Email</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/contactcard.svg') }}" alt="image">
-                                                <span>Contact Card</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/address.svg') }}" alt="image">
-                                                <span>address</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/facetime.svg') }}" alt="image">
-                                                <span>FaceTime</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="image">
-                                                <span>Whatsapp</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Social Media -->
-                            <div class="heading mt-4 mb-3">
-                                <h3>Social Media</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="image">
-                                                <span>Instagram</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/snapchat.svg') }}" alt="image">
-                                                <span>Snapchat</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/tiktok.svg') }}" alt="image">
-                                                <span>Tiktok</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="image">
-                                                <span>Facebook</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/linkedin.svg') }}" alt="image">
-                                                <span>Linkedin</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/twitter.svg') }}" alt="image">
-                                                <span>Twitter</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/youtube.svg') }}" alt="image">
-                                                <span>Youtube</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/Twitch.svg') }}" alt="image">
-                                                <span>Twitch</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/pinterest.svg') }}" alt="image">
-                                                <span>Pinterest</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/wechat.svg') }}" alt="image">
-                                                <span>WeChat</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/discord.svg') }}" alt="image">
-                                                <span>Discord</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/telegram.svg') }}" alt="image">
-                                                <span>Telegram</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Music icon -->
-                            <div class="heading mt-4 mb-3">
-                                <h3>Music Media</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/spotify.svg') }}" alt="image">
-                                                <span>Spotify</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/apple.svg') }}" alt="image">
-                                                <span>Apple Music</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/soundcloud.svg') }}" alt="image">
-                                                <span>SoundCloud</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Payment -->
-                            <div class="heading mt-4 mb-3">
-                                <h3>Payment</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/cashapp.svg') }}" alt="image">
-                                                <span>Cash App</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/venmo.svg') }}" alt="image">
-                                                <span>Venmo</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/paypal.svg') }}" alt="image">
-                                                <span>Paypal</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/zelle.svg') }}" alt="image">
-                                                <span>Zelle</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- More -->
-                            <div class="heading mt-4 mb-3">
-                                <h3>More</h3>
-                            </div>
-                            <div class="row align-item-center">
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/safari.svg') }}" alt="image">
-                                                <span>Website</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/customlink.svg') }}" alt="image">
-                                                <span>Custom Link</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/file.svg') }}" alt="image">
-                                                <span>File</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/linktree.svg') }}" alt="image">
-                                                <span>Linktree</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/calendly.svg') }}" alt="image">
-                                                <span>Calendly</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/podcasts.svg') }}" alt="image">
-                                                <span>Podcasts</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/clubhouse.svg') }}" alt="image">
-                                                <span>Clubhouse</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/yelp.svg') }}" alt="image">
-                                                <span>Yelp</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/embeddedvideo.svg') }}" alt="image">
-                                                <span>Embedded Video</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/hoobe.svg') }}" alt="image">
-                                                <span>hoo.be</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/square.svg') }}" alt="image">
-                                                <span>Square</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/etsy.svg') }}" alt="image">
-                                                <span>Etsy</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/reviews.svg') }}" alt="image">
-                                                <span>Reviews</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/mediakits.svg') }}" alt="image">
-                                                <span>MediaKits</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/opensea_color.svg') }}" alt="image">
-                                                <span>OpenSea</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/app_link.svg') }}" alt="image">
-                                                <span>App Link</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/booksy.svg') }}" alt="image">
-                                                <span>Booksy</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/dropdown.svg') }}" alt="image">
-                                                <span>Dropdown</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/textSection.svg') }}" alt="image">
-                                                <span>Text Section</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <a href="#" class="onclickIcon">
-                                        <div class="icon_wrap media position-relative mb-3">
-                                            <div class="icon_info">
-                                                <img src="{{ asset('assets/img/icon/featured.svg') }}" alt="image">
-                                                <span>Featured</span>
-                                            </div>
-                                            <div class="icon float-right">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+
+                            @if(isset($icon_group) && count($icon_group)>0)
+                                @foreach($icon_group as $key => $igroup)
+                                    <div class="heading mb-3">
+                                        <h3>{{ $igroup }}</h3>
+                                    </div>
+                                    <div class="row align-item-center">
+                                        @if(isset($icons) && count($icons) > 0)
+                                            @foreach ($icons as $key2 => $icon )
+                                                @if($icon->icon_group == $igroup )
+                                                    <div class="col-sm-6 col-lg-4 icon_each" data-name="{{ $icon->icon_name }}">
+                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}">
+                                                            <div class="icon_wrap media position-relative mb-3">
+                                                                <div class="icon_info">
+                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon_title }}">
+                                                                    <span>{{ $icon->icon_title }}</span>
+                                                                </div>
+                                                                <div class="icon float-right">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                @endforeach
+                            @endif
+
+
                         </div>
+
                         <!-- add content form -->
                         <div class="add_form_wrap second_modal d-none">
                             <div class="row no-gutters">
@@ -1280,27 +377,20 @@
                                         <form action="#" method="post">
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
-                                                    <img id="previewIcon" src="{{ asset('') }}assets/img/icon/facebook.svg" alt="">
-                                                    <input type="file" onchange="loadFile(event)" name="logo" id="logo" hidden>
+                                                    <img id="content_icon" src="{{ getIcon() }}" alt="">
+                                                    <input type="file" name="logo" id="logo" hidden>
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                 </label>
                                             </div>
                                             <div class="form-group">
-                                                <label for="facebook" class="form-label">Facebook profile link <span class="text-dark">*</span></label>
-                                                <input type="text" name="facebook" id="facebook" class="form-control" placeholder="Facebook profile link" required>
+                                                <label class="form-label"><span id="content_link">Facebook profile link</span> <span class="text-dark">*</span></label>
+                                                <input type="text" name="content" class="form-control" placeholder="link" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="title" class="form-label">Link title</label>
-                                                <input type="text" name="title"  class="form-control" placeholder="Facebook">
+                                                <input type="text" name="title" class="form-control" placeholder="Title" required id="content_title">
                                             </div>
-                                            <div class="form-group mb-4">
-                                                <a href="#" target="_blank">
-                                                    Test your link
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#03a9f4">
-                                                        <path d="M384 320c-17.67 0-32 14.33-32 32v96H64V160h96c17.67 0 32-14.32 32-32s-14.33-32-32-32L64 96c-35.35 0-64 28.65-64 64V448c0 35.34 28.65 64 64 64h288c35.35 0 64-28.66 64-64v-96C416 334.3 401.7 320 384 320zM488 0H352c-12.94 0-24.62 7.797-29.56 19.75c-4.969 11.97-2.219 25.72 6.938 34.88L370.8 96L169.4 297.4c-12.5 12.5-12.5 32.75 0 45.25C175.6 348.9 183.8 352 192 352s16.38-3.125 22.62-9.375L416 141.3l41.38 41.38c9.156 9.141 22.88 11.84 34.88 6.938C504.2 184.6 512 172.9 512 160V24C512 10.74 501.3 0 488 0z"></path>
-                                                    </svg>
-                                                </a>
-                                            </div>
+
                                             <div class="form-group text-center float-lg-right">
                                                 <button type="button" class="btn btn-secondary backfirstModal mr-2">Cancel</button>
                                                 <button type="submit" class="btn btn-primary">Add Link</button>
@@ -1362,24 +452,13 @@
                                                             </div>
                                                             <div class="social_icon">
                                                                 <ul>
-                                                                    <li>
+                                                                    {{-- <li>
                                                                         <a href="#" target="_blank">
                                                                             <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
                                                                             <span>Facebook</span>
                                                                         </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" target="_blank">
-                                                                            <img src="{{ asset('assets/img/icon/call.svg') }}" alt="phone">
-                                                                            <span>Phone</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" target="_blank">
-                                                                            <img src="{{ asset('assets/img/icon/email.svg') }}" alt="email">
-                                                                            <span>Email</span>
-                                                                        </a>
-                                                                    </li>
+                                                                    </li> --}}
+
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -1403,10 +482,10 @@
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
 // preview icon
-var loadFile = function(event) {
-    var image = document.getElementById('previewIcon');
-    image.src = URL.createObjectURL(event.target.files[0]);
-};
+// var loadFile = function(event) {
+//     var image = document.getElementById('previewIcon');
+//     image.src = URL.createObjectURL(event.target.files[0]);
+// };
 
 // preview profile photo
 var profileloadFile = function(event) {
@@ -1449,6 +528,12 @@ new Sortable(dropItems, {
 
 // social content modal
 $('.onclickIcon').on('click', function() {
+    var name = $(this).data('name');
+    var title = $(this).data('title');
+    var image = $(this).data('image');
+    $('#content_icon').attr('src',image);
+    $('#content_link').text(title+ ' profile link');
+    $('#content_title').val(title);
     $('.first_modal').addClass('d-none');
     $('.second_modal').removeClass('d-none');
 });
@@ -1496,6 +581,21 @@ $(document).on('input','#colorPicker',function(){
     element.style.backgroundColor = color;
 })
 
+//icon search
+$(document).on('keyup', '#filter', function(){
+    var filter = $(this).val(), count = 0;
+    $(".add_list_wrap .icon_each").each(function(){
+        if ($(this).data('name').search(new RegExp(filter, "i")) < 0) {
+            $(this).fadeOut();
+        } else {
+            $(this).show();
+            count++;
+        }
+    });
+    var numberItems = count;
+    $("#filter-count").text('('+count+')');
+
+});
 
 </script>
 @endpush

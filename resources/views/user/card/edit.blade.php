@@ -103,15 +103,15 @@
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
-                                                                     <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_title" id="title" class="form-control" value="{{ $card->card_for }}" placeholder="{{ __('Card Title') }}" required>
+                                                                     <label for="card_for" class="form-label">{{ __('Card Title') }}</label>
+                                                                     <input type="text" name="card_for" id="title" class="form-control" value="{{ $card->card_for }}" placeholder="{{ __('Card Title') }}" required>
                                                                  </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group">
-                                                                             <label class="form-label">{{ __('Profile picture') }}</label>
+                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
                                                                                 <img id="profilePic" src="{{ getProfile($card->profile) }}" alt="profile image">
                                                                              </label>
@@ -120,7 +120,7 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group">
-                                                                             <label class="form-label">Cover photo</label><br/>
+                                                                             <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
                                                                                   <img id="coverpic" src="{{ getCover($card->cover) }}" alt="logo">
                                                                              </label>
@@ -128,7 +128,7 @@
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
-                                                                         <label class="form-label">Company Logo</label>
+                                                                         <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
                                                                          <label id="logofile" for="company_logo">
                                                                              <img id="showlogo" src="{{ getLogo($card->logo) }}" alt="logo">
                                                                          </label>
@@ -328,10 +328,10 @@
                         <div class="first_modal">
                             <h5>Add content</h5>
                             <p>Select from our wide variety of links and contact info below.</p>
-                            <form action="#" method="post">
+                            <form onsubmit="return false;">
                                 <div class="input-group">
                                     <input type="text" name="search" id="search" class="form-control" placeholder="Search Content" required>
-                                    <button type="submit" class="input-type-text btn btn-dark"><i class="fa fa-search"></i></button>
+                                    <button type="button" class="input-type-text btn btn-dark"><i class="fa fa-search"></i></button>
                                 </div>
                             </form>
                         </div>

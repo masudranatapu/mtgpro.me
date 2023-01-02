@@ -48,7 +48,7 @@ class SocialIconController extends Controller
             'icon_image' => 'required',
             'icon_group' => 'required',
             'icon_name' => 'required',
-            'icon_fa' => 'required',
+            // 'icon_fa' => 'required',
             'icon_title' => 'required',
             'example_text' => 'required',
             'order_id' => 'required',
@@ -123,7 +123,7 @@ class SocialIconController extends Controller
         $this->validate($request, [
             'icon_group' => 'required',
             'icon_name' => 'required',
-            'icon_fa' => 'required',
+            // 'icon_fa' => 'required',
             'icon_title' => 'required',
             'example_text' => 'required',
             'order_id' => 'required',
@@ -179,7 +179,7 @@ class SocialIconController extends Controller
      */
     public function destroy($id)
     {
-    
+
         $SocialIcon = SocialIcon::find($id);
         if (file_exists($SocialIcon->icon_image)) {
             File::delete($SocialIcon->icon_image);

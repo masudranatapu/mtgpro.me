@@ -149,6 +149,15 @@ return [
         'vi' => 'Vietnamese'
     ],
 
+    'icon_group' => [
+        1 => 'Recommended',
+        2 => 'Contact',
+        3 => 'Social Media',
+        4 => 'Music Media',
+        5 => 'Payment',
+        6 => 'More',
+    ],
+
 
     'faker_locale' => 'en_US',
 
