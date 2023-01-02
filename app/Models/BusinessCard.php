@@ -75,7 +75,7 @@ class BusinessCard extends Model
             $card['company_websitelink'] = $request->company_websitelink;
             $card['phone_number'] = $request->phone_number;
             $card['ccode']        = $request->ccode;
-            $card['card_email']   = $request->card_email;
+            $card['card_email']   = $request->card_email ?? Auth::user()->email;
             $card['created_at']   = date('Y-m-d H:i:s');
 
             if(!is_null($request->file('profile_pic')))

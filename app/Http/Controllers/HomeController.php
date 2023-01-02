@@ -92,7 +92,9 @@ class HomeController extends Controller
                 Toastr::warning('This card has been deleted');
                 return redirect()->back();
             }
-            return view('card_preview', compact('cardinfo', 'icons', 'shareComponent'));
+            $carddetails = DB::table('business_fields')->where('card_id', $cardinfo->id)->where('status',1)->orderBy('position','ASC')->get();
+
+            return view('card_preview', compact('cardinfo', 'icons', 'shareComponent','carddetails'));
         }else{
 
             Toastr::warning('This card is not available please create your desired card');

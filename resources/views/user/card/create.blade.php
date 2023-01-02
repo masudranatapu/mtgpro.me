@@ -100,7 +100,7 @@
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                     <label for="card_title" class="form-label">{{ __('Card Title') }}</label>
-                                                                     <input type="text" name="card_for" id="card_title" class="form-control @error('card_title') is-invalid @enderror cin" placeholder="{{ __('Card Title') }}" required data-preview="card_for_show" tabindex="{{ $tabindex++ }}" value="{{ old('card_title') }}">
+                                                                     <input type="text" name="card_for" id="card_title" class="form-control @error('card_title') is-invalid @enderror cin" placeholder="{{ __('Card Title') }}" required data-preview="card_for_show" tabindex="{{ $tabindex++ }}" value="{{ old('card_for') }}">
                                                                      @if($errors->has('card_for'))
                                                                      <span class="help-block text-danger">{{ $errors->first('card_for') }}</span>
                                                                      @endif
