@@ -23,13 +23,9 @@ class CardRequest extends FormRequest
 
     public function rules()
     {
-        $rules = [];
-        // if ($this->attributes->get('video_type') == 'file') {
-        //     $rules['video_file'] = 'file|mimes:mp4,m4v,avi,mov,mpg,mpeg,webm|max:1999';
-        // }
         $rules = [
             'card_for'         => 'required|string|max:124',
-            // 'bgcolor'          => 'required|string|max:25',
+            'bgcolor'          => 'required|string|max:25',
             'name'             => 'required|string|max:124',
             'location'         => 'required|string|max:124',
             'designation'      => 'required|string|max:124',
