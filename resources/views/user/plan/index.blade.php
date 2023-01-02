@@ -6,33 +6,49 @@
 My Plans
 @endsection
 @section('meta_tag')@endsection
+<style>
+    .pricing-card{
+        /* width: 319px; */
+    border: solid 1px #bdbdbd;
+    cursor: pointer;
+    height: 728px;
+    /* display: flex; */
+    padding: 24px;
+    /* margin-right: 15px; */
+    border-radius: 20px;
+    /* flex-direction: column; */
+    background-color: #fff;
+    }
+    .pricing-card:hover{
+        border: 1px solid #4B8CE2;
+        filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.11));
+    }
+</style>
+
+
 @section('content')
-<div class="setting_sec section mt-4 mb-5 min_height">
-    <div class="container">
-        <div class="row g-2">
-            <div class="col-md-12">
-                <div class="p-3 bg-white custome_shadow">
-                    <div class="">
-                        <h3 class="card-title">{{ __('My plan')}} <small style="font-weight: 300; font-size:12px;" >{{ __('Expiration date')}} : {{ date('d M, Y',strtotime(Auth::user()->plan_validity)) }}</small></h3>
-                        <p class="text-uppercase"><b>{{$user_plan->plan_name}}</b></p>
-                        <p class="plan_name">
-                            @if($user_plan->is_free == 1)
-                            <span>{{ __('Free Plan')}}</span>
-                            @else
-                            <span>{{ __('Paid Plan')}}</span>
-                            @endif
-                        </p>
-                        <div class="card-text">
-                            <a href="javascript:;" onclick="return confirm('Are you sure?')" class="btn btn-danger" title="{{ __('Cancel')}}">{{ __('Cancel')}}</a>
-                            <a href="#pricing" class="btn btn-primary" title="{{ __('Upgrade')}}">{{ __('Upgrade')}}</a>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ __('Choose a plan') }}</h1>
+
+                    <div>
+                        <div class="info">Checkbox Shown &amp; <strong>Checked</strong>
+                            <input type="checkbox" class="show" checked>
                         </div>
+                        <div class="Switch">
+                            <div class="Toggle"></div>
+                            <span class="On">ON</span> <span class="Off">OFF</span> </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="pricing_sec pt-5 pb-5" id="pricing">
-            <div class="container">
-                <div class="row g-4">
+    </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="section_title text-center mb-2">
                             <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
@@ -44,16 +60,28 @@ My Plans
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row justify-content-md-center">
+
                     @if (!empty($plans) && count($plans) > 0)
                         @foreach($plans as $plan)
                     @php
                         $planfeatures = json_decode($plan->features);
                     @endphp
-                    <div class="col-md-6 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                    <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
                         <div class="pricing-card card card-md">
                             <div class="card-body text-center">
                                 <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}
                                 </div>
+                                @if (Auth::user()->plan_id==$plan->id && $plan->is_free==1)
+                                <div class="text-center mt-4">
+                                <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
+                                </div>
+                                @else
+                                    <div class="text-center mt-4">
+                                        <a href="javascript:void(0)" class="choose-plan btn btn-block btn-dark w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                                    </div>
+                                @endif
                                 <div class="my-3 pb-3">
                                     <div class="price">
                                         <h4 class="planpricemonthly">$ {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
@@ -61,22 +89,13 @@ My Plans
                                     </div>
                                 </div>
                                 <hr>
-                                <ul class="list-unstyled lh-lg">
+                                <ul class="list-unstyled lh-lg ">
                                     @foreach($planfeatures as $features)
-                                        <li>
+                                        <li class="py-2">
                                             <span>{{$features}}</span>
                                         </li>
                                     @endforeach
                                 </ul>
-                                @if (Auth::user()->plan_id==$plan->id && $plan->is_free==1)
-                                    <div class="text-center mt-4">
-                                    <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
-                                    </div>
-                                @else
-                                    <div class="text-center mt-4">
-                                        <a href="javascript:void(0)" class="choose-plan btn w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>
