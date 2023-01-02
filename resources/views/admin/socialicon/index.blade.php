@@ -43,10 +43,11 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive px-2 py-2">
-                                <table class="table table-vcenter card-table" id="table">
+                                <table id="dataTable" class="table table-vcenter card-table" id="table">
                                     <thead>
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
+                                            <th>{{ __('Icon Group') }}</th>
                                             <th>{{ __('Icon Name') }}</th>
                                             <th>{{ __('Icon fa ') }}</th>
                                             <th>{{ __('Icon Title') }}</th>
@@ -59,6 +60,7 @@
                                         @foreach($socileicons as $key => $socile)
                                         <tr>
                                             <td>{{$key + 1}}</td>
+                                            <td>{{$socile->icon_group}}</td>
                                             <td>{{$socile->icon_name}}</td>
                                             <td><i class="{{ $socile->icon_fa }}"></i></td>
                                             <td>{{$socile->icon_title}}</td>
