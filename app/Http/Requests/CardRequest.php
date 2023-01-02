@@ -30,7 +30,7 @@ class CardRequest extends FormRequest
             'location'         => 'required|string|max:124',
             'designation'      => 'required|string|max:124',
             'company_name'     => 'required|string|max:124',
-            'bio'                => 'nullable|string|max:124',
+            'bio'              => 'nullable|string|max:255',
             'profile_pic'      => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
             'cover_pic'        => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
             'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'

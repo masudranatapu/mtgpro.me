@@ -46,7 +46,7 @@
                                         <div class="card_info mt-4 text-center">
                                             <div class="profile_name">
                                                 <h3>{{ $item->name }}</h3>
-                                                <h5>{{ $item->designation }}</h5>
+                                                <h5>{{ $item->designation }} {{ __('at') }} {{ $item->company_name }}</h5>
                                             </div>
                                             <div class="card_btn mt-3 mb-4">
                                                 <a href="{{ route('user.card.edit',$item->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
