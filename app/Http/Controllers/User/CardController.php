@@ -176,7 +176,7 @@ class CardController extends Controller
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
         }
         Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
-        return redirect()->route('user.card.view',$this->resp->data)->with($this->resp->redirect_class, $this->resp->msg);
+        return redirect()->route('user.card.edit',$this->resp->data)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
 

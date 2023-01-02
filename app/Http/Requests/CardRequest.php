@@ -24,24 +24,20 @@ class CardRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-
         // if ($this->attributes->get('video_type') == 'file') {
         //     $rules['video_file'] = 'file|mimes:mp4,m4v,avi,mov,mpg,mpeg,webm|max:1999';
         // }
-
         $rules = [
-            'first_name'            => 'required|string|max:124',//
-            'last_name'             => 'required|string|max:124',//
-            'phone_number'          => 'required|string|max:20',//
-            'card_email'            => 'required|email|max:124',//
-            // 'upload_logo_url'       => 'image|mimes:jpg,jpeg,png,gif|max:3048',
-            // 'upload_image_url'      => 'image|mimes:jpg,jpeg,png,gif|max:3048',
-            'card_name'             => 'required|string|max:124',//
-            'designation'           => 'nullable|string|max:124',//
-            'personalized_link'     => 'required|unique:users,email|string|max:124',//
-            'company_name'          => 'nullable|string|max:124',//
-            'ccode'                 => 'required|string|max:8',//
-
+            'card_for'         => 'required|string|max:124',
+            // 'bgcolor'          => 'required|string|max:25',
+            'name'             => 'required|string|max:124',
+            'location'         => 'required|string|max:124',
+            'designation'      => 'required|string|max:124',
+            'company_name'     => 'required|string|max:124',
+            'bio'                => 'nullable|string|max:124',
+            'profile_pic'      => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
+            'cover_pic'        => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
+            'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'
         ];
         $social_icon = DB::table('social_icon')->get();
         if($social_icon){
@@ -56,18 +52,13 @@ class CardRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required'   => 'This field is required',
-            'last_name.required'    => 'This field is required',
-            'profile.required'      => 'This field is required',
-            'card_name.required'    => 'This field is required',
-            'upload_logo_url.required'         => 'This field is required',
-            'upload_image_url.required'         => 'This field is required',
+            'card_for.required'   => 'This field is required',
+            'bgcolor.required'    => 'This field is required',
+            'name.required'      => 'This field is required',
+            'location.required'    => 'This field is required',
             'designation.required'  => 'This field is required',
-            'phone.required'        => 'This field is required',
+            'company_name.required'        => 'This field is required',
             'email.required'        => 'This field is required',
-            'personalized_link.required' => 'This field is required',
-            'company_name.required' => 'This field is required',
-            'ccode.required'        => 'This field is required',
         ];
     }
 }
