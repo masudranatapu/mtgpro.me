@@ -53,7 +53,6 @@
     <meta name="twitter:image:alt" content="{{ $user_name }}'s profile picture" />
     <meta property="twitter:url" content="{{Request::url()}}" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}">
@@ -68,7 +67,7 @@
                 </div>
                 <div class="card_profile" data-aos="zoom-in">
                     <img class="profile_pic" src="{{ getProfile($cardinfo->profile) }}" alt="image">
-                    <img class="logo" src="{{ getLogo($cardinfo->profile) }}" alt="image">
+                    <img class="logo" src="{{ getLogo($cardinfo->logo) }}" alt="image">
                 </div>
             </div>
             <div class="card_view_body">

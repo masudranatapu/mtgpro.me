@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('user.layouts.app')
 @push('custom_css')
 @endpush
 @section('plan','active')
@@ -7,20 +7,6 @@ My Plans
 @endsection
 @section('meta_tag')@endsection
 @section('content')
-<!-- Breadcrumb -->
-{{-- <div class="container">
-    <div class="page-header breadcrumb_section d-print-none mt-2 mb-3">
-        <div class="row align-items-center">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">{{ __('Overview')}}</li>
-                <li class="breadcrumb-item active">{{ __('Plans')}}</li>
-              </ol>
-            </nav>
-        </div>
-    </div>
-</div> --}}
-
 <div class="setting_sec section mt-4 mb-5 min_height">
     <div class="container">
         <div class="row g-2">
@@ -47,58 +33,59 @@ My Plans
         <div class="pricing_sec pt-5 pb-5" id="pricing">
             <div class="container">
                 <div class="row g-4">
-                    <div class="section_title text-center mb-2">
-                        <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
-                    </div>
-                    <div class="switchBtn text-center mb-4">
-                        <div class="form-check form-switch">
-                            <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
-                                {{ __('Monthly | Annual')}}</label>
-                    </div>
-                </div>
-                @if (!empty($plans) && count($plans) > 0)
-                    @foreach($plans as $plan)
-                @php
-                    $planfeatures = json_decode($plan->features);
-                @endphp
-
-                <div class="col-md-6 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
-                    <div class="pricing-card card card-md">
-                        <div class="card-body text-center">
-                            <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}
+                    <div class="col-md-12">
+                        <div class="section_title text-center mb-2">
+                            <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
+                        </div>
+                        <div class="switchBtn text-center mb-4">
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
+                                    {{ __('Monthly | Annual')}}</label>
                             </div>
-                            <div class="my-3 pb-3">
-                                <div class="price">
-                                    <h4 class="planpricemonthly">$ {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
-                                    <h4 class="planpriceyearly" style="display: none;">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
-                            </div>
-                            </div>
-                            <hr>
-                            <ul class="list-unstyled lh-lg">
-                                @foreach($planfeatures as $features)
-                                    <li>
-                                        <span>{{$features}}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            @if (Auth::user()->plan_id==$plan->id && $plan->is_free==1)
-                                <div class="text-center mt-4">
-                                <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
-                                </div>
-                            @else
-                                <div class="text-center mt-4">
-                                    <a href="javascript:void(0)" class="choose-plan btn w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
-                                </div>
-                            @endif
                         </div>
                     </div>
+                    @if (!empty($plans) && count($plans) > 0)
+                        @foreach($plans as $plan)
+                    @php
+                        $planfeatures = json_decode($plan->features);
+                    @endphp
+                    <div class="col-md-6 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                        <div class="pricing-card card card-md">
+                            <div class="card-body text-center">
+                                <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}
+                                </div>
+                                <div class="my-3 pb-3">
+                                    <div class="price">
+                                        <h4 class="planpricemonthly">$ {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
+                                        <h4 class="planpriceyearly" style="display: none;">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <ul class="list-unstyled lh-lg">
+                                    @foreach($planfeatures as $features)
+                                        <li>
+                                            <span>{{$features}}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                @if (Auth::user()->plan_id==$plan->id && $plan->is_free==1)
+                                    <div class="text-center mt-4">
+                                    <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
+                                    </div>
+                                @else
+                                    <div class="text-center mt-4">
+                                        <a href="javascript:void(0)" class="choose-plan btn w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endif
                 </div>
-                @endforeach
-                @endif
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- Modal -->
 <div class="modal animate__animated animate__fadeIn" id="planConfirmModal" tabindex="-1" aria-labelledby="planConfirmModalLabel" aria-hidden="true">

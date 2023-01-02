@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="card_btn mt-3 mb-4">
                                                 <a href="{{ route('user.card.edit',$item->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
-                                                <a href="{{ route('card.preview',$item->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
+                                                <a target="__blank" href="{{ route('card.preview',$item->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
                                             </div>
                                         </div>
                                     </div>

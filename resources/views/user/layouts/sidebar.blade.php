@@ -56,7 +56,7 @@ $settings = getSetting();
         </div>
         <!-- upgrade plan -->
         <div class="plan_upgrade text-center mb-5">
-            <a href="#">{{ __('Upgrade now') }}</a>
+            <a href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
         </div>
     </div>
 </aside>
