@@ -361,7 +361,7 @@
                                             @foreach ($icons as $key2 => $icon )
                                                 @if($icon->icon_group == $igroup )
                                                     <div class="col-sm-6 col-lg-4 icon_each" data-name="{{ $icon->icon_name }}">
-                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}">
+                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}">
                                                             <div class="icon_wrap media position-relative mb-3">
                                                                 <div class="icon_info">
                                                                     <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon_title }}">
@@ -387,7 +387,7 @@
                             <div class="row no-gutters">
                                 <div class="col-lg-8">
                                     <div class="social_add_form">
-                                        <form onsubmit="alert('Please complete the about section'); return false;">
+                                        <form action="{{ route('user.card.add_icon') }}" >
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
@@ -401,7 +401,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="title" class="form-label">Link title</label>
-                                                <input type="text" name="title" class="form-control" placeholder="Title" required id="content_title">
+                                                <input type="text" name="title" class="form-control mcin" data-preview="link_title_show" placeholder="Title" required id="content_title" data-id="" maxlength="20">
                                             </div>
 
                                             <div class="form-group text-center float-lg-right">
@@ -461,7 +461,7 @@
                                                                 <p>{{ $card->bio }}</p>
                                                             </div>
                                                             <div class="save_contact mt-4 mb-4">
-                                                                <a href="#" >Save Contact</a>
+                                                                <a href="#" >{{ __('Save Contact') }}</a>
                                                             </div>
                                                             <div class="social_icon">
                                                                 <ul>
@@ -471,7 +471,7 @@
                                                                     <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                         <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
                                                                             <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
-                                                                            <span class="icon_label">{{ $icon->label }}</span>
+                                                                            <span class="icon_label link_title_show">{{ $icon->label }}</span>
                                                                         </a>
                                                                     </li>
                                                                     @endforeach
