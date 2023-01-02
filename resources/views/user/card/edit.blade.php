@@ -64,78 +64,30 @@
                                                     </div>
                                                     <!-- social media link -->
                                                     <div class="social_media_list" id="drop-items">
-                                                        <!-- single list -->
+
+                                                    @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
+                                                        @foreach ($card->business_card_fields as $key => $icon )
+
                                                         <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
+                                                            <a href="javascript:void(0)" class="editLink">
                                                                 <div class="drag_drap">
                                                                     <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
-                                                                    <span>{{ __('facebook') }}</span>
+                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
+                                                                    <span>{{ $icon->label }}</span>
                                                                 </div>
                                                             </a>
                                                             <div class="media_btn float-right">
                                                                 <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" checked="" id="visiable">
-                                                                    <label class="custom-control-label" for="visiable"></label>
+                                                                    <input type="checkbox" class="custom-control-input sicon_control" checked="" id="{{ $icon->icon.'_'.$icon->id }}" value="{{ $icon->id }}" >
+                                                                    <label class="custom-control-label" for="{{ $icon->icon.'_'.$icon->id }}"></label>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/instagram.svg') }}" alt="facebook">
-                                                                    <span>{{ __('Instagram') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" id="visiable2">
-                                                                    <label class="custom-control-label" for="visiable2"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/number.svg') }}" alt="facebook">
-                                                                    <span>{{ __('Number') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" checked="" id="visiable3">
-                                                                    <label class="custom-control-label" for="visiable3"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- single list -->
-                                                        <div class="single_list media position-relative">
-                                                            <a href="#" class="editLink">
-                                                                <div class="drag_drap">
-                                                                    <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
-                                                                </div>
-                                                                <div class="social_media_name">
-                                                                    <img src="{{ asset('assets/img/icon/soundcloud.svg') }}" alt="facebook">
-                                                                    <span>{{ __('Soundcloud') }}</span>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media_btn float-right">
-                                                                <div class="custom-control custom-switch d-inline">
-                                                                    <input type="checkbox" class="custom-control-input" id="visiable3">
-                                                                    <label class="custom-control-label" for="visiable3"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        @endforeach
+                                                        @endif
+
                                                     </div>
                                                     <!-- edit social link form -->
                                                     <div class="edit_social_form add_form_wrap d-none" style="padding-top:14px;">
@@ -366,24 +318,17 @@
                                                     </div>
                                                     <div class="social_icon">
                                                         <ul>
-                                                            <li>
-                                                                <a href="#" target="_blank">
-                                                                    <img src="{{ asset('assets/img/icon/facebook.svg') }}" alt="facebook">
-                                                                    <span>Facebook</span>
+                                                            @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
+                                                            @foreach ($card->business_card_fields as $key => $icon )
+                                                            <li class="sicon_{{ $icon->id }}" >
+                                                                <a href="{{ makeUrl($icon->content) }}" target="_blank">
+                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
+                                                                    <span>{{ $icon->label }}</span>
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" target="_blank">
-                                                                    <img src="{{ asset('assets/img/icon/call.svg') }}" alt="phone">
-                                                                    <span>Phone</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" target="_blank">
-                                                                    <img src="{{ asset('assets/img/icon/email.svg') }}" alt="email">
-                                                                    <span>Email</span>
-                                                                </a>
-                                                            </li>
+                                                            @endforeach
+                                                            @endif
+
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -441,6 +386,7 @@
                                 <h3>Recommended</h3>
                             </div>
                             <div class="row align-item-center">
+
                                 <div class="col-sm-6 col-lg-4">
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
@@ -454,6 +400,7 @@
                                         </div>
                                     </a>
                                 </div>
+
                                 <div class="col-sm-6 col-lg-4">
                                     <a href="#" class="onclickIcon">
                                         <div class="icon_wrap media position-relative mb-3">
@@ -1275,15 +1222,40 @@
         </div>
     </div>
 @endsection
-@push('custom_js')
-@if($card->theme_color )
-<style>
-.card_preview_wrapper .save_contact a{
-    background:{{ $card->theme_color }}
-}
-</style>
 
+@push('custom_js')
+
+@if($card->theme_color )
+    <style>
+    .card_preview_wrapper .save_contact a{
+        background:{{ $card->theme_color }}
+    }
+    </style>
 @endif
+
+@if($card->theme_color == '#fff' )
+    <style>
+        .card_preview_wrapper .save_contact a{
+            color: #000;
+            border-color: #000;
+            background-color: #fff;
+
+        }
+    </style>
+@endif
+
+@if($card->theme_color == '#000' )
+    <style>
+        .card_preview_wrapper .save_contact a{
+            color: #fff;
+            border-color: #fff;
+            background-color: #000;
+
+        }
+    </style>
+@endif
+
+
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
@@ -1379,6 +1351,42 @@ $(document).on('input','#colorPicker',function(){
     element.style.backgroundColor = color;
 })
 
+
+$("input:checkbox.sicon_control").click(function() {
+    var id = $(this).val();
+    var status = '';
+    if(!$(this).is(":checked")){
+       $('.sicon_'+id).hide();
+       status = 'unchecked';
+
+    }else{
+        $('.sicon_'+id).show();
+        status = 'checked';
+    }
+
+    $.ajax({
+         url: `{{ route('user.card.sicon_edit') }}`,
+         type: "post",
+         data:{"image": response,"_token": "{{ csrf_token() }}",},
+         success:function(data)
+         {
+             console.log(data);
+            //  $('.preview_logo_div').html(data.html);
+            //  $(".profile_image_src").attr("src",data.image);
+            //  $('#uploadAvatarModal').modal('hide');
+            //  // $('#photo').val(1);
+            //  $('.logo-crop-spinner').removeClass('active');
+         },
+         error: function (jqXHR, exception) {
+            //  $('.logo-crop-spinner').removeClass('active');
+         },
+         complete: function (response) {
+            //  $("body").css("cursor", "default");
+            //  $('.logo-crop-spinner').removeClass('active');
+         }
+     });
+
+});
 
 </script>
 @endpush

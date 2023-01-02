@@ -146,9 +146,26 @@ if (!function_exists('getLogo')) {
         }else{
             return asset('assets/img/default-logo.png');
         }
-
     }
 }
+
+if (!function_exists('getIcon')) {
+    function getIcon($path = null)
+    {
+        if($path){
+            $ppath = public_path($path);
+            if(file_exists($ppath)){
+              return asset($path);
+            } else {
+                return asset('assets/img/default-icon.png');
+           }
+        }else{
+            return asset('assets/img/default-icon.png');
+        }
+    }
+}
+
+
 
 if (!function_exists('getDesigComp')) {
     function getDesigComp($desig,$comp)
