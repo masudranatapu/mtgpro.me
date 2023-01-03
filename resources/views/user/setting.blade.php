@@ -2,6 +2,13 @@
 @section('title') {{ __('Settings') }}  @endsection
 @push('custom_css')
 @endpush
+
+@php
+
+$settings = getSetting();
+
+@endphp
+
 @section('settings','active')
 @section('content')
         <!-- main content -->
@@ -49,7 +56,7 @@
                                                     </div>
                                                     <div class="setting_form">
                                                         <form onsubmit="return false;">
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <label for="profile_url" class="form-label">
                                                                     {{ __('Profile URL') }}
                                                                     <a href="#">
@@ -57,15 +64,31 @@
                                                                     </a>
                                                                 </label>
                                                                 <input type="text" name="profile_url" id="profile_url" class="form-control" value="mtgpr/">
+                                                            </div> --}}
+
+                                                            <div class="form-group">
+                                                                <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
+                                                                <label for="profile_pic" class="form-label" style="display: block;">
+                                                                   <img src="{{ getProfile() }}" alt="profile image" style="width:150px;">
+                                                                </label>
+                                                                <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}" >
+                                                                @if($errors->has('profile_pic'))
+                                                                <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
+                                                                @endif
                                                             </div>
+
                                                             <div class="form-group">
                                                                 <label for="email" class="form-label">{{ __('Email') }}</label>
-                                                                <input type="email" name="email" id="email" class="form-control" value="rabin@gmail.com">
+                                                                <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}">
                                                             </div>
+
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                             </div>
                                                         </form>
+                                                       <a href="" style="padding: 10px 20px; " >Reset Your Password</a>
+                                                       <a href="" style="padding: 10px 20px; " >Delete Account</a>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,7 +102,8 @@
                                                         <form onsubmit="return false;">
                                                             <div class="form-group">
                                                                 <label for="emalil_to" class="form-label">{{ __('To') }}</label>
-                                                                <input type="text" name="emalil_to" id="emalil_to" class="form-control" value="support@contactsolutions.com" readonly="">
+                                                                    <div>{{ $settings->email }}</div>
+                                                                    <hr>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="subject" class="form-label">{{ __('Subject') }} <span class="text-dark">*</span></label>
