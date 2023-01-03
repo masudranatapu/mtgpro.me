@@ -124,7 +124,7 @@ $settings = getSetting();
                                                 <div class="setting_tab_contetn">
                                                     <div class="heading mb-4">
                                                         <h3>{{ __('Request a Feature') }}</h3>
-                                                        <p>{{ __('Do you have an idea for a feature that would make Popl even better for you? Let us know!') }}</p>
+                                                        <p>{{ __('Do you have an idea for a feature that would make better for you? Let us know!') }}</p>
                                                     </div>
                                                     <div class="setting_form">
                                                         <form onsubmit="return false;">
