@@ -186,6 +186,7 @@ class BusinessCard extends Model
 
     public function postUpdate($request, $id)
     {
+        dd($request->all());
         DB::beginTransaction();
         try {
             $card = BusinessCard::findOrFail($id);
