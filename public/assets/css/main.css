@@ -62,12 +62,28 @@ textarea {
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+@font-face {
+    font-family: "Gilroy-Light";
+    src: url("../fonts/Gilroy-Light.eot");
+    src: url("../fonts/Gilroy-Light.woff") format("woff"),
+        url("../fonts/Gilroy-Light.ttf") format("opentype"),
+        url("../fonts/Gilroy-Light.otf") format("opentype"),
+        url("../fonts/Gilroy-Light.svg#svg") format("svg");
+}
+
+@font-face {
+    font-family: "Gilroy-Bold";
+    src: url("../fonts/Gilroy-Bold.eot");
+    src: url("../fonts/Gilroy-Bold.woff") format("woff"),
+        url("../fonts/Gilroy-Bold.ttf") format("opentype"),
+        url("../fonts/Gilroy-Bold.otf") format("opentype"),
+        url("../fonts/Gilroy-Bold.svg#svg") format("svg");
+}
 
 body {
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     color: #111;
-    background-image: url(../images/site-bg.webp);
 }
 
 :root {
@@ -88,7 +104,7 @@ body {
     color: #fff;
     font-size: 18px;
     margin: 0;
-    font-family: 'Inter';
+    font-family: 'Gilroy-Bold';
     font-weight: 500;
 }
 
@@ -102,16 +118,15 @@ body {
 .header {
     box-shadow: rgb(0 0 0 / 5%) 0px 1px 4px;
     background: #fff;
-    padding:5px 0px;
+    padding: 5px 0px;
 }
 
 .header .nav-link {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--secondary);
-    font-family: 'Inter', sans-serif;
     padding: 1px 28px !important;
-    text-transform: uppercase;
     font-weight: 500;
+    font-family: 'Gilroy-Light', sans-serif;
 }
 
 .header .nav-link:hover {
@@ -139,12 +154,11 @@ body {
 /* ========================= Banner =============================== */
 
 .banner_content h2 {
-    font-size: 36px;
+    font-size: 35px;
     line-height: 49px;
     color: var(--secondary);
     margin-bottom: 22px;
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Gilroy-Bold';
     text-shadow: 2px 2px #00000029;
 }
 
@@ -162,18 +176,19 @@ body {
 
 .banner_content .btn-dark {
     outline: none;
-    box-shadow: none;
-    padding: 10px 44px;
+    padding: 12px 44px;
     text-transform: uppercase;
-    font-weight: 600;
     border-radius: 50px;
     border: none !important;
-    background: var(--primary)
+    background: var(--white);
+    box-shadow: 0 4px 7px 0 rgb(0 0 0 / 20%);
+    color: var(--black);
+    font-family: 'Gilroy-Bold';
 }
-
 
 .banner_content .btn-dark:hover {
     background: var(--black) !important;
+    color: var(--white) !important;
 }
 
 .dropdown.user_dropdown button {
@@ -205,8 +220,8 @@ body {
 }
 
 .feature_wrapper .feature_name h3 {
-    font-size: 23px;
-    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-family: 'Gilroy-Bold';
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 12px;
@@ -221,9 +236,10 @@ body {
 /* ========================= Pricing =============================== */
 
 .section_title h4 {
-    font-size: 30px;
+    font-size: 27px;
     color: var(--black);
     font-weight: 500;
+    font-family: 'Inter', sans-serif;
 }
 
 .pricing {
@@ -290,16 +306,17 @@ body {
 }
 
 .plan_name h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Gilroy-Bold';
     padding-bottom: 1px;
 }
 
 .plan_name span {
-    font-size: 14px;
+    font-size: 15px;
     color: #444;
+    font-family: 'Inter';
 }
 
 .plan_feature ul li {
@@ -418,17 +435,18 @@ body {
 }
 
 .testimonial_sec .review_user h3 {
-    font-size: 19px;
-    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-family: 'Gilroy-Bold';
     font-weight: 500;
     color: var(--black);
     margin: 0;
-    padding-bottom: 1px;
+    padding-bottom: 3px;
 }
 
 .testimonial_sec .review_user span {
-    font-size: 14px;
+    font-size: 15px;
     color: #666;
+    font-family: 'Gilroy-Light';
 }
 
 .testimonial_sec .owl-nav {
@@ -523,7 +541,7 @@ body {
 }
 
 .footer_menu ul li a:hover {
-   color: var(--white);
+    color: var(--white);
 }
 
 .footer_article p {
@@ -578,7 +596,7 @@ body {
 .widget_title h3 {
     font-size: 18px;
     color: #d4d3d3;
-    font-family: 'Inter';
+    font-family: 'Gilroy-Light';
     font-weight: 500;
 }
 
