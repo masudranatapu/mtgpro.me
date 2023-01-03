@@ -141,7 +141,9 @@
         var element = document.getElementById("clrBg");
         element.style.backgroundColor = color;
     })
-
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
     </script>
     @stack('custom_js')
 </body>

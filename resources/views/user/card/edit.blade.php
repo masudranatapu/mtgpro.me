@@ -21,7 +21,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                <a href="{{ route('user.card') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
+                                <a href="{{ route('user.card') }}" class="back_btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="{{ $card->title }}">
                                 {{ $card->card_for ?? '' }}
                             </h1>
@@ -119,22 +119,18 @@
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
-                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-
-                                                                             {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
+                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
                                                                              <input type="file" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group cover_group">
-                                                                             <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
-                                                                             {{-- <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden> --}}
+                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center company_group">
-                                                                         <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
-                                                                         {{-- <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> --}}
+                                                                         <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                     </div>
                                                                 </div>
@@ -400,7 +396,7 @@
                                             @csrf
                                             <input type="hidden" name="card_id" value="{{ $card->id }}">
                                             <input type="hidden" name="icon_id" id="icon_id" value="">
-                                            <div class="form-group">
+                                            <div class="form-group social_icon_up">
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
                                                     <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon"  data-ratio="1:1" data-id="" hidden>
@@ -531,7 +527,6 @@
             color: #000;
             border-color: #000;
             background-color: #fff;
-
         }
     </style>
 @endif
@@ -549,28 +544,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
-// preview profile photo
-// var profileloadFile = function(event) {
-//     var profile = document.getElementById('profilePic');
-//     profile.src = URL.createObjectURL(event.target.files[0]);
-//     var profile2 = document.getElementById('profilePic_2');
-//     profile2.src = URL.createObjectURL(event.target.files[0]);
-// };
-// // preview company logo
-// var companyloadFile = function(event) {
-//     var logo = document.getElementById('showlogo');
-//     logo.src = URL.createObjectURL(event.target.files[0]);
-//     var logo2 = document.getElementById('showlogo_2');
-//     logo2.src = URL.createObjectURL(event.target.files[0]);
-// };
-// // preview cover photo
-// var coverFile = function(event) {
-//     var cover  = document.getElementById('coverpic');
-//     cover.src  = URL.createObjectURL(event.target.files[0]);
-//     var cover2  = document.getElementById('coverpic_2');
-//     var cover2_url  = URL.createObjectURL(event.target.files[0]);
-//     cover2.style.backgroundImage = "url("+cover2_url+")";
-// };
 // drag and drop
 const dropItems = document.getElementById('drop-items')
 new Sortable(dropItems, {
@@ -578,11 +551,21 @@ new Sortable(dropItems, {
     chosenClass: "sortable-chosen",
     dragClass: "sortable-drag"
 });
-
 // social content modal
 $('.onclickIcon').on('click', function() {
     $('.first_modal').addClass('d-none');
     var icon_id = $(this).attr('data-id');
+    var icon_name = $(this).attr('data-image');
+    // var image = document.createElement("IMG");
+    // image.alt = "Alt information for image";
+    // image.setAttribute('class', 'img-fluid');
+    // image.src=icon_name;
+    // $(".upload_icon").html(image);
+    // upload_icon slim-file-hopper
+    // var cover2  = $('.upload_icon').css('background-image', 'url('+icon_name+');');;
+    // var cover2_url  = icon_name;
+    // cover2.style.backgroundImage = "url("+cover2_url+")";
+    // $('#upload_icon').attr('src',icon_name);
     $('#icon_id').val(icon_id);
     $('.second_modal').removeClass('d-none');
 });
@@ -603,7 +586,6 @@ $('.editLink').on('click', function() {
     $('.tab_body .add_link').addClass('d-none');
     $('.tab_body .social_media_list').addClass('d-none');
     var id = $(this).data('id');
-
     $.ajax({
          url: `{{ route('user.card.sicon_edit') }}`,
          type: "get",
