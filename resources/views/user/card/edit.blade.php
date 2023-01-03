@@ -119,19 +119,34 @@
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
-                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-                                                                             <input type="file" hidden name="profile_pic" id="profile_pic">
-                                                                         </div>
+                                                                            <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
+                                                                            @if (!empty($card->profile))
+                                                                            <div class="slim" data-ratio="1:1">
+                                                                                <img src="{{ asset($card->profile) }}" alt="">
+                                                                            </div>
+                                                                            @endif
+                                                                            <input type="file" hidden name="profile_pic" id="profile_pic" >
+                                                                        </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group cover_group">
-                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
+                                                                            <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
+                                                                            <div class="slim" data-ratio="3:1">
+                                                                                @if (!empty($card->cover))
+                                                                                <img src="{{ asset($card->cover) }}" alt="">
+                                                                                @endif
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
+                                                                         </div>
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center company_group">
                                                                          <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
+                                                                         <div class="slim" data-ratio="1:1">
+                                                                            @if (!empty($card->logo))
+                                                                            <img src="{{ asset($card->logo) }}" alt="">
+                                                                            @endif
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -769,7 +784,7 @@ $("input:checkbox.sicon_control").click(function() {
         }
     });
 });
-    var cropper = new Slim(document.getElementById('profile_pic'), {
+   new Slim(document.getElementById('profile_pic'), {
         ratio: '1:1',
         minSize: {
             width: 150,
@@ -789,7 +804,7 @@ $("input:checkbox.sicon_control").click(function() {
         download: false,
         instantEdit: true,
     });
-    var cropper = new Slim(document.getElementById('cover_pic'), {
+    new Slim(document.getElementById('cover_pic'), {
         ratio: '3:1',
         minSize: {
             width: 300,
