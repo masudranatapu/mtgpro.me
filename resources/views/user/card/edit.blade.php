@@ -400,9 +400,9 @@
                                             @csrf
                                             <input type="hidden" name="card_id" value="{{ $card->id }}">
                                             <input type="hidden" name="icon_id" id="icon_id" value="">
-                                            <div class="form-group">
+                                            <div class="form-group social_icon_up">
                                                 <label class="imgLabel" for="logo">
-                                                    <img id="content_icon" src="{{ getIcon() }}" alt="">
+                                                    <!-- <img id="content_icon" src="{{ getIcon() }}" alt=""> -->
                                                     <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon"  data-ratio="1:1" data-id="" hidden>
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                     @if($errors->has('logo'))
