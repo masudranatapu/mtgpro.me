@@ -229,7 +229,9 @@ body {
 }
 
 .card_preview_wrapper .social_icon ul li img {
-    width: 50px;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
 }
 
 .card_preview_wrapper .social_icon ul li a span {
@@ -743,7 +745,9 @@ body {
 }
 
 .add_content_modal .add_list_wrap .icon_info img {
-    width: 39px;
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
 }
 
 .add_content_modal .add_list_wrap .icon {
@@ -1059,14 +1063,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
 .slim-btn {
     width: 28px !important;
     height: 28px !important;
@@ -1111,3 +1107,84 @@ body {
     padding: 7px 14px !important;
 }
 
+
+
+
+
+
+
+.delete_modal .modal {
+    backdrop-filter: blur(4px);
+    background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
+    backdrop-filter: blur(4px);
+}
+
+.delete_modal .modal-content {
+    border: none;
+    border-radius: 0px;
+    padding: 5px 20px;
+}
+
+.delete_modal .close {
+    position: absolute;
+    top: 25px;
+    right: 23px;
+    border: 1px solid #e2e2e2;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    line-height: 2px;
+    text-align: center;
+    padding: 0 !important;
+}
+
+.delete_modal .modal-header {
+    padding: 10px 0px;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 17px;
+}
+
+.delete_modal .modal-header h5 {
+    display: block;
+    font-size: 15px;
+    font-family: 'Inter';
+    color: #111;
+    font-weight: 600;
+}
+
+.delete_modal .modal_body h5 {
+    font-size: 16px;
+    color: #dc3545;
+    font-weight: 400;
+    margin-bottom: 9px;
+}
+
+.delete_modal .modal_body p {
+    font-size: 15px;
+    text-align: justify;
+    color: #444;
+    font-weight: 400;
+}
+
+.delete_modal .modal-footer {
+    border: none;
+    padding: 0;
+}
+
+.delete_modal .modal-footer button {
+    border-radius: 3px;
+    padding: 7px 17px;
+    height: 39px;
+    border: none !important;
+}
+
+.delete_modal .form-control {
+    background: #F7F7F7 !important;
+    border: none;
+    height: 56px;
+    font-size: 14px;
+    color: #111;
+    outline: none;
+    box-shadow: none;
+    border-radius: 10px;
+}
