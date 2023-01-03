@@ -1,6 +1,7 @@
 @extends('user.layouts.app')
 @section('title') {{ __('Settings') }}  @endsection
 @push('custom_css')
+
 @endpush
 
 @php
@@ -152,9 +153,9 @@ $settings = getSetting();
     </div>
 
 
-  
+
 <!-- Account delete modal -->
-<div class="delete_modal">
+<div class="delete_modal1">
     <div class="modal fade" id="deleteAccount" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

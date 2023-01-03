@@ -11,7 +11,7 @@
 @php
     $icon_group = Config::get('app.icon_group');
 @endphp
-
+{{ $errors }}
 @section('tab_content','active')
 @section('content')
         <!-- main content -->

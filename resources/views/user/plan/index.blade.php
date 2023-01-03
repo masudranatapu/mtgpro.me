@@ -46,17 +46,8 @@ My Plans
                     </div>
                     <div class="switchBtn text-center mb-4">
                         <div class="form-check form-switch">
-                            <label class="form-check-label" for="monthlyCheckedMonthly">
-                                <input class="form-check-input" type="radio" value="0" id="monthlyCheckedMonthly" onclick="monthlyCheckedAnnualy()">
-                                {{ __('Monthly') }}
-
-                                </label>
-                                |
-                                <label class="form-check-label" for="monthlyCheckedAnnualy">
-                                    <input class="form-check-input" type="radio" value="1" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
-                                    {{ __('Annual') }}
-
-                            </label>
+                            <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
+                                    {{ __('Annual | Monthly')}}</label>
                         </div>
                     </div>
                 </div>
@@ -105,31 +96,35 @@ My Plans
     </div>
 </div>
 <!-- Modal -->
-<div class="modal animate__animated animate__fadeIn" id="planConfirmModal" tabindex="-1" aria-labelledby="planConfirmModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-        <div class="modal-body">
-            <form action="{{ route('user.checkout') }}" id="choose_plan_action" method="get">
-                {{-- @csrf --}}
-                <label for="is_yearly" class="sr-only">{{ __('Yearly')}}</label>
-                <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
-                <br>
-                <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
-                <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
-                <div class="modal-title">{{ __('“We’re excited to have you!')}}</div>
-                <div class="mb-2">{{ __('Proceed to checkout with this plan and you’ll be able to upgrade or downgrade at any time')}}</div>
-                <div class="text-danger">
-                    {{ __('For upgrading users, simply visit “Business Cards” to enable your cards after the upgrade')}}
+
+
+    <div class="modal fade" id="planConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="{{ route('user.checkout') }}" id="choose_plan_action" method="get">
+
+                        <label for="is_yearly" class="sr-only">{{ __('Yearly')}}</label>
+                        <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
+                        <br>
+                        <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
+                        <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
+                        <div class="modal-title">{{ __('“We’re excited to have you!')}}</div>
+                        <div class="mb-2">{{ __('Proceed to checkout with this plan and you’ll be able to upgrade or downgrade at any time')}}</div>
+                        <div class="text-danger">
+                            {{ __('For upgrading users, simply visit “Business Cards” to enable your cards after the upgrade')}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Close')}}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Confirm')}}</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Close')}}</button>
-                    <button type="submit" class="btn btn-primary">{{ __('Confirm')}}</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-</div>
+
+
 <div class="modal animate__animated animate__fadeIn" id="downPlanModal" tabindex="-1" aria-labelledby="downPlanModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content">

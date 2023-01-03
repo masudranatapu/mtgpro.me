@@ -32,7 +32,7 @@ class CardUpdateRequest extends FormRequest
             'designation'           => 'required|string|max:124',
             'company_name'          => 'nullable|string|max:124',
             // 'card_url'  => 'required|unique:users,email|string|max:124',
-            'bio'                   => 'nullable|string|max:124',
+            'bio'                   => 'nullable|string|max:255',
 
         ];
 
