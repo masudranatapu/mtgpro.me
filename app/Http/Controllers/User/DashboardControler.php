@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 use DB;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,10 @@ class DashboardControler extends Controller
     public function getSetting(Request $request)
     {
 
-        return view('user.setting');
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        return view('user.setting',compact('user'));
     }
 
 }
