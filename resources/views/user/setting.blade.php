@@ -86,9 +86,10 @@ $settings = getSetting();
                                                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                             </div>
                                                         </form>
-                                                       <a href="" style="padding: 10px 20px; " >Reset Your Password</a>
-                                                       <a href="" style="padding: 10px 20px; " >Delete Account</a>
-
+                                                       <div class="float-right">
+                                                            <a href="#" class="text-primary p-2">Reset Your Password</a>
+                                                            <a href="#" class="text-danger p-2" data-toggle="modal" data-target="#deleteAccount">Delete Account</a>
+                                                       </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,6 +150,42 @@ $settings = getSetting();
             </div>
         </div>
     </div>
+
+
+  
+<!-- Account delete modal -->
+<div class="delete_modal">
+    <div class="modal fade" id="deleteAccount" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- modal header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Account Deletion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- modal body -->
+                <div class="modal_body">
+                    <h5>Type "delete" to delete your account.</h5>
+                    <p>All contacts and other data associated with this account will be permanently deleted. This cannot be undone.</p>
+                    <form action="#" method="post">
+                        <div class="mb-3">
+                            <input type="text" name="" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer pb-3">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
     @endsection
     @push('custom_js')
