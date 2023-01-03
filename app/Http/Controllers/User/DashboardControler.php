@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\User;
 use DB;
-
+use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,9 +50,7 @@ class DashboardControler extends Controller
     {
        $this->resp =  $this->plan->getPlanList($request);
        $plans =  $this->resp->data;
-       $user_plan = DB::table('plans')
-    //    ->where('id', Auth::user()->plan_id)
-       ->latest()->first();
+       $user_plan = Plan::where('id', Auth::user()->plan_id)->first();
         return view('user.plan.index', compact('user_plan','plans'));
     }
 
