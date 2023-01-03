@@ -16,6 +16,8 @@ class CustomPageController extends Controller
 
     public function getIndex(Request $request){
         $this->resp = $this->page->getPaginatedList($request);
+
+
         return view('admin.custom-page.index')->withData($this->resp->data);
     }
 

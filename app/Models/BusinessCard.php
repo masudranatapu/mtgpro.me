@@ -20,9 +20,21 @@ class BusinessCard extends Model
     use RepoResponse;
     use ApiResponse;
 
-    public function getPaginatedList($request, int $per_page = 20)
+    public function getPaginatedList($request, int $paginate = 20)
     {
-        $data = $this->where('user_id',Auth::user()->id)->where('status',1)->orderBy('id','DESC')->paginate($per_page);
+        // $data = $this->where('user_id',Auth::user()->id)->where('status',1)->orderBy('id','DESC')->paginate($per_page);
+        $data = DB::table('business_cards as c')
+        ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
+        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status','c.cover','c.designation','c.company_name','u.name'
+        )
+        ->leftJoin('business_fields as cf','cf.card_id','c.id')
+        ->leftJoin('users as u','c.user_id','u.id')
+        ->leftJoin('plans as p','u.plan_id','p.id')
+        ->orderBy('c.created_at', 'desc')
+        ->where('c.status', '!=' , 2)
+        ->where('c.user_id',Auth::user()->id)
+        ->paginate($paginate);
+
         return $this->formatResponse(true, '', 'web.index', $data);
     }
 
