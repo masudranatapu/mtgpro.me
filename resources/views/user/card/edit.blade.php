@@ -120,21 +120,17 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
                                                                              <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-
-                                                                             {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
                                                                              <input type="file" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group cover_group">
-                                                                             <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
-                                                                             {{-- <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden> --}}
+                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center company_group">
-                                                                         <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
-                                                                         {{-- <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> --}}
+                                                                         <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                     </div>
                                                                 </div>
@@ -402,7 +398,7 @@
                                             <input type="hidden" name="icon_id" id="icon_id" value="">
                                             <div class="form-group social_icon_up">
                                                 <label class="imgLabel" for="logo">
-                                                    <!-- <img id="content_icon" src="{{ getIcon() }}" alt=""> -->
+                                                    <img id="content_icon" src="{{ getIcon() }}" alt="">
                                                     <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon"  data-ratio="1:1" data-id="" hidden>
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                     @if($errors->has('logo'))
@@ -559,6 +555,17 @@ new Sortable(dropItems, {
 $('.onclickIcon').on('click', function() {
     $('.first_modal').addClass('d-none');
     var icon_id = $(this).attr('data-id');
+    var icon_name = $(this).attr('data-image');
+    // var image = document.createElement("IMG");
+    // image.alt = "Alt information for image";
+    // image.setAttribute('class', 'img-fluid');
+    // image.src=icon_name;
+    // $(".upload_icon").html(image);
+    // upload_icon slim-file-hopper
+    // var cover2  = $('.upload_icon').css('background-image', 'url('+icon_name+');');;
+    // var cover2_url  = icon_name;
+    // cover2.style.backgroundImage = "url("+cover2_url+")";
+    // $('#upload_icon').attr('src',icon_name);
     $('#icon_id').val(icon_id);
     $('.second_modal').removeClass('d-none');
 });
