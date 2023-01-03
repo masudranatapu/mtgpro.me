@@ -57,6 +57,11 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('checkout/stripe',[ 'as' => 'payment.stripe', 'uses' =>'StripeController@stripeCheckout']);
 
 
+    Route::get('card/crop-image',['as'=>'card.crop-image','uses'=>'CardController@cropImage']);
+    Route::post('card/crop-upload',['as'=>'card.crop-upload','uses'=>'CardController@cropImageUpload']);
+
+
+
 });
 
 

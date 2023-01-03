@@ -14,23 +14,25 @@ use Intervention\Image\Facades\Image;
 class CardController extends Controller
 {
 
-    protected $card;
-    public function __construct(
-        BusinessCard $card
-    )
+    public function __construct()
     {
-        $this->card     = $card;
+        $this->middleware('auth');
     }
-
 
     public function index(Request $request,$paginate=20)
     {
-        $this->resp = $this->card->getPaginatedList($request,$paginate=20);
-        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg)
-        ->with('cards',$this->resp->data);
-        // $settings = Setting::where('status', 1)->first();
-
-        // return view('admin.cards.index', compact('cards', 'settings'));
+        $cards = DB::table('business_cards as c')
+        ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
+        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status'
+        )
+        ->leftJoin('business_fields as cf','cf.card_id','c.id')
+        ->leftJoin('users as u','c.user_id','u.id')
+        ->leftJoin('plans as p','u.plan_id','p.id')
+        ->orderBy('c.created_at', 'desc')
+        ->where('c.status', '!=' , 2)
+        ->paginate($paginate);
+        $settings = Setting::where('status', 1)->first();
+        return view('admin.cards.index', compact('cards', 'settings'));
     }
 
 

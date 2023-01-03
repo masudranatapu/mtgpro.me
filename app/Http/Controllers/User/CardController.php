@@ -278,8 +278,6 @@ class CardController extends Controller
     }
 
 
-
-
     public function uploadCardAvatar(Request $request){
         $data = $request->image;
         $image_array_1 = explode(";", $data);
@@ -338,6 +336,19 @@ class CardController extends Controller
         $card->card_email   = $request->card_email ?? Auth::user()->email;
         $card->card_for     = 'Work';
         $card->save();
+        $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
+        $fields = new BusinessField();
+        $fields->card_id = $card->id;
+        $fields->type = 'email';
+        $fields->icon = $email_icon->icon_name;
+        $fields->icon_image = $email_icon->icon_image;
+        $fields->icon_id = $email_icon->id;
+        $fields->label = $email_icon->icon_title;
+        $fields->content = Auth::user()->email;
+        $fields->position = 1;
+        $fields->status = 1;
+        $fields->created_at = date('Y-m-d H:i:s');
+        $fields->save();
         $user = User::where('id',Auth::id())->first();
         if($user->name == null){
             User::where('id',Auth::id())->update(['name' => $request->name]);
@@ -353,6 +364,65 @@ class CardController extends Controller
         DB::commit();
         Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('user.card');
+        }
+
+
+
+
+        public function cropImage(Request $request){
+
+
+            return view('user.crop-img');
+
+        }
+
+
+        public function cropImageUpload(Request $request){
+            if($request->has('avatar') && $request->avatar[0])
+            {
+                 $output = $request->avatar;
+                 $output = json_decode($output, TRUE);
+                 if(isset($output) && isset($output['output']) && isset($output['output']['image']))
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                      $this->uploadBase64ToImage($image,'jpg');
+                      return view('user.crop-img');
+                    }
+                    return view('user.crop-img');
+                //  return 'no picture file';
+            }
+            // dd($request->all());
+
+            return view('user.crop-img');
+
+        }
+
+
+        public function uploadBase64ToImage($file,$file_prefix)
+        {
+            $name = date('YmdHis');
+            $file_path = sprintf("assets/uploads/avatar/");
+            $file_name = sprintf('%s.%s', $name, $file_prefix);
+            $upload_path = public_path() . '/' . $file_path;
+            if(stripos($file, 'data:image/jpeg;base64,') === 0)
+            {
+                $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
+            }
+            else if(stripos($file, 'data:image/png;base64,') === 0)
+            {
+                $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
+            }
+            else
+            {
+                return array('error' => 'non-image files');
+            }
+              $result = file_put_contents($upload_path . $file_name, $img);
+            if($result == FALSE)
+            {
+                return array('error' => 'Failed to write to file, possibly without permission');
+            }
+            return $file_path.$file_name;
         }
 
 

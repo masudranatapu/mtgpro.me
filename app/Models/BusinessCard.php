@@ -7,6 +7,7 @@ use App\Models\SocialIcon;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Str;
 use App\Traits\RepoResponse;
+use App\Models\BusinessField;
 use App\Helpers\StorageHelper;
 use App\Mail\EmailToCardOwner;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class BusinessCard extends Model
         // $data = $this->where('user_id',Auth::user()->id)->where('status',1)->orderBy('id','DESC')->paginate($per_page);
         $data = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
-        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status','c.cover','c.designation','c.company_name','u.name'
+        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status','c.cover','c.designation','c.company_name',
         )
         ->leftJoin('business_fields as cf','cf.card_id','c.id')
         ->leftJoin('users as u','c.user_id','u.id')
@@ -208,17 +209,19 @@ class BusinessCard extends Model
             //     DB::table('business_fields')->insert($fields);
             // }
 
-                $fields['card_id'] = $card_id;
-                $fields['type'] = 'email';
-                $fields['icon'] = 'json';
-                $fields['label'] = 'Email';
-                $fields['content'] = Auth::user()->email;
-                $fields['position'] = 1;
-                $fields['icon_image'] = 'assets/img/icon/email.svg';
-                $fields['status'] = 1;
-                $fields['created_at'] = date('Y-m-d H:i:s');
-
-                DB::table('business_fields')->insert($fields);
+                $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
+                $fields = new BusinessField();
+                $fields->card_id = $card_id;
+                $fields->type = 'email';
+                $fields->icon = $email_icon->icon_name;
+                $fields->icon_image = $email_icon->icon_image;
+                $fields->icon_id = $email_icon->id;
+                $fields->label = $email_icon->icon_title;
+                $fields->content = Auth::user()->email;
+                $fields->position = 1;
+                $fields->status = 1;
+                $fields->created_at = date('Y-m-d H:i:s');
+                $fields->save();
 
             $card_info = DB::table('business_cards')->where('id',$card_id)->first();
             Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card_info));

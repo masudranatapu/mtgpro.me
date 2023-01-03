@@ -17,7 +17,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         @if(isset($cards) && count($cards)>0)
-                        @foreach($cards as $key => $item)
+                        @foreach($cards as $key => $card)
 
                         <div class="col-md-6 col-xl-4">
                             <!-- user card -->
@@ -27,17 +27,17 @@
                                         <div class="card_cover_bg">
                                             <!-- cover image -->
                                             <div class="cover_photo">
-                                                <img src="{{ getCover($item->cover) }}" class="img-fluid" alt="image">
+                                                <img src="{{ getCover($card->cover) }}" class="img-fluid" alt="{{ $card->title }} {{ $card->title2 }}">
                                             </div>
                                             <div class="user_card_profile text-center">
                                                 <div class="profile_image">
                                                     <!-- profile image -->
                                                     <div class="profile_photo">
-                                                        <img src="{{ getProfile($item->profile) }}" class="img-fluid" alt="image">
+                                                        <img src="{{ getProfile($card->profile) }}" class="img-fluid" alt="{{ $card->title }} {{ $card->title2 }}">
                                                     </div>
                                                     <!-- logo -->
                                                     <div class="logo">
-                                                        <img src="{{ getLogo($item->logo) }}" alt="image">
+                                                        <img src="{{ getLogo($card->logo) }}" alt="{{ $card->company_name }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -45,12 +45,12 @@
                                         <!-- user card info -->
                                         <div class="card_info mt-4 text-center">
                                             <div class="profile_name">
-                                                <h3>{{ $item->name }}</h3>
-                                                <h5>{{ $item->designation }} {{ __('at') }} {{ $item->company_name }}</h5>
+                                                <h3>{{ $card->title }} {{ $card->title2 }}</h3>
+                                                <h5>{{ $card->designation }} {{ __('at') }} {{ $card->company_name }}</h5>
                                             </div>
                                             <div class="card_btn mt-3 mb-4">
-                                                <a href="{{ route('user.card.edit',$item->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
-                                                <a target="__blank" href="{{ route('card.preview',$item->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
+                                                <a href="{{ route('user.card.edit',$card->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
+                                                <a target="__blank" href="{{ route('card.preview',$card->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
                                             </div>
                                         </div>
                                     </div>
