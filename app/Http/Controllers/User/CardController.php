@@ -327,7 +327,6 @@ class CardController extends Controller
         $card->card_lang    = 'en';
         $card->card_url     = uniqid();
         $card->card_type    = 'vcard';
-
         if($request->has('photo') && !empty($request->photo[0]))
         {
             $file_name = $this->businessCard->formatName($request->name);

@@ -6,7 +6,7 @@
         <label class="imgLabel" for="logo">
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
             {{-- <input type="file" onchange="loadFile(event)" class="upload_icon" name="logo" id="logo" hidden> --}}
-            <input type="file" class="upload_icon" name="logo" id="logo" hidden>
+            <input type="file" class="upload_icon" name="logo" id="logo" data-id="{{ $icon->id }}" hidden>
             <span>Select photo here or drag and drop <br /> one in place of current</span>
         </label>
         @if($errors->has('logo'))
@@ -51,49 +51,73 @@
 
 
 <script>
-  $('.upload_icon').on('change', function(){
-        if (isImage($(this).val())){
-            if(this.files[0].size > 10000) {
-                toastr.error("Please upload file less than 100KB. Thanks!!", 'Error', {
-                closeButton: true,
-                progressBar: true,
-                });
-                return false;
-            }
-            $(this).siblings('#previewIcon').attr('src', URL.createObjectURL(this.files[0]));
-        }
-        else
-        {
-            toastr.error("Only image files are allowed to upload.", 'Error', {
-                closeButton: true,
-                progressBar: true,
-            });
-        }
-    });
+//   $('.upload_icon').on('change', function(){
+//         if (isImage($(this).val())){
+//             if(this.files[0].size > 10000) {
+//                 toastr.error("Please upload file less than 100KB. Thanks!!", 'Error', {
+//                 closeButton: true,
+//                 progressBar: true,
+//                 });
+//                 return false;
+//             }
+//             $(this).siblings('#previewIcon').attr('src', URL.createObjectURL(this.files[0]));
+//         }
+//         else
+//         {
+//             toastr.error("Only image files are allowed to upload.", 'Error', {
+//                 closeButton: true,
+//                 progressBar: true,
+//             });
+//         }
+//     });
 
-// If user tries to upload videos other than these extension , it will throw error.
-function isImage(filename) {
-    var ext = getExtension(filename);
-    switch (ext.toLowerCase()) {
-    case 'jpeg':
-    case 'jpg':
-    case 'png':
-    case 'webp':
-    case 'gif':
-    case 'svg':
-    return true;
-    }
-    return false;
-}
-function getExtension(filename) {
-var parts = filename.split('.');
-return parts[parts.length - 1];
-}
+// // If user tries to upload videos other than these extension , it will throw error.
+// function isImage(filename) {
+//     var ext = getExtension(filename);
+//     switch (ext.toLowerCase()) {
+//     case 'jpeg':
+//     case 'jpg':
+//     case 'png':
+//     case 'webp':
+//     case 'gif':
+//     case 'svg':
+//     return true;
+//     }
+//     return false;
+// }
+// function getExtension(filename) {
+// var parts = filename.split('.');
+// return parts[parts.length - 1];
+// }
 </script>
 
 
-@push('custom_js')
-
-@endpush
+{{-- @push('custom_js') --}}
+<script>
+        var cropper = new Slim(document.getElementById('logo'), {
+        ratio: '1:1',
+        minSize: {
+            width: 50,
+            height: 50,
+        },
+        size: {
+            width: 80,
+            height: 80,
+        },
+        willSave: function(data, ready) {
+            var id = $('#logo').attr('data-id');
+            $('#previewIcon').attr("src", data.output.image);
+            $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
+            $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+    });
+</script>
+{{-- @endpush --}}
 
 

@@ -292,24 +292,41 @@ class BusinessCard extends Model
                 $icon->created_at = date('Y-m-d H:i:s');
                 $icon->content  = $request->content;
                 $icon->label    =  $request->label;
-                if(!is_null($request->file('logo')))
+
+                if($request->has('logo') && !empty($request->logo[0]))
                 {
-                  $icon_ = $request->file('logo');
-                  $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
-                  $base_name = explode(' ', $base_name);
-                  $base_name = implode('-', $base_name);
-                  $base_name = Str::lower($base_name);
-                  $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
-                  $file_path = 'assets/img/icon/custom_icon/';
-                  if (!File::exists($file_path)) {
-                    File::makeDirectory($file_path, 777, true);
-                  }
-                 $icon_->move($file_path, $image_name);
-                 $icon->icon_image = $file_path.$image_name;
-                }
-                else{
+                    $file_name = $this->formatName($request->name);
+                    $output = $request->logo;
+                    $output = json_decode($output, TRUE);
+                    if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                        $image = $output['output']['image'];
+                        if(isset($image))
+                        {
+                            $icon->icon_image =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                        }
+                    }
+                }else{
                     $icon->icon_image = $social_icon->icon_image;
                 }
+
+                // if(!is_null($request->file('logo')))
+                // {
+                //   $icon_ = $request->file('logo');
+                //   $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                //   $base_name = explode(' ', $base_name);
+                //   $base_name = implode('-', $base_name);
+                //   $base_name = Str::lower($base_name);
+                //   $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                //   $file_path = 'assets/img/icon/custom_icon/';
+                //   if (!File::exists($file_path)) {
+                //     File::makeDirectory($file_path, 777, true);
+                //   }
+                //  $icon_->move($file_path, $image_name);
+                //  $icon->icon_image = $file_path.$image_name;
+                // }
+                // else{
+                //     $icon->icon_image = $social_icon->icon_image;
+                // }
                 $icon->save();
                 $data['html'] = view('user.card.partial._social_icon', compact('icon'))->render();
         } catch (\Exception $e) {
