@@ -87,9 +87,6 @@
         buttonUploadTitle: 'Upload',
         statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
-
-
-
     </script>
 {{-- <script type="text/javascript" src="{{ asset('assets/js/rcrop.min.js') }}"></script> --}}
 {{-- <script>

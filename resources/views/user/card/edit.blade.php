@@ -2,7 +2,7 @@
 @section('title') {{ __('Edit card') }}  @endsection
 
 @push('custom_css')
-
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
 
 @endpush
 
@@ -121,7 +121,8 @@
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
                                                                                 <img id="profilePic" src="{{ getProfile($card->profile) }}" alt="profile image">
                                                                              </label>
-                                                                             <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic">
+                                                                             {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
+                                                                             <input type="file" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
@@ -130,7 +131,8 @@
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
                                                                                   <img id="coverpic" src="{{ getCover($card->cover) }}" alt="logo">
                                                                              </label>
-                                                                             <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden>
+                                                                             {{-- <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden> --}}
+                                                                             <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center">
@@ -138,7 +140,8 @@
                                                                          <label id="logofile" for="company_logo">
                                                                              <img id="showlogo" src="{{ getLogo($card->logo) }}" alt="logo">
                                                                          </label>
-                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo">
+                                                                         {{-- <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> --}}
+                                                                         <input type="file" hidden name="company_logo" id="company_logo">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -556,6 +559,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+
 <script>
 
 
@@ -805,5 +810,98 @@ $("input:checkbox.sicon_control").click(function() {
     });
 });
 
+    var cropper = new Slim(document.getElementById('profile_pic'), {
+        ratio: '1:1',
+        minSize: {
+            width: 150,
+            height: 150,
+        },
+        size: {
+            width: 600,
+            height: 600,
+        },
+        willSave: function(data, ready) {
+            console.log(data);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+        // label: 'Upload: Click here or drag an image file onto it',
+        // buttonConfirmLabel: 'Crop',
+        // buttonConfirmTitle: 'Crop',
+        // buttonCancelLabel: 'Cancel',
+        // buttonCancelTitle: 'Cancel',
+        // buttonEditTitle: 'Edit',
+        // buttonRemoveTitle: 'Remove',
+        // buttonDownloadTitle: 'Download',
+        // buttonRotateTitle: 'Rotate',
+        // buttonUploadTitle: 'Upload',
+        // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
+    var cropper = new Slim(document.getElementById('cover_pic'), {
+        ratio: '3:1',
+        minSize: {
+            width: 300,
+            height: 100,
+        },
+        size: {
+            width: 720,
+            height: 720,
+        },
+        willSave: function(data, ready) {
+            console.log(data);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+        // label: 'Upload: Click here or drag an image file onto it',
+        buttonConfirmLabel: 'Crop',
+        buttonConfirmTitle: 'Crop',
+        buttonCancelLabel: 'Cancel',
+        buttonCancelTitle: 'Cancel',
+        buttonEditTitle: 'Edit',
+        buttonRemoveTitle: 'Remove',
+        buttonDownloadTitle: 'Download',
+        buttonRotateTitle: 'Rotate',
+        buttonUploadTitle: 'Upload',
+        statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
+    var cropper = new Slim(document.getElementById('company_logo'), {
+        ratio: '1:1',
+        minSize: {
+            width: 100,
+            height: 100,
+        },
+        size: {
+            width: 150,
+            height: 150,
+        },
+        willSave: function(data, ready) {
+            console.log(data);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+        // label: 'Upload: Click here or drag an image file onto it',
+        buttonConfirmLabel: 'Crop',
+        buttonConfirmTitle: 'Crop',
+        buttonCancelLabel: 'Cancel',
+        buttonCancelTitle: 'Cancel',
+        buttonEditTitle: 'Edit',
+        buttonRemoveTitle: 'Remove',
+        buttonDownloadTitle: 'Download',
+        buttonRotateTitle: 'Rotate',
+        buttonUploadTitle: 'Upload',
+        statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
 </script>
 @endpush
