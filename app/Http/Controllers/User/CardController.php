@@ -399,33 +399,31 @@ class CardController extends Controller
         }
 
 
-        public function uploadBase64ToImage($file,$file_prefix)
-        {
-            $name = date('YmdHis');
-            $file_path = sprintf("assets/uploads/avatar/");
-            $file_name = sprintf('%s.%s', $name, $file_prefix);
-            $upload_path = public_path() . '/' . $file_path;
-            if(stripos($file, 'data:image/jpeg;base64,') === 0)
-            {
-                $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
-            }
-            else if(stripos($file, 'data:image/png;base64,') === 0)
-            {
-                $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
-            }
-            else
-            {
-                return array('error' => 'non-image files');
-            }
-              $result = file_put_contents($upload_path . $file_name, $img);
-            if($result == FALSE)
-            {
-                return array('error' => 'Failed to write to file, possibly without permission');
-            }
-            return $file_path.$file_name;
-        }
-
-
+        // public function uploadBase64ToImage($file,$file_prefix)
+        // {
+        //     $name = date('YmdHis');
+        //     $file_path = sprintf("assets/uploads/avatar/");
+        //     $file_name = sprintf('%s.%s', $name, $file_prefix);
+        //     $upload_path = public_path() . '/' . $file_path;
+        //     if(stripos($file, 'data:image/jpeg;base64,') === 0)
+        //     {
+        //         $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
+        //     }
+        //     else if(stripos($file, 'data:image/png;base64,') === 0)
+        //     {
+        //         $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
+        //     }
+        //     else
+        //     {
+        //         return array('error' => 'non-image files');
+        //     }
+        //       $result = file_put_contents($upload_path . $file_name, $img);
+        //     if($result == FALSE)
+        //     {
+        //         return array('error' => 'Failed to write to file, possibly without permission');
+        //     }
+        //     return $file_path.$file_name;
+        // }
 
 
 

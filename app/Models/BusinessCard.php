@@ -68,192 +68,142 @@ class BusinessCard extends Model
         DB::beginTransaction();
         try {
             $card_id = uniqid();
-            $card['card_id']      = $card_id;
-            // $card['card_url']      = $card_id;
-            $card['user_id']      = Auth::id();
-            $card['card_lang']    = 'en';
-            $card['card_type']    = 'vcard';
-            $card['card_for']     = $request->card_for;
-            $card['card_status']  = 'activated';
-            $card['status']       = 1;
-            $card['title']        = $request->name;
-            // $card['title2']       = $request->last_name;
-            $card['location']     = $request->location;
-            $card['bio']          = $request->bio;
-            $card['sub_title']    = $request->sub_title ?? '';
-            $card['theme_color']  = $request->bgcolor ?? '#fff';
-            $card['theme_id']     = $request->theme_id ?? 1;
-            $card['designation']  = $request->designation;
-            $card['company_name'] = $request->company_name;
-            $card['card_url']     = $request->card_url;
-            $card['phone_number'] = $request->phone_number;
-            $card['ccode']        = $request->ccode;
-            $card['card_email']   = $request->card_email ?? Auth::user()->email;
-            $card['created_at']   = date('Y-m-d H:i:s');
-
-            if(!is_null($request->file('profile_pic')))
+            $data = new BusinessCard();
+            $data->card_id      = $card_id;
+            // $data->card_url      = $card_id;
+            $data->user_id      = Auth::id();
+            $data->card_lang    = 'en';
+            $data->card_type    = 'vcard';
+            $data->card_for     = $request->card_for;
+            $data->card_status  = 'activated';
+            $data->status       = 1;
+            $data->title        = $request->name;
+            // $data->title2       = $request->last_name;
+            $data->location     = $request->location;
+            $data->bio          = $request->bio;
+            $data->sub_title    = $request->sub_title ?? '';
+            $data->theme_color  = $request->bgcolor ?? '#fff';
+            $data->theme_id     = $request->theme_id ?? 1;
+            $data->designation  = $request->designation;
+            $data->company_name = $request->company_name;
+            $data->card_url     = $request->card_url;
+            $data->phone_number = $request->phone_number;
+            $data->ccode        = $request->ccode;
+            $data->card_email   = $request->card_email ?? Auth::user()->email;
+            $data->created_at   = date('Y-m-d H:i:s');
+            if($request->has('profile_pic') && !empty($request->profile_pic[0]))
             {
-              $icon_ = $request->file('profile_pic');
-              $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
-              $base_name = explode(' ', $base_name);
-              $base_name = implode('-', $base_name);
-              $base_name = Str::lower($base_name);
-              $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
-              $file_path = 'assets/uploads/avatar/';
-              if (!File::exists($file_path)) {
-                File::makeDirectory($file_path, 777, true);
-              }
-             $icon_->move($file_path, $image_name);
-
-             $card['profile']  = $file_path.$image_name;
+                $file_name = $this->formatName($request->name);
+                $output = $request->profile_pic;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        $image_name =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+                $data->profile  = $image_name;
             }
-
-            if(!is_null($request->file('cover_pic')))
+            if($request->has('cover_pic') && !empty($request->cover_pic[0]))
             {
-              $cover_pic = $request->file('cover_pic');
-              $base_name = preg_replace('/\..+$/', '', $cover_pic->getClientOriginalName());
-              $base_name = explode(' ', $base_name);
-              $base_name = implode('-', $base_name);
-              $base_name = Str::lower($base_name);
-              $image_name = $base_name."-".uniqid().".".$cover_pic->getClientOriginalExtension();
-              $file_path = 'assets/uploads/cover/';
-              if (!File::exists($file_path)) {
-                File::makeDirectory($file_path, 777, true);
-              }
-             $cover_pic->move($file_path, $image_name);
-             $card['cover'] = $file_path.$image_name;
+                $file_name = $this->formatName($request->name);
+                $output = $request->cover_pic;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        $image_name =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+                $data->cover = $image_name;
             }
-            if(!is_null($request->file('company_logo')))
+            if($request->has('company_logo') && !empty($request->company_logo[0]))
             {
-              $company_logo = $request->file('company_logo');
-              $base_name = preg_replace('/\..+$/', '', $company_logo->getClientOriginalName());
-              $base_name = explode(' ', $base_name);
-              $base_name = implode('-', $base_name);
-              $base_name = Str::lower($base_name);
-              $image_name = $base_name."-".uniqid().".".$company_logo->getClientOriginalExtension();
-              $file_path = 'assets/uploads/logo/';
-              if (!File::exists($file_path)) {
-                File::makeDirectory($file_path, 777, true);
-              }
-             $company_logo->move($file_path, $image_name);
-             $card['logo'] = $file_path.$image_name;
+                $file_name = $this->formatName($request->name);
+                $output = $request->company_logo;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        $image_name =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+                $data->logo = $image_name;
             }
+            $data->save();
             $card_id = DB::table('business_cards')->insertGetId($card);
-            // $request_arr = $request->all();
-            // $content = $section_video = $section_testimonial = [];
-            // if($request_arr){
-            //     foreach ($request_arr as $key => $value) {
-            //         $icon = SocialIcon::where('status',1)->where('icon_name',$key)->pluck('icon_name')->toArray();
-            //         if(!empty($icon)){
-            //             if(in_array($key,$icon)){
-            //                 $content[$key] = $request_arr[$key];
-            //             }
-            //         }
-            //     }
-            // }
-            // //section about
-            // if($request->about_content){
-            //     $content['section_about'] = ['about_title' => $request->about_title, 'about_content' => $request->about_content];
-            // }
-            //section video
-            // if($request->video_file){
-            //     foreach ($request->video_file as $vkey => $video) {
-            //         if(!empty($video)){
-            //             $video_file =  null;
-            //             if($request->video_file[$vkey]){
-            //                 if($request->video_type[$vkey]=='file'){
-            //                     $_video = $request->file('video_file')[$vkey];
-            //                     $base_name = preg_replace('/\..+$/', '', $_video->getClientOriginalName());
-            //                     $video_name = $base_name . "-" . uniqid() . "." .$_video->getClientOriginalExtension();
-            //                     $file_path = 'upload/video';
-            //                     if (! File::exists($file_path)) {
-            //                         File::makeDirectory($file_path);
-            //                     }
-            //                     $_video->move($file_path, $video_name);
-            //                     $video_file = asset($file_path.'/'.$video_name);
-            //                 }else{
-            //                     $video_file =  $this->getYoutubeEmbad($request->video_file[$vkey]);
-            //                 }
-            //             }
-            //             $section_video[$vkey]['video_title'] = $request->video_title[$vkey] ?? null;
-            //             // $section_video[$vkey]['video_type'] = $request->video_type[$vkey] ?? null;
-            //             $section_video['video_type'] = 'link';
-            //             $section_video[$vkey]['video_description'] = $request->video_description[$vkey] ?? null;
-            //             $section_video[$vkey]['video_file'] = $video_file;
-            //         }
-            //     }
-            //     $content['section_video'] = $section_video;
-            // }
-
-            //section testimonial
-            // if($request->testimonial_content){
-            //     foreach ($request->testimonial_content as $tkey => $testimonial) {
-            //         if(!empty($testimonial)){
-            //             $section_testimonial[$vkey]['testimonial_content'] = $request->testimonial_content[$tkey] ?? null;
-            //             $section_testimonial[$vkey]['testimonial_name'] = $request->testimonial_name[$tkey] ?? null;
-            //         }
-            //     }
-            //     $content['section_testimonial'] = $section_testimonial;
-            // }
-
-            //insert to business_fields
-            // if($content){
-            //     $fields['card_id'] = $card_id;
-            //     $fields['type'] = 'json';
-            //     $fields['icon'] = 'json';
-            //     $fields['label'] = 'json';
-            //     $fields['content'] = json_encode($content);
-            //     $fields['position'] = 1;
-            //     $fields['status'] = 1;
-            //     $fields['created_at'] = date('Y-m-d H:i:s');
-            //     DB::table('business_fields')->insert($fields);
-            // }
-
-                $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
-                $fields = new BusinessField();
-                $fields->card_id = $card_id;
-                $fields->type = 'email';
-                $fields->icon = $email_icon->icon_name;
-                $fields->icon_image = $email_icon->icon_image;
-                $fields->icon_id = $email_icon->id;
-                $fields->label = $email_icon->icon_title;
-                $fields->content = Auth::user()->email;
-                $fields->position = 1;
-                $fields->status = 1;
-                $fields->created_at = date('Y-m-d H:i:s');
-                $fields->save();
-
-            $card_info = DB::table('business_cards')->where('id',$card_id)->first();
-            Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card_info));
+            $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
+            $fields = new BusinessField();
+            $fields->card_id = $card_id;
+            $fields->type = 'email';
+            $fields->icon = $email_icon->icon_name;
+            $fields->icon_image = $email_icon->icon_image;
+            $fields->icon_id = $email_icon->id;
+            $fields->label = $email_icon->icon_title;
+            $fields->content = Auth::user()->email;
+            $fields->position = 1;
+            $fields->status = 1;
+            $fields->created_at = date('Y-m-d H:i:s');
+            $fields->save();
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
             return $this->formatResponse(false, 'Unable to create Card !', 'user.card.create');
         }
         DB::commit();
+        $card_info = DB::table('business_cards')->where('id',$card_id)->first();
+        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card_info));
         return $this->formatResponse(true, 'Card has been created successfully !', 'user.card.edit',$card_info->id);
     }
 
 
-    public function getYoutubeEmbad($url){
-        $query = parse_url($url);
-        if(isset($query['query'])){
-           $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
-            $_query = $remove_extra;
-            $video_id = trim($_query,'v=');
-        }else{
-            $video_id = explode('/', $url);
-            $video_id = end($video_id);
-            }
-        $video_file = 'https://www.youtube.com/embed/'.$video_id;
-        return $video_file;
+
+
+    public function uploadBase64ToImage($file,$file_name,$file_prefix)
+    {
+        $file_path = sprintf("assets/uploads/avatar/");
+        $file_name = sprintf('%s.%s', $file_name, $file_prefix);
+        $upload_path = public_path() . '/' . $file_path;
+        if(stripos($file, 'data:image/jpeg;base64,') === 0)
+        {
+            $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
+        }
+        else if(stripos($file, 'data:image/png;base64,') === 0){
+            $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
+        }
+        else{
+            return array('error' => 'non-image files');
+        }
+        $result = file_put_contents($upload_path . $file_name, $img);
+            // if($result == FALSE)
+            // {
+            //     return array('error' => 'Failed to write to file, possibly without permission');
+            // }
+        return $file_path.$file_name;
     }
+
+
+
+    // public function getYoutubeEmbad($url){
+    //     $query = parse_url($url);
+    //     if(isset($query['query'])){
+    //        $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
+    //         $_query = $remove_extra;
+    //         $video_id = trim($_query,'v=');
+    //     }else{
+    //         $video_id = explode('/', $url);
+    //         $video_id = end($video_id);
+    //         }
+    //     $video_file = 'https://www.youtube.com/embed/'.$video_id;
+    //     return $video_file;
+    // }
 
 
     public function postUpdate($request, $id)
     {
-        // dd($request->all());
-        // $content = null;
         DB::beginTransaction();
         try {
             $card = BusinessCard::findOrFail($id);
@@ -279,15 +229,56 @@ class BusinessCard extends Model
             // $card->company_websitelink   = $request->company_websitelink;
             $card->updated_at   = date('Y-m-d H:i:s');
 
-            // if($request->profile_image_path){
-            //     $card->profile = $request->profile_image_path;
-            // }
-            // if($request->logo_path){
-            //     $card->logo = $request->logo_path;
-            // }
+            if($request->has('profile_pic') && !empty($request->profile_pic[0]))
+            {
+                $file_name = $this->formatName($request->name);
+                $output = $request->profile_pic;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        if(File::exists($card->profile)) {
+                            File::delete($card->profile);
+                        }
+                        $card->profile =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+
+            }
+            if($request->has('cover_pic') && !empty($request->cover_pic[0]))
+            {
+                $file_name = $this->formatName($request->name);
+                $output = $request->cover_pic;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        if(File::exists($card->cover)) {
+                            File::delete($card->cover);
+                        }
+                        $card->cover =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+            }
+            if($request->has('company_logo') && !empty($request->company_logo[0]))
+            {
+                $file_name = $this->formatName($request->name);
+                $output = $request->company_logo;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        if(File::exists($card->logo)) {
+                            File::delete($card->logo);
+                        }
+                        $card->logo =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+            }
             $card->update();
-
-
     } catch (\Exception $e) {
         dd($e);
         DB::rollback();
@@ -300,7 +291,6 @@ class BusinessCard extends Model
 
 
     public function addCardIcon($request){
-        // dd($request->all());
         $data = [];
         DB::beginTransaction();
         try {
@@ -484,6 +474,17 @@ class BusinessCard extends Model
         }
             DB::commit();
             return $this->successResponse(200, 'Data found!', $data, 1);
+    }
+
+
+    public function formatName($name)
+    {
+        $base_name = preg_replace('/\..+$/', '', $name);
+        $base_name = explode(' ', $base_name);
+        $base_name = implode('-', $base_name);
+        $base_name = Str::lower($base_name);
+        $name = $base_name."-".uniqid();
+        return $name;
     }
 
 

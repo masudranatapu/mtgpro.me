@@ -215,6 +215,16 @@ if (!function_exists('CurrencyFormat')) {
 }
 
 
+function formatFileName($file)
+{
+    $base_name = preg_replace('/\..+$/', '', $file->getClientOriginalName());
+    $base_name = explode(' ', $base_name);
+    $base_name = implode('-', $base_name);
+    $base_name = Str::lower($base_name);
+    $file_name = $base_name."-".uniqid().".".$file->getClientOriginalExtension();
+    return $file_name;
+}
+
 
 
 

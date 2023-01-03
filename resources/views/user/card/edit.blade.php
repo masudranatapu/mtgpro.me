@@ -410,7 +410,7 @@
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
                                                     <input type="file" name="logo" id="logo" hidden>
-                                                    <span>Select photo here or drag and drop <br /> one in place of current 465464646464</span>
+                                                    <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                     @if($errors->has('logo'))
                                                         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
                                                     @endif
@@ -875,8 +875,8 @@ $("input:checkbox.sicon_control").click(function() {
     var cropper = new Slim(document.getElementById('company_logo'), {
         ratio: '1:1',
         minSize: {
-            width: 100,
-            height: 100,
+            width: 50,
+            height: 50,
         },
         size: {
             width: 150,
