@@ -66,18 +66,18 @@ textarea {
     font-family: "Gilroy-Light";
     src: url("../fonts/Gilroy-Light.eot");
     src: url("../fonts/Gilroy-Light.woff") format("woff"),
-    url("../fonts/Gilroy-Light.ttf") format("opentype"),
-    url("../fonts/Gilroy-Light.otf") format("opentype"),
-    url("../fonts/Gilroy-Light.svg#svg") format("svg");
+        url("../fonts/Gilroy-Light.ttf") format("opentype"),
+        url("../fonts/Gilroy-Light.otf") format("opentype"),
+        url("../fonts/Gilroy-Light.svg#svg") format("svg");
 }
 
 @font-face {
     font-family: "Gilroy-Bold";
     src: url("../fonts/Gilroy-Bold.eot");
     src: url("../fonts/Gilroy-Bold.woff") format("woff"),
-    url("../fonts/Gilroy-Bold.ttf") format("opentype"),
-    url("../fonts/Gilroy-Bold.otf") format("opentype"),
-    url("../fonts/Gilroy-Bold.svg#svg") format("svg");
+        url("../fonts/Gilroy-Bold.ttf") format("opentype"),
+        url("../fonts/Gilroy-Bold.otf") format("opentype"),
+        url("../fonts/Gilroy-Bold.svg#svg") format("svg");
 }
 
 body {
@@ -118,7 +118,7 @@ body {
 .header {
     box-shadow: rgb(0 0 0 / 5%) 0px 1px 4px;
     background: #fff;
-    padding:5px 0px;
+    padding: 5px 0px;
 }
 
 .header .nav-link {
@@ -161,6 +161,7 @@ body {
     font-family: 'Gilroy-Bold';
     text-shadow: 2px 2px #00000029;
 }
+
 .banner_content h2 span {
     font-style: italic;
     color: var(--primary);
@@ -177,14 +178,13 @@ body {
     outline: none;
     padding: 12px 44px;
     text-transform: uppercase;
-    font-weight: 600;
     border-radius: 50px;
     border: none !important;
     background: var(--white);
     box-shadow: 0 4px 7px 0 rgb(0 0 0 / 20%);
     color: var(--black);
+    font-family: 'Gilroy-Bold';
 }
-
 
 .banner_content .btn-dark:hover {
     background: var(--black) !important;
@@ -306,16 +306,17 @@ body {
 }
 
 .plan_name h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Gilroy-Bold';
     padding-bottom: 1px;
 }
 
 .plan_name span {
-    font-size: 14px;
+    font-size: 15px;
     color: #444;
+    font-family: 'Inter';
 }
 
 .plan_feature ul li {
@@ -434,17 +435,18 @@ body {
 }
 
 .testimonial_sec .review_user h3 {
-    font-size: 19px;
-    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-family: 'Gilroy-Bold';
     font-weight: 500;
     color: var(--black);
     margin: 0;
-    padding-bottom: 1px;
+    padding-bottom: 3px;
 }
 
 .testimonial_sec .review_user span {
-    font-size: 14px;
+    font-size: 15px;
     color: #666;
+    font-family: 'Gilroy-Light';
 }
 
 .testimonial_sec .owl-nav {
@@ -539,7 +541,7 @@ body {
 }
 
 .footer_menu ul li a:hover {
-   color: var(--white);
+    color: var(--white);
 }
 
 .footer_article p {
