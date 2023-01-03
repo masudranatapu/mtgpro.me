@@ -21,7 +21,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                <a href="{{ route('user.card') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
+                                <a href="{{ route('user.card') }}" class="back_btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="{{ $card->title }}">
                                 {{ $card->card_for ?? '' }}
                             </h1>
@@ -531,7 +531,6 @@
             color: #000;
             border-color: #000;
             background-color: #fff;
-
         }
     </style>
 @endif
@@ -549,28 +548,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
-// preview profile photo
-// var profileloadFile = function(event) {
-//     var profile = document.getElementById('profilePic');
-//     profile.src = URL.createObjectURL(event.target.files[0]);
-//     var profile2 = document.getElementById('profilePic_2');
-//     profile2.src = URL.createObjectURL(event.target.files[0]);
-// };
-// // preview company logo
-// var companyloadFile = function(event) {
-//     var logo = document.getElementById('showlogo');
-//     logo.src = URL.createObjectURL(event.target.files[0]);
-//     var logo2 = document.getElementById('showlogo_2');
-//     logo2.src = URL.createObjectURL(event.target.files[0]);
-// };
-// // preview cover photo
-// var coverFile = function(event) {
-//     var cover  = document.getElementById('coverpic');
-//     cover.src  = URL.createObjectURL(event.target.files[0]);
-//     var cover2  = document.getElementById('coverpic_2');
-//     var cover2_url  = URL.createObjectURL(event.target.files[0]);
-//     cover2.style.backgroundImage = "url("+cover2_url+")";
-// };
 // drag and drop
 const dropItems = document.getElementById('drop-items')
 new Sortable(dropItems, {
@@ -578,7 +555,6 @@ new Sortable(dropItems, {
     chosenClass: "sortable-chosen",
     dragClass: "sortable-drag"
 });
-
 // social content modal
 $('.onclickIcon').on('click', function() {
     $('.first_modal').addClass('d-none');
@@ -603,7 +579,6 @@ $('.editLink').on('click', function() {
     $('.tab_body .add_link').addClass('d-none');
     $('.tab_body .social_media_list').addClass('d-none');
     var id = $(this).data('id');
-
     $.ajax({
          url: `{{ route('user.card.sicon_edit') }}`,
          type: "get",
