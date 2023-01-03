@@ -269,11 +269,13 @@ class BusinessCard extends Model
 
 
     public function addCardIcon($request){
+
+        // dd($request->all());
         $data = [];
         DB::beginTransaction();
         try {
                 $rules = array(
-                    'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
+                    // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
                     'content'   => 'required|max:255',
                     'label'     => 'required|max:255',
                 );
@@ -372,9 +374,9 @@ class BusinessCard extends Model
                     if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
                         $image = $output['output']['image'];
                         if(isset($image)){
-                            if(File::exists($icon->icon_image)) {
-                                    File::delete($icon->icon_image);
-                            }
+                            // if(File::exists($icon->icon_image)) {
+                            //         File::delete($icon->icon_image);
+                            // }
                             $icon->icon_image =  $this->uploadBase64ToImage($image,$file_name,'jpg');
                         }
                     }

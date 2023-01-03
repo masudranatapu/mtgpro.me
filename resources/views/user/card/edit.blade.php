@@ -5,7 +5,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
 
 @endpush
-
+@push('top_js')
+<script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+@endpush
 @php
     $icon_group = Config::get('app.icon_group');
 @endphp
@@ -118,7 +120,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
                                                                              <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-                                                                              
+
                                                                              {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
                                                                              <input type="file" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
@@ -401,7 +403,7 @@
                                             <div class="form-group">
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
-                                                    <input type="file" name="logo" id="logo" hidden>
+                                                    <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon"  data-ratio="1:1" data-id="" hidden>
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
                                                     @if($errors->has('logo'))
                                                         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
@@ -469,7 +471,7 @@
                                                             <div class="profile_image">
                                                                 <img src="{{ getProfile($card->profile) }}" height="100" width="100" alt="{{ $card->title }}">
                                                                 <!-- logo -->
-                                                                <img class="logo" src="{{ getLogo($card->logo) }}" alt="{{ $card->title }}">
+                                                                <img class="logo" src="{{ getLogo($card->logo) }}" alt="{{ $card->title }}" >
                                                             </div>
                                                         </div>
                                                         <div class="card_content text-center">
@@ -546,7 +548,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
 // preview profile photo
 // var profileloadFile = function(event) {
@@ -769,6 +770,7 @@ $("input:checkbox.sicon_control").click(function() {
         success: function (response) {
             if (response.status == 1) {
             $('#drop-items').append(response.data.html);
+            $('input[name="logo"]').val('');
             $('#iconCreateForm')[0].reset();
             $('.second_modal').addClass('d-none');
             $('.first_modal').removeClass('d-none');
@@ -883,8 +885,8 @@ $("input:checkbox.sicon_control").click(function() {
             height: 80,
         },
         willSave: function(data, ready) {
-            var id = $('#upload_icon').attr('data-id');
-            $('#previewIcon').attr("src", data.output.image);
+            var id =$('#icon_id').val();
+            $('.upload_icon_preview').attr("src", data.output.image);
             $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
             $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
           ready(data);

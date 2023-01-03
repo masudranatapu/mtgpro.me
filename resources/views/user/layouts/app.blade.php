@@ -52,6 +52,8 @@
         .fa-exclamation-circle{color: #ccc;}
     </style>
     @stack('custom_css')
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    @stack('top_js')
     <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
 
     </head>
@@ -63,7 +65,6 @@
             @include('user.layouts.sidebar')
             @yield('content')
         </div>
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap4.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
