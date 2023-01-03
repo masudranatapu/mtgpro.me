@@ -121,11 +121,13 @@
                                                                         <div class="form-group profile_group">
                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
                                                                             @if (!empty($card->profile))
-                                                                            <div class="slim" data-ratio="1:1">
-                                                                                <img src="{{ asset($card->profile) }}" alt="">
+                                                                            <div class="slim" data-ratio="1:1"  data-fetcher="{{ asset($card->profile) }}" data-save-initial-image="true"
+                                                                                >
+                                                                                {{-- <img src="{{ asset($card->profile) }}" alt=""> --}}
                                                                             </div>
                                                                             @endif
-                                                                            <input type="file" hidden name="profile_pic" id="profile_pic" >
+                                                                             <input type="file" hidden name="profile_pic" id="profile_pic" >
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
@@ -309,7 +311,6 @@
                                                         <ul>
                                                             @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                             @foreach ($card->business_card_fields as $key => $icon )
-
                                                             <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                 <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
                                                                     <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
@@ -660,10 +661,8 @@ $('.tab_body .back').on('click', function() {
 function changeColor(bgcolor,color){
     // var element = document.getElementById("clrBg");
     // element.style.backgroundColor = color;
-
     var element = $("#clrBg");
     element.css("background-color", bgcolor);
-
     if(color == '#fff'){
         $('.save_contact a').css("color", '#000');
         $('.save_contact a').css("border-color", '#000');
@@ -677,7 +676,6 @@ function changeColor(bgcolor,color){
         $('.save_contact a').css("border-color", color);
         $('.save_contact a').css("background-color", color);
     }
-
 }
 $(document).on('input','#colorPicker',function(){
     let color = $(this).val();
@@ -784,27 +782,29 @@ $("input:checkbox.sicon_control").click(function() {
         }
     });
 });
-   new Slim(document.getElementById('profile_pic'), {
-        ratio: '1:1',
-        minSize: {
-            width: 150,
-            height: 150,
-        },
-        size: {
-            width: 600,
-            height: 600,
-        },
-        willSave: function(data, ready) {
-            $('#profilePic_2').attr('src',data.output.image);
-          ready(data);
-        },
-        meta: {
-            viewid:1
-      },
-        download: false,
-        instantEdit: true,
-    });
-    new Slim(document.getElementById('cover_pic'), {
+$('#profile_pic').slim();
+
+// var cropper = new Slim(document.getElementById('profile_pic'), {
+//         ratio: '1:1',
+//         minSize: {
+//             width: 150,
+//             height: 150,
+//         },
+//         size: {
+//             width: 600,
+//             height: 600,
+//         },
+//         willSave: function(data, ready) {
+//             $('#profilePic_2').attr('src',data.output.image);
+//           ready(data);
+//         },
+//         meta: {
+//             viewid:1
+//       },
+//         download: false,
+//         instantEdit: true,
+//     });
+    var cropper = new Slim(document.getElementById('cover_pic'), {
         ratio: '3:1',
         minSize: {
             width: 300,
@@ -822,7 +822,7 @@ $("input:checkbox.sicon_control").click(function() {
           ready(data);
         },
         meta: {
-            viewid:1
+            viewid:2
       },
         download: false,
         instantEdit: true,
@@ -854,7 +854,7 @@ $("input:checkbox.sicon_control").click(function() {
           ready(data);
         },
         meta: {
-            viewid:1
+            viewid:3
       },
         download: false,
         instantEdit: true,
@@ -889,7 +889,7 @@ $("input:checkbox.sicon_control").click(function() {
           ready(data);
         },
         meta: {
-            viewid:1
+            viewid:4
       },
         download: false,
         instantEdit: true,
