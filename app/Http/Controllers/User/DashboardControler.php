@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Auth;
 class DashboardControler extends Controller
 {
 
-    public function __construct()
+
+    protected $plan;
+
+    public function __construct(Plan $plan)
     {
         $this->middleware('auth');
         $this->settings = getSetting();
+        $this->plan         = $plan;
     }
+
+
 
     public function getIndex(Request $request)
     {
@@ -39,5 +45,16 @@ class DashboardControler extends Controller
 
         return view('user.setting',compact('user'));
     }
+
+    public function getPlanList(Request $request)
+    {
+       $this->resp =  $this->plan->getPlanList($request);
+       $plans =  $this->resp->data;
+       $user_plan = DB::table('plans')
+    //    ->where('id', Auth::user()->plan_id)
+       ->latest()->first();
+        return view('user.plan.index', compact('user_plan','plans'));
+    }
+
 
 }

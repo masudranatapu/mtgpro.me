@@ -51,7 +51,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);
     // Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting',['as'=>'setting','uses'=>'DashboardControler@getSetting']);
-    Route::get('plans',['as'=>'plans','uses'=>'PlanController@getPlanList']);
+    Route::get('plans',['as'=>'plans','uses'=>'DashboardControler@getPlanList']);
     Route::get('checkout',['as'=>'checkout','uses'=>'CheckoutController@checkout']);
     Route::post('checkout/paypal',['as'=>'checkout.post-transection','uses'=>'CheckoutController@postTransection']);
     Route::post('checkout/stripe',[ 'as' => 'payment.stripe', 'uses' =>'StripeController@stripeCheckout']);
