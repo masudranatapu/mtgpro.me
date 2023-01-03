@@ -57,7 +57,7 @@
 
 <script type="text/javascript">
     var cropper = new Slim(document.getElementById('myCropper'), {
-        ratio: '3:2',
+        ratio: '3:3',
         minSize: {
             width: 360,
             height: 240,
