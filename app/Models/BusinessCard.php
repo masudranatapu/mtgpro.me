@@ -31,6 +31,7 @@ class BusinessCard extends Model
         ->leftJoin('users as u','c.user_id','u.id')
         ->leftJoin('plans as p','u.plan_id','p.id')
         ->orderBy('c.created_at', 'desc')
+        ->groupBy('c.id')
         ->where('c.status', '!=' , 2)
         ->where('c.user_id',Auth::user()->id)
         ->paginate($paginate);
@@ -186,7 +187,7 @@ class BusinessCard extends Model
 
     public function postUpdate($request, $id)
     {
-        dd($request->all());
+        // dd($request->all());
         DB::beginTransaction();
         try {
             $card = BusinessCard::findOrFail($id);

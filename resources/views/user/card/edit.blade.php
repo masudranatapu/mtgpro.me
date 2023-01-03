@@ -122,11 +122,11 @@
                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
                                                                             <div
                                                                                 class="slim"
-                                                                                 data-service="async.php"
-                                                                                 data-fetcher="fetch.php"
+                                                                                 {{-- data-service="async.php" --}}
+                                                                                 {{-- data-fetcher="fetch.php" --}}
                                                                                  data-ratio="1:1"
                                                                                  data-size="540,540"
-                                                                                 data-max-file-size="1">
+                                                                                 data-max-file-size="100">
                                                                                 <img src="{{ getProfile($card->profile) }}" alt=""/>
                                                                                 <input type="file" name="profile_pic" id="profile_pic">
                                                                             </div>
@@ -136,20 +136,28 @@
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group cover_group">
                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
-                                                                            <div class="slim" data-ratio="3:1">
-                                                                                @if (!empty($card->cover))
-                                                                                <img src="{{ asset($card->cover) }}" alt="">
-                                                                                @endif
+                                                                            <div
+                                                                                class="slim cover_group"
+                                                                                 {{-- data-service="async.php" --}}
+                                                                                 {{-- data-fetcher="fetch.php" --}}
+                                                                                 data-ratio="3:1"
+                                                                                 data-size="780,300"
+                                                                                 data-max-file-size="100">
+                                                                                <img src="{{ getCover($card->cover) }}" alt=""/>
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center company_group">
                                                                          <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
-                                                                         <div class="slim" data-ratio="1:1">
-                                                                            @if (!empty($card->logo))
-                                                                            <img src="{{ asset($card->logo) }}" alt="">
-                                                                            @endif
+                                                                         <div
+                                                                         class="slim"
+                                                                          {{-- data-service="async.php" --}}
+                                                                          {{-- data-fetcher="fetch.php" --}}
+                                                                          data-ratio="1:1"
+                                                                          data-size="440,400"
+                                                                          data-max-file-size="100">
+                                                                         <img src="{{ getLogo($card->logo) }}" alt=""/>
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                         </div>
                                                                     </div>
@@ -808,72 +816,71 @@ $("input:checkbox.sicon_control").click(function() {
 //         instantEdit: true,
 //     });
 
-    var cropper = new Slim(document.getElementById('cover_pic'), {
-        ratio: '3:1',
-        minSize: {
-            width: 300,
-            height: 100,
-        },
-        size: {
-            width: 720,
-            height: 720,
-        },
-        willSave: function(data, ready) {
-            var cover2  = document.getElementById('coverpic_2');
-            var cover2_url  = data.output.image;
-            cover2.style.backgroundImage = "url("+cover2_url+")";
-            // console.log(data);
-          ready(data);
-        },
-        meta: {
-            viewid:2
-      },
-        download: false,
-        instantEdit: true,
-        // label: 'Upload: Click here or drag an image file onto it',
-        buttonConfirmLabel: 'Crop',
-        buttonConfirmTitle: 'Crop',
-        buttonCancelLabel: 'Cancel',
-        buttonCancelTitle: 'Cancel',
-        buttonEditTitle: 'Edit',
-        buttonRemoveTitle: 'Remove',
-        buttonDownloadTitle: 'Download',
-        buttonRotateTitle: 'Rotate',
-        buttonUploadTitle: 'Upload',
-        statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
-    });
-    var cropper = new Slim(document.getElementById('company_logo'), {
-        ratio: '1:1',
-        minSize: {
-            width: 50,
-            height: 50,
-        },
-        size: {
-            width: 150,
-            height: 150,
-        },
-        willSave: function(data, ready) {
-            $('#showlogo_2').attr('src',data.output.image);
-            // console.log(data);
-          ready(data);
-        },
-        meta: {
-            viewid:3
-      },
-        download: false,
-        instantEdit: true,
-        // label: 'Upload: Click here or drag an image file onto it',
-        buttonConfirmLabel: 'Crop',
-        buttonConfirmTitle: 'Crop',
-        buttonCancelLabel: 'Cancel',
-        buttonCancelTitle: 'Cancel',
-        buttonEditTitle: 'Edit',
-        buttonRemoveTitle: 'Remove',
-        buttonDownloadTitle: 'Download',
-        buttonRotateTitle: 'Rotate',
-        buttonUploadTitle: 'Upload',
-        statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
-    });
+    // var cropper = new Slim(document.getElementById('cover_pic'), {
+    //     ratio: '3:1',
+    //     minSize: {
+    //         width: 300,
+    //         height: 100,
+    //     },
+    //     size: {
+    //         width: 720,
+    //         height: 720,
+    //     },
+    //     willSave: function(data, ready) {
+    //         var cover2  = document.getElementById('coverpic_2');
+    //         var cover2_url  = data.output.image;
+    //         cover2.style.backgroundImage = "url("+cover2_url+")";
+    //       ready(data);
+    //     },
+    //     meta: {
+    //         viewid:2
+    //   },
+    //     download: false,
+    //     instantEdit: true,
+    //     // label: 'Upload: Click here or drag an image file onto it',
+    //     buttonConfirmLabel: 'Crop',
+    //     buttonConfirmTitle: 'Crop',
+    //     buttonCancelLabel: 'Cancel',
+    //     buttonCancelTitle: 'Cancel',
+    //     buttonEditTitle: 'Edit',
+    //     buttonRemoveTitle: 'Remove',
+    //     buttonDownloadTitle: 'Download',
+    //     buttonRotateTitle: 'Rotate',
+    //     buttonUploadTitle: 'Upload',
+    //     statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    // });
+    // var cropper = new Slim(document.getElementById('company_logo'), {
+    //     ratio: '1:1',
+    //     minSize: {
+    //         width: 50,
+    //         height: 50,
+    //     },
+    //     size: {
+    //         width: 150,
+    //         height: 150,
+    //     },
+    //     willSave: function(data, ready) {
+    //         $('#showlogo_2').attr('src',data.output.image);
+    //         // console.log(data);
+    //       ready(data);
+    //     },
+    //     meta: {
+    //         viewid:3
+    //   },
+    //     download: false,
+    //     instantEdit: true,
+    //     // label: 'Upload: Click here or drag an image file onto it',
+    //     buttonConfirmLabel: 'Crop',
+    //     buttonConfirmTitle: 'Crop',
+    //     buttonCancelLabel: 'Cancel',
+    //     buttonCancelTitle: 'Cancel',
+    //     buttonEditTitle: 'Edit',
+    //     buttonRemoveTitle: 'Remove',
+    //     buttonDownloadTitle: 'Download',
+    //     buttonRotateTitle: 'Rotate',
+    //     buttonUploadTitle: 'Upload',
+    //     statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    // });
 
     var cropper = new Slim(document.getElementById('upload_icon'), {
         ratio: '1:1',
