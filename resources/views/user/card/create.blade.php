@@ -110,11 +110,8 @@
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group profile_group">
                                                                              <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i> </label>
-                                                                             <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="{{ getProfile() }}" alt="profile image">
-                                                                             </label>
                                                                              <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}" tabindex="{{ $tabindex++ }}">
                                                                              @if($errors->has('profile_pic'))
                                                                              <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
@@ -122,22 +119,16 @@
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group cover_group">
                                                                              <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
-                                                                             <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="{{ getCover() }}" alt="logo">
-                                                                             </label>
                                                                              <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden value="{{ old('cover_pic') }}" tabindex="{{ $tabindex++ }}">
                                                                              @if($errors->has('cover_pic'))
                                                                              <span class="help-block text-danger">{{ $errors->first('cover_pic') }}</span>
                                                                              @endif
                                                                          </div>
                                                                     </div>
-                                                                    <div class="col-md-3 col-sm-6 text-lg-center">
+                                                                    <div class="col-md-3 col-sm-6 text-lg-center company_group">
                                                                          <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i> </label>
-                                                                         <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="{{ getLogo() }}" alt="logo">
-                                                                         </label>
                                                                          <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo" value="{{ old('company_logo') }}" tabindex="{{ $tabindex++ }}">
                                                                         @if($errors->has('company_logo'))
                                                                              <span class="help-block text-danger">{{ $errors->first('company_logo') }}</span>

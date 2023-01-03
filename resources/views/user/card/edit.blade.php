@@ -116,30 +116,22 @@
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group profile_group">
                                                                              <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-                                                                             <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="{{ getProfile($card->profile) }}" alt="profile image">
-                                                                             </label>
+                                                                              
                                                                              {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
                                                                              <input type="file" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group cover_group">
                                                                              <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
-                                                                             <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="{{ getCover($card->cover) }}" alt="logo">
-                                                                             </label>
                                                                              {{-- <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden> --}}
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                     </div>
-                                                                    <div class="col-md-3 col-sm-6 text-lg-center">
+                                                                    <div class="col-md-3 col-sm-6 text-lg-center company_group">
                                                                          <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
-                                                                         <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="{{ getLogo($card->logo) }}" alt="logo">
-                                                                         </label>
                                                                          {{-- <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> --}}
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                     </div>
@@ -285,7 +277,7 @@
                                                 <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');" id="coverpic_2">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ getProfile($card->profile) }}" width="100" alt="{{ $card->title }}" id="profilePic_2">
+                                                        <img src="{{ getProfile($card->profile) }}" height="100" width="100" alt="{{ $card->title }}" id="profilePic_2">
                                                         <!-- logo -->
                                                         <img class="logo" src="{{ getLogo($card->logo) }}" alt="{{ $card->title }}" id="showlogo_2">
                                                     </div>
@@ -475,7 +467,7 @@
                                                         <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ getProfile($card->profile) }}" width="100" alt="{{ $card->title }}">
+                                                                <img src="{{ getProfile($card->profile) }}" height="100" width="100" alt="{{ $card->title }}">
                                                                 <!-- logo -->
                                                                 <img class="logo" src="{{ getLogo($card->logo) }}" alt="{{ $card->title }}">
                                                             </div>
@@ -494,7 +486,6 @@
                                                                 <ul>
                                                                     @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                                     @foreach ($card->business_card_fields as $key => $icon )
-
                                                                     <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                         <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
                                                                             <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
@@ -508,8 +499,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                         </div>
@@ -555,44 +544,32 @@
     </style>
 @endif
 
-
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
-
 <script>
-
-
 // preview profile photo
-var profileloadFile = function(event) {
-    var profile = document.getElementById('profilePic');
-    profile.src = URL.createObjectURL(event.target.files[0]);
-
-    var profile2 = document.getElementById('profilePic_2');
-    profile2.src = URL.createObjectURL(event.target.files[0]);
-};
-
-// preview company logo
-var companyloadFile = function(event) {
-    var logo = document.getElementById('showlogo');
-    logo.src = URL.createObjectURL(event.target.files[0]);
-
-    var logo2 = document.getElementById('showlogo_2');
-    logo2.src = URL.createObjectURL(event.target.files[0]);
-};
-
-// preview cover photo
-var coverFile = function(event) {
-    var cover  = document.getElementById('coverpic');
-    cover.src  = URL.createObjectURL(event.target.files[0]);
-
-    var cover2  = document.getElementById('coverpic_2');
-    var cover2_url  = URL.createObjectURL(event.target.files[0]);
-    cover2.style.backgroundImage = "url("+cover2_url+")";
-
-};
-
-
+// var profileloadFile = function(event) {
+//     var profile = document.getElementById('profilePic');
+//     profile.src = URL.createObjectURL(event.target.files[0]);
+//     var profile2 = document.getElementById('profilePic_2');
+//     profile2.src = URL.createObjectURL(event.target.files[0]);
+// };
+// // preview company logo
+// var companyloadFile = function(event) {
+//     var logo = document.getElementById('showlogo');
+//     logo.src = URL.createObjectURL(event.target.files[0]);
+//     var logo2 = document.getElementById('showlogo_2');
+//     logo2.src = URL.createObjectURL(event.target.files[0]);
+// };
+// // preview cover photo
+// var coverFile = function(event) {
+//     var cover  = document.getElementById('coverpic');
+//     cover.src  = URL.createObjectURL(event.target.files[0]);
+//     var cover2  = document.getElementById('coverpic_2');
+//     var cover2_url  = URL.createObjectURL(event.target.files[0]);
+//     cover2.style.backgroundImage = "url("+cover2_url+")";
+// };
 // drag and drop
 const dropItems = document.getElementById('drop-items')
 new Sortable(dropItems, {
@@ -820,25 +797,13 @@ $("input:checkbox.sicon_control").click(function() {
         },
         willSave: function(data, ready) {
             $('#profilePic_2').attr('src',data.output.image);
-            // console.log(data);
           ready(data);
         },
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
-        // label: 'Upload: Click here or drag an image file onto it',
-        // buttonConfirmLabel: 'Crop',
-        // buttonConfirmTitle: 'Crop',
-        // buttonCancelLabel: 'Cancel',
-        // buttonCancelTitle: 'Cancel',
-        // buttonEditTitle: 'Edit',
-        // buttonRemoveTitle: 'Remove',
-        // buttonDownloadTitle: 'Download',
-        // buttonRotateTitle: 'Rotate',
-        // buttonUploadTitle: 'Upload',
-        // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
     var cropper = new Slim(document.getElementById('cover_pic'), {
         ratio: '3:1',
@@ -860,7 +825,7 @@ $("input:checkbox.sicon_control").click(function() {
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
         // label: 'Upload: Click here or drag an image file onto it',
         buttonConfirmLabel: 'Crop',
@@ -892,7 +857,7 @@ $("input:checkbox.sicon_control").click(function() {
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
         // label: 'Upload: Click here or drag an image file onto it',
         buttonConfirmLabel: 'Crop',
@@ -906,5 +871,33 @@ $("input:checkbox.sicon_control").click(function() {
         buttonUploadTitle: 'Upload',
         statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
+
+    var cropper = new Slim(document.getElementById('upload_icon'), {
+        ratio: '1:1',
+        minSize: {
+            width: 50,
+            height: 50,
+        },
+        size: {
+            width: 80,
+            height: 80,
+        },
+        willSave: function(data, ready) {
+            var id = $('#upload_icon').attr('data-id');
+            $('#previewIcon').attr("src", data.output.image);
+            $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
+            $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: false,
+        instantEdit: true,
+    });
+
+
+
+
 </script>
 @endpush

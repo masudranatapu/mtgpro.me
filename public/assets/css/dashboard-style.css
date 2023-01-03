@@ -1057,3 +1057,57 @@ body {
 .sw-btn#btnFinish  {
     padding: 12px 90px !important;
 }
+
+
+
+
+
+
+
+
+
+
+.slim-btn {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+.slim-btn-group {
+    padding: 6px 0px !important;
+}
+
+
+.slim[data-ratio='1:1']>img, .slim[data-ratio='1:1']>input[type=file] {
+    margin-bottom: 69% !important;
+}
+
+
+.form-group.profile_group .slim {
+    border-radius: 100px;
+    width: 120px;
+    height: 120px;
+}
+
+.form-group.cover_group .slim {
+    border-radius: 6px;
+}
+
+.company_group .slim {
+    border-radius: 100px;
+    width: 120px;
+    height: 120px;
+    margin:0 auto;
+}
+
+
+.slim-label {
+    font-size: 12px;
+    padding: 0;
+    color: #777;
+    font-family: 'Inter';
+}
+
+.slim-status {
+    padding: 7px 14px !important;
+}
+
