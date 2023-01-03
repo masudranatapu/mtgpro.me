@@ -494,7 +494,6 @@
                                                                 <ul>
                                                                     @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                                     @foreach ($card->business_card_fields as $key => $icon )
-
                                                                     <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                         <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
                                                                             <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
@@ -508,8 +507,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                         </div>
@@ -555,44 +552,32 @@
     </style>
 @endif
 
-
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
-
 <script>
-
-
 // preview profile photo
-var profileloadFile = function(event) {
-    var profile = document.getElementById('profilePic');
-    profile.src = URL.createObjectURL(event.target.files[0]);
-
-    var profile2 = document.getElementById('profilePic_2');
-    profile2.src = URL.createObjectURL(event.target.files[0]);
-};
-
-// preview company logo
-var companyloadFile = function(event) {
-    var logo = document.getElementById('showlogo');
-    logo.src = URL.createObjectURL(event.target.files[0]);
-
-    var logo2 = document.getElementById('showlogo_2');
-    logo2.src = URL.createObjectURL(event.target.files[0]);
-};
-
-// preview cover photo
-var coverFile = function(event) {
-    var cover  = document.getElementById('coverpic');
-    cover.src  = URL.createObjectURL(event.target.files[0]);
-
-    var cover2  = document.getElementById('coverpic_2');
-    var cover2_url  = URL.createObjectURL(event.target.files[0]);
-    cover2.style.backgroundImage = "url("+cover2_url+")";
-
-};
-
-
+// var profileloadFile = function(event) {
+//     var profile = document.getElementById('profilePic');
+//     profile.src = URL.createObjectURL(event.target.files[0]);
+//     var profile2 = document.getElementById('profilePic_2');
+//     profile2.src = URL.createObjectURL(event.target.files[0]);
+// };
+// // preview company logo
+// var companyloadFile = function(event) {
+//     var logo = document.getElementById('showlogo');
+//     logo.src = URL.createObjectURL(event.target.files[0]);
+//     var logo2 = document.getElementById('showlogo_2');
+//     logo2.src = URL.createObjectURL(event.target.files[0]);
+// };
+// // preview cover photo
+// var coverFile = function(event) {
+//     var cover  = document.getElementById('coverpic');
+//     cover.src  = URL.createObjectURL(event.target.files[0]);
+//     var cover2  = document.getElementById('coverpic_2');
+//     var cover2_url  = URL.createObjectURL(event.target.files[0]);
+//     cover2.style.backgroundImage = "url("+cover2_url+")";
+// };
 // drag and drop
 const dropItems = document.getElementById('drop-items')
 new Sortable(dropItems, {
@@ -825,19 +810,8 @@ $("input:checkbox.sicon_control").click(function() {
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
-        // label: 'Upload: Click here or drag an image file onto it',
-        // buttonConfirmLabel: 'Crop',
-        // buttonConfirmTitle: 'Crop',
-        // buttonCancelLabel: 'Cancel',
-        // buttonCancelTitle: 'Cancel',
-        // buttonEditTitle: 'Edit',
-        // buttonRemoveTitle: 'Remove',
-        // buttonDownloadTitle: 'Download',
-        // buttonRotateTitle: 'Rotate',
-        // buttonUploadTitle: 'Upload',
-        // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
     var cropper = new Slim(document.getElementById('cover_pic'), {
         ratio: '3:1',
@@ -859,7 +833,7 @@ $("input:checkbox.sicon_control").click(function() {
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
         // label: 'Upload: Click here or drag an image file onto it',
         buttonConfirmLabel: 'Crop',
@@ -891,7 +865,7 @@ $("input:checkbox.sicon_control").click(function() {
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
         // label: 'Upload: Click here or drag an image file onto it',
         buttonConfirmLabel: 'Crop',
@@ -904,6 +878,30 @@ $("input:checkbox.sicon_control").click(function() {
         buttonRotateTitle: 'Rotate',
         buttonUploadTitle: 'Upload',
         statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
+
+    var cropper = new Slim(document.getElementById('upload_icon'), {
+        ratio: '1:1',
+        minSize: {
+            width: 50,
+            height: 50,
+        },
+        size: {
+            width: 80,
+            height: 80,
+        },
+        willSave: function(data, ready) {
+            var id = $('#upload_icon').attr('data-id');
+            $('#previewIcon').attr("src", data.output.image);
+            $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
+            $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: false,
+        instantEdit: true,
     });
 
 

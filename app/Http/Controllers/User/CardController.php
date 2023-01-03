@@ -202,9 +202,7 @@ class CardController extends Controller
 
     public function postUpdate(CardUpdateRequest $request, $id)
     {
-
         $this->resp = $this->businessCard->postUpdate($request, $id);
-
         if (!$this->resp->status) {
             Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
@@ -229,8 +227,6 @@ class CardController extends Controller
         return response()->json($data);
     }
 
-
-
     public function getDelete(Request $request,$id){
         BusinessCard::where('id',$id)->update([
             'status' => 2
@@ -247,8 +243,6 @@ class CardController extends Controller
         return redirect()->route('user.card');
 
     }
-
-
 
     public function getCardShareInfo(Request $request,$id)
     {

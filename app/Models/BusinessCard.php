@@ -339,6 +339,8 @@ class BusinessCard extends Model
     }
     public function siconUpdate($request){
 
+        // dd($request->all());
+
         $data = [];
 
         DB::beginTransaction();
@@ -350,7 +352,7 @@ class BusinessCard extends Model
             }
             else{
                 $rules = array(
-                    'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
+                    // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
                     'content'   => 'required|max:255',
                     'label'     => 'required|max:255',
                 );
@@ -361,24 +363,41 @@ class BusinessCard extends Model
                 $icon = BusinessField::findOrFail($request->id);
                 $icon->content = $request->content;
                 $icon->label =  $request->label;
-                if(!is_null($request->file('logo')))
-                {
-                    if(File::exists($icon->icon_image)) {
-                        File::delete($icon->icon_image);
+
+                if($request->has('logo') && !empty($request->logo[0])){
+
+                    $file_name = $this->formatName($request->label);
+                    $output = $request->logo;
+                    $output = json_decode($output, TRUE);
+                    if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                        $image = $output['output']['image'];
+                        if(isset($image)){
+                            if(File::exists($icon->icon_image)) {
+                                    File::delete($icon->icon_image);
+                            }
+                            $icon->icon_image =  $this->uploadBase64ToImage($image,$file_name,'jpg');
+                        }
                     }
-                  $icon_ = $request->file('logo');
-                  $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
-                  $base_name = explode(' ', $base_name);
-                  $base_name = implode('-', $base_name);
-                  $base_name = Str::lower($base_name);
-                  $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
-                  $file_path = 'assets/img/icon/custom_icon/';
-                  if (!File::exists($file_path)) {
-                    File::makeDirectory($file_path, 777, true);
-                  }
-                 $icon_->move($file_path, $image_name);
-                 $icon->icon_image = $file_path.$image_name;
                 }
+
+                // if(!is_null($request->file('logo')))
+                // {
+                //     if(File::exists($icon->icon_image)) {
+                //         File::delete($icon->icon_image);
+                //     }
+                //   $icon_ = $request->file('logo');
+                //   $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                //   $base_name = explode(' ', $base_name);
+                //   $base_name = implode('-', $base_name);
+                //   $base_name = Str::lower($base_name);
+                //   $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                //   $file_path = 'assets/img/icon/custom_icon/';
+                //   if (!File::exists($file_path)) {
+                //     File::makeDirectory($file_path, 777, true);
+                //   }
+                //  $icon_->move($file_path, $image_name);
+                //  $icon->icon_image = $file_path.$image_name;
+                // }
                 $icon->update();
 
                 $data['logo'] = asset($icon->icon_image);

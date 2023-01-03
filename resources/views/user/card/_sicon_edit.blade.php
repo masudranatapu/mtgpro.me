@@ -4,9 +4,10 @@
     <input id="id" type="hidden" name="id" value="{{ $icon->id }}">
     <div class="form-group">
         <label class="imgLabel" for="logo">
+            <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon" data-ratio="1:1" data-id="{{ $icon->id }}" hidden>
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
             {{-- <input type="file" onchange="loadFile(event)" class="upload_icon" name="logo" id="logo" hidden> --}}
-            <input type="file" class="upload_icon" name="logo" id="logo" data-id="{{ $icon->id }}" hidden>
+            {{-- <input type="file" class="upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden> --}}
             <span>Select photo here or drag and drop <br /> one in place of current</span>
         </label>
         @if($errors->has('logo'))
@@ -94,7 +95,7 @@
 
 {{-- @push('custom_js') --}}
 <script>
-        var cropper = new Slim(document.getElementById('logo'), {
+    var cropper = new Slim(document.getElementById('upload_icon'), {
         ratio: '1:1',
         minSize: {
             width: 50,
@@ -105,7 +106,7 @@
             height: 80,
         },
         willSave: function(data, ready) {
-            var id = $('#logo').attr('data-id');
+            var id = $('#upload_icon').attr('data-id');
             $('#previewIcon').attr("src", data.output.image);
             $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
             $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
@@ -114,7 +115,7 @@
         meta: {
             viewid:1
       },
-        download: true,
+        download: false,
         instantEdit: true,
     });
 </script>
