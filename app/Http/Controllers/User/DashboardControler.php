@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 use DB;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,8 @@ class DashboardControler extends Controller
        $this->resp =  $this->plan->getPlanList($request);
        $plans =  $this->resp->data;
        $user_plan = Plan::where('id', Auth::user()->plan_id)->first();
-        return view('user.plan.index', compact('user_plan','plans'));
+       $currency = Currency::where('is_default', 1)->first();
+        return view('user.plan.index', compact('user_plan','plans','currency'));
     }
 
 

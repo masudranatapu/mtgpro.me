@@ -46,8 +46,17 @@ My Plans
                     </div>
                     <div class="switchBtn text-center mb-4">
                         <div class="form-check form-switch">
-                            <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
-                                    {{ __('Monthly | Annual')}}</label>
+                            <label class="form-check-label" for="monthlyCheckedMonthly">
+                                <input class="form-check-input" type="radio" value="0" id="monthlyCheckedMonthly" onclick="monthlyCheckedAnnualy()">
+                                {{ __('Monthly') }}
+
+                                </label>
+                                |
+                                <label class="form-check-label" for="monthlyCheckedAnnualy">
+                                    <input class="form-check-input" type="radio" value="1" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
+                                    {{ __('Annual') }}
+
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -73,7 +82,7 @@ My Plans
                                 @endif
                                 <div class="my-3 pb-3">
                                     <div class="price">
-                                        <h4 class="planpricemonthly">$ {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
+                                        <h4 class="planpricemonthly">  {{ $currency->symbol }} {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
                                         <h4 class="planpriceyearly" style="display: none;">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
                                     </div>
                                 </div>
