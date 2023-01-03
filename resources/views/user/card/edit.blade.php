@@ -820,7 +820,6 @@ $("input:checkbox.sicon_control").click(function() {
         },
         willSave: function(data, ready) {
             $('#profilePic_2').attr('src',data.output.image);
-            // console.log(data);
           ready(data);
         },
         meta: {

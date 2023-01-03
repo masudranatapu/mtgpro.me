@@ -10,7 +10,9 @@
       <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
       <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
       <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
-      <link rel="stylesheet" href="{{ asset('assets/css/croppie.css') }}" />
+      {{-- <link rel="stylesheet" href="{{ asset('assets/css/croppie.css') }}" /> --}}
+      <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
+
       <style>
          .loading-spinner {
          display: none;
@@ -22,7 +24,7 @@
       <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
       <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
-      <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script>
+      {{-- <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script> --}}
       <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
    </head>
    <?php
@@ -66,7 +68,6 @@
                            <div class="tab-content">
                               <!-- step 1 -->
                               <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
-                                 <input type="hidden" name="upload_avatar_url" id="upload_avatar_url" value="{{ route('user.card.upload_avatar') }}" />
                                  <div class="row d-flex justify-content-center">
                                     <div class="col-sm-8 col-lg-12 col-xl-8">
                                        <div class="form-group">
@@ -284,198 +285,15 @@
          </div>
       </div>
       <script src="{{asset('assets/js/toastr.js')}}"></script>
+      <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+
       <script>
          $.ajaxSetup({
              headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
              }
          });
-
-         $(document).ready(function(){
-             $logo_crop = $('#logo_demo').croppie({
-                 enableExif: true,
-                 showZoomer: true,
-                 viewport: {
-                     width:200,
-                     height:200,
-                     type:'square' //circle
-                 },
-                 boundary:{
-                     width:250,
-                     height:250
-                 }
-             });
-             var boundaryWidth = 600;
-             var boundaryHeight = boundaryWidth / 1;
-             var viewportWidth = boundaryWidth - (boundaryWidth/100*25);
-             var viewportHeight = boundaryHeight - (boundaryHeight/100*25);
-             $image_crop = $('#image_demo').croppie({
-                 enableExif: true,
-                 viewport: {
-                     width: viewportWidth, height: viewportHeight,
-                     type:'square' //circle
-                 },
-                 boundary:{
-                     width: boundaryWidth, height: boundaryHeight
-                 },
-                 enableOrientation: true,
-             });
-
-         });
-
-         $(document).on('change', '#photo', function(){
-             var reader = new FileReader();
-             reader.onload = function (event) {
-                 $logo_crop.croppie('bind', {
-                     url: event.target.result
-                 }).then(function(){
-                     console.log('jQuery bind complete');
-                 });
-             }
-             reader.readAsDataURL(this.files[0]);
-             $('.loading-spinner').removeClass('active');
-             $('#uploadAvatarModal').modal('show');
-         });
-
-         $(document).on('click', '.crop_logo', function(event){
-         var upload_avatar_url = $('#upload_avatar_url').val();
-         $('.logo-crop-spinner').toggleClass('active');
-         $logo_crop.croppie('result', {
-             type: 'canvas',
-             size: 'viewport'
-         }).then(function(response){
-             $.ajax({
-                 url: upload_avatar_url,
-                 type: "POST",
-                 data:{"image": response,"_token": "{{ csrf_token() }}",},
-                 success:function(data)
-                 {
-                     console.log(data);
-                     $('.preview_logo_div').html(data.html);
-                     $(".profile_image_src").attr("src",data.image);
-                     $('#uploadAvatarModal').modal('hide');
-                     // $('#photo').val(1);
-                     $('.logo-crop-spinner').removeClass('active');
-                 },
-                 error: function (jqXHR, exception) {
-                     $('.logo-crop-spinner').removeClass('active');
-                 },
-                 complete: function (response) {
-                     $("body").css("cursor", "default");
-                     $('.logo-crop-spinner').removeClass('active');
-                 }
-             });
-         })
-         });
-
-         // // preview image
-         // var loadFile = function(event) {
-         //     var image = document.getElementById('preview');
-         //     image.src = URL.createObjectURL(event.target.files[0]);
-         // };
-
-         // step form validation
-         // $(function() {
-         //     $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
-         //         // Validate only on forward movement
-         //         if (stepDirection == 'forward') {
-         //             let form = document.getElementById('form-' + (currentStepIdx + 1));
-         //             if (form) {
-         //                 if (!form.checkValidity()) {
-         //                     form.classList.add('was-validated');
-         //                     $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-         //                     $("#smartwizard").smartWizard('fixHeight');
-         //                     return false;
-         //                 }
-         //                 $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
-         //             }
-         //         }
-         //     });
-         //     // Smart Wizard
-         //     $('#smartwizard').smartWizard({
-         //         transition: {
-         //               animation: 'slideSwing',
-         //           },
-         //           onLeaveStep: function() {
-         //             alert(1);
-         //         }
-         //     });
-         // });
-
-         // Function to fetch the ajax content
-             // function provideContent(e, stepDirection,stepNumber, stepPosition, selStep, callback) {
-             //     // console.log(stepPosition);
-             //     console.log(stepNumber);
-             //     var form = $("#cerate-first-card");
-             //     if (stepDirection == 'forward' && stepPosition == 'last') {
-             //         let ajaxURL = form.attr('action');
-             //         $.ajax({
-             //             method  : "POST",
-             //             url     : ajaxURL,
-             //             beforeSend: function( xhr ) {
-             //                 $('#smartwizard').smartWizard("loader", "show");
-             //             }
-             //         }).done(function( res ) {
-             //             $('#smartwizard').smartWizard("loader", "hide");
-             //         }).fail(function(err) {
-             //             $('#smartwizard').smartWizard("loader", "hide");
-             //         });
-             //     }
-             //     callback();
-             // }
-
-             // SmartWizard initialize with step content callback
-             // $('#smartwizard').smartWizard({
-             //       transition: {
-             //           animation: 'slideSwing',
-             //       },
-             //     // getContent: provideContent
-             // });
-
-             // $(document).ready(function () {
-             //     $('#smartwizard').smartWizard({
-             //         transitionEffect: 'fade',
-             //         transitionSpeed: '400',
-             //         toolbarSettings: {
-             //             toolbarButtonPosition: 'left',
-             //             showNextButton: true,
-             //             showPreviousButton: true
-             //         }
-             //     })
-
-             //     $('#smartwizard').on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
-
-             //         var elmForm = $("#form-step-" + stepNumber);
-             //         if (stepDirection === 'forward' && elmForm) {
-             //             elmForm.validator('validate');
-             //             var elmErr = elmForm.children('.has-error');
-             //             if (elmErr && elmErr.length > 0) {
-             //                 return false;
-             //             }
-             //         }
-             //         return true;
-             //     })
-             // })
-
-      </script>
-      <script type="text/javascript">
-         $(function() {
-
-            //  $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
-            //      if (stepDirection == 'forward') {
-            //          let form = document.getElementById('form-' + (currentStepIdx + 1));
-            //          if (form) {
-            //              if (!form.checkValidity()) {
-            //                  form.classList.add('was-validated');
-            //                  $('#smartwizard').smartWizard("setState", [currentStepIdx], 'error');
-            //                  $("#smartwizard").smartWizard('fixHeight');
-            //                  return false;
-            //              }
-            //              $('#smartwizard').smartWizard("unsetState", [currentStepIdx], 'error');
-            //          }
-            //      }
-            //  });
-
+           $(function() {
                  // Smart Wizard
                  $('#smartwizard').smartWizard({
                      onLeaveStep:leaveAStepCallback,
@@ -637,6 +455,41 @@
                 }
                return isValid;
              }
+
+             var cropper = new Slim(document.getElementById('photo'), {
+                ratio: '1:1',
+                minSize: {
+                    width: 150,
+                    height: 150,
+                },
+                size: {
+                    width: 600,
+                    height: 600,
+                },
+                willSave: function(data, ready) {
+                    $('#preview').attr('src',data.output.image);
+                    $('.profile_image_src').attr('src',data.output.image);
+                ready(data);
+                },
+                meta: {
+                    viewid:1
+            },
+                download: true,
+                instantEdit: true,
+                // label: 'Upload: Click here or drag an image file onto it',
+                // buttonConfirmLabel: 'Crop',
+                // buttonConfirmTitle: 'Crop',
+                // buttonCancelLabel: 'Cancel',
+                // buttonCancelTitle: 'Cancel',
+                // buttonEditTitle: 'Edit',
+                // buttonRemoveTitle: 'Remove',
+                // buttonDownloadTitle: 'Download',
+                // buttonRotateTitle: 'Rotate',
+                // buttonUploadTitle: 'Upload',
+                // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+            });
+
+
         // $(document).on('submit', "#cerate-first-card", function (e) {
         // // $(document).on('click', "#btnFinish", function (e) {
         //     e.preventDefault();
