@@ -119,7 +119,7 @@
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
-                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
+                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
 
                                                                              {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
                                                                              <input type="file" hidden name="profile_pic" id="profile_pic">
@@ -127,13 +127,13 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group cover_group">
-                                                                             <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
+                                                                             <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                              {{-- <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden> --}}
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center company_group">
-                                                                         <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
+                                                                         <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
                                                                          {{-- <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> --}}
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                     </div>

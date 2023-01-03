@@ -111,7 +111,7 @@
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
-                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i> </label>
+                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i> </label>
                                                                              <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}" tabindex="{{ $tabindex++ }}">
                                                                              @if($errors->has('profile_pic'))
                                                                              <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
@@ -120,7 +120,7 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
                                                                         <div class="form-group cover_group">
-                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
+                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                              <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden value="{{ old('cover_pic') }}" tabindex="{{ $tabindex++ }}">
                                                                              @if($errors->has('cover_pic'))
                                                                              <span class="help-block text-danger">{{ $errors->first('cover_pic') }}</span>
@@ -128,7 +128,7 @@
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6 text-lg-center company_group">
-                                                                         <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i> </label>
+                                                                         <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right"  title="Ideal dimensions: 440px x 440px (1:1)"></i> </label>
                                                                          <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo" value="{{ old('company_logo') }}" tabindex="{{ $tabindex++ }}">
                                                                         @if($errors->has('company_logo'))
                                                                              <span class="help-block text-danger">{{ $errors->first('company_logo') }}</span>
@@ -512,37 +512,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
-
 <script>
-// preview icon
-// var loadFile = function(event) {
-//     var image = document.getElementById('previewIcon');
-//     image.src = URL.createObjectURL(event.target.files[0]);
-// };
-
-// preview profile photo
-// var profileloadFile = function(event) {
-//     var profile = document.getElementById('profilePic');
-//     profile.src = URL.createObjectURL(event.target.files[0]);
-//     var profile2 = document.getElementById('profilePic_2');
-//     profile2.src = URL.createObjectURL(event.target.files[0]);
-// };
-// // preview company logo
-// var companyloadFile = function(event) {
-//     var logo = document.getElementById('showlogo');
-//     logo.src = URL.createObjectURL(event.target.files[0]);
-//     var logo2 = document.getElementById('showlogo_2');
-//     logo2.src = URL.createObjectURL(event.target.files[0]);
-// };
-// // preview cover photo
-// var coverFile = function(event) {
-//     var cover  = document.getElementById('coverpic');
-//     cover.src  = URL.createObjectURL(event.target.files[0]);
-//     var cover2  = document.getElementById('coverpic_2');
-//     var cover2_url  = URL.createObjectURL(event.target.files[0]);
-//     cover2.style.backgroundImage = "url("+cover2_url+")";
-// };
-
 // drag and drop
 const dropItems = document.getElementById('drop-items')
 new Sortable(dropItems, {
