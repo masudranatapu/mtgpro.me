@@ -116,30 +116,22 @@
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <div class="col-md-3 col-sm-6">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group profile_group">
                                                                              <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-                                                                             <label id="profile_file" for="profile_pic" class="form-label">
-                                                                                <img id="profilePic" src="{{ getProfile($card->profile) }}" alt="profile image">
-                                                                             </label>
+                                                                              
                                                                              {{-- <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic"> --}}
                                                                              <input type="file" hidden name="profile_pic" id="profile_pic">
                                                                          </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group cover_group">
                                                                              <label class="form-label">Cover photo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
-                                                                             <label for="cover_pic" id="coverfile" class="form-label">
-                                                                                  <img id="coverpic" src="{{ getCover($card->cover) }}" alt="logo">
-                                                                             </label>
                                                                              {{-- <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden> --}}
                                                                              <input type="file" name="cover_pic" id="cover_pic" hidden>
                                                                          </div>
                                                                     </div>
-                                                                    <div class="col-md-3 col-sm-6 text-lg-center">
+                                                                    <div class="col-md-3 col-sm-6 text-lg-center company_group">
                                                                          <label class="form-label">Company Logo <i class="fa fa-exclamation-circle" aria-hidden="true" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
-                                                                         <label id="logofile" for="company_logo">
-                                                                             <img id="showlogo" src="{{ getLogo($card->logo) }}" alt="logo">
-                                                                         </label>
                                                                          {{-- <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo"> --}}
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                     </div>
@@ -285,7 +277,7 @@
                                                 <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');" id="coverpic_2">
                                                     <!-- profile image -->
                                                     <div class="profile_image">
-                                                        <img src="{{ getProfile($card->profile) }}" width="100" alt="{{ $card->title }}" id="profilePic_2">
+                                                        <img src="{{ getProfile($card->profile) }}" height="100" width="100" alt="{{ $card->title }}" id="profilePic_2">
                                                         <!-- logo -->
                                                         <img class="logo" src="{{ getLogo($card->logo) }}" alt="{{ $card->title }}" id="showlogo_2">
                                                     </div>
@@ -475,7 +467,7 @@
                                                         <div class="card_banner mb-5" style="background-image: url('{{ getCover($card->cover) }}');">
                                                             <!-- profile image -->
                                                             <div class="profile_image">
-                                                                <img src="{{ getProfile($card->profile) }}" width="100" alt="{{ $card->title }}">
+                                                                <img src="{{ getProfile($card->profile) }}" height="100" width="100" alt="{{ $card->title }}">
                                                                 <!-- logo -->
                                                                 <img class="logo" src="{{ getLogo($card->logo) }}" alt="{{ $card->title }}">
                                                             </div>
