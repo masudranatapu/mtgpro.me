@@ -120,13 +120,16 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="form-group profile_group">
                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
-                                                                            @if (!empty($card->profile))
-                                                                            <div class="slim" data-ratio="1:1"  data-fetcher="{{ asset($card->profile) }}" data-save-initial-image="true"
-                                                                                >
-                                                                                {{-- <img src="{{ asset($card->profile) }}" alt=""> --}}
+                                                                            <div
+                                                                                class="slim"
+                                                                                 data-service="async.php"
+                                                                                 data-fetcher="fetch.php"
+                                                                                 data-ratio="1:1"
+                                                                                 data-size="540,540"
+                                                                                 data-max-file-size="1">
+                                                                                <img src="{{ getProfile($card->profile) }}" alt=""/>
+                                                                                <input type="file" name="profile_pic" id="profile_pic">
                                                                             </div>
-                                                                            @endif
-                                                                             <input type="file" hidden name="profile_pic" id="profile_pic" >
 
                                                                         </div>
                                                                     </div>
@@ -782,7 +785,7 @@ $("input:checkbox.sicon_control").click(function() {
         }
     });
 });
-$('#profile_pic').slim();
+// $('#profile_pic').slim();
 
 // var cropper = new Slim(document.getElementById('profile_pic'), {
 //         ratio: '1:1',
@@ -804,6 +807,7 @@ $('#profile_pic').slim();
 //         download: false,
 //         instantEdit: true,
 //     });
+
     var cropper = new Slim(document.getElementById('cover_pic'), {
         ratio: '3:1',
         minSize: {
