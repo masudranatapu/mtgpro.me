@@ -812,7 +812,6 @@ $("input:checkbox.sicon_control").click(function() {
         },
         willSave: function(data, ready) {
             $('#profilePic_2').attr('src',data.output.image);
-            // console.log(data);
           ready(data);
         },
         meta: {
@@ -898,5 +897,9 @@ $("input:checkbox.sicon_control").click(function() {
         buttonUploadTitle: 'Upload',
         statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
+
+
+
+
 </script>
 @endpush

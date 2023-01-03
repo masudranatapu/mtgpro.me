@@ -327,7 +327,19 @@ class CardController extends Controller
         $card->card_lang    = 'en';
         $card->card_url     = uniqid();
         $card->card_type    = 'vcard';
-        $card->profile      = $request->avatar_path ?? null;
+        if($request->has('photo') && !empty($request->photo[0]))
+        {
+            $file_name = $this->businessCard->formatName($request->name);
+            $output = $request->photo;
+            $output = json_decode($output, TRUE);
+            if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                $image = $output['output']['image'];
+                if(isset($image))
+                {
+                    $card->profile =  $this->businessCard->uploadBase64ToImage($image,$file_name,'jpg');
+                }
+            }
+        }
         $card->title        = $request->name;
         $card->designation  = $request->designation;
         $card->company_name = $request->company_name;
