@@ -23,7 +23,6 @@ class BusinessCard extends Model
 
     public function getPaginatedList($request, int $paginate = 20)
     {
-        // $data = $this->where('user_id',Auth::user()->id)->where('status',1)->orderBy('id','DESC')->paginate($per_page);
         $data = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
         'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status','c.cover','c.designation','c.company_name',
@@ -35,12 +34,10 @@ class BusinessCard extends Model
         ->where('c.status', '!=' , 2)
         ->where('c.user_id',Auth::user()->id)
         ->paginate($paginate);
-
         return $this->formatResponse(true, '', 'web.index', $data);
     }
 
     public function getView($request,$id){
-
         return $this->select('business_cards.*','users.plan_details')
         ->leftJoin('users','users.id','=','business_cards.user_id')
         ->where('business_cards.status',1)
@@ -48,15 +45,10 @@ class BusinessCard extends Model
         ->where('business_cards.user_id',Auth::user()->id)->first();
     }
 
-
-
     public function business_card_fields()
     {
         return $this->hasMany(BusinessField::class, 'card_id')->orderBy('position','asc');
     }
-
-
-
 
     public function theme()
     {
@@ -68,29 +60,27 @@ class BusinessCard extends Model
         DB::beginTransaction();
         try {
             $card_id = uniqid();
-            $data = new BusinessCard();
-            $data->card_id      = $card_id;
-            // $data->card_url      = $card_id;
-            $data->user_id      = Auth::id();
-            $data->card_lang    = 'en';
-            $data->card_type    = 'vcard';
-            $data->card_for     = $request->card_for;
-            $data->card_status  = 'activated';
-            $data->status       = 1;
-            $data->title        = $request->name;
-            // $data->title2       = $request->last_name;
-            $data->location     = $request->location;
-            $data->bio          = $request->bio;
-            $data->sub_title    = $request->sub_title ?? '';
-            $data->theme_color  = $request->bgcolor ?? '#fff';
-            $data->theme_id     = $request->theme_id ?? 1;
-            $data->designation  = $request->designation;
-            $data->company_name = $request->company_name;
-            $data->card_url     = $request->card_url;
-            $data->phone_number = $request->phone_number;
-            $data->ccode        = $request->ccode;
-            $data->card_email   = $request->card_email ?? Auth::user()->email;
-            $data->created_at   = date('Y-m-d H:i:s');
+            $card = new BusinessCard();
+            $card->card_id      = $card_id;
+            $card->user_id      = Auth::id();
+            $card->card_lang    = 'en';
+            $card->card_type    = 'vcard';
+            $card->card_for     = $request->card_for;
+            $card->card_status  = 'activated';
+            $card->status       = 1;
+            $card->title        = $request->name;
+            $card->location     = $request->location;
+            $card->bio          = $request->bio;
+            $card->sub_title    = $request->sub_title ?? '';
+            $card->theme_color  = $request->bgcolor ?? '#fff';
+            $card->theme_id     = $request->theme_id ?? 1;
+            $card->designation  = $request->designation;
+            $card->company_name = $request->company_name;
+            $card->card_url     = $request->card_url;
+            $card->phone_number = $request->phone_number;
+            $card->ccode        = $request->ccode;
+            $card->card_email   = $request->card_email ?? Auth::user()->email;
+            $card->created_at   = date('Y-m-d H:i:s');
             if($request->has('profile_pic') && !empty($request->profile_pic[0]))
             {
                 $file_name = $this->formatName($request->name);
@@ -103,7 +93,7 @@ class BusinessCard extends Model
                         $image_name =  $this->uploadBase64ToImage($image,$file_name,'jpg');
                     }
                 }
-                $data->profile  = $image_name;
+                $card->profile  = $image_name;
             }
             if($request->has('cover_pic') && !empty($request->cover_pic[0]))
             {
@@ -117,7 +107,7 @@ class BusinessCard extends Model
                         $image_name =  $this->uploadBase64ToImage($image,$file_name,'jpg');
                     }
                 }
-                $data->cover = $image_name;
+                $card->cover = $image_name;
             }
             if($request->has('company_logo') && !empty($request->company_logo[0]))
             {
@@ -131,13 +121,12 @@ class BusinessCard extends Model
                         $image_name =  $this->uploadBase64ToImage($image,$file_name,'jpg');
                     }
                 }
-                $data->logo = $image_name;
+                $card->logo = $image_name;
             }
-            $data->save();
-            $card_id = DB::table('business_cards')->insertGetId($card);
+            $card->save();
             $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
             $fields = new BusinessField();
-            $fields->card_id = $card_id;
+            $fields->card_id = $card->id;
             $fields->type = 'email';
             $fields->icon = $email_icon->icon_name;
             $fields->icon_image = $email_icon->icon_image;
@@ -154,12 +143,9 @@ class BusinessCard extends Model
             return $this->formatResponse(false, 'Unable to create Card !', 'user.card.create');
         }
         DB::commit();
-        $card_info = DB::table('business_cards')->where('id',$card_id)->first();
-        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card_info));
-        return $this->formatResponse(true, 'Card has been created successfully !', 'user.card.edit',$card_info->id);
+        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+        return $this->formatResponse(true, 'Card has been created successfully !', 'user.card.edit',$card->id);
     }
-
-
 
 
     public function uploadBase64ToImage($file,$file_name,$file_prefix)
@@ -175,14 +161,10 @@ class BusinessCard extends Model
             $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
         }
         else{
-            return array('error' => 'non-image files');
+            return false;
         }
         $result = file_put_contents($upload_path . $file_name, $img);
-            // if($result == FALSE)
-            // {
-            //     return array('error' => 'Failed to write to file, possibly without permission');
-            // }
-        return $file_path.$file_name;
+         return $file_path.$file_name;
     }
 
 
@@ -209,26 +191,23 @@ class BusinessCard extends Model
             $card = BusinessCard::findOrFail($id);
             $card->user_id      = Auth::id();
             $card->card_lang    = 'en';
-            $card->card_url     = $request->card_url;
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
             $card->card_status  = 'activated';
             $card->status       = 1;
             $card->title        = $request->name;
-            // $card->title2       = $request->last_name;
-            // $card->sub_title    = $request->sub_title;
+            $card->location     = $request->location;
+            $card->bio          = $request->bio;
+            $card->sub_title    = $request->sub_title ?? '';
             $card->theme_color  = $request->bgcolor ?? '#fff';
             $card->theme_id     = $request->theme_id ?? 1;
             $card->designation  = $request->designation;
-            $card->location     = $request->location;
-            $card->bio          = $request->bio;
             $card->company_name = $request->company_name;
-            // $card->phone_number = $request->phone_number;
-            // $card->ccode        = $request->ccode;
-            // $card->card_email   = $request->card_email;
-            // $card->company_websitelink   = $request->company_websitelink;
+            $card->card_url     = $request->card_url;
+            $card->phone_number = $request->phone_number;
+            $card->ccode        = $request->ccode;
+            $card->card_email   = $request->card_email ?? Auth::user()->email;
             $card->updated_at   = date('Y-m-d H:i:s');
-
             if($request->has('profile_pic') && !empty($request->profile_pic[0]))
             {
                 $file_name = $this->formatName($request->name);
@@ -244,7 +223,6 @@ class BusinessCard extends Model
                         $card->profile =  $this->uploadBase64ToImage($image,$file_name,'jpg');
                     }
                 }
-
             }
             if($request->has('cover_pic') && !empty($request->cover_pic[0]))
             {

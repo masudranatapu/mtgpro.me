@@ -32,9 +32,9 @@ class CardRequest extends FormRequest
             'company_name'     => 'required|string|max:124',
             'bio'              => 'nullable|string|max:255',
             'card_url'         => 'required|unique:business_cards,card_url|string|max:124',
-            'profile_pic'      => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
-            'cover_pic'        => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
-            'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'
+            // 'profile_pic'      => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
+            // 'cover_pic'        => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
+            // 'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'
         ];
         $social_icon = DB::table('social_icon')->get();
         if($social_icon){

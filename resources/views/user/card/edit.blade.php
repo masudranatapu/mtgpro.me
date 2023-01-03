@@ -551,7 +551,6 @@
             color: #fff;
             border-color: #fff;
             background-color: #000;
-
         }
     </style>
 @endif
@@ -809,7 +808,6 @@ $("input:checkbox.sicon_control").click(function() {
         }
     });
 });
-
     var cropper = new Slim(document.getElementById('profile_pic'), {
         ratio: '1:1',
         minSize: {
@@ -821,7 +819,8 @@ $("input:checkbox.sicon_control").click(function() {
             height: 600,
         },
         willSave: function(data, ready) {
-            console.log(data);
+            $('#profilePic_2').attr('src',data.output.image);
+            // console.log(data);
           ready(data);
         },
         meta: {
@@ -852,7 +851,10 @@ $("input:checkbox.sicon_control").click(function() {
             height: 720,
         },
         willSave: function(data, ready) {
-            console.log(data);
+            var cover2  = document.getElementById('coverpic_2');
+            var cover2_url  = data.output.image;
+            cover2.style.backgroundImage = "url("+cover2_url+")";
+            // console.log(data);
           ready(data);
         },
         meta: {
@@ -883,7 +885,8 @@ $("input:checkbox.sicon_control").click(function() {
             height: 150,
         },
         willSave: function(data, ready) {
-            console.log(data);
+            $('#showlogo_2').attr('src',data.output.image);
+            // console.log(data);
           ready(data);
         },
         meta: {

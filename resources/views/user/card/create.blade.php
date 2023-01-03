@@ -2,6 +2,7 @@
 @section('content')
 @section('title') {{ __('Create Card') }}  @endsection
 @push('custom_css')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
 @endpush
 
 @php
@@ -114,7 +115,7 @@
                                                                              <label id="profile_file" for="profile_pic" class="form-label">
                                                                                 <img id="profilePic" src="{{ getProfile() }}" alt="profile image">
                                                                              </label>
-                                                                             <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}">
+                                                                             <input type="file" onchange="profileloadFile(event)" hidden name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}" tabindex="{{ $tabindex++ }}">
                                                                              @if($errors->has('profile_pic'))
                                                                              <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
                                                                              @endif
@@ -126,7 +127,7 @@
                                                                              <label for="cover_pic" id="coverfile" class="form-label">
                                                                                   <img id="coverpic" src="{{ getCover() }}" alt="logo">
                                                                              </label>
-                                                                             <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden value="{{ old('cover_pic') }}">
+                                                                             <input type="file" onchange="coverFile(event)" name="cover_pic" id="cover_pic" hidden value="{{ old('cover_pic') }}" tabindex="{{ $tabindex++ }}">
                                                                              @if($errors->has('cover_pic'))
                                                                              <span class="help-block text-danger">{{ $errors->first('cover_pic') }}</span>
                                                                              @endif
@@ -137,7 +138,7 @@
                                                                          <label id="logofile" for="company_logo">
                                                                              <img id="showlogo" src="{{ getLogo() }}" alt="logo">
                                                                          </label>
-                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo" value="{{ old('company_logo') }}">
+                                                                         <input type="file" onchange="companyloadFile(event)" hidden name="company_logo" id="company_logo" value="{{ old('company_logo') }}" tabindex="{{ $tabindex++ }}">
                                                                         @if($errors->has('company_logo'))
                                                                              <span class="help-block text-danger">{{ $errors->first('company_logo') }}</span>
                                                                         @endif
@@ -195,7 +196,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="name" class="form-label">{{ __('Name') }}</label>
-                                                                    <input type="text" name="name" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('name') }}" required data-preview="name_show" value="{{ old('name') }}" maxlength="50">
+                                                                    <input type="text" name="name" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('name') }}" required data-preview="name_show" value="{{ old('name') }}" maxlength="50" tabindex="{{ $tabindex++ }}">
                                                                     @if($errors->has('name'))
                                                                         <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                                                     @endif
@@ -204,7 +205,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                    <input type="text" name="location" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('location') }}" required data-preview="location_show" value="{{ old('location') }}" maxlength="50">
+                                                                    <input type="text" name="location" class="form-control @error('email') is-invalid @enderror cin" placeholder="{{ __('location') }}" required data-preview="location_show" value="{{ old('location') }}" maxlength="50" tabindex="{{ $tabindex++ }}">
                                                                     @if($errors->has('location'))
                                                                         <span class="help-block text-danger">{{ $errors->first('location') }}</span>
                                                                     @endif
@@ -213,7 +214,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="designation" class="form-label">{{ __('Job Title') }}</label>
-                                                                    <input type="text" name="designation" class="form-control @error('designation') is-invalid @enderror cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show" value="{{ old('designation') }}" maxlength="50">
+                                                                    <input type="text" name="designation" class="form-control @error('designation') is-invalid @enderror cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show" value="{{ old('designation') }}" maxlength="50" tabindex="{{ $tabindex++ }}">
                                                                     @if($errors->has('designation'))
                                                                         <span class="help-block text-danger">{{ $errors->first('designation') }}</span>
                                                                     @endif
@@ -222,7 +223,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="company_name" class="form-label">{{ __('Company') }}</label>
-                                                                    <input type="text" name="company_name" class="form-control @error('company_name') is-invalid @enderror cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show" value="{{ old('company_name') }}" maxlength="50">
+                                                                    <input type="text" name="company_name" class="form-control @error('company_name') is-invalid @enderror cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show" value="{{ old('company_name') }}" maxlength="50" tabindex="{{ $tabindex++ }}">
                                                                     @if($errors->has('company_name'))
                                                                         <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                                                     @endif
@@ -231,7 +232,7 @@
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                     <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" maxlength="150">{{ old('bio') }}</textarea>
+                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" maxlength="150" tabindex="{{ $tabindex++ }}">{{ old('bio') }}</textarea>
                                                                     @if($errors->has('bio'))
                                                                         <span class="help-block text-danger">{{ $errors->first('bio') }}</span>
                                                                     @endif
@@ -242,14 +243,13 @@
                                                                 <div class="input-group-prepend">
                                                                   <span class="input-group-text" id="card_url-addon3" style="border: none">{{ route('home') }}/</span>
                                                                 </div>
-                                                                <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{ old('card_url') }}" >
+                                                                <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{ old('card_url') }}" tabindex="{{ $tabindex++ }}">
                                                               </div>
                                                               <span class="help-block text-danger" id="personalized_link_help">{{ $errors->first('personalized_link') }}</span>
                                                               @if($errors->has('card_url'))
                                                               <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
                                                                 @endif
                                                             </div>
-
                                                             <div class="col-12">
                                                                 <div class="float-right">
                                                                      <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
@@ -520,6 +520,8 @@
 @push('custom_js')
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+
 <script>
 // preview icon
 // var loadFile = function(event) {
@@ -528,35 +530,27 @@
 // };
 
 // preview profile photo
-var profileloadFile = function(event) {
-    var profile = document.getElementById('profilePic');
-    profile.src = URL.createObjectURL(event.target.files[0]);
-
-    var profile2 = document.getElementById('profilePic_2');
-    profile2.src = URL.createObjectURL(event.target.files[0]);
-};
-
-// preview company logo
-var companyloadFile = function(event) {
-    var logo = document.getElementById('showlogo');
-    logo.src = URL.createObjectURL(event.target.files[0]);
-
-    var logo2 = document.getElementById('showlogo_2');
-    logo2.src = URL.createObjectURL(event.target.files[0]);
-
-
-};
-
-// preview cover photo
-var coverFile = function(event) {
-    var cover  = document.getElementById('coverpic');
-    cover.src  = URL.createObjectURL(event.target.files[0]);
-
-    var cover2  = document.getElementById('coverpic_2');
-    var cover2_url  = URL.createObjectURL(event.target.files[0]);
-    cover2.style.backgroundImage = "url("+cover2_url+")";
-};
-
+// var profileloadFile = function(event) {
+//     var profile = document.getElementById('profilePic');
+//     profile.src = URL.createObjectURL(event.target.files[0]);
+//     var profile2 = document.getElementById('profilePic_2');
+//     profile2.src = URL.createObjectURL(event.target.files[0]);
+// };
+// // preview company logo
+// var companyloadFile = function(event) {
+//     var logo = document.getElementById('showlogo');
+//     logo.src = URL.createObjectURL(event.target.files[0]);
+//     var logo2 = document.getElementById('showlogo_2');
+//     logo2.src = URL.createObjectURL(event.target.files[0]);
+// };
+// // preview cover photo
+// var coverFile = function(event) {
+//     var cover  = document.getElementById('coverpic');
+//     cover.src  = URL.createObjectURL(event.target.files[0]);
+//     var cover2  = document.getElementById('coverpic_2');
+//     var cover2_url  = URL.createObjectURL(event.target.files[0]);
+//     cover2.style.backgroundImage = "url("+cover2_url+")";
+// };
 
 // drag and drop
 const dropItems = document.getElementById('drop-items')
@@ -610,6 +604,105 @@ $(document).on('input','#colorPicker',function(){
     var element = document.getElementById("clrBg");
     element.style.backgroundColor = color;
 })
+
+var cropper = new Slim(document.getElementById('profile_pic'), {
+        ratio: '1:1',
+        minSize: {
+            width: 150,
+            height: 150,
+        },
+        size: {
+            width: 600,
+            height: 600,
+        },
+        willSave: function(data, ready) {
+            $('#profilePic_2').attr('src',data.output.image);
+            // console.log(data);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+        // label: 'Upload: Click here or drag an image file onto it',
+        // buttonConfirmLabel: 'Crop',
+        // buttonConfirmTitle: 'Crop',
+        // buttonCancelLabel: 'Cancel',
+        // buttonCancelTitle: 'Cancel',
+        // buttonEditTitle: 'Edit',
+        // buttonRemoveTitle: 'Remove',
+        // buttonDownloadTitle: 'Download',
+        // buttonRotateTitle: 'Rotate',
+        // buttonUploadTitle: 'Upload',
+        // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
+    var cropper = new Slim(document.getElementById('cover_pic'), {
+        ratio: '3:1',
+        minSize: {
+            width: 300,
+            height: 100,
+        },
+        size: {
+            width: 720,
+            height: 720,
+        },
+        willSave: function(data, ready) {
+            var cover2  = document.getElementById('coverpic_2');
+            var cover2_url  = data.output.image;
+            cover2.style.backgroundImage = "url("+cover2_url+")";
+            // console.log(data);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+        // label: 'Upload: Click here or drag an image file onto it',
+        buttonConfirmLabel: 'Crop',
+        buttonConfirmTitle: 'Crop',
+        buttonCancelLabel: 'Cancel',
+        buttonCancelTitle: 'Cancel',
+        buttonEditTitle: 'Edit',
+        buttonRemoveTitle: 'Remove',
+        buttonDownloadTitle: 'Download',
+        buttonRotateTitle: 'Rotate',
+        buttonUploadTitle: 'Upload',
+        statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
+    var cropper = new Slim(document.getElementById('company_logo'), {
+        ratio: '1:1',
+        minSize: {
+            width: 50,
+            height: 50,
+        },
+        size: {
+            width: 150,
+            height: 150,
+        },
+        willSave: function(data, ready) {
+            $('#showlogo_2').attr('src',data.output.image);
+            // console.log(data);
+          ready(data);
+        },
+        meta: {
+            viewid:1
+      },
+        download: true,
+        instantEdit: true,
+        // label: 'Upload: Click here or drag an image file onto it',
+        buttonConfirmLabel: 'Crop',
+        buttonConfirmTitle: 'Crop',
+        buttonCancelLabel: 'Cancel',
+        buttonCancelTitle: 'Cancel',
+        buttonEditTitle: 'Edit',
+        buttonRemoveTitle: 'Remove',
+        buttonDownloadTitle: 'Download',
+        buttonRotateTitle: 'Rotate',
+        buttonUploadTitle: 'Upload',
+        statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+    });
 
 
 
