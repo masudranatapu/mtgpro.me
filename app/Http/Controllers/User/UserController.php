@@ -253,6 +253,29 @@ class UserController extends Controller
     }
 
 
+    public function putUpdateBilling(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::find(Auth::user()->id);
+            $user->billing_email = $request->email;
+            $user->billing_country = $request->country;
+            $user->billing_zipcode  = $request->zip_code;
+            $user->updated_at = date("Y-m-d H:i:s");
+            // $user->updated_by = Auth::user()->id;
+            $user->update();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error('Something wrong! Please try again');
+            return redirect()->back();
+        }
+        DB::commit();
+        Toastr::success('Billing info updated');
+        return redirect()->back();
+    }
+
+
 
 
 }

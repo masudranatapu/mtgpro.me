@@ -4,6 +4,7 @@ use DB;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Currency;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,17 @@ class DashboardControler extends Controller
 
 
     protected $plan;
+    protected $transection;
 
-    public function __construct(Plan $plan)
+    public function __construct(
+        Plan $plan,
+        Transaction $transection
+        )
     {
         $this->middleware('auth');
         $this->settings = getSetting();
         $this->plan         = $plan;
+        $this->transection  = $transection;
     }
 
 
@@ -40,11 +46,11 @@ class DashboardControler extends Controller
 
     public function getSetting(Request $request)
     {
-
         $user_id = Auth::id();
         $user = User::find($user_id);
-
-        return view('user.setting',compact('user'));
+        $plan = DB::table('plans')->where('id',$user->plan_id)->first();
+        $transections =  $this->transection->getTransectionList($request);
+        return view('user.setting',compact('user','plan','transections'));
     }
 
     public function getPlanList(Request $request)
