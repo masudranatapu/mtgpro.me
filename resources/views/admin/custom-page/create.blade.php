@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 <!--push from page-->
 @push('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 @endpush('css')
 @section('settings', 'active')
 @section('custom_page_list','active')
@@ -183,44 +183,44 @@ $tabindex = 1;
 </div>
 @endsection
 @push('scripts')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/text-editor.js') }}"></script>
 <script>
-$('#title').on('keyup keydown paste',function(){
-var str = $(this).val();
-str = str.replace(/^\s+|\s+$/g, ''); // trim
-str = str.toLowerCase();
-// remove accents, swap ñ for n, etc
-var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
-var to   = "aaaaaeeeeeiiiiooooouuuunc------";
-for (var i = 0, l = from.length; i < l; i++) {
-str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-}
-str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-.replace(/\s+/g, '-') // collapse whitespace and replace by -
-.replace(/-+/g, '-'); // collapse dashes
-$("#url_slug").val(str);
-return str;
-})
-var get_url = $('#base_url').val();
-function uploadImage(image) {
-var data = new FormData();
-data.append("image", image);
-$.ajax({
-url: get_url + 'admin/ajax/text-editor/image/',
-cache: false,
-contentType: false,
-processData: false,
-data: data,
-type: "post",
-success: function(url) {
-var image = $('<img>').attr('src', url).attr('class', 'img-fluid');
-$('#text-editor').summernote("insertNode", image[0]);
-},
-error: function(data) {
-console.log(data);
-}
-});
-}
+    $('#title').on('keyup keydown paste',function(){
+        var str = $(this).val();
+        str = str.replace(/^\s+|\s+$/g, ''); // trim
+        str = str.toLowerCase();
+        // remove accents, swap ñ for n, etc
+        var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+        var to   = "aaaaaeeeeeiiiiooooouuuunc------";
+        for (var i = 0, l = from.length; i < l; i++) {
+        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        }
+        str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
+        $("#url_slug").val(str);
+        return str;
+    })
+    var get_url = $('#base_url').val();
+    function uploadImage(image) {
+        var data = new FormData();
+        data.append("image", image);
+        $.ajax({
+            url: '{{URL("admin/ajax/text-editor/image/")}}',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            type: "post",
+            success: function(url) {
+                var image = $('<img>').attr('src', url).attr('data-src', url).attr('class', 'img-fluid img-responsive');
+                $('#text-editor').summernote("insertNode", image[0]);
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    }
 </script>
 @endpush('custom_js')

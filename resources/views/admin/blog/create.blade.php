@@ -269,7 +269,7 @@
 						console.log(data);
 					}
 				});
-			}
+	}
 
 </script>
 @endsection

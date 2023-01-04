@@ -7,6 +7,45 @@
 @section('title') {{ $page->title }}  @endsection
 @push('custom_css')
 <style>
+.page_content a:hover, a:focus {
+    color: #0087c1;
+}
+.page_content a:active, a:hover {
+    outline: 0;
+}
+.page_content a, .page_content button, .page_content input, .page_content select,.page_content  textarea, .page_content label, .page_content summary {
+    touch-action: manipulation;
+}
+.page_content a, .page_content a:visited, .page_content a span {
+    color: #4a9ef4;
+    text-decoration: none;
+    position: relative;
+    transition: color .1s linear;
+}
+b, strong {
+    font-weight: 700;
+}
+ol {
+    list-style: decimal;
+}
+ul, ol {
+    margin-bottom: 20px;
+}
+h2, .h2, h2.title {
+    font-family: DM Sans,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 31px;
+    text-transform: none;
+    line-height: 1.5;
+    color: #000;
+    display: block;
+    letter-spacing: 0px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-bottom: 0.75em;
+}
 </style>
 @endpush
 @section('meta_tag')
@@ -33,7 +72,7 @@
         <div class="container">
             <div class="page_wrapper">
                 <div class="page_title mb-4">
-                    <h3>{{ $page->title }}</h3>
+                    <h1>{{ $page->title }}</h1>
                 </div>
                 <div class="page_content">
                    {!! $page->body !!}
