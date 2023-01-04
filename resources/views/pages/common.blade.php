@@ -72,9 +72,14 @@ h2, .h2, h2.title {
         <div class="container">
             <div class="page_wrapper">
                 <div class="page_title mb-4">
-                    <h1>{{ $page->title }}</h1>
+                    <h1 class="{{ $page->url_slug == 'contact-us' ? 'text-center' : '' }} " >{{ $page->title }}</h1>
                 </div>
                 <div class="page_content">
+                    @if($page->url_slug == 'contact-us')
+                        @include('pages._contact_us')
+
+                    @endif
+
                    {!! $page->body !!}
                 </div>
             </div>

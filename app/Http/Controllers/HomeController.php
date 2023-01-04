@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Share;
 use App\Mail\ConnectMail;
+use App\Mail\SendContact;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
@@ -317,7 +318,6 @@ class HomeController extends Controller
 
     public function getContact(){
         $page = DB::table('custom_pages')->where('url_slug','contact-us')->first();
-
         return view('pages.common',compact('page'));
     }
 
@@ -328,13 +328,13 @@ class HomeController extends Controller
     }
 
     public function getHelp(){
-        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+        $page = DB::table('custom_pages')->where('url_slug','help')->first();
 
         return view('pages.common',compact('page'));
     }
 
     public function getTutorials(){
-        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+        $page = DB::table('custom_pages')->where('url_slug','tutorials')->first();
 
         return view('pages.common',compact('page'));
     }

@@ -24,7 +24,8 @@ Route::get('privacy-policy',['as'=>'privacy-policy','uses'=>'HomeController@getP
 Route::get('terms-conditions',['as'=>'terms-conditions','uses'=>'HomeController@getTermsCondition']);
 Route::get('about-us',['as'=>'about-us','uses'=>'HomeController@getAboutUs']);
 Route::get('pricing',['as'=>'pricing','uses'=>'HomeController@getPricing']);
-Route::get('contact',['as'=>'contact','uses'=>'HomeController@getContact']);
+Route::get('contact-us',['as'=>'contact-us','uses'=>'HomeController@getContact']);
+Route::post('contact',['as'=>'contact.post','uses'=>'HomeController@postContact']);
 Route::get('help',['as'=>'help','uses'=>'HomeController@getHelp']);
 Route::get('tutorials',['as'=>'tutorials','uses'=>'HomeController@getTutorials']);
 
