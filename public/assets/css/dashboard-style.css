@@ -400,11 +400,11 @@ body {
 
 .btn-primary {
     background: #212121;
-    border: none;
+    border: none !important;
     outline: none;
     box-shadow: none;
-    padding: 8px 44px;
-    border-radius: 50px;
+    padding: 12px 42px !important;
+    border-radius: 50px !important;
     font-size: 13px;
 }
 
@@ -632,7 +632,7 @@ body {
 }
 
 
-.add_content_modal .modal {
+.modal {
     backdrop-filter: blur(4px);
     background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
     backdrop-filter: blur(4px);
@@ -650,7 +650,7 @@ body {
     min-height: 680px;
 }
 
-.add_content_modal .close {
+.modal .close {
     position: absolute;
     top: 25px;
     right: 23px;
@@ -835,7 +835,7 @@ body {
     font-size: 14px;
     font-family: 'DM Sans';
     border-radius: 50px;
-    padding: 8px 34px;
+    padding: 10px 34px;
 }
 
 
@@ -869,10 +869,10 @@ body {
     background: #ddd;
     border-radius: 100px;
     display: block;
-     cursor: pointer;
+    cursor: pointer;
 }
 
-.about_user #profile_file  img {
+.about_user #profile_file img {
     width: 90px;
     height: 90px;
     background: #ddd;
@@ -888,7 +888,7 @@ body {
     cursor: pointer;
 }
 
-.about_user #logofile  img {
+.about_user #logofile img {
     width: 90px;
     height: 90px;
     border-radius: 100px;
@@ -902,10 +902,10 @@ body {
     background: #ddd;
     border-radius: 6px;
     display: block;
-     cursor: pointer;
+    cursor: pointer;
 }
 
-.about_user #coverfile  img {
+.about_user #coverfile img {
     width: 100%;
     height: 100px;
     border-radius: 6px;
@@ -964,7 +964,7 @@ body {
 
 /*  color */
 
-.bg_btn .form-check label{
+.bg_btn .form-check label {
     width: 23px;
     height: 23px;
     border-radius: 50px;
@@ -972,10 +972,10 @@ body {
     margin: 0px 2px;
     border: none !important;
     cursor: pointer;
-     position: relative;
+    position: relative;
 }
 
-.bg_btn input[type=radio]{
+.bg_btn input[type=radio] {
     display: none;
 }
 
@@ -1044,9 +1044,6 @@ body {
 
 
 
-
-
-
 #btnFinish {
     border-radius: 50px;
     font-size: 14px;
@@ -1058,7 +1055,8 @@ body {
     margin: 6px 11px;
     color: #fff;
 }
-.sw-btn#btnFinish  {
+
+.sw-btn#btnFinish {
     padding: 12px 90px !important;
 }
 
@@ -1073,7 +1071,8 @@ body {
 }
 
 
-.slim[data-ratio='1:1']>img, .slim[data-ratio='1:1']>input[type=file] {
+.slim[data-ratio='1:1']>img,
+.slim[data-ratio='1:1']>input[type=file] {
     margin-bottom: 69% !important;
 }
 
@@ -1092,7 +1091,7 @@ body {
     border-radius: 100px;
     width: 120px;
     height: 120px;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 
@@ -1108,43 +1107,19 @@ body {
 }
 
 
-
-
-
-
-
-.delete_modal .modal {
-    backdrop-filter: blur(4px);
-    background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
-    backdrop-filter: blur(4px);
-}
-
-.delete_modal .modal-content {
+.modal-content {
     border: none;
     border-radius: 0px;
     padding: 5px 20px;
 }
 
-.delete_modal .close {
-    position: absolute;
-    top: 25px;
-    right: 23px;
-    border: 1px solid #e2e2e2;
-    border-radius: 100px;
-    width: 30px;
-    height: 30px;
-    line-height: 2px;
-    text-align: center;
-    padding: 0 !important;
-}
-
-.delete_modal .modal-header {
+.modal-header {
     padding: 10px 0px;
     border-bottom: 1px solid #f1f1f1;
     margin-bottom: 17px;
 }
 
-.delete_modal .modal-header h5 {
+.modal-header h5 {
     display: block;
     font-size: 15px;
     font-family: 'Inter';
@@ -1166,22 +1141,19 @@ body {
     font-weight: 400;
 }
 
-.delete_modal .modal-footer {
+.modal-footer {
     border: none;
     padding: 0;
 }
 
-.delete_modal .modal-footer button {
-    border-radius: 3px;
-    padding: 7px 17px;
-    height: 39px;
-    border: none !important;
+.modal {
+    padding-right: 0 !important;
 }
 
-.delete_modal .form-control {
+.modal .form-control {
     background: #F7F7F7 !important;
     border: none;
-    height: 56px;
+    height: 50px;
     font-size: 14px;
     color: #111;
     outline: none;
@@ -1189,9 +1161,11 @@ body {
     border-radius: 10px;
 }
 
-
-
-
+.modal label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 400 !important;
+}
 
 .social_icon_up .slim {
     width: 72px !important;
@@ -1218,3 +1192,194 @@ body {
 .social_icon_up .slim:hover .slim-btn {
     opacity: 1;
 }
+
+.plan_modal .modal-header {
+    padding: 10px 0px;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 17px;
+}
+
+.plan_modal .modal-header h5 {
+    display: block;
+    font-size: 15px;
+    font-family: 'Inter';
+    color: #111;
+    font-weight: 600;
+}
+
+.plan_modal .modal_body h5 {
+    font-size: 16px;
+    color: #dc3545;
+    font-weight: 400;
+    margin-bottom: 9px;
+}
+
+.plan_modal .modal_body p {
+    font-size: 15px;
+    text-align: justify;
+    color: #444;
+    font-weight: 400;
+}
+
+.plan_modal .modal-content {
+    border: none;
+    border-radius: 0px;
+    padding: 5px 20px;
+}
+
+
+.modal .btn-danger {
+    background: transparent !important;
+    color: #111;
+    border: 1px solid #DDD !important;
+    font-size: 14px;
+    font-family: 'DM Sans';
+    border-radius: 50px;
+    padding: 10px 34px;
+}
+
+
+
+
+
+
+.subscription_info .card {
+    border: 1px solid #efefef;
+    border-radius: 5px;
+    box-shadow: none !important;
+}
+
+.subscription_info .card .card-header {padding: 13px 18px;}
+
+.subscription_info .card .card-header h3 {
+    font-size: 16px;
+    margin: 0;
+    color: #212121;
+    font-weight: 500;
+    font-family: 'Inter';
+}
+
+.subscription_info .card {
+    border: 1px solid #efefef;
+    border-radius: 5px;
+    box-shadow: none !important;
+}
+
+.subscription_info .card .card-header {padding: 13px 18px;}
+
+.subscription_info .card .card-header h3 {
+    font-size: 16px;
+    margin: 0;
+    color: #212121;
+    font-weight: 500;
+    font-family: 'Inter';
+}
+
+.subscription_info .card-body h5 {
+    color: #212121;
+    font-weight: bold;
+    font-family: 'Inter';
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.subscription_info .card-body p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 300;
+    color: #555;
+    padding: 2px 0px;
+}
+
+.subs_info {
+    background: #F7F7F7;
+    padding: 6px;
+    border: 1px solid #EEE;
+    border-radius: 10px;
+}
+
+.subs_info .card-header h4 {
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 700;
+    margin: 0;
+}
+
+.subs_info .card-header h4 a {
+    font-weight: 400;
+    color: #2196f3;
+}
+
+.subs_info .card-header {
+    border-bottom: 1px solid #EEE;
+    padding: 10px 12px 16px 12px;
+}
+
+.subs_info .card-body {
+    padding: 0;
+}
+
+.subs_info .card-body table tr td {
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 400;
+    width: 100%;
+    border: none;
+}
+
+
+.invoice_table .header h3 {
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.invoice_table .header p {
+    font-size: 15px;
+    color: #888;
+    font-weight: 400;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+    color: #545b62 !important;
+    background-color: 545b62;
+    border-color: #4e555b;
+}
+
+.invoice_table .header a {
+    align-items: center;
+    vertical-align: middle;
+    background: transparent !important;
+    color: #111;
+    border: 1px solid #DDD;
+    font-size: 14px;
+    font-family: 'DM Sans';
+    border-radius: 50px;
+    padding: 10px 25px;
+}
+
+.invoice_table .table tr td {
+    border-radius: 3px;
+    background-color: #F7F7F7;
+    padding: 12px 12px;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.invoice_table .table tr th {
+    border-radius: 3px;
+    background-color: #F7F7F7;
+    padding: 12px 12px;
+    font-size: 13px;
+    border: none;
+    font-weight: bold;
+}
+
+.download_invoice a {
+    color: #212121;
+    font-weight: 700;
+}
+
+
+ 

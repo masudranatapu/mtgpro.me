@@ -68,7 +68,7 @@ My Plans
                                 </div>
                                 @else
                                     <div class="text-center mt-4">
-                                        <a href="javascript:void(0)" class="choose-plan btn btn-block btn-dark w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                                        <a href="javascript:void(0)" class="choose-plan btn btn-primary btn-block btn-dark w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
                                     </div>
                                 @endif
                                 <div class="my-3 pb-3">
@@ -95,10 +95,9 @@ My Plans
         </div>
     </div>
 </div>
-<!-- Modal -->
 
-
-    <div class="modal fade" id="planConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Modal -->
+  <!--   <div class="modal fade" id="planConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -122,7 +121,43 @@ My Plans
                 </div>
             </div>
         </div>
+    </div> -->
+
+<div class="plan_modal">
+    <div class="modal fade" id="planConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- modal header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Account Deletion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- modal body -->
+                <div class="modal_body">
+                     <form action="{{ route('user.checkout') }}" id="choose_plan_action" method="get">
+                        <label for="is_yearly" class="sr-only">{{ __('Yearly')}}</label>
+                        <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
+                        <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
+                        <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
+                        <div class="modal-title">{{ __('“We’re excited to have you!')}}</div>
+                        <div class="mb-2">{{ __('Proceed to checkout with this plan and you’ll be able to upgrade or downgrade at any time')}}</div>
+                        <div class="text-danger">
+                            {{ __('For upgrading users, simply visit “Business Cards” to enable your cards after the upgrade')}}
+                        </div>
+                        <div class="modal-footer pb-2 pt-4">
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Confirm')}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+
 
 
 <div class="modal animate__animated animate__fadeIn" id="downPlanModal" tabindex="-1" aria-labelledby="downPlanModalLabel" aria-hidden="true">
