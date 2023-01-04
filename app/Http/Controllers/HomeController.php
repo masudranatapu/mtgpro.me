@@ -316,9 +316,8 @@ class HomeController extends Controller
     }
 
     public function getContact(){
-        $page = DB::table('custom_pages')->where('url_slug','contact-us')->first();
 
-        return view('pages.common',compact('page'));
+        return view('pages.contact-us',compact('page'));
     }
 
     public function getdDataDeletion(){
@@ -328,13 +327,13 @@ class HomeController extends Controller
     }
 
     public function getHelp(){
-        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+        $page = DB::table('custom_pages')->where('url_slug','help')->first();
 
         return view('pages.common',compact('page'));
     }
 
     public function getTutorials(){
-        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+        $page = DB::table('custom_pages')->where('url_slug','tutorials')->first();
 
         return view('pages.common',compact('page'));
     }
