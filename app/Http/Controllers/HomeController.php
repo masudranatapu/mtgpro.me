@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Share;
 use App\Mail\ConnectMail;
+use App\Mail\SendContact;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
