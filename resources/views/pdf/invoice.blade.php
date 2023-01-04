@@ -81,12 +81,9 @@
 									</td>
 									<td style="border-bottom: 1px solid #ccc;padding: 8px;text-align: right;" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
 								</tr>
-
                                 <tr style="margin-right: 0px;padding-right: 0px;">
-									<td style="width: 49%"></td>
-
-									<td style="width: 50%">
-
+									<td style="width: 50%;"></td>
+									<td style="width: 49%;">
                                         <table style="width: 100%;color: #212529;vertical-align: top;border-collapse: collapse;margin-right: 0px;">
                                             <tbody>
                                                 <tr style="border-color: inherit;border-style: solid;border-width: 0;">

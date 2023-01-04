@@ -60,12 +60,9 @@ $settings = getSetting();
                                                      <div class="subscription_info mb-4">
                                                          <div class="card">
                                                              <div class="card-header">
-
                                                                 {{-- 10 days left --}}
-
                                                                 <h3>
                                                                     {{-- Subscription --}}
-
                                                                     <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
                                                                     <?php
                                                                     $subscription_end = new \Carbon\Carbon($user->plan_validity);
@@ -75,11 +72,8 @@ $settings = getSetting();
                                                                     @if ($diff > 0)
                                                                         <span class="float-right">{{__($diff)}} {{ __(Str::plural('day',$diff)) }} {{ __('left') }}</span>
                                                                     @else
-
                                                                     @endif
-
                                                                  </h3>
-
                                                              </div>
                                                              <div class="card-body">
                                                                  <h5>${{ CurrencyFormat($plan->plan_price,2) }}
@@ -125,30 +119,30 @@ $settings = getSetting();
                                                                  <div class="card-header">
                                                                      <h4>
                                                                         {{ __('Payment method') }}
-                                                                         <a href="#" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __('Edit') }}</a>
+                                                                         <a href="javascript::void(0)" class="float-right" id="paymentModal" data-toggle="modal" data-target="#paymentModal">{{ __('Edit') }}</a>
                                                                      </h4>
                                                                  </div>
                                                                  <div class="card-body">
-                                                                    <div class="media">
+                                                                    <div class="media p-1">
                                                                         <img class="mr-3" src="{{ asset('assets/img/icon/mastercard2.png') }}" alt="Generic placeholder image">
                                                                         <div class="media-body">
                                                                             <div class="">
                                                                                 <?php
                                                                                     $number = 123456789123;
                                                                                     ?>
-                                                                                <span class="d-block py-1">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
-                                                                                <span class="d-block py-1"><small>Master Card - Expires 03/2024</small></span>
-                                                                            </div>
-                                                                            <div class="">
-                                                                                <span class="d-block py-1"><small>Billed on the 19th of every month.</small></span>
-                                                                                <span class="d-block py-1">
-                                                                                    <small>
-                                                                                        Next billing on
-                                                                                        <span class=""><b>January 19, 2023</b></span>
-                                                                                    </small>
-                                                                                </span>
+                                                                                <span class="d-block">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
+                                                                                <span class="d-block pb-1"><small>Master Card - Expires 03/2024</small></span>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
+                                                                    <div class="p-3">
+                                                                        <span class="d-block py-1"><small>Billed on the 19th of every month.</small></span>
+                                                                        <span class="d-block py-1">
+                                                                            <small>
+                                                                                Next billing on
+                                                                                <span class=""><b>January 19, 2023</b></span>
+                                                                            </small>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -291,7 +285,6 @@ $settings = getSetting();
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -312,15 +305,15 @@ $settings = getSetting();
             <div class="modal-content">
                 <!-- modal header -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirm Account Deletion</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Confirm Account Deletion') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <!-- modal body -->
                 <div class="modal_body">
-                    <h5>Type "delete" to delete your account.</h5>
-                    <p>All contacts and other data associated with this account will be permanently deleted. This cannot be undone.</p>
+                    <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
+                    <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
                     <form action="#" method="post">
                         <div class="mb-3">
                             <input type="text" name="" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
@@ -328,8 +321,8 @@ $settings = getSetting();
                     </form>
                 </div>
                 <div class="modal-footer pb-3">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Delete Account</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                    <button type="button" class="btn btn-primary">{{ __('Delete Account') }}</button>
                 </div>
             </div>
         </div>
@@ -343,34 +336,35 @@ $settings = getSetting();
             <div class="modal-content">
                 <!-- modal header -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Billing details</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Billing details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal_body">
-                    <form action="#" method="post">
+                    <form action="{{ route('user.billing-info.update') }}" method="post">
+                        @csrf
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" name="email" id="email" class="form-control" required>
+                            <label for="email" class="form-label">{{ __('Email') }}</label>
+                            <input type="text" name="email" id="email" class="form-control" value="{{ $user->billing_email }}" required>
                         </div>
                          <div class="mb-3">
-                            <label for="country" class="form-label">Country / Region</label>
+                            <label for="country" class="form-label">{{ _('Country / Region') }}</label>
                             <select name="country" id="country" class="form-control">
-                                <option value="" class="d-none">-- Choose --</option>
-                                <option value="">Bangladesh</option>
-                                <option value="">India</option>
-                                <option value="">Pakistan</option>
-                                <option value="">Chaina</option>
+                                <option value="" class="d-none">-- {{ __('Choose') }} --</option>
+                                <option value="Bangladesh" {{ $user->billing_country=='Bangladesh' ? 'selected':'' }}>Bangladesh</option>
+                                <option value="India" {{ $user->billing_country=='India' ? 'selected':'' }}>India</option>
+                                <option value="Pakistan" {{ $user->billing_country=='Pakistan' ? 'selected':'' }}>Pakistan</option>
+                                <option value="Chaina" {{ $user->billing_country=='Chaina' ? 'selected':'' }}>Chaina</option>
                             </select>
                         </div>
                          <div class="mb-3">
-                            <label for="zip_code" class="form-label">Zip Code</label>
-                            <input type="number" name="zip_code" id="zip_code" class="form-control" required>
+                            <label for="zip_code" class="form-label">{{ __('Zip Code') }}</label>
+                            <input type="number" name="zip_code" id="zip_code" class="form-control" value="{{ $user->billing_zipcode }}" required>
                         </div>
                         <div class="modal-footer pb-3">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save billing details</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Save billing details') }}</button>
                         </div>
                     </form>
                 </div>
@@ -382,22 +376,21 @@ $settings = getSetting();
 
 <!-- Payment Details -->
 <div class="payment_modal">
-    <div class="modal fade" id="paymentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Payment details</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Payment details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal_body">
                     <form action="#" method="post">
-
                         <div class="modal-footer pb-3">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save payment method</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Save payment method') }}</button>
                         </div>
                     </form>
                 </div>
@@ -405,9 +398,6 @@ $settings = getSetting();
         </div>
     </div>
 </div>
-
-
-
-    @endsection
-    @push('custom_js')
-    @endpush
+@endsection
+@push('custom_js')
+@endpush
