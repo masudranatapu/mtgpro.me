@@ -60,41 +60,61 @@ $settings = getSetting();
                                                      <div class="subscription_info mb-4">
                                                          <div class="card">
                                                              <div class="card-header">
-                                                                 <h3>
-                                                                    Subscription
-                                                                    <span class="float-right">10 days left</span>
+
+                                                                {{-- 10 days left --}}
+
+                                                                <h3>
+                                                                    {{-- Subscription --}}
+
+                                                                    <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
+                                                                    <?php
+                                                                    $subscription_end = new \Carbon\Carbon($user->plan_validity);
+                                                                    // echo $subscription_end->diffForHumans();
+                                                                    $diff = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity))
+                                                                    ?>
+                                                                    @if ($diff > 0)
+                                                                        <span class="float-right">{{__($diff)}} {{ __(Str::plural('day',$diff)) }} {{ __('left') }}</span>
+                                                                    @else
+
+                                                                    @endif
+
                                                                  </h3>
+
                                                              </div>
                                                              <div class="card-body">
-                                                                 <h5>$55.00</h5>
-                                                                 <p>$14.99 per member per month.</p>
-                                                                 <p>You will be charged <strong>$14.99 / month starting Jan 19</strong></p>
+                                                                 <h5>${{ CurrencyFormat($plan->plan_price,2) }}
+                                                                    {{-- $55.00 --}}
+                                                                </h5>
+                                                                 {{-- <p>$14.99 per member per month.</p> --}}
+                                                                 <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
+                                                                 {{-- <p>You will be charged <strong>$14.99 / month starting Jan 19</strong></p> --}}
+                                                                 <p>You will be charged <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting Jan 19</strong></p>
                                                              </div>
                                                          </div>
                                                      </div>
 
                                                      <div class="row mb-4">
                                                          <div class="col-lg-6 mb-4">
-                                                             <div class="billing_info_card subs_info"> 
+                                                             <div class="billing_info_card subs_info">
                                                                  <div class="card-header">
                                                                      <h4>
-                                                                         Billing Infomation 
-                                                                         <a href="#" data-toggle="modal" data-target="#billingModal" class="float-right">Edit</a>
+                                                                        {{ __('Billing Infomation') }}
+                                                                         <a href="#" data-toggle="modal" data-target="#billingModal" class="float-right">{{ __('Edit') }}</a>
                                                                      </h4>
                                                                  </div>
                                                                  <div class="card-body">
                                                                      <table class="table">
                                                                          <tr>
-                                                                             <td>Country</td>
-                                                                             <td>United States</td>
+                                                                             <td>{{ __('Country') }}</td>
+                                                                             <td>{{ $user->billing_country }}</td>
                                                                          </tr>
                                                                          <tr>
-                                                                             <td>Email</td>
-                                                                             <td>Maidul@gmail.com</td>
+                                                                             <td>{{ __('Email') }}</td>
+                                                                             <td>{{ $user->billing_email }}</td>
                                                                          </tr>
                                                                          <tr>
-                                                                             <td>Zip code</td>
-                                                                             <td>1212</td>
+                                                                             <td>{{ __('Zip code') }}</td>
+                                                                             <td>{{ $user->billing_zipcode }}</td>
                                                                          </tr>
                                                                      </table>
                                                                  </div>
@@ -104,61 +124,72 @@ $settings = getSetting();
                                                              <div class="payment_method_card subs_info">
                                                                  <div class="card-header">
                                                                      <h4>
-                                                                         Billing Infomation 
-                                                                         <a href="#" class="float-right" data-toggle="modal" data-target="#paymentModal">Edit</a>
+                                                                        {{ __('Payment method') }}
+                                                                         <a href="#" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __('Edit') }}</a>
                                                                      </h4>
                                                                  </div>
                                                                  <div class="card-body">
-                                                                     <table class="table">
-                                                                         <tr>
-                                                                             <td>Country</td>
-                                                                             <td>United States</td>
-                                                                         </tr>
-                                                                         <tr>
-                                                                             <td>Email</td>
-                                                                             <td>Maidul@gmail.com</td>
-                                                                         </tr>
-                                                                         <tr>
-                                                                             <td>Zip code</td>
-                                                                             <td>1212</td>
-                                                                         </tr>
-                                                                     </table>
-                                                                 </div>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-
-                                                     <div class="invoice_table">
-                                                         <div class="header mb-1">
-                                                             <div class="row align-items-center">
+                                                                    <div class="media">
+                                                                        <img class="mr-3" src="{{ asset('assets/img/icon/mastercard2.png') }}" alt="Generic placeholder image">
+                                                                        <div class="media-body">
+                                                                            <div class="">
+                                                                                <?php
+                                                                                    $number = 123456789123;
+                                                                                    ?>
+                                                                                <span class="d-block py-1">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
+                                                                                <span class="d-block py-1"><small>Master Card - Expires 03/2024</small></span>
+                                                                            </div>
+                                                                            <div class="">
+                                                                                <span class="d-block py-1"><small>Billed on the 19th of every month.</small></span>
+                                                                                <span class="d-block py-1">
+                                                                                    <small>
+                                                                                        Next billing on
+                                                                                        <span class=""><b>January 19, 2023</b></span>
+                                                                                    </small>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invoice_table">
+                                                        <div class="header mb-1">
+                                                            <div class="row align-items-center">
                                                                  <div class="col-md-7">
-                                                                     <h3>Invoice history</h3>
-                                                                     <p>Here are your previous invoices and receipts</p>
+                                                                     <h3>{{ __('Invoice history') }}</h3>
+                                                                     <p>{{ __('Here are your previous invoices and receipts') }}</p>
                                                                  </div>
                                                                  <div class="col-md-5">
-                                                                     <a href="#" class="btn btn-secondary float-md-right">Download all Invoice</a>
+                                                                     <a href="#" class="btn btn-secondary float-md-right">{{ __('Download all Invoice') }}</a>
                                                                  </div>
                                                              </div>
                                                          </div>
                                                          <table class="table">
                                                              <thead>
                                                                  <tr>
-                                                                     <th>Date</th>
-                                                                     <th>Description</th>
+                                                                     <th>{{ __('Date') }}</th>
+                                                                     <th>{{ __('Description') }}</th>
                                                                      <th></th>
                                                                  </tr>
                                                              </thead>
                                                              <tbody>
+                                                                @if (!empty($transections) && count($transections) > 0)
+                                                                @foreach ($transections as $transection)
                                                                  <tr>
-                                                                     <td>December 19, 2022</td>
-                                                                     <td>Free trail</td>
+                                                                     <td>{{date('M d, Y', strtotime($transection->transaction_date))}}</td>
+                                                                     <td>{!! $transection->desciption !!}</td>
                                                                      <td class="text-right download_invoice">
-                                                                         <a href="#">
-                                                                           Download
+                                                                         <a href="{{ route('user.invoice.download',$transection->id) }}">
+                                                                            {{ __('Download') }}
                                                                            <img src="{{ asset('assets/img/icon/download.svg') }}" alt="">
                                                                         </a>
                                                                      </td>
                                                                  </tr>
+                                                                @endforeach
+                                                                @else
+                                                                @endif
                                                              </tbody>
                                                          </table>
                                                      </div>
@@ -173,6 +204,7 @@ $settings = getSetting();
                                                     </div>
                                                     <div class="setting_form">
                                                         <form onsubmit="return false;">
+                                                            @csrf
                                                             {{-- <div class="form-group">
                                                                 <label for="profile_url" class="form-label">
                                                                     {{ __('Profile URL') }}
@@ -204,8 +236,8 @@ $settings = getSetting();
                                                             </div>
                                                         </form>
                                                        <div class="float-right">
-                                                            <a href="#" class="text-primary p-2">Reset Your Password</a>
-                                                            <a href="#" class="text-danger p-2" data-toggle="modal" data-target="#deleteAccount">Delete Account</a>
+                                                            <a href="#" class="text-primary p-2">{{ __('Reset Your Password') }}</a>
+                                                            <a href="#" class="text-danger p-2" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                        </div>
                                                     </div>
                                                 </div>
@@ -226,11 +258,11 @@ $settings = getSetting();
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="subject" class="form-label">{{ __('Subject') }} <span class="text-dark">*</span></label>
-                                                                <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject" required>
+                                                                <input type="text" name="subject" id="subject" class="form-control" placeholder="{{ __('Subject') }}" required>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
-                                                                <textarea name="message" id="message" cols="30" rows="7" placeholder="Message" class="form-control" required style="height:120px;"></textarea>
+                                                                <textarea name="message" id="message" cols="30" rows="7" placeholder="{{ __('Message') }}" class="form-control" required style="height:120px;"></textarea>
                                                             </div>
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
@@ -250,7 +282,7 @@ $settings = getSetting();
                                                         <form onsubmit="return false;">
                                                             <div class="form-group">
                                                                 <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
-                                                                <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="Message" class="form-control" required style="height:120px;"></textarea>
+                                                                <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="{{ __('Messag') }}e" class="form-control" required style="height:120px;"></textarea>
                                                             </div>
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Send Feedback') }}</button>
@@ -362,7 +394,7 @@ $settings = getSetting();
                 </div>
                 <div class="modal_body">
                     <form action="#" method="post">
-                         
+
                         <div class="modal-footer pb-3">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save payment method</button>

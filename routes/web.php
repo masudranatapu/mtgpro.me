@@ -59,6 +59,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('checkout',['as'=>'checkout','uses'=>'CheckoutController@checkout']);
     Route::post('checkout/paypal',['as'=>'checkout.post-transection','uses'=>'CheckoutController@postTransection']);
     Route::post('checkout/stripe',[ 'as' => 'payment.stripe', 'uses' =>'StripeController@stripeCheckout']);
+    Route::get('invoice/download/{transection_id}',[ 'as' => 'invoice.download', 'uses' =>'TransactionController@getInvoicePDF']);
 
 
     Route::get('card/crop-image',['as'=>'card.crop-image','uses'=>'CardController@cropImage']);
