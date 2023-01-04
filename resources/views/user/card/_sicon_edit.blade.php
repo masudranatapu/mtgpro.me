@@ -4,7 +4,7 @@
     <input id="id" type="hidden" name="id" value="{{ $icon->id }}">
     <div class="form-group">
         <label class="imgLabel" for="logo">
-            <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon" data-ratio="1:1" data-id="{{ $icon->id }}" hidden>
+            <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-ratio="1:1" data-id="{{ $icon->id }}" hidden>
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
             {{-- <input type="file" onchange="loadFile(event)" class="upload_icon" name="logo" id="logo" hidden> --}}
             {{-- <input type="file" class="upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden> --}}
