@@ -316,8 +316,8 @@ class HomeController extends Controller
     }
 
     public function getContact(){
-
-        return view('pages.contact-us',compact('page'));
+        $page = DB::table('custom_pages')->where('url_slug','contact-us')->first();
+        return view('pages.common',compact('page'));
     }
 
     public function getdDataDeletion(){

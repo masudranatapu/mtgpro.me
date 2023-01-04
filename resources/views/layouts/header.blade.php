@@ -49,7 +49,7 @@
                                 <a class="nav-link" href="{{ route('home') }}#pricing">{{ __('Pricing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                                <a class="nav-link" href="{{ route('contact-us') }}">{{ __('Contact') }}</a>
                             </li>
 
                             @auth
@@ -122,7 +122,7 @@
                                     <a class="nav-link" href="{{ route('pricing') }}">{{ __('Pricing') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                                    <a class="nav-link" href="{{ route('contact-us') }}">{{ __('Contact') }}</a>
                                 </li>
                                 @auth
                                 <li class="nav-item">

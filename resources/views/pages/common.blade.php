@@ -75,6 +75,8 @@ h2, .h2, h2.title {
                     <h1>{{ $page->title }}</h1>
                 </div>
                 <div class="page_content">
+                    @include('pages._contact_us')
+                    <hr>
                    {!! $page->body !!}
                 </div>
             </div>
