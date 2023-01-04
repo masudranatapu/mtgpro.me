@@ -33,9 +33,9 @@ class TransactionController extends Controller
         $data = [];
         $data['transaction'] = Transaction::where('id',$id)->first();
         $name = $data['transaction']->transaction_id;
-        // $pdf = Pdf::loadView('pdf.invoice',compact('data'));
-        // return $pdf->download($name.'.pdf');
-         return view('pdf.invoice',compact('data'));
+        $pdf = Pdf::loadView('pdf.invoice',compact('data'));
+        return $pdf->download($name.'.pdf');
+        //  return view('pdf.invoice',compact('data'));
     }
 
 }
