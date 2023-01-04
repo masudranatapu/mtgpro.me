@@ -327,6 +327,19 @@ class HomeController extends Controller
         return view('pages.common',compact('page'));
     }
 
+    public function getHelp(){
+        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+
+        return view('pages.common',compact('page'));
+    }
+
+    public function getTutorials(){
+        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+
+        return view('pages.common',compact('page'));
+    }
+
+
 
 
 

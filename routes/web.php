@@ -25,6 +25,9 @@ Route::get('terms-conditions',['as'=>'terms-conditions','uses'=>'HomeController@
 Route::get('about-us',['as'=>'about-us','uses'=>'HomeController@getAboutUs']);
 Route::get('pricing',['as'=>'pricing','uses'=>'HomeController@getPricing']);
 Route::get('contact',['as'=>'contact','uses'=>'HomeController@getContact']);
+Route::get('help',['as'=>'help','uses'=>'HomeController@getHelp']);
+Route::get('tutorials',['as'=>'tutorials','uses'=>'HomeController@getTutorials']);
+
 Route::get('data-deletion-instructions',['as'=>'data-deletion-instructions','uses'=>'HomeController@getdDataDeletion']);
 
 Route::get('login/{provider}', ['as' => 'social.login', 'uses' => 'Auth\AuthController@redirectToProvider']);
