@@ -286,6 +286,13 @@
                                             placeholder="{{ __('SEO Keywords (Keyword 1, Keyword 2)') }}" required>{{ $settings->seo_keywords }}</textarea>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-xl-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('Main Motto') }}</label>
+                                            <textarea class="form-control required" name="main_motto" rows="3"
+                                            placeholder="{{ __('Main moto') }}" required>{{ $settings->main_motto }}</textarea>
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <div class="row">
@@ -576,6 +583,15 @@
                                             <label class="form-label">{{ __('Instagram Url') }}</label>
                                             <input type="url" class="form-control" name="instagram_url" value="{{ $settings->instagram_url }}" placeholder="{{ __('Instagram url') }}...">
                                             @error('instagram_url')
+                                            <span class="help-block text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-6 col-xl-4 form-group">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('Pinterest Url') }}</label>
+                                            <input type="url" class="form-control" name="pinterest_url" value="{{ $settings->pinterest_url }}" placeholder="{{ __('Instagram url') }}...">
+                                            @error('pinterest_url')
                                             <span class="help-block text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>

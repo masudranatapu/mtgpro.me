@@ -120,6 +120,8 @@ class SettingsController extends Controller
             $setting->phone_no          = $request->phone_no;
             $setting->office_address    = $request->office_address;
             $setting->instagram_url     = $request->instagram_url;
+            $setting->pinterest_url     = $request->pinterest_url;
+            $setting->main_motto        = $request->main_motto;
             if($request->favi_icon){
                 $favicon = $request->file('favi_icon');
                 $base_name = preg_replace('/\..+$/', '', $favicon->getClientOriginalName());
