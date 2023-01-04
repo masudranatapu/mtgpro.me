@@ -17,6 +17,14 @@ $settings = getSetting();
         <nav class="mt-4">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
+                    <a href="{{ url('/') }}" target="_blank" class="nav-link">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/website.svg') }}" alt="{{ __('WebSite') }}">
+                        </span>
+                        {{ __('WebSite') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.card') }}" class="nav-link @yield('dashboard')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Cards') }}">
@@ -46,7 +54,7 @@ $settings = getSetting();
         <div class="user-panel align-items-center mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <a href="{{ route('user.setting') }}">
-                    <img src="{{ getProfile(Auth::user()->profile) }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
+                    <img src="{{ getAvatar(Auth::user()->profile_image) }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
                 </a>
             </div>
             <div class="info">

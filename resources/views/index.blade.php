@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('home','active')
-<?php
-    $rows = $data ?? [];
-?>
+
 @section('title') : Your Digital Business Card @endsection
 @push('custom_css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
@@ -180,7 +178,7 @@
     <!-- container -->
 </div>
 <!-- ======================= Pricing  =========================== -->
-<div class="pricing section pt-5 pb-5">
+<div class="pricing section pt-5 pb-5" id="pricing">
     <!-- container -->
     <div class="container">
         <!-- row -->

@@ -573,12 +573,11 @@ var cropper = new Slim(document.getElementById('profile_pic'), {
             height: 150,
         },
         size: {
-            width: 600,
-            height: 600,
+            width: 540,
+            height: 540,
         },
         willSave: function(data, ready) {
             $('#profilePic_2').attr('src',data.output.image);
-            // console.log(data);
           ready(data);
         },
         meta: {
@@ -586,18 +585,8 @@ var cropper = new Slim(document.getElementById('profile_pic'), {
       },
         download: true,
         instantEdit: true,
-        // label: 'Upload: Click here or drag an image file onto it',
-        // buttonConfirmLabel: 'Crop',
-        // buttonConfirmTitle: 'Crop',
-        // buttonCancelLabel: 'Cancel',
-        // buttonCancelTitle: 'Cancel',
-        // buttonEditTitle: 'Edit',
-        // buttonRemoveTitle: 'Remove',
-        // buttonDownloadTitle: 'Download',
-        // buttonRotateTitle: 'Rotate',
-        // buttonUploadTitle: 'Upload',
-        // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
+
     var cropper = new Slim(document.getElementById('cover_pic'), {
         ratio: '3:1',
         minSize: {
@@ -605,8 +594,8 @@ var cropper = new Slim(document.getElementById('profile_pic'), {
             height: 100,
         },
         size: {
-            width: 720,
-            height: 720,
+            width: 780,
+            height: 300,
         },
         willSave: function(data, ready) {
             var cover2  = document.getElementById('coverpic_2');
@@ -639,8 +628,8 @@ var cropper = new Slim(document.getElementById('profile_pic'), {
             height: 50,
         },
         size: {
-            width: 150,
-            height: 150,
+            width: 440,
+            height: 440,
         },
         willSave: function(data, ready) {
             $('#showlogo_2').attr('src',data.output.image);
@@ -664,8 +653,6 @@ var cropper = new Slim(document.getElementById('profile_pic'), {
         buttonUploadTitle: 'Upload',
         statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
-
-
 
 </script>
 @endpush

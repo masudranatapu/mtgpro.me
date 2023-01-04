@@ -24,7 +24,12 @@ Route::get('privacy-policy',['as'=>'privacy-policy','uses'=>'HomeController@getP
 Route::get('terms-conditions',['as'=>'terms-conditions','uses'=>'HomeController@getTermsCondition']);
 Route::get('about-us',['as'=>'about-us','uses'=>'HomeController@getAboutUs']);
 Route::get('pricing',['as'=>'pricing','uses'=>'HomeController@getPricing']);
-Route::get('contact',['as'=>'contact','uses'=>'HomeController@getContact']);
+Route::get('contact-us',['as'=>'contact-us','uses'=>'HomeController@getContact']);
+Route::post('contact',['as'=>'contact.post','uses'=>'HomeController@postContact']);
+Route::get('help',['as'=>'help','uses'=>'HomeController@getHelp']);
+Route::get('tutorials',['as'=>'tutorials','uses'=>'HomeController@getTutorials']);
+
+Route::get('data-deletion-instructions',['as'=>'data-deletion-instructions','uses'=>'HomeController@getdDataDeletion']);
 
 Route::get('login/{provider}', ['as' => 'social.login', 'uses' => 'Auth\AuthController@redirectToProvider']);
 Route::get('auth/{provider}/callback', ['as' => 'social.login.callback', 'uses' => 'Auth\AuthController@handleProviderCallback']);
@@ -51,7 +56,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('insights',['as'=>'insights','uses'=>'DashboardControler@getInsights']);
     // Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting',['as'=>'setting','uses'=>'DashboardControler@getSetting']);
-    Route::get('plans',['as'=>'plans','uses'=>'PlanController@getPlanList']);
+    Route::get('plans',['as'=>'plans','uses'=>'DashboardControler@getPlanList']);
     Route::get('checkout',['as'=>'checkout','uses'=>'CheckoutController@checkout']);
     Route::post('checkout/paypal',['as'=>'checkout.post-transection','uses'=>'CheckoutController@postTransection']);
     Route::post('checkout/stripe',[ 'as' => 'payment.stripe', 'uses' =>'StripeController@stripeCheckout']);

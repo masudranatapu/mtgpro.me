@@ -21,6 +21,7 @@ class PlanController extends Controller
 
     public function getPlanList(Request $request)
     {
+        dd(1);
        $this->resp =  $this->plan->getPlanList($request);
        $plans =  $this->resp->data;
        $user_plan = DB::table('plans')
@@ -28,5 +29,6 @@ class PlanController extends Controller
        ->latest()->first();
         return view('user.plan.index', compact('user_plan','plans'));
     }
+
 
 }

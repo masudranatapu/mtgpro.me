@@ -1,24 +1,19 @@
 <?php
     $setting  = getSetting();
-    if(Auth::check()){
-        $user = DB::table('users')->where('id',Auth::user()->id)->first();
-    }
-    else{
-        $user = [];
-    }
+
 ?>
+
 
 <header class="header_section sticky-top">
     <!-- Header top -->
-    <div class="header_top">
-        <!-- container -->
+    {{-- <div class="header_top">
         <div class="container">
             <div class="warning_text text-center">
-                <h3>{{ __('Get a free traial of ContactSolutions') }}</h3>
+                <h3><a href="" >{{ __('Get a free traial of ContactSolutions') }}</a></h3>
             </div>
         </div>
-        <!-- container -->
-    </div>
+    </div> --}}
+
     <!-- header -->
     <div class="header">
         <!-- container -->
@@ -45,14 +40,16 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('about-us') }}">{{ __('About Us') }}</a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('pricing') }}">{{ __('Pricing') }}</a>
+                                <a class="nav-link" href="{{ route('home') }}#pricing">{{ __('Pricing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                                <a class="nav-link" href="{{ route('contact-us') }}">{{ __('Contact') }}</a>
                             </li>
 
                             @auth
@@ -105,7 +102,7 @@
 
 
 
-                                 
+
                         </ul>
                     </div>
                     <!-- mobile menu -->
@@ -125,7 +122,7 @@
                                     <a class="nav-link" href="{{ route('pricing') }}">{{ __('Pricing') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                                    <a class="nav-link" href="{{ route('contact-us') }}">{{ __('Contact') }}</a>
                                 </li>
                                 @auth
                                 <li class="nav-item">

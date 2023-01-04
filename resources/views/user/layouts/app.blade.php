@@ -73,15 +73,15 @@
 
     <script>
     // preview icon
-    var loadFile = function(event) {
-        var image = document.getElementById('previewIcon');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
+    // var loadFile = function(event) {
+    //     var image = document.getElementById('previewIcon');
+    //     image.src = URL.createObjectURL(event.target.files[0]);
+    // };
     // preview profile photo
-    var profileloadFile = function(event) {
-        var profile = document.getElementById('profilePic');
-        profile.src = URL.createObjectURL(event.target.files[0]);
-    };
+    // var profileloadFile = function(event) {
+    //     var profile = document.getElementById('profilePic');
+    //     profile.src = URL.createObjectURL(event.target.files[0]);
+    // };
 
     // preview company logo
     // var companyloadFile = function(event) {
@@ -90,10 +90,10 @@
     // };
 
     // preview cover photo
-    var coverFile = function(event) {
-        var cover  = document.getElementById('coverpic');
-        cover.src  = URL.createObjectURL(event.target.files[0]);
-    };
+    // var coverFile = function(event) {
+    //     var cover  = document.getElementById('coverpic');
+    //     cover.src  = URL.createObjectURL(event.target.files[0]);
+    // };
 
     // drag and drop
     // const dropItems = document.getElementById('drop-items')
@@ -145,6 +145,6 @@
         $('[data-toggle="tooltip"]').tooltip()
     })
     </script>
-    @stack('custom_js')
+ @stack('custom_js')
 </body>
 </html>

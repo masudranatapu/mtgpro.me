@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Share;
 use App\Mail\ConnectMail;
+use App\Mail\SendContact;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
@@ -25,12 +26,14 @@ class HomeController extends Controller
 
     public function getPrivacyPolicy()
     {
-        return view('pages.privacy-policy');
+        $page = DB::table('custom_pages')->where('url_slug','privacy-policy')->first();
+        return view('pages.common',compact('page'));
     }
 
     public function getTermsCondition()
     {
-        return view('pages.terms-conditions');
+        $page = DB::table('custom_pages')->where('url_slug','terms-and-conditions')->first();
+        return view('pages.common',compact('page'));
     }
 
     public function getConnect(ConnectRequest $request)
@@ -307,6 +310,38 @@ class HomeController extends Controller
 
     return response()->view('rss.index')->header('Content-Type', 'application/xml');
     }
+
+    public function getAboutUs(){
+        $page = DB::table('custom_pages')->where('url_slug','about')->first();
+        return view('pages.common',compact('page'));
+    }
+
+    public function getContact(){
+        $page = DB::table('custom_pages')->where('url_slug','contact-us')->first();
+        return view('pages.common',compact('page'));
+    }
+
+    public function getdDataDeletion(){
+        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+
+        return view('pages.common',compact('page'));
+    }
+
+    public function getHelp(){
+        $page = DB::table('custom_pages')->where('url_slug','help')->first();
+
+        return view('pages.common',compact('page'));
+    }
+
+    public function getTutorials(){
+        $page = DB::table('custom_pages')->where('url_slug','tutorials')->first();
+
+        return view('pages.common',compact('page'));
+    }
+
+
+
+
 
 
 }
