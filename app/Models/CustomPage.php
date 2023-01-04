@@ -67,19 +67,21 @@ class CustomPage extends Model
         try {
             $page                   = CustomPage::findOrFail($request->id);
             $page->title            = $request->title;
-            if(!empty($request->url_slug)){
-                $str                = strtolower($request->url_slug);
-                $page->url_slug     = Str::slug($str);
-            }
-            else{
-                $str                = strtolower($request->title);
-                $page->url_slug     = Str::slug($str);
-            }
-            $page->display_in       = $request->display_in;
+
+            // if(!empty($request->url_slug)){
+            //     $str                = strtolower($request->url_slug);
+            //     $page->url_slug     = Str::slug($str);
+            // }
+            // else{
+            //     $str                = strtolower($request->title);
+            //     $page->url_slug     = Str::slug($str);
+            // }
+
+            $page->display_in       = $request->display_in ?? null;
             $page->body             = $request->body;
-            $page->position         = $request->position;
-            $page->is_active        = $request->is_active;
-            $page->order_id         = $request->order_id;
+            $page->position         = $request->position ??  null;
+            $page->is_active        = $request->is_active ?? 1;
+            $page->order_id         = $request->order_id ?? 1;
             $page->meta_keywords    = $request->meta_keywords;
             $page->meta_description = $request->meta_description;
             $page->updated_by       = Auth::user()->id;

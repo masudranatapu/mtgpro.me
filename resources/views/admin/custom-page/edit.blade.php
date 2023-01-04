@@ -67,13 +67,13 @@ $tabindex = 1;
                                                     <div class="form-group {!! $errors->has('url_slug') ? 'error' : '' !!}">
                                                         <label for="url_slug">{{ __('Url Slug')}}<span class="text-danger">*</span></label>
                                                         <div class="controls">
-                                                            <input type="text" name="url_slug" id="url_slug" class="form-control mb-1" required value="{{$row->url_slug}}" placeholder="{{ __('Enter url slug')}}" tabindex="{{ $tabindex++ }}">
+                                                            <input type="text" name="url_slug" id="url_slug" class="form-control mb-1" required value="{{$row->url_slug}}" placeholder="{{ __('Enter url slug')}}" tabindex="{{ $tabindex++ }}" readonly>
                                                             {!! $errors->first('url_slug', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-md-12 mb-3">
                                                     <div class="form-group {!! $errors->has('position') ? 'error' : '' !!}">
                                                         <label for="position">{{ __('Position')}}<span class="text-danger">*</span></label>
@@ -86,7 +86,7 @@ $tabindex = 1;
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="row">
                                                 <div class="col-md-12 mb-3">
                                                     <div class="form-group {!! $errors->has('body') ? 'error' : '' !!}">
@@ -98,6 +98,7 @@ $tabindex = 1;
                                                     </div>
                                                 </div>
                                             </div>
+{{--
                                             <div class="row">
                                                 <div class="col-md-12 mb-3">
                                                     <div class="form-group {!! $errors->has('is_active') ? 'error' : '' !!}">
@@ -111,7 +112,8 @@ $tabindex = 1;
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
+
                                             <div class="row">
                                                 <div class="col-md-12 mb-3 col-12">
                                                     <div class="form-group {!! $errors->has('meta_keywords') ? 'error' : '' !!}">
@@ -134,7 +136,7 @@ $tabindex = 1;
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-md-12 mb-3">
                                                     <div class="form-group {!! $errors->has('order_id') ? 'error' : '' !!}">
                                                         <label for="order_id">{{ __('Order Id')}} <span class="text-danger">*</span></label>
@@ -144,8 +146,8 @@ $tabindex = 1;
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
+                                            </div> --}}
+                                            {{-- <div class="row">
                                                 <div class="col-md-12 mb-3">
                                                     <div class="form-group {!! $errors->has('display_in') ? 'error' : '' !!}">
                                                         <label for="display_in">{{ __('Display In')}} <span class="text-danger">*</span></label>
@@ -160,7 +162,7 @@ $tabindex = 1;
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="row">
                                                 <div class="col-md-12 mb-3">
                                                     <div class="form-actions text-center">
