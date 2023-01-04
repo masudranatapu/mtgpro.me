@@ -718,10 +718,8 @@ $("input:checkbox.sicon_control").click(function() {
             // console.log(data);
          },
          error: function (jqXHR, exception) {
-
          },
          complete: function (response) {
-
          }
      });
 
@@ -884,29 +882,29 @@ $("input:checkbox.sicon_control").click(function() {
     //     statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
     // });
 
-    var cropper = new Slim(document.getElementById('upload_icon'), {
-        ratio: '1:1',
-        minSize: {
-            width: 50,
-            height: 50,
-        },
-        size: {
-            width: 80,
-            height: 80,
-        },
-        willSave: function(data, ready) {
-            var id =$('#icon_id').val();
-            $('.upload_icon_preview').attr("src", data.output.image);
-            $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
-            $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
-          ready(data);
-        },
-        meta: {
-            viewid:4
-      },
-        download: false,
-        instantEdit: true,
-    });
+    // var cropper = new Slim(document.getElementById('upload_icon'), {
+    //     ratio: '1:1',
+    //     minSize: {
+    //         width: 50,
+    //         height: 50,
+    //     },
+    //     size: {
+    //         width: 80,
+    //         height: 80,
+    //     },
+    //     willSave: function(data, ready) {
+    //         var id =$('#icon_id').val();
+    //         $('.upload_icon_preview').attr("src", data.output.image);
+    //         $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
+    //         $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
+    //       ready(data);
+    //     },
+    //     meta: {
+    //         viewid:4
+    //   },
+    //     download: false,
+    //     instantEdit: true,
+    // });
 
 
 
