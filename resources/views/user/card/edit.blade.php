@@ -11,7 +11,6 @@
 @php
     $icon_group = Config::get('app.icon_group');
 @endphp
-{{ $errors }}
 @section('tab_content','active')
 @section('content')
         <!-- main content -->
@@ -424,13 +423,16 @@
                                             <input type="hidden" name="card_id" value="{{ $card->id }}">
                                             <input type="hidden" name="icon_id" id="icon_id" value="">
                                             <div class="form-group social_icon_up">
-                                                <label class="imgLabel" for="logo">
-                                                    <img id="content_icon" src="{{ getIcon() }}" alt="">
-                                                    <input type="file" class="form-control upload_icon slim" name="logo" id="upload_icon"  data-ratio="1:1" data-id="" hidden>
+                                                <label class="imgLabel" for="logo" >
+                                                    {{-- <div  class="slim" data-ratio="1:1" data-size="100,100" data-force-min-size="false" data-min-size="1,1"> --}}
+                                                    <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
+                                                    <img id="content_icon" src="{{ getIcon() }}" alt="" width="100" height="100">
                                                     <span>Select photo here or drag and drop <br /> one in place of current</span>
+                                                    {{-- </div> --}}
                                                     @if($errors->has('logo'))
                                                         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
                                                     @endif
+
                                                 </label>
                                             </div>
                                             <div class="form-group">
