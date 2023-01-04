@@ -2,7 +2,7 @@
 
 @media screen and (min-width:1400px) {
     .setting_tab_contetn {
-        padding: 0px 110px;
+        padding: 0px 50px;
     }
 }
 
@@ -56,7 +56,7 @@
     }
 
     .setting_tab_contetn {
-        padding: 0px 90px;
+        padding: 0px 40px;
     }
 
     .add_form_wrap {
@@ -79,7 +79,7 @@
     }
 
     .setting_tab_contetn {
-        padding: 0px 40px;
+        padding: 0px 0px;
     }
 }
 

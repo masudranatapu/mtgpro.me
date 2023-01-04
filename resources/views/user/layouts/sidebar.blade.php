@@ -17,6 +17,14 @@ $settings = getSetting();
         <nav class="mt-4">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
+                    <a href="{{ url('/') }}" target="_blank" class="nav-link">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/website.svg') }}" alt="{{ __('WebSite') }}">
+                        </span>
+                        {{ __('WebSite') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.card') }}" class="nav-link @yield('dashboard')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Cards') }}">
