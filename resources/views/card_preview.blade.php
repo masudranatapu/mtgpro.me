@@ -104,7 +104,7 @@
                                 @endif
 
                                 @else
-                                <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
+                                <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
 
                                 @endif
                                     <img class="img-fluid" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75" >
