@@ -170,7 +170,7 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                         <p>{{ __('Here are your previous invoices and receipts') }}</p>
                                                                     </div>
                                                                     <div class="col-md-5">
-                                                                        <a href="#" class="btn btn-secondary float-md-right">{{ __('Download all Invoice') }}</a>
+                                                                        <a href="{{ route('user.all-invoice.download') }}" class="btn btn-secondary float-md-right">{{ __('Download all Invoice') }}</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
