@@ -85,11 +85,16 @@
                                                                 </h3>
                                                             </div>
                                                             <div class="card-body">
-                                                                <h5>${{ CurrencyFormat($plan->plan_price,2) }}{{-- $55.00 --}}</h5>
-                                                                {{-- <p>$14.99 per member per month.</p> --}}
+                                                                @if ($plan->is_yearly_plan)
+                                                                <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
+                                                                <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per year') }}.</p>
+                                                                @else
+                                                                <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
                                                                 <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
+                                                                @endif
+                                                                {{-- <p>$14.99 per member per month.</p> --}}
                                                                 {{-- <p>You will be charged <strong>$14.99 / month starting  Jan 19</strong></p> --}}
-                                                                <p>You will be charged <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M  y', strtotime($plan->transaction_date) ) }}</strong></p>
+                                                                <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M  y', strtotime($plan->transaction_date) ) }}</strong></p>
                                                             </div>
                                                             @else
                                                             <div class="card-body">
