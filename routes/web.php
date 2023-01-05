@@ -69,6 +69,9 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('billing-info/update',['as'=>'billing-info.update','uses'=>'UserController@putUpdateBilling']);
     Route::post('payment-info/update',['as'=>'payment-info.update','uses'=>'UserController@putUpdatePayment']);
 
+    Route::post('profile-info/update',['as'=>'profile-info.update','uses'=>'DashboardController@profileUpdate']);
+
+
 
 
 });
@@ -81,7 +84,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth']], function () {
     Route::post('change-password/update',['as'=>'user.change-password.update','uses'=>'AuthController@putChangePassword']);
     Route::get('settings',['as'=>'dashboard','uses'=>'DashboardController@index']);
     Route::get('profile', ['as'=>'profile','uses'=>'DashboardController@profile']);
-    Route::post('profile/update',['as'=>'profile.update','uses'=>'DashboardController@profileUpdate']);
 });
 Route::post('sendcard/mail/{id}', ['as'=>'sendcard.mail','uses'=>'HomeController@sendCardMail']);
 Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');

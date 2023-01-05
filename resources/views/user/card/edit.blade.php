@@ -20,7 +20,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                <a href="{{ route('user.card') }}" class="back_btn" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
+                                <a href="{{ route('user.card') }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="{{ $card->title }}">
                                 {{ $card->card_for ?? '' }}
                             </h1>
