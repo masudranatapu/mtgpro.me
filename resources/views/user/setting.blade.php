@@ -5,10 +5,19 @@
 @endpush
 
 @php
-
-$settings = getSetting();
-
-$countries = \App\Helpers\CountryHelper::CountryCodes();
+    $settings = getSetting();
+    $countries = \App\Helpers\CountryHelper::CountryCodes();
+    $subscription_end = new \Carbon\Carbon($user->plan_validity);
+    $plan_price_monthly = $plan->plan_price_monthly;
+    $plan_price_yearly =$plan->plan_price_yearly;
+    // echo $subscription_end->diffForHumans();
+    $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
+    if($plan->is_yearly_plan){
+        $next_bill_date = date('F d, Y', strtotime($plan->transaction_date . " +1 year"));
+    }else{
+        $next_bill_date = date('F d, Y', strtotime($plan->transaction_date . " +1 month") );
+    }
+    $bill_date = date('d', strtotime($plan->transaction_date));
 
 @endphp
 
@@ -68,13 +77,9 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                 <h3>
                                                                        {{-- Subscription --}}
                                                                     <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
-                                                                    <?php
-                                                                    $subscription_end = new \Carbon\Carbon($user->plan_validity);
-                                                                       // echo $subscription_end->diffForHumans();
-                                                                    $diff = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity))
-                                                                    ?>
-                                                                    @if ($diff > 0)
-                                                                           <span class="float-right">{{__($diff)}} {{ __(Str::plural('day',$diff)) }} {{ __('left') }}</span>
+
+                                                                    @if ($duration > 0)
+                                                                           <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
                                                                     @else
                                                                     @endif
                                                                 </h3>
@@ -83,8 +88,8 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                 <h5>${{ CurrencyFormat($plan->plan_price,2) }}{{-- $55.00 --}}</h5>
                                                                 {{-- <p>$14.99 per member per month.</p> --}}
                                                                 <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
-                                                                {{-- <p>You will be charged <strong>$14.99 / month starting Jan 19</strong></p> --}}
-                                                                <p>You will be charged <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting Jan 19</strong></p>
+                                                                {{-- <p>You will be charged <strong>$14.99 / month starting  Jan 19</strong></p> --}}
+                                                                <p>You will be charged <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M  y', strtotime($plan->transaction_date) ) }}</strong></p>
                                                             </div>
                                                             @else
                                                             <div class="card-body">
@@ -104,18 +109,24 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <table class="table">
+                                                                            @if (!empty($user->billing_country))
                                                                             <tr>
                                                                                 <td>{{ __('Country') }}</td>
                                                                                 <td>{{ $user->billing_country }}</td>
                                                                             </tr>
+                                                                            @endif
+                                                                            @if (!empty($user->billing_email))
                                                                             <tr>
                                                                                 <td>{{ __('Email') }}</td>
                                                                                 <td>{{ $user->billing_email }}</td>
                                                                             </tr>
+                                                                            @endif
+                                                                            @if (!empty($user->billing_zipcode))
                                                                             <tr>
                                                                                 <td>{{ __('Zip code') }}</td>
                                                                                 <td>{{ $user->billing_zipcode }}</td>
                                                                             </tr>
+                                                                            @endif
                                                                         </table>
                                                                     </div>
                                                                 </div>
@@ -138,18 +149,23 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                                        $number = $user->card_number;
                                                                                     ?>
                                                                                    <span class="d-block">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
-                                                                                   <span class="d-block pb-1"><small>{{ $user->card_type }} - Expires {{date('m/Y', strtotime($user->card_expiration_date))}}
+                                                                                   <span class="d-block pb-1"><small>{{ $user->card_type }} - {{ __('Expires') }} {{date('m/Y', strtotime($user->card_expiration_date))}}
                                                                                     {{-- 03/2024 --}}
                                                                                 </small></span>
                                                                                </div>
                                                                            </div>
                                                                        </div>
                                                                        <div class="p-3">
-                                                                           <span class="d-block py-1"><small>Billed on the 19th of every month.</small></span>
+                                                                        <span class="d-block py-1"><small>Billed on the {{ $bill_date }}th of every
+                                                                            @if ($plan->is_yearly_plan)
+                                                                            year
+                                                                            @else
+                                                                            month
+                                                                           @endif .</small></span>
                                                                            <span class="d-block py-1">
                                                                                <small>
                                                                                    {{ __('Next billing on') }}
-                                                                                   <span class=""><b>January 19, 2023</b></span>
+                                                                                   <span class=""><b>{{ $next_bill_date }}</b></span>
                                                                                </small>
                                                                            </span>
                                                                        </div>
@@ -174,7 +190,7 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <table class="table">
+                                                            <table class="table table-striped">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>{{ __('Date') }}</th>

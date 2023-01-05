@@ -1361,7 +1361,7 @@ body {
 
 .invoice_table .table tr td {
     border-radius: 3px;
-    background-color: #F7F7F7;
+    /* background-color: #F7F7F7; */
     padding: 12px 12px;
     font-size: 13px;
     font-weight: 300;
@@ -1369,7 +1369,7 @@ body {
 
 .invoice_table .table tr th {
     border-radius: 3px;
-    background-color: #F7F7F7;
+    /* background-color: #F7F7F7; */
     padding: 12px 12px;
     font-size: 13px;
     border: none;
@@ -1382,4 +1382,3 @@ body {
 }
 
 
- 

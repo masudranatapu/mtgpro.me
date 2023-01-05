@@ -55,7 +55,6 @@ class DashboardControler extends Controller
         ->orderBy('transactions.id','DESC')
         ->first();
 
-        // dd($plan);
         $transections =  $this->transection->getTransectionList($request);
         return view('user.setting',compact('user','plan','transections'));
     }
