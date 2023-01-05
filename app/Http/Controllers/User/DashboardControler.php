@@ -54,6 +54,9 @@ class DashboardControler extends Controller
         ->where('plans.id',$user->plan_id)
         ->orderBy('transactions.id','DESC')
         ->first();
+        if($plan == null){
+            return redirect()->route('user.plans');
+        }
         $transections =  $this->transection->getTransectionList($request);
         return view('user.setting',compact('user','plan','transections'));
     }

@@ -19,12 +19,13 @@
     $plan_price_yearly =$plan->plan_price_yearly;
     // echo $subscription_end->diffForHumans();
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
+
     if($plan->is_yearly_plan){
-        $next_bill_date = date('F d, Y', strtotime($plan->transaction_date . " +1 year"));
+        $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 year"));
     }else{
-        $next_bill_date = date('F d, Y', strtotime($plan->transaction_date . " +1 month") );
+        $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 month") );
     }
-    $bill_date = date('d', strtotime($plan->transaction_date));
+    $bill_date = date('d', strtotime($user->plan_activation_date));
 
 @endphp
 
@@ -101,7 +102,7 @@
                                                                 @endif
                                                                 {{-- <p>$14.99 per member per month.</p> --}}
                                                                 {{-- <p>You will be charged <strong>$14.99 / month starting  Jan 19</strong></p> --}}
-                                                                <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M  y', strtotime($plan->transaction_date) ) }}</strong></p>
+                                                                <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M d, Y', strtotime($user->plan_activation_date) ) }}</strong></p>
                                                             </div>
                                                             @else
                                                             <div class="card-body">
