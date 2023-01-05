@@ -43,12 +43,11 @@ $settings = getSetting();
                                                 {{ __('Request a Feature') }}
                                             </a>
                                             <!-- logout -->
-
                                             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();" title="{{ __('Logout') }}"><img src="{{ asset('assets/img/icon/logout.svg') }}" alt="icon">
                                                 {{ __('Logout') }}</a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                    @csrf
+                                                @csrf
                                             </form>
                                         </div>
                                     </div>
@@ -56,12 +55,10 @@ $settings = getSetting();
                                         <div class="tab-content" id="vert-tabs-tabContent">
                                             <!-- my subscription -->
                                             <div class="tab-pane fade active show" id="vert-tabs-subscription" role="tabpanel" aria-labelledby="vert-tabs-subscription-tab">
-
                                                 <div class="setting_tab_contetn">
-                                                    @dd(checkPackage())
+                                                    {{-- @dd(checkPackage()) --}}
 
                                                 </div>
-
                                             </div>
                                             <!-- account settings -->
                                             <div class="tab-pane text-left fade" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
@@ -92,7 +89,6 @@ $settings = getSetting();
                                                                 <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
                                                                 @endif
                                                             </div>
-
                                                             <div class="form-group">
                                                                 <label for="email" class="form-label">{{ __('Email') }}</label>
                                                                 <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}">

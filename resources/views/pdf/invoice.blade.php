@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>Invoice</title>
-        <style>
-        </style>
+        <style></style>
     </head>
     <?php
         $row = $data['transaction'] ?? [];
@@ -67,31 +66,31 @@
                                     <table style="width: 100%;margin-bottom: 1rem;color: #212529;vertical-align: top;border-collapse: collapse;">
                                         <thead style="vertical-align: bottom;border-color: inherit;border-style: solid;border-width: 0;">
                                             <tr>
-                                                <th colspan="4" style="text-align: left;border-bottom: 1px solid #ccc;padding: 8px;">Description</th>
-                                                <th style="width: 10%;border-bottom: 1px solid #ccc;padding: 8px;text-align: right;">Amount</th>
+                                                <th colspan="4" style="text-align: left;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">Description</th>
+                                                <th style="width: 10%;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody style="vertical-align: inherit;border-color: inherit;border-style: solid;border-width: 0;">
                                             <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                                <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 8px;">
+                                                <td colspan="4" style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">
                                                     <p class="strong mb-1">{{ $row->desciption }}</p>
                                                 </td>
-                                                <td style="border-bottom: 1px solid #ccc;padding: 8px;text-align: right;" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                                <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <table class="table" style="float: right; width: 45%;overflow: hidden;clear: both;">
                                         <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                            <td style="border-bottom: 1px solid #ccc;padding: 8px;" colspan="4">Subtotal</td>
-                                            <td style="border-bottom: 1px solid #ccc;padding: 8px;text-align: right;" class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                            <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;" colspan="4">Subtotal</td>
+                                            <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;" class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
                                         </tr>
                                         <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                            <td colspan="4"  style="border-bottom: 1px solid #ccc;padding: 8px;">Tax Amount</td>
-                                            <td style="width: 23%;border-bottom: 1px solid #ccc;padding: 8px;text-align: right;">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
+                                            <td colspan="4"  style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">Tax Amount</td>
+                                            <td style="width: 23%;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
                                         </tr>
                                         <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                            <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 8px;">Total</td>
-                                            <td style="border-bottom: 1px solid #ccc;padding: 8px;text-align: right;">
+                                            <td colspan="4" style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">Total</td>
+                                            <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">
                                                 <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
                                             </td>
                                         </tr>
@@ -100,9 +99,9 @@
 
                             </div>
                         </div>
-                        <p style="font-weight: 300;text-align: center;display: block;overflow: hidden;clear: both;margin-top: 180px;">
+                        {{-- <p style="font-weight: 300;text-align: center;display: block;overflow: hidden;clear: both;margin-top: 180px;">
                             Thank you very much for doing business with us. We look forward to working with you again!
-                        </p>
+                        </p> --}}
                     </div>
                 </div>
             </div>
