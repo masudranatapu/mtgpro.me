@@ -235,11 +235,7 @@ function checkPackage($id = null){
         }
 
     }else{
-        if(Auth::user()->plan_id){
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 }
 
