@@ -245,12 +245,15 @@
 
                                                             <div class="form-group">
                                                                 <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
-                                                                {{-- <label for="profile_pic" class="form-label" style="display: block;">
-                                                                   <img src="{{ getProfile() }}" width="120" class="rounded-circle border shadow-sm" alt="profile image">
-                                                                </label> --}}
-                                                                <input type="file"  name="profile_pic" id="profile_pic" value="{{ old('profile_pic') }}" >
+                                                                <div class="slim"
+                                                                    data-ratio="1:1"
+                                                                    data-size="540,540"
+                                                                    data-max-file-size="100">
+                                                                <img src="{{ getProfile($user->profile_image) }}" alt=""/>
+                                                                <input type="file" name="profile_pic" id="profile_pic">
+                                                                </div>
                                                                 @if($errors->has('profile_pic'))
-                                                                <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
+                                                                    <span class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
                                                                 @endif
                                                             </div>
                                                             <div class="form-group">
@@ -279,7 +282,8 @@
                                                         <h3>{{ __('Support') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form onsubmit="return false;">
+                                                        <form action="{{ route('user.support.send-mail') }}" method="post">
+                                                            @csrf
                                                             <div class="form-group">
                                                                 <label for="emalil_to" class="form-label">{{ __('To') }}</label>
                                                                     <div>{{ $settings->email }}</div>
@@ -499,25 +503,25 @@
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
-var cropper = new Slim(document.getElementById('profile_pic'), {
-        ratio: '1:1',
-        minSize: {
-            width: 150,
-            height: 150,
-        },
-        size: {
-            width: 600,
-            height: 600,
-        },
-        willSave: function(data, ready) {
-            $('#profilePic_2').attr('src',data.output.image);
-          ready(data);
-        },
-        meta: {
-            viewid:1
-      },
-        download: false,
-        instantEdit: true,
-    });
+// var cropper = new Slim(document.getElementById('profile_pic'), {
+//         ratio: '1:1',
+//         minSize: {
+//             width: 150,
+//             height: 150,
+//         },
+//         size: {
+//             width: 600,
+//             height: 600,
+//         },
+//         willSave: function(data, ready) {
+//             $('#profilePic_2').attr('src',data.output.image);
+//           ready(data);
+//         },
+//         meta: {
+//             viewid:1
+//       },
+//         download: false,
+//         instantEdit: true,
+//     });
 </script>
 @endpush

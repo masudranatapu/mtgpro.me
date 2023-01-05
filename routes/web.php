@@ -68,8 +68,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('card/crop-upload',['as'=>'card.crop-upload','uses'=>'CardController@cropImageUpload']);
     Route::post('billing-info/update',['as'=>'billing-info.update','uses'=>'UserController@putUpdateBilling']);
     Route::post('payment-info/update',['as'=>'payment-info.update','uses'=>'UserController@putUpdatePayment']);
-
-    Route::post('profile-info/update',['as'=>'profile-info.update','uses'=>'DashboardController@profileUpdate']);
+    Route::post('profile-info/update',['as'=>'profile-info.update','uses'=>'UserController@profileUpdate']);
+    Route::post('support/send-mail',['as'=>'support.send-mail','uses'=>'UserController@sendSupportMail']);
 
 
 

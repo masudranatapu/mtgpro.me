@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Review;
 use App\Mail\ResetEmail;
 use App\Mail\ChangeEmail;
+use App\Mail\SupportMail;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use App\Mail\AccountDeletion;
 use App\Models\BusinessField;
@@ -16,10 +18,12 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\PassResetRequest;
 use App\Http\Requests\BillingInfoRequest;
 use App\Http\Requests\PaymentInfoRequest;
+use App\Http\Requests\SupportMailRequest;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -27,9 +31,13 @@ class UserController extends Controller
 {
 
     protected $settings;
-    public function __construct()
+    protected $businessCard;
+    public function __construct(
+        BusinessCard $businessCard
+        )
         {
             $this->settings = getSetting();
+            $this->businessCard  = $businessCard;
         }
 
 
@@ -170,13 +178,9 @@ class UserController extends Controller
                 'display_name' => $request->display_name,
                 'details' => $request->details,
                 'status' => 0,
-
             ]);
-
             Toastr::success('Review Updated successfully:-)','Success');
             return redirect()->back();
-
-
     }
 
 
@@ -299,7 +303,64 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function profileUpdate(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user  = User::find(Auth::user()->id);
+            if($request->has('profile_pic') && !empty($request->profile_pic[0]))
+            {
+                $file_name = $this->businessCard->formatName($request->name);
+                $output = $request->profile_pic;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        if(File::exists($user->profile)) {
+                            File::delete($user->profile);
+                        }
+                        $user->profile_image =  $this->businessCard->uploadBase64ToImage($image,$file_name,'png');
+                    }
+                }
+            }
+            $user->email = $request->email;
+            $user->updated_at   = date("Y-m-d H:i:s");
+            $user->update();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+        DB::commit();
+        Toastr::success('User information updated', 'Success', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    }
 
+
+    public function sendSupportMail(SupportMailRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $settings =  getSetting();
+            $data = [];
+            $data['subject'] = $request->subject;
+            $data['message'] = $request->message;
+            $data['email'] = Auth::user()->email;
+            $data['username'] = Auth::user()->name;
+            $user  = User::find(Auth::user()->id);
+           Mail::to($settings->support_email)->send(new SupportMail($data));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+        DB::commit();
+        Toastr::success('Thank you for your feedback', 'Success', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    }
 
 
 }
