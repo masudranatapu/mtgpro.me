@@ -72,29 +72,30 @@
                                         </thead>
                                         <tbody style="vertical-align: inherit;border-color: inherit;border-style: solid;border-width: 0;">
                                             <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                                <td colspan="4" style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">
-                                                    <p class="strong mb-1">{{ $row->desciption }}</p>
+                                                <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;">
+                                                   {{ $row->desciption }}
                                                 </td>
-                                                <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                                <td style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;text-align: right;">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                            </tr>
+                                            <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">Subtotal</td>
+                                                <td style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;" class="text-end">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                            </tr>
+                                            <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">Tax Amount</td>
+                                                <td style="width: 23%;border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
+                                            </tr>
+                                            <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">Total</td>
+                                                <td style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">
+                                                    <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table" style="float: right; width: 45%;overflow: hidden;clear: both;">
-                                        <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                            <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;" colspan="4">Subtotal</td>
-                                            <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;" class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
-                                        </tr>
-                                        <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                            <td colspan="4"  style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">Tax Amount</td>
-                                            <td style="width: 23%;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
-                                        </tr>
-                                        <tr style="border-color: inherit;border-style: solid;border-width: 0;">
-                                            <td colspan="4" style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">Total</td>
-                                            <td style="border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">
-                                                <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    {{-- <table class="table" style="float: right; width: 100%;overflow: hidden;clear: both;">
+
+                                    </table> --}}
                                 </div>
 
                             </div>

@@ -39,7 +39,7 @@ class TransactionController extends Controller
         $base_name = explode(' ', $base_name);
         $base_name = implode('-', $base_name);
         $base_name = Str::lower($base_name);
-        $name = 'INVOICE'."_".$base_name;
+        $name = 'invoice'."_".$base_name;
         return $pdf->download($name.'.pdf');
     }
 
@@ -49,7 +49,7 @@ class TransactionController extends Controller
         $data['transaction'] = Transaction::where('id',$id)->first();
         $name = $data['transaction']->transaction_id;
         $pdf = Pdf::loadView('pdf.invoice',compact('data'));
-        return $pdf->download('INVOICE'."_".$name.'.pdf');
+        return $pdf->download('invoice'."_".$name.'.pdf');
         //  return view('pdf.invoice',compact('data'));
     }
 

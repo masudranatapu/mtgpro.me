@@ -49,6 +49,7 @@ class DashboardControler extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
         $plan = DB::table('plans')
+        // ->select('')
         ->leftJoin('transactions','transactions.plan_id','=','plans.id')
         ->where('plans.id',$user->plan_id)
         ->orderBy('transactions.id','DESC')

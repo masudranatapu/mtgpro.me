@@ -125,7 +125,7 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                     <div class="card-header">
                                                                         <h4>
                                                                            {{ __('Payment method') }}
-                                                                            <a href="javascript::void(0)" class="float-right" id="paymentModal" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
+                                                                            <a href="#" class="float-right" id="paymentModal" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
                                                                         </h4>
                                                                     </div>
                                                                     @if (!empty($user->card_number))
@@ -136,9 +136,9 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                                <div class="">
                                                                                    <?php
                                                                                        $number = $user->card_number;
-                                                                                       ?>
+                                                                                    ?>
                                                                                    <span class="d-block">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
-                                                                                   <span class="d-block pb-1"><small>Master Card - Expires {{date('M/Y', strtotime($user->card_expiration_date))}}
+                                                                                   <span class="d-block pb-1"><small>{{ $user->card_type }} - Expires {{date('m/Y', strtotime($user->card_expiration_date))}}
                                                                                     {{-- 03/2024 --}}
                                                                                 </small></span>
                                                                                </div>
@@ -323,7 +323,7 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
 
 <!-- Account delete modal -->
 <div class="delete_modal">
-    <div class="modal fade" id="deleteAccount" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteAccount" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
@@ -357,7 +357,7 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
 
 <!-- Billing Address Modal -->
 <div class="billing_modal">
-    <div class="modal fade" id="billingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="billingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
@@ -406,11 +406,9 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
         </div>
     </div>
 </div>
-
-
 <!-- Payment Details -->
 <div class="payment_modal">
-    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
@@ -438,8 +436,7 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="card_expiration_date" class="form-label">{{ __('Expiration date') }}</label>
-                                    <input autocomplete="cc-exp"
-                                    autocorrect="off" spellcheck="false" type="text" name="card_expiration_date" id="card_expiration_date" class="form-control @error('card_expiration_date') is-invalid @enderror"
+                                    <input autocomplete="cc-exp" autocorrect="off" spellcheck="false" type="text" name="card_expiration_date" id="card_expiration_date" class="form-control @error('card_expiration_date') is-invalid @enderror"
                                     required aria-label="Credit or debit card expiration date" placeholder="MM / YY" aria-invalid="false" tabindex="2" value="{{ $user->card_expiration_date }}">
                                     @if($errors->has('card_expiration_date'))
                                     <span class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
