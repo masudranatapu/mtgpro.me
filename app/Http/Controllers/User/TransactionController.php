@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

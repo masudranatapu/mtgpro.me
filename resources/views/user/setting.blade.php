@@ -125,19 +125,22 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                     <div class="card-header">
                                                                         <h4>
                                                                            {{ __('Payment method') }}
-                                                                            <a href="javascript::void(0)" class="float-right" id="paymentModal" data-toggle="modal" data-target="#paymentModal">{{ __('Edit') }}</a>
+                                                                            <a href="javascript::void(0)" class="float-right" id="paymentModal" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
                                                                         </h4>
                                                                     </div>
+                                                                    @if (!empty($user->card_number))
                                                                     <div class="card-body">
                                                                        <div class="media p-1">
                                                                            <img class="mr-3" src="{{ asset('assets/img/icon/mastercard2.png') }}" alt="Generic placeholder image">
                                                                            <div class="media-body">
                                                                                <div class="">
                                                                                    <?php
-                                                                                       $number = 123456789123;
+                                                                                       $number = $user->card_number;
                                                                                        ?>
                                                                                    <span class="d-block">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
-                                                                                   <span class="d-block pb-1"><small>Master Card - Expires 03/2024</small></span>
+                                                                                   <span class="d-block pb-1"><small>Master Card - Expires {{date('M/Y', strtotime($user->card_expiration_date))}}
+                                                                                    {{-- 03/2024 --}}
+                                                                                </small></span>
                                                                                </div>
                                                                            </div>
                                                                        </div>
@@ -145,12 +148,17 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                                                            <span class="d-block py-1"><small>Billed on the 19th of every month.</small></span>
                                                                            <span class="d-block py-1">
                                                                                <small>
-                                                                                   Next billing on
+                                                                                   {{ __('Next billing on') }}
                                                                                    <span class=""><b>January 19, 2023</b></span>
                                                                                </small>
                                                                            </span>
                                                                        </div>
                                                                    </div>
+                                                                   @else
+                                                                   <div class="d-block py-3 text-center">
+                                                                    {{ __('Still credit card not added') }}
+                                                                   </div>
+                                                                    @endif
                                                                </div>
                                                            </div>
                                                        </div>
@@ -407,14 +415,13 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
             <div class="modal-content">
                 <!-- modal header -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Payment details') }}</h5>
+                    <h5 class="modal-title" id="paymentModalLabel">{{ __('Payment details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal_body">
                     <form action="{{ route('user.payment-info.update') }}" method="post">
-
                         @csrf
                         <div class="mb-3">
                             <label for="card_number" class="form-label">{{ __('Credit card number') }}</label>
@@ -447,7 +454,6 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                     <span class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
                                     @endif
                                 </div>
-
                             </div>
                         </div>
                         <div class="mb-3">
@@ -461,8 +467,6 @@ $countries = \App\Helpers\CountryHelper::CountryCodes();
                                 <span class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
                             @endif
                         </div>
-
-
                         <div class="modal-footer pb-3">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
                             <button type="submit" class="btn btn-primary">{{ __('Save payment method') }}</button>
