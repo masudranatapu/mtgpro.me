@@ -141,7 +141,7 @@
                                                                     <div class="card-header">
                                                                         <h4>
                                                                            {{ __('Payment method') }}
-                                                                            <a href="#" class="float-right" id="paymentModal" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
+                                                                            <a href="#" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
                                                                         </h4>
                                                                     </div>
                                                                     @if (!empty($user->card_number))
@@ -378,7 +378,7 @@
 
 <!-- Billing Address Modal -->
 <div class="billing_modal">
-    <div class="modal fade" id="billingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="billingModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
@@ -429,7 +429,7 @@
 </div>
 <!-- Payment Details -->
 <div class="payment_modal">
-    <div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="paymentModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
