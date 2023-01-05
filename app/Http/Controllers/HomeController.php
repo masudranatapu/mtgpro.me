@@ -78,6 +78,9 @@ class HomeController extends Controller
 
     public function getPreview($cardurl)
     {
+        if(!checkPackage()){
+            return redirect()->route('user.plans');
+        }
         $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding')->where('card_url', $cardurl)
         ->leftJoin('users','users.id','business_cards.user_id')
         ->leftJoin('plans','plans.id','users.plan_id')

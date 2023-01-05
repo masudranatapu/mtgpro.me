@@ -225,6 +225,25 @@ function formatFileName($file)
     return $file_name;
 }
 
+function checkPackage($id = null){
+    if($id){
+        $user = DB::table('users')->where('id',$id)->first();
+        if($user->plan_id){
+            return true;
+        }else{
+            return false;
+        }
+
+    }else{
+        if(Auth::user()->plan_id){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+
 
 
 
