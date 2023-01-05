@@ -161,7 +161,7 @@
                                                                            </div>
                                                                        </div>
                                                                        <div class="p-3">
-                                                                        <span class="d-block py-1"><small>Billed on the {{ $bill_date }}th of every
+                                                                        <span class="d-block py-1"><small>{{ __('Billed on the') }} {{ $bill_date }}th of every
                                                                             @if ($plan->is_yearly_plan)
                                                                             year
                                                                             @else
@@ -183,6 +183,7 @@
                                                                </div>
                                                            </div>
                                                        </div>
+                                                       @if (!empty($transections) && count($transections) > 0)
                                                        <div class="invoice_table">
                                                            <div class="header mb-1">
                                                                <div class="row align-items-center">
@@ -204,7 +205,6 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                   @if (!empty($transections) && count($transections) > 0)
                                                                    @foreach ($transections as $transection)
                                                                     <tr>
                                                                         <td>{{date('M d, Y', strtotime($transection->transaction_date))}}</td>
@@ -217,11 +217,11 @@
                                                                         </td>
                                                                     </tr>
                                                                    @endforeach
-                                                                   @else
-                                                                   @endif
+                                                                   {{-- @else --}}
                                                                 </tbody>
                                                             </table>
                                                         </div>
+                                                        @endif
                                                 </div>
                                             </div>
                                             <!-- account settings -->
