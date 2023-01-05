@@ -88,7 +88,7 @@ body {
     color: #fff;
     font-size: 18px;
     margin: 0;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
 }
 
@@ -495,7 +495,7 @@ body {
 .footer_menu ul li a {
     color: var(--white);
     font-size: 14px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -525,7 +525,7 @@ body {
 .footer_menu ul li a {
     color: #999;
     font-size: 14px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -559,7 +559,7 @@ body {
 .widget_title h3 {
     font-size: 18px;
     color: #d4d3d3;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
 }
 
@@ -567,7 +567,7 @@ body {
     color: #999;
     font-size: 14px;
     font-weight: 400;
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
     margin: 0;
 }
 
@@ -599,7 +599,7 @@ body {
 .login_form .form-label {
     font-size: 14px;
     color: var(--black);
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
 }
 
@@ -661,7 +661,7 @@ body {
 
 .login_form .divider span {
     font-size: 19px;
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
     background: #fff;
     z-index: 1;
     position: relative;
@@ -703,138 +703,6 @@ body {
 .login_form .bottom p a {
     color: var(--primary);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1001,4 +869,3 @@ body {
         page-break-after: avoid;
     }
 }
-
