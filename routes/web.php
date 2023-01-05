@@ -66,6 +66,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('card/crop-image',['as'=>'card.crop-image','uses'=>'CardController@cropImage']);
     Route::post('card/crop-upload',['as'=>'card.crop-upload','uses'=>'CardController@cropImageUpload']);
     Route::post('billing-info/update',['as'=>'billing-info.update','uses'=>'UserController@putUpdateBilling']);
+    Route::post('payment-info/update',['as'=>'payment-info.update','uses'=>'UserController@putUpdatePayment']);
 
 
 

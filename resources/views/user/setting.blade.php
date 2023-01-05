@@ -8,95 +8,98 @@
 
 $settings = getSetting();
 
+$countries = \App\Helpers\CountryHelper::CountryCodes();
+
 @endphp
 
 @section('settings','active')
 @section('content')
-        <!-- main content -->
-        <div class="content-wrapper">
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-xl-9">
-                            <div class="page_content account_setting mt-5">
-                                <div class="row">
-                                    <div class="col-lg-4 col-xl-3">
-                                        <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                                            <!-- My Subscription -->
-                                            <a class="nav-link active" id="vert-tabs-subscription-tab" data-toggle="pill" href="#vert-tabs-subscription" role="tab" aria-controls="vert-tabs-subscription" aria-selected="true">
-                                                <img src="{{ asset('assets/img/icon/plan.svg') }}" alt="icon">
-                                                {{ __('My Subscription') }}
-                                            </a>
-                                            <!-- account settings -->
-                                            <a class="nav-link" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
-                                                <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="icon">
-                                                {{ __('Account Settings') }}
-                                            </a>
-                                            <!-- support -->
-                                            <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
-                                                <img src="{{ asset('assets/img/icon/support.svg') }}" alt="icon">
-                                                {{ __('Support') }}
-                                            </a>
-                                            <!-- request a feature -->
-                                            <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">
-                                                <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
-                                                {{ __('Request a Feature') }}
-                                            </a>
-                                            <!-- logout -->
-                                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();" title="{{ __('Logout') }}"><img src="{{ asset('assets/img/icon/logout.svg') }}" alt="icon">
-                                                {{ __('Logout') }}</a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </div>
+<!-- main content -->
+<div class="content-wrapper">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-9">
+                    <div class="page_content account_setting mt-5">
+                        <div class="row">
+                            <div class="col-lg-4 col-xl-3">
+                                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                                    <!-- My Subscription -->
+                                    <a class="nav-link active" id="vert-tabs-subscription-tab" data-toggle="pill" href="#vert-tabs-subscription" role="tab" aria-controls="vert-tabs-subscription" aria-selected="true">
+                                        <img src="{{ asset('assets/img/icon/plan.svg') }}" alt="icon">
+                                        {{ __('My Subscription') }}
+                                    </a>
+                                    <!-- account settings -->
+                                    <a class="nav-link" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
+                                        <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="icon">
+                                            {{ __('Account Settings') }}
+                                    </a>
+                                    <!-- support -->
+                                    <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">
+                                        <img src="{{ asset('assets/img/icon/support.svg') }}" alt="icon">
+                                        {{ __('Support') }}
+                                    </a>
+                                    <!-- request a feature -->
+                                    <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">
+                                        <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
+                                        {{ __('Request a Feature') }}
+                                    </a>
+                                    <!-- logout -->
+                                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">
+                                        <img src="{{ asset('assets/img/icon/logout.svg') }}" alt="icon">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </div>
                                     <div class="col-lg-8 col-xl-9">
                                         <div class="tab-content" id="vert-tabs-tabContent">
                                             <!-- my subscription -->
                                             <div class="tab-pane fade active show" id="vert-tabs-subscription" role="tabpanel" aria-labelledby="vert-tabs-subscription-tab">
                                                 <div class="setting_tab_contetn">
-<<<<<<< HEAD
-                                                    {{-- @dd(checkPackage()) --}}
-=======
-                                                    <div class="setting_tab_contetn">
-                                                        <div class="subscription_info mb-4">
-                                                            <div class="card">
-                                                                <div class="card-header">
-                                                                   {{-- 10 days left --}}
-                                                                   <h3>
+                                                    <div class="subscription_info mb-4">
+                                                        <div class="card">
+
+                                                            @if (checkPackage())
+                                                            <div class="card-header">
+                                                                {{-- 10 days left --}}
+                                                                <h3>
                                                                        {{-- Subscription --}}
-                                                                       <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
-                                                                       <?php
-                                                                       $subscription_end = new \Carbon\Carbon($user->plan_validity);
+                                                                    <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
+                                                                    <?php
+                                                                    $subscription_end = new \Carbon\Carbon($user->plan_validity);
                                                                        // echo $subscription_end->diffForHumans();
-                                                                       $diff = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity))
-                                                                       ?>
-                                                                       @if ($diff > 0)
+                                                                    $diff = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity))
+                                                                    ?>
+                                                                    @if ($diff > 0)
                                                                            <span class="float-right">{{__($diff)}} {{ __(Str::plural('day',$diff)) }} {{ __('left') }}</span>
-                                                                       @else
-                                                                       @endif
-                                                                    </h3>
-                                                                </div>
-                                                                <div class="card-body">
-                                                                    <h5>${{ CurrencyFormat($plan->plan_price,2) }}
-                                                                       {{-- $55.00 --}}
-                                                                   </h5>
-                                                                    {{-- <p>$14.99 per member per month.</p> --}}
-                                                                    <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
-                                                                    {{-- <p>You will be charged <strong>$14.99 / month starting Jan 19</strong></p> --}}
-                                                                    <p>You will be charged <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting Jan 19</strong></p>
+                                                                    @else
+                                                                    @endif
+                                                                </h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <h5>${{ CurrencyFormat($plan->plan_price,2) }}{{-- $55.00 --}}</h5>
+                                                                {{-- <p>$14.99 per member per month.</p> --}}
+                                                                <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
+                                                                {{-- <p>You will be charged <strong>$14.99 / month starting Jan 19</strong></p> --}}
+                                                                <p>You will be charged <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting Jan 19</strong></p>
+                                                            </div>
+                                                            @else
+                                                            <div class="card-body">
+                                                                <div class="plan_upgrade text-center mb-5">
+                                                                    <a href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
                                                                 </div>
                                                             </div>
+                                                            @endif
                                                         </div>
-
-                                                        <div class="row mb-4">
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="billing_info_card subs_info">
-                                                                    <div class="card-header">
-                                                                        <h4>
-                                                                           {{ __('Billing Infomation') }}
-                                                                            <a href="#" data-toggle="modal" data-target="#billingModal" class="float-right">{{ __('Edit') }}</a>
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="billing_info_card subs_info">
+                                                                <div class="card-header">
+                                                                    <h4>{{ __('Billing Infomation') }} <a href="#" data-toggle="modal" data-target="#billingModal" class="float-right">{{ __('Edit') }}</a>
                                                                         </h4>
                                                                     </div>
                                                                     <div class="card-body">
@@ -190,10 +193,6 @@ $settings = getSetting();
                                                                 </tbody>
                                                             </table>
                                                         </div>
-
-                                                   </div>
->>>>>>> 7fe750d20505687ee355b554de78dad0ccd9e715
-
                                                 </div>
                                             </div>
                                             <!-- account settings -->
@@ -228,8 +227,10 @@ $settings = getSetting();
                                                             <div class="form-group">
                                                                 <label for="email" class="form-label">{{ __('Email') }}</label>
                                                                 <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}">
+                                                                @if($errors->has('email'))
+                                                                <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                                                                @endif
                                                             </div>
-
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                             </div>
@@ -258,10 +259,16 @@ $settings = getSetting();
                                                             <div class="form-group">
                                                                 <label for="subject" class="form-label">{{ __('Subject') }} <span class="text-dark">*</span></label>
                                                                 <input type="text" name="subject" id="subject" class="form-control" placeholder="{{ __('Subject') }}" required>
+                                                                @if($errors->has('subject'))
+                                                                <span class="help-block text-danger">{{ $errors->first('subject') }}</span>
+                                                                @endif
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
                                                                 <textarea name="message" id="message" cols="30" rows="7" placeholder="{{ __('Message') }}" class="form-control" required style="height:120px;"></textarea>
+                                                                @if($errors->has('message'))
+                                                                <span class="help-block text-danger">{{ $errors->first('message') }}</span>
+                                                                @endif
                                                             </div>
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
@@ -282,6 +289,9 @@ $settings = getSetting();
                                                             <div class="form-group">
                                                                 <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
                                                                 <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="{{ __('Messag') }}e" class="form-control" required style="height:120px;"></textarea>
+                                                                @if($errors->has('request_message'))
+                                                                <span class="help-block text-danger">{{ $errors->first('request_message') }}</span>
+                                                                @endif
                                                             </div>
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Send Feedback') }}</button>
@@ -321,7 +331,10 @@ $settings = getSetting();
                     <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
                     <form action="#" method="post">
                         <div class="mb-3">
-                            <input type="text" name="" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                            <input type="text" name="delete" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                            @if($errors->has('delete'))
+                            <span class="help-block text-danger">{{ $errors->first('delete') }}</span>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -350,22 +363,30 @@ $settings = getSetting();
                     <form action="{{ route('user.billing-info.update') }}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="email" class="form-label">{{ __('Email') }}</label>
-                            <input type="text" name="email" id="email" class="form-control" value="{{ $user->billing_email }}" required>
+                            <label for="billing_email" class="form-label">{{ __('Email') }}</label>
+                            <input type="text" name="billing_email" id="billing_email" class="form-control" value="{{ $user->billing_email }}" required>
+                            @if($errors->has('billing_email'))
+                            <span class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
+                            @endif
                         </div>
                          <div class="mb-3">
-                            <label for="country" class="form-label">{{ _('Country / Region') }}</label>
-                            <select name="country" id="country" class="form-control">
+                            <label for="billing_country" class="form-label">{{ _('Country / Region') }}</label>
+                            <select name="billing_country" id="billing_country" class="form-control">
                                 <option value="" class="d-none">-- {{ __('Choose') }} --</option>
-                                <option value="Bangladesh" {{ $user->billing_country=='Bangladesh' ? 'selected':'' }}>Bangladesh</option>
-                                <option value="India" {{ $user->billing_country=='India' ? 'selected':'' }}>India</option>
-                                <option value="Pakistan" {{ $user->billing_country=='Pakistan' ? 'selected':'' }}>Pakistan</option>
-                                <option value="Chaina" {{ $user->billing_country=='Chaina' ? 'selected':'' }}>Chaina</option>
+                                @foreach ($countries as $key=>$country)
+                                <option value="{{ $country }}" {{ $user->billing_country==$country ? 'selected':'' }}>{{ $country }}</option>
+                                @endforeach
                             </select>
+                            @if($errors->has('billing_country'))
+                            <span class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
+                            @endif
                         </div>
                          <div class="mb-3">
-                            <label for="zip_code" class="form-label">{{ __('Zip Code') }}</label>
-                            <input type="number" name="zip_code" id="zip_code" class="form-control" value="{{ $user->billing_zipcode }}" required>
+                            <label for="billing_zipcode" class="form-label">{{ __('Zip Code') }}</label>
+                            <input type="number" name="billing_zipcode" id="billing_zipcode" class="form-control" value="{{ $user->billing_zipcode }}" required>
+                            @if($errors->has('billing_zipcode'))
+                            <span class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
+                            @endif
                         </div>
                         <div class="modal-footer pb-3">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
@@ -392,7 +413,56 @@ $settings = getSetting();
                     </button>
                 </div>
                 <div class="modal_body">
-                    <form action="#" method="post">
+                    <form action="{{ route('user.payment-info.update') }}" method="post">
+
+                        @csrf
+                        <div class="mb-3">
+                            <label for="card_number" class="form-label">{{ __('Credit card number') }}</label>
+                            <input type="text" name="card_number" id="card_number" class="form-control @error('name') is-invalid @enderror" value="{{ $user->card_number }}" required
+                            autocomplete="cc-number" autocorrect="off"
+                            spellcheck="false" type="text"
+                            aria-label="Credit or debit card number"
+                            placeholder="1234 1234 1234 1234" aria-invalid="false" tabindex="1">
+                            @if($errors->has('card_number'))
+                            <span class="help-block text-danger">{{ $errors->first('card_number') }}</span>
+                            @endif
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="card_expiration_date" class="form-label">{{ __('Expiration date') }}</label>
+                                    <input autocomplete="cc-exp"
+                                    autocorrect="off" spellcheck="false" type="text" name="card_expiration_date" id="card_expiration_date" class="form-control @error('card_expiration_date') is-invalid @enderror"
+                                    required aria-label="Credit or debit card expiration date" placeholder="MM / YY" aria-invalid="false" tabindex="2" value="{{ $user->card_expiration_date }}">
+                                    @if($errors->has('card_expiration_date'))
+                                    <span class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="card_cvc" class="form-label">{{ __('CVC') }}</label>
+                                    <input class="form-control @error('card_cvc') is-invalid @enderror" autocomplete="cc-csc" autocorrect="off" spellcheck="false" type="text" name="card_cvc" inputmode="numeric" aria-label="Credit or debit card CVC/CVV" placeholder="CVC" aria-invalid="false" tabindex="3" value="{{ $user->card_cvc }}">
+                                    @if($errors->has('card_cvc'))
+                                    <span class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name_on_card" class="form-label">{{ __('Name on the card') }}</label>
+                            <input type="text" name="name_on_card" id="name_on_card" class="form-control @error('name_on_card') is-invalid @enderror" value="{{ $user->name_on_card }}" required
+                            autocomplete="cc-number" autocorrect="off"
+                            spellcheck="false" type="text"
+                            aria-label="Credit or debit card number"
+                            placeholder="1234 1234 1234 1234" aria-invalid="false" tabindex="1">
+                            @if($errors->has('name_on_card'))
+                                <span class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
+                            @endif
+                        </div>
+
+
                         <div class="modal-footer pb-3">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
                             <button type="submit" class="btn btn-primary">{{ __('Save payment method') }}</button>

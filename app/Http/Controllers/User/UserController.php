@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use Str;
+use App\Models\Card;
 use App\Models\User;
 use App\Models\Review;
 use App\Mail\ResetEmail;
 use App\Mail\ChangeEmail;
-use App\Models\Card;
 use Illuminate\Http\Request;
 use App\Mail\AccountDeletion;
 use App\Models\BusinessField;
@@ -18,6 +18,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\PassResetRequest;
+use App\Http\Requests\BillingInfoRequest;
+use App\Http\Requests\PaymentInfoRequest;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -253,25 +255,47 @@ class UserController extends Controller
     }
 
 
-    public function putUpdateBilling(Request $request)
+    public function putUpdateBilling(BillingInfoRequest $request)
     {
         DB::beginTransaction();
         try {
             $user = User::find(Auth::user()->id);
-            $user->billing_email = $request->email;
-            $user->billing_country = $request->country;
-            $user->billing_zipcode  = $request->zip_code;
+            $user->billing_email = $request->billing_email;
+            $user->billing_country = $request->billing_country;
+            $user->billing_zipcode  = $request->billing_zipcode;
             $user->updated_at = date("Y-m-d H:i:s");
-            // $user->updated_by = Auth::user()->id;
             $user->update();
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
-            Toastr::error('Something wrong! Please try again');
+            Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         DB::commit();
-        Toastr::success('Billing info updated');
+        Toastr::success('Billing information updated', 'Success', ["positionClass" => "toast-top-center"]);
+
+        return redirect()->back();
+    }
+
+    public function putUpdatePayment(PaymentInfoRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user              = User::find(Auth::user()->id);
+            $user->card_number = $request->card_number;
+            $user->card_expiration_date = $request->card_expiration_date;
+            $user->card_cvc     = $request->card_cvc;
+            $user->name_on_card = $request->name_on_card;
+            $user->updated_at   = date("Y-m-d H:i:s");
+            $user->update();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+        DB::commit();
+        Toastr::success('Payment information updated', 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
