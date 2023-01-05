@@ -2,6 +2,13 @@
 @section('title') {{ __('Settings') }}  @endsection
 @push('custom_css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
+<style>
+    .setting_form .slim {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+</style>
 @endpush
 
 @php
@@ -243,7 +250,7 @@
                                                                 <input type="text" name="profile_url" id="profile_url" class="form-control" value="mtgpr/">
                                                             </div> --}}
 
-                                                            <div class="form-group">
+                                                            <div class="form-group profile-pic">
                                                                 <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
                                                                 <div class="slim"
                                                                     data-ratio="1:1"
@@ -487,7 +494,7 @@
                             autocomplete="cc-number" autocorrect="off"
                             spellcheck="false" type="text"
                             aria-label="Credit or debit card number"
-                            placeholder="1234 1234 1234 1234" aria-invalid="false" tabindex="1">
+                            placeholder="John wick" aria-invalid="false" tabindex="4">
                             @if($errors->has('name_on_card'))
                                 <span class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
                             @endif
