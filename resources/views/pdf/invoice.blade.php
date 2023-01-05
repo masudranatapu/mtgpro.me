@@ -9,10 +9,9 @@
         </style>
     </head>
     <?php
-    $row = $data['transaction'] ?? [];
-    $settings = getSetting();
-    // dd($data['transaction']);
-    $invoice_details = json_decode($row->invoice_details);
+        $row = $data['transaction'] ?? [];
+        $settings = getSetting();
+        $invoice_details = json_decode($row->invoice_details);
     ?>
     <body>
         <div class="setting_sec section mt-3 mb-5">
@@ -72,9 +71,7 @@
                                                 <th style="width: 10%;border-bottom: 1px solid #ccc;padding: 8px;text-align: right;">Amount</th>
                                             </tr>
                                         </thead>
-
                                         <tbody style="vertical-align: inherit;border-color: inherit;border-style: solid;border-width: 0;">
-
                                             <tr style="border-color: inherit;border-style: solid;border-width: 0;">
                                                 <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 8px;">
                                                     <p class="strong mb-1">{{ $row->desciption }}</p>
@@ -83,9 +80,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table" style="float: right; width: 45%;
-    overflow: hidden;
-    clear: both;">
+                                    <table class="table" style="float: right; width: 45%;overflow: hidden;clear: both;">
                                         <tr style="border-color: inherit;border-style: solid;border-width: 0;">
                                             <td style="border-bottom: 1px solid #ccc;padding: 8px;" colspan="4">Subtotal</td>
                                             <td style="border-bottom: 1px solid #ccc;padding: 8px;text-align: right;" class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
@@ -105,14 +100,9 @@
 
                             </div>
                         </div>
-                        <p style="font-weight: 300;
-    text-align: center;
-    display: block;
-    overflow: hidden;
-    clear: both;
-    margin-top: 180px;">
-                                        Thank you very much for doing business with us. We look forward to working with you again!
-                                    </p>
+                        <p style="font-weight: 300;text-align: center;display: block;overflow: hidden;clear: both;margin-top: 180px;">
+                            Thank you very much for doing business with us. We look forward to working with you again!
+                        </p>
                     </div>
                 </div>
             </div>
