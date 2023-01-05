@@ -17,7 +17,7 @@
     display: block;
     border-radius: 100px;
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .card-status label:after {
@@ -97,7 +97,7 @@
                                                 <a href="{{ route('user.card.edit',$card->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
                                                 <a target="__blank" href="{{ route('card.preview',$card->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
                                                 @if (checkPackage())
-                                                <div class="card-status d-inline-block position-relative mt-3">
+                                                <div class="card-status d-inline-block position-relative">
                                                     <input type="checkbox" name="change-status" id="switch_{{$card->id}}" value="{{$card->status}}"  {{ $card->status==1 ? 'checked':'' }}  class="change-status" data-id="{{ $card->id }}" /><label for="switch_{{$card->id}}">Toggle</label>
                                                 </div>
                                                 @endif
