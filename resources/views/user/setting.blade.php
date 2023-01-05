@@ -318,7 +318,10 @@
                                                         <p>{{ __('Do you have an idea for a feature that would make better for you? Let us know!') }}</p>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form onsubmit="return false;">
+
+
+                                                        <form action="{{ route('user.support.feature-request') }}" method="post">
+                                                            @csrf
                                                             <div class="form-group">
                                                                 <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
                                                                 <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="{{ __('Messag') }}e" class="form-control" required style="height:120px;"></textarea>

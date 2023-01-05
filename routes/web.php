@@ -70,6 +70,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('payment-info/update',['as'=>'payment-info.update','uses'=>'UserController@putUpdatePayment']);
     Route::post('profile-info/update',['as'=>'profile-info.update','uses'=>'UserController@profileUpdate']);
     Route::post('support/send-mail',['as'=>'support.send-mail','uses'=>'UserController@sendSupportMail']);
+    Route::post('support/feature-request',['as'=>'support.feature-request','uses'=>'UserController@sendRequestToFeature']);
 
 
 

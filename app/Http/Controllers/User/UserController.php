@@ -349,7 +349,38 @@ class UserController extends Controller
             $data['message'] = $request->message;
             $data['email'] = Auth::user()->email;
             $data['username'] = Auth::user()->name;
-            $user  = User::find(Auth::user()->id);
+           Mail::to($settings->support_email)->send(new SupportMail($data));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+        DB::commit();
+        Toastr::success('Thank you for your feedback', 'Success', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    }
+
+    public function sendRequestToFeature(Request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make($request->all(), [
+                'request_message' => 'required',
+              ]);
+
+              if ($validator->fails())
+              {
+                return redirect()->back()->withErrors($validator)->withInput();
+              }
+
+            $settings =  getSetting();
+            $data = [];
+            $data['subject'] = 'Request a Feature';
+            $data['message'] = $request->request_message;
+            $data['email'] = Auth::user()->email;
+            $data['username'] = Auth::user()->name;
            Mail::to($settings->support_email)->send(new SupportMail($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
