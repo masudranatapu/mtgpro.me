@@ -433,4 +433,38 @@ class CardController extends Controller
 
 
 
+
+        public function getChangeCardStatus(Request $request)
+        {
+            DB::beginTransaction();
+            try
+            {
+            $card = BusinessCard::findOrFail($request->id);
+            $card->status = !$card->status;
+            $card->save();
+            }
+            catch(\Exception $e)
+            {
+                DB::rollback();
+                return response()->json([
+                    'status'=>false,
+                    'msg'=>'Something wrong! Please try again',
+                    'is_active'=> $card->status,
+                ]);
+            }
+            DB::commit();
+            return response()->json([
+                'status'=>true,
+                'msg'=>'Card status successfully updated',
+                'is_active'=> $card->status,
+            ]);
+
+
+        }
+
+
+
+
+
+
 }

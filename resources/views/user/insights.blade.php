@@ -1,7 +1,6 @@
 @extends('user.layouts.app')
 @section('title') {{__('Instghts') }}  @endsection
-@push('custom_css')
-@endpush
+
 @section('insights','active')
 @section('content')
 <div class="content-wrapper">
