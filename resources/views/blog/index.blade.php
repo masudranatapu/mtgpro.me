@@ -284,7 +284,7 @@ $category = $category ?? [];
                 <h4 class="blog-title-category feature-title">{{ $row->title }}</h4>
                 <p class="blog-short-description">{{ $row->summary }}</p>
                 <div class="d-flex position-relative">
-                    <img src="{{ getAvatar($row->profile_image) }}" class="flex-shrink-0 me-3 " alt="{{ $row->title }}" title="{{ $row->title }}">
+                    <img src="{{ getAvatar($row->profile_image) }}" class="flex-shrink-0 me-3 img-fluid " alt="{{ $row->title }}" title="{{ $row->title }}">
                     <div>
                       @if (!empty($row->author))
                       <p class="blog-author-name-by">By <a href="{{ $row->blog_url }}" class="blog-author-name">{{ $row->author }}</a></p>
@@ -320,7 +320,7 @@ $category = $category ?? [];
                     <h4 class="blog-title">{{ $row->title }}</h4>
                     <p class="blog-short-description">{{ $summary }}</p>
                     <div class="d-flex position-relative">
-                      <img src="{{ getAvatar($row->profile_image) }}" class="flex-shrink-0 me-3" alt="{{ $row->title }}" title="{{ $row->title }}">
+                      <img src="{{ getAvatar($row->profile_image) }}" class="flex-shrink-0 me-3 img-fluid" alt="{{ $row->title }}" title="{{ $row->title }}">
                       <div>
                         @if (!empty($row->author))
                         <p class="blog-author-name-by">By <a href="{{ $row->blog_url }}" class="blog-author-name" title="{{ $row->author }}">{{ $row->author }}</a></p>
