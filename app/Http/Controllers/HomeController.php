@@ -10,16 +10,25 @@ use App\Mail\SendContact;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
+use JeroenDesloovere\VCard\VCard;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
+use Behat\Transliterator\Transliterator;
+use Illuminate\Support\Facades\Response;
+
 
 class HomeController extends Controller
 {
+    private $filename;
 
     public function __construct()
     {
+
+        $this->settings = getSetting();
     }
 
     public function getIndex()
@@ -144,13 +153,19 @@ class HomeController extends Controller
                 'business_cards.card_email',
                 'business_cards.logo',
                 'business_cards.designation',
-                'business_fields.content',
+                'business_cards.bio',
                 'users.dob'
                 )
                 ->where('business_cards.card_id', $id)
                 ->leftJoin('users', 'business_cards.user_id', '=', 'users.id')
-                ->leftJoin('business_fields','business_cards.id','=','business_fields.card_id')
                 ->first();
+            $contacts = DB::table('business_fields as bf')
+            ->select('bf.type','bf.label','bf.icon_image','bf.content','bf.position')
+            // ->leftJoin('social_icon','social_icon.id','=','bf.icon_id')
+            ->where('bf.card_id',$card->id)
+            ->where('bf.status',1)
+            ->orderBy('bf.position','ASC')
+            ->get();
                 $vcard = new VCard();
                 if(!empty($card->card_url)){
                     $vcard_url = URL::to('/') . "/" . $card->card_url;
@@ -162,23 +177,35 @@ class HomeController extends Controller
                 }else{
                     $lastname = '';
                 }
-
                 $firstname = $card->title;
-
                 $additional = '';
                 $prefix = '';
                 $suffix = '';
-                $email = $card->card_email;
                 $tel = $card->ccode . $card->phone_number;
                 $url = $card->company_websitelink;
                 $company = $card->company_name;
-                $designation = $card->designation;
                 $whatsapp = '';
+                 // define values with non-empty values
+                // $values = array_filter([
+                //     $prefix,
+                //     $firstname,
+                //     $additional,
+                //     $lastname,
+                //     $suffix,
+                // ]);
                 // add personal data
+                // $vcard->setFilename($values,$overwrite = true,$separator = '_');
                 $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
-                $vcard->addEmail($email);
+                $vcard->addEmail($card->card_email ?? Auth::user()->email);
+                if(!empty($card->bio)){
+                $vcard->addNote($card->bio);
+                }
                 if(!empty($tel)){
                     $vcard->addPhoneNumber($tel,'HOME');
+                }
+                if($card->designation){
+                    $vcard->addRole($card->designation);
+                    $vcard->addJobtitle($card->designation);
                 }
                 if(!empty($company)){
                     $vcard->addCompany($company);
@@ -187,10 +214,7 @@ class HomeController extends Controller
                 {
                     $vcard->addBirthday ($card->dob);
                 }
-                if($card->designation){
-                    $vcard->addRole($card->designation);
-                    $vcard->addJobtitle($card->designation);
-                }
+
                 if(!empty($card->logo)){
                     $logo = str_replace(' ', '%20', public_path($card->logo));
                     $vcard->addLogo($logo);
@@ -199,44 +223,90 @@ class HomeController extends Controller
                     $profile = str_replace(' ', '%20', public_path($card->profile));
                     $vcard->addPhoto($profile);
                 }
-                if(isset($card->content)){
-                    $card_fields = $card->content;
-                    $arr_card_fields = json_decode($card_fields,true);
-                    // dd($arr_card_fields);
-                    if(isset($arr_card_fields['facebook'])){
-                        $vcard->addURL ($arr_card_fields['facebook'][0],'Facebook');
-                    }
-                    if(isset($arr_card_fields['twitter'])){
-                        $vcard->addURL ($arr_card_fields['twitter'][0],'Twitter');
-                    }
-                    if(isset($arr_card_fields['linkedin'])){
-                        $vcard->addURL ($arr_card_fields['linkedin'][0],'Linkedin');
-                    }
-                    if(isset($arr_card_fields['pinterest'])){
-                        $vcard->addURL ($arr_card_fields['pinterest'][0],'Pinterest');
-                    }
-                    if(isset($arr_card_fields['whatsapp'])){
-                        $vcard->addPhoneNumber($arr_card_fields['whatsapp'][0], 'Whatsapp');
-                    }
-                    if(isset($arr_card_fields['instagram'])){
-                        $vcard->addURL($arr_card_fields['instagram'][0], 'Instagram');
-                    }
-                    if(isset($arr_card_fields['phone'])){
-                        $vcard->addPhoneNumber($arr_card_fields['phone'][0], 'Phone');
-                    }
-                    if(isset($arr_card_fields['address'])){
-                        $vcard->addAddress($arr_card_fields['address'][0]);
-                    }
-                    if(isset($arr_card_fields['text'])){
-                        $vcard->addPhoneNumber($arr_card_fields['text'][0]);
+                if(!empty($contacts) && count($contacts) > 0){
+                    foreach ($contacts as $key => $contact) {
+
+                        if ($contact->type=='link'){
+                            $vcard->addURL ($contact->content,$contact->label);
+                        }
+                        elseif ($contact->type=='email'){
+                            $vcard->addEmail ( $contact->content,$contact->label);
+                        }elseif ($contact->type=='phone'){
+                            $vcard->addPhoneNumber($contact->content,$contact->label);
+                        }
+                        elseif ($contact->type=='address'){
+                            $vcard->addAddress($contact->content,$contact->label);
+                        }
+                        elseif ($contact->type=='date'){
+                            $vcard->addBirthday ($contact->content);
+                        }
+                        else{
+                            $vcard->addURL($contact->content,$contact->label);
+                        }
                     }
                 }
-                $vcard->addURL (URL::to('/'),'Created With '.$this->settings->site_name);
-                $vcard->addURL ($url,$this->settings->site_name.' URL');
-            // $vcard->addLabel('street, worktown, workpostcode Belgium');
+                // $vcard->addURL (URL::to('/'),'Created With '.$this->settings->site_name);
+                // $vcard->addURL ($url,$this->settings->site_name.' URL');
+                // if(isset($card->content)){
+                //     $card_fields = $card->content;
+                //     $arr_card_fields = json_decode($card_fields,true);
+                //     // dd($arr_card_fields);
+                //     if(isset($arr_card_fields['facebook'])){
+                //         $vcard->addURL ($arr_card_fields['facebook'][0],'Facebook');
+                //     }
+                //     if(isset($arr_card_fields['twitter'])){
+                //         $vcard->addURL ($arr_card_fields['twitter'][0],'Twitter');
+                //     }
+                //     if(isset($arr_card_fields['linkedin'])){
+                //         $vcard->addURL ($arr_card_fields['linkedin'][0],'Linkedin');
+                //     }
+                //     if(isset($arr_card_fields['pinterest'])){
+                //         $vcard->addURL ($arr_card_fields['pinterest'][0],'Pinterest');
+                //     }
+                //     if(isset($arr_card_fields['whatsapp'])){
+                //         $vcard->addPhoneNumber($arr_card_fields['whatsapp'][0], 'Whatsapp');
+                //     }
+                //     if(isset($arr_card_fields['instagram'])){
+                //         $vcard->addURL($arr_card_fields['instagram'][0], 'Instagram');
+                //     }
+                //     if(isset($arr_card_fields['phone'])){
+                //         $vcard->addPhoneNumber($arr_card_fields['phone'][0], 'Phone');
+                //     }
+                //     if(isset($arr_card_fields['address'])){
+                //         $vcard->addAddress($arr_card_fields['address'][0]);
+                //     }
+                //     if(isset($arr_card_fields['text'])){
+                //         $vcard->addPhoneNumber($arr_card_fields['text'][0]);
+                //     }
+                // }
 
-            return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
-            // return $vcard->download();
+                // dd($vcard);
+                // $vcard->addLabel('street, worktown, workpostcode Belgium');
+                // save vcard on disk
+                $path = public_path('assets/vcard/');
+                $vcard->setSavePath($path);
+                $vcard->save();
+
+                // dd($vcard);
+                $file_name =  $vcard->getFilename();
+                $file_extension = $vcard->getFileExtension();
+                $final_name =$file_name.'.'.$file_extension;
+
+                return response()->json([
+                'status' => 1,
+                'file_path' => 'assets/vcard/'.$final_name,
+                'file_name'=>$final_name
+                ]);
+                // return 'assets/vcard/'.$final_name;
+
+                // return Response::download($path, $final_name, $headers);
+                // return response()->download($path.$final_name);
+
+            // // 5. return the vcard
+            // return $response;
+
+
+            // return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
         }
     }
 
@@ -348,7 +418,39 @@ class HomeController extends Controller
         return view('pages.common',compact('page'));
     }
 
+    public function setFilename($value, $overwrite = true, $separator = '_')
+    {
+        // recast to string if $value is array
+        if (is_array($value)) {
+            $value = implode($separator, $value);
+        }
 
+        // trim unneeded values
+        $value = trim($value, $separator);
+
+        // remove all spaces
+        $value = preg_replace('/\s+/', $separator, $value);
+
+        // if value is empty, stop here
+        if (empty($value)) {
+            return;
+        }
+
+        // decode value + lowercase the string
+        $value = strtolower($this->decode($value));
+
+        // urlize this part
+        $value = Transliterator::urlize($value);
+
+        // overwrite filename or add to filename using a prefix in between
+        $this->filename = ($overwrite) ?
+            $value : $this->filename . $separator . $value;
+    }
+    private function decode($value)
+    {
+        // convert cyrlic, greek or other caracters to ASCII characters
+        return Transliterator::transliterate($value);
+    }
 
 
 

@@ -74,9 +74,11 @@
                         @if (!empty($cardinfo->location))
                         <p>{{ $cardinfo->bio }}</p>
                         @endif
+                        <p><a href="{{ route('qr',$cardinfo->card_id) }}" rel="noopener noreferrer">QR Code Download</a></p>
                     </div>
                     <div class="save_contact mt-5 mb-5">
-                        <a href="javascript:void(0)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#contactModal">Save Contact</a>
+                        {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact"  data-bs-toggle="modal" data-bs-target="#contactModal">{{ __('Save Contact') }}</a> --}}
+                        <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact">{{ __('Save Contact') }}</a>
                     </div>
                     <div class="social_media">
                          <ul>
@@ -102,10 +104,8 @@
                                 @else
                                 <a class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
                                 @endif
-
                                 @else
                                 <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
-
                                 @endif
                                     <img class="img-fluid" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75" >
                                     <span>{{ $contact->label }}</span>
@@ -113,7 +113,6 @@
                             </li>
                             @endforeach
                             @endif
-
                         </ul>
                     </div>
                 </div>
@@ -180,13 +179,42 @@
             </div>
         </div>
     </div>
-
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{asset('assets/js/toastr.js')}}"></script>
     <script>
       AOS.init();
+      $(document).on("click", ".save-contact", function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    contentType:false,
+                    processData:false,
+                    success: function (response) {
+                        if (response.status == 1) {
+                            const link = document.createElement('a');
+                            link.setAttribute('href', response.file_path);
+                            link.setAttribute('download', response.file_name);
+                            link.click();
+                            $("#contactModal").modal("show");
+                        }else{
+                            toastr.error('Something wrong! please try again');
+                        }
+                    },
+                    error: function (jqXHR, exception) {
+                        toastr.error('Something wrong! please try again');
+                    },
+                    complete: function (data) {
+                        $("body").css("cursor", "default");
+                    }
+                });
+
+        });
+
+
     </script>
     {!! Toastr::message() !!}
 </body>
