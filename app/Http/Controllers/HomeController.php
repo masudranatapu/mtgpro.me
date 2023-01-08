@@ -8,16 +8,24 @@ use App\Mail\SendContact;
 use App\Models\SocialIcon;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
+use JeroenDesloovere\VCard\VCard;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
+use Illuminate\Support\Facades\Response;
+use Behat\Transliterator\Transliterator;
+
 
 class HomeController extends Controller
 {
+    private $filename;
 
     public function __construct()
     {
+
+        $this->settings = getSetting();
     }
 
     public function getIndex()
@@ -171,6 +179,23 @@ class HomeController extends Controller
                 $company = $card->company_name;
                 $designation = $card->designation;
                 $whatsapp = '';
+
+                 // define values with non-empty values
+                $values = array_filter([
+                    $prefix,
+                    $firstname,
+                    $additional,
+                    $lastname,
+                    $suffix,
+                ]);
+                // dd($this->filename);
+                // dd($this->setFilename($values));
+                // $vcard_name = $firstname .'-'. $lastname;
+                // $base_name = preg_replace('/\..+$/', '', $vcard_name);
+                // $base_name = explode(' ', $base_name);
+                // $base_name = implode('-', $base_name);
+                // $base_name = Str::lower($base_name);
+                $vcard->setFilename($values,$overwrite = true,$separator = '_');
                 // add personal data
                 $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
                 $vcard->addEmail($email);
@@ -230,10 +255,32 @@ class HomeController extends Controller
                 }
                 $vcard->addURL (URL::to('/'),'Created With '.$this->settings->site_name);
                 $vcard->addURL ($url,$this->settings->site_name.' URL');
-            // $vcard->addLabel('street, worktown, workpostcode Belgium');
+                // $vcard->addLabel('street, worktown, workpostcode Belgium');
+                // save vcard on disk
+                $path = public_path('assets/vcard/');
+                $vcard->setSavePath($path);
+                $vcard->save();
 
-            return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
-            // return $vcard->download();
+                // dd($vcard);
+                $file_name =  $vcard->getFilename();
+                $file_extension = $vcard->getFileExtension();
+                $final_name =$file_name.'.'.$file_extension;
+
+                return response()->json([
+                'status' => 1,
+                'file_path' => 'assets/vcard/'.$final_name,
+                'file_name'=>$final_name
+                ]);
+                // return 'assets/vcard/'.$final_name;
+
+                // return Response::download($path, $final_name, $headers);
+                // return response()->download($path.$final_name);
+
+            // // 5. return the vcard
+            // return $response;
+
+
+            // return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
         }
     }
 
@@ -345,7 +392,39 @@ class HomeController extends Controller
         return view('pages.common',compact('page'));
     }
 
+    public function setFilename($value, $overwrite = true, $separator = '_')
+    {
+        // recast to string if $value is array
+        if (is_array($value)) {
+            $value = implode($separator, $value);
+        }
 
+        // trim unneeded values
+        $value = trim($value, $separator);
+
+        // remove all spaces
+        $value = preg_replace('/\s+/', $separator, $value);
+
+        // if value is empty, stop here
+        if (empty($value)) {
+            return;
+        }
+
+        // decode value + lowercase the string
+        $value = strtolower($this->decode($value));
+
+        // urlize this part
+        $value = Transliterator::urlize($value);
+
+        // overwrite filename or add to filename using a prefix in between
+        $this->filename = ($overwrite) ?
+            $value : $this->filename . $separator . $value;
+    }
+    private function decode($value)
+    {
+        // convert cyrlic, greek or other caracters to ASCII characters
+        return Transliterator::transliterate($value);
+    }
 
 
 

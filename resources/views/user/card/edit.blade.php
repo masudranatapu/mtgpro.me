@@ -155,7 +155,8 @@
                                                                           {{-- data-fetcher="fetch.php" --}}
                                                                           data-ratio="1:1"
                                                                           data-size="440,400"
-                                                                          data-max-file-size="100">
+                                                                          data-max-file-size="100"
+                                                                          data-min-file-size="1">
                                                                          <img src="{{ getLogo($card->logo) }}" alt=""/>
                                                                          <input type="file" hidden name="company_logo" id="company_logo">
                                                                         </div>
