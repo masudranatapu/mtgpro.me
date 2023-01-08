@@ -29,6 +29,10 @@ Route::post('contact',['as'=>'contact.post','uses'=>'HomeController@postContact'
 Route::get('help',['as'=>'help','uses'=>'HomeController@getHelp']);
 Route::get('tutorials',['as'=>'tutorials','uses'=>'HomeController@getTutorials']);
 
+ //Blog
+Route::get('blog',['as'=>'blog','uses'=>'BlogController@getBlogList']);
+Route::get('category/{slug}',['as'=>'blog.category','uses'=>'BlogController@getCategortyBlog']);
+Route::get('blog/{blog_slug}',['as'=>'blog.details','uses'=>'BlogController@getBlogDetails']);
 Route::get('data-deletion-instructions',['as'=>'data-deletion-instructions','uses'=>'HomeController@getdDataDeletion']);
 
 Route::get('login/{provider}', ['as' => 'social.login', 'uses' => 'Auth\AuthController@redirectToProvider']);

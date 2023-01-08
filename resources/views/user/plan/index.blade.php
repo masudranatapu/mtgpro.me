@@ -97,7 +97,7 @@ My Plans
 </div>
 
     <!-- Modal -->
-  <!--   <div class="modal fade" id="planConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!--   <div class="modal fade" id="planConfirmModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -114,7 +114,7 @@ My Plans
                             {{ __('For upgrading users, simply visit “Business Cards” to enable your cards after the upgrade')}}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Close')}}</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
                             <button type="submit" class="btn btn-primary">{{ __('Confirm')}}</button>
                         </div>
                     </form>
@@ -124,7 +124,7 @@ My Plans
     </div> -->
 
 <div class="plan_modal">
-    <div class="modal fade" id="planConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="planConfirmModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
@@ -170,7 +170,7 @@ My Plans
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Close')}}</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
         </div>
     </div>
 </div>

@@ -1,9 +1,6 @@
 <?php
     $setting  = getSetting();
-
 ?>
-
-
 <header class="header_section sticky-top">
     <!-- Header top -->
     {{-- <div class="header_top">
@@ -13,7 +10,6 @@
             </div>
         </div>
     </div> --}}
-
     <!-- header -->
     <div class="header">
         <!-- container -->
@@ -22,13 +18,11 @@
                 <div class="container-fluid">
                     <!-- logo -->
                     <a class="navbar-brand p-0" href="{{ route('home') }}">
-
                     @if ($setting->site_logo)
                         <img src="{{ asset($setting->site_logo) }}"  alt="{{ $setting->site_name }}">
                     @else
                         <img src="{{ asset('assets/img/logo.png') }}"  alt="{{ $setting->site_name }}">
                     @endif
-
                     </a>
                     <!-- toggle bar -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
@@ -151,8 +145,6 @@
                                             <li><a class="dropdown-item" href="{{ route('user.card') }}" title="{{ __('Card')}}">{{ __('Card')}}</a></li>
                                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Settings')}}">{{ __('Settings')}}</a></li>
                                             @endif
-
-
                                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">{{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -175,7 +167,6 @@
                                     </a>
                                 </li>
                                 @endauth
-
                             </ul>
                         </div>
                     </div>
