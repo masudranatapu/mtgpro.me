@@ -242,6 +242,14 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+.section_title .form-check {
+    font-size: 15px;
+    color: #444;
+    font-weight: 600;
+    margin: 0px 5px;
+    font-family: 'Inter', sans-serif;
+}
+
 .pricing {
     background: #F8F9FC;
 }
