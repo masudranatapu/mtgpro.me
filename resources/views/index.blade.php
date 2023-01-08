@@ -188,13 +188,13 @@
                 <div class="plan_type switchBtn text-center mb-2 mt-3">
                     <div class="form-check form-switch d-inline">
                         <label class="form-check-label" for="CheckedAnnualy">
-                            <input class="form-check-input" name="planType" checked="" type="radio" value="0" id="CheckedAnnualy">
+                            <input class="form-check-input" name="planType" checked="" type="radio" value="annual" id="CheckedAnnualy">
                                 {{ __('Annual')}}
                         </label>
                     </div>
                     <div class="form-check form-switch d-inline">
                         <label class="form-check-label" for="monthlyChecked">
-                            <input class="form-check-input" name="planType"  type="radio" value="0" id="monthlyChecked">
+                            <input class="form-check-input" name="planType"  type="radio" value="monthly" id="monthlyChecked">
                                 {{ __('Monthly')}}
                         </label>
                     </div>
@@ -202,146 +202,46 @@
             </div>
             <!-- section heading -->
             <!-- plan -->
-            <div class="col-lg-4">
-                <div class="plan_wrapper mb-4" data-aos="zoom-in">
-                    <div class="plan_header mb-5 text-center">
-                        <div class="plan_price mb-3">
-                            <span>$ 0.00</span>
+
+            @if (!empty($plans) && count($plans) > 0)
+            @foreach($plans as $plan)
+                @php
+                    $planfeatures = json_decode($plan->features);
+                @endphp
+        <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+            <div class="pricing-card card card-md">
+                <div class="card-body text-center">
+                    <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}</div>
+                        @if ((Auth::user()) && (Auth::user()->plan_id==$plan->id))
+                        <div class="text-center mt-4">
+                        <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
                         </div>
-                        <div class="plan_name">
-                            <h2>{{ __('Free Plan') }}</h2>
-                            <span>{{ __('For free absic card feature') }}</span>
+                        @else
+                            <div class="text-center mt-4">
+                                <a href="{{ route('user.checkout') }}?plan_id={{ $plan->id }}&is_yearly=1" class="choose-plan btn btn-primary btn-block btn-dark w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                            </div>
+                        @endif
+                        <div class="my-3 pb-3">
+                            <div class="price">
+                                <h4 class="planpricemonthly">  {{ $currency->symbol }} {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
+                                <h4 class="planpriceyearly">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
+                            </div>
                         </div>
-                    </div>
-                    <div class="plan_feature">
-                        <ul>
-                            <li>
-                                <i class="fa fa-check"></i>
-                                <span>{{ __('5 GB of free space') }}</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-check"></i>
-                                <span>{{ __('30 days for free services') }}</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('All time support services 24/7') }}</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur.') }}</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur.') }}</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
+                        <hr>
+                        <ul class="list-unstyled lh-lg ">
+                            @foreach($planfeatures as $features)
+                                <li class="py-2">
+                                    <span>{{$features}}</span>
+                                </li>
+                            @endforeach
                         </ul>
-                    </div>
-                    <div class="plan_btn text-center mt-5">
-                        <a href="#">{{ __('Select Plan') }}</a>
-                    </div>
                 </div>
             </div>
-            <!-- plan -->
-            <div class="col-lg-4">
-                <div class="plan_wrapper middle_plan mb-4" data-aos="zoom-in">
-                    <div class="plan_header mb-5 text-center">
-                        <div class="plan_price mb-3">
-                            <span>$ 99.99</span>
-                        </div>
-                        <div class="plan_name">
-                            <h2>{{ __('Professional Plan') }}</h2>
-                            <span>{{ __('For minumal card feature') }}</span>
-                        </div>
-                        <!-- shape divider -->
-                        <div class="custom-shape-divider-top-1671081492">
-                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="plan_feature">
-                        <ul>
-                            <li>
-                                <i class="fa fa-check"></i>
-                                <span>{{ __('5 GB of free space') }}</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-check"></i>
-                                <span>{{ __('30 days for free services') }}</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('All time support services 24/7') }}</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="plan_btn text-center mt-5">
-                        <a href="#">{{ __('Select Plan') }}</a>
-                    </div>
-                </div>
-            </div>
-            <!-- plan -->
-            <div class="col-lg-4">
-                <div class="plan_wrapper mb-4" data-aos="zoom-in">
-                    <div class="plan_header mb-5 text-center">
-                        <div class="plan_price mb-3">
-                            <span>$ 199.99</span>
-                        </div>
-                        <div class="plan_name">
-                            <h2>{{ __('Enterprice Plan') }}</h2>
-                            <span>{{ __('For full incrediable card feature') }}</span>
-                        </div>
-                    </div>
-                    <div class="plan_feature">
-                        <ul>
-                            <li>
-                                <i class="fa fa-check"></i>
-                                <span>{{ __('5 GB of free space') }}</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-check"></i>
-                                <span>{{ __('30 days for free services') }}</span>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('All time support services 24/7') }}</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
-                            <li>
-                                <i class="fa fa-times"></i>
-                                <del>{{ __('Lorem ipsum dolor sit amet consectetur') }}.</del>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="plan_btn text-center mt-5">
-                        <a href="#">{{ __('Select Plan') }}</a>
-                    </div>
-                </div>
-            </div>
+        </div>
+        @endforeach
+        @endif
+
+
         </div>
         <!-- row -->
     </div>
@@ -532,5 +432,53 @@
 @endsection
 @push('custom_js')
     <script>
+        // var planType = $("input[name='planType']:checked").val();
+        // alert(planType)''
+
+        $(document).ready(function(){
+            getPackage();
+
+            $("input[name='planType']").click(function(){
+                getPackage();
+
+            });
+
+        });
+
+        function getPackage(){
+            var radioValue = $("input[name='planType']:checked").val();
+            if(radioValue == 'monthly'){
+                $('.planpriceyearly').addClass('d-none');
+                $('.planpricemonthly').removeClass('d-none');
+
+                $.each($('.choose-plan'), function (index, item) {
+                    var currentUrl = $(item).attr('href');
+                    var url = new URL(currentUrl);
+                    url.searchParams.set("is_yearly", 0);
+                    var newUrl = url.href;
+                    $(item).attr('href', newUrl);
+                });
+
+            }
+
+            if(radioValue == 'annual'){
+                $('.planpriceyearly').removeClass('d-none');
+                $('.planpricemonthly').addClass('d-none');
+
+                $.each($('.choose-plan'), function (index, item) {
+                    var currentUrl = $(item).attr('href');
+                    var url = new URL(currentUrl);
+                    url.searchParams.set("is_yearly", 1);
+                    var newUrl = url.href;
+                    $(item).attr('href', newUrl);
+                });
+            }
+
+        }
+
+
+
+
+
     </script>
 @endpush

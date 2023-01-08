@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use Str;
 use Share;
 use QrCode;
+use App\Models\Plan;
+use App\Models\Currency;
 use App\Mail\ConnectMail;
 use App\Mail\SendContact;
 use App\Models\SocialIcon;
@@ -23,8 +25,9 @@ class HomeController extends Controller
     public function getIndex()
     {
         $data = [];
-        $plans = DB::table('plans')->where('status',1)->get();
-        return view('index');
+        $plans = Plan::where('status',1)->get();
+        $currency = Currency::where('is_default', 1)->first();
+        return view('index',compact('plans','currency'));
     }
 
     public function getPrivacyPolicy()
