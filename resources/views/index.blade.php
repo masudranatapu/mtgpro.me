@@ -185,6 +185,20 @@
             <!-- section heading -->
             <div class="section_title mb-5 text-center" data-aos="fade-up">
                 <h4>{{ __('Choose your best plan') }}</h4>
+                <div class="plan_type switchBtn text-center mb-2 mt-3">
+                    <div class="form-check form-switch d-inline">
+                        <label class="form-check-label" for="CheckedAnnualy">
+                            <input class="form-check-input" name="planType" checked="" type="radio" value="0" id="CheckedAnnualy">
+                                {{ __('Annual')}}
+                        </label>
+                    </div>
+                    <div class="form-check form-switch d-inline">
+                        <label class="form-check-label" for="monthlyChecked">
+                            <input class="form-check-input" name="planType"  type="radio" value="0" id="monthlyChecked">
+                                {{ __('Monthly')}}
+                        </label>
+                    </div>
+                </div>
             </div>
             <!-- section heading -->
             <!-- plan -->

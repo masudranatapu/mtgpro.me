@@ -23,6 +23,14 @@ My Plans
         border: 1px solid #4B8CE2;
         filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.11));
     }
+    .plan_type .form-check {
+        position: relative;
+        padding-left: 1.25rem;
+        display: inline-block;
+        margin: 0px 7px;
+        font-size: 14px;
+        font-weight: 500;
+    }
 </style>
 @endpush
 
@@ -44,10 +52,18 @@ My Plans
                     <div class="section_title text-center mb-2">
                         <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
                     </div>
-                    <div class="switchBtn text-center mb-4">
+                    <div class="plan_type switchBtn text-center mb-4">
                         <div class="form-check form-switch">
-                            <label class="form-check-label" for="monthlyCheckedAnnualy"> <input class="form-check-input" type="checkbox" value="0" id="monthlyCheckedAnnualy" onclick="monthlyCheckedAnnualy()">
-                                    {{ __('Annual | Monthly')}}</label>
+                            <label class="form-check-label" for="CheckedAnnualy">
+                                <input class="form-check-input" name="planType" checked="" type="radio" value="0" id="CheckedAnnualy" onclick="monthlyCheckedAnnualy()">
+                                    {{ __('Annual')}}
+                            </label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="monthlyChecked">
+                                <input class="form-check-input" name="planType"  type="radio" value="0" id="monthlyChecked" onclick="monthlyCheckedAnnualy()">
+                                    {{ __('Monthly')}}
+                            </label>
                         </div>
                     </div>
                 </div>
