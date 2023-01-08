@@ -1,13 +1,17 @@
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-01-08T18:25:38Z
+REV:2023-01-08T19:13:51Z
 URL:http://127.0.0.1:8000/test1
 N;CHARSET=utf-8:Maidul Islam;Sultana Makal;;;
 FN;CHARSET=utf-8:Sultana Makal Maidul Islam
 EMAIL;INTERNET:user@gmail.com
-ORG;CHARSET=utf-8:Arobil Ltd
+NOTE;CHARSET=utf-8:Lorem Ipsum is simply dummy text of the printing and typ
+ esetting industry. Lorem Ipsum has been the industry's standard dummy text 
+ ever since the 1500s, when an unknown printer took a galley of type and scr
+ ambled it to make a type specimen book.
 ROLE;CHARSET=utf-8:Developer
 TITLE;CHARSET=utf-8:Developer
+ORG;CHARSET=utf-8:Arobil Ltd
 LOGO;ENCODING=b;TYPE=PNG:iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACAvzbMAAAAAX
  NSR0IArs4c6QAAIABJREFUeF7t3VFyXFeMA9D2yuKdOdlZsjJPtZzM9+C4hOI8QVX5uwhJECTef
  S21v/38+fPnaz9jYAyMgTEwBkIGvs1AQsZ2fAyMgTEwBj4YmIFMCGNgDIyBMUAMzECItoHGwBgY
@@ -1564,6 +1568,5 @@ PHOTO;ENCODING=b;TYPE=JPEG:/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUA
  JwPu5qncgL2p5G4uFPIn5r5vEwMc/pXzfJOfN+IrkIrHcVGcDn8KmiA3KcDJFEDWYC+ZNBbbVOO
  cHvk1ZjibB29/wCtfoAMYxxVuD7n6VaXXuCb2ydovMQfUEe9KuppgspQE+3vT3dk7cZ4pS1AA3D
  5GcdqFlqpORbWLTWLSBvLgd+9Vn04bsEHj8f70zFFVSAoGTVWUAPgAflVUHEUCA9z/9k=
-URL;Created With Mtgpro.me:http://127.0.0.1:8000
-URL;Mtgpro.me URL:www.arobil.com
+URL;Facebook:https://www.facebook.com/arifurrahmansw
 END:VCARD

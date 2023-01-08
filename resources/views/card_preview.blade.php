@@ -75,7 +75,6 @@
                         <p>{{ $cardinfo->bio }}</p>
                         @endif
                         <p><a href="{{ route('qr',$cardinfo->card_id) }}" rel="noopener noreferrer">QR Code Download</a></p>
-                        <p><a href="{{ route('download.vCard',$cardinfo->card_id) }}" rel="noopener noreferrer">VCR</a></p>
                     </div>
                     <div class="save_contact mt-5 mb-5">
                         {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact"  data-bs-toggle="modal" data-bs-target="#contactModal">{{ __('Save Contact') }}</a> --}}
@@ -180,7 +179,6 @@
             </div>
         </div>
     </div>
-
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
