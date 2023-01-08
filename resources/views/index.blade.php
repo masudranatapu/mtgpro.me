@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('home','active')
-
-@section('title') : Your Digital Business Card @endsection
+@section('title') Your Digital Business Card @endsection
 @push('custom_css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <style>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 
+
 Route::get('clear', function() {
     \Artisan::call('cache:clear');
     \Artisan::call('view:clear');
@@ -20,6 +21,10 @@ Route::get('language/{locale}', function ($locale) {
 
 
 Route::get('/',['as'=>'home','uses'=>'HomeController@getIndex']);
+
+Route::get('/qr/{id}', ['as' => 'qr', 'uses' => 'HomeController@getQRImage']);
+Route::get('/rss/rss.xml', ['as' => 'rss', 'uses' => 'HomeController@rss']);
+
 Route::get('privacy-policy',['as'=>'privacy-policy','uses'=>'HomeController@getPrivacyPolicy']);
 Route::get('terms-conditions',['as'=>'terms-conditions','uses'=>'HomeController@getTermsCondition']);
 Route::get('about-us',['as'=>'about-us','uses'=>'HomeController@getAboutUs']);

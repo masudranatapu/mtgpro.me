@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
-
+use Str;
 use Share;
+use QrCode;
 use App\Mail\ConnectMail;
 use App\Mail\SendContact;
 use App\Models\SocialIcon;
@@ -21,6 +22,8 @@ class HomeController extends Controller
 
     public function getIndex()
     {
+        $data = [];
+        $plans = DB::table('plans')->where('status',1)->get();
         return view('index');
     }
 
@@ -248,8 +251,8 @@ class HomeController extends Controller
         $file_name = $base_name.uniqid().".".'png';
         $path = public_path('assets/uploads/qr-code/');
         $file_path = $path.$file_name;
-        $image = \QrCode::format('png')
-        ->merge(public_path('assets/img/logo/qrlogo.png'), 0.2, true)
+        $image = QrCode::format('png')
+        ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
         ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
         return Response::download($file_path);
     }
