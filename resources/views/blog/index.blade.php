@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('layouts.app')
 <?php
 $rows = $data ?? [];
 $settings  = getSetting();

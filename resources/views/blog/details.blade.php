@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('layouts.app')
 @section('blogDetails','active')
 <?php
 $setting  = getSetting();
@@ -397,11 +397,11 @@ $setting  = getSetting();
     <div class="row">
         <div class="col-md-10 col-12 mx-md-auto">
             <div class="post-breadcrumbs d-none d-md-block my-md-5 my-sm-2">
-                <a href="{{ route('web.index') }}" class="breadcrumb-link">{{ __('Home')}}</a>
+                <a href="{{ route('home') }}" class="breadcrumb-link">{{ __('Home')}}</a>
                 <div class="breadcrumb-link">&gt;</div>
                 <a href="{{ route('blog') }}" class="breadcrumb-link">{{ __('Blog')}}</a>
                 <div class="breadcrumb-link">&gt;</div>
-                <a href="{{ route('blog.category',$data->category_slug) }}" class="breadcrumb-link">{{ $data->category_name }}</a>
+                <a href="{{ route('blog.category',$data->category_slug ?? 'mtg') }}" class="breadcrumb-link">{{ $data->category_name }}</a>
             </div>
         </div>
     </div>

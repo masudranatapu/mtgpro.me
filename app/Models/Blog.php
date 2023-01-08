@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    protected $fillable = ['title', 'author', 'image', 'slug', 'date', 'details', 'tag', 'date'];
+    protected $fillable = ['title', 'author', 'cover_image', 'slug', 'date', 'details', 'tag', 'date'];
 
     public function getBlogList($request){
         $data = [];
         $blogs = DB::table('blogs')->leftJoin('categories','categories.id','=','blogs.category_id')
         ->leftJoin('users','blogs.created_by','=','users.id')
-        ->select('blogs.slug as article_slug','categories.category_slug','categories.category_name',
-        'blogs.title','blogs.image','blogs.summary','blogs.created_at','users.name as user_name','users.profile_image','blogs.author','users.designation')
+        ->select('blogs.slug as article_slug','categories.category_slug','categories.category_name','blogs.details',
+        'blogs.title','blogs.cover_image as image','blogs.summary','blogs.created_at','users.name as user_name','users.profile_image','blogs.author','users.designation')
         ->where('blogs.is_active',1)
         ->orderby('blogs.order_id','DESC')->paginate(11);
         foreach ($blogs as $value) {
@@ -30,7 +30,7 @@ class Blog extends Model
 
      public function getFeatureArticle(){
         $blog = DB::table('blogs')->leftJoin('categories','categories.id','=','blogs.category_id')
-        ->select('blogs.slug as article_slug','categories.category_slug','blogs.title','blogs.image','blogs.summary','blogs.created_at')
+        ->select('blogs.slug as article_slug','categories.category_slug','blogs.title','blogs.cover_image as image','blogs.summary','blogs.created_at')
         ->where('blogs.is_active',1)
         ->orderby('blogs.order_id','DESC')->take(3)->get();
         foreach ($blog as $value) {
@@ -44,7 +44,7 @@ class Blog extends Model
         $blog    = DB::table('blogs')->leftJoin('categories','categories.id','=','blogs.category_id')
         ->leftJoin('users','blogs.created_by','=','users.id')
         ->select('blogs.id','blogs.slug as article_slug','categories.category_slug',
-        'blogs.title','blogs.image','blogs.summary','categories.category_name',
+        'blogs.title','blogs.cover_image as image','blogs.summary','categories.category_name',
         'blogs.details','blogs.tag','blogs.created_at','categories.id as category_id',
         'blogs.summary','blogs.created_at','blogs.updated_at','users.name as user_name','users.profile_image','blogs.author','users.designation'
         )->where('blogs.slug',$blogslug)
@@ -56,7 +56,7 @@ class Blog extends Model
      {
          $blog_table = 'blogs';
          $related_news =DB::table('blogs')->leftJoin('categories','categories.id','=','blogs.category_id')
-         ->select('blogs.slug as article_slug','categories.category_slug','blogs.title','blogs.image','blogs.author','blogs.summary','categories.category_name','blogs.details','blogs.tag')->where('blogs.id', '!=', $blogid)->where('blogs.is_active', 1)->where(function($q) use ($tags, $blog_table)
+         ->select('blogs.slug as article_slug','categories.category_slug','blogs.title','blogs.cover_image as image','blogs.author','blogs.summary','categories.category_name','blogs.details','blogs.tag')->where('blogs.id', '!=', $blogid)->where('blogs.is_active', 1)->where(function($q) use ($tags, $blog_table)
          {
              foreach ($tags as $tag) {
                  $q->orwhere($blog_table . ".tags", "like", "%" . $tag . "%");
@@ -73,7 +73,7 @@ class Blog extends Model
         $data       = [];
         $blogs    = DB::table('blogs')->leftJoin('categories','categories.id','=','blogs.category_id')
         ->leftJoin('users','blogs.created_by','=','users.id')
-        ->select('blogs.id','blogs.slug as article_slug','categories.category_slug','blogs.title','blogs.image','blogs.summary','categories.category_name','blogs.details','blogs.tag','blogs.created_at','categories.id as category_id',
+        ->select('blogs.id','blogs.slug as article_slug','categories.category_slug','blogs.title','blogs.cover_image as image','blogs.summary','categories.category_name','blogs.details','blogs.tag','blogs.created_at','categories.id as category_id',
         'blogs.summary','users.name as user_name','users.profile_image','blogs.author','users.designation'
         )->where('categories.category_slug',$category_slug)
         ->where('blogs.is_active',1)

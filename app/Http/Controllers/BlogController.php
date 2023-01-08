@@ -17,6 +17,7 @@ class BlogController extends Controller
         public function getBlogList(Request $request)
         {
             $data = $this->blog->getBlogList($request);
+
             $categories = DB::table('categories')->get();
             return view('blog.index',compact('data','categories'));
         }
