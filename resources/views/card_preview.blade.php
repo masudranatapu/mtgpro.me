@@ -194,12 +194,15 @@
                         @if (!empty($cardinfo->location))
                         <p>{{ $cardinfo->bio }}</p>
                         @endif
-                        <p><a href="{{ route('qr',$cardinfo->card_id) }}" rel="noopener noreferrer">QR Code Download</a></p>
                     </div>
                     <div class="save_contact mt-5 mb-5">
                         {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact"  data-bs-toggle="modal" data-bs-target="#contactModal">{{ __('Save Contact') }}</a> --}}
-                        <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50">{{ __('Save Contact') }}</a>
-                        <a href="javascript:void(0)" class="text-decoration-none w-50" data-bs-toggle="modal" data-bs-target="#shareModal">{{ __('Share') }}</a>
+                        <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">
+                            {{ __('Save Contact') }}
+                        </a>
+                        <a href="javascript:void(0)" class="text-decoration-none d-inline-block" data-bs-toggle="modal" data-bs-target="#shareModal">
+                            {{ __('Share') }}
+                        </a>
                     </div>
                     <div class="social_media">
                          <ul>
@@ -353,15 +356,20 @@
                             <div class="row">
                                 <div class="col-4">
                                     <ul>
-                                        <li><a title="{{ __('By Email')}}" href="#" data-bs-toggle="modal" data-bs-target="#contactModal"><i
-                                                    class="fa fa-envelope"></i>{{ __('By Email')}}</a>
+                                        <li>
+                                            <a title="{{ __('By Email')}}" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icon/message.svg') }}" alt="">
+                                                {{ __('By Email')}}
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-4">
                                     <ul>
-                                        <li><a title="{{ __('Social Media')}}" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#SocialModal"><i class="fa fa-share-alt"></i>{{ __('Social Media')}}</a>
+                                        <li><a title="{{ __('Social Media')}}" href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
+                                            <img class="img-fluid" src="{{ asset('assets/img/icon/connections.svg') }}" alt="">
+                                            {{ __('Social Media')}}
+                                        </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -386,11 +394,11 @@
                     <h2 class="mb-5 text-center">Share Your Card</h2>
                     <div id="social-links">
                         <ul>
-                            <li><a href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><span class="fab fa-facebook-square"></span></a></li>
-                            <li><a href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><span class="fab fa-twitter"></span></a></li>
-                            <li><a href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><span class="fab fa-linkedin"></span></a></li>
-                            <li><a target="_blank" href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><span class="fab fa-telegram"></span></a></li>
-                            <li><a target="_blank" href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><span class="fab fa-whatsapp"></span></a></li>
+                            <li><a href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt=""></a></li>
+                            <li><a href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt=""></a></li>
+                            <li><a href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><img class="img-fluid" src="{{ asset('assets/img/icon/linkedin.svg') }}" alt=""></a></li>
+                            <li><a target="_blank" href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt=""></a></li>
+                            <li><a target="_blank" href="#" class="bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2 bg-blue-600 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-700 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2" id="" title=""><img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt=""></a></li>
                         </ul>
                     </div>
                 </div>
@@ -419,7 +427,7 @@
                             link.setAttribute('href', response.file_path);
                             link.setAttribute('download', response.file_name);
                             link.click();
-                            $("#contactModal").modal("show");
+                            // $("#contactModal").modal("show");
                         }else{
                             toastr.error('Something wrong! please try again');
                         }
