@@ -43,6 +43,7 @@
 .card-status label:active:after {
 	width: 50px;
 }
+.btn-sm.inactive{color: rgb(151 140 140) !important;}
 
 </style>
 @endpush
@@ -95,11 +96,20 @@
                                             </div>
                                             <div class="card_btn mt-3 mb-4">
                                                 <a href="{{ route('user.card.edit',$card->id) }}" class="btn-sm btn-secondary">{{ __('Edit Card') }}</a>
-                                                <a target="__blank" href="{{ route('card.preview',$card->card_url) }}" class="btn-sm btn-secondary"><i class="fa fa-check"></i> {{ __('Live') }}</a>
+
                                                 @if (checkPackage())
-                                                <div class="card-status d-inline-block position-relative">
+
+                                                <a href="javascript:void(0)" id="change_status_{{ $card->id }}" class="btn-sm btn-secondary change-status {{ $card->status == 0 ? 'inactive' : '' }} " data-id="{{ $card->id }}" data-status="{{ $card->status }}" >
+                                                    <i class="fa fa-check" style="@if($card->status == 0) display:none; @endif" ></i>
+                                                    {{ __('Live') }}
+                                                </a>
+
+                                                <a target="__blank" href="{{ route('card.preview',$card->card_url) }}" class="btn-sm btn-secondary"> {{ __('Preview') }}</a>
+
+
+                                                {{-- <div class="card-status d-inline-block position-relative">
                                                     <input type="checkbox" name="change-status" id="switch_{{$card->id}}" value="{{$card->status}}"  {{ $card->status==1 ? 'checked':'' }}  class="change-status" data-id="{{ $card->id }}" /><label for="switch_{{$card->id}}">Toggle</label>
-                                                </div>
+                                                </div> --}}
                                                 @endif
 
                                             </div>
@@ -138,21 +148,30 @@
            });
 
 
-    $(document).on('change','.change-status', function() {
-        var change_status = $('input[name="change-status"]:checked').val() ?? 0;
+    $(document).on('click','.change-status', function() {
         var card_id = $(this).attr('data-id');
-        var get_url = $('#base_url').val();
+        var status = $(this).attr('data-status');
+
 
         $.ajax({
             type: 'POST',
             url: "{{ URL::route('user.card.change-status') }}",
             data: {
             '_token': $('input[name=_token]').val(),
-            'id': card_id
+            'id': card_id,
+            'status': status,
             },
             success: function(data) {
                 if(data.status==true){
                     toastr.success(data.msg);
+                    if(status == 1){
+                        $('#change_status_'+card_id+' i').hide();
+                        $('#change_status_'+card_id).attr('data-status',0);
+                    }
+                    if(status == 0){
+                        $('#change_status_'+card_id+' i').show();
+                        $('#change_status_'+card_id).attr('data-status',1);
+                    }
                 }
                 else{
                         toastr.warning(data.msg);

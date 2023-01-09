@@ -88,7 +88,7 @@ input[disabled], button[disabled] {background-color: #eee;}
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">{{ __('Upgrade / Renewal Plan')}}</h6>
+                    <h6 class="card-title">{{ __('Upgrade Plan')}}</h6>
                     <div class="card-table">
                         <table class="table">
                             <thead class="bg-white">

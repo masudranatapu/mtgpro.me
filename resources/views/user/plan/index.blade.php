@@ -52,16 +52,16 @@ My Plans
                     <div class="section_title text-center mb-2">
                         <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
                     </div>
-                    <div class="plan_type switchBtn text-center mb-4">
-                        <div class="form-check form-switch">
+                    <div class="plan_type switchBtn text-center mb-2 mt-3">
+                        <div class="form-check form-switch d-inline">
                             <label class="form-check-label" for="CheckedAnnualy">
-                                <input class="form-check-input" name="planType" checked="" type="radio" value="0" id="CheckedAnnualy" onclick="monthlyCheckedAnnualy()">
+                                <input class="form-check-input" name="planType" checked="" type="radio" value="annual" id="CheckedAnnualy">
                                     {{ __('Annual')}}
                             </label>
                         </div>
-                        <div class="form-check form-switch">
+                        <div class="form-check form-switch d-inline">
                             <label class="form-check-label" for="monthlyChecked">
-                                <input class="form-check-input" name="planType"  type="radio" value="0" id="monthlyChecked" onclick="monthlyCheckedAnnualy()">
+                                <input class="form-check-input" name="planType"  type="radio" value="monthly" id="monthlyChecked">
                                     {{ __('Monthly')}}
                             </label>
                         </div>
@@ -90,7 +90,7 @@ My Plans
                                 <div class="my-3 pb-3">
                                     <div class="price">
                                         <h4 class="planpricemonthly">  {{ $currency->symbol }} {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
-                                        <h4 class="planpriceyearly" style="display: none;">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
+                                        <h4 class="planpriceyearly">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
                                     </div>
                                 </div>
                                 <hr>
@@ -157,11 +157,9 @@ My Plans
                         <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
                         <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
                         <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
-                        <div class="modal-title">{{ __('“We’re excited to have you!')}}</div>
+                        <div class="modal-title">{{ __('Were excited to have you!')}}</div>
                         <div class="mb-2">{{ __('Proceed to checkout with this plan and you’ll be able to upgrade or downgrade at any time')}}</div>
-                        <div class="text-danger">
-                            {{ __('For upgrading users, simply visit “Business Cards” to enable your cards after the upgrade')}}
-                        </div>
+
                         <div class="modal-footer pb-2 pt-4">
                             <button type="button"  class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
                             <button type="submit" class="btn btn-primary">{{ __('Confirm')}}</button>
@@ -200,21 +198,64 @@ $(document).on('click', '.choose-plan', function () {
     $("#plan_id").val(plan_id);
     $('#planConfirmModal').modal('show');
 })
+
 $(document).on('click', '.down-plan-model', function () {
     $('#downPlanModal').modal('show');
 })
-function monthlyCheckedAnnualy() {
-    var montlycheckBox = document.getElementById("monthlyCheckedAnnualy");
-    var monthlyCheckedAnnualy
-    if (montlycheckBox.checked == true){
-    $("#is_yearly").val(1);
-    $(".planpricemonthly").hide();
-    $(".planpriceyearly").show();
-    } else {
-    $(".planpricemonthly").show();
-    $(".planpriceyearly").hide();
-    $("#is_yearly").val(0);
+// function monthlyCheckedAnnualy() {
+//     var montlycheckBox = document.getElementById("monthlyCheckedAnnualy");
+//     var monthlyCheckedAnnualy
+//     if (montlycheckBox.checked == true){
+//     $("#is_yearly").val(1);
+//     $(".planpricemonthly").hide();
+//     $(".planpriceyearly").show();
+//     } else {
+//     $(".planpricemonthly").show();
+//     $(".planpriceyearly").hide();
+//     $("#is_yearly").val(0);
+//     }
+// };
+
+
+$(document).ready(function(){
+        getPackage();
+
+        $("input[name='planType']").click(function(){
+            getPackage();
+
+        });
+
+    });
+
+    function getPackage(){
+        var radioValue = $("input[name='planType']:checked").val();
+        if(radioValue == 'monthly'){
+            $('.planpriceyearly').addClass('d-none');
+            $('.planpricemonthly').removeClass('d-none');
+
+            $.each($('.choose-plan'), function (index, item) {
+                var currentUrl = $(item).attr('href');
+                var url = new URL(currentUrl);
+                url.searchParams.set("is_yearly", 0);
+                var newUrl = url.href;
+                $(item).attr('href', newUrl);
+            });
+
+        }
+
+        if(radioValue == 'annual'){
+            $('.planpriceyearly').removeClass('d-none');
+            $('.planpricemonthly').addClass('d-none');
+
+            $.each($('.choose-plan'), function (index, item) {
+                var currentUrl = $(item).attr('href');
+                var url = new URL(currentUrl);
+                url.searchParams.set("is_yearly", 1);
+                var newUrl = url.href;
+                $(item).attr('href', newUrl);
+            });
+        }
+
     }
-};
 </script>
 @endpush
