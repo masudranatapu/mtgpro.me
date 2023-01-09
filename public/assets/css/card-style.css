@@ -102,7 +102,7 @@ ul{
     border-radius: 50px;
     color: #fff;
     background: #111;
-    width: 54%;
+    /* width: 54%; */
     transition: all 0.4s ease;
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
