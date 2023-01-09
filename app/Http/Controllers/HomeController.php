@@ -17,6 +17,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
+use App\Models\Faq;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Support\Facades\Response;
 
@@ -36,7 +37,8 @@ class HomeController extends Controller
         $data = [];
         $plans = Plan::where('status',1)->get();
         $currency = Currency::where('is_default', 1)->first();
-        return view('index',compact('plans','currency'));
+        $faqs = Faq::orderBy('order_id', 'DESC')->get();
+        return view('index',compact('plans','currency', 'faqs'));
     }
 
     public function getPrivacyPolicy()
@@ -57,12 +59,11 @@ class HomeController extends Controller
         DB::beginTransaction();
         try {
             $data['name' ]         = $request->name;
-            // $data['title']      = $request->title;
             $data['email']         = $request->email;
             $data['phone']         = $request->phone;
-            $data['title']         = $request->job_title;
-            $data['company_name']  = $request->company;
-            $data['message']       = $request->note;
+            $data['title']         = $request->title;
+            $data['company_name']  = $request->company_name;
+            $data['message']       = $request->message;
             $card = BusinessCard::where('id', $request->card_id)->first();
             // if(Auth::user()){
             //     $user_id =  Auth::id();
@@ -101,6 +102,8 @@ class HomeController extends Controller
         ->leftJoin('plans','plans.id','users.plan_id')
         ->first();
         if($cardinfo){
+            DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
+            // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
             $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
             $shareComponent = Share::page($url,'Hello! This is my vCard.',)->facebook()->twitter()->linkedin()->telegram()->whatsapp();
@@ -185,16 +188,6 @@ class HomeController extends Controller
                 $url = $card->company_websitelink;
                 $company = $card->company_name;
                 $whatsapp = '';
-                 // define values with non-empty values
-                // $values = array_filter([
-                //     $prefix,
-                //     $firstname,
-                //     $additional,
-                //     $lastname,
-                //     $suffix,
-                // ]);
-                // add personal data
-                // $vcard->setFilename($values,$overwrite = true,$separator = '_');
                 $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
                 $vcard->addEmail($card->card_email ?? Auth::user()->email);
                 if(!empty($card->bio)){
@@ -245,47 +238,11 @@ class HomeController extends Controller
                         }
                     }
                 }
-                // $vcard->addURL (URL::to('/'),'Created With '.$this->settings->site_name);
-                // $vcard->addURL ($url,$this->settings->site_name.' URL');
-                // if(isset($card->content)){
-                //     $card_fields = $card->content;
-                //     $arr_card_fields = json_decode($card_fields,true);
-                //     // dd($arr_card_fields);
-                //     if(isset($arr_card_fields['facebook'])){
-                //         $vcard->addURL ($arr_card_fields['facebook'][0],'Facebook');
-                //     }
-                //     if(isset($arr_card_fields['twitter'])){
-                //         $vcard->addURL ($arr_card_fields['twitter'][0],'Twitter');
-                //     }
-                //     if(isset($arr_card_fields['linkedin'])){
-                //         $vcard->addURL ($arr_card_fields['linkedin'][0],'Linkedin');
-                //     }
-                //     if(isset($arr_card_fields['pinterest'])){
-                //         $vcard->addURL ($arr_card_fields['pinterest'][0],'Pinterest');
-                //     }
-                //     if(isset($arr_card_fields['whatsapp'])){
-                //         $vcard->addPhoneNumber($arr_card_fields['whatsapp'][0], 'Whatsapp');
-                //     }
-                //     if(isset($arr_card_fields['instagram'])){
-                //         $vcard->addURL($arr_card_fields['instagram'][0], 'Instagram');
-                //     }
-                //     if(isset($arr_card_fields['phone'])){
-                //         $vcard->addPhoneNumber($arr_card_fields['phone'][0], 'Phone');
-                //     }
-                //     if(isset($arr_card_fields['address'])){
-                //         $vcard->addAddress($arr_card_fields['address'][0]);
-                //     }
-                //     if(isset($arr_card_fields['text'])){
-                //         $vcard->addPhoneNumber($arr_card_fields['text'][0]);
-                //     }
-                // }
-
-                // dd($vcard);
-                // $vcard->addLabel('street, worktown, workpostcode Belgium');
                 // save vcard on disk
                 $path = public_path('assets/vcard/');
                 $vcard->setSavePath($path);
                 $vcard->save();
+                DB::table('business_cards')->where('card_id',$id)->increment('total_vcf_download', 1);
 
                 // dd($vcard);
                 $file_name =  $vcard->getFilename();
@@ -327,6 +284,8 @@ class HomeController extends Controller
         $image = QrCode::format('png')
         ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
         ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
+        DB::table('business_cards')->where('card_id',$id)->increment('total_qr_download', 1);
+
         return Response::download($file_path);
     }
 

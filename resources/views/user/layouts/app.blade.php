@@ -13,7 +13,7 @@
         <title>{{ $settings->site_name }} - @yield('title')</title>
         <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
-        <link rel="manifest" href="{{ asset('manifest.json') }}">
+        {{-- <link rel="manifest" href="{{ asset('manifest.json') }}"> --}}
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="">
         <meta name="theme-color" content="#ffffff">
