@@ -10,6 +10,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SendConnectMail;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\SendConnectMailRequest;
 
 class ConnectionController extends Controller
 {
@@ -132,28 +133,22 @@ class ConnectionController extends Controller
     }
 
 
-    public function sendConnectEmail(SendConnectMail $request)
+    // public function sendConnectEmail(SendConnectMailRequest $request,$id)
+    public function sendConnectEmail(Request $request,$id)
     {
-        DB::beginTransaction();
         try {
+
+            // "email" => "midul@gmail.com"
+            // "subject" => "asas"
+            // "message" => "asas"
             $connection   = Connection::find($id);
-            $connection->name       = $request->name;
-            $connection->email      = $request->email;
-            $connection->phone      = $request->phone;
-            $connection->title      = $request->title;
-            $connection->company_name = $request->company_name;
-            $connection->message    = $request->message;
-            $connection->updated_at = date("Y-m-d H:i:s");
-            $connection->updated_by = Auth::user()->id;
-            $connection->update();
+
         } catch (\Exception $e) {
             dd($e->getMessage());
-            DB::rollback();
             Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
-        DB::commit();
-        Toastr::success('Payment information updated', 'Success', ["positionClass" => "toast-top-center"]);
+        Toastr::success('Email successfully sent', 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
