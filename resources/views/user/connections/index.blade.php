@@ -47,7 +47,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}">
-                                                    <img src="{{ getProfile() }}" alt="{{ $row->name }}" width="80">
+                                                    <img src="{{ getProfile($row->user_image) }}" alt="{{ $row->name }}" width="80">
                                                     {{ $row->name }}<br>
                                                     {{ $row->email }}
                                                 </a>

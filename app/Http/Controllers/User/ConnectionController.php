@@ -27,15 +27,18 @@ class ConnectionController extends Controller
 
     public function getIndex(Request $request)
     {
-        $data = DB::table('connects')->orderBy('id','desc')
-        ->where('user_id',Auth::user()->id);
+        $data = DB::table('connects')
+        ->select('connects.*','users.profile_image as user_image')
+        ->orderBy('connects.id','desc')
+        ->leftJoin('users','users.id','=','connects.user_id')
+        ->where('connects.user_id',Auth::user()->id);
 
         if($request->search){
             $search = $request->search;
             $search = explode(' ',$search);
             if($search){
                 foreach ($search as $key => $value) {
-                    $data->where("name", "like", "%$value%");
+                    $data->where("connects.name", "like", "%$value%");
                 }
             }
         }
