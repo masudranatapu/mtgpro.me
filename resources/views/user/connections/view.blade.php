@@ -32,8 +32,8 @@
                 <div class="row align-item-center">
                     <div class="col-xl-8">
                         <a href="" class="btn"> <a href="{{ route('user.connections.edit',$row->id) }}"><img src="{{ asset('assets/img/icon/edit.svg') }}" alt="{{ $row->name }}"> {{ __('Edit') }}</a>
-                        <a href="" class="btn"> <a href="{{ route('user.connections.edit',$row->id) }}"><img src="{{ asset('assets/img/icon/download.svg') }}" alt="{{ $row->name }}"> {{ __('Save as contact') }}</a>
-                        <a href="" class="btn"> <a href="{{ route('user.connections.edit',$row->id) }}"><img src="{{ asset('assets/img/icon/message.svg') }}" alt="{{ $row->name }}"> {{ __('Email lead') }}</a>
+                        <a href="" class="btn"> <a href="{{ route('user.connections.download',$row->id) }}"><img src="{{ asset('assets/img/icon/download.svg') }}" alt="{{ $row->name }}"> {{ __('Save as contact') }}</a>
+                        <a href="" class="btn"> <a href="#"><img src="{{ asset('assets/img/icon/message.svg') }}" alt="{{ $row->name }}"> {{ __('Email lead') }}</a>
 
                         <div class="view-card card">
                             <div class="row">

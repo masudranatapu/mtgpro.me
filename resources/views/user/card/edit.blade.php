@@ -3,7 +3,6 @@
 
 @push('custom_css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
-
 @endpush
 @push('top_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
@@ -129,7 +128,6 @@
                                                                                 <img src="{{ getProfile($card->profile) }}" alt=""/>
                                                                                 <input type="file" name="profile_pic" id="profile_pic">
                                                                             </div>
-
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-sm-6 text-center">

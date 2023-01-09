@@ -85,6 +85,9 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
 
     Route::get('connections',['as'=>'connections','uses'=>'ConnectionController@getIndex']);
     Route::get('connections/view/{email}/{id}',['as'=>'connections.details','uses'=>'ConnectionController@getConnectionDetails']);
+    Route::get('connections/{id}/edit',['as'=>'connections.edit','uses'=>'ConnectionController@getEdit']);
+    Route::get('connections/{id}/download',['as'=>'connections.download','uses'=>'ConnectionController@getDownloadVcf']);
+    Route::post('connections/{id}/update',['as'=>'connections.update','uses'=>'UserController@putUpdateConnection']);
 
 
 });
