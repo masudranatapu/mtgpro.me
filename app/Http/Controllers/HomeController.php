@@ -101,6 +101,7 @@ class HomeController extends Controller
         ->first();
         if($cardinfo){
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
+            // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
             $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
             $shareComponent = Share::page($url,'Hello! This is my vCard.',)->facebook()->twitter()->linkedin()->telegram()->whatsapp();
@@ -185,16 +186,6 @@ class HomeController extends Controller
                 $url = $card->company_websitelink;
                 $company = $card->company_name;
                 $whatsapp = '';
-                 // define values with non-empty values
-                // $values = array_filter([
-                //     $prefix,
-                //     $firstname,
-                //     $additional,
-                //     $lastname,
-                //     $suffix,
-                // ]);
-                // add personal data
-                // $vcard->setFilename($values,$overwrite = true,$separator = '_');
                 $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
                 $vcard->addEmail($card->card_email ?? Auth::user()->email);
                 if(!empty($card->bio)){
@@ -245,43 +236,6 @@ class HomeController extends Controller
                         }
                     }
                 }
-                // $vcard->addURL (URL::to('/'),'Created With '.$this->settings->site_name);
-                // $vcard->addURL ($url,$this->settings->site_name.' URL');
-                // if(isset($card->content)){
-                //     $card_fields = $card->content;
-                //     $arr_card_fields = json_decode($card_fields,true);
-                //     // dd($arr_card_fields);
-                //     if(isset($arr_card_fields['facebook'])){
-                //         $vcard->addURL ($arr_card_fields['facebook'][0],'Facebook');
-                //     }
-                //     if(isset($arr_card_fields['twitter'])){
-                //         $vcard->addURL ($arr_card_fields['twitter'][0],'Twitter');
-                //     }
-                //     if(isset($arr_card_fields['linkedin'])){
-                //         $vcard->addURL ($arr_card_fields['linkedin'][0],'Linkedin');
-                //     }
-                //     if(isset($arr_card_fields['pinterest'])){
-                //         $vcard->addURL ($arr_card_fields['pinterest'][0],'Pinterest');
-                //     }
-                //     if(isset($arr_card_fields['whatsapp'])){
-                //         $vcard->addPhoneNumber($arr_card_fields['whatsapp'][0], 'Whatsapp');
-                //     }
-                //     if(isset($arr_card_fields['instagram'])){
-                //         $vcard->addURL($arr_card_fields['instagram'][0], 'Instagram');
-                //     }
-                //     if(isset($arr_card_fields['phone'])){
-                //         $vcard->addPhoneNumber($arr_card_fields['phone'][0], 'Phone');
-                //     }
-                //     if(isset($arr_card_fields['address'])){
-                //         $vcard->addAddress($arr_card_fields['address'][0]);
-                //     }
-                //     if(isset($arr_card_fields['text'])){
-                //         $vcard->addPhoneNumber($arr_card_fields['text'][0]);
-                //     }
-                // }
-
-                // dd($vcard);
-                // $vcard->addLabel('street, worktown, workpostcode Belgium');
                 // save vcard on disk
                 $path = public_path('assets/vcard/');
                 $vcard->setSavePath($path);
