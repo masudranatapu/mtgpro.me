@@ -24,16 +24,17 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table" id="connections">
+                            <div class="custome_table table-responsive">
+                                <table class="table " id="connections">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <th class="text-left">
                                                 <label for="">
-                                                    <input class="form-control" type="checkbox" name="select_all"> {{ _('Select All') }}
+                                                    <input type="checkbox" name="select_all"> 
+                                                    {{ _('Select All') }}
                                                 </label>
                                             </th>
-                                            <th>{{ _('Connection') }}</th>
+                                            <th class="text-left">{{ _('Connection') }}</th>
                                             <th>{{ _('Connected with') }}</th>
                                             <th>{{ _('Date') }}</th>
                                             <th>{{ _('Export') }}</th>
@@ -42,21 +43,26 @@
                                     <tbody>
                                         @foreach ($rows as $row)
                                         <tr>
-                                            <td>
-                                                <input class="form-control" type="checkbox" name="select_all" value="{{ $row->id }}">
+                                            <td class="text-left" >
+                                                <input  type="checkbox" name="select_all" value="{{ $row->id }}">
                                             </td>
-                                            <td>
-                                                <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}">
-                                                    <img src="{{ getProfile($row->user_image) }}" alt="{{ $row->name }}" width="80">
-                                                    {{ $row->name }}<br>
-                                                    {{ $row->email }}
+                                            <td class="text-left">
+                                                <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}" class="text-dark">
+                                                    <div class="media position-relative align-items-center">
+                                                      <img src="{{ getProfile($row->user_image) }}" width="50" class="rounded-circle mr-2 border" alt="{{ $row->name }}" width="80">
+                                                      <div class="media-body">
+                                                        <h6 class="m-0">{{ $row->name }}</h6>
+                                                        <span>{{ $row->email }}</span>
+                                                      </div>
+                                                    </div>
                                                 </a>
+
                                             </td>
-                                            <td>
-                                                <img src="{{ getProfile($row->profile_image) }}" width="50" class="img-circle mr-2" alt="{{ $row->name }}" title="{{ $row->name }}">
+                                            <td class="text-center">
+                                                <img src="{{ getProfile($row->profile_image) }}" width="42" class="img-circle mr-2" alt="{{ $row->name }}" title="{{ $row->name }}">
                                             </td>
-                                            <td>{{ date('M d, Y', strtotime($row->created_at)) }} </td>
-                                            <td>
+                                            <td class="text-center">{{ date('M d, Y', strtotime($row->created_at)) }} </td>
+                                            <td class="text-center">
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <img src="{{ asset('assets/img/icon/tripledot.svg') }}" alt="{{ _('Export') }}">

@@ -20,6 +20,9 @@ body {
     background: #F7F7F7;
 }
 
+.dropdown-toggle::after{
+    display: none;
+}
 .card_step_form {
     background: #fff;
     padding: 50px 50px;
@@ -1381,4 +1384,36 @@ body {
     font-weight: 700;
 }
 
+.custome_table table {
+  border-collapse: separate;
+  border-spacing: 0px 2px;
+}
 
+.custome_table .table tr{
+    border-radius: 10px;
+}
+
+.custome_table .table td {
+    background: #fff;
+    vertical-align: middle;
+    color: #999;
+    font-size: 14px;
+    font-weight: 600;
+    border: none !important;
+}
+
+.custome_table th {
+    padding: 0;
+    color: #828282;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    padding: 0px 0px 10px 0px;
+    line-height: 42px;
+    border: none !important;
+    vertical-align: middle;
+}
