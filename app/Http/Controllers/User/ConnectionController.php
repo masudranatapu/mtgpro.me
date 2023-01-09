@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\User;
 use App\Models\Connection;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -9,10 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ConnectionController extends Controller
 {
-    public function __construct()
-    {
-        $this->settings = getSetting();
-    }
+
+    protected $businessCard;
+    public function __construct(
+        BusinessCard $businessCard
+        )
+        {
+            $this->businessCard  = $businessCard;
+            $this->settings = getSetting();
+        }
+
 
     public function getIndex(Request $request)
     {
@@ -135,16 +142,34 @@ class ConnectionController extends Controller
 
 
 
-    public function putUpdateConnection(Request $request,$id)
+    public function putUpdate(Request $request,$id)
     {
+
         DB::beginTransaction();
         try {
             $connection   = Connection::find($id);
-            $connection->card_number = $request->card_number;
-            $connection->card_expiration_date = $request->card_expiration_date;
-            $connection->card_cvc     = $request->card_cvc;
-            $connection->name_on_card = $request->name_on_card;
-            $connection->updated_at   = date("Y-m-d H:i:s");
+            if($request->has('profile_pic') && !empty($request->profile_pic[0]))
+            {
+                $file_name = $this->businessCard->formatName($request->name);
+                $output = $request->profile_pic;
+                $output = json_decode($output, TRUE);
+                if(isset($output) && isset($output['output']) && isset($output['output']['image'])){
+                    $image = $output['output']['image'];
+                    if(isset($image))
+                    {
+                        $image_name =  $this->businessCard->uploadBase64ToImage($image,$file_name,'jpg');
+                    }
+                }
+                $connection->profile_image  = $image_name;
+            }
+            $connection->name       = $request->name;
+            $connection->email      = $request->email;
+            $connection->phone      = $request->phone;
+            $connection->title      = $request->title;
+            $connection->company_name = $request->company_name;
+            $connection->message    = $request->message;
+            $connection->updated_at = date("Y-m-d H:i:s");
+            $connection->updated_by = Auth::user()->id;
             $connection->update();
         } catch (\Exception $e) {
             dd($e->getMessage());

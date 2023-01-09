@@ -43,7 +43,7 @@ $tabindex = 1;
                                                      data-ratio="1:1"
                                                      data-size="540,540"
                                                      data-max-file-size="100">
-                                                    <img src="{{ asset($row->profile) }}" alt="{{ $row->name }}"/>
+                                                    <img src="{{ asset($row->profile_image) }}" alt="{{ $row->name }}"/>
                                                     <input type="file" name="profile_pic" id="profile_pic">
                                                 </div>
                                             </div>
@@ -77,21 +77,21 @@ $tabindex = 1;
                                             @endif
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" name="job_title" id="job_title" value="{{ $row->title }}" class="form-control @error('job_title') is-invalid @enderror" placeholder="{{ __('Job Title') }}" required tabindex="{{$tabindex++}}">
-                                            @if($errors->has('job_title'))
-                                            <span class="help-block text-danger">{{ $errors->first('job_title') }}</span>
+                                            <input type="text" name="title" id="title" value="{{ $row->title }}" class="form-control @error('title') is-invalid @enderror" placeholder="{{ __('Job Title') }}" required tabindex="{{$tabindex++}}">
+                                            @if($errors->has('title'))
+                                            <span class="help-block text-danger">{{ $errors->first('title') }}</span>
                                             @endif
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" name="company" id="company" value="{{$row->company_name }}" class="form-control @error('company') is-invalid @enderror" placeholder="{{ __('Company') }}" required tabindex="{{$tabindex++}}">
-                                            @if($errors->has('company'))
-                                            <span class="help-block text-danger">{{ $errors->first('company') }}</span>
+                                            <input type="text" name="company_name" id="company_name" value="{{$row->company_name }}" class="form-control @error('company_name') is-invalid @enderror" placeholder="{{ __('company_name') }}" required tabindex="{{$tabindex++}}">
+                                            @if($errors->has('company_name'))
+                                            <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                             @endif
                                         </div>
                                         <div class="mb-3">
-                                            <textarea name="note" id="note" cols="30" rows="10" value="{{ old('note') }}" class="form-control @error('note') is-invalid @enderror" placeholder="{{ __('Notes on this interaction') }}" tabindex="{{$tabindex++}}">{{$row->message }}</textarea>
-                                            @if($errors->has('note'))
-                                            <span class="help-block text-danger">{{ $errors->first('note') }}</span>
+                                            <textarea name="message" id="message" cols="30" rows="10" value="{{ old('message') }}" class="form-control @error('message') is-invalid @enderror" placeholder="{{ __('Notes on this interaction') }}" tabindex="{{$tabindex++}}">{{$row->message }}</textarea>
+                                            @if($errors->has('message'))
+                                            <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                                             @endif
                                         </div>
                                         <button type="submit" class="btn btn-primary" style="background: #111 !important;">{{ __('Update') }}</button>
