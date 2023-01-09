@@ -77,8 +77,7 @@ class CheckoutController extends Controller
                     'paypal_data' => NULL,
                 ]);
                 return redirect()->route('user.plans');
-            }
-            elseif($plan->is_free==1){
+            }elseif($plan->is_free==1){
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => 0,
@@ -88,14 +87,13 @@ class CheckoutController extends Controller
                     'plan_details' => json_encode($plan)
                 ]);
                 return redirect()->route('user.plans');
-            }
-            else{
+            }else{
                 $plan->is_yearly = $is_yearly;
                 $gateways = DB::table('gateways')->where('status', 1)->get();
+
                 return view('user.plan.checkout', compact('plan', 'gateways','user','config'));
             }
-        }
-        else {
+        }else {
             Toastr::error(trans('Please select your plan'), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->route('user.plans');
         }
