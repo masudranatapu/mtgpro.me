@@ -86,5 +86,6 @@
 @endsection
 @push('custom_js')
 <script>
+
 </script>
 @endpush
