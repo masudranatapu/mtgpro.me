@@ -17,6 +17,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
+use App\Models\Faq;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Support\Facades\Response;
 
@@ -36,7 +37,8 @@ class HomeController extends Controller
         $data = [];
         $plans = Plan::where('status',1)->get();
         $currency = Currency::where('is_default', 1)->first();
-        return view('index',compact('plans','currency'));
+        $faqs = Faq::orderBy('order_id', 'DESC')->get();
+        return view('index',compact('plans','currency', 'faqs'));
     }
 
     public function getPrivacyPolicy()
