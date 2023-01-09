@@ -100,6 +100,7 @@ class HomeController extends Controller
         ->leftJoin('plans','plans.id','users.plan_id')
         ->first();
         if($cardinfo){
+            DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
             $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
             $shareComponent = Share::page($url,'Hello! This is my vCard.',)->facebook()->twitter()->linkedin()->telegram()->whatsapp();
@@ -285,6 +286,7 @@ class HomeController extends Controller
                 $path = public_path('assets/vcard/');
                 $vcard->setSavePath($path);
                 $vcard->save();
+                DB::table('business_cards')->where('card_id',$id)->increment('total_vcf_download', 1);
 
                 // dd($vcard);
                 $file_name =  $vcard->getFilename();
@@ -326,6 +328,8 @@ class HomeController extends Controller
         $image = QrCode::format('png')
         ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
         ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
+        DB::table('business_cards')->where('card_id',$id)->increment('total_qr_download', 1);
+
         return Response::download($file_path);
     }
 
