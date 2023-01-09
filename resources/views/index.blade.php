@@ -162,7 +162,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- feature item -->
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                         <div class="feature_item">
@@ -177,17 +176,11 @@
                     </div>
                 </div>
             </div>
-            <!-- row -->
         </div>
-        <!-- container -->
     </div>
-    <!-- ======================= Pricing  =========================== -->
     <div class="pricing section pt-5 pb-5" id="pricing">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
-                <!-- section heading -->
                 <div class="section_title mb-5 text-center" data-aos="fade-up">
                     <h4>{{ __('Choose your best plan') }}</h4>
                     <div class="plan_type switchBtn text-center mb-2 mt-3">
@@ -205,64 +198,59 @@
                         </div>
                     </div>
                 </div>
-                <!-- section heading -->
-                <!-- plan -->
-
                 @if (!empty($plans) && count($plans) > 0)
-                @foreach($plans as $plan)
-                    @php
-                        $planfeatures = json_decode($plan->features);
-                    @endphp
-            <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
-                <div class="pricing-card card card-md">
-                    <div class="card-body text-center">
-                        <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}</div>
-                            @if ((Auth::user()) && (Auth::user()->plan_id==$plan->id))
-                            <div class="text-center mt-4">
-                            <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
-                            </div>
-                            @else
-                                <div class="text-center mt-4">
-                                    <a href="{{ route('user.checkout') }}?plan_id={{ $plan->id }}&is_yearly=1" class="choose-plan btn btn-primary btn-block btn-dark w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                    @foreach($plans as $plan)
+                        @php
+                            $planfeatures = json_decode($plan->features);
+                        @endphp
+                        <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                            <div class="pricing-card card card-md">
+                                <div class="card-body text-center">
+                                    <div class="text-capitalize text-dark font-weight-bold">
+                                        {{$plan->plan_name}}
+                                    </div>
+                                    @if ((Auth::user()) && (Auth::user()->plan_id==$plan->id))
+                                        <div class="text-center mt-4">
+                                            <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
+                                        </div>
+                                    @else
+                                        <div class="text-center mt-4">
+                                            <a href="{{ route('user.checkout') }}?plan_id={{ $plan->id }}&is_yearly=1" class="choose-plan btn btn-primary btn-block btn-dark w-100" data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}" title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                                        </div>
+                                    @endif
+                                    <div class="my-3 pb-3">
+                                        <div class="price">
+                                            <h4 class="planpricemonthly">  {{ $currency->symbol }} {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
+                                            <h4 class="planpriceyearly">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <ul class="list-unstyled lh-lg ">
+                                        @foreach($planfeatures as $features)
+                                            <li class="py-2">
+                                                <span>{{$features}}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                            @endif
-                            <div class="my-3 pb-3">
-                                <div class="price">
-                                    <h4 class="planpricemonthly">  {{ $currency->symbol }} {{$plan->plan_price_monthly}} <sub> / {{ __('Monthly')}} </sub></h4>
-                                    <h4 class="planpriceyearly">$ {{$plan->plan_price_yearly}} <sub> / {{ __('Yearly')}} </sub></h4>
-                                </div>
                             </div>
-                            <hr>
-                            <ul class="list-unstyled lh-lg ">
-                                @foreach($planfeatures as $features)
-                                    <li class="py-2">
-                                        <span>{{$features}}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                    </div>
-                </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            @endforeach
-            @endif
-
-
-            </div>
-            <!-- row -->
         </div>
-        <!-- container -->
     </div>
-    <!-- ======================= Video  =========================== -->
+    
     <div class="video_sec section">
-        <!-- container -->
+        
         <div class="container">
             <!-- row -->
             <div class="row d-flex justify-content-center">
-                <!-- section heading -->
+                
                 <div class="section_title mb-5 text-center" data-aos="fade-up">
                     <h4>{{ __('What is Contacts Solutions') }}</h4>
                 </div>
-                <!-- section heading -->
+                
                 <div class="col-lg-9">
                     <div class="video_iframe" data-aos="zoom-in">
                         <div class="ratio ratio-16x9">
@@ -273,7 +261,7 @@
             </div>
         </div>
     </div>
-    <!-- ======================= Testimonial  =========================== -->
+    
     <div class="testimonial_sec section">
         <!-- container -->
         <div class="container">
@@ -283,68 +271,20 @@
                 <div class="section_title mb-5 text-center" data-aos="fade-up">
                     <h4>{{ __('See What Teams are Saying') }}</h4>
                 </div>
-                <!-- section heading -->
                 <div class="review_wrapper owl-carousel">
-                    <!-- review -->
-                    <div class="item review_wrap text-center" data-aos="zoom-in">
-                        <div class="review_item">
-                            <span class="icon"><i class="fa fa-quote-left"></i></span>
-                            <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
+                    @foreach($reviews as $review)
+                        <div class="item review_wrap text-center" data-aos="zoom-in">
+                            <div class="review_item">
+                                <span class="icon"><i class="fa fa-quote-left"></i></span>
+                                <p>{{ __($review->details) }}</p>
+                            </div>
+                            <div class="review_user">
+                                <img src="@if($review->user->profile_image) {{ asset($review->user->profile_image) }} @else {{ asset('assets/img/default-profile.png') }} @endif" alt="image">
+                                <h3>{{ __($review->display_name ?? '') }}</h3>
+                                <span>{{ __($review->display_title ?? '') }}</span>
+                            </div>
                         </div>
-                        <div class="review_user">
-                            <img src="{{ asset('assets/img/user/1.jpg') }}" alt="image">
-                            <h3>{{ __('John Doe') }}</h3>
-                            <span>{{ __('ui/ux Designer') }}</span>
-                        </div>
-                    </div>
-                    <!-- review -->
-                    <div class="item review_wrap text-center" data-aos="zoom-in">
-                        <div class="review_item">
-                            <span class="icon"><i class="fa fa-quote-left"></i></span>
-                            <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
-                        </div>
-                        <div class="review_user">
-                            <img src="{{ asset('assets/img/user/2.jpg') }}" alt="image">
-                            <h3>{{ __('John Doe') }}</h3>
-                            <span>{{ __('ui/ux Designer') }}</span>
-                        </div>
-                    </div>
-                    <!-- review -->
-                    <div class="item review_wrap text-center" data-aos="zoom-in">
-                        <div class="review_item">
-                            <span class="icon"><i class="fa fa-quote-left"></i></span>
-                            <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
-                        </div>
-                        <div class="review_user">
-                            <img src="{{ asset('assets/img/user/3.jpg') }}" alt="image">
-                            <h3>{{ __('John Doe') }}</h3>
-                            <span>{{ __('ui/ux Designer') }}</span>
-                        </div>
-                    </div>
-                    <!-- review -->
-                    <div class="item review_wrap text-center" data-aos="zoom-in">
-                        <div class="review_item">
-                            <span class="icon"><i class="fa fa-quote-left"></i></span>
-                            <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
-                        </div>
-                        <div class="review_user">
-                            <img src="{{ asset('assets/img/user/2.jpg') }}" alt="image">
-                            <h3>{{ __('John Doe') }}</h3>
-                            <span>{{ __('ui/ux Designer') }}</span>
-                        </div>
-                    </div>
-                    <!-- review -->
-                    <div class="item review_wrap text-center" data-aos="zoom-in">
-                        <div class="review_item">
-                            <span class="icon"><i class="fa fa-quote-left"></i></span>
-                            <p>{{ __('Lorem, ipsum dolor sit amet consectetur adipisicing, elit. Iusto distinctio porro sunt incidunt iure placeat, earum laboriosam reprehenderit, eligendi corrupti quia numquam laudantium labore tempore, ipsam aliquid, quo nulla praesentium!') }}</p>
-                        </div>
-                        <div class="review_user">
-                            <img src="{{ asset('assets/img/user/1.jpg') }}" alt="image">
-                            <h3>{{ __('John Doe') }}</h3>
-                            <span>{{ __('ui/ux Designer') }}</span>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

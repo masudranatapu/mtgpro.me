@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
 use App\Models\Faq;
+use App\Models\Review;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Support\Facades\Response;
 
@@ -38,7 +39,8 @@ class HomeController extends Controller
         $plans = Plan::where('status',1)->get();
         $currency = Currency::where('is_default', 1)->first();
         $faqs = Faq::orderBy('order_id', 'DESC')->get();
-        return view('index',compact('plans','currency', 'faqs'));
+        $reviews = Review::where('status', 1)->orderBy('order_id', 'DESC')->get();
+        return view('index',compact('plans','currency', 'faqs', 'reviews'));
     }
 
     public function getPrivacyPolicy()
