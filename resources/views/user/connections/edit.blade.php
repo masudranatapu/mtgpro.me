@@ -17,7 +17,7 @@ $tabindex = 1;
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        <a href="{{ route('user.card') }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
+                        <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                         <img src="{{ getProfile('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="{{ $row->name }}">
                         {{ $row->name }}
                     </h1>
@@ -34,6 +34,7 @@ $tabindex = 1;
                             <div class="card-body">
                                 <form action="{{route('user.connections.update',$row->id)}}" method="post">
                                     @csrf
+                                    <input type="hidden" name="card_id" id="card_id" value="{{$row->card_id}}" />
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group profile_group">
@@ -94,6 +95,7 @@ $tabindex = 1;
                                             <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                                             @endif
                                         </div>
+                                        <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}" class="btn btn-danger">{{ __('Cancel') }}</a>
                                         <button type="submit" class="btn btn-primary" style="background: #111 !important;">{{ __('Update') }}</button>
                                     </form>
 

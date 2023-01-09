@@ -57,12 +57,11 @@ class HomeController extends Controller
         DB::beginTransaction();
         try {
             $data['name' ]         = $request->name;
-            // $data['title']      = $request->title;
             $data['email']         = $request->email;
             $data['phone']         = $request->phone;
-            $data['title']         = $request->job_title;
-            $data['company_name']  = $request->company;
-            $data['message']       = $request->note;
+            $data['title']         = $request->title;
+            $data['company_name']  = $request->company_name;
+            $data['message']       = $request->message;
             $card = BusinessCard::where('id', $request->card_id)->first();
             // if(Auth::user()){
             //     $user_id =  Auth::id();
