@@ -60,7 +60,7 @@
     .qr-code {
         position: absolute;
         top: 5%;
-        left: 17%;
+        left: 28%;
     }
 
     .qr-background {
