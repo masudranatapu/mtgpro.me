@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\User;
-
 use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,10 +34,7 @@ class ContactController extends Controller
             $value->user = DB::table('users')->where('id', $value->user_id)->first();
             $value->card = Card::where('card_id', $value->card_id)->first();
         }
-        if(isMobile()){
-            return view('mobile.contact', compact('data'));
-        }
-        return view('desktop.contact', compact('data'));
+          return view('desktop.contact', compact('data'));
     }
 
 

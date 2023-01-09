@@ -33,6 +33,14 @@ $settings = getSetting();
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('user.connections') }}" class="nav-link @yield('connections')">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/insights.svg') }}" alt="{{ __('Connections') }}">
+                        </span>
+                        {{ __('Connections') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.insights') }}" class="nav-link @yield('insights')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/insights.svg') }}" alt="{{ __('Insights') }}">

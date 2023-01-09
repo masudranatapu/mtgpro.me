@@ -83,6 +83,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('support/feature-request',['as'=>'support.feature-request','uses'=>'UserController@sendRequestToFeature']);
 
 
+    Route::get('connections',['as'=>'connections','uses'=>'ConnectionController@getIndex']);
+    Route::get('connections/view/{email}/{id}',['as'=>'connections.details','uses'=>'ConnectionController@getConnectionDetails']);
 
 
 });
