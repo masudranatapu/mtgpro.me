@@ -408,10 +408,15 @@ a {
 
 .copyright_article p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     font-family: 'Inter', sans-serif;
     color: #212121;
     font-weight: 500;
+}
+
+.copyright_article {
+    margin-bottom: 71px;
+    margin-top: 21px;
 }
 
 @media screen and (max-width: 450px){
