@@ -24,6 +24,7 @@ class StripeController extends Controller
     {
         return Auth::user();
     }
+
     public function stripeCheckout(Request $request)
     {
             try {
@@ -136,7 +137,7 @@ class StripeController extends Controller
             Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
 
             Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-right"]);
-            return redirect()->route('user.invoice',$transaction->gobiz_transaction_id);
+            return redirect()->route('user.invoice',$transaction->transaction_id);
 
     }
 

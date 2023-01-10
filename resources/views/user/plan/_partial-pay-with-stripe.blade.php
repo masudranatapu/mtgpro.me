@@ -28,7 +28,7 @@
                                 <label for="card-element">
                                     {{ __('Credit or debit card')}}
                                 </label>
-                                <div id="card-element">
+                                <div id="card-element" style="width: 100%;">
                                     <!-- A Stripe Element will be inserted here. -->
                                 </div>
                                 <!-- Used to display Element errors. -->
@@ -39,7 +39,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
-                    <button class="btn btn-primary" type="submit">{{ __('Submit')}}</button>
+                    <button class="btn btn-primary" type="submit">{{ __('Pay now')}}</button>
                 </div>
             </form>
         </div>

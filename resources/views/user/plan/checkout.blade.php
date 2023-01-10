@@ -1,10 +1,8 @@
 @extends('user.layouts.app')
 @section('title') {{ __('Checkout')}} @endsection
-@section('plan','active')
-@section('meta_tag')
-@endsection
+@section('checkout','active')
 @push('custom_css')
-<link href="{{ asset('assets/css/countrySelect.min.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('assets/css/countrySelect.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('assets/css/intlTelInput.css') }}">
 <style>
 .card {box-shadow: rgb(35 46 60 / 4%) 0 2px 4px 0;border: 1px solid rgba(101, 109, 119, .16);}
@@ -18,7 +16,6 @@
 .form-selectgroup-item {display: block;position: relative;}
 .form-selectgroup-input:checked+.form-selectgroup-label {z-index: 1;color: #206bc4;background: rgba(32, 107, 196, .25);border-color: #90b5e2;}
 input.country_selector,.country_selector button {height: 35px;margin: 0;padding: 6px 12px;border-radius: 2px;font-family: inherit;font-size: 100%;color: inherit;}
-input[disabled], button[disabled] {background-color: #eee;}
 ::-webkit-input-placeholder {color: #BBB;}
 ::-moz-placeholder {color: #BBB;opacity: 1;}
 :-ms-input-placeholder {color: #BBB;}
@@ -221,7 +218,37 @@ input[disabled], button[disabled] {background-color: #eee;}
 @push('custom_js')
 <script src="{{ asset('assets/js/countrySelect.min.js') }}"></script>
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
+<script src="https://js.stripe.com/v3/"></script>
 <script>
+
+        var countryCode = 'us';
+        var input = document.querySelector("#billing_phone");
+        window.intlTelInput(input, {
+            // allowDropdown: false,
+            autoHideDialCode: false,
+            autoPlaceholder: "on",
+            dropdownContainer: document.body,
+            formatOnDisplay: true,
+            geoIpLookup: function(callback) {
+                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "us";
+                    callback(countryCode);
+                });
+            },
+            hiddenInput: "full_number",
+            initialCountry: "auto",
+            nationalMode: false,
+            placeholderNumberType: "MOBILE",
+            preferredCountries: ['us', 'uk', 'ca'],
+            separateDialCode: false,
+            utilsScript: "{{ asset('assets/js/utils.js')}}",
+        });
+
+		$("#country_selector").countrySelect({
+			responsiveDropdown: true,
+			preferredCountries: ['us', 'uk', 'ca'],
+		});
+
     $(document).on('submit','#order-form', function(e){
         if($('input[type=radio]:checked').length == 0){
             toastr.error('ERROR! Please choose any payment method!');
@@ -245,68 +272,44 @@ input[disabled], button[disabled] {background-color: #eee;}
                 }
             }
         })
-        var countryCode = 'us';
-        var input = document.querySelector("#billing_phone");
-        window.intlTelInput(input, {
-            // allowDropdown: false,
-            autoHideDialCode: false,
-            autoPlaceholder: "on",
-            dropdownContainer: document.body,
-            formatOnDisplay: true,
-            geoIpLookup: function(callback) {
-                $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "us";
-                    callback(countryCode);
-                });
-            },
-            hiddenInput: "full_number",
-            initialCountry: "auto",
-            nationalMode: false,
-            placeholderNumberType: "MOBILE",
-            preferredCountries: ['us', 'uk', 'ca'],
-            separateDialCode: false,
-            utilsScript: "{{ asset('assets/js/utils.js')}}",
-        });
 
-		$("#country_selector").countrySelect({
-			responsiveDropdown: true,
-			preferredCountries: ['us', 'uk', 'ca'],
-		});
-  </script>
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    // Set your publishable key: remember to change this to your live publishable key in production
-    // See your keys here: https://dashboard.stripe.com/apikeys
-    var stripe = Stripe('{{ $config[9]->config_value }}');
-    var elements = stripe.elements();
-    // Custom styling can be passed to options when creating an Element.
-    var style = {
-        base: {
-            // Add your base input styles here. For example:
-            fontSize: '16px',
-            color: '#32325d',
-        },
-    };
-    // Create an instance of the card Element.
-    var card = elements.create('card', {style: style});
-    // Add an instance of the card Element into the `card-element` <div>.
-    card.mount('#card-element');
-    // Create a token or display an error when the form is submitted.
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        stripe.createToken(card).then(function (result) {
-            if (result.error) {
-                // Inform the customer that there was an error.
-                var errorElement = document.getElementById('card-errors');
-                errorElement.textContent = result.error.message;
-            } else {
-                // Send the token to your server.
-                stripeTokenHandler(result.token);
-            }
+    $(function() {
+        // Set your publishable key: remember to change this to your live publishable key in production
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        var stripe = Stripe('{{ $config[9]->config_value }}');
+        // var stripe = Stripe('pk_test_51M9pqYBIRmXVjgUGW3b1i91X0uTNeU6umRaoD9UprcFLotiHpfdBwgr4MnkbZoPuKKPFmdWJFVzWTwvUgxBrcl1d00OcqJU0Ta');
+        var elements = stripe.elements();
+        // Custom styling can be passed to options when creating an Element.
+        var style = {
+            base: {
+                // Add your base input styles here. For example:
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        };
+        // Create an instance of the card Element.
+        var card = elements.create('card', {style: style});
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+        // Create a token or display an error when the form is submitted.
+        var form = document.getElementById('payment-form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    // Inform the customer that there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server.
+                    stripeTokenHandler(result.token);
+                }
+            });
         });
     });
     function stripeTokenHandler(token) {
+        console.log(token);
         // Insert the token ID into the form so it gets submitted to the server
         var form = document.getElementById('payment-form');
         var hiddenInput = document.createElement('input');

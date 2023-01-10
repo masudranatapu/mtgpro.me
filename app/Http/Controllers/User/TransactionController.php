@@ -24,11 +24,11 @@ class TransactionController extends Controller
     //     return view('desktop.transaction', compact('transaction'));
     // }
 
-    // public function invoice(Request $request,$id)
-    // {
-    //     $transaction = Transaction::where('gobiz_transaction_id',$id)->first();
-    //      return view('desktop.invoice',compact('transaction'));
-    // }
+    public function getInvoice(Request $request,$transaction_id)
+    {
+        $transaction = Transaction::where('transaction_id',$transaction_id)->first();
+         return view('user.invoice',compact('transaction'));
+    }
 
     public function getAllInvoicePDF(Request $request)
     {
