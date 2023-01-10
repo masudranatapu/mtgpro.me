@@ -28,7 +28,7 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
 ?>
 @section('content')
     <div class="content-wrapper checkout-wrapper py-4">
-        <div class="content">
+        <div class="content mt-5">
             <div class="container-fluid">
                 <div class="row g-4">
                     <div class="col-lg-4">
@@ -166,42 +166,39 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
                                                 <input id="billing_phone" name="billing_phone"  class="form-control" type="tel" required>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                    <h6 class="card-title">{{ __('Payment method')}}</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        @if (!empty($gateways) && count($gateways) > 0)
-                                        @foreach ($gateways as $gateway)
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
-                                                    <label class="form-selectgroup-item flex-fill">
-                                                        <input type="radio" name="payment_gateway_id" value="{{ $gateway->id }}" class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror">
-                                                        <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                                            <div class="me-3">
-                                                                <span class="form-selectgroup-check"></span>
+
+                                        <div class="col-12">
+                                            <label for="" class="form-label d-block">{{ __('Payment method')}} <span class="text-danger">*</span></label>
+
+                                            @if (!empty($gateways) && count($gateways) > 0)
+                                            @foreach ($gateways as $gateway)
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
+                                                        <label class="form-selectgroup-item flex-fill">
+                                                            <input type="radio" name="payment_gateway_id" value="{{ $gateway->id }}" class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror">
+                                                            <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                                                <div class="me-3">
+                                                                    <span class="form-selectgroup-check"></span>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="payment payment-provider-{{ $gateway->payment_gateway_name == 'Paypal' ? 'paypal' : 'visa' }} payment-xs me-2">
+                                                                    <img width="36" src="{{ asset($gateway->payment_gateway_logo) }}" alt="{{ $gateway->display_name }}">
+                                                                    </span>
+                                                                    {{ $gateway->display_name }} <strong></strong>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <span class="payment payment-provider-{{ $gateway->payment_gateway_name == 'Paypal' ? 'paypal' : 'visa' }} payment-xs me-2">
-                                                                <img width="36" src="{{ asset($gateway->payment_gateway_logo) }}" alt="{{ $gateway->display_name }}">
-                                                                </span>
-                                                                {{ $gateway->display_name }} <strong></strong>
-                                                            </div>
-                                                        </div>
-                                                    </label>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            @endforeach
+                                            @endif
+
+                                             <button type="submit" id="continuePaypalBtn" class="btn btn-primary">{{ __('Continue for payment') }}</button>
                                         </div>
-                                        @endforeach
-                                        @endif
-                                        <div class="col-12">
-                                            <button type="submit" id="continuePaypalBtn" class="btn btn-primary">{{ __('Continue for payment') }}</button>
-                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>

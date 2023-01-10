@@ -66,8 +66,16 @@ My Plans
                     <div class="section_title text-center mb-2">
                         <h3>{{ __('Pick Your')}} <span>{{ __('Plan')}}</span></h3>
                     </div>
-                    <div class="plan_type switchBtn text-center mb-2 mt-3">
-                        <div class="form-check form-switch d-inline">
+                    <div class="plan_type switchBtn text-center mb-4 mt-3">
+                        <div class="switch-wrapper">
+                                <input id="monthly" name="planType" value="annual" type="radio" name="switch" checked>
+                                <input id="yearly" name="planType" value="monthly" type="radio" name="switch">
+                                <label for="monthly">Annual</label>
+                                <label for="yearly">Monthly</label>
+                                <span class="highlighter"></span>
+                          </div>
+
+                       <!-- <div class="form-check form-switch d-inline">
                             <label class="form-check-label" for="CheckedAnnualy">
                                 <input class="form-check-input" name="planType" checked="" type="radio" value="annual" id="CheckedAnnualy">
                                     {{ __('Annual')}}
@@ -78,7 +86,7 @@ My Plans
                                 <input class="form-check-input" name="planType"  type="radio" value="monthly" id="monthlyChecked">
                                     {{ __('Monthly')}}
                             </label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -88,7 +96,7 @@ My Plans
                 @php
                     $planfeatures = json_decode($plan->features);
                 @endphp
-                <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                <div class="col-md-6 col-xl-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
                     <div class="pricing-card card card-md">
                         <div class="card-body text-center">
                             <div class="text-capitalize text-dark font-weight-bold">  {{$plan->plan_name}}</div>
@@ -130,7 +138,7 @@ My Plans
 <div class="modal fade" id="planConfirmModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header border-0">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -139,7 +147,7 @@ My Plans
                 <form action="{{ route('user.checkout') }}" id="choose_plan_action" method="get">
                     <label for="is_yearly" class="sr-only">{{ __('Yearly')}}</label>
                     <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
-                    <br>
+                    
                     <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
                     <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
                     <div class="modal-title">{{ __('“We’re excited to have you!')}}</div>
@@ -147,7 +155,7 @@ My Plans
                     <div class="text-danger">
                             {{ __('For upgrading users, simply visit “Business Cards” to enable your cards after the upgrade')}}
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer mt-4">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
                          <button type="submit" class="btn btn-primary">{{ __('Confirm')}}</button>
                     </div>
