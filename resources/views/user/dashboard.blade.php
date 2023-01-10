@@ -64,10 +64,8 @@
                     <div class="row">
                         @if(isset($cards) && count($cards)>0)
                         @foreach($cards as $key => $card)
-
                         <div class="col-md-6 col-xl-4">
                             <!-- user card -->
-
                                 <div class="dashboard_card user_card" style="background-color: #E8F4ED;">
                                     <div class="card_body">
                                         <div class="card_cover_bg">
@@ -103,20 +101,15 @@
                                                     <i class="fa fa-check" style="@if($card->status == 0) display:none; @endif" ></i>
                                                     {{ __('Live') }}
                                                 </a>
-
                                                 <a target="_blank" href="{{ route('card.preview',$card->card_url) }}" class="btn-sm btn-secondary"> {{ __('Preview') }}</a>
-
-
                                                 {{-- <div class="card-status d-inline-block position-relative">
                                                     <input type="checkbox" name="change-status" id="switch_{{$card->id}}" value="{{$card->status}}"  {{ $card->status==1 ? 'checked':'' }}  class="change-status" data-id="{{ $card->id }}" /><label for="switch_{{$card->id}}">Toggle</label>
                                                 </div> --}}
                                                 @endif
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                         </div>
                         @endforeach
                         @endif
@@ -146,13 +139,9 @@
          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
          }
            });
-
-
     $(document).on('click','.change-status', function() {
         var card_id = $(this).attr('data-id');
         var status = $(this).attr('data-status');
-
-
         $.ajax({
             type: 'POST',
             url: "{{ URL::route('user.card.change-status') }}",
@@ -178,26 +167,6 @@
                     }
             },
         });
-
-
-
-        // $.ajax({
-        //     type: 'GET',
-        //     url: get_url + '/card/change-status/'+card_id,
-        //     async: true,
-        //     beforeSend: function () {
-        //         $("body").css("cursor", "progress");
-        //     },
-        //     success: function (response) {
-        //         $("#personalized_link_help").text(response.message).removeClass('text-danger').addClass('text-success');
-
-        //     },
-        //     complete: function (data) {
-        //         $("body").css("cursor", "default");
-        //     }
-        // });
-
-
 })
 </script>
 @endpush
