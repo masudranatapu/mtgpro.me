@@ -224,11 +224,11 @@ a {
 
 
 
-.modal,
-.offcanvas-backdrop {
+.modal, .offcanvas-backdrop {
     backdrop-filter: blur(4px);
     background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
     backdrop-filter: blur(4px);
+    opacity: 1 !important;
 }
 
 .modal-backdrop.show {
@@ -412,4 +412,17 @@ a {
     font-family: 'Inter', sans-serif;
     color: #212121;
     font-weight: 500;
+}
+
+@media screen and (max-width: 450px){
+    .save_contact a{
+        padding: 12px 20px;
+    }
+}
+
+@media screen and (max-width: 330px){
+    .save_contact a{
+        width: 100% !important;
+        margin: 5px 0px;
+    }
 }
