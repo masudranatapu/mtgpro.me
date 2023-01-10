@@ -20,13 +20,13 @@ class ReviewController extends Controller
 
     public function update($id,$status){
         $reviews = DB::table('reviews')->where('id',$id)->update(['status' => $status]);
-        Toastr::success(trans('Review updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Review updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
     public function delete($id){
         $reviews = DB::table('reviews')->where('id',$id)->delete();
-        Toastr::success(trans('Review deleted Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Review deleted Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 

@@ -94,7 +94,7 @@ class CheckoutController extends Controller
                 return view('user.plan.checkout', compact('plan', 'gateways','user','config'));
             }
         }else {
-            Toastr::error(trans('Please select your plan'), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Please select your plan'), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
 

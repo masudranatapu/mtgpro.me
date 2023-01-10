@@ -31,7 +31,7 @@ class StripeController extends Controller
             $plan_details = Plan::query()->where('id', $planId)->where('status', 1)->first();
 
             if ($plan_details->stripe_plan_id == null) {
-                Toastr::error(trans('Stripe payment is not available for this plan. \n Please contact with admin'), 'Error', ["positionClass" => "toast-top-right"]);
+                Toastr::error(trans('Stripe payment is not available for this plan. \n Please contact with admin'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back();
             }
                 $userData = Auth::user();
@@ -130,11 +130,11 @@ class StripeController extends Controller
                     'billing_email'         => $request->billing_email,
                 ]);
             } catch (Exception $error) {
-                Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-right"]);
+                Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back();
             }
             Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
-            Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.invoice',$transaction->invoice_number);
 
     }

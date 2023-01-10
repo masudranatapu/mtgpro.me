@@ -31,9 +31,9 @@ class FaqController extends Controller
         $this->resp = $this->faq->postStore($request);
         if (!$this->resp->status) {
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
-            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-center"]);
         }
-        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
@@ -52,9 +52,9 @@ class FaqController extends Controller
         $this->resp = $this->faq->putUpdate ($request, $id);
         if (!$this->resp->status) {
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
-            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-center"]);
         }
-        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 

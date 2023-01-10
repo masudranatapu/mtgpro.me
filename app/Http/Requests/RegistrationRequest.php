@@ -19,15 +19,16 @@ class RegistrationRequest extends FormRequest
      *
      * @return array
      */
+
+
     public function rules()
     {
          $rules = [
             '_token'                => 'required',
-            // 'name'                  => 'required',
-            'email'                 => 'required|email',
-            'is_agree'              => 'required',
-            'password'              => 'min:6|required_with:confirm_password|same:confirm_password',
-            'confirm_password'      => 'required|min:6'
+            'name'                  => 'required',
+            'email'                 =>"required|email|unique:users,email",
+            'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'required|min:6'
         ];
         return $rules;
     }
@@ -35,10 +36,10 @@ class RegistrationRequest extends FormRequest
     public function messages()
     {
         return [
-        //    'name.required'          => 'Please Enter Your Name',
-           'email.required'         => 'Please Enter Your Email',
-           'password.required'      => 'Please Enter Your Password',
-           'is_agree.required'      => 'This field is required',
+           'name.required'          => 'Please enter your name',
+           'email.required'         => 'Please enter your email',
+           'password.required'      => 'Please enter your password',
+           'password_confirmation.required'      => 'This field is required',
 
         ];
     }
