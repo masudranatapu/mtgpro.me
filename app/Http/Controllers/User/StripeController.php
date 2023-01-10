@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Http\Controllers\User;
-
 use DB;
 use Auth;
 use App\User;
 use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Plan;
-use App\Card;
+use App\BusinessCard;
 use Stripe\StripeClient;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
@@ -24,17 +22,18 @@ class StripeController extends Controller
     {
         return Auth::user();
     }
+
     public function stripeCheckout(Request $request)
     {
-            try {
-                $planId = $request->plan_id;
-                $config = DB::table('config')->get();
-                $plan_details = Plan::query()->where('id', $planId)->where('status', 1)->first();
+        try {
+            $planId = $request->plan_id;
+            $config = DB::table('config')->get();
+            $plan_details = Plan::query()->where('id', $planId)->where('status', 1)->first();
 
-                if ($plan_details->stripe_plan_id == null) {
-                    Toastr::error(trans('Stripe payment is not available for this plan. \n Please contact with admin'), 'Error', ["positionClass" => "toast-top-right"]);
-                    return redirect()->back();
-                }
+            if ($plan_details->stripe_plan_id == null) {
+                Toastr::error(trans('Stripe payment is not available for this plan. \n Please contact with admin'), 'Error', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
                 $userData = Auth::user();
                 $price_id = $plan_details->stripe_plan_id;
                 $stripe = new StripeClient($config[10]->config_value);
@@ -65,10 +64,9 @@ class StripeController extends Controller
                 else{
                     $plan_price = $plan_details->plan_price_monthly;
                 }
-                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d h:i:s');
+                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d H:i:s');
                 $plan_validity = Carbon::parse($subscription->start_date)->addDays($plan_details->validity);
                 $amountToBePaid = ((int)($plan_price) * (int)($config[25]->config_value) / 100) + (int)($plan_price);
-                $gobiz_transaction_id = uniqid();
                 $invoice_details = [];
                 $tax_amount = (int)($plan_price) * (int)($config[25]->config_value) / 100;
 
@@ -81,6 +79,8 @@ class StripeController extends Controller
                 $invoice_details['from_vat_number']             = $config[26]->config_value;
                 $invoice_details['from_billing_phone']          = $config[18]->config_value;
                 $invoice_details['from_billing_email']          = $config[17]->config_value;
+
+
                 $invoice_details['to_billing_name']             = $request->billing_name;
                 $invoice_details['to_billing_address']          = $request->billing_address;
                 $invoice_details['to_billing_city']             = $request->billing_city;
@@ -90,16 +90,18 @@ class StripeController extends Controller
                 $invoice_details['to_billing_phone']            = $request->billing_phone;
                 $invoice_details['to_billing_email']            = $request->billing_email;
                 $invoice_details['to_vat_number']               = $request->vat_number;
+
                 $invoice_details['tax_name']                    = $config[24]->config_value;
                 $invoice_details['tax_type']                    = $config[14]->config_value;
                 $invoice_details['tax_value']                   = $config[25]->config_value;
+
                 $invoice_details['invoice_amount']              = $amountToBePaid;
                 $invoice_details['subtotal']                    = $plan_price;
                 $invoice_details['tax_amount']                  = $tax_amount;
 
                 $transaction = new Transaction();
-                $transaction->gobiz_transaction_id  = $gobiz_transaction_id;
-                $transaction->transaction_date      = now();
+                $transaction->invoice_number        = uniqid();
+                $transaction->transaction_date      = date('Y-m-d H:i:s');
                 $transaction->transaction_id        = $subscription->id;
                 $transaction->user_id               = Auth::user()->id;
                 $transaction->plan_id               = $plan_details->id;
@@ -128,15 +130,12 @@ class StripeController extends Controller
                     'billing_email'         => $request->billing_email,
                 ]);
             } catch (Exception $error) {
-                dd($error->getMessage());
                 Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
-
             Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
-
             Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-right"]);
-            return redirect()->route('user.invoice',$transaction->gobiz_transaction_id);
+            return redirect()->route('user.invoice',$transaction->invoice_number);
 
     }
 
@@ -280,7 +279,7 @@ class StripeController extends Controller
                     } else {
 
                         // Making all cards inactive, For Plan change
-                        Card::where('user_id', Auth::user()->user_id)->update([
+                        BusinessCard::where('user_id', Auth::user()->user_id)->update([
                             'card_status' => 'inactive',
                         ]);
 

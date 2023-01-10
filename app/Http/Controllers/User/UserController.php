@@ -320,7 +320,8 @@ class UserController extends Controller
                         if(File::exists($user->profile)) {
                             File::delete($user->profile);
                         }
-                        $user->profile_image =  $this->businessCard->uploadBase64ToImage($image,$file_name,'png');
+                        $profile_image = $this->businessCard->uploadBase64ToImage($image,$file_name,'png');
+                        $user->profile_image =  asset($profile_image);
                     }
                 }
             }

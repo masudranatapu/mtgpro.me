@@ -162,7 +162,7 @@
 </head>
 <body>
     <div class="template">
-        <div class="card_view_wrapper" style="background: #C6E4D2;">
+        <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
             <div class="card_cover">
                 <div class="cover_img" data-aos="zoom-in">
                     <img src="{{ getCover($cardinfo->cover) }}" alt="image">
@@ -175,7 +175,7 @@
             <div class="card_view_body">
                 <div class="content text-center">
                     <div class="profile_info mt-4">
-                        <h2>{{ $cardinfo->title }}</h2>
+                        <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
                         <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
                         @if (!empty($cardinfo->location))
                         <h6>{{ $cardinfo->location }}</h6>

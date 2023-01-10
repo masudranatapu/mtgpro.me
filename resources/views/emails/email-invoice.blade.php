@@ -696,22 +696,22 @@
                                                     </td>
                                                     <td class="text-center"></td>
                                                     <td class="text-end"></td>
-                                                    <td class="text-end" style="width: 23%">$ {{ Format($invoice_details->subtotal,2) }}</td>
+                                                    <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td colspan="4" class="title strong text-end">Subtotal</td>
-                                                    <td class="text-end" style="width: 23%">$ {{ Format($invoice_details->subtotal,2) }}</td>
+                                                    <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4" class="title strong text-end">Tax Amount</td>
-                                                    <td class="text-end" style="width: 23%">$ {{ Format($invoice_details->tax_amount,2) }}</td>
+                                                    <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td colspan="4" class="title font-weight-bold text-uppercase text-end">Total</td>
                                                     <td class="font-weight-bold text-end">
-                                                        <strong>$ {{ Format($invoice_details->invoice_amount,2) }}</strong>
+                                                        <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
                                                     </td>
                                                 </tr>
                                             </tbody>

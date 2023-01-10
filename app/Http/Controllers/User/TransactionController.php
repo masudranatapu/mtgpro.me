@@ -18,17 +18,17 @@ class TransactionController extends Controller
 
     }
 
-    // public function index(Request $request)
-    // {
-    //     $transaction = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(10);
-    //     return view('desktop.transaction', compact('transaction'));
-    // }
+    public function getIndex(Request $request)
+    {
+        $transaction = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(10);
+        return view('user.transaction', compact('transaction'));
+    }
 
-    // public function invoice(Request $request,$id)
-    // {
-    //     $transaction = Transaction::where('gobiz_transaction_id',$id)->first();
-    //      return view('desktop.invoice',compact('transaction'));
-    // }
+    public function getInvoice(Request $request,$transaction_id)
+    {
+        $transaction = Transaction::where('invoice_number',$transaction_id)->first();
+         return view('user.invoice',compact('transaction'));
+    }
 
     public function getAllInvoicePDF(Request $request)
     {
@@ -46,8 +46,8 @@ class TransactionController extends Controller
     public function getInvoicePDF(Request $request,$id)
     {
         $data = [];
-        $data['transaction'] = Transaction::where('id',$id)->first();
-        $name = $data['transaction']->transaction_id;
+        $data['transaction'] = Transaction::where('invoice_number',$id)->first();
+        $name = $data['transaction']->invoice_number;
         $pdf = Pdf::loadView('pdf.invoice',compact('data'));
         return $pdf->download('invoice'."_".$name.'.pdf');
         //  return view('pdf.invoice',compact('data'));

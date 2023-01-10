@@ -15,12 +15,15 @@
     $settings = getSetting();
     $countries = \App\Helpers\CountryHelper::CountryCodes();
     $subscription_end = new \Carbon\Carbon($user->plan_validity);
+    $subscription_start = new \Carbon\Carbon($user->plan_activation_date);
     $plan_price_monthly = $plan->plan_price_monthly;
     $plan_price_yearly =$plan->plan_price_yearly;
-    // echo $subscription_end->diffForHumans();
+
+    $diff_in_days = $subscription_start->diffInDays($subscription_end);
+
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
 
-    if($plan->is_yearly_plan){
+    if($diff_in_days > 1){
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 year"));
     }else{
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 month") );
@@ -93,9 +96,9 @@
                                                                 </h3>
                                                             </div>
                                                             <div class="card-body">
-                                                                @if ($plan->is_yearly_plan)
+                                                                @if ($diff_in_days > 1)
                                                                 <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
-                                                                <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per year') }}.</p>
+                                                                <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per member per year') }}.</p>
                                                                 @else
                                                                 <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
                                                                 <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
@@ -170,10 +173,10 @@
                                                                        </div>
                                                                        <div class="p-3">
                                                                         <span class="d-block py-1"><small>{{ __('Billed on the') }} {{ $bill_date }}th of every
-                                                                            @if ($plan->is_yearly_plan)
-                                                                            year
+                                                                            @if ($diff_in_days > 1)
+                                                                            {{ __('year') }}
                                                                             @else
-                                                                            month
+                                                                            {{ __('month') }}
                                                                            @endif .</small></span>
                                                                            <span class="d-block py-1">
                                                                                <small>
@@ -208,26 +211,32 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>{{ __('Date') }}</th>
+                                                                        <th>{{ __('Invoice ID') }}</th>
                                                                         <th>{{ __('Description') }}</th>
                                                                         <th></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                   @foreach ($transections as $transection)
+                                                                   @foreach ($transections as $row)
                                                                     <tr>
-                                                                        <td>{{date('M d, Y', strtotime($transection->transaction_date))}}</td>
-                                                                        <td>{!! $transection->desciption !!}</td>
+                                                                        <td>{{date('M d, Y', strtotime($row->transaction_date))}}</td>
+                                                                        <td>{{ $row->invoice_number }}</td>
+                                                                        <td>{!! $row->desciption !!}</td>
                                                                         <td class="text-right download_invoice">
-                                                                            <a href="{{ route('user.invoice.download',$transection->id) }}">
+                                                                            <a href="{{ route('user.invoice.download',$row->invoice_number) }}">
                                                                                {{ __('Download') }}
                                                                               <img src="{{ asset('assets/img/icon/download.svg') }}" alt="">
                                                                            </a>
                                                                         </td>
                                                                     </tr>
                                                                    @endforeach
-                                                                   {{-- @else --}}
                                                                 </tbody>
                                                             </table>
+
+                                                            @if ($transections->total() > $transections->perPage() )
+                                                            <a href="{{ route('user.transactions') }}">{{ __('See all') }}</a>
+                                                            @endif
+
                                                         </div>
                                                         @endif
                                                 </div>
@@ -241,23 +250,13 @@
                                                     <div class="setting_form">
                                                         <form action="{{ route('user.profile-info.update') }}" method="post">
                                                             @csrf
-                                                            {{-- <div class="form-group">
-                                                                <label for="profile_url" class="form-label">
-                                                                    {{ __('Profile URL') }}
-                                                                    <a href="#">
-                                                                        <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="icon">
-                                                                    </a>
-                                                                </label>
-                                                                <input type="text" name="profile_url" id="profile_url" class="form-control" value="mtgpr/">
-                                                            </div> --}}
-
                                                             <div class="form-group profile-pic">
                                                                 <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
                                                                 <div class="slim"
                                                                     data-ratio="1:1"
                                                                     data-size="540,540"
                                                                     data-max-file-size="100">
-                                                                <img src="{{ getProfile($user->profile_image) }}" alt=""/>
+                                                                <img src="{{ getAvatar($user->profile_image) }}" alt=""/>
                                                                 <input type="file" name="profile_pic" id="profile_pic">
                                                                 </div>
                                                                 @if($errors->has('profile_pic'))
@@ -354,162 +353,159 @@
             </div>
         </div>
     </div>
-
-
-
-<!-- Account delete modal -->
-<div class="delete_modal">
-    <div class="modal fade" id="deleteAccount" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <!-- modal header -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Confirm Account Deletion') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <!-- modal body -->
-                <div class="modal_body">
-                    <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
-                    <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
-                    <form action="#" method="post">
-                        <div class="mb-3">
-                            <input type="text" name="delete" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
-                            @if($errors->has('delete'))
-                            <span class="help-block text-danger">{{ $errors->first('delete') }}</span>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer pb-3">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                    <button type="button" class="btn btn-primary">{{ __('Delete Account') }}</button>
+    <!-- Account delete modal -->
+    <div class="delete_modal">
+        <div class="modal fade" id="deleteAccount" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Confirm Account Deletion') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!-- modal body -->
+                    <div class="modal_body">
+                        <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
+                        <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
+                        <form action="#" method="post">
+                            <div class="mb-3">
+                                <input type="text" name="delete" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                                @if($errors->has('delete'))
+                                <span class="help-block text-danger">{{ $errors->first('delete') }}</span>
+                                @endif
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer pb-3">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="button" class="btn btn-primary">{{ __('Delete Account') }}</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Billing Address Modal -->
-<div class="billing_modal">
-    <div class="modal fade" id="billingModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <!-- modal header -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Billing details') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal_body">
-                    <form action="{{ route('user.billing-info.update') }}" method="post">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="billing_email" class="form-label">{{ __('Email') }}</label>
-                            <input type="text" name="billing_email" id="billing_email" class="form-control" value="{{ $user->billing_email }}" required>
-                            @if($errors->has('billing_email'))
-                            <span class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
-                            @endif
-                        </div>
-                         <div class="mb-3">
-                            <label for="billing_country" class="form-label">{{ _('Country / Region') }}</label>
-                            <select name="billing_country" id="billing_country" class="form-control">
-                                <option value="" class="d-none">-- {{ __('Choose') }} --</option>
-                                @foreach ($countries as $key=>$country)
-                                <option value="{{ $country }}" {{ $user->billing_country==$country ? 'selected':'' }}>{{ $country }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('billing_country'))
-                            <span class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
-                            @endif
-                        </div>
-                         <div class="mb-3">
-                            <label for="billing_zipcode" class="form-label">{{ __('Zip Code') }}</label>
-                            <input type="number" name="billing_zipcode" id="billing_zipcode" class="form-control" value="{{ $user->billing_zipcode }}" required>
-                            @if($errors->has('billing_zipcode'))
-                            <span class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
-                            @endif
-                        </div>
-                        <div class="modal-footer pb-3">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                            <button type="submit" class="btn btn-primary">{{ __('Save billing details') }}</button>
-                        </div>
-                    </form>
+    <!-- Billing Address Modal -->
+    <div class="billing_modal">
+        <div class="modal fade" id="billingModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Billing details') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal_body">
+                        <form action="{{ route('user.billing-info.update') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="billing_email" class="form-label">{{ __('Email') }}</label>
+                                <input type="text" name="billing_email" id="billing_email" class="form-control" value="{{ $user->billing_email }}" required>
+                                @if($errors->has('billing_email'))
+                                <span class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="billing_country" class="form-label">{{ _('Country / Region') }}</label>
+                                <select name="billing_country" id="billing_country" class="form-control">
+                                    <option value="" class="d-none">-- {{ __('Choose') }} --</option>
+                                    @foreach ($countries as $key=>$country)
+                                    <option value="{{ $country }}" {{ $user->billing_country==$country ? 'selected':'' }}>{{ $country }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('billing_country'))
+                                <span class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="billing_zipcode" class="form-label">{{ __('Zip Code') }}</label>
+                                <input type="number" name="billing_zipcode" id="billing_zipcode" class="form-control" value="{{ $user->billing_zipcode }}" required>
+                                @if($errors->has('billing_zipcode'))
+                                <span class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
+                                @endif
+                            </div>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Save billing details') }}</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Payment Details -->
-<div class="payment_modal">
-    <div class="modal fade" id="paymentModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <!-- modal header -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="paymentModalLabel">{{ __('Payment details') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal_body">
-                    <form action="{{ route('user.payment-info.update') }}" method="post">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="card_number" class="form-label">{{ __('Credit card number') }}</label>
-                            <input type="text" name="card_number" id="card_number" class="form-control @error('name') is-invalid @enderror" value="{{ $user->card_number }}" required
-                            autocomplete="cc-number" autocorrect="off"
-                            spellcheck="false" type="text"
-                            aria-label="Credit or debit card number"
-                            placeholder="1234 1234 1234 1234" aria-invalid="false" tabindex="1">
-                            @if($errors->has('card_number'))
-                            <span class="help-block text-danger">{{ $errors->first('card_number') }}</span>
-                            @endif
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="card_expiration_date" class="form-label">{{ __('Expiration date') }}</label>
-                                    <input autocomplete="cc-exp" autocorrect="off" spellcheck="false" type="text" name="card_expiration_date" id="card_expiration_date" class="form-control @error('card_expiration_date') is-invalid @enderror"
-                                    required aria-label="Credit or debit card expiration date" placeholder="MM / YY" aria-invalid="false" tabindex="2" value="{{ $user->card_expiration_date }}">
-                                    @if($errors->has('card_expiration_date'))
-                                    <span class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
-                                    @endif
+    <!-- Payment Details -->
+    <div class="payment_modal">
+        <div class="modal fade" id="paymentModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">{{ __('Payment details') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal_body">
+                        <form action="{{ route('user.payment-info.update') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="card_number" class="form-label">{{ __('Credit card number') }}</label>
+                                <input type="text" name="card_number" id="card_number" class="form-control @error('name') is-invalid @enderror" value="{{ $user->card_number }}" required
+                                autocomplete="cc-number" autocorrect="off"
+                                spellcheck="false" type="text"
+                                aria-label="Credit or debit card number"
+                                placeholder="1234 1234 1234 1234" aria-invalid="false" tabindex="1">
+                                @if($errors->has('card_number'))
+                                <span class="help-block text-danger">{{ $errors->first('card_number') }}</span>
+                                @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="card_expiration_date" class="form-label">{{ __('Expiration date') }}</label>
+                                        <input autocomplete="cc-exp" autocorrect="off" spellcheck="false" type="text" name="card_expiration_date" id="card_expiration_date" class="form-control @error('card_expiration_date') is-invalid @enderror"
+                                        required aria-label="Credit or debit card expiration date" placeholder="MM / YY" aria-invalid="false" tabindex="2" value="{{ $user->card_expiration_date }}">
+                                        @if($errors->has('card_expiration_date'))
+                                        <span class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="card_cvc" class="form-label">{{ __('CVC') }}</label>
+                                        <input class="form-control @error('card_cvc') is-invalid @enderror" autocomplete="cc-csc" autocorrect="off" spellcheck="false" type="text" name="card_cvc" inputmode="numeric" aria-label="Credit or debit card CVC/CVV" placeholder="CVC" aria-invalid="false" tabindex="3" value="{{ $user->card_cvc }}">
+                                        @if($errors->has('card_cvc'))
+                                        <span class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="card_cvc" class="form-label">{{ __('CVC') }}</label>
-                                    <input class="form-control @error('card_cvc') is-invalid @enderror" autocomplete="cc-csc" autocorrect="off" spellcheck="false" type="text" name="card_cvc" inputmode="numeric" aria-label="Credit or debit card CVC/CVV" placeholder="CVC" aria-invalid="false" tabindex="3" value="{{ $user->card_cvc }}">
-                                    @if($errors->has('card_cvc'))
-                                    <span class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
-                                    @endif
-                                </div>
+                            <div class="mb-3">
+                                <label for="name_on_card" class="form-label">{{ __('Name on the card') }}</label>
+                                <input type="text" name="name_on_card" id="name_on_card" class="form-control @error('name_on_card') is-invalid @enderror" value="{{ $user->name_on_card }}" required
+                                autocomplete="cc-number" autocorrect="off"
+                                spellcheck="false" type="text"
+                                aria-label="Credit or debit card number"
+                                placeholder="John wick" aria-invalid="false" tabindex="4">
+                                @if($errors->has('name_on_card'))
+                                    <span class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
+                                @endif
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name_on_card" class="form-label">{{ __('Name on the card') }}</label>
-                            <input type="text" name="name_on_card" id="name_on_card" class="form-control @error('name_on_card') is-invalid @enderror" value="{{ $user->name_on_card }}" required
-                            autocomplete="cc-number" autocorrect="off"
-                            spellcheck="false" type="text"
-                            aria-label="Credit or debit card number"
-                            placeholder="John wick" aria-invalid="false" tabindex="4">
-                            @if($errors->has('name_on_card'))
-                                <span class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
-                            @endif
-                        </div>
-                        <div class="modal-footer pb-3">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                            <button type="submit" class="btn btn-primary">{{ __('Save payment method') }}</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Save payment method') }}</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
