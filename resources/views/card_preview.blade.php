@@ -186,6 +186,7 @@
                     </div>
                     <div class="save_contact mt-5 mb-5">
                         <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">{{ __('Save Contact') }}</a>
+
                         {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">
                             {{ __('Save Contact') }}
                         </a> --}}
@@ -228,12 +229,10 @@
                             @endif
                         </ul>
                     </div>
-                    @if (isFreePlan())
+
                     <div class="copyright_article">
                         <p>Copyright © mtgpro. All rights reserved.</p>
                     </div>
-                    @else
-                    @endif
                 </div>
             </div>
 
