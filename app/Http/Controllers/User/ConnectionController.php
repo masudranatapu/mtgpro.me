@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ConnectRequest;
 use App\Http\Requests\SendConnectMail;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SendConnectMailRequest;
