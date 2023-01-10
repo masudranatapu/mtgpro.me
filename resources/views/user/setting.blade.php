@@ -225,14 +225,12 @@
                                                                         </td>
                                                                     </tr>
                                                                    @endforeach
-                                                                   {{-- @else --}}
                                                                 </tbody>
                                                             </table>
 
                                                             {{-- @if ($transections->total() > $transections->perPage() ) --}}
                                                             <a href="{{ route('user.transactions') }}">{{ __('See all') }}</a>
-                                                            {{-- @else
-                                                            @endif --}}
+                                                            {{-- @endif --}}
 
                                                         </div>
                                                         @endif
