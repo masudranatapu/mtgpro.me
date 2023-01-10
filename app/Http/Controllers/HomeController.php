@@ -313,7 +313,6 @@ class HomeController extends Controller
 
     }
 
-
     public function postContact(Request $request){
         $data               = [];
         $data['name']       = $request->name;
