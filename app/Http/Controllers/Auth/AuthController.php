@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
-
-
 class AuthController extends Controller
 {
     protected $user;
@@ -83,12 +81,6 @@ class AuthController extends Controller
     }
 
     public function getChangePassword(){
-
-        if(isMobile() && (Auth::user()->user_type == 2)){
-            return view('mobile.profile.change_password');
-        }else{
-
-        }
         return view('auth.change_password');
     }
 
@@ -124,7 +116,9 @@ class AuthController extends Controller
         $data = Socialite::driver($provider)->stateless()->user();
         $check_deactive = User::where('email',$data->email)->where('status',0)->first();
         if(!empty($check_deactive)){
-            return redirect()->route('login')->with('error','oops! your account has been deactivated! please contact website administrator');
+            Toastr::error(trans('oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('login');
+            // ->with('error','oops! your account has been deactivated! please contact website administrator');
         }
         try {
             $isExist  = User::where(['email' => $data->email])->first();
@@ -171,9 +165,11 @@ class AuthController extends Controller
                 }
         } catch (\Exception $e) {
             dd($e->getmessage());
-            return redirect()->route('login')->with('error','Login failed. Please try again');
+            Toastr::error(trans('Login failed. Please try again'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('login');
+            // ->with('error','Login failed. Please try again');
         }
-        return redirect()->route('user.dashboard');
+        return redirect()->route('user.card');
     }
 
 
