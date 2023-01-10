@@ -58,8 +58,27 @@ class AuthController extends Controller
             $user->plan_details         = json_encode($plans);
             $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
             $user->plan_activation_date = Carbon::now();
-
             $user->save();
+
+
+            $location               = $this->getLocation();
+            if($location){
+                $user->country          = $location->countryName;
+                $user->countryCode      = $location->countryCode;
+                $user->regionCode       = $location->regionCode;
+                $user->regionName       = $location->regionName;
+                $user->cityName         = $location->cityName;
+                $user->zipCode          = $location->zipCode;
+                $user->isoCode          = $location->isoCode;
+                $user->latitude         = $location->latitude;
+                $user->longitude        = $location->longitude;
+            }
+            $user->ip_address       = $this->user->getIP();
+            $user->device           = $this->user->getOS();
+            $user->browser          = $this->user->getBrowser();
+
+
+
 
             if($user){
                 Auth::login($user);
@@ -71,10 +90,40 @@ class AuthController extends Controller
             dd($e->getMessage());
             return redirect()->back()->with('error','Account not created');
         }
-
         return redirect()->route('user.dashboard');
-
     }
+
+    public function getLocation(){
+        // $ip = '103.103.35.202'; //Dynamic IP address get
+          $ip = $this->getIp();
+         $data = \Location::get($ip);
+         return $data;
+     }
+
+     public static function getIP() {
+        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if(getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if(getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if(getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if(getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if(getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = 'UNKNOWN';
+        if($ipaddress=='::1')
+            $ipaddress = getHostByName(getHostName());
+
+        return $ipaddress;
+    }
+
+
+
 
 
     public function getDeactivationForm(){
