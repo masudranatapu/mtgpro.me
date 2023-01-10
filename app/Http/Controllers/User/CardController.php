@@ -52,23 +52,25 @@ class CardController extends Controller
         // if(count($cards) == 0 ){
         //     return view('user.card.first_card',compact('cards'));
         // }
+        $user_id = Auth::id();
         //validity
-        $validity = checkPackageValidity(Auth::id());
+        $validity = checkPackageValidity($user_id);
         if($validity == false){
             Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
             return redirect()->route('user.plans');
         }
 
 
-        $check = checkCardLimit(Auth::id());
+        $check = checkCardLimit($user_id);
         if($check == false){
             Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
-        $plan_details = User::where('id',Auth::user()->id)->first();
+        $plan_details = User::where('id',$user_id)->first();
         $user_email = SocialIcon::where('icon_name','email')->first();
 
-        return view('user.card.create',compact('cards','icons','plan_details','user_email'));
+        $user = User::find($user_id);
+        return view('user.card.create',compact('cards','icons','plan_details','user_email','user'));
     }
 
     public function getEdit(Request $request,$id)
@@ -76,8 +78,10 @@ class CardController extends Controller
         $user_id = Auth::id();
         $card = $this->businessCard->getView($request,$id);
         $icons = SocialIcon::where('status',1)->orderBy('order_id','desc')->get();
+        // dd($icons);
         // dd($card->business_card_fields);
-        return view('user.card.edit',compact('card','icons'));
+        $user = User::find($user_id);
+        return view('user.card.edit',compact('card','icons','user'));
     }
 
     public function siconUpdate(Request $request)
@@ -216,14 +220,23 @@ class CardController extends Controller
         $reserve_word = config('app.reserve_word');
         $data['status'] = false;
         $data['message'] = 'This link is not available';
+
         if(!in_array($link_text,$reserve_word)){
+
             //check in database business_cards card_url
-            $card_url = BusinessCard::where('card_url',$link_text)->first();
+            if($request->mode == 'edit'){
+                $card_url = BusinessCard::where('card_url',$link_text)->where('id','<>',$request->id)->first();
+            }else{
+                $card_url = BusinessCard::where('card_url',$link_text)->first();
+            }
+
+
             if($card_url == null){
                 $data['status'] = true;
                 $data['message'] = 'This link is available';
             }
         }
+
         return response()->json($data);
     }
 

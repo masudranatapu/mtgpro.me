@@ -52,6 +52,8 @@ class SocialIconController extends Controller
             'icon_title' => 'required',
             'example_text' => 'required',
             'order_id' => 'required',
+            'type' => 'required',
+
         ],[
             'icon_image.required' => 'Icon image is required',
             'icon_group.required' => 'Icon group is required',
@@ -61,6 +63,12 @@ class SocialIconController extends Controller
             'example_text.required' => 'Icon example text is required',
             'order_id.required' => 'Order by id is required',
         ]);
+
+        if($request->type == 'username'){
+            $request->validate([
+                'main_link' => 'required|url'
+            ]);
+        }
 
         if ($request->file('icon_image')) {
             $image = $request->file('icon_image');
@@ -73,8 +81,10 @@ class SocialIconController extends Controller
             'icon_image' => $icon_image,
             'icon_group' => $request->icon_group,
             'icon_name' => $request->icon_name,
-            'icon_fa' => $request->icon_fa,
+            // 'icon_fa' => $request->icon_fa,
             'icon_title' => $request->icon_title,
+            'type' => $request->type,
+            'main_link' => $request->main_link,
             'example_text' => $request->example_text,
             'status' => $request->status,
             'order_id' => $request->order_id,
@@ -127,6 +137,7 @@ class SocialIconController extends Controller
             'icon_title' => 'required',
             'example_text' => 'required',
             'order_id' => 'required',
+            'type' => 'required',
         ],[
             'icon_group.required' => 'Icon group is required',
             'icon_name.required' => 'Icon name is required',
@@ -136,6 +147,11 @@ class SocialIconController extends Controller
             'order_id.required' => 'Order by id is required',
         ]);
 
+        if($request->type == 'username'){
+            $request->validate([
+                'main_link' => 'required|url'
+            ]);
+        }
 
         $old_iconImg = DB::table('social_icon')->where('id', $id)->first();
 
@@ -160,6 +176,8 @@ class SocialIconController extends Controller
             'icon_fa' => $request->icon_fa,
             'icon_title' => $request->icon_title,
             'example_text' => $request->example_text,
+            'type' => $request->type,
+            'main_link' => $request->main_link,
             'status' => $request->status,
             'order_id' => $request->order_id,
             'icon_name' => $request->icon_name,

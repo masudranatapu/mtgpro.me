@@ -42,6 +42,8 @@ class CardRequest extends FormRequest
                 $rules[$value->icon_name.'.*'] = 'nullable|string|max:224';
             }
         }
+
+
         return $rules;
     }
 

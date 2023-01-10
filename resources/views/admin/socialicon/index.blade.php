@@ -50,7 +50,7 @@
                                             <th>{{ __('Icon Group') }}</th>
                                             <th>{{ __('Icon Image') }}</th>
                                             <th>{{ __('Icon Name') }}</th>
-                                            <th>{{ __('Icon fa ') }}</th>
+                                            <th>{{ __('Icon Type') }}</th>
                                             <th>{{ __('Icon Title') }}</th>
                                             <th>{{ __('Example') }}</th>
                                             <th>{{ __('Status') }}</th>
@@ -64,7 +64,13 @@
                                             <td>{{$socile->icon_group}}</td>
                                             <td><img src="{{ asset($socile->icon_image) }}" width="35" alt="icon image"></td>
                                             <td>{{$socile->icon_name}}</td>
-                                            <td><i class="{{ $socile->icon_fa }}"></i></td>
+                                            <td>
+                                                {{ $socile->type }}
+                                                @if($socile->type == 'username')
+                                                <div>{{ $socile->main_link }}</div>
+                                                @endif
+
+                                            </td>
                                             <td>{{$socile->icon_title}}</td>
                                             <td>{{$socile->example_text}}</td>
                                             <td>
@@ -75,10 +81,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.social-icon.edit', $socile->id) }}" title="Edit socile icon" class="btn btn-primary btn-sm">
+                                                <a href="{{ route('admin.social-icon.edit', $socile->id) }}" title="Edit socile icon" class="btn btn-primary btn-sm mb-1" style="min-width: 55px;">
                                                     {{ __('Edit')}}
                                                 </a>
-                                                <a href="{{ route('admin.social-icon.destroy', $socile->id) }}" title="Edit socile icon" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure, you want to delete socile icon ?')">
+                                                <a href="{{ route('admin.social-icon.destroy', $socile->id) }}" title="Edit socile icon" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Are you sure, you want to delete socile icon ?')" style="min-width: 55px;">
                                                     {{ __('Delete')}}
                                                 </a>
                                             </td>

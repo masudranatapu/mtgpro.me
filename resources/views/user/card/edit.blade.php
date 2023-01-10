@@ -20,7 +20,7 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">
                                 <a href="{{ route('user.card') }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
-                                <img src="{{ asset('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2" alt="{{ $card->title }}">
+                                <img src="{{ getProfile($user->profile_image) }}" width="50" class="img-circle mr-2" alt="{{ $card->title }}">
                                 {{ $card->card_for ?? '' }}
                             </h1>
                         </div>
@@ -105,6 +105,9 @@
                                                 <div class="tab_body about_user">
                                                      <form action="{{ route('user.card.update',$card->id) }}" method="post" enctype="multipart/form-data">
                                                         @csrf
+
+                                                        <input type="hidden" name="mode" value="edit" />
+                                                        <input type="hidden" name="id" value="{{ $card->id }}" />
 
                                                         <div class="row">
                                                             <div class="col-xl-6">
@@ -247,7 +250,7 @@
                                                                     </div>
                                                                     <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{$card->card_url }}" >
                                                                   </div>
-                                                                  <span class="help-block text-danger" id="personalized_link_help">{{ $errors->first('personalized_link') }}</span>
+                                                                  <span class="help-block text-danger" id="card_url_help">{{ $errors->first('personalized_link') }}</span>
                                                                   @if($errors->has('card_url'))
                                                                   <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
                                                                     @endif
@@ -391,12 +394,19 @@
                                             @foreach ($icons as $key2 => $icon )
                                                 @if($icon->icon_group == $igroup )
                                                     <div class="col-sm-6 col-lg-4 icon_each" data-name="{{ $icon->icon_name }}">
-                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}">
+                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}" data-type="{{ $icon->type }}">
                                                             <div class="icon_wrap media position-relative mb-3">
                                                                 <div class="icon_info">
                                                                     <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon_title }}">
                                                                     <span>{{ $icon->icon_title }}</span>
                                                                 </div>
+
+                                                                @if($icon->is_paid == '1')
+                                                                    <div style="padding: 5px 20px;" title="Paid link">
+                                                                        <img src="{{ asset('assets/img/logo/pro.png') }}" alt="" width="22"  />
+                                                                    </div>
+                                                                @endif
+
                                                                 <div class="icon float-right">
                                                                     <i class="fa fa-plus"></i>
                                                                 </div>
@@ -426,7 +436,7 @@
                                                     {{-- <div  class="slim" data-ratio="1:1" data-size="100,100" data-force-min-size="false" data-min-size="1,1"> --}}
                                                     <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="" width="100" height="100">
-                                                    <span>Select photo here or drag and drop <br /> one in place of current</span>
+                                                    {{-- <span>Select photo here or drag and drop <br /> one in place of current</span> --}}
                                                     {{-- </div> --}}
                                                     @if($errors->has('logo'))
                                                         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
@@ -435,8 +445,8 @@
                                                 </label>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label"><span id="content_link">{{ __('Facebook profile link') }}</span> <span class="text-dark">*</span></label>
-                                                <input type="text" name="content" class="form-control" placeholder="link" required>
+                                                <label class="form-label"><span id="content_link"></span> <span class="text-dark">*</span></label>
+                                                <input type="text" name="content" class="form-control" placeholder="" required>
                                                 @if($errors->has('logo'))
                                                     <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
                                                 @endif
@@ -451,7 +461,7 @@
 
                                             <div class="form-group text-center float-lg-right">
                                                 <button type="button" class="btn btn-secondary backfirstModal mr-2">{{ __('Cancel') }}</button>
-                                                <button type="submit" class="btn btn-primary">{{ __('Add Link') }}</button>
+                                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                             </div>
                                         </form>
                                     </div>

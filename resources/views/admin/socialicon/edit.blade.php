@@ -2,6 +2,13 @@
 @section('settings','active')
 @section('social_icon','active')
 @section('title') {{ __('Social Icon Edit')}} @endsection
+
+@php
+$social_type =  Config::get('app.social_type');
+
+@endphp
+
+
 @section('content')
 <div class="page-wrapper">
     {{--         <div class="container-xl">
@@ -53,11 +60,11 @@
                                             </div>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                     <label for="" class="form-label">{{ __('Icon Image')}}</label>
                                                 <input type="file" name="icon_image" onchange="loadFile(event)" class="form-control" placeholder="{{ __('Icon image')}}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Group')}}</label>
                                                 <select name="icon_group" id="icon_group" class="form-control">
                                                      <option value="Recommended" {{$socileicons->icon_group == 'Recommended' ? 'selected' : '' }}>Recommended</option>
@@ -68,33 +75,41 @@
                                                      <option value="More" {{$socileicons->icon_group == 'More' ? 'selected' : '' }}>More</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Name')}}</label>
                                                 <input type="text" name="icon_name" class="form-control" value="{{$socileicons->icon_name}}" placeholder="Icon name">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="" class="form-label">{{ __('Icon fa')}}</label>
-                                                <input type="text" name="icon_fa" class="form-control" value="{{$socileicons->icon_fa}}" placeholder="Icon  name fa">
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
+
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Title')}}</label>
                                                 <input type="text" name="icon_title" class="form-control" value="{{$socileicons->icon_title}}" placeholder="Icon Title">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="" class="form-label">{{ __('Icon Exampl')}}e</label>
+
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Type')}}</label>
+                                                <select name="type" class="form-control" >
+                                                    @if(isset($social_type) && count($social_type)>0)
+                                                        @foreach($social_type as $key => $typ)
+                                                            <option value="{{ $typ }}" {{ $socileicons->type == $typ ? 'selected' : '' }} >{{ $typ }}</option>
+                                                        @endforeach
+                                                    @endif
+
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Main Link')}}</label>
+                                                <input type="text" name="main_link" class="form-control" value="{{$socileicons->main_link}}" placeholder="Enter main link (if type is username)">
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Icon Example')}}</label>
                                                 <input type="text" name="example_text" class="form-control" value="{{$socileicons->example_text}}" placeholder="Icon Example">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
+
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Order Id')}}</label>
                                                 <input type="number" name="order_id" class="form-control" value="{{$socileicons->order_id}}" placeholder="Order id">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Status')}}</label>
                                                 <select name="status"  class="form-control">
                                                     <option disabled>Select One</option>
@@ -102,7 +117,10 @@
                                                     <option @if($socileicons->status == 0) selected @endif value="0">{{ __('Inactive')}}</option>
                                                 </select>
                                             </div>
+
+
                                         </div>
+
                                         <div class="row mt-3">
                                             <div class="col-md-12 text-center">
                                                 <button type="submit" class="btn btn-success">{{ __('Update')}}</button>
