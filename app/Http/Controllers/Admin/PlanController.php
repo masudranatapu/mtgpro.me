@@ -167,7 +167,7 @@ class PlanController extends Controller
         $plan->save();
 
 
-        Toastr::success(trans('New Plan Created Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('New Plan Created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
 
         return redirect()->route('admin.plans');
     }
@@ -193,12 +193,12 @@ class PlanController extends Controller
         } else {
             if ($plan_details->shareable == 1){
                 $plan_details->update(['shareable' => 0]);
-                Toastr::success(trans('Plan has been shareable Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+                Toastr::success(trans('Plan has been shareable Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
                 return back();
             }else{
                 $plan_details->update(['shareable' => 1]);
 
-                Toastr::success(trans('Plan has been non shareable Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+                Toastr::success(trans('Plan has been non shareable Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
                 return back();
             }
         }
@@ -305,7 +305,7 @@ class PlanController extends Controller
         Plan::where('plan_id', $request->plan_id)->update($updateData);
 
 
-        Toastr::success(trans('Plan Details Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Plan Details Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.plans', $request->plan_id);
     }
 
@@ -320,7 +320,7 @@ class PlanController extends Controller
         }
         Plan::where('plan_id', $request->query('id'))->update(['status' => $status]);
 
-        Toastr::success(trans('Plan Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Plan Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.plans');
     }
 
@@ -363,7 +363,7 @@ class PlanController extends Controller
         }
 
         $plan->update();
-        Toastr::success(trans('Stripe package created Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Stripe package created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
 
     }
@@ -455,7 +455,7 @@ class PlanController extends Controller
             die($ex);
         }
 
-    Toastr::success(trans('Paypal package created Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+    Toastr::success(trans('Paypal package created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
     return redirect()->back();
     }
 

@@ -58,7 +58,7 @@ class ThemeController extends Controller
         }
 
      $themes->update();
-     Toastr::success(trans('Theme updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+     Toastr::success(trans('Theme updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
      return redirect()->route('admin.themes');
 
     }

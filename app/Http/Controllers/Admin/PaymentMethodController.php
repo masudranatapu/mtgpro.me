@@ -33,7 +33,7 @@ class PaymentMethodController extends Controller
         }
         Gateway::where('id', $request->query('id'))->update(['status' => $status]);
 
-        Toastr::success(trans('Payment Method Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Payment Method Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.payment.methods');
     }
 

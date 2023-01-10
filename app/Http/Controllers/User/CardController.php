@@ -56,14 +56,14 @@ class CardController extends Controller
         //validity
         $validity = checkPackageValidity($user_id);
         if($validity == false){
-            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
 
 
         $check = checkCardLimit($user_id);
         if($check == false){
-            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         $plan_details = User::where('id',$user_id)->first();
@@ -184,22 +184,22 @@ class CardController extends Controller
     {
         $validity = checkPackageValidity(Auth::id());
         if($validity == false){
-            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
 
 
         $check = checkCardLimit(Auth::id());
         if($check == false){
-            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         $this->resp = $this->businessCard->postStore($request);
         if (!$this->resp->status) {
-            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
         }
-        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.card.edit',$this->resp->data)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
@@ -208,10 +208,10 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->postUpdate($request, $id);
         if (!$this->resp->status) {
-            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
         }
-        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
@@ -252,7 +252,7 @@ class CardController extends Controller
         if($request->ajax()){
             return response()->json(['status'=> 1,'message' => 'Card deleted successfully!'], 200);
         }
-        Toastr::success(trans('Card deleted successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card deleted successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.card');
 
     }
@@ -317,13 +317,13 @@ class CardController extends Controller
           //validity
           $validity = checkPackageValidity(Auth::id());
         //   if($validity == false){
-        //       Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+        //       Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
         //       return redirect()->route('user.plans');
         //   }
 
         //   $check = checkCardLimit(Auth::id());
         //   if($check == false){
-        //       Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+        //       Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
         //       return redirect()->back();
         //   }
         $card               = new BusinessCard();
@@ -377,11 +377,11 @@ class CardController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
-            Toastr::error(trans('Unable to create Card ! Please try again'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Unable to create Card ! Please try again'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         DB::commit();
-        Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.card');
         }
 

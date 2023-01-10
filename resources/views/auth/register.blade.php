@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
     <!-- ======================= Sign Up  =========================== -->
     <div class="login_sec section" style="margin:35px 0px;">
         <!-- container -->
@@ -15,7 +13,7 @@
                             <div class="login_title mb-4 text-center">
                                 <h3>{{ __('Sign Up') }}</h3>
                             </div>
-                            <form method="POST" action="{{ route('register') }}">
+                            <form method="POST" action="{{ route('post-register') }}">
                                 @csrf
                                 <div class="social_login mb-2 mt-2 text-center">
                                     <a href="{{ route('social.login', 'facebook') }}" class="fa_facebook"><i class="fab fa-facebook"></i></a>
