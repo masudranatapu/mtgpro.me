@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('getSetting')) {
     function getSetting(){
@@ -233,7 +234,6 @@ function checkPackage($id = null){
         }else{
             return false;
         }
-
     }else{
         return true;
     }
