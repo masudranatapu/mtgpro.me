@@ -268,8 +268,8 @@
                                                             </div>
                                                         </form>
                                                        <div class="float-right">
-                                                            <a href="#" class="text-primary p-2">{{ __('Reset Your Password') }}</a>
-                                                            <a href="#" class="text-danger p-2" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
+                                                            <a href="#" class="btn btn-primary">{{ __('Reset Your Password') }}</a>
+                                                            <a href="#" class="btn btn-secondary text-danger" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                        </div>
                                                     </div>
                                                 </div>
