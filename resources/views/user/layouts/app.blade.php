@@ -50,6 +50,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <style>
         .fa-exclamation-circle{color: #ccc;}
+        .paid_scin{padding: 5px 20px;}
     </style>
     @stack('custom_css')
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>

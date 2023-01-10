@@ -1475,3 +1475,10 @@ body {
     border-radius: 50px;
     padding: 10px 34px;
 }
+.save-card-spinner{display: none;}
+
+.form-group .error {
+    color: #a74d19 !important;
+    font-size: 14px;
+    font-style: italic;
+}

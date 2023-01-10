@@ -19,7 +19,7 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">
                                 <a href="{{ route('dashboard') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
-                                <img src="{{ getProfile() }}" width="50" class="img-circle mr-2" alt="image">
+                                <img src="{{ getProfile($user->profile_image) }}" width="50" class="img-circle mr-2" alt="image">
                                 <span id="card_for_show">{{ __('Card Name') }}</span>
                             </h1>
                         </div>
@@ -95,8 +95,10 @@
                                             <!-- about -->
                                             <div class="tab-pane fade active show" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
                                                 <div class="tab_body about_user">
-                                                        <form action="{{ route('user.card.store') }}" method="post" id="cardCreate" enctype="multipart/form-data">
+                                                        <form action="{{ route('user.card.store') }}" method="post" id="cardCreate" enctype="multipart/form-data" novalidate="novalidate">
                                                             @csrf
+                                                            <input type="hidden" name="mode" value="create" />
+                                                            <input type="hidden" name="id" value="0" />
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
@@ -223,27 +225,34 @@
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                     <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" maxlength="150" tabindex="{{ $tabindex++ }}">{{ old('bio') }}</textarea>
+                                                                    <textarea name="bio" cols="30" rows="10" class="form-control @error('bio') is-invalid @enderror cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" maxlength="150" tabindex="{{ $tabindex++ }}" >{{ old('bio') }}</textarea>
                                                                     @if($errors->has('bio'))
                                                                         <span class="help-block text-danger">{{ $errors->first('bio') }}</span>
                                                                     @endif
                                                                  </div>
                                                             </div>
                                                             <div class="col-12 mb-3">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                  <span class="input-group-text" id="card_url-addon3" style="border: none">{{ route('home') }}/</span>
+                                                                <div class="form-group">
+                                                                    <label for="" class="form-label">{{ __('Personal link') }}</label>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="card_url-addon3" style="border: none">{{ route('home') }}/</span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control  @error('card_url') is-invalid @enderror" id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{ old('card_url') }}" tabindex="{{ $tabindex++ }}" required>
+                                                                    </div>
+                                                                    <span class="help-block text-danger" id="card_url_help"></span>
+
+                                                                    @if($errors->has('card_url'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
+                                                                    @endif
                                                                 </div>
-                                                                <input type="text" class="form-control  @error('card_url') is-invalid @enderror " id="card_url" aria-describedby="card_url-addon3" maxlength="50" name="card_url" value="{{ old('card_url') }}" tabindex="{{ $tabindex++ }}">
-                                                              </div>
-                                                              <span class="help-block text-danger" id="personalized_link_help">{{ $errors->first('personalized_link') }}</span>
-                                                              @if($errors->has('card_url'))
-                                                              <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
-                                                                @endif
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="float-right">
-                                                                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                                     <button type="submit" class="btn btn-primary save-card">
+                                                                         <i class="loading-spinner save-card-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                        <span class="btn-txt">{{ __('Save') }}</span>
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -377,7 +386,7 @@
                                             @foreach ($icons as $key2 => $icon )
                                                 @if($icon->icon_group == $igroup )
                                                     <div class="col-sm-6 col-lg-4 icon_each" data-name="{{ $icon->icon_name }}">
-                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}">
+                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-type="{{ $icon->type }}" >
                                                             <div class="icon_wrap media position-relative mb-3">
                                                                 <div class="icon_info">
                                                                     <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon_title }}">
@@ -410,21 +419,21 @@
                                                 <label class="imgLabel" for="logo">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="">
                                                     <input type="file" name="logo" id="logo" hidden>
-                                                    <span>Select photo here or drag and drop <br /> one in place of current</span>
+                                                    {{-- <span>Select photo here or drag and drop <br /> one in place of current</span> --}}
                                                 </label>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label"><span id="content_link">Facebook profile link</span> <span class="text-dark">*</span></label>
+                                                <label class="form-label"><span id="content_link"></span> <span class="text-dark">*</span></label>
                                                 <input type="text" name="content" class="form-control" placeholder="link" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="title" class="form-label">Link title</label>
+                                                <label for="title" class="form-label">{{ __('Link title') }}</label>
                                                 <input type="text" name="title" class="form-control" placeholder="Title" required id="content_title">
                                             </div>
 
                                             <div class="form-group text-center float-lg-right">
-                                                <button type="button" class="btn btn-secondary backfirstModal mr-2">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Add Link</button>
+                                                <button type="button" class="btn btn-secondary backfirstModal mr-2">{{ __('Cancel') }}</button>
+                                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -444,7 +453,7 @@
                                                                 </svg>
                                                             </div>
                                                             <!-- time -->
-                                                            <div class="clock">2:39</div>
+                                                            <div class="clock">{{ date('h:i') }}</div>
                                                             <!-- mobile icon -->
                                                             <div class="mobile_icon">
                                                                 <svg width="16" height="9" fill="none" viewBox="0 0 12 9">
@@ -509,6 +518,7 @@
 
 @endsection
 @push('custom_js')
+<script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
@@ -565,6 +575,8 @@ $(document).on('input','#colorPicker',function(){
     var element = document.getElementById("clrBg");
     element.style.backgroundColor = color;
 })
+
+//card_url validation
 
 var cropper = new Slim(document.getElementById('profile_pic'), {
         ratio: '1:1',

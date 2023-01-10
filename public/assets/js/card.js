@@ -279,15 +279,27 @@ $(document).on('keyup', '#filter', function(){
 // social content modal
 $(document).on('click', '.onclickIcon' ,function() {
     var name = $(this).data('name');
+    var type = $(this).data('type');
     var title = $(this).data('title');
     var image = $(this).data('image');
     var id = $(this).data('id');
-
+    var ftitle = '';
     var html = '<li class="sicon_'+id+'"><a class="social_link" href="" target="_blank"><img src="'+image+'" alt="email" class="social_logo"><span class="icon_label link_title_show">'+title+'</span></a></li>';
     $('.social_icon ul').append(html);
 
     $('#content_icon').attr('src',image);
-    $('#content_link').text(title+ ' profile link');
+    if(type == 'username'){
+        ftitle = title+ ' username';
+    }else if(type == 'link'){
+        ftitle = title+ ' profile link';
+    }else if(type == 'mail'){
+        ftitle = title+ ' address';
+    }else{
+        ftitle = title;
+    }
+    $('#content_link').text(ftitle);
+    $("input[name='content']").attr('placeholder',ftitle);
+
     $('#content_title').val(title);
     $('#content_title').attr('data-id', id);
     $('.first_modal').addClass('d-none');
@@ -298,6 +310,8 @@ $(document).on('click', '.onclickIcon' ,function() {
 
 $(document).on('input','#card_url', function() {
     var get_url = $('#base_url').val();
+    var mode = $('input[name="mode"]').val();
+    var id = $('input[name="id"]').val();
     var minLength = 2;
     var maxLength = 100;
     var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
@@ -315,12 +329,20 @@ $(document).on('input','#card_url', function() {
         $.ajax({
             type: 'get',
             url: get_url + '/user/card/check_link/'+value,
+            data:{mode,id},
             async: true,
             beforeSend: function () {
                 $("body").css("cursor", "progress");
             },
             success: function (response) {
-                $("#card_url_help").html(response.message).removeClass('text-danger').addClass('text-success');
+                $("#card_url_help").html(response.message);
+                // .removeClass('text-danger').addClass('text-success')
+                if(response.status == false){
+                    $("#card_url_help").removeClass('text-success').addClass('text-danger');
+                }
+                if(response.status == true){
+                    $("#card_url_help").removeClass('text-danger').addClass('text-success');
+                }
             },
             complete: function (data) {
                 $("body").css("cursor", "default");
@@ -329,6 +351,70 @@ $(document).on('input','#card_url', function() {
     }
 
 }).keyup();
+
+
+
+
+
+$(document).ready(function () {
+
+    // jQuery.validator.addMethod('username_rule', function (value, element) {
+    //     if (/^[a-zA-Z0-9_-]+$/.test(value)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     };
+    // });
+
+    // $.validator.addMethod('email_rule', function (value, element) {
+    //     if (/^([a-zA-Z0-9_\-\.]+)\+?([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(value)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     };
+    // });
+
+    $('#cardCreate').validate({
+        // rules: {
+        //     'email': {
+        //         required: true,
+        //         email_rule: true
+        //     },
+        //     'card_name': {
+        //         required: true,
+        //     },
+        //     'profil': {
+        //         required: true,
+        //     },
+        // },
+        // messages: {
+        //     'join[email]': "Please enter a valid email address.",
+        //     'firstName': "Please type your first name.",
+        //     'lastName': "Please type your last name."
+        // }
+        // submitHandler: function (form) {
+        //     return true;
+        // }
+        submitHandler: function(form) {
+
+            $('.save-card-spinner').addClass('active');
+            $(this).find('.save-card').prop('disabled', true);
+            $(".btn-txt").text("Processing ...");
+            setTimeout(function(){
+                $(".save-card-spinner").removeClass("active");
+                $('.save-card').attr("disabled", false);
+                $(".btn-txt").text("Save");
+            }, 50000);
+            form.submit();
+
+          },
+          errorPlacement: function(error, element) {
+            $(element).parents('.form-group').append(error)
+        },
+    });
+
+});
+
 
 
 

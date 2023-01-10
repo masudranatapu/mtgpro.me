@@ -239,7 +239,7 @@
             <!-- offcanvas contact button -->
             <div class="offcanvas_btn">
                 <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                    Send Contact
+                   {{ __('Connect') }}
                 </a>
             </div>
             <!-- offcanvas contact button -->

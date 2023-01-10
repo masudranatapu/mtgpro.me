@@ -8,7 +8,7 @@
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
             {{-- <input type="file" onchange="loadFile(event)" class="upload_icon" name="logo" id="logo" hidden> --}}
             {{-- <input type="file" class="upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden> --}}
-            <span>Select photo here or drag and drop <br /> one in place of current</span>
+            {{-- <span>Select photo here or drag and drop one in place of current</span> --}}
         </label>
         @if($errors->has('logo'))
         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
