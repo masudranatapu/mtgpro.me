@@ -92,6 +92,7 @@ if (!function_exists('getPhoto')) {
     }
 }
 
+
 if (!function_exists('getAvatar')) {
     function getAvatar($path)
     {

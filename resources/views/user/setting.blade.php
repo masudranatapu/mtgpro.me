@@ -257,7 +257,7 @@
                                                                     data-ratio="1:1"
                                                                     data-size="540,540"
                                                                     data-max-file-size="100">
-                                                                <img src="{{ getProfile($user->profile_image) }}" alt=""/>
+                                                                <img src="{{ getAvatar($user->profile_image) }}" alt=""/>
                                                                 <input type="file" name="profile_pic" id="profile_pic">
                                                                 </div>
                                                                 @if($errors->has('profile_pic'))

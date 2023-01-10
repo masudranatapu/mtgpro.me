@@ -175,7 +175,7 @@
             <div class="card_view_body">
                 <div class="content text-center">
                     <div class="profile_info mt-4">
-                        <h2>{{ $cardinfo->title }}</h2>
+                        <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
                         <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
                         @if (!empty($cardinfo->location))
                         <h6>{{ $cardinfo->location }}</h6>

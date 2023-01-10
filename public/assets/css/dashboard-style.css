@@ -391,6 +391,7 @@ body {
     font-family: 'DM Sans';
 }
 
+.checkout-wrapper .form-control,
 .account_setting .form-control {
     padding: 13px 24px;
     align-items: center;
