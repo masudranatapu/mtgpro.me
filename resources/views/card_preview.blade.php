@@ -185,11 +185,10 @@
                         @endif
                     </div>
                     <div class="save_contact mt-5 mb-5">
-                        {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact"  data-bs-toggle="modal" data-bs-target="#contactModal">{{ __('Save Contact') }}</a> --}}
-
-                        <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">
+                        <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">{{ __('Save Contact') }}</a>
+                        {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">
                             {{ __('Save Contact') }}
-                        </a>
+                        </a> --}}
                         <a href="javascript:void(0)" class="text-decoration-none d-inline-block btn-secondary" data-bs-toggle="modal" data-bs-target="#shareModal">
                             {{ __('Share') }}
                         </a>
@@ -229,10 +228,12 @@
                             @endif
                         </ul>
                     </div>
-
+                    @if (isFreePlan())
                     <div class="copyright_article">
                         <p>Copyright © mtgpro. All rights reserved.</p>
                     </div>
+                    @else
+                    @endif
                 </div>
             </div>
 
@@ -262,7 +263,7 @@
                                 <h5>{{ __('Send Card') }}</h5>
 
                                 <div class="py-2 mb-4 qrcode_share">
-                                    
+
                                     <div class="qrcode-wrapper mb-5">
                                         <div class="qr-background">
                                             <svg viewBox="0 0 213 213" xmlns="http://www.w3.org/2000/svg">
@@ -437,34 +438,32 @@
     <script src="{{asset('assets/js/toastr.js')}}"></script>
     <script>
       AOS.init();
-      $(document).on("click", ".save-contact", function (e) {
-            e.preventDefault();
-            var url = $(this).attr('href');
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    contentType:false,
-                    processData:false,
-                    success: function (response) {
-                        if (response.status == 1) {
-                            const link = document.createElement('a');
-                            link.setAttribute('href', response.file_path);
-                            link.setAttribute('download', response.file_name);
-                            link.click();
-                            // $("#contactModal").modal("show");
-                        }else{
-                            toastr.error('Something wrong! please try again');
-                        }
-                    },
-                    error: function (jqXHR, exception) {
-                        toastr.error('Something wrong! please try again');
-                    },
-                    complete: function (data) {
-                        $("body").css("cursor", "default");
-                    }
-                });
-
-        });
+    //   $(document).on("click", ".save-contact", function (e) {
+    //         e.preventDefault();
+    //         var url = $(this).attr('href');
+    //             $.ajax({
+    //                 type: 'GET',
+    //                 url: url,
+    //                 contentType:false,
+    //                 processData:false,
+    //                 success: function (response) {
+    //                     if (response.status == 1) {
+    //                         const link = document.createElement('a');
+    //                         link.setAttribute('href', response.file_path);
+    //                         link.setAttribute('download', response.file_name);
+    //                         link.click();
+    //                     }else{
+    //                         toastr.error('Something wrong! please try again');
+    //                     }
+    //                 },
+    //                 error: function (jqXHR, exception) {
+    //                     toastr.error('Something wrong! please try again');
+    //                 },
+    //                 complete: function (data) {
+    //                     $("body").css("cursor", "default");
+    //                 }
+    //             });
+    //     });
 
 
     </script>

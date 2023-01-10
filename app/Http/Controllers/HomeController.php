@@ -163,7 +163,6 @@ class HomeController extends Controller
                 ->first();
             $contacts = DB::table('business_fields as bf')
             ->select('bf.type','bf.label','bf.icon_image','bf.content','bf.position')
-            // ->leftJoin('social_icon','social_icon.id','=','bf.icon_id')
             ->where('bf.card_id',$card->id)
             ->where('bf.status',1)
             ->orderBy('bf.position','ASC')
@@ -207,11 +206,11 @@ class HomeController extends Controller
                     $vcard->addBirthday ($card->dob);
                 }
 
-                if(!empty($card->logo)){
+                if(!empty($card->logo) && file_exists(public_path($card->logo))){
                     $logo = str_replace(' ', '%20', public_path($card->logo));
                     $vcard->addLogo($logo);
                 }
-                if(!empty($card->profile)){
+                if(!empty($card->profile) && file_exists(public_path($card->profile))){
                     $profile = str_replace(' ', '%20', public_path($card->profile));
                     $vcard->addPhoto($profile);
                 }
@@ -238,21 +237,17 @@ class HomeController extends Controller
                     }
                 }
                 // save vcard on disk
-                $path = public_path('assets/vcard/');
-                $vcard->setSavePath($path);
-                $vcard->save();
-                DB::table('business_cards')->where('card_id',$id)->increment('total_vcf_download', 1);
-
-                // dd($vcard);
-                $file_name =  $vcard->getFilename();
-                $file_extension = $vcard->getFileExtension();
-                $final_name =$file_name.'.'.$file_extension;
-
-                return response()->json([
-                'status' => 1,
-                'file_path' => 'assets/vcard/'.$final_name,
-                'file_name'=>$final_name
-                ]);
+                // $path = public_path('assets/vcard/');
+                // $vcard->setSavePath($path);
+                // $vcard->save();
+                // $file_name =  $vcard->getFilename();
+                // $file_extension = $vcard->getFileExtension();
+                // $final_name =$file_name.'.'.$file_extension;
+                // return response()->json([
+                // 'status' => 1,
+                // 'file_path' => 'assets/vcard/'.$final_name,
+                // 'file_name'=>$final_name
+                // ]);
                 // return 'assets/vcard/'.$final_name;
 
                 // return Response::download($path, $final_name, $headers);
@@ -261,8 +256,9 @@ class HomeController extends Controller
             // // 5. return the vcard
             // return $response;
 
+            DB::table('business_cards')->where('card_id',$id)->increment('total_vcf_download', 1);
 
-            // return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
+            return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
         }
     }
 
