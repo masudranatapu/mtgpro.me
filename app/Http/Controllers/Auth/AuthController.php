@@ -45,7 +45,7 @@ class AuthController extends Controller
             // for plan info
             $user->plan_id              = $plans->id;
             $user->plan_details         = json_encode($plans);
-            $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
+            $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addYear(5)->format('Y-m-d');
             $user->plan_activation_date = Carbon::now();
             $location                   = $this->user->getLocation();
             if($location){
@@ -146,8 +146,8 @@ class AuthController extends Controller
                         $user->billing_country_code = $location->countryCode;
                         // $user->regionCode       = $location->regionCode;
                         $user->billing_state       = $location->regionName;
-                        $user->billing_city         = $location->cityName;
-                        $user->billing_zipcode          = $location->zipCode;
+                        $user->billing_city        = $location->cityName;
+                        $user->billing_zipcode     = $location->zipCode;
                         // $user->isoCode          = $location->isoCode;
                         // $user->latitude         = $location->latitude;
                         // $user->longitude        = $location->longitude;
@@ -155,7 +155,7 @@ class AuthController extends Controller
                     // for plan info
                     $user->plan_id     = $plans->id;
                     $user->plan_details = json_encode($plans);
-                    $user->plan_validity = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
+                    $user->plan_validity = Carbon::parse(date('Y-m-d'))->addYear(3)->format('Y-m-d');
                     $user->plan_activation_date = Carbon::now();
                     $user->save();
                     Auth::login($user);
@@ -167,7 +167,6 @@ class AuthController extends Controller
             dd($e->getmessage());
             Toastr::error(trans('Login failed. Please try again'), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->route('login');
-            // ->with('error','Login failed. Please try again');
         }
         return redirect()->route('user.card');
     }
