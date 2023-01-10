@@ -2,7 +2,10 @@
 namespace App\Http\Controllers;
 use Str;
 use QrCode;
+use App\Models\Faq;
 use App\Models\Plan;
+use App\Models\User;
+use App\Models\Review;
 use App\Models\Currency;
 use App\Mail\ConnectMail;
 use App\Mail\SendContact;
@@ -16,8 +19,6 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
-use App\Models\Faq;
-use App\Models\Review;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Support\Facades\Response;
 
@@ -104,6 +105,8 @@ class HomeController extends Controller
         ->first();
         if($cardinfo){
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
+            $user = User::find($cardinfo->user_id);
+
             // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
             $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
@@ -120,7 +123,7 @@ class HomeController extends Controller
             // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
             ->where('business_fields.card_id', $cardinfo->id)
             ->where('business_fields.status',1)->orderBy('business_fields.position','ASC')->get();
-            return view('card_preview', compact('cardinfo', 'icons','carddetails'));
+            return view('card_preview', compact('cardinfo', 'icons','carddetails','user'));
         }else{
 
             Toastr::warning('This card is not available please create your desired card');
