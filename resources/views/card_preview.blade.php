@@ -230,9 +230,11 @@
                         </ul>
                     </div>
 
+                    @if (isFreePlan())
                     <div class="copyright_article">
                         <p>Copyright © mtgpro. All rights reserved.</p>
                     </div>
+                    @endif
                 </div>
             </div>
 

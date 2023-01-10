@@ -25,7 +25,6 @@ class ConnectionController extends Controller
             $this->settings = getSetting();
         }
 
-
     public function getIndex(Request $request)
     {
         $data = DB::table('connects')
