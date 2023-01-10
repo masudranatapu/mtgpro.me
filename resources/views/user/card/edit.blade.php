@@ -103,7 +103,7 @@
                                             <!-- about -->
                                             <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
                                                 <div class="tab_body about_user">
-                                                     <form action="{{ route('user.card.update',$card->id) }}" method="post" enctype="multipart/form-data">
+                                                     <form action="{{ route('user.card.update',$card->id) }}" method="post" enctype="multipart/form-data" novalidate="novalidate" class="card_validation">
                                                         @csrf
 
                                                         <input type="hidden" name="mode" value="edit" />
@@ -244,6 +244,8 @@
                                                                  </div>
                                                             </div>
                                                             <div class="col-12 mb-3">
+                                                                <div class="form-group">
+                                                                    <label for="" class="form-label">{{ __('Personal link') }}</label>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                       <span class="input-group-text" id="card_url-addon3" style="border: none">{{ route('home') }}/</span>
@@ -255,9 +257,14 @@
                                                                   <span class="help-block text-danger">{{ $errors->first('card_url') }}</span>
                                                                     @endif
                                                                 </div>
+                                                            </div>
+                                                            
                                                             <div class="col-12">
                                                                 <div class="float-right">
-                                                                     <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                                                                     <button type="submit" class="btn btn-primary save-card">
+                                                                         <i class="loading-spinner save-card-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                        <span class="btn-txt">{{ __('Update') }}</span>
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -578,7 +585,7 @@
         }
     </style>
 @endif
-
+<script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
