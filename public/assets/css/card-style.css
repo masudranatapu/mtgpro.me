@@ -224,11 +224,11 @@ a {
 
 
 
-.modal,
-.offcanvas-backdrop {
+.modal, .offcanvas-backdrop {
     backdrop-filter: blur(4px);
     background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
     backdrop-filter: blur(4px);
+    opacity: 1 !important;
 }
 
 .modal-backdrop.show {
@@ -408,8 +408,26 @@ a {
 
 .copyright_article p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     font-family: 'Inter', sans-serif;
     color: #212121;
     font-weight: 500;
+}
+
+.copyright_article {
+    margin-bottom: 71px;
+    margin-top: 21px;
+}
+
+@media screen and (max-width: 450px){
+    .save_contact a{
+        padding: 12px 20px;
+    }
+}
+
+@media screen and (max-width: 330px){
+    .save_contact a{
+        width: 100% !important;
+        margin: 5px 0px;
+    }
 }
