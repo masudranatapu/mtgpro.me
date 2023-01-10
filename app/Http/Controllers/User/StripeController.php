@@ -132,15 +132,12 @@ class StripeController extends Controller
                     'billing_email'         => $request->billing_email,
                 ]);
             } catch (Exception $error) {
-                dd($error->getMessage());
                 Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
-
             Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
-
             Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-right"]);
-            return redirect()->route('user.invoice',$transaction->transaction_id);
+            return redirect()->route('user.invoice',$transaction->invoice_number);
 
     }
 
