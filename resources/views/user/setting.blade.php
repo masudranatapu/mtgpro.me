@@ -15,12 +15,15 @@
     $settings = getSetting();
     $countries = \App\Helpers\CountryHelper::CountryCodes();
     $subscription_end = new \Carbon\Carbon($user->plan_validity);
+    $subscription_start = new \Carbon\Carbon($user->plan_activation_date);
     $plan_price_monthly = $plan->plan_price_monthly;
     $plan_price_yearly =$plan->plan_price_yearly;
-    // echo $subscription_end->diffForHumans();
+
+    $diff_in_days = $subscription_start->diffInDays($subscription_end);
+
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
 
-    if($plan->is_yearly_plan){
+    if($diff_in_days > 1){
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 year"));
     }else{
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 month") );
@@ -93,9 +96,9 @@
                                                                 </h3>
                                                             </div>
                                                             <div class="card-body">
-                                                                @if ($plan->is_yearly_plan)
+                                                                @if ($diff_in_days > 1)
                                                                 <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
-                                                                <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per year') }}.</p>
+                                                                <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per member per year') }}.</p>
                                                                 @else
                                                                 <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
                                                                 <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
@@ -170,10 +173,10 @@
                                                                        </div>
                                                                        <div class="p-3">
                                                                         <span class="d-block py-1"><small>{{ __('Billed on the') }} {{ $bill_date }}th of every
-                                                                            @if ($plan->is_yearly_plan)
-                                                                            year
+                                                                            @if ($diff_in_days > 1)
+                                                                            {{ __('year') }}
                                                                             @else
-                                                                            month
+                                                                            {{ __('month') }}
                                                                            @endif .</small></span>
                                                                            <span class="d-block py-1">
                                                                                <small>

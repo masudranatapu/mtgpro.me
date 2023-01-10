@@ -58,15 +58,13 @@ class StripeController extends Controller
                     ]],
                 ]);
 
-
-
                 if($request->is_yearly==1){
                     $plan_price = $plan_details->plan_price_yearly;
                 }
                 else{
                     $plan_price = $plan_details->plan_price_monthly;
                 }
-                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d h:i:s');
+                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d H:i:s');
                 $plan_validity = Carbon::parse($subscription->start_date)->addDays($plan_details->validity);
                 $amountToBePaid = ((int)($plan_price) * (int)($config[25]->config_value) / 100) + (int)($plan_price);
                 $invoice_details = [];
@@ -103,7 +101,7 @@ class StripeController extends Controller
 
                 $transaction = new Transaction();
                 $transaction->invoice_number        = uniqid();
-                $transaction->transaction_date      = now();
+                $transaction->transaction_date      = date('Y-m-d H:i:s');
                 $transaction->transaction_id        = $subscription->id;
                 $transaction->user_id               = Auth::user()->id;
                 $transaction->plan_id               = $plan_details->id;
