@@ -146,8 +146,8 @@ class AuthController extends Controller
                         $user->billing_country_code = $location->countryCode;
                         // $user->regionCode       = $location->regionCode;
                         $user->billing_state       = $location->regionName;
-                        $user->billing_city         = $location->cityName;
-                        $user->billing_zipcode          = $location->zipCode;
+                        $user->billing_city        = $location->cityName;
+                        $user->billing_zipcode     = $location->zipCode;
                         // $user->isoCode          = $location->isoCode;
                         // $user->latitude         = $location->latitude;
                         // $user->longitude        = $location->longitude;

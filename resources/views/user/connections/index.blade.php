@@ -25,6 +25,7 @@ $tabindex  = 1;
             <div class="row">
                 <div class="col-md-12">
                     <div class="custome_table table-responsive">
+                        @if (!empty($rows) && count($rows) > 0)
                         <table class="table " id="connections">
                             <thead>
                                 <tr>
@@ -81,6 +82,9 @@ $tabindex  = 1;
                                 @endforeach
                             </tbody>
                         </table>
+                        @else
+                        <p class="text-center">{{ __('Connection not found') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -88,7 +92,9 @@ $tabindex  = 1;
     </div>
 </div>
 </div>
-@include('user.connections._send_mail_modal')
+@if (!empty($rows) && count($rows) > 0)
+    @include('user.connections._send_mail_modal')
+@endif
 @endsection
 @push('custom_js')
 <script>

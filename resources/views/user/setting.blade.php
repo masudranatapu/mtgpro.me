@@ -152,7 +152,7 @@
                                                                     <div class="card-header">
                                                                         <h4>
                                                                            {{ __('Payment method') }}
-                                                                            <a href="#" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
+                                                                            <a href="javascript:void(0)" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
                                                                         </h4>
                                                                     </div>
                                                                     @if (!empty($user->card_number))
@@ -166,7 +166,7 @@
                                                                                     ?>
                                                                                    <span class="d-block">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
                                                                                    <span class="d-block pb-1"><small>{{ $user->card_type }} - {{ __('Expires') }} {{date('m/Y', strtotime($user->card_expiration_date))}}
-                                                                                    {{-- 03/2024 --}}
+
                                                                                 </small></span>
                                                                                </div>
                                                                            </div>
