@@ -98,7 +98,11 @@ $setting  = getSetting();
             </div>
             <!-- row -->
             <div class="copyright text-center mt-4">
-                <p>{!! $settings->copyright_text !!}</p>
+                <p>
+                    {{ __('Copyright') }} &copy; <span id="year"></span>
+                    <a href="{{ route('home') }}" class="link-secondary">{{ $settings->site_name }}</a>.
+                    {{ __('All rights reserved.') }}
+                </p>
             </div>
         </div>
         <!-- container -->
