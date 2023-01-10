@@ -5,8 +5,10 @@
 <style>
 </style>
 @endpush
+@php
+  $rows = $transaction ?? [];
+@endphp
 @section('content')
-
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -29,7 +31,7 @@
 								<tr>
 									<th>{{ __('No') }}</th>
 									<th>{{ __('Transaction Date') }}</th>
-									<th>{{ __('Trans ID') }}</th>
+									<th>{{ __('Invoice ID') }}</th>
 									<th>{{ __('Payment Mode') }}</th>
 									<th>{{ __('Amount') }}</th>
 									<th>{{ __('Status') }}</th>
@@ -37,20 +39,20 @@
 								</tr>
 							</thead>
 							<tbody>
-                                @if(isset($transaction) && count($transaction) > 0 )
-                                @foreach($transaction as $key => $row)
+                                @if(isset($rows) && count($rows) > 0 )
+                                @foreach($rows as $key => $row)
 								<tr>
 									<td>{{ $key+1 }}</td>
 									<td>{{date('M d, Y', strtotime($row->transaction_date))}}</td>
-									<td>{{ $row->transaction_id }}</td>
+									<td>{{ $row->invoice_number }}</td>
 									<td>{{ $row->desciption }}</td>
 									<td class="text-right">{{ $row->transaction_currency }}&nbsp;{{ CurrencyFormat($row->transaction_amount,2) }}</td>
 									<td><span class="badge text-bg-success">{{ __('Paid')}}</span></td>
 									<td>
-                                        <a class="btn btn-primary btn-sm text-white" target="_blank" href="{{ route('user.invoice',$row->transaction_id) }}" title="{{ __('Invoice')}}">
+                                        <a class="btn btn-primary btn-sm text-white" target="_blank" href="{{ route('user.invoice',$row->invoice_number) }}" title="{{ __('Invoice')}}">
                                             {{ __('View')}}
                                         </a>
-                                        <a class="btn btn-primary btn-sm text-white" href="{{ route('user.invoice.download',$row->id) }}">
+                                        <a class="btn btn-primary btn-sm text-white" href="{{ route('user.invoice.download',$row->invoice_number) }}">
                                             {{ __('Download') }}
                                            <img src="{{ asset('assets/img/icon/download.svg') }}" alt="">
                                         </a>
@@ -64,7 +66,7 @@
                                 @endif
 							</tbody>
 						</table>
-                        {{ $transaction->links() }}
+                        {{ $rows->links() }}
 					</div>
 				</div>
 			</div>

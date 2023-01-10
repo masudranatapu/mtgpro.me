@@ -26,7 +26,7 @@ class TransactionController extends Controller
 
     public function getInvoice(Request $request,$transaction_id)
     {
-        $transaction = Transaction::where('transaction_id',$transaction_id)->first();
+        $transaction = Transaction::where('invoice_number',$transaction_id)->first();
          return view('user.invoice',compact('transaction'));
     }
 
@@ -46,8 +46,8 @@ class TransactionController extends Controller
     public function getInvoicePDF(Request $request,$id)
     {
         $data = [];
-        $data['transaction'] = Transaction::where('id',$id)->first();
-        $name = $data['transaction']->transaction_id;
+        $data['transaction'] = Transaction::where('invoice_number',$id)->first();
+        $name = $data['transaction']->invoice_number;
         $pdf = Pdf::loadView('pdf.invoice',compact('data'));
         return $pdf->download('invoice'."_".$name.'.pdf');
         //  return view('pdf.invoice',compact('data'));

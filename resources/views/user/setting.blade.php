@@ -208,6 +208,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>{{ __('Date') }}</th>
+                                                                        <th>{{ __('Invoice ID') }}</th>
                                                                         <th>{{ __('Description') }}</th>
                                                                         <th></th>
                                                                     </tr>
@@ -216,9 +217,10 @@
                                                                    @foreach ($transections as $row)
                                                                     <tr>
                                                                         <td>{{date('M d, Y', strtotime($row->transaction_date))}}</td>
+                                                                        <td>{{ $row->invoice_number }}</td>
                                                                         <td>{!! $row->desciption !!}</td>
                                                                         <td class="text-right download_invoice">
-                                                                            <a href="{{ route('user.invoice.download',$row->id) }}">
+                                                                            <a href="{{ route('user.invoice.download',$row->invoice_number) }}">
                                                                                {{ __('Download') }}
                                                                               <img src="{{ asset('assets/img/icon/download.svg') }}" alt="">
                                                                            </a>
