@@ -2,8 +2,7 @@
    <div class="contact_modal modal fade" id="connectMail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <a href="{{ route('user.connections') }}" title="Tooltip on top"><i class="fa fa-angle-left"></i> Back</a>
+            <div class="modal-header border-0">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -33,7 +32,7 @@
                         <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">{{ __('Send Message') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Send Message') }}</button>
                 </form>
             </div>
         </div>

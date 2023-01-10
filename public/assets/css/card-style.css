@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-ul{
-    margin:0;
-    padding:0;
+ul {
+    margin: 0;
+    padding: 0;
     list-style: none;
 }
+
+a {
+    text-decoration: none !important;
+}
+
 .card_view_wrapper {
     padding: 0;
     position: relative;
@@ -21,6 +26,7 @@ ul{
     background: #fff;
     padding-bottom: 23px;
 }
+
 .card_cover {
     position: relative;
 }
@@ -37,6 +43,7 @@ ul{
     height: 140px;
     border: 5px solid #fff;
     position: relative;
+    background: #fff;
 }
 
 .logo {
@@ -94,15 +101,14 @@ ul{
 
 .save_contact a {
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-    padding: 17px 22px;
-    display: inline-block;
+    padding: 12px 45px;
     font-size: 17px;
     font-family: 'Inter';
     font-weight: 400;
+    width: 34%;
     border-radius: 50px;
     color: #fff;
-    background: #111;
-    /* width: 54%; */
+    background: #212121;
     transition: all 0.4s ease;
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
@@ -110,7 +116,13 @@ ul{
     -o-transition: all 0.4s ease;
 }
 
-.save_contact a:hover{
+.save_contact .btn-secondary {
+    background: #fff !important;
+    color: #212121;
+    border-color: #fff;
+}
+
+.save_contact a:hover {
     box-shadow: none;
 }
 
@@ -144,8 +156,9 @@ ul{
 }
 
 .contact_modal .contact_body {
-    padding: 87px 30px 30px 30px;
+    padding: 12px 30px 0px 30px;
 }
+
 .contact_modal .modal-header {
     padding: 0;
     border: none;
@@ -168,6 +181,7 @@ ul{
     margin: 0 auto;
     transform: translate(0px, -36px);
     border: 5px solid #fff;
+    background: #fff;
 }
 
 .contact_modal .heading h4 {
@@ -201,38 +215,201 @@ ul{
 }
 
 
-
-
-
-
-
- @media screen and (max-width:450px){
+@media screen and (max-width:450px) {
     .social_media ul li {
         margin: 8px 10px;
     }
- }
+}
 
 
 
 
+.modal,
+.offcanvas-backdrop {
+    backdrop-filter: blur(4px);
+    background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
+    backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.show {
+    opacity: 0;
+}
+
+.modal-content {
+    border: none;
+    box-shadow: 0px 12px 40px rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.modal .close {
+    position: absolute;
+    top: 25px;
+    right: 23px;
+    border: 1px solid #e2e2e2;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    line-height: 2px;
+    text-align: center;
+    padding: 0 !important;
+    background: #fff;
+    z-index: 5;
+}
+
+.modal-header {
+    border: none;
+    display: block;
+    padding: 0px 4px;
+}
+
+
+.modal-header h5 {
+    display: block;
+    font-size: 18px;
+    font-family: 'Inter';
+    color: #111;
+    font-weight: 400;
+}
 
 
 
+.btn-primary {
+    background: #212121;
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+    padding: 12px 30px !important;
+    border-radius: 50px !important;
+    font-size: 13px;
+}
+
+
+.modal .btn-secondary {
+    background: transparent !important;
+    color: #111;
+    border: 1px solid #DDD !important;
+    font-size: 14px;
+    font-family: 'DM Sans';
+    border-radius: 50px;
+    padding: 12px 30px;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background-color: #212121;
+}
+
+.modal_body h5 {
+    display: block;
+    font-size: 18px;
+    font-family: 'Inter';
+    color: #111;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+#social-links ul li img {
+    width: 55px;
+    margin: 7px 5px;
+}
+
+.offcanvas_btn a {
+    font-size: 17px;
+    background: #212121;
+    padding: 12px 41px;
+    color: #fff !important;
+    font-family: 'Inter';
+    border-radius: 50px;
+    text-align: center;
+    font-weight: 400;
+    box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 3px 4px 0 rgb(0 0 0 / 14%), 0 1px 8px 0 rgb(0 0 0 / 12%);
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    position: fixed;
+    bottom: 8px;
+    right: 0;
+    left: 0;
+    max-width: 237px;
+    margin: 0 auto;
+    z-index: 5;
+}
 
 
 
+.offcanvas_btn a:hover {
+    transform: scale(1.1);
+    background: #212121 !important;
+}
+
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+    color: #fff !important;
+    background-color: #212121 !important;
+    border-color: #212121 !important;
+}
+
+.contact_modal.offcanvas.offcanvas-bottom {
+    right: 15px !important;
+}
+
+.contact_modal.offcanvas-bottom {
+    width: 441px;
+    height: 625px;
+    border: none !important;
+    animation-delay: 0s;
+    animation: bounce;
+    animation-duration: 2s;
+    background: rgb(255, 255, 255);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    bottom: 0px;
+    color: rgb(51, 51, 51);
+    margin: 0px auto;
+    transform-origin: center bottom;
+    transition: all 0.1s ease-in-out !important;
+    -webkit-transition: all 0.1s ease-in-out !important;
+    -moz-transition: all 0.1s ease-in-out !important;
+    -ms-transition: all 0.1s ease-in-out !important;
+    -o-transition: all 0.1s ease-in-out !important;
+}
 
 
+.contact_modal .offcanvas-header button {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    display: flex;
+    font-size: 60px;
+    height: 70px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    left: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 8px;
+    line-height: 16px;
+    transform: translate3d(-50%, -50%, 0px);
+    width: 70px;
+    box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+}
 
+.contact_modal .offcanvas-header button {
+    border: none;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.copyright_article p {
+    margin: 0;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: #212121;
+    font-weight: 500;
+}
