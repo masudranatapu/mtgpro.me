@@ -18,11 +18,11 @@ class TransactionController extends Controller
 
     }
 
-    // public function index(Request $request)
-    // {
-    //     $transaction = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(10);
-    //     return view('desktop.transaction', compact('transaction'));
-    // }
+    public function getIndex(Request $request)
+    {
+        $transaction = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(10);
+        return view('user.transaction', compact('transaction'));
+    }
 
     public function getInvoice(Request $request,$transaction_id)
     {
