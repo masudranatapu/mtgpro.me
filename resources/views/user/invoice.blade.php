@@ -19,10 +19,8 @@
     	font-weight: 600;
     	color: #000000;
 	}
-
 	.card-body h4, .card-body p{
 	    font-size: 15px;
-	    font-family: 'Poppins', sans-serif;
 	}
 
 address {
@@ -34,13 +32,11 @@ address {
 }
 .card-body h1 {
     font-size: 22px;
-    font-family: 'Poppins', sans-serif;
     font-weight: 400;
 }
 .card-body td.title {
     font-size: 14px;
     font-weight: 500;
-    font-family: 'Poppins';
     color: #000;
     vertical-align: middle;
 }

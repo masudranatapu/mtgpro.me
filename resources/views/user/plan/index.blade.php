@@ -110,12 +110,12 @@ My Plans
                                 </div>
                                 <hr>
                                 <ul class="list-unstyled lh-lg ">
-                                    @foreach($planfeatures as $features)
-                                        <li class="py-2">
-                                            <span>{{$features}}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                            @foreach($planfeatures as $features)
+                                <li class="py-2">
+                                    <span>{{$features}}</span>
+                                </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>

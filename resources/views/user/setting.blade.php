@@ -228,9 +228,9 @@
                                                                 </tbody>
                                                             </table>
 
-                                                            {{-- @if ($transections->total() > $transections->perPage() ) --}}
+                                                            @if ($transections->total() > $transections->perPage() )
                                                             <a href="{{ route('user.transactions') }}">{{ __('See all') }}</a>
-                                                            {{-- @endif --}}
+                                                            @endif
 
                                                         </div>
                                                         @endif
@@ -245,16 +245,6 @@
                                                     <div class="setting_form">
                                                         <form action="{{ route('user.profile-info.update') }}" method="post">
                                                             @csrf
-                                                            {{-- <div class="form-group">
-                                                                <label for="profile_url" class="form-label">
-                                                                    {{ __('Profile URL') }}
-                                                                    <a href="#">
-                                                                        <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="icon">
-                                                                    </a>
-                                                                </label>
-                                                                <input type="text" name="profile_url" id="profile_url" class="form-control" value="mtgpr/">
-                                                            </div> --}}
-
                                                             <div class="form-group profile-pic">
                                                                 <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
                                                                 <div class="slim"
