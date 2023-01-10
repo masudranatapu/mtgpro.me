@@ -350,7 +350,7 @@ class SettingsController extends Controller
         ]);
 
 
-        Toastr::success(trans('Invoice Setting Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Invoice Setting Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.tax.setting');
     }
 
@@ -366,7 +366,7 @@ class SettingsController extends Controller
         ]);
 
 
-        Toastr::success(trans('Email Setting Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Email Setting Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.tax.setting');
     }
 
@@ -975,7 +975,7 @@ class SettingsController extends Controller
         //     $safe_section_content = $request->input('section' . $i);
         //     DB::table('pages')->where('page_name', $id)->where('id', $sections[$i]->id)->update(['section_content' => $safe_section_content]);
         // }
-        Toastr::success(trans('Website Content Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Website Content Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
@@ -986,7 +986,7 @@ class SettingsController extends Controller
         Artisan::call('view:clear');
         Artisan::call('route:clear');
 
-        Toastr::success(trans('Website Cache Cleared Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Website Cache Cleared Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
@@ -1000,12 +1000,12 @@ class SettingsController extends Controller
             $mail = true;
         } catch (\Exception $e) {
 
-            Toastr::success(trans('Email configuration wrong.'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Email configuration wrong.'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         if($mail == true) {
 
-            Toastr::success(trans('Test mail send successfully.'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Test mail send successfully.'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
     }

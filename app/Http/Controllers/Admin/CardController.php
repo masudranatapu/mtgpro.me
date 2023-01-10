@@ -67,7 +67,7 @@ class CardController extends Controller
         }
 
      $themes->update();
-     Toastr::success(trans('Theme updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+     Toastr::success(trans('Theme updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
      return redirect()->route('admin.themes');
 
     }
@@ -93,11 +93,11 @@ class CardController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
-            Toastr::error(trans('Card not updated!'), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Card not updated!'), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         DB::commit();
-        Toastr::success(trans('Card Successfully removed!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card Successfully removed!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
@@ -130,7 +130,7 @@ class CardController extends Controller
                 $status = 0;
             }
             BusinessCard::where('id', $id)->update(['status' => $status]);
-            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.cards');
         }
 
@@ -144,7 +144,7 @@ class CardController extends Controller
                 'is_deleted' => 0,
                 'updated_at' =>  date('Y-m-d H:i:s'),
             ]);
-            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.cards');
         }
 

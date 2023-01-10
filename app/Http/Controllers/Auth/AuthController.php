@@ -6,16 +6,12 @@ use Socialite;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Mail\WelcomeMail;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
-
-
 class AuthController extends Controller
 {
     protected $user;
@@ -28,20 +24,13 @@ class AuthController extends Controller
 
     public function postRegister(RegistrationRequest $request)
     {
-        // dd($request->all());
-        date_default_timezone_set('Asia/Dhaka');
         try {
             $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
             $checkExist = User::where('email',$request->email)->whereNotNull('email')->first();
-
-            // dd($checkExist);
-
             if(!empty($checkExist)){
-
-                Toastr::error(trans('Cannot create account an identical account already exists!'), 'Success', ["positionClass" => "toast-top-right"]);
+                Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back()->with('error','Already exist account')->withInput();;
             }
-
             $user                       = new User();
             $user->name                 = trim($request->name);
             $user->email                = trim($request->email);
@@ -56,89 +45,42 @@ class AuthController extends Controller
             // for plan info
             $user->plan_id              = $plans->id;
             $user->plan_details         = json_encode($plans);
-            $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
+            $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addYear(5)->format('Y-m-d');
             $user->plan_activation_date = Carbon::now();
-            $user->save();
-
-
-            $location               = $this->getLocation();
+            $location                   = $this->user->getLocation();
             if($location){
-                $user->country          = $location->countryName;
-                $user->countryCode      = $location->countryCode;
-                $user->regionCode       = $location->regionCode;
-                $user->regionName       = $location->regionName;
-                $user->cityName         = $location->cityName;
-                $user->zipCode          = $location->zipCode;
-                $user->isoCode          = $location->isoCode;
-                $user->latitude         = $location->latitude;
-                $user->longitude        = $location->longitude;
+                $user->billing_country  = $location->countryName;
+                $user->billing_country_code = $location->countryCode;
+                // $user->regionCode    = $location->regionCode;
+                $user->billing_state    = $location->regionName;
+                $user->billing_city     = $location->cityName;
+                $user->billing_zipcode  = $location->zipCode;
+                // $user->isoCode          = $location->isoCode;
+                // $user->latitude         = $location->latitude;
+                // $user->longitude        = $location->longitude;
             }
-            $user->ip_address       = $this->user->getIP();
-            $user->device           = $this->user->getOS();
-            $user->browser          = $this->user->getBrowser();
-
-
-
-
+            // $user->ip_address       = $this->user->getIP();
+            // $user->device           = $this->user->getOS();
+            // $user->browser          = $this->user->getBrowser();
+            $user->save();
             if($user){
                 Auth::login($user);
                 Mail::to($user->email)->send(new WelcomeMail($user));
-                return redirect()->route('user.dashboard');
+                return redirect()->route('user.card');
             }
-
         } catch (\Exception $e) {
             dd($e->getMessage());
-            return redirect()->back()->with('error','Account not created');
+            Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
         }
-        return redirect()->route('user.dashboard');
+        return redirect()->route('user.card');
     }
-
-    public function getLocation(){
-        // $ip = '103.103.35.202'; //Dynamic IP address get
-          $ip = $this->getIp();
-         $data = \Location::get($ip);
-         return $data;
-     }
-
-     public static function getIP() {
-        $ipaddress = '';
-        if (getenv('HTTP_CLIENT_IP'))
-            $ipaddress = getenv('HTTP_CLIENT_IP');
-        else if(getenv('HTTP_X_FORWARDED_FOR'))
-            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-        else if(getenv('HTTP_X_FORWARDED'))
-            $ipaddress = getenv('HTTP_X_FORWARDED');
-        else if(getenv('HTTP_FORWARDED_FOR'))
-            $ipaddress = getenv('HTTP_FORWARDED_FOR');
-        else if(getenv('HTTP_FORWARDED'))
-            $ipaddress = getenv('HTTP_FORWARDED');
-        else if(getenv('REMOTE_ADDR'))
-            $ipaddress = getenv('REMOTE_ADDR');
-        else
-            $ipaddress = 'UNKNOWN';
-        if($ipaddress=='::1')
-            $ipaddress = getHostByName(getHostName());
-
-        return $ipaddress;
-    }
-
-
-
-
 
     public function getDeactivationForm(){
         return view('auth.deactivation-form');
     }
 
-
-
     public function getChangePassword(){
-
-        if(isMobile() && (Auth::user()->user_type == 2)){
-            return view('mobile.profile.change_password');
-        }else{
-
-        }
         return view('auth.change_password');
     }
 
@@ -163,7 +105,6 @@ class AuthController extends Controller
     }
 
 
-
     public function redirectToProvider(string $provider)
     {
         return Socialite::driver($provider)->redirect();
@@ -175,7 +116,9 @@ class AuthController extends Controller
         $data = Socialite::driver($provider)->stateless()->user();
         $check_deactive = User::where('email',$data->email)->where('status',0)->first();
         if(!empty($check_deactive)){
-            return redirect()->route('login')->with('error','oops! your account has been deactivated! please contact website administrator');
+            Toastr::error(trans('oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('login');
+            // ->with('error','oops! your account has been deactivated! please contact website administrator');
         }
         try {
             $isExist  = User::where(['email' => $data->email])->first();
@@ -197,10 +140,22 @@ class AuthController extends Controller
                     $user->status      = 1;
                     $user->role_id     = 1;
                     $user->user_type   = 2;
+                    $location                   = $this->user->getLocation();
+                    if($location){
+                        $user->billing_country     = $location->countryName;
+                        $user->billing_country_code = $location->countryCode;
+                        // $user->regionCode       = $location->regionCode;
+                        $user->billing_state       = $location->regionName;
+                        $user->billing_city        = $location->cityName;
+                        $user->billing_zipcode     = $location->zipCode;
+                        // $user->isoCode          = $location->isoCode;
+                        // $user->latitude         = $location->latitude;
+                        // $user->longitude        = $location->longitude;
+                    }
                     // for plan info
                     $user->plan_id     = $plans->id;
                     $user->plan_details = json_encode($plans);
-                    $user->plan_validity = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
+                    $user->plan_validity = Carbon::parse(date('Y-m-d'))->addYear(3)->format('Y-m-d');
                     $user->plan_activation_date = Carbon::now();
                     $user->save();
                     Auth::login($user);
@@ -210,9 +165,10 @@ class AuthController extends Controller
                 }
         } catch (\Exception $e) {
             dd($e->getmessage());
-            return redirect()->route('login')->with('error','Login failed. Please try again');
+            Toastr::error(trans('Login failed. Please try again'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('login');
         }
-        return redirect()->route('user.dashboard');
+        return redirect()->route('user.card');
     }
 
 

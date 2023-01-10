@@ -56,14 +56,14 @@ class CardController extends Controller
         //validity
         $validity = checkPackageValidity($user_id);
         if($validity == false){
-            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
 
 
         $check = checkCardLimit($user_id);
         if($check == false){
-            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         $plan_details = User::where('id',$user_id)->first();
@@ -184,22 +184,22 @@ class CardController extends Controller
     {
         $validity = checkPackageValidity(Auth::id());
         if($validity == false){
-            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
 
 
         $check = checkCardLimit(Auth::id());
         if($check == false){
-            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         $this->resp = $this->businessCard->postStore($request);
         if (!$this->resp->status) {
-            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
         }
-        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.card.edit',$this->resp->data)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
@@ -208,10 +208,10 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->postUpdate($request, $id);
         if (!$this->resp->status) {
-            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans($this->resp->msg), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
         }
-        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans($this->resp->msg), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
@@ -253,7 +253,7 @@ class CardController extends Controller
         if($request->ajax()){
             return response()->json(['status'=> 1,'message' => 'Card deleted successfully!'], 200);
         }
-        Toastr::success(trans('Card deleted successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card deleted successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.card');
 
     }
@@ -286,27 +286,6 @@ class CardController extends Controller
     }
 
 
-    // public function uploadCardAvatar(Request $request){
-    //     $data = $request->image;
-    //     $image_array_1 = explode(";", $data);
-    //     $image_array_2 = explode(",", $image_array_1[1]);
-    //     $data = base64_decode($image_array_2[1]);
-    //     $imageName = time() . '.png';
-    //     $imagePath = 'assets/uploads/avatar/';
-    //     if (!File::exists($imagePath)) {
-    //         File::makeDirectory($imagePath, 777, true);
-    //     }
-    //    Image::make($data)->save($imagePath.$imageName);
-    //     $imagePath_ = asset($imagePath. $imageName);
-    //     $imagePath2 = $imagePath. $imageName;
-    //     return response()->json([
-    //         'html'=> '<img src="'.$imagePath_.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">',
-    //         'image' =>$imagePath_
-    //     ]);
-    //     // return response()->json('<img src="'.$imagePath.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">');
-
-    // }
-
     public function saveBusinessCard(FirstCardRequest $request)
     {
         DB::beginTransaction();
@@ -318,13 +297,13 @@ class CardController extends Controller
           //validity
           $validity = checkPackageValidity(Auth::id());
         //   if($validity == false){
-        //       Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-right"]);
+        //       Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
         //       return redirect()->route('user.plans');
         //   }
 
         //   $check = checkCardLimit(Auth::id());
         //   if($check == false){
-        //       Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-right"]);
+        //       Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
         //       return redirect()->back();
         //   }
         $card               = new BusinessCard();
@@ -378,75 +357,40 @@ class CardController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
-            Toastr::error(trans('Unable to create Card ! Please try again'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Unable to create Card ! Please try again'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         DB::commit();
-        Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card has been created successfully !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.card');
         }
 
 
 
-
-        public function cropImage(Request $request){
-
-
-            return view('user.crop-img');
-
-        }
-
-
-        public function cropImageUpload(Request $request){
-            if($request->has('avatar') && $request->avatar[0])
-            {
-                 $output = $request->avatar;
-                 $output = json_decode($output, TRUE);
-                 if(isset($output) && isset($output['output']) && isset($output['output']['image']))
-                    $image = $output['output']['image'];
-                    if(isset($image))
-                    {
-                      $this->uploadBase64ToImage($image,'jpg');
-                      return view('user.crop-img');
-                    }
-                    return view('user.crop-img');
-                //  return 'no picture file';
-            }
-            // dd($request->all());
-
-            return view('user.crop-img');
-
-        }
-
-
-        // public function uploadBase64ToImage($file,$file_prefix)
-        // {
-        //     $name = date('YmdHis');
-        //     $file_path = sprintf("assets/uploads/avatar/");
-        //     $file_name = sprintf('%s.%s', $name, $file_prefix);
-        //     $upload_path = public_path() . '/' . $file_path;
-        //     if(stripos($file, 'data:image/jpeg;base64,') === 0)
-        //     {
-        //         $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
-        //     }
-        //     else if(stripos($file, 'data:image/png;base64,') === 0)
-        //     {
-        //         $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
-        //     }
-        //     else
-        //     {
-        //         return array('error' => 'non-image files');
-        //     }
-        //       $result = file_put_contents($upload_path . $file_name, $img);
-        //     if($result == FALSE)
-        //     {
-        //         return array('error' => 'Failed to write to file, possibly without permission');
-        //     }
-        //     return $file_path.$file_name;
+        // public function cropImage(Request $request){
+        //     return view('user.crop-img');
         // }
 
 
+        // public function cropImageUpload(Request $request){
+        //     if($request->has('avatar') && $request->avatar[0])
+        //     {
+        //          $output = $request->avatar;
+        //          $output = json_decode($output, TRUE);
+        //          if(isset($output) && isset($output['output']) && isset($output['output']['image']))
+        //             $image = $output['output']['image'];
+        //             if(isset($image))
+        //             {
+        //               $this->uploadBase64ToImage($image,'jpg');
+        //               return view('user.crop-img');
+        //             }
+        //             return view('user.crop-img');
+        //         //  return 'no picture file';
+        //     }
+        //     // dd($request->all());
 
+        //     return view('user.crop-img');
+        // }
 
         public function getChangeCardStatus(Request $request)
         {

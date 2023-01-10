@@ -50,7 +50,7 @@ class AccountController extends Controller
             if ($validator->fails()) {
                 return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
             }
-            Toastr::success(trans('Profile Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Profile Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.edit.account')->with('success', 'Profile Updated Successfully!');
         } else {
             $validator = Validator::make($request->all(), [
@@ -58,7 +58,7 @@ class AccountController extends Controller
             ]);
 
             if ($validator->fails()) {
-                Toastr::error(trans('Invalid Image or image size is large.'), 'Success', ["positionClass" => "toast-top-right"]);
+                Toastr::error(trans('Invalid Image or image size is large.'), 'Success', ["positionClass" => "toast-top-center"]);
                 return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
             }
 
@@ -68,7 +68,7 @@ class AccountController extends Controller
             User::where('id', Auth::user()->id)->update([
                 'profile_image' => $profile_picture
             ]);
-            Toastr::success(trans('Profile Image Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Profile Image Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.edit.account')->with('success', 'Profile Image Updated Successfully!');
         }
     }
@@ -177,11 +177,11 @@ class AccountController extends Controller
 
     } catch (\Exception $e) {
         DB::rollback();
-        Toastr::error(trans('User not Created !'), 'Error', ["positionClass" => "toast-top-right"]);
+        Toastr::error(trans('User not Created !'), 'Error', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.admin-users');
     }
         DB::commit();
-        Toastr::success(trans('User Successfully Created !'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('User Successfully Created !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.admin-users');
     }
 
@@ -218,11 +218,11 @@ class AccountController extends Controller
 
     } catch (\Exception $e) {
         DB::rollback();
-        Toastr::error(trans('User not updated!'), 'Error', ["positionClass" => "toast-top-right"]);
+        Toastr::error(trans('User not updated!'), 'Error', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.admin-users');
     }
         DB::commit();
-        Toastr::success(trans('User updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('User updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.admin-users');
     }
 

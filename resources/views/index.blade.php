@@ -261,69 +261,72 @@
             </div>
         </div>
     </div>
-    
-    <div class="testimonial_sec section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row d-flex justify-content-center">
-                <!-- section heading -->
-                <div class="section_title mb-5 text-center" data-aos="fade-up">
-                    <h4>{{ __('See What Teams are Saying') }}</h4>
-                </div>
-                <div class="review_wrapper owl-carousel">
-                    @foreach($reviews as $review)
-                        <div class="item review_wrap text-center" data-aos="zoom-in">
-                            <div class="review_item">
-                                <span class="icon"><i class="fa fa-quote-left"></i></span>
-                                <p>{{ __($review->details) }}</p>
+    @if($reviews->count() > 0)
+        <div class="testimonial_sec section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row d-flex justify-content-center">
+                    <!-- section heading -->
+                    <div class="section_title mb-5 text-center" data-aos="fade-up">
+                        <h4>{{ __('See What Teams are Saying') }}</h4>
+                    </div>
+                    <div class="review_wrapper owl-carousel">
+                        @foreach($reviews as $review)
+                            <div class="item review_wrap text-center" data-aos="zoom-in">
+                                <div class="review_item">
+                                    <span class="icon"><i class="fa fa-quote-left"></i></span>
+                                    <p>{{ __($review->details) }}</p>
+                                </div>
+                                <div class="review_user">
+                                    <img src="@if($review->user->profile_image) {{ asset($review->user->profile_image) }} @else {{ asset('assets/img/default-profile.png') }} @endif" alt="image">
+                                    <h3>{{ __($review->display_name ?? '') }}</h3>
+                                    <span>{{ __($review->display_title ?? '') }}</span>
+                                </div>
                             </div>
-                            <div class="review_user">
-                                <img src="@if($review->user->profile_image) {{ asset($review->user->profile_image) }} @else {{ asset('assets/img/default-profile.png') }} @endif" alt="image">
-                                <h3>{{ __($review->display_name ?? '') }}</h3>
-                                <span>{{ __($review->display_title ?? '') }}</span>
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     <!-- ======================= Faq  =========================== -->
-    <div class="faq_sec section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row d-flex justify-content-center">
-                <!-- section heading -->
-                <div class="section_title mb-5 text-center" data-aos="fade-up">
-                    <h4>{{ __('Frequently Asked Questions') }}</h4>
-                </div>
-                <!-- section heading -->
-                <div class="col-lg-9">
-                    <div class="faq_list">
-                        <div class="accordion accordion-flush" id="accordionFlushExample" data-aos="fade-up">
-                            <!-- accordion item -->
-                            @foreach($faqs as $key => $faq)
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingOne__{{ $key }}">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne__{{$key}}" aria-expanded="false" aria-controls="flush-collapseOne__{{$key}}">
-                                            {{ __($faq->title) }}
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseOne__{{$key}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne__{{ $key }}" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">
-                                            <p>{{ __($faq->body) }}</p>
+    @if($faqs->count() > 0)
+        <div class="faq_sec section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row d-flex justify-content-center">
+                    <!-- section heading -->
+                    <div class="section_title mb-5 text-center" data-aos="fade-up">
+                        <h4>{{ __('Frequently Asked Questions') }}</h4>
+                    </div>
+                    <!-- section heading -->
+                    <div class="col-lg-9">
+                        <div class="faq_list">
+                            <div class="accordion accordion-flush" id="accordionFlushExample" data-aos="fade-up">
+                                <!-- accordion item -->
+                                @foreach($faqs as $key => $faq)
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne__{{ $key }}">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne__{{$key}}" aria-expanded="false" aria-controls="flush-collapseOne__{{$key}}">
+                                                {{ __($faq->title) }}
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne__{{$key}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne__{{ $key }}" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <p>{{ __($faq->body) }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
 
 @push('custom_js')

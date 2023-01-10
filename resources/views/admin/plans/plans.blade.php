@@ -114,25 +114,41 @@
                                             <td class="text-muted">
                                                 @if (!empty($gateway))
                                                 @foreach ($gateway as $gate)
+                                                @if ($plan->is_free==0)
+
                                                 @if ($gate->payment_gateway_name=='Paypal')
-                                                    <p title="Monthly" >Paypal(M): @if($plan->paypal_plan_id) {{ $plan->paypal_plan_id }} @else <a href="{{ route('admin.plan.getpaypal',['id'=>$plan->id,'period'=>'month']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
-                                                    <p title="Yearly">Paypal(Y): @if($plan->paypal_plan_id_yearly) {{ $plan->paypal_plan_id_yearly }} @else <a href="{{ route('admin.plan.getpaypal',['id'=>$plan->id,'period'=>'year']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
+                                                    <p title="Monthly" >Paypal(M):
+                                                        @if($plan->paypal_plan_id) {{ $plan->paypal_plan_id }}
+                                                        @else
+                                                        <a href="{{ route('admin.plan.getpaypal',['id'=>$plan->id,'period'=>'month']) }}" class="btn btn-sm btn-primary" >+</a>
+                                                        @endif
+                                                    </p>
+                                                    <p title="Yearly">Paypal(Y):
+                                                        @if($plan->paypal_plan_id_yearly)
+                                                            {{ $plan->paypal_plan_id_yearly }}
+                                                        @else
+                                                            <a href="{{ route('admin.plan.getpaypal',['id'=>$plan->id,'period'=>'year']) }}" class="btn btn-sm btn-primary" >+</a>
+                                                        @endif
+                                                    </p>
                                                 @elseif ($gate->payment_gateway_name=='Stripe')
-                                                    <p title="Monthly">Stripe(M):@if($plan->stripe_plan_id){{ $plan->stripe_plan_id }} @else <a href="{{ route('admin.plan.getstripe',['id'=>$plan->id,'period'=>'month']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
-                                                    <p title="Yearly">Stripe(Y):@if($plan->stripe_plan_id_yearly){{ $plan->stripe_plan_id_yearly }} @else <a href="{{ route('admin.plan.getstripe',['id'=>$plan->id,'period'=>'year']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
+                                                    <p title="Monthly">Stripe(M):
+                                                        @if($plan->stripe_plan_id)
+                                                            {{ $plan->stripe_plan_id }}
+                                                        @else
+                                                            <a href="{{ route('admin.plan.getstripe',['id'=>$plan->id,'period'=>'month']) }}" class="btn btn-sm btn-primary" >+</a>
+                                                        @endif
+                                                    </p>
+                                                    <p title="Yearly">Stripe(Y):
+                                                        @if($plan->stripe_plan_id_yearly)
+                                                            {{ $plan->stripe_plan_id_yearly }}
+                                                        @else
+                                                            <a href="{{ route('admin.plan.getstripe',['id'=>$plan->id,'period'=>'year']) }}" class="btn btn-sm btn-primary" >+</a>
+                                                        @endif
+                                                    </p>
+                                                @endif
                                                 @endif
                                                 @endforeach
                                                 @endif
-
-                                                {{-- @if( isset($gateway[0]) && ($gateway[0] == 1) )
-                                                <p title="Monthly">Stripe(M):@if($plan->stripe_plan_id){{ $plan->stripe_plan_id }} @else <a href="{{ route('admin.plan.getstripe',['id'=>$plan->id,'period'=>'month']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
-                                                <p title="Yearly">Stripe(Y):@if($plan->stripe_plan_id_yearly){{ $plan->stripe_plan_id_yearly }} @else <a href="{{ route('admin.plan.getstripe',['id'=>$plan->id,'period'=>'year']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
-                                                @endif
-                                                @if( isset($gateway[1]) && ($gateway[1] == 1) )
-                                                <p title="Monthly" >Paypal(M): @if($plan->paypal_plan_id) {{ $plan->paypal_plan_id }} @else <a href="{{ route('admin.plan.getpaypal',['id'=>$plan->id,'period'=>'month']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
-                                                <p title="Yearly">Paypal(Y): @if($plan->paypal_plan_id_yearly) {{ $plan->paypal_plan_id_yearly }} @else <a href="{{ route('admin.plan.getpaypal',['id'=>$plan->id,'period'=>'year']) }}" class="btn btn-sm btn-primary" >+</a>  @endif</p>
-                                                @endif --}}
-
                                             </td>
                                             <td>
                                                 <div class="btn-list flex-nowrap">

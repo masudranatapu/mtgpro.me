@@ -123,11 +123,11 @@ class UserController extends Controller
     } catch (\Exception $e) {
         dd($e->getMessage());
         DB::rollback();
-        Toastr::error(trans('User not updated!'), 'Error', ["positionClass" => "toast-top-right"]);
+        Toastr::error(trans('User not updated!'), 'Error', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.users');
     }
         DB::commit();
-        Toastr::success(trans('User updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('User updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.users');
     }
 
@@ -369,7 +369,7 @@ class UserController extends Controller
             $status = 0;
         }
         User::where('id', $request->query('id'))->update(['status' => $status]);
-        Toastr::success(trans('User Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('User Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.users');
     }
 
@@ -406,7 +406,7 @@ class UserController extends Controller
                 'deleted_by' => Auth::user()->id
             ]);
         }
-        Toastr::success(trans('User deleted Successfully!!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('User deleted Successfully!!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.users');
     }
 
@@ -437,13 +437,13 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         if(empty($user)){
-            Toastr::error(trans('Account not found !'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Account not found !'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         $trim_email = trim($user->email,$user->id.'-');
         $check_exist = User::where('email',$trim_email)->where('id','!=',$user->id)->first();
         if(!empty($check_exist)){
-            Toastr::error(trans('Already have an account by this email address !'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Already have an account by this email address !'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         $user_cards = Card::where('user_id', $id)->get();
@@ -465,7 +465,7 @@ class UserController extends Controller
                 'deleted_at' => NULL,
                 'deleted_by' => NULL
             ]);
-        Toastr::success(trans('User Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('User Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.users');
     }
 

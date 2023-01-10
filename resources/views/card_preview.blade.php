@@ -230,9 +230,11 @@
                         </ul>
                     </div>
 
+                    @if (isFreePlan())
                     <div class="copyright_article">
                         <p>Copyright © mtgpro. All rights reserved.</p>
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -295,7 +297,7 @@
                                         <a href="{{ route('qr',$cardinfo->card_id) }}" class="download_btn btn btn-primary mr-1" title="{{ __('Download QR code')}}">
                                             <i class="fa fa-download"></i>{{ __('Download QR code')}}
                                         </a>
-                                        <a class="btn btn-secondary" title="{{ __('Social Media')}}" href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
+                                        <a class="btn btn-primary" title="{{ __('Social Media')}}" href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
                                             <img class="img-fluid" src="{{ asset('assets/img/icon/connections.svg') }}" alt="">
                                             {{ __('Social Media')}}
                                             </a>
@@ -323,35 +325,23 @@
                         <h5 class="mb-5 text-center">Share Your Card</h5>
                         <div id="social-links">
                             <div class="row">
-                                <div class="col-4 col-sm-3">
-                                    <ul>
+                                <div class="col-12 col-sm-12">
+                                    <ul class="text-center">
                                         <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
                                             </a>
                                          </li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 col-sm-3">
-                                    <ul>
                                          <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
                                             </a>
                                          </li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 col-sm-3">
-                                    <ul>
-                                        <li>
+                                         <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
                                             </a>
                                          </li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 col-sm-3">
-                                    <ul>
                                          <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">

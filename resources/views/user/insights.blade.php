@@ -13,11 +13,11 @@
             </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content dashboard_item">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="small-box bg-success">
+                    <div class="small-box">
                         <div class="inner">
                             <h3>{{ $total_card ?? 0 }}</h3>
                             <p>{{ __('Total Cards') }}</p>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                         <div class="col-sm-6 col-lg-4 col-xl-3">
-                            <div class="small-box bg-primary">
+                            <div class="small-box">
                                 <div class="inner">
                                     <h3>{{ $total_card_share ?? 0 }}</h3>
                                     <p>{{ __('Total Card Share') }}</p>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-4 col-xl-3">
-                            <div class="small-box bg-info">
+                            <div class="small-box">
                                 <div class="inner">
                                     <h3>{{ __('Free') }}</h3>
                                     <p>{{ __('Current Plan') }}</p>

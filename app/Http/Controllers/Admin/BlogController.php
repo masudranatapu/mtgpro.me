@@ -64,7 +64,7 @@ class BlogController extends Controller
          }
         $blog->save();
 
-        Toastr::success(trans('Post Created Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Post Created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.blog');
     }
 
@@ -108,7 +108,7 @@ class BlogController extends Controller
          }
         $blog->update();
 
-        Toastr::success(trans('Post Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Post Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.blog');
     }
 
@@ -120,7 +120,7 @@ class BlogController extends Controller
         };
        $blog = DB::table('blogs')->where('id', $request->query('id'))->delete();
 
-       Toastr::success(trans('Post Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+       Toastr::success(trans('Post Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
        return redirect()->route('admin.blog');
     }
 

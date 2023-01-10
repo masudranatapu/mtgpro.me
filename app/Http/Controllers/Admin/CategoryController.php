@@ -34,7 +34,7 @@ class CategoryController extends Controller
     	$category->category_slug = Str::slug($request->category_name, '-');
         $category->save();
 
-        Toastr::success(trans('Category Created Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Category Created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.category.index');
     }
 
@@ -57,7 +57,7 @@ class CategoryController extends Controller
 		$category->category_slug = Str::slug($request->category_name, '-');
 		$category->update();
 
-        Toastr::success(trans('Category Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Category Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
     	return redirect()->route('admin.category.index');
     }
 
@@ -65,7 +65,7 @@ class CategoryController extends Controller
     {
     	 $category = DB::table('categories')->where('id', $request->query('id'))->delete();
 
-         Toastr::success(trans('Category Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+         Toastr::success(trans('Category Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
          return redirect()->route('admin.category.index');
     }
 }

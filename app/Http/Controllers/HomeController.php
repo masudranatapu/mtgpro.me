@@ -308,7 +308,7 @@ class HomeController extends Controller
         if($request->ajax()){
             return response()->json(['status'=> 1,'message' => 'Card send successfully!'], 200);
         }
-        Toastr::success(trans('Card send successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card send successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
 
     }
@@ -321,7 +321,7 @@ class HomeController extends Controller
         $data['subject']    = $request->subject;
         $data['your_message'] = $request->your_message;
         Mail::to($this->settings->support_email)->send(new SendContact($data));
-        Toastr::success(trans('Message Successfully Send!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Message Successfully Send!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
@@ -334,7 +334,7 @@ class HomeController extends Controller
             'created_at'=> date('Y-m-d H:i:s'),
         ]);
         // Mail::to($this->settings->address)->send(new SendContact($data));
-        Toastr::success(trans('You have successfully subscribed!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('You have successfully subscribed!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 

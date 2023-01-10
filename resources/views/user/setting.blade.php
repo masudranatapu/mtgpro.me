@@ -18,11 +18,8 @@
     $subscription_start = new \Carbon\Carbon($user->plan_activation_date);
     $plan_price_monthly = $plan->plan_price_monthly;
     $plan_price_yearly =$plan->plan_price_yearly;
-
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
-
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-
     if($diff_in_days > 1){
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 year"));
     }else{
@@ -81,39 +78,35 @@
                                                 <div class="setting_tab_contetn">
                                                     <div class="subscription_info mb-4">
                                                         <div class="card">
-
-                                                            @if (checkPackage())
                                                             <div class="card-header">
-                                                                {{-- 10 days left --}}
                                                                 <h3>
-                                                                       {{-- Subscription --}}
                                                                     <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
-
-                                                                    @if ($duration > 0)
-                                                                           <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
+                                                                    @if ($duration > 0 && $plan->is_free==0)
+                                                                        <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
                                                                     @else
                                                                     @endif
                                                                 </h3>
                                                             </div>
+
                                                             <div class="card-body">
+                                                                @if (checkPackage() && $plan->is_free==0)
                                                                 @if ($diff_in_days > 1)
-                                                                <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
-                                                                <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per member per year') }}.</p>
+                                                                    <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
+                                                                    <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per member per year') }}.</p>
                                                                 @else
-                                                                <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
-                                                                <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
+                                                                    <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
+                                                                    <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
                                                                 @endif
                                                                 {{-- <p>$14.99 per member per month.</p> --}}
                                                                 {{-- <p>You will be charged <strong>$14.99 / month starting  Jan 19</strong></p> --}}
                                                                 <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M d, Y', strtotime($user->plan_activation_date) ) }}</strong></p>
+                                                                @else
+                                                                    <div class="text-center mb-5">
+                                                                        <a class="btn btn-primary" href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
+                                                                    </div>
+                                                                @endif
                                                             </div>
-                                                            @else
-                                                            <div class="card-body">
-                                                                <div class="plan_upgrade text-center mb-5">
-                                                                    <a href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
-                                                                </div>
-                                                            </div>
-                                                            @endif
+
                                                         </div>
                                                     </div>
                                                     <div class="row mb-4">
@@ -152,7 +145,7 @@
                                                                     <div class="card-header">
                                                                         <h4>
                                                                            {{ __('Payment method') }}
-                                                                            <a href="#" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
+                                                                            <a href="javascript:void(0)" class="float-right" data-toggle="modal" data-target="#paymentModal">{{ __($user->card_number !='' ? 'Edit':'Add') }}</a>
                                                                         </h4>
                                                                     </div>
                                                                     @if (!empty($user->card_number))
@@ -166,7 +159,7 @@
                                                                                     ?>
                                                                                    <span class="d-block">{{'•••• •••• •••• ' . substr($number, -4) }}</span>
                                                                                    <span class="d-block pb-1"><small>{{ $user->card_type }} - {{ __('Expires') }} {{date('m/Y', strtotime($user->card_expiration_date))}}
-                                                                                    {{-- 03/2024 --}}
+
                                                                                 </small></span>
                                                                                </div>
                                                                            </div>
@@ -275,8 +268,8 @@
                                                             </div>
                                                         </form>
                                                        <div class="float-right">
-                                                            <a href="#" class="text-primary p-2">{{ __('Reset Your Password') }}</a>
-                                                            <a href="#" class="text-danger p-2" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
+                                                            <a href="#" class="btn btn-primary">{{ __('Reset Your Password') }}</a>
+                                                            <a href="#" class="btn btn-secondary text-danger" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                        </div>
                                                     </div>
                                                 </div>
