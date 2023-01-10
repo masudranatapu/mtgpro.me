@@ -24,21 +24,15 @@ class AuthController extends Controller
         $this->user     = $user;
     }
 
-    // public function postRegister(RegistrationRequest $request)
     public function postRegister(RegistrationRequest $request)
     {
         try {
             $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
             $checkExist = User::where('email',$request->email)->whereNotNull('email')->first();
-
-            // dd($checkExist);
-
             if(!empty($checkExist)){
-
-                Toastr::error(trans('Cannot create account an identical account already exists!'), 'Success', ["positionClass" => "toast-top-center"]);
+                Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back()->with('error','Already exist account')->withInput();;
             }
-
             $user                       = new User();
             $user->name                 = trim($request->name);
             $user->email                = trim($request->email);
@@ -55,14 +49,14 @@ class AuthController extends Controller
             $user->plan_details         = json_encode($plans);
             $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
             $user->plan_activation_date = Carbon::now();
-            $location               = $this->user->getLocation();
+            $location                   = $this->user->getLocation();
             if($location){
-                $user->billing_country          = $location->countryName;
-                // $user->countryCode      = $location->countryCode;
-                // $user->regionCode       = $location->regionCode;
-                $user->billing_state       = $location->regionName;
-                $user->billing_city         = $location->cityName;
-                $user->billing_zipcode          = $location->zipCode;
+                $user->billing_country  = $location->countryName;
+                $user->billing_country_code = $location->countryCode;
+                // $user->regionCode    = $location->regionCode;
+                $user->billing_state    = $location->regionName;
+                $user->billing_city     = $location->cityName;
+                $user->billing_zipcode  = $location->zipCode;
                 // $user->isoCode          = $location->isoCode;
                 // $user->latitude         = $location->latitude;
                 // $user->longitude        = $location->longitude;
@@ -71,13 +65,11 @@ class AuthController extends Controller
             // $user->device           = $this->user->getOS();
             // $user->browser          = $this->user->getBrowser();
             $user->save();
-
             if($user){
                 Auth::login($user);
                 Mail::to($user->email)->send(new WelcomeMail($user));
                 return redirect()->route('user.card');
             }
-
         } catch (\Exception $e) {
             dd($e->getMessage());
             Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
@@ -86,17 +78,9 @@ class AuthController extends Controller
         return redirect()->route('user.card');
     }
 
-
-
-
-
-
-
     public function getDeactivationForm(){
         return view('auth.deactivation-form');
     }
-
-
 
     public function getChangePassword(){
 
@@ -127,7 +111,6 @@ class AuthController extends Controller
         return redirect()->back();
         // ->with('success','Password successfully updated');
     }
-
 
 
     public function redirectToProvider(string $provider)
@@ -163,6 +146,18 @@ class AuthController extends Controller
                     $user->status      = 1;
                     $user->role_id     = 1;
                     $user->user_type   = 2;
+                    $location                   = $this->user->getLocation();
+                    if($location){
+                        $user->billing_country     = $location->countryName;
+                        $user->billing_country_code = $location->countryCode;
+                        // $user->regionCode       = $location->regionCode;
+                        $user->billing_state       = $location->regionName;
+                        $user->billing_city         = $location->cityName;
+                        $user->billing_zipcode          = $location->zipCode;
+                        // $user->isoCode          = $location->isoCode;
+                        // $user->latitude         = $location->latitude;
+                        // $user->longitude        = $location->longitude;
+                    }
                     // for plan info
                     $user->plan_id     = $plans->id;
                     $user->plan_details = json_encode($plans);
