@@ -67,7 +67,8 @@ class DashboardControler extends Controller
        $plans =  $this->resp->data;
        $user_plan = Plan::where('id', Auth::user()->plan_id)->first();
        $currency = Currency::where('is_default', 1)->first();
-        return view('user.plan.index', compact('user_plan','plans','currency'));
+       $user = User::findOrFail(Auth::user()->id);
+        return view('user.plan.index', compact('user_plan','plans','currency','user'));
     }
 
 
