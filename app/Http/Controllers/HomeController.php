@@ -99,16 +99,19 @@ class HomeController extends Controller
         if(!checkPackage()){
             return redirect()->route('user.plans');
         }
-        $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding')->where('card_url', $cardurl)
+        $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
+        ->where('card_url', $cardurl)
         ->leftJoin('users','users.id','business_cards.user_id')
         ->leftJoin('plans','plans.id','users.plan_id')
         ->first();
+
         if($cardinfo){
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
             $user = User::find($cardinfo->user_id);
 
+
             // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
-            $icons = SocialIcon::orderBy('order_id','desc')->get();
+            // $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
             if($cardinfo->status == 0){
                 Toastr::warning('This card is not active now');
@@ -118,12 +121,15 @@ class HomeController extends Controller
                 Toastr::warning('This card has been deleted');
                 return redirect()->back();
             }
-            $carddetails = DB::table('business_fields')
-            ->select('business_fields.*')
-            // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
-            ->where('business_fields.card_id', $cardinfo->id)
-            ->where('business_fields.status',1)->orderBy('business_fields.position','ASC')->get();
-            return view('card_preview', compact('cardinfo', 'icons','carddetails','user'));
+            // $carddetails = DB::table('business_fields')
+            // ->select('business_fields.*')
+            // // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
+            // ->where('business_fields.card_id', $cardinfo->id)
+            // ->where('business_fields.status',1)
+            // ->orderBy('business_fields.position','ASC')
+            // ->get();
+
+            return view('card_preview', compact('cardinfo','user'));
         }else{
 
             Toastr::warning('This card is not available please create your desired card');
