@@ -20,9 +20,10 @@ body {
     background: #F7F7F7;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after {
     display: none;
 }
+
 .card_step_form {
     background: #fff;
     padding: 50px 50px;
@@ -539,7 +540,7 @@ body {
 
 .create_card_wrapper .btn-primary {
     padding: 8px 21px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 200 !important;
     font-family: 'DM Sans';
 }
@@ -1252,7 +1253,9 @@ body {
     box-shadow: none !important;
 }
 
-.subscription_info .card .card-header {padding: 13px 18px;}
+.subscription_info .card .card-header {
+    padding: 13px 18px;
+}
 
 .subscription_info .card .card-header h3 {
     font-size: 16px;
@@ -1268,7 +1271,9 @@ body {
     box-shadow: none !important;
 }
 
-.subscription_info .card .card-header {padding: 13px 18px;}
+.subscription_info .card .card-header {
+    padding: 13px 18px;
+}
 
 .subscription_info .card .card-header h3 {
     font-size: 16px;
@@ -1344,7 +1349,9 @@ body {
     font-weight: 400;
 }
 
-.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
     color: #545b62 !important;
     background-color: 545b62;
     border-color: #4e555b;
@@ -1385,11 +1392,24 @@ body {
 }
 
 .custome_table table {
-  border-collapse: separate;
-  border-spacing: 0px 2px;
+    border-collapse: separate;
+    border-spacing: 0px 6px;
+    border-radius: 10px !important;
 }
 
-.custome_table .table tr{
+.custome_table .select_checkbox {
+    background: #fff;
+    padding: 0px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #212121;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    line-height: 36px;
+}
+
+.custome_table .table tr {
     border-radius: 10px;
 }
 
@@ -1416,4 +1436,41 @@ body {
     line-height: 42px;
     border: none !important;
     vertical-align: middle;
+}
+
+.custome_table span {
+    color: #888;
+    font-size: 14px;
+    font-weight: 300 !important;
+}
+
+
+.custome_table .dropdown-menu {
+    border: none;
+    padding: 0;
+}
+
+.custome_table .dropdown-menu a {
+    font-size: 14px;
+    padding: 7px 12px;
+    font-family: 'Inter', sans-serif;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+
+.btn-danger:not(:disabled):not(.disabled).active,
+.btn-danger:not(:disabled):not(.disabled):active,
+.show>.btn-danger.dropdown-toggle {
+    color: #000 !important;
+}
+
+
+.btn.btn-secondary {
+    background: transparent !important;
+    color: #111;
+    border: 1px solid #DDD !important;
+    font-size: 14px;
+    font-family: 'DM Sans';
+    border-radius: 50px;
+    padding: 10px 34px;
 }

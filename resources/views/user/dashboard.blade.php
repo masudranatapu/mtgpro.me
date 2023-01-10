@@ -68,7 +68,7 @@
                         <div class="col-md-6 col-xl-4">
                             <!-- user card -->
 
-                                <div class="dashboard_card user_card" style="background-color: #E8F4ED;height: 400px;">
+                                <div class="dashboard_card user_card" style="background-color: #E8F4ED;">
                                     <div class="card_body">
                                         <div class="card_cover_bg">
                                             <!-- cover image -->
