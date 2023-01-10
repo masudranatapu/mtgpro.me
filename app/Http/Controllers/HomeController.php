@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 use Str;
-use Share;
 use QrCode;
 use App\Models\Plan;
 use App\Models\Currency;
@@ -108,8 +107,6 @@ class HomeController extends Controller
             // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
             $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
-            $shareComponent = Share::page($url,'Hello! This is my vCard.',)->facebook()->twitter()->linkedin()->telegram()->whatsapp();
-            // dd($shareComponent);
             if($cardinfo->status == 0){
                 Toastr::warning('This card is not active now');
                 return redirect()->back();
@@ -123,7 +120,7 @@ class HomeController extends Controller
             // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
             ->where('business_fields.card_id', $cardinfo->id)
             ->where('business_fields.status',1)->orderBy('business_fields.position','ASC')->get();
-            return view('card_preview', compact('cardinfo', 'icons', 'shareComponent','carddetails'));
+            return view('card_preview', compact('cardinfo', 'icons','carddetails'));
         }else{
 
             Toastr::warning('This card is not available please create your desired card');
