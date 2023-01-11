@@ -511,7 +511,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
 
-$(document).on('submit', "#accountDeletionForm", function (e) {
+    $(document).on('submit', "#accountDeletionForm", function (e) {
         e.preventDefault();
         var form = $("#accountDeletionForm");
         $.ajax({

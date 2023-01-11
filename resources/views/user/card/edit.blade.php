@@ -454,7 +454,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label"><span id="content_link"></span> <span class="text-dark">*</span></label>
-                                                <input type="text" name="content" class="form-control" placeholder="" required>
+                                                <input type="text" name="content" class="form-control content_input" placeholder="" required>
                                                 @if($errors->has('logo'))
                                                     <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
                                                 @endif
