@@ -40,7 +40,17 @@ class HomeController extends Controller
         $currency = Currency::where('is_default', 1)->first();
         $faqs = Faq::orderBy('order_id', 'DESC')->get();
         $reviews = Review::where('status', 1)->orderBy('order_id', 'DESC')->get();
-        return view('index',compact('plans','currency', 'faqs', 'reviews'));
+        $home_page = DB::table('pages')->where('page_name','home')->get();
+
+        // dd($home_page);
+        $home_data = [];
+        if($home_page){
+            foreach ($home_page as $key => $value) {
+                $home_data[$value->section_name][$value->section_title] = $value->section_content;
+            }
+        }
+
+        return view('index',compact('plans','currency', 'faqs', 'reviews','home_data'));
     }
 
     public function getPrivacyPolicy()

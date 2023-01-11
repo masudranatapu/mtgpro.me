@@ -31,10 +31,12 @@
 
 @section('content')
     <!-- Banner -->
+    @if(isset($home_data['banner']))
+    @php
+        $banner = $home_data['banner'] ;
+    @endphp
     <div class="banner section">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row g-0 align-items-center">
                 <div class="col-lg-5">
                     <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
@@ -49,10 +51,9 @@
                     </div>
                 </div>
             </div>
-            <!-- row -->
         </div>
-        <!-- container -->
     </div>
+    @endif
     <!-- ======================= Featured  =========================== -->
     <div class="featured section">
         <!-- container -->
@@ -240,17 +241,17 @@
             </div>
         </div>
     </div>
-    
+
     <div class="video_sec section">
-        
+
         <div class="container">
             <!-- row -->
             <div class="row d-flex justify-content-center">
-                
+
                 <div class="section_title mb-5 text-center" data-aos="fade-up">
                     <h4>{{ __('What is Contacts Solutions') }}</h4>
                 </div>
-                
+
                 <div class="col-lg-9">
                     <div class="video_iframe" data-aos="zoom-in">
                         <div class="ratio ratio-16x9">
@@ -331,7 +332,7 @@
 
 @push('custom_js')
     <script>
-        
+
         $(document).ready(function(){
             getPackage();
 
@@ -372,6 +373,6 @@
             }
 
         }
-        
+
     </script>
 @endpush
