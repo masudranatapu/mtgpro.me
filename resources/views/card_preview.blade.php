@@ -19,7 +19,7 @@
             if($cardinfo->profile){
                 $settings->favicon =  $cardinfo->profile;
             }
-            $settings = getSetting();
+
 
         ?>
     <meta charset="UTF-8">
