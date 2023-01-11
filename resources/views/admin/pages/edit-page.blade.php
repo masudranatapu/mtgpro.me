@@ -49,14 +49,14 @@
                                                             <label class="form-label">{{ ucfirst(str_replace('_', ' ', $item->section_title)) }}</label>
                                                             @if(($item->is_video == 1))
                                                             <input type="file" name="{{ $item->section_title }}" value="" class="form-control" />
-                                                                <small class="help-block text-danger">Preferred Size (1000x1000) PX</small>
+                                                                <small class="help-block text-danger">Preferred Size (794x594) PX</small>
                                                                 {!! $errors->first($item->section_title, '<span class="help-block text-danger">:message</span>') !!}
                                                                 {{-- <video autoplay="" loop="" style="padding-left: 0; padding-right: 0;width:100px;height:auto;" muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover" >
                                                                     <source src="{{ asset($item->section_content) }}" data-wf-ignore="true">
                                                                 </video> --}}
                                                             @elseif($item->is_photo == 1)
                                                                 <input type="file" name="{{ $item->section_title }}" value="" class="form-control" />
-                                                                <small>Preferred Size (1000x1000) PX</small>
+                                                                <small>Preferred Size (794x594) PX</small>
 
                                                             @else
                                                             <textarea rows="3" cols="10" class="form-control" name="{{ $item->section_title }}"

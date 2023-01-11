@@ -40,14 +40,14 @@
             <div class="row g-0 align-items-center">
                 <div class="col-lg-5">
                     <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
-                        <h2>Digital Business Card Platform for <span>Contacts Solutions</span></h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing, elit. Rem veniam quis sapiente qui ipsum, explicabo laudantium ad aliquid porro, itaque, perferendis cumque commodi.</p>
-                        <a href="#" class="btn btn-dark">Learn More</a>
+                        <h2>{{__($banner['banner_title'])}} <span>Contacts Solutions</span></h2>
+                        <p>{{__($banner['banner_description'])}}</p>
+                        <a href="{{ route('tutorials') }}" class="btn btn-dark">{{__($banner['banner_button'])}} </a>
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="banner_logo text-center" data-aos="zoom-in">
-                        <img src="{{ asset('assets/img/banner-img.png') }}" class="img-fluid" alt="image">
+                        <img src="{{ asset($banner['banner_photo']) }}" class="img-fluid" alt="image">
                     </div>
                 </div>
             </div>
