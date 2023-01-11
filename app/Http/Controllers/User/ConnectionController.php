@@ -181,22 +181,35 @@ class ConnectionController extends Controller
         {
             $data = [];
             $path = '';
+            $connects = '';
             $connect_id = $request->connect_id;
             $fileName   = 'contacts_'.uniqid().'.csv';
             $path = public_path('assets/vcard/');
-            $connects = DB::table('connects')->whereIn('id',$connect_id)->get();
+            if (isset($connect_id)) {
+                $connects = DB::table('connects')->whereIn('id',$connect_id)->get();
+                if(empty($connects)){
+                    return response()->json([
+                        'status' => 0,
+                        'redirect_url'   => '',
+                        'msg'=> trans('Please select at least one connection'),
+                    ]);
+                }
+            }
+
             $file = fopen($path.$fileName, 'w');
             $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
             fputcsv($file, $columns);
             $data = [];
-            foreach ($connects as $connect) {
-                $data['Name']  = $connect->name;
-                $data['Email']    = $connect->email;
-                $data['Phone']    = $connect->phone;
-                $data['Title']  = $connect->title;
-                $data['Image']  = $connect->profile_image;
-                $data['Company Name']  = $connect->company_name;
-                fputcsv($file, array($data['Name'], $data['Email'], $data['Phone'], $data['Title'], $data['Image'], $data['Company Name']));
+            if (!empty($connects)) {
+                foreach ($connects as $connect) {
+                    $data['Name']  = $connect->name;
+                    $data['Email']    = $connect->email;
+                    $data['Phone']    = $connect->phone;
+                    $data['Title']  = $connect->title;
+                    $data['Image']  = $connect->profile_image;
+                    $data['Company Name']  = $connect->company_name;
+                    fputcsv($file, array($data['Name'], $data['Email'], $data['Phone'], $data['Title'], $data['Image'], $data['Company Name']));
+                }
             }
             if(!empty($fileName) && file_exists(($path.$fileName))) {
                 $data = route('user.connections.download-csv',$fileName);
