@@ -161,6 +161,30 @@
                         </div>
                     </li>
 
+                    <li class="nav-item dropdown @yield('admin')">
+                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img src="{{ getProfile(Auth::user()->profile_image) }}" alt="{{ auth::user()->name }}" >
+                                </span>
+                                <span class="nav-link-title">
+                                    {{ auth::user()->name }}
+                                </span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="{{ route('admin.account') }}" class="dropdown-item @yield('admin.account')">{{ __('Profile & account') }}</a>
+                                <a href="{{ route('logout') }}" class="dropdown-item @yield('logout')"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                <form class="logout" id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+
+
+                            </div>
+                        </li>
+
+
+
+
                 </ul>
             </div>
         </div>
