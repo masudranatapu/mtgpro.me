@@ -30,7 +30,7 @@ class ConnectionController extends Controller
         $form_date      = '';
         $to_date        = '';
         if(!empty($request->daterange)){
-            $date = explode(" - ",$request->daterange);
+            $date = explode("-",$request->daterange);
             $form_date = trim($date[0]);
             $to_date = trim($date[1]);
         }

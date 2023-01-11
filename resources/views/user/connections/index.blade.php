@@ -155,6 +155,7 @@ if (!empty($daterange)) {
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    {{ $rows->links() }}
                                 @else
                                     <p class="text-center">{{ __('Connection not found') }}</p>
                                 @endif
