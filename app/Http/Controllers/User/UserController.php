@@ -142,7 +142,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'display_name' => 'required|string|max:50',
                 'display_title' => 'required|string|max:50',
-                'details' => 'required|string|max:1024',
+                'details' => 'required|string|min:230|max:250',
             ]);
 
             DB::table('reviews')->insert([
@@ -167,7 +167,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'display_name' => 'required|string|max:50',
                 'display_title' => 'required|string|max:50',
-                'details' => 'required|string|max:1024',
+                'details' => 'required|string|min:230|max:250',
             ]);
 
             DB::table('reviews')
