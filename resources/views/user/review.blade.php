@@ -131,7 +131,7 @@
                                                     @if($review->user_image)
                                                         <img src="{{ asset($review->user_image) }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
                                                     @else
-                                                        <img src="{{ asset('assets/img/avatar/1.jpg') }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
+                                                        <img src="{{ getProfile() }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
                                                     @endif
                                                 </div>
                                                 <div class="profile_info">
@@ -147,9 +147,9 @@
                                             </div>
                                             <div class="status">
                                                 @if ($review->status == 0)
-                                                    <p class="pending">{{__('Pending')}}</p>
+                                                    <p style="color: #ffc107" class="pending">{{__('Pending')}}</p>
                                                 @else
-                                                    <p class="active" >{{__('Active')}}</p>
+                                                    <p style="color: #198754" class="active" >{{__('Active')}}</p>
                                                 @endif
                                             </div>
                                         </div>
@@ -181,7 +181,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="details" class="form-label">{{ __('Review') }}</label>
-                                        <textarea class="form-control @error('details') is-invalid @enderror" name="details" id="details" style="height: 120px !important;" required>{{ old('details') }}</textarea>
+                                        <textarea class="form-control @error('details') is-invalid @enderror" onkeyup="countChars(this);" name="details" id="details" style="height: 120px !important;" required>{{ old('details') }}</textarea>
+                                        <p id="charNum"></p>
                                         @if($errors->has('details'))
                                             <span class="help-block text-danger">{{ $errors->first('details') }}</span>
                                         @endif
@@ -219,7 +220,8 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="details" class="form-label">{{ __('Review') }}</label>
-                                            <textarea class="form-control @error('details') is-invalid @enderror" name="details"  id="details" style="height: 120px !important;" required>{{ old('details') ?? $review->details }}</textarea>
+                                            <textarea class="form-control @error('details') is-invalid @enderror" name="details" onkeyup="countChars(this);"  id="details" style="height: 120px !important;" required>{{ old('details') ?? $review->details }}</textarea>
+                                            <p id="charNum"></p>
                                             @if($errors->has('details'))
                                             <span class="help-block text-danger">{{ $errors->first('details') }}</span>
                                         @endif
@@ -247,5 +249,17 @@
                 $('.show_form').fadeIn()
             });
         });
+        
+        function countChars(obj){
+            var maxLength = 250;
+            var strLength = obj.value.length;
+            
+            if(strLength > maxLength){
+                document.getElementById("charNum").innerHTML = '<span style="color: red;">'+strLength+' out of '+maxLength+' characters</span>';
+            }else{
+                document.getElementById("charNum").innerHTML = '<span style="color: green;">'+strLength+' out of '+maxLength+' characters</span>';
+            }
+
+        }
     </script>
 @endpush
