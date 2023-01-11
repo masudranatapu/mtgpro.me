@@ -218,7 +218,7 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 
-        var countryCode = 'us';
+        var countryCode = "{{ Auth::user()->billing_country_code ?? 'us' }}";
         var input = document.querySelector("#billing_phone");
         window.intlTelInput(input, {
             // allowDropdown: false,

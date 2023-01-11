@@ -146,7 +146,7 @@ My Plans
             <div class="modal-body">
                 <form action="{{ route('user.checkout') }}" id="choose_plan_action" method="get">
                     <label for="is_yearly" class="sr-only">{{ __('Yearly')}}</label>
-                    <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
+                    <input type="hidden" class="form-control" name="is_yearly" value="1" id="is_yearly">
 
                     <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
                     <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
@@ -198,8 +198,10 @@ $(document).ready(function(){
             getPackage();
         });
     });
+
     function getPackage(){
         var radioValue = $("input[name='planType']:checked").val();
+        console.log(radioValue);
         if(radioValue == 'monthly'){
             $('.planpriceyearly').addClass('d-none');
             $('.planpricemonthly').removeClass('d-none');
@@ -208,9 +210,9 @@ $(document).ready(function(){
                 var url = new URL(currentUrl);
                 url.searchParams.set("is_yearly", 0);
                 var newUrl = url.href;
+                $('#is_yearly').val('0');
                 $(item).attr('href', newUrl);
             });
-
         }
 
         if(radioValue == 'annual'){
@@ -222,6 +224,9 @@ $(document).ready(function(){
                 var url = new URL(currentUrl);
                 url.searchParams.set("is_yearly", 1);
                 var newUrl = url.href;
+                console.log(newUrl);
+                $('#is_yearly').val('1');
+
                 $(item).attr('href', newUrl);
             });
         }
