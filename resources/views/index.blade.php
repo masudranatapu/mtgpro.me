@@ -199,6 +199,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row mx-auto">
                 @if (!empty($plans) && count($plans) > 0)
                     @foreach($plans as $plan)
                         @php
@@ -238,6 +240,7 @@
                         </div>
                     @endforeach
                 @endif
+            </div>
             </div>
         </div>
     </div>

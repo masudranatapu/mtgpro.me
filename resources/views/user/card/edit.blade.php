@@ -347,7 +347,7 @@
                                         </div>
                                     </div>
                                     <div class="view_btn text-center mt-3">
-                                        <a href="card-view.html" target="_blank">
+                                        <a href="{{ route('card.preview',$card->card_url) }}" target="_blank">
                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M9 2H14V7" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                                                 <path d="M8 8L14.0104 1.98959" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>

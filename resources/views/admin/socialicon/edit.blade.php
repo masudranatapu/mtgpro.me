@@ -113,14 +113,19 @@ $social_type =  Config::get('app.social_type');
                                                 <label for="" class="form-label">{{ __('Status')}}</label>
                                                 <select name="status"  class="form-control">
                                                     <option disabled>Select One</option>
-                                                    <option @if($socileicons->status == 1) selected @endif value="1" selected>{{ __('Active')}}</option>
+                                                    <option @if($socileicons->status == 1) selected @endif value="1">{{ __('Active')}}</option>
                                                     <option @if($socileicons->status == 0) selected @endif value="0">{{ __('Inactive')}}</option>
                                                 </select>
                                             </div>
-
-
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Paid Status')}}</label>
+                                                <select name="is_paid"  class="form-control">
+                                                    <option disabled>{{ __('Select One')}}</option>
+                                                    <option value="0" @if($socileicons->is_paid == 0) selected @endif>{{ __('Free')}}</option>
+                                                    <option value="1" @if($socileicons->is_paid == 1) selected @endif>{{ __('Paid')}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-
                                         <div class="row mt-3">
                                             <div class="col-md-12 text-center">
                                                 <button type="submit" class="btn btn-success">{{ __('Update')}}</button>
@@ -129,7 +134,6 @@ $social_type =  Config::get('app.social_type');
                                     </form>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

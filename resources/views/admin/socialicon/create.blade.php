@@ -117,10 +117,15 @@ $social_type =  Config::get('app.social_type');
                                                     <option value="0">{{ __('Inactive')}}</option>
                                                 </select>
                                             </div>
-
-
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Paid Status')}}</label>
+                                                <select name="is_paid"  class="form-control">
+                                                    <option disabled>{{ __('Select One')}}</option>
+                                                    <option value="0" selected>{{ __('Free')}}</option>
+                                                    <option value="1">{{ __('Paid')}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-
                                         <div class="row mt-3">
                                             <div class="col-md-12 text-center">
                                                 <button type="submit" class="btn btn-success">{{ __('Create')}}</button>

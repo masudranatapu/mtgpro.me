@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-use DB;
 use Carbon\Carbon;
 use File;
 use App\Models\SocialIcon;
+use Illuminate\Support\Facades\DB;
 
 class SocialIconController extends Controller
 {
@@ -53,6 +53,7 @@ class SocialIconController extends Controller
             'example_text' => 'required',
             'order_id' => 'required',
             'type' => 'required',
+            'is_paid' => 'required',
 
         ],[
             'icon_image.required' => 'Icon image is required',
@@ -62,6 +63,7 @@ class SocialIconController extends Controller
             'icon_title.required' => 'Icon title is required',
             'example_text.required' => 'Icon example text is required',
             'order_id.required' => 'Order by id is required',
+            'is_paid.required' => 'Paid status is required',
         ]);
 
         if($request->type == 'username'){
@@ -88,8 +90,10 @@ class SocialIconController extends Controller
             'example_text' => $request->example_text,
             'status' => $request->status,
             'order_id' => $request->order_id,
+            'is_paid' => $request->is_paid,
             'created_at' => Carbon::now(),
         ]);
+        
         Toastr::success('Social icon successfully save :-)','Success');
         return redirect()->route('admin.social-icon.index');
     }
@@ -138,6 +142,7 @@ class SocialIconController extends Controller
             'example_text' => 'required',
             'order_id' => 'required',
             'type' => 'required',
+            'is_paid' => 'required',
         ],[
             'icon_group.required' => 'Icon group is required',
             'icon_name.required' => 'Icon name is required',
@@ -145,6 +150,7 @@ class SocialIconController extends Controller
             'icon_title.required' => 'Icon title is required',
             'example_text.required' => 'Icon example text is required',
             'order_id.required' => 'Order by id is required',
+            'is_paid.required' => 'Paid status is required',
         ]);
 
         if($request->type == 'username'){
@@ -181,6 +187,7 @@ class SocialIconController extends Controller
             'status' => $request->status,
             'order_id' => $request->order_id,
             'icon_name' => $request->icon_name,
+            'is_paid' => $request->is_paid,
             'created_at' => Carbon::now(),
         ]);
 
