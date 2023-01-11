@@ -25,10 +25,11 @@ class StripeController extends Controller
 
     public function stripeCheckout(Request $request)
     {
+        // dd($request->all());is_yearly
         try {
             $planId = $request->plan_id;
             $config = DB::table('config')->get();
-            $plan_details = Plan::query()->where('id', $planId)->where('status', 1)->first();
+            $plan_details = Plan::where('id', $planId)->where('status', 1)->first();
 
             if ($plan_details->stripe_plan_id == null) {
                 Toastr::error(trans('Stripe payment is not available for this plan. \n Please contact with admin'), 'Error', ["positionClass" => "toast-top-center"]);
@@ -37,8 +38,6 @@ class StripeController extends Controller
                 $userData = Auth::user();
                 $price_id = $plan_details->stripe_plan_id;
                 $stripe = new StripeClient($config[10]->config_value);
-
-
                 if ($userData->stripe_customer_id == null) {
                     $customer = $stripe->customers->create([
                         'name' => $userData->name,
@@ -58,14 +57,21 @@ class StripeController extends Controller
                     ]],
                 ]);
 
+                // dd($subscription);current_period_end
+                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d H:i:s');
+
                 if($request->is_yearly==1){
                     $plan_price = $plan_details->plan_price_yearly;
+                    $plan_validity = Carbon::parse($subscription->current_period_end)->format('Y-m-d H:i:s');
+
+                    // $plan_validity = Carbon::parse($subscription->start_date)->addDays(31);
                 }
                 else{
                     $plan_price = $plan_details->plan_price_monthly;
+                    $plan_validity = Carbon::parse($subscription->current_period_end)->format('Y-m-d H:i:s');
+                    // $plan_validity = Carbon::parse($subscription->start_date)->addYears(1);
                 }
-                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d H:i:s');
-                $plan_validity = Carbon::parse($subscription->start_date)->addDays($plan_details->validity);
+
                 $amountToBePaid = ((int)($plan_price) * (int)($config[25]->config_value) / 100) + (int)($plan_price);
                 $invoice_details = [];
                 $tax_amount = (int)($plan_price) * (int)($config[25]->config_value) / 100;

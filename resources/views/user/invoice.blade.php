@@ -76,9 +76,9 @@ $invoice_details = json_decode($row->invoice_details);
                         <div class="card card-lg">
                             <div class="p-4" id="invoice">
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="h3">{{ $settings->site_name }}</p>
+                                    <div class="row pb-3">
+                                        <div class="col-6 ">
+                                            <span class="h5">{{ $settings->site_name }}</span>
                                             <address>
                                                <span class="d-block">{{ $invoice_details->from_billing_name }}</span>
                                                <span class="d-block"> {{ $invoice_details->from_billing_address }}</span>
@@ -93,11 +93,14 @@ $invoice_details = json_decode($row->invoice_details);
                                             </span>
                                                 <span class="d-block"> {{ $invoice_details->from_billing_email }}</span>
                                                 <span class="d-block"> {{ $invoice_details->from_billing_phone }}</span>
-                                                <span class="d-block">Tax Number: {{ $invoice_details->from_vat_number }}</span>
+                                                {{-- <span class="d-block">Tax Number: {{ $invoice_details->from_vat_number }}</span> --}}
                                             </address>
+                                            <span >
+                                                INVOICE NO : {{ $row->invoice_prefix }}-{{ $row->invoice_number }}
+                                            </span>
                                         </div>
-                                        <div class="col-6 text-end">
-                                            <span class="h3"> {{ $invoice_details->to_billing_name }}</span>
+                                        <div class="col-6 text-right">
+                                            <span class="h5"> {{ $invoice_details->to_billing_name }}</span>
                                             <address>
                                                 {{ $invoice_details->to_billing_address }}
                                             <span class="d-block">
@@ -112,14 +115,9 @@ $invoice_details = json_decode($row->invoice_details);
                                             <span class="d-block">{{ $invoice_details->to_billing_email }}</span>
                                                 <span class="d-block">{{ $invoice_details->to_billing_phone }}</span>
                                             </address>
-                                            <h4>INVOICE DATE : {{date('d-m-Y H:i A', strtotime( $row->transaction_date))}}</h4>
+                                            <span>INVOICE DATE : {{date('d-m-Y H:i A', strtotime( $row->transaction_date))}}</span>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-10 my-5">
-                                                <h1>
-                                                INVOICE NO : {{ $row->invoice_prefix }}-{{ $row->invoice_number }}</h1>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <table class="table table-transparent">
                                         <thead>
@@ -128,7 +126,7 @@ $invoice_details = json_decode($row->invoice_details);
                                                 <th>Description</th>
                                                 <th class="text-center" style="width: 8%"></th>
                                                 <th class="text-end" ></th>
-                                                <th class="text-end" style="width: 10%">Amount</th>
+                                                <th class="text-right" style="width: 10%">Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody><tr>
@@ -140,21 +138,20 @@ $invoice_details = json_decode($row->invoice_details);
                                             </td>
                                             <td class="text-center"></td>
                                             <td class="text-end"></td>
-                                            <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                            <td class="text-right" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="4" class="title strong text-end">Subtotal</td>
-                                            <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                            <td colspan="4" class="title strong">Subtotal</td>
+                                            <td class="text-right" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4" class="title strong text-end">Tax Amount</td>
-                                            <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
+                                            <td colspan="4" class="title strong">Tax Amount</td>
+                                            <td class="text-right" style="width: 23%">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
                                         </tr>
-
                                         <tr>
                                             <td colspan="4" class="title font-weight-bold text-uppercase text-end">Total</td>
-                                            <td class="font-weight-bold text-end">
+                                            <td class="font-weight-bold text-right">
                                                 <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
                                             </td>
                                         </tr>
