@@ -61,11 +61,10 @@ class ConnectionController extends Controller
               });
         }
         if(!empty($form_date) && !empty($to_date)){
-            $data->whereBetween('connects.created_at', [date('Y-m-d', strtotime($form_date)),date('Y-m-d', strtotime($to_date))]);
+            // MM/DD/YYYY
+            $data->whereBetween('connects.created_at', [date('m-d-Y', strtotime($form_date)),date('m-d-Y', strtotime($to_date))]);
         }
-        elseif (!empty($form_date)) {
-            $data->whereDate('connects.created_at','=', date('Y-m-d', strtotime($form_date)));
-        }
+
         $data = $data->paginate(10);
         return view('user.connections.index', compact('data'));
     }

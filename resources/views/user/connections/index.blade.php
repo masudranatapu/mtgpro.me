@@ -29,7 +29,6 @@ if(!empty($daterange)){
                 <div class="col-md-8">
                     <a href="{{ route('user.connections') }}" class="btn btn-default">{{ __('Refresh') }}</a>
                         <form action="{{ route('user.connections') }}" method="get" class="form-inline">
-                            @csrf
                             <div class="mb-3">
                                 <input type="tel" name="search" id="search" value="" class="form-control @error('search') is-invalid @enderror" placeholder="{{ __('Search name, email,company') }}" tabindex="{{$tabindex++}}">
                                 @if($errors->has('search'))
@@ -37,7 +36,7 @@ if(!empty($daterange)){
                                 @endif
                             </div>
                             <div class="mb-3">
-                                <input type="text" name="daterange" id="daterangepicker" value="" class="form-control @error('daterange') is-invalid @enderror" placeholder="{{ __('YYYY-MM-DD - YYYY-MM-DD') }}" tabindex="{{$tabindex++}}">
+                                <input type="text" name="daterange" id="daterangepicker" value="{{ $daterange }}" class="form-control @error('daterange') is-invalid @enderror" placeholder="{{ $_by_date ?? 'MM/DD/YYYY - MM/DD/YYYY' }}" tabindex="{{$tabindex++}}">
                                 @if($errors->has('daterange'))
                                 <span class="help-block text-danger">{{ $errors->first('daterange') }}</span>
                                 @endif
@@ -148,7 +147,7 @@ if(!empty($daterange)){
         var start = moment().subtract(29, 'days');
         var end = moment();
         function cb(start, end) {
-            $('#daterangepicker span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+            $('#daterangepicker span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
         }
         $('#daterangepicker').daterangepicker({
             autoUpdateInput: false,
