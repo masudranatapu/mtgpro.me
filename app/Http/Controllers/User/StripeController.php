@@ -56,15 +56,20 @@ class StripeController extends Controller
                         'price' => $price_id,
                     ]],
                 ]);
+
+                // dd($subscription);current_period_end
                 $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d H:i:s');
 
                 if($request->is_yearly==1){
                     $plan_price = $plan_details->plan_price_yearly;
-                    $plan_validity = Carbon::parse($subscription->start_date)->addDays(31);
+                    $plan_validity = Carbon::parse($subscription->current_period_end)->format('Y-m-d H:i:s');
+
+                    // $plan_validity = Carbon::parse($subscription->start_date)->addDays(31);
                 }
                 else{
                     $plan_price = $plan_details->plan_price_monthly;
-                    $plan_validity = Carbon::parse($subscription->start_date)->addYears(1);
+                    $plan_validity = Carbon::parse($subscription->current_period_end)->format('Y-m-d H:i:s');
+                    // $plan_validity = Carbon::parse($subscription->start_date)->addYears(1);
                 }
 
                 $amountToBePaid = ((int)($plan_price) * (int)($config[25]->config_value) / 100) + (int)($plan_price);

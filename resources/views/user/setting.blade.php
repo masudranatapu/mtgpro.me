@@ -19,12 +19,15 @@
     $plan_price_monthly = $plan->plan_price_monthly;
     $plan_price_yearly =$plan->plan_price_yearly;
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
+    // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-    if($diff_in_days > 1){
+
+    if($diff_in_days > 31){
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 year"));
     }else{
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 month") );
     }
+
     $bill_date = date('d', strtotime($user->plan_activation_date));
 
 @endphp
@@ -90,7 +93,7 @@
 
                                                             <div class="card-body">
                                                                 @if (checkPackage() && $plan->is_free==0)
-                                                                @if ($diff_in_days > 1)
+                                                                @if ($diff_in_days > 31)
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per year') }}.</p>
                                                                 @else
