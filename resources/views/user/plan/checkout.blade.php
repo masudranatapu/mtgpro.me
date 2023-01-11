@@ -227,7 +227,7 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
             dropdownContainer: document.body,
             formatOnDisplay: true,
             geoIpLookup: function(callback) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
                     var countryCode = (resp && resp.country) ? resp.country : "us";
                     callback(countryCode);
                 });
