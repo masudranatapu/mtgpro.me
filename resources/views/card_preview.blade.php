@@ -19,12 +19,17 @@
             if($cardinfo->profile){
                 $settings->favicon =  $cardinfo->profile;
             }
-            $settings = getSetting();
+
+        if(isFreePlan($cardinfo->user_id)){
+            $title = $user_name .' - '. $settings->site_name;
+        }else{
+            $title = $user_name;
+        }
 
         ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user_name }} - {{ $settings->site_name }}</title>
+    <title>{{ $title }} </title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
     @if(!empty($twitter_id))
     <meta name="twitter:site" content="{{'@'.$twitter_id}}"/>
