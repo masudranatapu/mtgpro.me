@@ -222,14 +222,14 @@ class UserController extends Controller
             $data = [];
             if($request->confirm=='delete'){
 
-                $user_cards = Card::where('user_id', Auth::user()->id)->get();
+                $user_cards = BusinessCard::where('user_id', Auth::user()->id)->get();
 
                 foreach ($user_cards as $key => $value) {
                     BusinessField::where('card_id', $value->id)->update([
                         'status'=> 2,
                     ]);
                 }
-                Card::where('user_id', Auth::user()->id)->update([
+                BusinessCard::where('user_id', Auth::user()->id)->update([
                     'status'=> 2,
                     'is_deleted' => 1,
                     'deleted_at' => date('Y-m-d H:i:s'),
@@ -252,6 +252,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
+
             return response()->json(['status'=> 0,'message' => 'Something wrong! Please try again'], 200);
         }
         DB::commit();
