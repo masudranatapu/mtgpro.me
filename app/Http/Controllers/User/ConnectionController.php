@@ -178,11 +178,13 @@ class ConnectionController extends Controller
         return redirect()->back();
     }
 
-    public function getExportCsv(Request $request,$id)
+    public function getExportCsv(Request $request)
         {
-        $fileName = 'tasks.csv';
-        $tasks = DB::table('connects')->where('id',$id)->first();
-
+            $connect_id = $request->connect_id;
+            $fileName   = 'contacts.csv';
+            $connects = DB::table('connects')
+            ->whereIn('id',$connect_id)
+            ->get();
                 $headers = array(
                     "Content-type"        => "text/csv",
                     "Content-Disposition" => "attachment; filename=$fileName",
@@ -190,21 +192,19 @@ class ConnectionController extends Controller
                     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
                     "Expires"             => "0"
                 );
-
-                $columns = array('Title', 'Assign', 'Description', 'Start Date', 'Due Date');
-
-                $callback = function() use($tasks, $columns) {
+                $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
+                $callback = function() use($connects, $columns) {
                     $file = fopen('php://output', 'w');
                     fputcsv($file, $columns);
+                    foreach ($connects as $connect) {
+                        $row['Name']  = $connect->name;
+                        $row['Email']    = $connect->email;
+                        $row['Phone']    = $connect->phone;
+                        $row['Title']  = $connect->title;
+                        $row['Image']  = $connect->profile_image;
+                        $row['Company Name']  = $connect->company_name;
 
-                    foreach ($tasks as $task) {
-                        $row['Title']  = $task->title;
-                        $row['Assign']    = $task->assign->name;
-                        $row['Description']    = $task->description;
-                        $row['Start Date']  = $task->start_at;
-                        $row['Due Date']  = $task->end_at;
-
-                        fputcsv($file, array($row['Title'], $row['Assign'], $row['Description'], $row['Start Date'], $row['Due Date']));
+                        fputcsv($file, array($row['Name'], $row['Email'], $row['Phone'], $row['Title'], $row['Image'], $row['Company Name']));
                     }
 
                     fclose($file);

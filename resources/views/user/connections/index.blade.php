@@ -67,7 +67,6 @@ if(!empty($daterange)){
                     <div class="custome_table table-responsive">
                         <form action="" method="post" id="bulk_export_form">
 
-                        </form>
                         @if (!empty($rows) && count($rows) > 0)
                         <table class="table " id="connections">
                             <thead>
@@ -128,6 +127,7 @@ if(!empty($daterange)){
                         @else
                         <p class="text-center">{{ __('Connection not found') }}</p>
                         @endif
+                    </form>
                     </div>
                 </div>
             </div>
