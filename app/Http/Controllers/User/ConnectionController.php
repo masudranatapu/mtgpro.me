@@ -62,6 +62,7 @@ class ConnectionController extends Controller
         }
         if(!empty($form_date) && !empty($to_date)){
             // MM/DD/YYYY
+            dd($form_date);
             $data->whereBetween('connects.created_at', [date('m-d-Y', strtotime($form_date)),date('m-d-Y', strtotime($to_date))]);
         }
 
