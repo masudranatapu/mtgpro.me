@@ -57,13 +57,55 @@ class StripeController extends Controller
                     ]],
                 ]);
 
-                // dd($subscription);current_period_end
-                $activation_date = Carbon::parse($subscription->start_date)->format('Y-m-d H:i:s');
+                dd($subscription);
+                // id: "sub_1MP1c4BIRmXVjgUGOhkwpwiY"
+                // object: "subscription"
+                // application: null
+                // application_fee_percent: null
+                // automatic_tax: Stripe\StripeObject {#1523 ▶}
+                // billing_cycle_anchor: 1673433176
+                // billing_thresholds: null
+                // cancel_at: null
+                // cancel_at_period_end: false
+                // canceled_at: null
+                // collection_method: "charge_automatically"
+                // created: 1673433176
+                // currency: "usd"
+                // current_period_end: 1676111576
+                // current_period_start: 1673433176
+                // customer: "cus_MvsUI7ZC6dOOp9"
+                // days_until_due: null
+                // default_payment_method: null
+                // default_source: null
+                // default_tax_rates: []
+                // description: null
+                // discount: null
+                // ended_at: null
+                // items: Stripe\Collection {#1524 ▶}
+                // latest_invoice: "in_1MP1c4BIRmXVjgUG6sC8rH2M"
+                // livemode: false
+                // metadata: Stripe\StripeObject {#1528 ▶}
+                // next_pending_invoice_item_invoice: null
+                // on_behalf_of: null
+                // pause_collection: null
+                // payment_settings: Stripe\StripeObject {#1533 ▶}
+                // pending_invoice_item_interval: null
+                // pending_setup_intent: null
+                // pending_update: null
+                // plan: Stripe\Plan {#1564 ▶}
+                // quantity: 1
+                // schedule: null
+                // start_date: 1673433176
+                // status: "active"
+                // test_clock: null
+                // transfer_data: null
+                // trial_end: null
+                // trial_start: null
 
+                $activation_date = Carbon::parse($subscription->current_period_start)->format('Y-m-d H:i:s');
                 if($request->is_yearly==1){
                     $plan_price = $plan_details->plan_price_yearly;
                     $plan_validity = Carbon::parse($subscription->current_period_end)->format('Y-m-d H:i:s');
-
                     // $plan_validity = Carbon::parse($subscription->start_date)->addDays(31);
                 }
                 else{
@@ -114,7 +156,7 @@ class StripeController extends Controller
                 $transaction->desciption            = $plan_details->plan_name . " Plan";
                 $transaction->payment_gateway_name  = "Stripe";
                 $transaction->transaction_amount    = $amountToBePaid;
-                $transaction->transaction_currency = $config[1]->config_value;
+                $transaction->transaction_currency = $subscription->currency;
                 $transaction->invoice_details       = json_encode($invoice_details);
                 $transaction->payment_status        = "Success";
                 $transaction->save();

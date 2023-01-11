@@ -19,7 +19,6 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
-use Behat\Transliterator\Transliterator;
 use Illuminate\Support\Facades\Response;
 
 
@@ -71,19 +70,30 @@ class HomeController extends Controller
         DB::beginTransaction();
         try {
             $data['name' ]         = $request->name;
-            $data['email']         = $request->email;
+            $data['email']         = trim($request->email);
             $data['phone']         = $request->phone;
             $data['title']         = $request->title;
             $data['company_name']  = $request->company_name;
             $data['message']       = $request->message;
-            $card = BusinessCard::where('id', $request->card_id)->first();
-            // if(Auth::user()){
-            //     $user_id =  Auth::id();
-            //     if($card->user_id == $user_id){
-            //         Toastr::error('Not possible to send message to your card');
-            //         return redirect()->back();
-            //     }
-            // }
+            $find_user = DB::table('users')->where('email',$request->email)->first();
+            $card = BusinessCard::findOrFail($request->card_id);
+
+            if(Auth::user() && $card->user_id == Auth::user()->id){
+                // Toastr::error(trans('Not possible to send message to your card !'), 'Error', ["positionClass" => "toast-top-right"]);
+                // return redirect()->back();
+                return response()->json([
+                    'status' => 0,
+                    'msg'=> trans('Not possible to send message to your card !')
+                ]);
+            }elseif (!empty(Auth::user())) {
+                $data['connect_user_id'] = Auth::user()->id;
+                $data['profile_image']   = Auth::user()->profile_image;
+            }elseif (!empty($find_user)) {
+                $data['connect_user_id'] = $find_user->id;
+                $data['profile_image']   = $find_user->profile_image;
+            }else{
+                $data['connect_user_id'] = NULL;
+            }
             $data['card_id'] = $card->id;
             $data['user_id'] = $card->user_id;
             $connect = DB::table('connects')->insert($data);
@@ -91,15 +101,24 @@ class HomeController extends Controller
         } catch (\Throwable $th) {
             dd($th->getMessage());
             DB::rollback();
-            Toastr::error('Something wrong ! please try again');
-            return redirect()->back();
+
+            // Toastr::error(trans('Something wrong ! please try again'), 'Error', ["positionClass" => "toast-top-right"]);
+            // return redirect()->back();
+            return response()->json([
+                'status' => 0,
+                'msg'=> trans('Something wrong ! please try again')
+            ]);
         }
         DB::commit();
         if ($connect) {
             Mail::to($card->card_email)->send(new ConnectMail($data));
         }
-        Toastr::success('Connection send successfully');
-        return redirect()->back();
+        // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
+        // return redirect()->back();
+        return response()->json([
+            'status' => 1,
+            'msg'=> trans('Connection send successfully')
+        ]);
 
     }
 

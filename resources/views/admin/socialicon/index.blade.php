@@ -54,6 +54,7 @@
                                             <th>{{ __('Icon Title') }}</th>
                                             <th>{{ __('Example') }}</th>
                                             <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Paid Status') }}</th>
                                             <th>{{ __('Actions') }}</th>
                                         </tr>
                                     </thead>
@@ -78,6 +79,13 @@
                                                         <span class="badge bg-success">{{ __('Active')}}</span>
                                                     @else
                                                         <span class="badge bg-info">{{ __('Inactive')}}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($socile->is_paid == 1)
+                                                        <span class="badge bg-success">{{ __('Paid')}}</span>
+                                                    @else
+                                                        <span class="badge bg-info">{{ __('Free')}}</span>
                                                     @endif
                                                 </td>
                                                 <td>

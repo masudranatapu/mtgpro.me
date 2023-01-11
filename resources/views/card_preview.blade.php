@@ -387,7 +387,7 @@
         </div>
         <div class="offcanvas-body">
                 <div class="contact_body">
-                    <form action="{{route('getConnect')}}" method="post">
+                    <form action="{{route('getConnect')}}" method="post" id="connect-form">
                     @csrf
                     <input type="hidden" name="card_id" id="card_id" value="{{$cardinfo->id}}" />
                         <div class="heading mb-4 text-center">
@@ -434,44 +434,45 @@
                 </div>
         </div>
     </div>
-
-
-
-
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{asset('assets/js/toastr.js')}}"></script>
     <script>
       AOS.init();
-    //   $(document).on("click", ".save-contact", function (e) {
-    //         e.preventDefault();
-    //         var url = $(this).attr('href');
-    //             $.ajax({
-    //                 type: 'GET',
-    //                 url: url,
-    //                 contentType:false,
-    //                 processData:false,
-    //                 success: function (response) {
-    //                     if (response.status == 1) {
-    //                         const link = document.createElement('a');
-    //                         link.setAttribute('href', response.file_path);
-    //                         link.setAttribute('download', response.file_name);
-    //                         link.click();
-    //                     }else{
-    //                         toastr.error('Something wrong! please try again');
-    //                     }
-    //                 },
-    //                 error: function (jqXHR, exception) {
-    //                     toastr.error('Something wrong! please try again');
-    //                 },
-    //                 complete: function (data) {
-    //                     $("body").css("cursor", "default");
-    //                 }
-    //             });
-    //     });
+      $(document).on('submit', "#connect-form", function (e) {
+        e.preventDefault();
+        var form = $("#connect-form");
+        $.ajax({
+            type: 'post',
+            data: form.serialize(),
+            url: form.attr('action'),
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+                $('.connect-spinner').toggleClass('active');
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.msg);
+                    // $('#accountDeleteModal').modal('hide');
+                    // location.reload();
+                    $('#connect-form')[0].reset();
 
-
+                } else {
+                    toastr.error(response.msg);
+                }
+                $('.connect-spinner').removeClass('active');
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+                $('.connect-spinner').removeClass('active');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    });
     </script>
     {!! Toastr::message() !!}
 </body>
