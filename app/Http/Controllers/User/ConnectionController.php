@@ -183,7 +183,7 @@ class ConnectionController extends Controller
             $path = '';
             $connect_id = $request->connect_id;
             $fileName   = 'contacts.csv';
-            $path = public_path('assets/vcard/');
+            $path = public_path('assets/vcard');
 
             $connects = DB::table('connects')->whereIn('id',$connect_id)->get();
                 $headers = array(
@@ -209,6 +209,7 @@ class ConnectionController extends Controller
                     }
                     fclose($file);
                 };
+
                if(!empty($fileName) && file_exists(($path.'/'.$fileName))) {
                     $data = route('user.connections.download-csv',$fileName);
                 }
@@ -222,8 +223,8 @@ class ConnectionController extends Controller
 
 
         public function getDownloadCsv($nameFile) {
-            $path = public_path('assets/vcard/');
-            return response()->download($path.$nameFile);
+            $path = public_path('assets/vcard');
+            return response()->download($path.'/'.$nameFile);
         }
 
 }

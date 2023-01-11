@@ -226,7 +226,7 @@ if(!empty($daterange)){
                     if (response.status == 1) {
                         // toastr.success(response.msg);
                         $('#bulk_export_form')[0].reset();
-                        window.location.href = response.redirect_url;
+                        // window.location.href = response.redirect_url;
                     } else {
                         // toastr.error(response.msg);
                     }
