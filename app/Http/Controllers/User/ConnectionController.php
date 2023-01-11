@@ -182,35 +182,60 @@ class ConnectionController extends Controller
             $data = [];
             $path = '';
             $connect_id = $request->connect_id;
-            $fileName   = 'contacts.csv';
-            $path = public_path('assets/vcard');
+            $fileName   = 'contacts_'.uniqid().'.csv';
+            $path = public_path('assets/vcard/');
 
             $connects = DB::table('connects')->whereIn('id',$connect_id)->get();
-                $headers = array(
-                    "Content-type"        => "text/csv",
-                    "Content-Disposition" => "attachment; filename=$fileName",
-                    "Pragma"              => "no-cache",
-                    "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-                    "Expires"             => "0"
-                );
-                $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
-                $callback = function() use($connects, $columns,$path,$fileName) {
-                    $file = fopen($path.$fileName, 'w');
-                    // $file = fopen('php://output', 'w');
-                    fputcsv($file, $columns);
-                    foreach ($connects as $connect) {
-                        $row['Name']  = $connect->name;
-                        $row['Email']    = $connect->email;
-                        $row['Phone']    = $connect->phone;
-                        $row['Title']  = $connect->title;
-                        $row['Image']  = $connect->profile_image;
-                        $row['Company Name']  = $connect->company_name;
-                        fputcsv($file, array($row['Name'], $row['Email'], $row['Phone'], $row['Title'], $row['Image'], $row['Company Name']));
-                    }
-                    fclose($file);
-                };
+                // $headers = array(
+                //     "Content-type"        => "text/csv",
+                //     "Content-Disposition" => "attachment; filename=$fileName",
+                //     "Pragma"              => "no-cache",
+                //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                //     "Expires"             => "0"
+                // );
+                // $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
+                // $callback = function() use($connects, $columns,$path,$fileName) {
+                //     $_path = $path.$fileName;
+                //     $file = fopen($_path, 'w');
+                //     // $file = fopen('php://output', 'w');
+                //     fputcsv($file, $columns);
+                //     foreach ($connects as $connect) {
+                //         $row['Name']  = $connect->name;
+                //         $row['Email']    = $connect->email;
+                //         $row['Phone']    = $connect->phone;
+                //         $row['Title']  = $connect->title;
+                //         $row['Image']  = $connect->profile_image;
+                //         $row['Company Name']  = $connect->company_name;
+                //         fputcsv($file, array($row['Name'], $row['Email'], $row['Phone'], $row['Title'], $row['Image'], $row['Company Name']));
+                //     }
+                //     fclose($file);
+                // };
 
-               if(!empty($fileName) && file_exists(($path.'/'.$fileName))) {
+                $file = fopen($path.$fileName, 'w');
+
+
+                $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
+
+                fputcsv($file, $columns);
+
+                    // $data = [
+                    //     'First Name' => $user->first_name,
+                    //     'Email Address' => $user->email,
+                    // ];
+                    $data = [];
+
+                foreach ($connects as $connect) {
+                         $data['Name']  = $connect->name;
+                         $data['Email']    = $connect->email;
+                         $data['Phone']    = $connect->phone;
+                         $data['Title']  = $connect->title;
+                         $data['Image']  = $connect->profile_image;
+                         $data['Company Name']  = $connect->company_name;
+                        //  array_push($data, $data);
+                         fputcsv($file, array($data['Name'], $data['Email'], $data['Phone'], $data['Title'], $data['Image'], $data['Company Name']));
+                     }
+               // fclose($file);
+               if(!empty($fileName) && file_exists(($path.$fileName))) {
                     $data = route('user.connections.download-csv',$fileName);
                 }
                 return response()->json([
@@ -220,7 +245,6 @@ class ConnectionController extends Controller
                 ]);
             // return response()->stream($callback, 200, $headers);
         }
-
 
         public function getDownloadCsv($nameFile) {
             $path = public_path('assets/vcard');
