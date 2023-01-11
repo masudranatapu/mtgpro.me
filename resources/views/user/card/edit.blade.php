@@ -71,7 +71,7 @@
                                                     <div class="social_media_list" id="drop-items">
                                                     @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                         @foreach ($card->business_card_fields as $key => $icon )
-                                                        <div class="single_list media position-relative sicon_single_list_{{ $icon->id }}">
+                                                        <div class="single_list media position-relative sicon_single_list_{{ $icon->id }}" data-id="{{ $icon->id }}" data-card_id="{{ $card->id }}">
                                                             <a href="javascript:void(0)" class="editLink" data-id="{{ $icon->id }}">
                                                                 <div class="drag_drap">
                                                                     <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
@@ -591,11 +591,37 @@
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
 // drag and drop
-const dropItems = document.getElementById('drop-items')
+const dropItems = document.getElementById('drop-items');
+var get_url = $('#base_url').val();
 new Sortable(dropItems, {
     animation: 350,
     chosenClass: "sortable-chosen",
-    dragClass: "sortable-drag"
+    dragClass: "sortable-drag",
+    onEnd: function (/**Event*/evt) {
+        var itemEl = evt.item;
+        var id = $(itemEl).data('id');
+        var card_id = $(itemEl).data('card_id');
+        var position_new = evt.newIndex;
+
+        $.ajax({
+            type: 'get',
+            url: get_url + '/user/card/sicon_sorting/',
+            data:{id,card_id,position_new},
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                // console.log(response);
+                toastr.success(response.message);
+            },
+            complete: function (data) {
+                $("body").css("cursor", "default");
+            }
+        });
+
+
+    }
 });
 // social content modal
 $('.onclickIcon').on('click', function() {

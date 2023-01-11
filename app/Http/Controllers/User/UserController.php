@@ -396,4 +396,34 @@ class UserController extends Controller
     }
 
 
+    public function siconSorting(Request $request){
+
+    DB::beginTransaction();
+      try {
+          DB::table('business_fields')->where('id',$request->id)->update(['position' => $request->position_new]);
+        $data = DB::table('business_fields')->where('card_id',$request->card_id)->where('id','<>',$request->id)->orderBy('position','ASC')->get();
+        if($data && count($data)>0){
+            foreach ($data as $key => $value) {
+                $position_new = $key;
+                if($position_new == $request->position_new ){
+                    $position_new +=1;
+                    $key++;
+                }
+                DB::table('business_fields')->where('id',$value->id)->update(['position' => $position_new]);
+            }
+        }
+
+      } catch (\Throwable $th) {
+         DB::rollback();
+         $response['status'] = false;
+         $response['message'] = 'Sorting not updated';
+         return response()->json($response);
+      }
+        DB::commit();
+        $response['status'] = true;
+        $response['message'] = 'Sorting updated successfully!';
+        return response()->json($response);
+    }
+
+
 }
