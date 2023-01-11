@@ -81,6 +81,7 @@ class CardController extends Controller
         // dd($icons);
         // dd($card->business_card_fields);
         $user = User::find($user_id);
+        // dd($card);
         return view('user.card.edit',compact('card','icons','user'));
     }
 

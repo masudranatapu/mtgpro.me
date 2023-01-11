@@ -9,6 +9,7 @@
 @endpush
 @php
     $icon_group = Config::get('app.icon_group');
+
 @endphp
 @section('tab_content','active')
 @section('content')
