@@ -3,7 +3,7 @@
 @endpush
 @section('plan','active')
 @section('title')
-My Plans
+{{ __('My Plans') }}
 @endsection
 @section('meta_tag')@endsection
 @push('custom_css')
