@@ -180,8 +180,12 @@ class ConnectionController extends Controller
 
     public function getExportCsv(Request $request)
         {
+            $data = [];
+            $path = '';
             $connect_id = $request->connect_id;
             $fileName   = 'contacts.csv';
+            $path = public_path('assets/vcard/');
+
             $connects = DB::table('connects')->whereIn('id',$connect_id)->get();
                 $headers = array(
                     "Content-type"        => "text/csv",
@@ -191,8 +195,9 @@ class ConnectionController extends Controller
                     "Expires"             => "0"
                 );
                 $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
-                $callback = function() use($connects, $columns) {
-                    $file = fopen('php://output', 'w');
+                $callback = function() use($connects, $columns,$path,$fileName) {
+                    $file = fopen($path.$fileName, 'w');
+                    // $file = fopen('php://output', 'w');
                     fputcsv($file, $columns);
                     foreach ($connects as $connect) {
                         $row['Name']  = $connect->name;
@@ -205,9 +210,21 @@ class ConnectionController extends Controller
                     }
                     fclose($file);
                 };
-            return response()->stream($callback, 200, $headers);
+               if(!empty($fileName) && file_exists(($path.'/'.$fileName))) {
+                    $data = route('user.connections.download-csv',$fileName);
+                }
+                return response()->json([
+                    'status' => 1,
+                    'redirect_url'   => $data,
+                    'msg'=> trans('Successfully generate'),
+                ]);
+            // return response()->stream($callback, 200, $headers);
         }
 
 
+        public function getDownloadCsv($nameFile) {
+            $path = public_path('assets/vcard/');
+            return response()->download($path.$nameFile);
+        }
 
 }

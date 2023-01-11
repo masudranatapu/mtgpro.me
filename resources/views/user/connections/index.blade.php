@@ -225,10 +225,11 @@ if(!empty($daterange)){
                 },
                 success: function (response) {
                     if (response.status == 1) {
-                        toastr.success(response.message);
+                        // toastr.success(response.msg);
                         $('#bulk_export_form')[0].reset();
+                        window.location.href = response.redirect_url;
                     } else {
-                        toastr.error(response.message);
+                        // toastr.error(response.msg);
                     }
                 },
                 error: function (jqXHR, exception) {

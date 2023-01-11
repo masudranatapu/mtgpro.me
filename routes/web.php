@@ -91,6 +91,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('connections/{id}/update',['as'=>'connections.update','uses'=>'ConnectionController@putUpdate']);
     Route::post('connections/{id}/send-mail',['as'=>'connection.send-mail','uses'=>'ConnectionController@sendConnectEmail']);
     Route::post('connections/bulk-export',['as'=>'connections.bulk-export','uses'=>'ConnectionController@getExportCsv']);
+    Route::get('connections/download-csv/{name}',['as'=>'connections.download-csv','uses'=>'ConnectionController@getDownloadCsv']);
 
 
 });
