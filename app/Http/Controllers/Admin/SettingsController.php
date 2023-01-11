@@ -427,7 +427,7 @@ class SettingsController extends Controller
             // __add new image
             $banner_photo = $request->file('banner_photo');
             $name  = time() . '.' . $banner_photo->getClientOriginalExtension();
-            Image::make($banner_photo)->save('uploads/banner/' . $name);
+            Image::make($banner_photo)->save('assets/uploads/banner/' . $name);
             $banner_photo_path = 'assets/uploads/banner/' . $name;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_photo')->update(['section_content' => $banner_photo_path]);
         }
