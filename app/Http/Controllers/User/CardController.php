@@ -334,16 +334,35 @@ class CardController extends Controller
         $card->card_email   = $request->card_email ?? Auth::user()->email;
         $card->card_for     = 'Work';
         $card->save();
+
+        if(!empty($request->phone_number)){
+            $mobile_icon =  DB::table('social_icon')->where('icon_name','mobile')->first();
+            $fields = new BusinessField();
+            $fields->card_id = $card->id;
+            $fields->type = 'mobile';
+            $fields->icon = $mobile_icon->icon_name;
+            $fields->icon_image = $mobile_icon->icon_image;
+            $fields->icon_id = $mobile_icon->id;
+            $fields->label = $mobile_icon->icon_title;
+            $fields->content = $request->phone_number;
+            $fields->position = 1;
+            $fields->status = 1;
+            $fields->created_at = date('Y-m-d H:i:s');
+            $fields->save();
+
+        }
+
+
         $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
         $fields = new BusinessField();
         $fields->card_id = $card->id;
-        $fields->type = 'email';
+        $fields->type = 'mail';
         $fields->icon = $email_icon->icon_name;
         $fields->icon_image = $email_icon->icon_image;
         $fields->icon_id = $email_icon->id;
         $fields->label = $email_icon->icon_title;
         $fields->content = Auth::user()->email;
-        $fields->position = 1;
+        $fields->position = 2;
         $fields->status = 1;
         $fields->created_at = date('Y-m-d H:i:s');
         $fields->save();
