@@ -90,6 +90,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('connections/{id}/download',['as'=>'connections.download','uses'=>'ConnectionController@getDownloadVcf']);
     Route::post('connections/{id}/update',['as'=>'connections.update','uses'=>'ConnectionController@putUpdate']);
     Route::post('connections/{id}/send-mail',['as'=>'connection.send-mail','uses'=>'ConnectionController@sendConnectEmail']);
+    Route::get('connections/export',['as'=>'connections.export','uses'=>'ConnectionController@getExportCsv']);
 
 
 });

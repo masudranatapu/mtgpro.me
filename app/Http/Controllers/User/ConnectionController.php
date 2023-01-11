@@ -27,22 +27,45 @@ class ConnectionController extends Controller
 
     public function getIndex(Request $request)
     {
+        $form_date      = '';
+        $to_date        = '';
+        if(!empty($request->daterange)){
+            $date = explode(" - ",$request->daterange);
+            $form_date = trim($date[0]);
+            $to_date = trim($date[1]);
+        }
+        $keyword = $request->search;
+
         $data = DB::table('connects')
         ->select('connects.*','users.profile_image as user_image')
         ->orderBy('connects.id','desc')
         ->leftJoin('users','users.id','=','connects.user_id')
         ->where('connects.user_id',Auth::user()->id);
 
-        if($request->search){
-            $search = $request->search;
-            $search = explode(' ',$search);
-            if($search){
-                foreach ($search as $key => $value) {
-                    $data->where("connects.name", "like", "%$value%");
-                }
-            }
-        }
+        // if($request->search){
+        //     $search = $request->search;
+        //     $search = explode(' ',$search);
+        //     if($search){
+        //         foreach ($search as $key => $value) {
+        //             $data->where("connects.name", "like", "%$value%");
+        //         }
+        //     }
+        // }
 
+        if(isset($keyword)){
+            $data->where(function ($query) use($keyword) {
+                $query->where('connects.name', 'like', '%' . $keyword . '%')
+                   ->orWhere('connects.email', 'like', '%' . $keyword . '%')
+                   ->orWhere('connects.company_name', 'like', '%' . $keyword . '%')
+                   ->orWhere('connects.phone', 'like', '%' . $keyword . '%');
+              });
+        }
+        if(!empty($form_date) && !empty($to_date)){
+            $data->whereBetween('connects.created_at', [date('Y-m-d', strtotime($form_date)),date('Y-m-d', strtotime($to_date))]);
+        }
+        elseif (!empty($form_date)) {
+            $data->whereDate('connects.created_at','=', date('Y-m-d', strtotime($form_date)));
+        }
         $data = $data->paginate(10);
         return view('user.connections.index', compact('data'));
     }
@@ -154,5 +177,42 @@ class ConnectionController extends Controller
         Toastr::success('Email successfully sent', 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
+
+    public function getExportCsv(Request $request,$id)
+        {
+        $fileName = 'tasks.csv';
+        $tasks = DB::table('connects')->where('id',$id)->first();
+
+                $headers = array(
+                    "Content-type"        => "text/csv",
+                    "Content-Disposition" => "attachment; filename=$fileName",
+                    "Pragma"              => "no-cache",
+                    "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                    "Expires"             => "0"
+                );
+
+                $columns = array('Title', 'Assign', 'Description', 'Start Date', 'Due Date');
+
+                $callback = function() use($tasks, $columns) {
+                    $file = fopen('php://output', 'w');
+                    fputcsv($file, $columns);
+
+                    foreach ($tasks as $task) {
+                        $row['Title']  = $task->title;
+                        $row['Assign']    = $task->assign->name;
+                        $row['Description']    = $task->description;
+                        $row['Start Date']  = $task->start_at;
+                        $row['Due Date']  = $task->end_at;
+
+                        fputcsv($file, array($row['Title'], $row['Assign'], $row['Description'], $row['Start Date'], $row['Due Date']));
+                    }
+
+                    fclose($file);
+                };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
+
 
 }
