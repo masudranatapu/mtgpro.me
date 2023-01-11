@@ -55,7 +55,7 @@ if (!empty($daterange)) {
                             <div class="mb-3 mr-3">
                                 <input type="text" name="daterange" id="daterangepicker" value="{{ $daterange }}"
                                     class="form-control @error('daterange') is-invalid @enderror"
-                                    placeholder="{{ $_by_date ?? 'MM/DD/YYYY - MM/DD/YYYY' }}"
+                                    placeholder="{{ $_by_date ?? 'YYYY-MM-DD - YYYY-MM-DD' }}"
                                     tabindex="{{ $tabindex++ }}">
                                 @if ($errors->has('daterange'))
                                     <span class="help-block text-danger">{{ $errors->first('daterange') }}</span>
@@ -179,7 +179,7 @@ if (!empty($daterange)) {
             var end = moment();
 
             function cb(start, end) {
-                $('#daterangepicker span').html(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+                $('#daterangepicker span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
             }
             $('#daterangepicker').daterangepicker({
                 autoUpdateInput: false,
@@ -198,8 +198,8 @@ if (!empty($daterange)) {
             cb(start, end);
 
             $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
-                    'MM/DD/YYYY'));
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format(
+                    'YYYY-MM-DD'));
             });
 
             $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
