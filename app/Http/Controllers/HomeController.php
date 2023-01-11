@@ -405,39 +405,7 @@ class HomeController extends Controller
         return view('pages.common',compact('page'));
     }
 
-    public function setFilename($value, $overwrite = true, $separator = '_')
-    {
-        // recast to string if $value is array
-        if (is_array($value)) {
-            $value = implode($separator, $value);
-        }
 
-        // trim unneeded values
-        $value = trim($value, $separator);
-
-        // remove all spaces
-        $value = preg_replace('/\s+/', $separator, $value);
-
-        // if value is empty, stop here
-        if (empty($value)) {
-            return;
-        }
-
-        // decode value + lowercase the string
-        $value = strtolower($this->decode($value));
-
-        // urlize this part
-        $value = Transliterator::urlize($value);
-
-        // overwrite filename or add to filename using a prefix in between
-        $this->filename = ($overwrite) ?
-            $value : $this->filename . $separator . $value;
-    }
-    private function decode($value)
-    {
-        // convert cyrlic, greek or other caracters to ASCII characters
-        return Transliterator::transliterate($value);
-    }
 
 
 

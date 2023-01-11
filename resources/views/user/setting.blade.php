@@ -92,14 +92,14 @@
                                                                 @if (checkPackage() && $plan->is_free==0)
                                                                 @if ($diff_in_days > 1)
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
-                                                                    <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per member per year') }}.</p>
+                                                                    <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per year') }}.</p>
                                                                 @else
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
-                                                                    <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
+                                                                    <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per month') }}.</p>
                                                                 @endif
                                                                 {{-- <p>$14.99 per member per month.</p> --}}
                                                                 {{-- <p>You will be charged <strong>$14.99 / month starting  Jan 19</strong></p> --}}
-                                                                <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M d, Y', strtotime($user->plan_activation_date) ) }}</strong></p>
+                                                                {{-- <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M d, Y', strtotime($user->plan_activation_date) ) }}</strong></p> --}}
                                                                 @else
                                                                     <div class="text-center mb-5">
                                                                         <a class="btn btn-primary" href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
@@ -358,23 +358,27 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
                     <!-- modal body -->
                     <div class="modal_body">
-                        <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
-                        <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
-                        <form action="#" method="post">
+                        <form method="POST" id="accountDeletionForm" action="{{ route('user.deletion-request') }}">
+                            @csrf
+                            <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
+                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
+
                             <div class="mb-3">
-                                <input type="text" name="delete" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
-                                @if($errors->has('delete'))
-                                <span class="help-block text-danger">{{ $errors->first('delete') }}</span>
+                                <input type="text" name="confirm" id="confirm" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                                @if($errors->has('confirm'))
+                                <span class="help-block text-danger">{{ $errors->first('confirm') }}</span>
                                 @endif
+                            </div>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Delete Account') }}</button>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer pb-3">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                        <button type="button" class="btn btn-primary">{{ __('Delete Account') }}</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -503,6 +507,39 @@
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
+
+$(document).on('submit', "#accountDeletionForm", function (e) {
+        e.preventDefault();
+        var form = $("#accountDeletionForm");
+        $.ajax({
+            type: 'post',
+            data: form.serialize(),
+            url: form.attr('action'),
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+                $('.deletion-spinner').toggleClass('active');
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                    $('#accountDeleteModal').modal('hide');
+                    location.reload();
+                } else {
+                    toastr.error(response.message);
+                }
+                $('.deletion-spinner').removeClass('active');
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+                $('.deletion-spinner').removeClass('active');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    });
+
 // var cropper = new Slim(document.getElementById('profile_pic'), {
 //         ratio: '1:1',
 //         minSize: {

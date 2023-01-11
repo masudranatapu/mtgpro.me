@@ -230,8 +230,6 @@ class CardController extends Controller
             }else{
                 $card_url = BusinessCard::where('card_url',$link_text)->first();
             }
-
-
             if($card_url == null){
                 $data['status'] = true;
                 $data['message'] = 'This link is available';

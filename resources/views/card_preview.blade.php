@@ -248,7 +248,7 @@
                         @if (isFreePlan($cardinfo->user_id))
                         <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights reserved.</p>
                         @else
-                        <p> Copyright © <a href="javascript:void(0)">{{ $contact->title }}</a> All rights reserved.</p>
+                        <p> Copyright © <a href="javascript:void(0)">{{ $cardinfo->title }}</a> All rights reserved.</p>
                         @endif
                     </div>
 
