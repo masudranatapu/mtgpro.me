@@ -147,7 +147,7 @@ My Plans
                 <form action="{{ route('user.checkout') }}" id="choose_plan_action" method="get">
                     <label for="is_yearly" class="sr-only">{{ __('Yearly')}}</label>
                     <input type="hidden" class="form-control" name="is_yearly" value="0" id="is_yearly">
-                    
+
                     <label for="plan_id" class="sr-only">{{ __('Plan id')}}</label>
                     <input type="hidden" class="form-control" name="plan_id" value="" id="plan_id">
                     <div class="modal-title">{{ __('“We’re excited to have you!')}}</div>

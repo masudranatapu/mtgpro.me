@@ -46,7 +46,7 @@ Route::post('post-register', ['as' => 'post-register', 'uses' => 'Auth\AuthContr
 Auth::routes();
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'], 'where' => ['locale' => '[a-zA-Z]{2}']], function () {
-    Route::get('card/init-card',['as'=>'init-card','uses'=>'CardController@getInitCard']);//static
+    Route::get('card/init-card',['as'=>'card.init-card','uses'=>'CardController@getInitCard']);//static
     Route::post('card/upload_avatar',['as'=>'card.upload_avatar','uses'=>'CardController@uploadCardAvatar']);
     Route::get('card/check_link/{text}',['as'=>'card.check_link','uses'=>'CardController@checkPerLink']);
     Route::get('card',['as'=>'card','uses'=>'CardController@getIndex']);

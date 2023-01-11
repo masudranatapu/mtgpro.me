@@ -37,8 +37,8 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
-        if(count($cards)<1){
-            return redirect()->route('user.init-card');
+        if(count($cards) < 1){
+            return redirect()->route('user.card.init-card');
         }
         return view('user.dashboard', compact('cards'));
     }
@@ -107,62 +107,62 @@ class CardController extends Controller
     }
 
 
-    public function getVideoDelete($id,$index)
-    {
-        DB::beginTransaction();
-        try {
-            $card = BusinessCard::where('business_cards.id',$id)->first();
-            if($card->business_card_fields){
-                $card_fields = $card->business_card_fields->content;
-                $arr_card_fields = json_decode($card_fields,true);
-                if($arr_card_fields['section_video']){
-                    $comment = $arr_card_fields;
-                    if(isset($arr_card_fields['section_video'][$index])){
-                        unset($arr_card_fields['section_video'][$index]);
-                    }
-                    $comment['section_video'] = $arr_card_fields['section_video'];
-                    $jcomment = json_encode($comment);
-                    BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
-                }
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            $data['status'] = 'failed';
-            return response()->json($data);
-        }
-        DB::commit();
-        $data['status'] = 'success';
-        return response()->json($data);
-    }
+    // public function getVideoDelete($id,$index)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $card = BusinessCard::where('business_cards.id',$id)->first();
+    //         if($card->business_card_fields){
+    //             $card_fields = $card->business_card_fields->content;
+    //             $arr_card_fields = json_decode($card_fields,true);
+    //             if($arr_card_fields['section_video']){
+    //                 $comment = $arr_card_fields;
+    //                 if(isset($arr_card_fields['section_video'][$index])){
+    //                     unset($arr_card_fields['section_video'][$index]);
+    //                 }
+    //                 $comment['section_video'] = $arr_card_fields['section_video'];
+    //                 $jcomment = json_encode($comment);
+    //                 BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
+    //             }
+    //         }
+    //     } catch (\Throwable $th) {
+    //         DB::rollback();
+    //         $data['status'] = 'failed';
+    //         return response()->json($data);
+    //     }
+    //     DB::commit();
+    //     $data['status'] = 'success';
+    //     return response()->json($data);
+    // }
 
 
-    public function getTestimonialDelete($id,$index)
-    {
-        DB::beginTransaction();
-        try {
-            $card = BusinessCard::where('business_cards.id',$id)->first();
-            if($card->business_card_fields){
-                $card_fields = $card->business_card_fields->content;
-                $arr_card_fields = json_decode($card_fields,true);
-                if($arr_card_fields['section_testimonial']){
-                    $comment = $arr_card_fields;
-                    if(isset($arr_card_fields['section_testimonial'][$index])){
-                        unset($arr_card_fields['section_testimonial'][$index]);
-                    }
-                    $comment['section_testimonial'] = $arr_card_fields['section_testimonial'];
-                    $jcomment = json_encode($comment);
-                    BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
-                }
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            $data['status'] = 'failed';
-            return response()->json($data);
-        }
-        DB::commit();
-        $data['status'] = 'success';
-        return response()->json($data);
-    }
+    // public function getTestimonialDelete($id,$index)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $card = BusinessCard::where('business_cards.id',$id)->first();
+    //         if($card->business_card_fields){
+    //             $card_fields = $card->business_card_fields->content;
+    //             $arr_card_fields = json_decode($card_fields,true);
+    //             if($arr_card_fields['section_testimonial']){
+    //                 $comment = $arr_card_fields;
+    //                 if(isset($arr_card_fields['section_testimonial'][$index])){
+    //                     unset($arr_card_fields['section_testimonial'][$index]);
+    //                 }
+    //                 $comment['section_testimonial'] = $arr_card_fields['section_testimonial'];
+    //                 $jcomment = json_encode($comment);
+    //                 BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
+    //             }
+    //         }
+    //     } catch (\Throwable $th) {
+    //         DB::rollback();
+    //         $data['status'] = 'failed';
+    //         return response()->json($data);
+    //     }
+    //     DB::commit();
+    //     $data['status'] = 'success';
+    //     return response()->json($data);
+    // }
 
 
     public function getView(Request $request,$id)
@@ -280,7 +280,7 @@ class CardController extends Controller
         if(!empty($card)){
             return redirect()->route('user.card');
         }
-         return view('user.card.starter_card');
+        return view('user.card.starter_card');
     }
 
 
