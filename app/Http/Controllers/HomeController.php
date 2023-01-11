@@ -295,11 +295,13 @@ class HomeController extends Controller
         $file_name = $base_name.uniqid().".".'png';
         $path = public_path('assets/uploads/qr-code/');
         $file_path = $path.$file_name;
-        if (isFreePlan()) {
+
+        if (isFreePlan($data->user_id)) {
             $image = QrCode::format('png')
             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
             ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
         }
+
         elseif (!empty($data->logo)) {
             $image = QrCode::format('png')
             ->merge(public_path($data->logo), 0.2, true)
