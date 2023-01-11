@@ -78,7 +78,7 @@ $invoice_details = json_decode($row->invoice_details);
                                 <div class="card-body">
                                     <div class="row pb-3">
                                         <div class="col-6 ">
-                                            <p class="h3">{{ $settings->site_name }}</p>
+                                            <span class="h5">{{ $settings->site_name }}</span>
                                             <address>
                                                <span class="d-block">{{ $invoice_details->from_billing_name }}</span>
                                                <span class="d-block"> {{ $invoice_details->from_billing_address }}</span>
@@ -100,7 +100,7 @@ $invoice_details = json_decode($row->invoice_details);
                                             </span>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <span class="h3"> {{ $invoice_details->to_billing_name }}</span>
+                                            <span class="h5"> {{ $invoice_details->to_billing_name }}</span>
                                             <address>
                                                 {{ $invoice_details->to_billing_address }}
                                             <span class="d-block">
