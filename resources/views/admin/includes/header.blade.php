@@ -1,4 +1,4 @@
-<header class="navbar top_header navbar-expand-md navbar-light d-print-none">
+<header class="navbar top_header navbar-expand-md navbar-light d-print-none d-md-none d-lg-none d-xl-none">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
             <span class="navbar-toggler-icon"></span>
@@ -10,7 +10,7 @@
             </a>
         </h1>
         <div class="navbar-nav flex-row order-md-last">
-            @if(count(config('app.languages')) > 1)
+            {{-- @if(count(config('app.languages')) > 1)
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" role="button"
                     aria-expanded="false">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </li>
-            @endif
+            @endif --}}
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">

@@ -18,16 +18,16 @@
     $subscription_start = new \Carbon\Carbon($user->plan_activation_date);
     $plan_price_monthly = $plan->plan_price_monthly;
     $plan_price_yearly =$plan->plan_price_yearly;
-
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
-
+    // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
 
-    if($diff_in_days > 1){
+    if($diff_in_days > 31){
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 year"));
     }else{
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . " +1 month") );
     }
+
     $bill_date = date('d', strtotime($user->plan_activation_date));
 
 @endphp
@@ -81,39 +81,35 @@
                                                 <div class="setting_tab_contetn">
                                                     <div class="subscription_info mb-4">
                                                         <div class="card">
-
-                                                            @if (checkPackage())
                                                             <div class="card-header">
-                                                                {{-- 10 days left --}}
                                                                 <h3>
-                                                                       {{-- Subscription --}}
                                                                     <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
-
-                                                                    @if ($duration > 0)
-                                                                           <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
+                                                                    @if ($duration > 0 && $plan->is_free==0)
+                                                                        <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
                                                                     @else
                                                                     @endif
                                                                 </h3>
                                                             </div>
+
                                                             <div class="card-body">
-                                                                @if ($diff_in_days > 1)
-                                                                <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
-                                                                <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per member per year') }}.</p>
+                                                                @if (checkPackage() && $plan->is_free==0)
+                                                                @if ($diff_in_days > 31)
+                                                                    <h5>${{ CurrencyFormat($plan->plan_price_yearly,2) }}</h5>
+                                                                    <p>{{ CurrencyFormat($plan->plan_price_yearly,2) }} {{ __('per year') }}.</p>
                                                                 @else
-                                                                <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
-                                                                <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per member per month') }}.</p>
+                                                                    <h5>${{ CurrencyFormat($plan->plan_price_monthly,2) }}</h5>
+                                                                    <p>{{ CurrencyFormat($plan->plan_price_monthly,2) }} {{ __('per month') }}.</p>
                                                                 @endif
                                                                 {{-- <p>$14.99 per member per month.</p> --}}
                                                                 {{-- <p>You will be charged <strong>$14.99 / month starting  Jan 19</strong></p> --}}
-                                                                <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M d, Y', strtotime($user->plan_activation_date) ) }}</strong></p>
+                                                                {{-- <p>{{ __('You will be charged') }} <strong>{{ CurrencyFormat($plan->plan_price_monthly,2) }} / month starting {{  date('M d, Y', strtotime($user->plan_activation_date) ) }}</strong></p> --}}
+                                                                @else
+                                                                    <div class="text-center mb-5">
+                                                                        <a class="btn btn-primary" href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
+                                                                    </div>
+                                                                @endif
                                                             </div>
-                                                            @else
-                                                            <div class="card-body">
-                                                                <div class="plan_upgrade text-center mb-5">
-                                                                    <a href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
-                                                                </div>
-                                                            </div>
-                                                            @endif
+
                                                         </div>
                                                     </div>
                                                     <div class="row mb-4">
@@ -365,23 +361,27 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
                     <!-- modal body -->
                     <div class="modal_body">
-                        <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
-                        <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
-                        <form action="#" method="post">
+                        <form method="POST" id="accountDeletionForm" action="{{ route('user.deletion-request') }}">
+                            @csrf
+                            <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
+                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
+
                             <div class="mb-3">
-                                <input type="text" name="delete" id="" class="form-control" placeholder="Type 'delete' to delete your account." required>
-                                @if($errors->has('delete'))
-                                <span class="help-block text-danger">{{ $errors->first('delete') }}</span>
+                                <input type="text" name="confirm" id="confirm" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                                @if($errors->has('confirm'))
+                                <span class="help-block text-danger">{{ $errors->first('confirm') }}</span>
                                 @endif
+                            </div>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Delete Account') }}</button>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer pb-3">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                        <button type="button" class="btn btn-primary">{{ __('Delete Account') }}</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -510,6 +510,39 @@
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
+
+$(document).on('submit', "#accountDeletionForm", function (e) {
+        e.preventDefault();
+        var form = $("#accountDeletionForm");
+        $.ajax({
+            type: 'post',
+            data: form.serialize(),
+            url: form.attr('action'),
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+                $('.deletion-spinner').toggleClass('active');
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                    $('#accountDeleteModal').modal('hide');
+                    location.reload();
+                } else {
+                    toastr.error(response.message);
+                }
+                $('.deletion-spinner').removeClass('active');
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+                $('.deletion-spinner').removeClass('active');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    });
+
 // var cropper = new Slim(document.getElementById('profile_pic'), {
 //         ratio: '1:1',
 //         minSize: {

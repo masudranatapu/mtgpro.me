@@ -46,13 +46,11 @@ Route::post('post-register', ['as' => 'post-register', 'uses' => 'Auth\AuthContr
 Auth::routes();
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'], 'where' => ['locale' => '[a-zA-Z]{2}']], function () {
-    Route::get('card/init-card',['as'=>'init-card','uses'=>'CardController@getInitCard']);//static
+    Route::get('card/init-card',['as'=>'card.init-card','uses'=>'CardController@getInitCard']);//static
     Route::post('card/upload_avatar',['as'=>'card.upload_avatar','uses'=>'CardController@uploadCardAvatar']);
     Route::get('card/check_link/{text}',['as'=>'card.check_link','uses'=>'CardController@checkPerLink']);
     Route::get('card',['as'=>'card','uses'=>'CardController@getIndex']);
-
     Route::get('card/create',['as'=>'card.create','uses'=>'CardController@getCreate']);
-
     Route::post('card/store',['as'=>'card.store','uses'=>'CardController@postStore']);
     Route::post('card/store-first-card',['as'=>'card.store-first-card','uses'=>'CardController@saveBusinessCard']);
     Route::get('card/{id}/view',['as'=>'card.view','uses'=>'CardController@getView']);
@@ -90,6 +88,10 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('connections/{id}/download',['as'=>'connections.download','uses'=>'ConnectionController@getDownloadVcf']);
     Route::post('connections/{id}/update',['as'=>'connections.update','uses'=>'ConnectionController@putUpdate']);
     Route::post('connections/{id}/send-mail',['as'=>'connection.send-mail','uses'=>'ConnectionController@sendConnectEmail']);
+    Route::post('connections/bulk-export',['as'=>'connections.bulk-export','uses'=>'ConnectionController@getExportCsv']);
+    Route::get('connections/download-csv/{name}',['as'=>'connections.download-csv','uses'=>'ConnectionController@getDownloadCsv']);
+
+    Route::post('deletion-request',['as'=>'deletion-request','uses'=>'UserController@postDeletionRequest']);
 
 
 });

@@ -2,7 +2,10 @@
 namespace App\Http\Controllers;
 use Str;
 use QrCode;
+use App\Models\Faq;
 use App\Models\Plan;
+use App\Models\User;
+use App\Models\Review;
 use App\Models\Currency;
 use App\Mail\ConnectMail;
 use App\Mail\SendContact;
@@ -16,8 +19,6 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
-use App\Models\Faq;
-use App\Models\Review;
 use Behat\Transliterator\Transliterator;
 use Illuminate\Support\Facades\Response;
 
@@ -39,7 +40,17 @@ class HomeController extends Controller
         $currency = Currency::where('is_default', 1)->first();
         $faqs = Faq::orderBy('order_id', 'DESC')->get();
         $reviews = Review::where('status', 1)->orderBy('order_id', 'DESC')->get();
-        return view('index',compact('plans','currency', 'faqs', 'reviews'));
+        $home_page = DB::table('pages')->where('page_name','home')->get();
+
+        // dd($home_page);
+        $home_data = [];
+        if($home_page){
+            foreach ($home_page as $key => $value) {
+                $home_data[$value->section_name][$value->section_title] = $value->section_content;
+            }
+        }
+
+        return view('index',compact('plans','currency', 'faqs', 'reviews','home_data'));
     }
 
     public function getPrivacyPolicy()
@@ -98,14 +109,19 @@ class HomeController extends Controller
         if(!checkPackage()){
             return redirect()->route('user.plans');
         }
-        $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding')->where('card_url', $cardurl)
+        $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
+        ->where('card_url', $cardurl)
         ->leftJoin('users','users.id','business_cards.user_id')
         ->leftJoin('plans','plans.id','users.plan_id')
         ->first();
+
         if($cardinfo){
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
+            $user = User::find($cardinfo->user_id);
+
+
             // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
-            $icons = SocialIcon::orderBy('order_id','desc')->get();
+            // $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
             if($cardinfo->status == 0){
                 Toastr::warning('This card is not active now');
@@ -115,12 +131,15 @@ class HomeController extends Controller
                 Toastr::warning('This card has been deleted');
                 return redirect()->back();
             }
-            $carddetails = DB::table('business_fields')
-            ->select('business_fields.*')
-            // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
-            ->where('business_fields.card_id', $cardinfo->id)
-            ->where('business_fields.status',1)->orderBy('business_fields.position','ASC')->get();
-            return view('card_preview', compact('cardinfo', 'icons','carddetails'));
+            // $carddetails = DB::table('business_fields')
+            // ->select('business_fields.*')
+            // // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
+            // ->where('business_fields.card_id', $cardinfo->id)
+            // ->where('business_fields.status',1)
+            // ->orderBy('business_fields.position','ASC')
+            // ->get();
+
+            return view('card_preview', compact('cardinfo','user'));
         }else{
 
             Toastr::warning('This card is not available please create your desired card');
@@ -276,11 +295,13 @@ class HomeController extends Controller
         $file_name = $base_name.uniqid().".".'png';
         $path = public_path('assets/uploads/qr-code/');
         $file_path = $path.$file_name;
-        if (isFreePlan()) {
+
+        if (isFreePlan($data->user_id)) {
             $image = QrCode::format('png')
             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
             ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
         }
+
         elseif (!empty($data->logo)) {
             $image = QrCode::format('png')
             ->merge(public_path($data->logo), 0.2, true)
@@ -384,39 +405,7 @@ class HomeController extends Controller
         return view('pages.common',compact('page'));
     }
 
-    public function setFilename($value, $overwrite = true, $separator = '_')
-    {
-        // recast to string if $value is array
-        if (is_array($value)) {
-            $value = implode($separator, $value);
-        }
 
-        // trim unneeded values
-        $value = trim($value, $separator);
-
-        // remove all spaces
-        $value = preg_replace('/\s+/', $separator, $value);
-
-        // if value is empty, stop here
-        if (empty($value)) {
-            return;
-        }
-
-        // decode value + lowercase the string
-        $value = strtolower($this->decode($value));
-
-        // urlize this part
-        $value = Transliterator::urlize($value);
-
-        // overwrite filename or add to filename using a prefix in between
-        $this->filename = ($overwrite) ?
-            $value : $this->filename . $separator . $value;
-    }
-    private function decode($value)
-    {
-        // convert cyrlic, greek or other caracters to ASCII characters
-        return Transliterator::transliterate($value);
-    }
 
 
 

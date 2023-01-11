@@ -3,7 +3,7 @@
 <head>
     <?php
         $cardinfo =  $cardinfo ?? [];
-        $icons = $icons ?? [];
+
         $shareComponent = $shareComponent ?? [];
         $settings = getSetting();
         $tabindex = 1;
@@ -19,12 +19,17 @@
             if($cardinfo->profile){
                 $settings->favicon =  $cardinfo->profile;
             }
-            $settings = getSetting();
+
+        if(isFreePlan($cardinfo->user_id)){
+            $title = $user_name .' - '. $settings->site_name;
+        }else{
+            $title = $user_name;
+        }
 
         ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user_name }} - {{ $settings->site_name }}</title>
+    <title>{{ $title }} </title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
     @if(!empty($twitter_id))
     <meta name="twitter:site" content="{{'@'.$twitter_id}}"/>
@@ -201,38 +206,52 @@
                             $iphone = stripos($_SERVER['HTTP_USER_AGENT'], "iphone");
                             $ipad = stripos($_SERVER['HTTP_USER_AGENT'], "ipad");
                               ?>
-                            @if (!empty($carddetails))
-                            @foreach ($carddetails as $contact)
+                            @if (!empty($cardinfo->business_card_fields))
+                            @foreach ($cardinfo->business_card_fields as $contact)
+
+
+
+                            @if(isset($user->userPlan) && ($user->userPlan->is_free == 1) && ($contact->sicon->is_paid == 1) )
+
+                            @else
+
                             <li>
                                 @if ($contact->type=='address')
-                                <a title="" class="text-decoration-none" href="{{'https://www.google.com/maps?q='.$contact->content }}" target="_blank">
+                                    <a title="" class="text-decoration-none" href="{{'https://www.google.com/maps?q='.$contact->content }}" target="_blank">
                                 @elseif ($contact->type=='email')
-                                <a class="text-decoration-none" href="mailto:{{$contact->content }}" target="_blank">
+                                    <a class="text-decoration-none" href="mailto:{{$contact->content }}" target="_blank">
                                 @elseif ($contact->type=='phone')
-                                <a class="text-decoration-none" href="tel:{{$contact->content }}" target="_blank">
+                                    <a class="text-decoration-none" href="tel:{{$contact->content }}" target="_blank">
                                 @elseif ($contact->type=='text')
-                                <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
+                                    <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
                                 @elseif ($contact->type=='whatsapp')
                                 @if($android !== false || $ipad !== false || $iphone !== false)
-                                <a class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
+                                    <a class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
                                 @else
-                                <a class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
+                                    <a class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="_blank">
                                 @endif
                                 @else
-                                <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
+                                    <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
                                 @endif
                                     <img class="img-fluid" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75" >
                                     <span>{{ $contact->label }}</span>
                                 </a>
                             </li>
+                            @endif
                             @endforeach
                             @endif
                         </ul>
                     </div>
 
+
                     <div class="copyright_article">
-                        <p>Copyright © mtgpro. All rights reserved.</p>
+                        @if (isFreePlan($cardinfo->user_id))
+                        <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights reserved.</p>
+                        @else
+                        <p> Copyright © <a href="javascript:void(0)">{{ $cardinfo->title }}</a> All rights reserved.</p>
+                        @endif
                     </div>
+
                 </div>
             </div>
 
@@ -295,7 +314,7 @@
                                         <a href="{{ route('qr',$cardinfo->card_id) }}" class="download_btn btn btn-primary mr-1" title="{{ __('Download QR code')}}">
                                             <i class="fa fa-download"></i>{{ __('Download QR code')}}
                                         </a>
-                                        <a class="btn btn-secondary" title="{{ __('Social Media')}}" href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
+                                        <a class="btn btn-primary" title="{{ __('Social Media')}}" href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
                                             <img class="img-fluid" src="{{ asset('assets/img/icon/connections.svg') }}" alt="">
                                             {{ __('Social Media')}}
                                             </a>
@@ -323,35 +342,23 @@
                         <h5 class="mb-5 text-center">Share Your Card</h5>
                         <div id="social-links">
                             <div class="row">
-                                <div class="col-4 col-sm-3">
-                                    <ul>
+                                <div class="col-12 col-sm-12">
+                                    <ul class="text-center">
                                         <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
                                             </a>
                                          </li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 col-sm-3">
-                                    <ul>
                                          <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
                                             </a>
                                          </li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 col-sm-3">
-                                    <ul>
-                                        <li>
+                                         <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
                                             </a>
                                          </li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 col-sm-3">
-                                    <ul>
                                          <li>
                                             <a href="#" class="" id="" title="">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">

@@ -37,8 +37,8 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
-        if(count($cards)<1){
-            return redirect()->route('user.init-card');
+        if(count($cards) < 1){
+            return redirect()->route('user.card.init-card');
         }
         return view('user.dashboard', compact('cards'));
     }
@@ -81,6 +81,7 @@ class CardController extends Controller
         // dd($icons);
         // dd($card->business_card_fields);
         $user = User::find($user_id);
+        // dd($card);
         return view('user.card.edit',compact('card','icons','user'));
     }
 
@@ -107,62 +108,62 @@ class CardController extends Controller
     }
 
 
-    public function getVideoDelete($id,$index)
-    {
-        DB::beginTransaction();
-        try {
-            $card = BusinessCard::where('business_cards.id',$id)->first();
-            if($card->business_card_fields){
-                $card_fields = $card->business_card_fields->content;
-                $arr_card_fields = json_decode($card_fields,true);
-                if($arr_card_fields['section_video']){
-                    $comment = $arr_card_fields;
-                    if(isset($arr_card_fields['section_video'][$index])){
-                        unset($arr_card_fields['section_video'][$index]);
-                    }
-                    $comment['section_video'] = $arr_card_fields['section_video'];
-                    $jcomment = json_encode($comment);
-                    BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
-                }
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            $data['status'] = 'failed';
-            return response()->json($data);
-        }
-        DB::commit();
-        $data['status'] = 'success';
-        return response()->json($data);
-    }
+    // public function getVideoDelete($id,$index)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $card = BusinessCard::where('business_cards.id',$id)->first();
+    //         if($card->business_card_fields){
+    //             $card_fields = $card->business_card_fields->content;
+    //             $arr_card_fields = json_decode($card_fields,true);
+    //             if($arr_card_fields['section_video']){
+    //                 $comment = $arr_card_fields;
+    //                 if(isset($arr_card_fields['section_video'][$index])){
+    //                     unset($arr_card_fields['section_video'][$index]);
+    //                 }
+    //                 $comment['section_video'] = $arr_card_fields['section_video'];
+    //                 $jcomment = json_encode($comment);
+    //                 BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
+    //             }
+    //         }
+    //     } catch (\Throwable $th) {
+    //         DB::rollback();
+    //         $data['status'] = 'failed';
+    //         return response()->json($data);
+    //     }
+    //     DB::commit();
+    //     $data['status'] = 'success';
+    //     return response()->json($data);
+    // }
 
 
-    public function getTestimonialDelete($id,$index)
-    {
-        DB::beginTransaction();
-        try {
-            $card = BusinessCard::where('business_cards.id',$id)->first();
-            if($card->business_card_fields){
-                $card_fields = $card->business_card_fields->content;
-                $arr_card_fields = json_decode($card_fields,true);
-                if($arr_card_fields['section_testimonial']){
-                    $comment = $arr_card_fields;
-                    if(isset($arr_card_fields['section_testimonial'][$index])){
-                        unset($arr_card_fields['section_testimonial'][$index]);
-                    }
-                    $comment['section_testimonial'] = $arr_card_fields['section_testimonial'];
-                    $jcomment = json_encode($comment);
-                    BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
-                }
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            $data['status'] = 'failed';
-            return response()->json($data);
-        }
-        DB::commit();
-        $data['status'] = 'success';
-        return response()->json($data);
-    }
+    // public function getTestimonialDelete($id,$index)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $card = BusinessCard::where('business_cards.id',$id)->first();
+    //         if($card->business_card_fields){
+    //             $card_fields = $card->business_card_fields->content;
+    //             $arr_card_fields = json_decode($card_fields,true);
+    //             if($arr_card_fields['section_testimonial']){
+    //                 $comment = $arr_card_fields;
+    //                 if(isset($arr_card_fields['section_testimonial'][$index])){
+    //                     unset($arr_card_fields['section_testimonial'][$index]);
+    //                 }
+    //                 $comment['section_testimonial'] = $arr_card_fields['section_testimonial'];
+    //                 $jcomment = json_encode($comment);
+    //                 BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
+    //             }
+    //         }
+    //     } catch (\Throwable $th) {
+    //         DB::rollback();
+    //         $data['status'] = 'failed';
+    //         return response()->json($data);
+    //     }
+    //     DB::commit();
+    //     $data['status'] = 'success';
+    //     return response()->json($data);
+    // }
 
 
     public function getView(Request $request,$id)
@@ -229,13 +230,12 @@ class CardController extends Controller
             }else{
                 $card_url = BusinessCard::where('card_url',$link_text)->first();
             }
-
-
             if($card_url == null){
                 $data['status'] = true;
                 $data['message'] = 'This link is available';
             }
         }
+
 
         return response()->json($data);
     }
@@ -281,30 +281,9 @@ class CardController extends Controller
         if(!empty($card)){
             return redirect()->route('user.card');
         }
-         return view('user.card.starter_card');
+        return view('user.card.starter_card');
     }
 
-
-    // public function uploadCardAvatar(Request $request){
-    //     $data = $request->image;
-    //     $image_array_1 = explode(";", $data);
-    //     $image_array_2 = explode(",", $image_array_1[1]);
-    //     $data = base64_decode($image_array_2[1]);
-    //     $imageName = time() . '.png';
-    //     $imagePath = 'assets/uploads/avatar/';
-    //     if (!File::exists($imagePath)) {
-    //         File::makeDirectory($imagePath, 777, true);
-    //     }
-    //    Image::make($data)->save($imagePath.$imageName);
-    //     $imagePath_ = asset($imagePath. $imageName);
-    //     $imagePath2 = $imagePath. $imageName;
-    //     return response()->json([
-    //         'html'=> '<img src="'.$imagePath_.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">',
-    //         'image' =>$imagePath_
-    //     ]);
-    //     // return response()->json('<img src="'.$imagePath.'" class="img-fluid"  /><input type="hidden" name="avatar_path" value="'.$imagePath2.'">');
-
-    // }
 
     public function saveBusinessCard(FirstCardRequest $request)
     {
@@ -387,65 +366,30 @@ class CardController extends Controller
 
 
 
-
-        public function cropImage(Request $request){
-
-
-            return view('user.crop-img');
-
-        }
-
-
-        public function cropImageUpload(Request $request){
-            if($request->has('avatar') && $request->avatar[0])
-            {
-                 $output = $request->avatar;
-                 $output = json_decode($output, TRUE);
-                 if(isset($output) && isset($output['output']) && isset($output['output']['image']))
-                    $image = $output['output']['image'];
-                    if(isset($image))
-                    {
-                      $this->uploadBase64ToImage($image,'jpg');
-                      return view('user.crop-img');
-                    }
-                    return view('user.crop-img');
-                //  return 'no picture file';
-            }
-            // dd($request->all());
-
-            return view('user.crop-img');
-
-        }
-
-
-        // public function uploadBase64ToImage($file,$file_prefix)
-        // {
-        //     $name = date('YmdHis');
-        //     $file_path = sprintf("assets/uploads/avatar/");
-        //     $file_name = sprintf('%s.%s', $name, $file_prefix);
-        //     $upload_path = public_path() . '/' . $file_path;
-        //     if(stripos($file, 'data:image/jpeg;base64,') === 0)
-        //     {
-        //         $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
-        //     }
-        //     else if(stripos($file, 'data:image/png;base64,') === 0)
-        //     {
-        //         $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
-        //     }
-        //     else
-        //     {
-        //         return array('error' => 'non-image files');
-        //     }
-        //       $result = file_put_contents($upload_path . $file_name, $img);
-        //     if($result == FALSE)
-        //     {
-        //         return array('error' => 'Failed to write to file, possibly without permission');
-        //     }
-        //     return $file_path.$file_name;
+        // public function cropImage(Request $request){
+        //     return view('user.crop-img');
         // }
 
 
+        // public function cropImageUpload(Request $request){
+        //     if($request->has('avatar') && $request->avatar[0])
+        //     {
+        //          $output = $request->avatar;
+        //          $output = json_decode($output, TRUE);
+        //          if(isset($output) && isset($output['output']) && isset($output['output']['image']))
+        //             $image = $output['output']['image'];
+        //             if(isset($image))
+        //             {
+        //               $this->uploadBase64ToImage($image,'jpg');
+        //               return view('user.crop-img');
+        //             }
+        //             return view('user.crop-img');
+        //         //  return 'no picture file';
+        //     }
+        //     // dd($request->all());
 
+        //     return view('user.crop-img');
+        // }
 
         public function getChangeCardStatus(Request $request)
         {

@@ -90,7 +90,7 @@ $social_type =  Config::get('app.social_type');
                                                 <select name="type" class="form-control" >
                                                     @if(isset($social_type) && count($social_type)>0)
                                                         @foreach($social_type as $key => $typ)
-                                                            <option value="{{ $typ }}" {{ $socileicons->type == $typ ? 'selected' : '' }} >{{ $typ }}</option>
+                                                            <option value="{{ $typ }}"  >{{ $typ }}</option>
                                                         @endforeach
                                                     @endif
 
@@ -98,7 +98,7 @@ $social_type =  Config::get('app.social_type');
                                             </div>
                                             <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Main Link')}}</label>
-                                                <input type="text" name="main_link" class="form-control" value="{{$socileicons->main_link}}" placeholder="Enter main link (if type is username)">
+                                                <input type="text" name="main_link" class="form-control" value="" placeholder="Enter main link (if type is username)">
                                             </div>
 
                                             <div class="col-md-6 mb-2">
@@ -117,10 +117,15 @@ $social_type =  Config::get('app.social_type');
                                                     <option value="0">{{ __('Inactive')}}</option>
                                                 </select>
                                             </div>
-
-
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Paid Status')}}</label>
+                                                <select name="is_paid"  class="form-control">
+                                                    <option disabled>{{ __('Select One')}}</option>
+                                                    <option value="0" selected>{{ __('Free')}}</option>
+                                                    <option value="1">{{ __('Paid')}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-
                                         <div class="row mt-3">
                                             <div class="col-md-12 text-center">
                                                 <button type="submit" class="btn btn-success">{{ __('Create')}}</button>

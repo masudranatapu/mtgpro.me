@@ -41,7 +41,7 @@ class BusinessCard extends Model
     public function getView($request,$id){
         return $this->select('business_cards.*','users.plan_details')
         ->leftJoin('users','users.id','=','business_cards.user_id')
-        ->where('business_cards.status',1)
+        // ->where('business_cards.status',1)
         ->where('business_cards.id',$id)
         ->where('business_cards.user_id',Auth::user()->id)->first();
     }
@@ -278,17 +278,32 @@ class BusinessCard extends Model
         try {
                 $rules = array(
                     // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
-                    'content'   => 'required|max:255',
+                    'content'   => 'required|string|max:255',
                     'label'     => 'required|max:255',
+                    'card_id'   => 'required',
+                    'icon_id'   => 'required',
                 );
+
+
+                $social_icon    = SocialIcon::findOrFail($request->icon_id);
+                if($social_icon->type == 'link'){
+                    $rules['content'] = 'required|url|max:255';
+
+                }
+
+                // if($social_icon->type == 'username'){
+                //     $rules['content'] = 'required|url|max:255';
+
+                // }
+
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
-                    return $this->successResponse(200, 'Information not updated! Please try again', '', 0);
+                    return $this->successResponse(200, $validator->errors()->first(), '', 0);
                 }
-                $social_icon    = SocialIcon::findOrFail($request->icon_id);
+
                 $icon           = new BusinessField();
                 $icon->card_id  = $request->card_id;
-                $icon->type     = $request->type ?? 'link';
+                $icon->type     = $social_icon->type;
                 $icon->position = BusinessField::where('card_id',$request->card_id)->max('position')+1;
                 $icon->status   = 1;
                 $icon->icon     = $social_icon->icon_name;

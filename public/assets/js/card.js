@@ -306,6 +306,11 @@ $(document).on('click', '.onclickIcon' ,function() {
     $('.second_modal').removeClass('d-none');
 });
 
+// $(document).on('input','#card_url', function() {
+//     var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
+//     $('#card_url').val(value);
+// })
+
 
 
 $(document).on('input','#card_url', function() {
@@ -313,19 +318,13 @@ $(document).on('input','#card_url', function() {
     var mode = $('input[name="mode"]').val();
     var id = $('input[name="id"]').val();
     var minLength = 2;
-    var maxLength = 100;
+    var maxLength = 124;
     var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
     $('#card_url').val(value);
     $("#card_url_help").addClass('text-danger');
-    if(value.length == 0){ $("#card_url_help").html(''); return false;}
 
-    if (value.length < minLength){
-        $("#card_url_help").html("Text is short");
-    }
-    else if (value.length > maxLength)
-    {
-        $("#card_url_help").html("Text is long");
-    }else{
+    if( (value.length > minLength) && (value.length < maxLength) ){
+
         $.ajax({
             type: 'get',
             url: get_url + '/user/card/check_link/'+value,
@@ -336,21 +335,27 @@ $(document).on('input','#card_url', function() {
             },
             success: function (response) {
                 $("#card_url_help").html(response.message);
-                // .removeClass('text-danger').addClass('text-success')
                 if(response.status == false){
                     $("#card_url_help").removeClass('text-success').addClass('text-danger');
+                    $('.save-card').attr('disabled','disabled');
                 }
                 if(response.status == true){
                     $("#card_url_help").removeClass('text-danger').addClass('text-success');
+                    $('.save-card').removeAttr('disabled');
                 }
             },
             complete: function (data) {
                 $("body").css("cursor", "default");
             }
         });
+    }else{
+        $("#card_url_help").text('');
     }
 
+
+
 }).keyup();
+
 
 
 
@@ -374,27 +379,51 @@ $(document).ready(function () {
     //     };
     // });
 
-    $('#cardCreate').validate({
-        // rules: {
-        //     'email': {
-        //         required: true,
-        //         email_rule: true
-        //     },
-        //     'card_name': {
-        //         required: true,
-        //     },
-        //     'profil': {
-        //         required: true,
-        //     },
-        // },
-        // messages: {
-        //     'join[email]': "Please enter a valid email address.",
-        //     'firstName': "Please type your first name.",
-        //     'lastName': "Please type your last name."
-        // }
-        // submitHandler: function (form) {
-        //     return true;
-        // }
+    $('.card_validation').validate({
+        rules: {
+            'card_url': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+
+            'card_for': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+
+            'name': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'location': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'designation': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'company_name': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'bio': {
+                required: false,
+                maxlength: 255,
+            },
+
+
+
+
+        },
+        messages: {},
+
         submitHandler: function(form) {
 
             $('.save-card-spinner').addClass('active');

@@ -95,7 +95,7 @@
                                             <!-- about -->
                                             <div class="tab-pane fade active show" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
                                                 <div class="tab_body about_user">
-                                                        <form action="{{ route('user.card.store') }}" method="post" id="cardCreate" enctype="multipart/form-data" novalidate="novalidate">
+                                                        <form action="{{ route('user.card.store') }}" method="post" id="cardCreate" enctype="multipart/form-data" novalidate="novalidate" class="card_validation">
                                                             @csrf
                                                             <input type="hidden" name="mode" value="create" />
                                                             <input type="hidden" name="id" value="0" />
