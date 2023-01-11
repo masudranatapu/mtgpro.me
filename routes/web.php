@@ -94,6 +94,10 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('deletion-request',['as'=>'deletion-request','uses'=>'UserController@postDeletionRequest']);
     Route::get('card/sicon_sorting',['as'=>'sicon.sorting','uses'=>'UserController@siconSorting']);
 
+    // user controller
+    Route::get('review',['as'=>'review','uses'=>'UserController@getReview']);
+    Route::post('review',['as'=>'review.store','uses'=>'UserController@storeReview']);
+    Route::post('review/{id}',['as'=>'review.update','uses'=>'UserController@updateReview']);
 
 });
 

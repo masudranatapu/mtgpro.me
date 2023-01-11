@@ -95,6 +95,7 @@ class HomeController extends Controller
                 $data['connect_user_id'] = NULL;
             }
             $data['card_id'] = $card->id;
+            $data['created_at']  = date("Y-m-d H:i:s");
             $data['user_id'] = $card->user_id;
             $connect = DB::table('connects')->insert($data);
             $data['card_id'] = $card->card_id;

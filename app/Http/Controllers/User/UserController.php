@@ -131,7 +131,7 @@ class UserController extends Controller
         ->where('user_id',$user_id)
         ->first();
 
-        return view('desktop.review.review',compact('review'));
+        return view('user.review', compact('review'));
     }
 
     public function storeReview(Request $request)
@@ -142,7 +142,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'display_name' => 'required|string|max:50',
                 'display_title' => 'required|string|max:50',
-                'details' => 'required|string|max:1024',
+                'details' => 'required|string|min:230|max:250',
             ]);
 
             DB::table('reviews')->insert([
@@ -167,7 +167,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'display_name' => 'required|string|max:50',
                 'display_title' => 'required|string|max:50',
-                'details' => 'required|string|max:1024',
+                'details' => 'required|string|min:230|max:250',
             ]);
 
             DB::table('reviews')

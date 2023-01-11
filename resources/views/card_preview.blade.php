@@ -218,10 +218,10 @@
                             <li>
                                 @if ($contact->type=='address')
                                     <a title="" class="text-decoration-none" href="{{'https://www.google.com/maps?q='.$contact->content }}" target="_blank">
-                                @elseif ($contact->type=='email')
-                                    <a class="text-decoration-none" href="mailto:{{$contact->content }}" target="_blank">
-                                @elseif ($contact->type=='phone')
-                                    <a class="text-decoration-none" href="tel:{{$contact->content }}" target="_blank">
+                                @elseif ($contact->type=='mail')
+                                    <a class="text-decoration-none" href="mailto:{{$contact->content }}">
+                                @elseif ($contact->type=='mobile')
+                                    <a class="text-decoration-none" href="tel:{{$contact->content }}">
                                 @elseif ($contact->type=='text')
                                     <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
                                 @elseif ($contact->type=='whatsapp')
