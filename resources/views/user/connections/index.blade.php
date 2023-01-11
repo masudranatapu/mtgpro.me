@@ -80,10 +80,8 @@ if (!empty($daterange)) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class="custome_table table-responsive">
-                            <form action="{{ route('user.connections.bulk-export') }}" method="post"
-                                id="bulk_export_form">
+                            <form action="{{ route('user.connections.bulk-export') }}" method="post" id="bulk_export_form">
                                 @csrf
-
                                 @if (!empty($rows) && count($rows) > 0)
                                     <table class="table " id="connections">
                                         <thead>
@@ -97,7 +95,7 @@ if (!empty($daterange)) {
                                                 </th>
                                                 <th>{{ _('Connected with') }}</th>
                                                 <th>{{ _('Date') }}</th>
-                                                <th>{{ _('Export') }}</th>
+                                                <th>{{ _('Action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
