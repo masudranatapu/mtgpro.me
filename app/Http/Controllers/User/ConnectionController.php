@@ -182,9 +182,7 @@ class ConnectionController extends Controller
         {
             $connect_id = $request->connect_id;
             $fileName   = 'contacts.csv';
-            $connects = DB::table('connects')
-            ->whereIn('id',$connect_id)
-            ->get();
+            $connects = DB::table('connects')->whereIn('id',$connect_id)->get();
                 $headers = array(
                     "Content-type"        => "text/csv",
                     "Content-Disposition" => "attachment; filename=$fileName",
@@ -203,13 +201,10 @@ class ConnectionController extends Controller
                         $row['Title']  = $connect->title;
                         $row['Image']  = $connect->profile_image;
                         $row['Company Name']  = $connect->company_name;
-
                         fputcsv($file, array($row['Name'], $row['Email'], $row['Phone'], $row['Title'], $row['Image'], $row['Company Name']));
                     }
-
                     fclose($file);
                 };
-
             return response()->stream($callback, 200, $headers);
         }
 

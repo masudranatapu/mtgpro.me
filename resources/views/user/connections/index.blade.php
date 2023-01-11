@@ -50,7 +50,7 @@ if(!empty($daterange)){
                             {{ __('Export') }}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="exportBtn">
-                            <a class="dropdown-item" href="{{ route('user.connections.export') }}">{{ _('Export to csv') }}</a>
+                            <a class="dropdown-item export_csv" href="javascript:void(0)">{{ _('Export to csv') }}</a>
                         </div>
                     </div>
 
@@ -65,7 +65,8 @@ if(!empty($daterange)){
             <div class="row">
                 <div class="col-md-12">
                     <div class="custome_table table-responsive">
-                        <form action="" method="post" id="bulk_export_form">
+                        <form action="{{ route('user.connections.bulk-export') }}" method="post" id="bulk_export_form">
+                            @csrf
 
                         @if (!empty($rows) && count($rows) > 0)
                         <table class="table " id="connections">
@@ -73,7 +74,7 @@ if(!empty($daterange)){
                                 <tr>
                                     <th class="text-left">
                                         <label for="select_all" class="mr-3 select_checkbox">
-                                            <input type="checkbox" id="select_all" name="select_all">
+                                            <input type="checkbox" id="select_all">
                                             {{ _('Select All') }}
                                         </label>
                                         {{ _('Connection') }}
@@ -205,6 +206,38 @@ if(!empty($daterange)){
         }
     });
 });
-bulk_export_form
+
+        $(".export_csv").click(function (event) {
+            $("#bulk_export_form").submit();
+
+        });
+
+    $(document).on('submit', "#bulk_export_form", function (e) {
+            e.preventDefault();
+            var form = $("#bulk_export_form");
+            $.ajax({
+                type: 'post',
+                data: form.serialize(),
+                url: form.attr('action'),
+                async: true,
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
+                success: function (response) {
+                    if (response.status == 1) {
+                        toastr.success(response.message);
+                        $('#bulk_export_form')[0].reset();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    toastr.error('Something wrong');
+                },
+                complete: function (response) {
+                    $("body").css("cursor", "default");
+                }
+            });
+        });
 </script>
 @endpush
