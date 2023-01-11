@@ -41,7 +41,7 @@ class BusinessCard extends Model
     public function getView($request,$id){
         return $this->select('business_cards.*','users.plan_details')
         ->leftJoin('users','users.id','=','business_cards.user_id')
-        ->where('business_cards.status',1)
+        // ->where('business_cards.status',1)
         ->where('business_cards.id',$id)
         ->where('business_cards.user_id',Auth::user()->id)->first();
     }
