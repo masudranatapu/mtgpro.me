@@ -131,7 +131,7 @@ class UserController extends Controller
         ->where('user_id',$user_id)
         ->first();
 
-        return view('desktop.review.review',compact('review'));
+        return view('user.review', compact('review'));
     }
 
     public function storeReview(Request $request)
