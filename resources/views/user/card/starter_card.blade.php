@@ -20,12 +20,18 @@
          .loading-spinner.active {
          display: inline-block;
          }
+         .preview_logo_div .slim {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
       </style>
       <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
       <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
       {{-- <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script> --}}
-      <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
+      {{-- <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script> --}}
    </head>
    <?php
       $tabIndex = 1;
@@ -121,16 +127,16 @@
                                     <div class="col-sm-8 col-lg-12 col-xl-8">
                                        <div class="text-center">
                                           <div class="upload_photo">
-                                             <label for="photo" class="preview_logo_div">
-                                             <img id="preview" src="{{ asset('assets/img/default.png') }}" alt="preview image">
-                                             </label>
+                                             <div class="preview_logo_div">
+                                                <input type="file" name="photo" id="photo">
+                                             {{-- <img id="preview" src="{{ asset('assets/img/default.png') }}" alt="preview image"> --}}
+                                             </div>
                                           </div>
                                           <div class="upload_photo_text">
                                              <p>{{ __('Make your card more personalized by adding a profile picture') }}</p>
                                              {{-- <input type="file" class="d-none" onchange="loadFile(event)" name="photo" id="photo" required tabindex="{{ $tabIndex++ }}"> --}}
-                                             <input type="file" class="d-none" name="photo" id="photo" tabindex="{{ $tabIndex++ }}">
-                                             <label for="photo">{{ __('Upload photo') }}</label>
-                                             <div class="invalid-feedback">{{ __('Select your profile photo') }}</div>
+                                             {{-- <label for="photo">{{ __('Upload photo') }}</label>
+                                             <div class="invalid-feedback">{{ __('Select your profile photo') }}</div> --}}
                                           </div>
                                        </div>
                                     </div>
@@ -264,29 +270,8 @@
             </div>
          </div>
       </div>
-      <div id="uploadAvatarModal" class="modal" role="dialog" data-keyboard="false" data-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-               <div class="modal-body">
-                  <div class="row">
-                     <div class="col-md-12 text-center">
-                        <div id="logo_demo" style="margin-top:30px"></div>
-                     </div>
-                  </div>
-               </div>
-               <div class="modal-footer">
-                  <button class="btn btn-success crop_logo">
-                  <i class="loading-spinner logo-crop-spinner fa-lg fas fa-spinner fa-spin"></i>
-                  <span class="btn-txt">{{ __('Crop & Upload logo') }}</span>
-                  </button>
-                  <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">{{ __('Close')}}</button>
-               </div>
-            </div>
-         </div>
-      </div>
       <script src="{{asset('assets/js/toastr.js')}}"></script>
       <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
-
       <script>
          $.ajaxSetup({
              headers: {
@@ -459,8 +444,8 @@
              var cropper = new Slim(document.getElementById('photo'), {
                 ratio: '1:1',
                 minSize: {
-                    width: 150,
-                    height: 150,
+                    width: 20,
+                    height: 20,
                 },
                 size: {
                     width: 600,
@@ -474,9 +459,9 @@
                 meta: {
                     viewid:1
             },
-                download: true,
+                download: false,
                 instantEdit: true,
-                // label: 'Upload: Click here or drag an image file onto it',
+                label: 'Click here or drag an image onto it',
                 // buttonConfirmLabel: 'Crop',
                 // buttonConfirmTitle: 'Crop',
                 // buttonCancelLabel: 'Cancel',
@@ -486,40 +471,9 @@
                 // buttonDownloadTitle: 'Download',
                 // buttonRotateTitle: 'Rotate',
                 // buttonUploadTitle: 'Upload',
-                // statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
+                statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
             });
 
-
-        // $(document).on('submit', "#cerate-first-card", function (e) {
-        // // $(document).on('click', "#btnFinish", function (e) {
-        //     e.preventDefault();
-        //     // validateAllSteps();
-        //     var form = $("#cerate-first-card");
-        //     $.ajax({
-        //         type: 'post',
-        //         data: form.serialize(),
-        //         url: form.attr('action'),
-        //         async: true,
-        //         beforeSend: function () {
-        //             $("body").css("cursor", "progress");
-        //         },
-        //         success: function (response) {
-        //             if (response.status == 1) {
-        //                 toastr.success(response.message);
-        //                 $('#cerate-first-card')[0].reset();
-        //                 // location.href = "https://www.w3schools.com";
-        //             } else {
-        //                 toastr.error(response.message);
-        //             }
-        //         },
-        //         error: function (jqXHR, exception) {
-        //             toastr.error('Something wrong');
-        //         },
-        //         complete: function (response) {
-        //             $("body").css("cursor", "default");
-        //         }
-        //     });
-        // });
       </script>
       {!! Toastr::message() !!}
       <script>
