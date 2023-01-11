@@ -1,12 +1,22 @@
 @extends('user.layouts.app')
 @section('title') {{ __('My Connections') }}  @endsection
 @push('custom_css')
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
 </style>
 @endpush
 <?php
 $rows = $data ?? [];
 $tabindex  = 1;
+$form_date ='';
+$to_date ='';
+$daterange           = request()->get('daterange') ?? '';
+if(!empty($daterange)){
+    $date = explode(" - ",$daterange);
+    $form_date = trim($date[0]);
+    $to_date = trim($date[1]);
+}
+
 ?>
 @section('connections','active')
 @section('content')
@@ -16,6 +26,27 @@ $tabindex  = 1;
             <div class="row mb-2">
                 <div class="col-sm-4">
                     <h1 class="m-0">{{ __('Connections') }}</h1>
+                </div>
+                <div class="col-md-8">
+                    <a href="{{ route('user.connections') }}" class="btn btn-default">{{ __('Refresh') }}</a>
+                        <form action="{{ route('user.connections') }}" method="get" class="form-inline">
+                            @csrf
+                            <div class="mb-3">
+                                <input type="tel" name="search" id="search" value="" class="form-control @error('search') is-invalid @enderror" placeholder="{{ __('Search name, email,company') }}" tabindex="{{$tabindex++}}">
+                                @if($errors->has('search'))
+                                <span class="help-block text-danger">{{ $errors->first('search') }}</span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="daterange" id="daterangepicker" value="YYYY-MM-DD - YYYY-MM-DD" class="form-control @error('daterange') is-invalid @enderror" placeholder="{{ __('Job Title') }}" tabindex="{{$tabindex++}}">
+                                @if($errors->has('daterange'))
+                                <span class="help-block text-danger">{{ $errors->first('daterange') }}</span>
+                                @endif
+                            </div>
+                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                    </form>
+                    <a href="{{ route('user.connections') }}" class="btn btn-default">{{ __('Export') }}</a>
+
                 </div>
             </div>
         </div>
@@ -97,6 +128,39 @@ $tabindex  = 1;
 @endif
 @endsection
 @push('custom_js')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
+        $(function() {
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+        function cb(start, end) {
+            $('#daterangepicker span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+        }
+        $('#daterangepicker').daterangepicker({
+            autoUpdateInput: false,
+            startDate: start,
+            endDate: end,
+            ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+        }, cb);
+        cb(start, end);
+
+        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+             $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            });
+
+            $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+    });
+
 </script>
 @endpush

@@ -14,12 +14,12 @@
 		background: #fff !important;
 		border-color: #EEE;
 	}
- 	.card-body p {
+   #invoice .card-body p {
     	font-size: 18px;
     	font-weight: 600;
     	color: #000000;
 	}
-	.card-body h4, .card-body p{
+	#invoice .card-body h4, #invoice .card-body p{
 	    font-size: 15px;
 	}
 
@@ -30,11 +30,11 @@ address {
     font-size: 15px;
     color: #555;
 }
-.card-body h1 {
+#invoice .card-body h1 {
     font-size: 22px;
     font-weight: 400;
 }
-.card-body td.title {
+#invoice .card-body td.title {
     font-size: 14px;
     font-weight: 500;
     color: #000;
@@ -80,41 +80,37 @@ $invoice_details = json_decode($row->invoice_details);
                                         <div class="col-6">
                                             <p class="h3">{{ $settings->site_name }}</p>
                                             <address>
-                                                {{ $invoice_details->from_billing_name }}<br>
-                                                {{ $invoice_details->from_billing_address }}
-                                                <br>
-                                            {{ $invoice_details->from_billing_city }},
-                                            {{ $invoice_details->from_billing_state }}
-                                            <br>
-                                            {{ $invoice_details->from_billing_country }},
-                                            {{ $invoice_details->from_billing_zipcode }}
-                                                <br>
-                                                {{ $invoice_details->from_billing_email }}
+                                               <span class="d-block">{{ $invoice_details->from_billing_name }}</span>
+                                               <span class="d-block"> {{ $invoice_details->from_billing_address }}</span>
+                                                <span class="d-block">
+                                                    {{ $invoice_details->from_billing_city }},
+                                                    {{ $invoice_details->from_billing_state }}
+                                                </span>
 
-                                                <br>
-                                                {{ $invoice_details->from_billing_phone }}
-                                                <br>
-                                                <br>
-                                                <p>Tax Number: {{ $invoice_details->from_vat_number }}</p>
+                                            <span class="d-block">
+                                                {{ $invoice_details->from_billing_country }},
+                                                {{ $invoice_details->from_billing_zipcode }}
+                                            </span>
+                                                <span class="d-block"> {{ $invoice_details->from_billing_email }}</span>
+                                                <span class="d-block"> {{ $invoice_details->from_billing_phone }}</span>
+                                                <span class="d-block">Tax Number: {{ $invoice_details->from_vat_number }}</span>
                                             </address>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <p class="h3"> {{ $invoice_details->to_billing_name }}</p>
+                                            <span class="h3"> {{ $invoice_details->to_billing_name }}</span>
                                             <address>
-                                            {{ $invoice_details->to_billing_address }}
-                                            <br>
-                                            {{ $invoice_details->to_billing_city }}
-                                            {{ $invoice_details->to_billing_state }}
-                                            <br>
+                                                {{ $invoice_details->to_billing_address }}
+                                            <span class="d-block">
+                                                {{ $invoice_details->to_billing_city }}
+                                                {{ $invoice_details->to_billing_state }}
+                                            </span>
+                                            <span class="d-block">
+                                                {{ $invoice_details->to_billing_country }}
+                                                {{ $invoice_details->to_billing_zipcode }}
+                                            </span>
 
-                                            {{ $invoice_details->to_billing_country }}
-                                            {{ $invoice_details->to_billing_zipcode }}
-
-                                                <br>
-                                                {{ $invoice_details->to_billing_email }}
-                                                <br>
-                                                {{ $invoice_details->to_billing_phone }}
-                                                <br>
+                                            <span class="d-block">{{ $invoice_details->to_billing_email }}</span>
+                                                <span class="d-block">{{ $invoice_details->to_billing_phone }}</span>
                                             </address>
                                             <h4>INVOICE DATE : {{date('d-m-Y H:i A', strtotime( $row->transaction_date))}}</h4>
                                         </div>
