@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Stripe\Terminal\Location;
+
 use Laravel\Sanctum\HasApiTokens;
+use Stevebauman\Location\Facades\Location;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -112,8 +113,8 @@ class User extends Authenticatable
 
     public function getLocation(){
         // $ip = '103.103.35.202'; //Dynamic IP address get
-          $ip = $this->getIp();
-         $data = Location::get($ip);
+            $ip = $this->getIp();
+            $data = Location::get($ip);
          return $data;
      }
 
