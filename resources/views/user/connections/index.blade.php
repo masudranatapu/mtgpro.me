@@ -246,6 +246,10 @@ if (!empty($daterange)) {
 
         $(document).on('submit', "#bulk_export_form", function(e) {
             e.preventDefault();
+            if($('.connect_id:checkbox:checked').length == 0){
+                toastr.error('Select connect to export to csv','','positionclass = "toast-top-center"');
+                return false;
+            }
             var form = $("#bulk_export_form");
             $.ajax({
                 type: 'post',
@@ -261,7 +265,7 @@ if (!empty($daterange)) {
                         $('#bulk_export_form')[0].reset();
                         window.location.href = response.redirect_url;
                     } else {
-                        // toastr.error(response.msg);
+                        toastr.error(response.msg);
                     }
                 },
                 error: function(jqXHR, exception) {
