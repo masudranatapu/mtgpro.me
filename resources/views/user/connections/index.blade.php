@@ -16,7 +16,6 @@ if(!empty($daterange)){
     $form_date = trim($date[0]);
     $to_date = trim($date[1]);
 }
-
 ?>
 @section('connections','active')
 @section('content')
@@ -38,14 +37,24 @@ if(!empty($daterange)){
                                 @endif
                             </div>
                             <div class="mb-3">
-                                <input type="text" name="daterange" id="daterangepicker" value="YYYY-MM-DD - YYYY-MM-DD" class="form-control @error('daterange') is-invalid @enderror" placeholder="{{ __('Job Title') }}" tabindex="{{$tabindex++}}">
+                                <input type="text" name="daterange" id="daterangepicker" value="" class="form-control @error('daterange') is-invalid @enderror" placeholder="{{ __('YYYY-MM-DD - YYYY-MM-DD') }}" tabindex="{{$tabindex++}}">
                                 @if($errors->has('daterange'))
                                 <span class="help-block text-danger">{{ $errors->first('daterange') }}</span>
                                 @endif
                             </div>
-                        <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
                     </form>
-                    <a href="{{ route('user.connections') }}" class="btn btn-default">{{ __('Export') }}</a>
+                    <div class="btn-group" role="group">
+                        <button id="exportBtn" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ asset('assets/img/icon/export.svg') }}" alt="">
+                            {{ __('Export') }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="exportBtn">
+                            <a class="dropdown-item" href="{{ route('user.connections.export') }}">{{ _('Export to csv') }}</a>
+                        </div>
+                    </div>
+
+
 
                 </div>
             </div>
@@ -56,6 +65,9 @@ if(!empty($daterange)){
             <div class="row">
                 <div class="col-md-12">
                     <div class="custome_table table-responsive">
+                        <form action="" method="post" id="bulk_export_form">
+
+                        </form>
                         @if (!empty($rows) && count($rows) > 0)
                         <table class="table " id="connections">
                             <thead>
@@ -77,7 +89,7 @@ if(!empty($daterange)){
                                     <tr>
                                         <td class="text-left align-items-center">
                                             <div class="check-primary d-inline float-left mt-3 mr-3">
-                                                <input type="checkbox" id="radioPrimary1" name="select_all" class="form-control" value="{{ $row->id }}">
+                                                <input type="checkbox" id="radioPrimary1" name="connect_id[]" class="form-control connect_id" value="{{ $row->id }}">
                                                 <label for="radioPrimary1"></label>
                                             </div>
                                             <div class="d-inline float-left">
@@ -102,7 +114,7 @@ if(!empty($daterange)){
                                                 <img src="{{ asset('assets/img/icon/tripledot.svg') }}" alt="{{ _('Export') }}">
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item" href="#">{{ _('Export to csv') }}</a>
+                                                    {{-- <a class="dropdown-item" href="#">{{ _('Export to csv') }}</a> --}}
                                                     <a class="dropdown-item" href="{{ route('user.connections.details',[$row->email,$row->id]) }}">{{ _('View Connection') }}</a>
                                                     <a class="dropdown-item" href="{{ route('user.connections.download',$row->id) }}">{{ _('Save as contact') }}</a>
                                                     <a class="dropdown-item" href="javascript::void(0)" data-toggle="modal" data-target="#connectMail">{{ _('Send mail') }}</a>
@@ -162,5 +174,37 @@ if(!empty($daterange)){
 
     });
 
+    $(document).ready(function() {
+    $("#select_all").change(function() {
+        if (this.checked) {
+            $(".connect_id").each(function() {
+                this.checked=true;
+            });
+        } else {
+            $(".connect_id").each(function() {
+                this.checked=false;
+            });
+        }
+    });
+
+    $(".connect_id").click(function () {
+        if ($(this).is(":checked")) {
+            var isAllChecked = 0;
+
+            $(".connect_id").each(function() {
+                if (!this.checked)
+                    isAllChecked = 1;
+            });
+
+            if (isAllChecked == 0) {
+                $("#select_all").prop("checked", true);
+            }
+        }
+        else {
+            $("#select_all").prop("checked", false);
+        }
+    });
+});
+bulk_export_form
 </script>
 @endpush
