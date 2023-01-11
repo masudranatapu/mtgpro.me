@@ -297,6 +297,11 @@ $(document).on('click', '.onclickIcon' ,function() {
     }else{
         ftitle = title;
     }
+    if(type != 'link'){
+        $('.content_input').addClass('remove_slash');
+    }else{
+        $('.content_input').removeClass('remove_slash');
+    }
     $('#content_link').text(ftitle);
     $("input[name='content']").attr('placeholder',ftitle);
 
@@ -311,7 +316,13 @@ $(document).on('click', '.onclickIcon' ,function() {
 //     $('#card_url').val(value);
 // })
 
+$(document).on('input','.remove_slash',function(){
+    var str = $(this).val();
+    var newstr = str.replace(/(\\|\/)+/ig, '');
+    var newstr = newstr.replace('www.', '');
+    $(this).val(newstr);
 
+})
 
 $(document).on('input','#card_url', function() {
     var get_url = $('#base_url').val();
