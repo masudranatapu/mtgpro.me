@@ -366,9 +366,13 @@ class CardController extends Controller
         $fields->created_at = date('Y-m-d H:i:s');
         $fields->save();
         $user = User::where('id',Auth::id())->first();
+
         if($user->name == null){
-            User::where('id',Auth::id())->update(['name' => $request->name]);
+            $user->name = $request->name;
         }
+        $user->active_card_id = $card->id;
+        $user->update();
+
         $card = $this->businessCard->getView($request,$card->id);
         // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
         } catch (\Exception $e) {

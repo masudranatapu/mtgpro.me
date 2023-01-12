@@ -38,6 +38,13 @@
                                     @endif
                                 </div>
                                 <div class="mb-3">
+                                    <label for="username" class="form-label">{{ __('Username') }}</label>
+                                    <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" tabindex="2" placeholder="{{ __('Username') }}" required>
+                                    @if($errors->has('username'))
+                                    <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                                    @endif
+                                </div>
+                                <div class="mb-3">
                                     <label for="password" class="form-label">{{ __('Password') }}</label>
                                     <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" tabindex="3" placeholder="{{ __('Password') }}" required>
                                     @if($errors->has('password'))
@@ -65,3 +72,5 @@
         </div>
     </div>
 @endsection
+
+

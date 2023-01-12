@@ -311,10 +311,6 @@ $(document).on('click', '.onclickIcon' ,function() {
     $('.second_modal').removeClass('d-none');
 });
 
-// $(document).on('input','#card_url', function() {
-//     var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
-//     $('#card_url').val(value);
-// })
 
 // $(document).on('input','.remove_slash',function(){
 //     var str = $(this).val();

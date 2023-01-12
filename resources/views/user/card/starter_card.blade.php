@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
+    <?php
+        $settings  = getSetting();
+    ?>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Starter Card</title>
+      <title>{{ $settings->site_name }}</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
       <link rel="stylesheet" href="{{ asset('assets/css/smart_wizard.css') }}">
       <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
@@ -11,6 +14,7 @@
       <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css') }}">
       <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css') }}">
       {{-- <link rel="stylesheet" href="{{ asset('assets/css/croppie.css') }}" /> --}}
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
 
       <style>
@@ -86,7 +90,7 @@
                                        </div>
                                        <div class="form-group">
                                           <label for="phone_number" class="form-label">{{ __('Phone Number') }}</label>
-                                          <input type="number" name="phone_number" id="phone_number" value="{{ Auth::user()->billing_phone }}" class="form-control cin @error('phone_number') is-invalid @enderror" data-preview="preview_phone_number" placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabIndex++ }}">
+                                          <input type="number" name="phone_number" id="phone_number" value="{{ Auth::user()->billing_phone }}" class="form-control cin @error('phone_number') is-invalid @enderror" data-preview="preview_phone_number" placeholder="{{ __('ex:+15162973389') }}" required tabindex="{{ $tabIndex++ }}">
                                           <div class="invalid-feedback">{{ __('Enter your phone number') }}</div>
                                           @if($errors->has('phone_number'))
                                           <span class="help-block text-danger">{{ $errors->first('phone_number') }}</span>
