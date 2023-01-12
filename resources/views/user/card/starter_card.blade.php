@@ -35,7 +35,7 @@
       <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <script type="text/javascript" src="{{ asset('assets/js/smartWizard.min.js') }}"></script>
       {{-- <script type="text/javascript" src="{{ asset('assets/js/croppie.js') }}"></script> --}}
-      {{-- <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script> --}}
+      <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
    </head>
    <?php
       $tabIndex = 1;

@@ -6,17 +6,27 @@ use App\User;
 use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Plan;
-use App\BusinessCard;
 use Stripe\StripeClient;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
-use Brian2694\Toastr\Facades\Toastr;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
 
 class StripeController extends Controller
 {
+
+    protected $businesscard;
+
+    public function __construct(
+        BusinessCard $businesscard
+        )
+    {
+        $this->businesscard  = $businesscard;
+    }
+
 
     public function webhook()
     {
@@ -25,7 +35,8 @@ class StripeController extends Controller
 
     public function stripeCheckout(Request $request)
     {
-        // dd($request->all());is_yearly
+
+        // dd($request->all());
         try {
             $planId = $request->plan_id;
             $config = DB::table('config')->get();
@@ -50,13 +61,13 @@ class StripeController extends Controller
                     ]);
                     $customer_id = $stripe_customer->id;
 
-                    //Create new Subscription
-                    $subscription = $stripe->subscriptions->create([
-                        'customer' => $customer_id,
-                        'items' => [[
-                            'price' => $price_id,
-                        ]],
-                    ]);
+                    // //Create new Subscription
+                    // $subscription = $stripe->subscriptions->create([
+                    //     'customer' => $customer_id,
+                    //     'items' => [[
+                    //         'price' => $price_id,
+                    //     ]],
+                    // ]);
 
                 } else {
                     //Find Existing Customer
@@ -65,47 +76,58 @@ class StripeController extends Controller
                         []
                     );
                     $customer_id = $stripe_customer->id;
-                    $exiating_subscription = json_decode($userData->stripe_data);
+                    // $exiating_subscription = json_decode($userData->stripe_data);
                     //Update existing subscription
-                    $subscription = $stripe->subscriptions->retrieve($exiating_subscription->id);
-                    if($request->is_yearly==1){
-                        $price_id = $plan_details->stripe_plan_id_yearly;
+                    // $subscription = $stripe->subscriptions->retrieve($exiating_subscription->id);
+                    //Unsubscription Stripe
+                    $payment_data = json_decode($userData->stripe_data);
+                    if(!empty($payment_data)){
+                        $stripe->subscriptions->cancel(
+                            $payment_data->id,
+                            []
+                          );
                     }
-                    else{
-                        $price_id = $plan_details->stripe_plan_id;
-                    }
-
+                    // $_subscription = \Stripe\Subscription::retrieve($payment_data->id);
+                    // $_subscription->cancel();
+                    // $stripe = $stripe->subscriptions->cancel(
+                    //     $payment_data->id,
+                    //     []
+                    //   );
                     // $stripe->plans->retrieve(
                     //     'price_1MPLF0BIRmXVjgUGWPX9RAyt',
                     //     []
                     //   );
 
-
-                    $stripe->subscriptions->update(
-                    $subscription->id,
-                    [
-                        'cancel_at_period_end' => false,
-                        'proration_behavior' => 'create_prorations',
-                        'items' => [
-                        [
-                            'id' => $subscription->items->data[0]->id,
-                            'price' => $price_id,
-                        ],
-                        ],
-                    ]
-                    );
-
-
+                    // $stripe->subscriptions->update(
+                    // $subscription->id,
+                    // [
+                    //     'cancel_at_period_end' => false,
+                    //     'proration_behavior' => 'create_prorations',
+                    //     'items' => [
+                    //     [
+                    //         'id' => $subscription->items->data[0]->id,
+                    //         'price' => $price_id,
+                    //     ],
+                    //     ],
+                    // ]
+                    // );
                 }
 
-                //Unsubscription Stripe
-                // $payment_data = json_decode($user->stripe_data);
-                // $stripe = new \Stripe\StripeClient($config[10]->config_value);
-                // $stripe = $stripe->subscriptions->cancel(
-                //     $payment_data->id,
-                //     []
-                //   );
+                if($request->is_yearly==1){
+                    $price_id = $plan_details->stripe_plan_id_yearly;
+                }
+                else{
+                    $price_id = $plan_details->stripe_plan_id;
+                }
 
+                 //Create new Subscription
+                 $subscription = $stripe->subscriptions->create([
+                    'customer' => $customer_id,
+                    'items' => [[
+                        'price' => $price_id,
+                    ]],
+                ]);
+                // dd($subscription);
                 $activation_date = Carbon::parse($subscription->current_period_start)->format('Y-m-d H:i:s');
                 if($request->is_yearly==1){
                     $plan_price = $plan_details->plan_price_yearly;
@@ -181,6 +203,7 @@ class StripeController extends Controller
                     'billing_phone'         => $request->billing_phone,
                     'billing_email'         => $request->billing_email,
                 ]);
+                $this->businesscard->updateDataByCuurentPlan($plan_details->id);
             } catch (Exception $error) {
                 Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back();
@@ -190,6 +213,7 @@ class StripeController extends Controller
             return redirect()->route('user.invoice',$transaction->invoice_number);
 
     }
+
 
 
 

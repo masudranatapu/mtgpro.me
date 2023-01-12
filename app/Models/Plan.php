@@ -13,9 +13,17 @@ class Plan extends Model
     protected $fillable = [
         'shareable'
     ];
+
+
     public function getPlanList($request, int $per_page = 20){
         $data = $this->where('status',1)->orderBy('id','ASC')->paginate($per_page);
         return $this->formatResponse(true, '', 'user.plans', $data);
     }
+
+
+
+
+
+
 
 }
