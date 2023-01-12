@@ -66,6 +66,7 @@ class CheckoutController extends Controller
                     $payment_data->id,
                     []
                   );
+                  $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => 0,
@@ -78,6 +79,7 @@ class CheckoutController extends Controller
                 ]);
                 return redirect()->route('user.plans');
             }elseif($plan->is_free==1){
+                $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => 0,
