@@ -280,7 +280,7 @@
                             <div class="item review_wrap text-center" data-aos="zoom-in">
                                 <div class="review_item">
                                     <span class="icon"><i class="fa fa-quote-left"></i></span>
-                                    <p>{{ __($review->details) }}</p>
+                                    <p style="min-height: 130px">{{ __($review->details) }}</p>
                                 </div>
                                 <div class="review_user">
                                     <img src="@if($review->user->profile_image) {{ asset($review->user->profile_image) }} @else {{ asset('assets/img/default-profile.png') }} @endif" alt="image">

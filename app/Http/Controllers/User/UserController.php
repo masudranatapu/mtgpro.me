@@ -124,53 +124,51 @@ class UserController extends Controller
     }
 
     public function getReview(){
+
         $user_id = Auth::id();
         $review = DB::table('reviews')
-        ->select('reviews.*','users.name as user_name','users.profile_image as user_image')
-        ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
-        ->where('user_id',$user_id)
-        ->first();
+                ->select('reviews.*','users.name as user_name','users.profile_image as user_image')
+                ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
+                ->where('user_id',$user_id)
+                ->first();
 
         return view('user.review', compact('review'));
+
     }
 
     public function storeReview(Request $request)
     {
-        //  dd($request->all());
+        $this->validate($request, [
+            'display_name' => 'required|string|max:50',
+            'display_title' => 'required|string|max:50',
+            'details' => 'required|string|min:10|max:250',
+        ]);
 
+        DB::table('reviews')->insert([
+            'user_id' => Auth::user()->id,
+            'order_id' => 0,
+            'display_title' => $request->display_title,
+            'display_name' => $request->display_name,
+            'details' => $request->details,
+            'status' => 0,
+            'created_at' => Carbon::now(),
+            'created_by' => Auth::user()->id,
+        ]);
 
-            $this->validate($request, [
-                'display_name' => 'required|string|max:50',
-                'display_title' => 'required|string|max:50',
-                'details' => 'required|string|min:230|max:250',
-            ]);
-
-            DB::table('reviews')->insert([
-                'user_id' => Auth::user()->id,
-                'order_id' => 0,
-                'display_title' => $request->display_title,
-                'display_name' => $request->display_name,
-                'details' => $request->details,
-                'status' => 0,
-                'created_at' => Carbon::now(),
-                'created_by' => Auth::user()->id,
-            ]);
-
-            Toastr::success('Review submitted successfully:-)','Success');
-            return redirect()->back();
-
+        Toastr::success('Review submitted successfully:-)','Success');
+        return redirect()->back();
 
     }
+
     public function updateReview(Request $request,$id)
     {
+        $this->validate($request, [
+            'display_name' => 'required|string|max:50',
+            'display_title' => 'required|string|max:50',
+            'details' => 'required|string|min:10|max:250',
+        ]);
 
-            $this->validate($request, [
-                'display_name' => 'required|string|max:50',
-                'display_title' => 'required|string|max:50',
-                'details' => 'required|string|min:230|max:250',
-            ]);
-
-            DB::table('reviews')
+        DB::table('reviews')
             ->where('id',$id)
             ->update([
                 'order_id' => 0,
@@ -179,11 +177,11 @@ class UserController extends Controller
                 'details' => $request->details,
                 'status' => 0,
             ]);
-            Toastr::success('Review Updated successfully:-)','Success');
-            return redirect()->back();
+
+        Toastr::success('Review Updated successfully:-)','Success');
+        return redirect()->back();
+
     }
-
-
 
     public function changeEmail(Request $request)
     {
