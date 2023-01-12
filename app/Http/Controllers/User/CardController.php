@@ -336,22 +336,21 @@ class CardController extends Controller
         $card->save();
 
         if(!empty($request->phone_number)){
-            $mobile_icon =  DB::table('social_icon')->where('icon_name','mobile')->first();
-            $fields = new BusinessField();
-            $fields->card_id = $card->id;
-            $fields->type = 'mobile';
-            $fields->icon = $mobile_icon->icon_name;
-            $fields->icon_image = $mobile_icon->icon_image;
-            $fields->icon_id = $mobile_icon->id;
-            $fields->label = $mobile_icon->icon_title;
-            $fields->content = $request->phone_number;
-            $fields->position = 1;
-            $fields->status = 1;
-            $fields->created_at = date('Y-m-d H:i:s');
-            $fields->save();
-
+            $mobile_icon =  DB::table('social_icon')->where('icon_name','phone')->first();
+            // dd($mobile_icon);
+            $_icon = new BusinessField();
+            $_icon->card_id = $card->id;
+            $_icon->type = 'mobile';
+            $_icon->icon = $mobile_icon->icon_name;
+            $_icon->icon_image = $mobile_icon->icon_image;
+            $_icon->icon_id = $mobile_icon->id;
+            $_icon->label = $mobile_icon->icon_title;
+            $_icon->content = $request->phone_number;
+            $_icon->position = 1;
+            $_icon->status = 1;
+            $_icon->created_at = date('Y-m-d H:i:s');
+            $_icon->save();
         }
-
 
         $email_icon =  DB::table('social_icon')->where('icon_name','email')->first();
         $fields = new BusinessField();
