@@ -34,6 +34,7 @@ class AuthController extends Controller
             $user                       = new User();
             $user->name                 = trim($request->name);
             $user->email                = trim($request->email);
+            $user->username                = trim($request->username);
             $user->password             = bcrypt($request->password);
             $user->gender               = NULL;
             $user->dob                  = NULL;
@@ -134,6 +135,7 @@ class AuthController extends Controller
                     $user              = new User;
                     $user->name        = $data->name;
                     $user->email       = $data->email;
+                    $user->username    = $data->username ??  trim($data->name);
                     $user->profile_image = $data->avatar;
                     $user->provider    = $provider;
                     $user->social_id   = $data->id;

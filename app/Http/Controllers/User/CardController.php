@@ -334,6 +334,7 @@ class CardController extends Controller
             $card->card_for     = 'Work';
             $card->save();
 
+
             if (!empty($request->phone_number)) {
                 $mobile_icon =  DB::table('social_icon')->where('icon_name', 'phone')->first();
                 // dd($mobile_icon);
@@ -364,12 +365,18 @@ class CardController extends Controller
             $fields->status = 1;
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
-            $user = User::where('id', Auth::id())->first();
-            if ($user->name == null) {
-                User::where('id', Auth::id())->update(['name' => $request->name]);
+
+            $user = User::where('id',Auth::id())->first();
+
+            if($user->name == null){
+                $user->name = $request->name;
             }
-            $card = $this->businessCard->getView($request, $card->id);
+            $user->active_card_id = $card->id;
+            $user->update();
+
+            $card = $this->businessCard->getView($request,$card->id);
             // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();

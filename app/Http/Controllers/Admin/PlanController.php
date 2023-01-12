@@ -352,6 +352,8 @@ class PlanController extends Controller
             'product' => $product->id,
         ]);
 
+        // dd($stripe_plan);
+
         if($period == 'month'){
             $plan->stripe_data = json_encode($stripe_plan);
             $plan->stripe_plan_id = $stripe_plan->id;

@@ -168,15 +168,14 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="" class="form-label d-block">{{ __('Payment method')}} <span class="text-danger">*</span></label>
-
+                                            <label for="payment_gateway_id" class="form-label d-block">{{ __('Payment method')}} <span class="text-danger">*</span></label>
                                             @if (!empty($gateways) && count($gateways) > 0)
                                             @foreach ($gateways as $gateway)
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
                                                         <label class="form-selectgroup-item flex-fill">
-                                                            <input type="radio" name="payment_gateway_id" value="{{ $gateway->id }}" class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror">
+                                                            <input type="radio" name="payment_gateway_id" id="payment_gateway_id" value="{{ $gateway->id }}" class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror">
                                                             <div class="form-selectgroup-label d-flex align-items-center p-3">
                                                                 <div class="me-3">
                                                                     <span class="form-selectgroup-check"></span>

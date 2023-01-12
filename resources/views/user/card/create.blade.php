@@ -343,7 +343,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 mb-3">
+                                                    {{-- <div class="col-12 mb-3">
                                                         <div class="form-group">
                                                             <label for=""
                                                                 class="form-label">{{ __('Personal link') }}</label>
@@ -368,7 +368,7 @@
                                                                     class="help-block text-danger">{{ $errors->first('card_url') }}</span>
                                                             @endif
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-12">
                                                         <div class="float-right">
                                                             <button type="submit" class="btn btn-primary save-card">
@@ -547,7 +547,7 @@
                                                         <div class="icon_wrap media position-relative mb-3">
                                                             <div class="icon_info">
                                                                 <img src="{{ getIcon($icon->icon_image) }}"
-                                                                    alt="{{ $icon->icon_title }}">
+                                                                    alt="{{ $icon->icon_title }}" >
                                                                 <span>{{ $icon->icon_title }}</span>
                                                             </div>
                                                             <div class="icon float-right">

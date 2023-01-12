@@ -266,6 +266,11 @@
                                                                 <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                                                                 @endif
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label for="username" class="form-label">{{ __('Username') }} (<a href="{{ route('home') }}/{{ $user->username }}" target="blank">{{ route('home') }}/{{ $user->username }}</a>)</label>
+                                                                <input type="text"  class="form-control" value="{{ $user->username }}" readonly>
+
+                                                            </div>
                                                             <div class="form-group mt-4">
                                                                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                             </div>

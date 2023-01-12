@@ -66,6 +66,11 @@
     <script src="{{asset('assets/js/toastr.js')}}"></script>
     @stack('custom_js')
     <script>
+    $(document).on('input','#username', function() {
+        var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
+        $('#username').val(value);
+    })
+
     // aos animation
     AOS.init({
         once: true,
