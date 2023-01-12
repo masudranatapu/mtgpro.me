@@ -95,7 +95,7 @@ class BusinessCard extends Model
             $card->theme_id     = $request->theme_id ?? 1;
             $card->designation  = $request->designation;
             $card->company_name = $request->company_name;
-            $card->card_url     = $request->card_url;
+            $card->card_url     = $card_id;
             $card->phone_number = $request->phone_number;
             $card->ccode        = $request->ccode;
             $card->card_email   = $request->card_email ?? Auth::user()->email;
@@ -210,11 +210,11 @@ class BusinessCard extends Model
             $card->location     = $request->location;
             $card->bio          = $request->bio;
             $card->sub_title    = $request->sub_title ?? '';
-            $card->theme_color  = $request->bgcolor ?? '#fff';
+            $card->theme_color  = $request->bgcolor ?? null;
             $card->theme_id     = $request->theme_id ?? 1;
             $card->designation  = $request->designation;
             $card->company_name = $request->company_name;
-            $card->card_url     = $request->card_url;
+            // $card->card_url     = $request->card_url;
             $card->phone_number = $request->phone_number;
             $card->ccode        = $request->ccode;
             $card->card_email   = $request->card_email ?? Auth::user()->email;
