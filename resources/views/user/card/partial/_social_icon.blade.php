@@ -6,7 +6,8 @@
             <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
         </div>
         <div class="social_media_name">
-            <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
+            <img style="background: {{ $icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
+
             <span>{{ $icon->label }}</span>
         </div>
     </a>

@@ -167,6 +167,13 @@
             margin-bottom: 4px;
         }
     </style>
+    @if($cardinfo->theme_color)
+        <style>
+            .save_contact a{background: {{ $cardinfo->theme_color }}}
+            .offcanvas_btn a{background: {{ $cardinfo->theme_color }}}
+        </style>
+    @endif
+
 </head>
 
 <body>
@@ -216,6 +223,17 @@
                                 @foreach ($cardinfo->business_card_fields as $contact)
                                     @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->sicon->is_paid == 1)
                                     @else
+
+                                    @php
+                                        if($cardinfo->theme_color == null){
+                                            $icon_color = $contact->sicon->icon_color;
+                                        }else{
+                                            $icon_color = $cardinfo->theme_colo;
+                                        }
+
+                                    @endphp
+
+
                                         <li>
                                             @if ($contact->type == 'address')
                                                 <a title="" class="text-decoration-none"
@@ -245,8 +263,9 @@
                                                                     href="{{ makeUrl($contact->content) }}"
                                                                     target="_blank">
                                             @endif
-                                            <img class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
+                                            <img style="border-radius: 15px; background:{{ $icon_color }}" class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
                                                 alt="{{ $contact->label }}" width="75" height="75">
+
                                             <span>{{ $contact->label }}</span>
                                             </a>
                                         </li>

@@ -289,9 +289,10 @@
                                                                 class="form-label">{{ __('Location') }}</label>
                                                             <input type="text" name="location"
                                                                 class="form-control @error('email') is-invalid @enderror cin"
-                                                                placeholder="{{ __('location') }}" required
+                                                                placeholder="{{ __('location') }}"
                                                                 data-preview="location_show"
-                                                                value="{{ old('location') }}" maxlength="50"
+                                                                value="{{ old('location') }}"
+                                                                maxlength="50"
                                                                 tabindex="{{ $tabindex++ }}">
                                                             @if ($errors->has('location'))
                                                                 <span
@@ -701,7 +702,7 @@
 @push('custom_js')
 <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/card.js') }}?v=1"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
     // drag and drop

@@ -180,7 +180,6 @@ class CardController extends Controller
         return view('user.card.view', compact('card', 'icons', 'shareComponent'));
     }
 
-
     public function postStore(CardRequest $request)
     {
         $validity = checkPackageValidity(Auth::id());
@@ -310,7 +309,7 @@ class CardController extends Controller
             $card->card_id      = uniqid();
             $card->user_id      = Auth::id();
             $card->theme_id     = 1;
-            $card->theme_color  = '#fff';
+            $card->theme_color  = null;
             $card->card_lang    = 'en';
             $card->card_url     = uniqid();
             $card->card_type    = 'vcard';
@@ -420,8 +419,13 @@ class CardController extends Controller
         DB::beginTransaction();
         try {
             $card = BusinessCard::findOrFail($request->id);
-            $card->status = !$card->status;
-            $card->save();
+            // $card->status = !$card->status;
+            // $card->save();
+            BusinessCard::where('id',$request->id)->update(['status'=>1]);
+            BusinessCard::where('id','<>',$request->id)->update(['status'=>0]);
+            User::where('id',$card->user_id)->update(['active_card_id' =>$request->id]);
+
+
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([

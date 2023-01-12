@@ -304,6 +304,7 @@ class BusinessCard extends Model
                 return $this->successResponse(200, $validator->errors()->first(), '', 0);
             }
 
+            $card = BusinessCard::find($request->card_id);
             $icon           = new BusinessField();
             $icon->card_id  = $request->card_id;
             $icon->type     = $social_icon->type;
@@ -348,7 +349,12 @@ class BusinessCard extends Model
                 $icon->icon_image = $social_icon->icon_image;
             }
             $icon->save();
-            $data['html'] = view('user.card.partial._social_icon', compact('icon'))->render();
+            $icon_color = $social_icon->icon_color;
+            if($card->theme_color){
+                $icon_color = $card->theme_color;
+            }
+
+            $data['html'] = view('user.card.partial._social_icon', compact('icon','icon_color'))->render();
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();

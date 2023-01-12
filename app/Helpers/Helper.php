@@ -159,10 +159,10 @@ if (!function_exists('getIcon')) {
             if(file_exists($ppath)){
               return asset($path);
             } else {
-                return asset('assets/img/default-icon.png');
+                return asset('assets/img/default.svg');
            }
         }else{
-            return asset('assets/img/default-icon.png');
+            return asset('assets/img/default.svg');
         }
     }
 }
