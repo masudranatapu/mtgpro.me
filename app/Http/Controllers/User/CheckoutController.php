@@ -15,6 +15,7 @@ use Stripe\StripeClient;
 use Stripe\PaymentIntent;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use PayPal\Api\RedirectUrls;
 use Illuminate\Support\Facades\URL;
@@ -31,8 +32,19 @@ class CheckoutController extends Controller
 {
 
 
-    public function __construct()
+    protected $businesscard;
+
+    public function __construct(
+        BusinessCard $businesscard
+        )
     {
+        $this->businesscard  = $businesscard;
+    }
+
+
+
+    // public function __construct()
+    // {
         /** PayPal api context **/
         // $paypal_configuration = DB::table('config')->get();
         // $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
@@ -43,7 +55,7 @@ class CheckoutController extends Controller
         //     'log.FileName' => storage_path() . '/logs/paypal.log',
         //     'log.LogLevel' => 'DEBUG',
         // ));
-    }
+    // }
 
     public function checkout(Request $request)
     {
@@ -66,6 +78,7 @@ class CheckoutController extends Controller
                     $payment_data->id,
                     []
                   );
+                  $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => 0,
@@ -78,6 +91,7 @@ class CheckoutController extends Controller
                 ]);
                 return redirect()->route('user.plans');
             }elseif($plan->is_free==1){
+                $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => 0,
