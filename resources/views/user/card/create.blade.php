@@ -471,8 +471,9 @@
                                 </div>
                             </div>
                             <div class="view_btn text-center mt-3">
-                                <a href="card-view.html" target="_blank">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                <a href="javascript:void(0)">
+                                    <img src="{{ asset('assets/img/icon/website.svg') }}" alt="WebSite">
+                                    {{-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 2H14V7" stroke="#828282" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round"></path>
@@ -482,8 +483,8 @@
                                             d="M5.5 3H3.5C2.67157 3 2 3.67157 2 4.5V12.5C2 13.3284 2.67157 14 3.5 14H11.5C12.3284 14 13 13.3284 13 12.5V10.5"
                                             stroke="#828282" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round"></path>
-                                    </svg>
-                                    <span>View Card</span>
+                                    </svg> --}}
+                                    <span>{{ __('View Card') }}</span>
                                 </a>
                             </div>
                         </div>
