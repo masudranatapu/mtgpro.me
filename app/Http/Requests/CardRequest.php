@@ -25,7 +25,7 @@ class CardRequest extends FormRequest
     {
         $rules = [
             'card_for'         => 'required|string|max:124',
-            'bgcolor'          => 'required|string|max:25',
+            'bgcolor'          => 'nullable|string|max:25',
             'name'             => 'required|string|max:124',
             'location'         => 'nullable|string|max:124',
             'designation'      => 'required|string|max:124',
