@@ -702,7 +702,7 @@
 @push('custom_js')
 <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/card.js') }}?v=1"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
     // drag and drop
