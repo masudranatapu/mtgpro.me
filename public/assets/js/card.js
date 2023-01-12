@@ -320,6 +320,8 @@ $(document).on('click', '.onclickIcon' ,function() {
 
 // })
 
+//card_url validation
+/*
 $(document).on('input','#card_url', function() {
     var get_url = $('#base_url').val();
     var mode = $('input[name="mode"]').val();
@@ -359,11 +361,9 @@ $(document).on('input','#card_url', function() {
         $("#card_url_help").text('');
     }
 
-
-
 }).keyup();
 
-
+*/
 
 
 
