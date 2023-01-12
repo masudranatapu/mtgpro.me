@@ -60,7 +60,7 @@ class CheckoutController extends Controller
         $term_days = $plan->validity;
         if($plan) {
             if($plan->is_free==1 && !empty($payment_data->id)){
-                //Unsubscription Stribe
+                //Unsubscription Stripe
                 $stripe = new \Stripe\StripeClient($config[10]->config_value);
                 $stripe = $stripe->subscriptions->cancel(
                     $payment_data->id,

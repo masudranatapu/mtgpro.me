@@ -36,71 +36,75 @@ class StripeController extends Controller
                 return redirect()->back();
             }
                 $userData = Auth::user();
+
                 $price_id = $plan_details->stripe_plan_id;
+
                 $stripe = new StripeClient($config[10]->config_value);
+
                 if ($userData->stripe_customer_id == null) {
-                    $customer = $stripe->customers->create([
+                    //Create new stripe customer
+                    $stripe_customer = $stripe->customers->create([
                         'name' => $userData->name,
                         'email' => $userData->email,
                         'source' => $request->stripeToken
                     ]);
+                    $customer_id = $stripe_customer->id;
 
-                    $customer_id = $customer->id;
+                    //Create new Subscription
+                    $subscription = $stripe->subscriptions->create([
+                        'customer' => $customer_id,
+                        'items' => [[
+                            'price' => $price_id,
+                        ]],
+                    ]);
+
                 } else {
-                    $customer_id = $userData->stripe_customer_id;
+                    //Find Existing Customer
+                    $stripe_customer = $stripe->customers->retrieve(
+                        $userData->stripe_customer_id,
+                        []
+                    );
+                    $customer_id = $stripe_customer->id;
+                    $exiating_subscription = json_decode($userData->stripe_data);
+                    //Update existing subscription
+                    $subscription = $stripe->subscriptions->retrieve($exiating_subscription->id);
+                    if($request->is_yearly==1){
+                        $price_id = $plan_details->stripe_plan_id_yearly;
+                    }
+                    else{
+                        $price_id = $plan_details->stripe_plan_id;
+                    }
+
+                    // $stripe->plans->retrieve(
+                    //     'price_1MPLF0BIRmXVjgUGWPX9RAyt',
+                    //     []
+                    //   );
+
+
+                    $stripe->subscriptions->update(
+                    $subscription->id,
+                    [
+                        'cancel_at_period_end' => false,
+                        'proration_behavior' => 'create_prorations',
+                        'items' => [
+                        [
+                            'id' => $subscription->items->data[0]->id,
+                            'price' => $price_id,
+                        ],
+                        ],
+                    ]
+                    );
+
+
                 }
 
-                $subscription = $stripe->subscriptions->create([
-                    'customer' => $customer_id,
-                    'items' => [[
-                        'price' => $price_id,
-                    ]],
-                ]);
-
-                dd($subscription);
-                // id: "sub_1MP1c4BIRmXVjgUGOhkwpwiY"
-                // object: "subscription"
-                // application: null
-                // application_fee_percent: null
-                // automatic_tax: Stripe\StripeObject {#1523 ▶}
-                // billing_cycle_anchor: 1673433176
-                // billing_thresholds: null
-                // cancel_at: null
-                // cancel_at_period_end: false
-                // canceled_at: null
-                // collection_method: "charge_automatically"
-                // created: 1673433176
-                // currency: "usd"
-                // current_period_end: 1676111576
-                // current_period_start: 1673433176
-                // customer: "cus_MvsUI7ZC6dOOp9"
-                // days_until_due: null
-                // default_payment_method: null
-                // default_source: null
-                // default_tax_rates: []
-                // description: null
-                // discount: null
-                // ended_at: null
-                // items: Stripe\Collection {#1524 ▶}
-                // latest_invoice: "in_1MP1c4BIRmXVjgUG6sC8rH2M"
-                // livemode: false
-                // metadata: Stripe\StripeObject {#1528 ▶}
-                // next_pending_invoice_item_invoice: null
-                // on_behalf_of: null
-                // pause_collection: null
-                // payment_settings: Stripe\StripeObject {#1533 ▶}
-                // pending_invoice_item_interval: null
-                // pending_setup_intent: null
-                // pending_update: null
-                // plan: Stripe\Plan {#1564 ▶}
-                // quantity: 1
-                // schedule: null
-                // start_date: 1673433176
-                // status: "active"
-                // test_clock: null
-                // transfer_data: null
-                // trial_end: null
-                // trial_start: null
+                //Unsubscription Stripe
+                // $payment_data = json_decode($user->stripe_data);
+                // $stripe = new \Stripe\StripeClient($config[10]->config_value);
+                // $stripe = $stripe->subscriptions->cancel(
+                //     $payment_data->id,
+                //     []
+                //   );
 
                 $activation_date = Carbon::parse($subscription->current_period_start)->format('Y-m-d H:i:s');
                 if($request->is_yearly==1){
