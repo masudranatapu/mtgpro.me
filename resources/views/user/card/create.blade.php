@@ -572,7 +572,7 @@
                         <div class="row no-gutters">
                             <div class="col-lg-8">
                                 <div class="social_add_form">
-                                    <form onsubmit="alert('Please complete the about section'); return false;">
+                                    <form method="post" id="icon_create_form">
                                         <div class="form-group">
                                             <label class="imgLabel" for="logo">
                                                 <img id="content_icon" src="{{ getIcon() }}" alt="">
@@ -846,5 +846,12 @@
         buttonUploadTitle: 'Upload',
         statusImageTooSmall: 'This photo is too small. The minimum size is 360 * 240 pixels.'
     });
+
+    $(document).on('submit', "#icon_create_form", function (e) {
+        e.preventDefault();
+        toastr.warning('Please complete the about section');
+        return false;
+    });
+
 </script>
 @endpush
