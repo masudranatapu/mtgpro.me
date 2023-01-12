@@ -126,14 +126,31 @@ class HomeController extends Controller
 
     public function getPreview($cardurl)
     {
-        if(!checkPackage()){
-            return redirect()->route('user.plans');
+        // if(!checkPackage()){
+        //     return redirect()->route('user.plans');
+        // }
+
+
+        $user = DB::table('users')->where('username',$cardurl)->first();
+        if($user == null){
+            $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
+            ->where('business_cards.card_url', $cardurl)
+            ->leftJoin('users','users.id','business_cards.user_id')
+            ->leftJoin('plans','plans.id','users.plan_id')
+            ->first();
+            if($cardinfo == null){
+                return redirect()->route('user.card.create');
+            }
+
+        }else{
+            $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
+            ->where('business_cards.id', $user->active_card_id)
+            ->leftJoin('users','users.id','business_cards.user_id')
+            ->leftJoin('plans','plans.id','users.plan_id')
+            ->first();
         }
-        $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
-        ->where('card_url', $cardurl)
-        ->leftJoin('users','users.id','business_cards.user_id')
-        ->leftJoin('plans','plans.id','users.plan_id')
-        ->first();
+
+
 
         if($cardinfo){
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);

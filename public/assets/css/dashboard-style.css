@@ -235,7 +235,7 @@ body {
 .card_preview_wrapper .social_icon ul li img {
     width: 40px;
     height: 40px;
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 .card_preview_wrapper .social_icon ul li a span {
@@ -577,6 +577,10 @@ body {
 .social_media_list .social_media_name img {
     width: 35px;
     margin-left: 15px;
+}
+
+.social_media_list .social_media_name img {
+    border-radius: 7px !important;
 }
 
 .social_media_list .social_media_name {

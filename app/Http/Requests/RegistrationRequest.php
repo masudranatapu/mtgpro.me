@@ -27,6 +27,7 @@ class RegistrationRequest extends FormRequest
             '_token'                => 'required',
             'name'                  => 'required',
             'email'                 =>"required|email|unique:users,email",
+            'username'                 =>"required|string|unique:users,username",
             'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required|min:6'
         ];
@@ -39,7 +40,7 @@ class RegistrationRequest extends FormRequest
            'name.required'          => 'Please enter your name',
            'email.required'         => 'Please enter your email',
            'password.required'      => 'Please enter your password',
-           'password_confirmation.required'      => 'This field is required',
+           'password_confirmation.required'  => 'This field is required',
 
         ];
     }

@@ -134,7 +134,7 @@
                                                         <img src="{{ getProfile() }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
                                                     @endif
                                                 </div>
-                                                <div class="profile_info">
+                                                <div style="margin-left: 10px;" class="profile_info">
                                                     <h3>{{ $review->display_name ?? '' }}</h3>
                                                     <span>{{ $review->display_title ??''}}</span>
                                                 </div>

@@ -71,13 +71,13 @@
                                                     <div class="social_media_list" id="drop-items">
                                                     @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                         @foreach ($card->business_card_fields as $key => $icon )
-                                                        <div class="single_list media position-relative sicon_single_list_{{ $icon->id }}">
+                                                        <div class="single_list media position-relative sicon_single_list_{{ $icon->id }}" data-id="{{ $icon->id }}" data-card_id="{{ $card->id }}">
                                                             <a href="javascript:void(0)" class="editLink" data-id="{{ $icon->id }}">
                                                                 <div class="drag_drap">
                                                                     <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
+                                                                    <img style="background: {{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
                                                                     <span>{{ $icon->label }}</span>
                                                                 </div>
                                                             </a>
@@ -327,19 +327,18 @@
                                                     <div class="save_contact mt-4 mb-4">
                                                         <a href="#" >Save Contact</a>
                                                     </div>
-                                                    <div class="social_icon">
+                                                     <div class="social_icon">
                                                         <ul>
                                                             @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                             @foreach ($card->business_card_fields as $key => $icon )
-                                                            <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
-                                                                <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
-                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
-                                                                    <span class="icon_label">{{ $icon->label }}</span>
-                                                                </a>
-                                                            </li>
+                                                                <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
+                                                                    <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
+                                                                        <img style="background:{{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
+                                                                        <span class="icon_label">{{ $icon->label }}</span>
+                                                                    </a>
+                                                                </li>
                                                             @endforeach
                                                             @endif
-
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -528,7 +527,7 @@
                                                             </div>
                                                             <div class="social_icon">
                                                                 <ul>
-                                                                    @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
+                                                                 @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                                     @foreach ($card->business_card_fields as $key => $icon )
                                                                     <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                         <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
@@ -537,10 +536,11 @@
                                                                         </a>
                                                                     </li>
                                                                     @endforeach
-                                                                    @endif
+                                                                @endif
 
                                                                 </ul>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -591,11 +591,37 @@
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 <script>
 // drag and drop
-const dropItems = document.getElementById('drop-items')
+const dropItems = document.getElementById('drop-items');
+var get_url = $('#base_url').val();
 new Sortable(dropItems, {
     animation: 350,
     chosenClass: "sortable-chosen",
-    dragClass: "sortable-drag"
+    dragClass: "sortable-drag",
+    onEnd: function (/**Event*/evt) {
+        var itemEl = evt.item;
+        var id = $(itemEl).data('id');
+        var card_id = $(itemEl).data('card_id');
+        var position_new = evt.newIndex;
+
+        $.ajax({
+            type: 'get',
+            url: get_url + '/user/card/sicon_sorting/',
+            data:{id,card_id,position_new},
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                // console.log(response);
+                toastr.success(response.message);
+            },
+            complete: function (data) {
+                $("body").css("cursor", "default");
+            }
+        });
+
+
+    }
 });
 // social content modal
 $('.onclickIcon').on('click', function() {

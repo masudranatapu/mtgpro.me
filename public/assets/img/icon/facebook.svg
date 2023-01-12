@@ -15,8 +15,8 @@
 <feBlend mode="normal" in2="shape" result="effect1_innerShadow"/>
 </filter>
 <linearGradient id="paint0_linear" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1BAFFF"/>
-<stop offset="1" stop-color="#0062E0"/>
+<stop />
+<stop offset="1"/>
 </linearGradient>
 <clipPath id="clip0">
 <rect width="80" height="80" fill="white"/>
