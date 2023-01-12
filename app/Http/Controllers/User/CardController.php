@@ -420,8 +420,13 @@ class CardController extends Controller
         DB::beginTransaction();
         try {
             $card = BusinessCard::findOrFail($request->id);
-            $card->status = !$card->status;
-            $card->save();
+            // $card->status = !$card->status;
+            // $card->save();
+            BusinessCard::where('id',$request->id)->update(['status'=>1]);
+            BusinessCard::where('id','<>',$request->id)->update(['status'=>0]);
+            User::where('id',$card->user_id)->update(['active_card_id' =>$request->id]);
+
+
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([

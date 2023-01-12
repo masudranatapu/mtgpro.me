@@ -333,7 +333,7 @@
                                                             @foreach ($card->business_card_fields as $key => $icon )
                                                                 <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                     <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
-                                                                        <img style="background:{{ $card->theme_color ?? $icon->scion->icon_color  }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
+                                                                        <img style="background:{{ $card->theme_color ?? $icon->scion->color  }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
                                                                         <span class="icon_label">{{ $icon->label }}</span>
                                                                     </a>
                                                                 </li>
@@ -404,8 +404,9 @@
                                                         <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}" data-type="{{ $icon->type }}">
                                                             <div class="icon_wrap media position-relative mb-3">
                                                                 <div class="icon_info">
-                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon_title }}">
+                                                                    <img style="background:{{ $icon->scion->color ?? ''  }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
                                                                     <span>{{ $icon->icon_title }}</span>
+
                                                                 </div>
 
                                                                 @if($icon->is_paid == '1')
@@ -644,6 +645,9 @@ $('.onclickIcon').on('click', function() {
 $('.backfirstModal').on('click', function() {
     $('.first_modal').removeClass('d-none');
     $('.second_modal').addClass('d-none');
+    $('#filter').val('');
+    $('.icon_each').css('display','block');
+
 });
 $('.modalClose').on('click', function() {
     $('.first_modal').removeClass('d-none');
@@ -827,6 +831,8 @@ $("input:checkbox.sicon_control").click(function() {
             } else {
                 toastr.error(response.message);
             }
+            $('#filter').val('');
+            $('.icon_each').css('display','block');
         },
         error: function (jqXHR, exception) {
             toastr.error('Something wrong');

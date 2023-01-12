@@ -121,7 +121,7 @@
 
                                                 @if (checkPackage())
                                                     <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
-                                                        class="btn-sm btn-secondary change-status {{ $card->status == 0 ? 'inactive' : '' }} "
+                                                        class="btn-sm btn-secondary changeTrg change-status {{ $card->status == 0 ? 'inactive' : '' }} "
                                                         data-id="{{ $card->id }}" data-status="{{ $card->status }}">
                                                         <i class="fa fa-check"
                                                             style="@if ($card->status == 0) display:none; @endif"></i>
@@ -161,7 +161,7 @@
         });
 
 
-        $(document).on('click', '.change-status', function() {
+        $(document).on('click', '.changeTrg', function() {
             var card_id = $(this).attr('data-id');
             var status = $(this).attr('data-status');
 
@@ -177,14 +177,22 @@
                 success: function(data) {
                     if (data.status == true) {
                         toastr.success(data.msg);
-                        if (status == 1) {
-                            $('#change_status_' + card_id + ' i').hide();
-                            $('#change_status_' + card_id).attr('data-status', 0);
-                        }
-                        if (status == 0) {
-                            $('#change_status_' + card_id + ' i').show();
-                            $('#change_status_' + card_id).attr('data-status', 1);
-                        }
+                        $('.change-status').addClass('inactive');
+                        $('.change-status').addClass('changeTrg');
+                        $('.change-status').attr('data-status', 0);
+                        $('.change-status i').hide();
+                        $('#change_status_' + card_id).attr('data-status', 1);
+                        $('#change_status_' + card_id).removeClass('inactive');
+                        $('#change_status_' + card_id).removeClass('changeTrg');
+                        $('#change_status_' + card_id + ' i').show();
+                        // if (status == 1) {
+                        //     $('#change_status_' + card_id + ' i').hide();
+                        //     $('#change_status_' + card_id).attr('data-status', 0);
+                        // }
+                        // if (status == 0) {
+                        //     $('#change_status_' + card_id + ' i').show();
+                        //     $('#change_status_' + card_id).attr('data-status', 1);
+                        // }
                     } else {
                         toastr.warning(data.msg);
                     }

@@ -261,7 +261,7 @@ $(document).on('input','#personalized_link', function() {
 }).keyup();
 
 //icon search
-$(document).on('keyup', '#filter', function(){
+$(document).on('input', '#filter', function(){
     var filter = $(this).val(), count = 0;
     $(".add_list_wrap .icon_each").each(function(){
         if ($(this).data('name').search(new RegExp(filter, "i")) < 0) {
@@ -271,7 +271,6 @@ $(document).on('keyup', '#filter', function(){
             count++;
         }
     });
-    var numberItems = count;
     $("#filter-count").text('('+count+')');
 
 });

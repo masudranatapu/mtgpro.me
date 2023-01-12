@@ -160,14 +160,20 @@ class HomeController extends Controller
             // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
             // $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
-            if($cardinfo->status == 0){
-                Toastr::warning('This card is not active now');
-                return redirect()->back();
+
+            if(Auth::user() && ($cardinfo->user_id == Auth::id()) ){
+
+            }else{
+                if($cardinfo->status == 0){
+                    Toastr::warning('This card is not active now');
+                    return redirect()->back();
+                }
+                if($cardinfo->status == 2){
+                    Toastr::warning('This card has been deleted');
+                    return redirect()->back();
+                }
             }
-            if($cardinfo->status == 2){
-                Toastr::warning('This card has been deleted');
-                return redirect()->back();
-            }
+
             // $carddetails = DB::table('business_fields')
             // ->select('business_fields.*')
             // // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
