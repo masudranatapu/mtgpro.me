@@ -77,7 +77,7 @@
                                                                     <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
                                                                 </div>
                                                                 <div class="social_media_name">
-                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
+                                                                    <img style="background: {{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}">
                                                                     <span>{{ $icon->label }}</span>
                                                                 </div>
                                                             </a>
@@ -327,31 +327,16 @@
                                                     <div class="save_contact mt-4 mb-4">
                                                         <a href="#" >Save Contact</a>
                                                     </div>
-                                                    {{-- <div class="social_icon">
+                                                     <div class="social_icon">
                                                         <ul>
                                                             @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
                                                             @foreach ($card->business_card_fields as $key => $icon )
-                                                            <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
-                                                                <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
-                                                                    <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
-                                                                    <span class="icon_label">{{ $icon->label }}</span>
-                                                                </a>
-                                                            </li>
-                                                            @endforeach
-                                                            @endif
-
-                                                        </ul>
-                                                    </div> --}}
-                                                    <div class="social_icon">
-                                                        <ul>
-                                                             @if(isset($card->business_card_fields) && count($card->business_card_fields)>0)
-                                                            @foreach ($card->business_card_fields as $key => $icon )
-                                                            <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif">
-                                                                <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
-                                                                     <img style="background: rgb(8, 27, 192);" src="{{ getIcon($icon->icon_image) }}" />
-                                                                    <span class="icon_label">{{ $icon->label }}</span>
-                                                                </a>
-                                                            </li>
+                                                                <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
+                                                                    <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
+                                                                        <img style="background:{{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
+                                                                        <span class="icon_label">{{ $icon->label }}</span>
+                                                                    </a>
+                                                                </li>
                                                             @endforeach
                                                             @endif
                                                         </ul>
