@@ -1,35 +1,50 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
-use DB;
-use Auth;
-use Socialite;
+
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Setting;
 use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use \Config;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
+
 class AuthController extends Controller
 {
     protected $user;
     public function __construct(
         User            $user
-    )
-    {
+    ) {
         $this->user     = $user;
+
+        $link = Setting::first();
+        // dd($link);
+
+        Config::set('services.google.client_id', $link->google_client_id);
+        Config::set('services.google.client_secret', $link->google_client_secret);
+        Config::set('services.google.redirect', url('/auth/google/callback'));
+
+        Config::set('services.facebook.client_id', $link->facebook_client_id);
+        Config::set('services.facebook.client_secret', $link->facebook_client_secret);
+        Config::set('services.facebook.redirect', preg_replace("/^http:/i", "https:", url('/auth/facebook/callback')));
     }
 
     public function postRegister(RegistrationRequest $request)
     {
         try {
             $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
-            $checkExist = User::where('email',$request->email)->whereNotNull('email')->first();
-            if(!empty($checkExist)){
+            $checkExist = User::where('email', $request->email)->whereNotNull('email')->first();
+            if (!empty($checkExist)) {
                 Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
-                return redirect()->back()->with('error','Already exist account')->withInput();;
+                return redirect()->back()->with('error', 'Already exist account')->withInput();;
             }
             $user                       = new User();
             $user->name                 = trim($request->name);
@@ -49,7 +64,7 @@ class AuthController extends Controller
             $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addYear(5)->format('Y-m-d');
             $user->plan_activation_date = Carbon::now();
             $location                   = $this->user->getLocation();
-            if($location){
+            if ($location) {
                 $user->billing_country  = $location->countryName;
                 $user->billing_country_code = $location->countryCode;
                 // $user->regionCode    = $location->regionCode;
@@ -64,7 +79,7 @@ class AuthController extends Controller
             // $user->device           = $this->user->getOS();
             // $user->browser          = $this->user->getBrowser();
             $user->save();
-            if($user){
+            if ($user) {
                 Auth::login($user);
                 Mail::to($user->email)->send(new WelcomeMail($user));
                 return redirect()->route('user.card');
@@ -77,11 +92,13 @@ class AuthController extends Controller
         return redirect()->route('user.card');
     }
 
-    public function getDeactivationForm(){
+    public function getDeactivationForm()
+    {
         return view('auth.deactivation-form');
     }
 
-    public function getChangePassword(){
+    public function getChangePassword()
+    {
         return view('auth.change_password');
     }
 
@@ -96,7 +113,7 @@ class AuthController extends Controller
             'confirm_password' => 'required',
         ]);
         if (!Hash::check($request->current_password, $userPassword)) {
-            return back()->withErrors(['current_password'=>'Old password does not match']);
+            return back()->withErrors(['current_password' => 'Old password does not match']);
         }
         $user->password = Hash::make($request->password);
         $user->save();
@@ -113,58 +130,66 @@ class AuthController extends Controller
 
     public function handleProviderCallback(string $provider)
     {
+        // dd($provider);
         $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
         $data = Socialite::driver($provider)->stateless()->user();
-        $check_deactive = User::where('email',$data->email)->where('status',0)->first();
-        if(!empty($check_deactive)){
+        $falsemail = trim(str_replace(' ','_',$data->name)) . '@gmail.com';
+        $check_deactive = User::where('email', $data->email)->where('status', 0)->first();
+        if (!empty($check_deactive)) {
             Toastr::error(trans('oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->route('login');
             // ->with('error','oops! your account has been deactivated! please contact website administrator');
         }
         try {
-            $isExist  = User::where(['email' => $data->email])->first();
-                if(!empty($isExist)){
-                    $isExist->update([
-                        'avatar'            => $data->avatar,
-                        'provider'          => $provider,
-                        'social_id'         => $data->id
-                    ]);
-                    Auth::login($isExist);
+            // dd($data);
+            if (!empty($data->email)) {
+                $isExist  = User::where(['email' => $data->email])->first();
+            } else {
+                $isExist  = User::where('provider', $provider)->where('social_id', $data->id)->first();
+            }
+
+
+            if (!empty($isExist)) {
+                $isExist->update([
+                    'avatar'            => $data->avatar,
+                    'provider'          => $provider,
+                    'social_id'         => $data->id
+                ]);
+                Auth::login($isExist);
+            } else {
+                $user              = new User;
+                $user->name        = $data->name;
+                $user->email       = $data->email ?? $falsemail;
+                $user->username    = $data->username ??  trim($data->name);
+                $user->profile_image = $data->avatar;
+                $user->provider    = $provider;
+                $user->social_id   = $data->id;
+                $user->status      = 1;
+                $user->role_id     = 1;
+                $user->user_type   = 2;
+                $location                   = $this->user->getLocation();
+                if ($location) {
+                    $user->billing_country     = $location->countryName;
+                    $user->billing_country_code = $location->countryCode;
+                    // $user->regionCode       = $location->regionCode;
+                    $user->billing_state       = $location->regionName;
+                    $user->billing_city        = $location->cityName;
+                    $user->billing_zipcode     = $location->zipCode;
+                    // $user->isoCode          = $location->isoCode;
+                    // $user->latitude         = $location->latitude;
+                    // $user->longitude        = $location->longitude;
                 }
-                else{
-                    $user              = new User;
-                    $user->name        = $data->name;
-                    $user->email       = $data->email;
-                    $user->username    = $data->username ??  trim($data->name);
-                    $user->profile_image = $data->avatar;
-                    $user->provider    = $provider;
-                    $user->social_id   = $data->id;
-                    $user->status      = 1;
-                    $user->role_id     = 1;
-                    $user->user_type   = 2;
-                    $location                   = $this->user->getLocation();
-                    if($location){
-                        $user->billing_country     = $location->countryName;
-                        $user->billing_country_code = $location->countryCode;
-                        // $user->regionCode       = $location->regionCode;
-                        $user->billing_state       = $location->regionName;
-                        $user->billing_city        = $location->cityName;
-                        $user->billing_zipcode     = $location->zipCode;
-                        // $user->isoCode          = $location->isoCode;
-                        // $user->latitude         = $location->latitude;
-                        // $user->longitude        = $location->longitude;
-                    }
-                    // for plan info
-                    $user->plan_id     = $plans->id;
-                    $user->plan_details = json_encode($plans);
-                    $user->plan_validity = Carbon::parse(date('Y-m-d'))->addYear(3)->format('Y-m-d');
-                    $user->plan_activation_date = Carbon::now();
-                    $user->save();
-                    Auth::login($user);
-                    if($user->email){
-                        Mail::to($user->email)->send(new WelcomeMail($user));
-                    }
+                // for plan info
+                $user->plan_id     = $plans->id;
+                $user->plan_details = json_encode($plans);
+                $user->plan_validity = Carbon::parse(date('Y-m-d'))->addYear(3)->format('Y-m-d');
+                $user->plan_activation_date = Carbon::now();
+                $user->save();
+                Auth::login($user);
+                if ($user->email) {
+                    Mail::to($user->email)->send(new WelcomeMail($user));
                 }
+            }
         } catch (\Exception $e) {
             dd($e->getmessage());
             Toastr::error(trans('Login failed. Please try again'), 'Error', ["positionClass" => "toast-top-right"]);
@@ -172,12 +197,4 @@ class AuthController extends Controller
         }
         return redirect()->route('user.card');
     }
-
-
-
-
-
-
-
-
 }
