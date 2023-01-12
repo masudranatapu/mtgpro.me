@@ -65,7 +65,7 @@ $tabindex =1;
                                             <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="{{ $row->name }}">
                                             <span class="notice d-none position-absolute" style="color: rgb(34, 34, 34); transition: all 0.2s ease 0s;">Copied</span>
                                         </a>
-                                    </h5>    
+                                    </h5>
                                    <span> {{ $row->name }}</span>
                                 </div>
                                 <div class="col-md-6 mb-4">
@@ -75,7 +75,7 @@ $tabindex =1;
                                         <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="{{ $row->email }}">
                                         <span class="notice d-none position-absolute" style="color: rgb(34, 34, 34); transition: all 0.2s ease 0s;">Copied</span>
                                         </a>
-                                    </h5>    
+                                    </h5>
                                     <span> {{ $row->email }}</span>
                                 </div>
                                 <div class="col-md-6 mb-4">
@@ -113,23 +113,23 @@ $tabindex =1;
 @push('custom_js')
 <script>
 $(document).on('click', '.copy_btn', function(e) {
-e.preventDefault();
-var url = $(this).attr('data-clipboard-target');
-var textarea = document.createElement("textarea");
-textarea.textContent = url;
-textarea.style.position = "fixed";
-document.body.appendChild(textarea);
-textarea.select();
-document.execCommand("copy");
-document.body.removeChild(textarea);
-// $('.notice').hide();
-$('.notice').addClass('d-none');
-$(this).children('span').removeClass('d-none').addClass('d-block');
-// console.log($(this).children('.notice').html('Copied'));
-// toastr.success("The link to your card has been copied to the clipboard. "+url, 'Success', {
-//     closeButton: true,
-//     progressBar: true,
-// });
+    e.preventDefault();
+    var url = $(this).attr('data-clipboard-target');
+    var textarea = document.createElement("textarea");
+    textarea.textContent = url;
+    textarea.style.position = "fixed";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    // $('.notice').hide();
+    $('.notice').addClass('d-none');
+    $(this).children('span').removeClass('d-none').addClass('d-block');
+    // console.log($(this).children('.notice').html('Copied'));
+    // toastr.success("The link to your card has been copied to the clipboard. "+url, 'Success', {
+    //     closeButton: true,
+    //     progressBar: true,
+    // });
 });
 </script>
 @endpush
