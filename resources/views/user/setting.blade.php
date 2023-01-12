@@ -276,7 +276,7 @@
                                                             </div>
                                                         </form>
                                                        <div class="float-right">
-                                                            <a href="#" class="btn btn-primary">{{ __('Reset Your Password') }}</a>
+                                                            <a href="{{ route('user.password.reset') }}" title="{{ __('Reset Your Password') }}" class="btn btn-primary reset_password_request">{{ __('Reset Your Password') }}</a>
                                                             <a href="#" class="btn btn-secondary text-danger" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                        </div>
                                                     </div>
@@ -568,5 +568,36 @@
 //         download: false,
 //         instantEdit: true,
 //     });
+
+$(document).on('click', ".reset_password_request", function (e) {
+        e.preventDefault();
+        var route = $(this).attr('href');
+        $.ajax({
+            type: 'get',
+            url:route,
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+                $('.reset-spinner').toggleClass('active');
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+                $('.reset-spinner').removeClass('active');
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+                $('.reset-spinner').removeClass('active');
+
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    });
+
 </script>
 @endpush

@@ -293,6 +293,7 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
         form.addEventListener('submit', function (event) {
             event.preventDefault();
             stripe.createToken(card).then(function (result) {
+                console.log(result);
                 if (result.error) {
                     // Inform the customer that there was an error.
                     var errorElement = document.getElementById('card-errors');

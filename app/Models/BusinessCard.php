@@ -501,4 +501,30 @@ class BusinessCard extends Model
         $name = $base_name . "-" . uniqid();
         return $name;
     }
+
+
+
+    public function updateDataByCuurentPlan($plan_id)
+    {
+        DB::beginTransaction();
+        try {
+        $plan = Plan::findOrFail($plan_id);
+        $take = $plan->no_of_vcards;
+        $keep =  BusinessCard::where('user_id', Auth::user()->id)->latest()->take($take)->pluck('id');
+        BusinessCard::where('user_id', Auth::user()->id)->whereNotIn('id', $keep)->update([
+            'status' => 0,
+            'card_status' => 'deactivate',
+        ]);
+    } catch (\Exception $e) {
+        DB::rollback();
+        return false;
+    }
+    DB::commit();
+    return true;
+}
+
+
+
+
+
 }
