@@ -3,9 +3,17 @@
 
 @push('custom_css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
-@endpush
-@push('top_js')
-<script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+<style>
+    div#social_icon_up .slim {
+        /* width: 100px;
+        height: 100px;
+        overflow: hidden; */
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+</style>
 @endpush
 @php
     $icon_group = Config::get('app.icon_group');
@@ -223,7 +231,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                     <input type="text" name="location" value="{{ $card->location }}" class="form-control cin" placeholder="{{ __('location') }}" required data-preview="location_show">
+                                                                     <input type="text" name="location" value="{{ $card->location }}" class="form-control cin" placeholder="{{ __('location') }}" data-preview="location_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -439,17 +447,17 @@
                                             @csrf
                                             <input type="hidden" name="card_id" value="{{ $card->id }}">
                                             <input type="hidden" name="icon_id" id="icon_id" value="">
-                                            <div class="form-group social_icon_up">
-                                                <label class="imgLabel" for="logo" >
-                                                    {{-- <div  class="slim" data-ratio="1:1" data-size="100,100" data-force-min-size="false" data-min-size="1,1"> --}}
-                                                    <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
+                                            <div class="form-group">
+                                                <div id="social_icon_up">
+                                                    {{-- <div  class="slim" data-ratio="1:1" data-size="100,100" data-force-min-size="false" data-min-size="1,1">
+                                                        <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
+                                                        <img  src="{{ getIcon() }}" alt="" width="100" height="100">
+                                                    </div> --}}
+                                                </div>
+                                               <label class="imgLabel" for="upload_icon" >
+                                                    <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden onchange="preview()">
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="" width="100" height="100">
                                                     {{-- <span>Select photo here or drag and drop <br /> one in place of current</span> --}}
-                                                    {{-- </div> --}}
-                                                    @if($errors->has('logo'))
-                                                        <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
-                                                    @endif
-
                                                 </label>
                                             </div>
                                             <div class="form-group">
@@ -589,7 +597,8 @@
 @endif
 <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/card.js') }}?v=1"></script>
 <script>
 // drag and drop
 const dropItems = document.getElementById('drop-items');
@@ -629,17 +638,31 @@ $('.onclickIcon').on('click', function() {
     $('.first_modal').addClass('d-none');
     var icon_id = $(this).attr('data-id');
     var icon_name = $(this).attr('data-image');
-    // var image = document.createElement("IMG");
-    // image.alt = "Alt information for image";
-    // image.setAttribute('class', 'img-fluid');
-    // image.src=icon_name;
-    // $(".upload_icon").html(image);
-    // upload_icon slim-file-hopper
-    // var cover2  = $('.upload_icon').css('background-image', 'url('+icon_name+');');;
-    // var cover2_url  = icon_name;
-    // cover2.style.backgroundImage = "url("+cover2_url+")";
-    // $('#upload_icon').attr('src',icon_name);
+    console.log(icon_name);
     $('#icon_id').val(icon_id);
+    // var html = '<div class="" data-ratio="1:1" data-size="100,100" data-force-min-size="false" data-min-size="1,1"><input type="file" name="logo" id="upload_icon" value="'+icon_name+'" hidden></div>';
+    // console.log(html);
+    // $('#social_icon_up').append(html);
+    // var cropper = new Slim(document.getElementById('upload_icon'), {
+    //     ratio: '1:1',
+    //     minSize: {
+    //         width: 50,
+    //         height: 50,
+    //     },
+    //     size: {
+    //         width: 100,
+    //         height: 100,
+    //     },
+    //     willSave: function(data, ready) {
+    //         $('.yyy').remove();
+    //       ready(data);
+    //     },
+    //      download: false,
+    //     instantEdit: true,
+    // });
+    // var html_ = '<img class="in yyy" src="'+icon_name+'" style="opacity: 1; z-index: 2;">';
+    // $('.slim-result').append(html_);
+    // $('.out').attr('src',icon_name)
     $('.second_modal').removeClass('d-none');
 });
 $('.backfirstModal').on('click', function() {
@@ -653,6 +676,8 @@ $('.modalClose').on('click', function() {
     $('.first_modal').removeClass('d-none');
     $('.second_modal').addClass('d-none');
 });
+
+
 
 
 // Show content for edit
@@ -680,7 +705,25 @@ $('.editLink').on('click', function() {
      });
 });
 
-
+// if(document.getElementById("upload_icon") != null){
+// var cropper = new Slim(document.getElementById('upload_icon'), {
+//         ratio: '1:1',
+//         minSize: {
+//             width: 50,
+//             height: 50,
+//         },
+//         size: {
+//             width: 100,
+//             height: 100,
+//         },
+//         willSave: function(data, ready) {
+//             $('#profilePic_2').attr('src',icon_name);
+//           ready(data);
+//         },
+//          download: false,
+//         instantEdit: true,
+//     });
+// }
 
 //Icon content remove
 $(document).on('click', '.scion_remove', function() {
@@ -844,121 +887,8 @@ $("input:checkbox.sicon_control").click(function() {
         }
     });
 });
-// $('#profile_pic').slim();
-
-// var cropper = new Slim(document.getElementById('profile_pic'), {
-//         ratio: '1:1',
-//         minSize: {
-//             width: 150,
-//             height: 150,
-//         },
-//         size: {
-//             width: 600,
-//             height: 600,
-//         },
-//         willSave: function(data, ready) {
-//             $('#profilePic_2').attr('src',data.output.image);
-//           ready(data);
-//         },
-//         meta: {
-//             viewid:1
-//       },
-//         download: false,
-//         instantEdit: true,
-//     });
-
-    // var cropper = new Slim(document.getElementById('cover_pic'), {
-    //     ratio: '3:1',
-    //     minSize: {
-    //         width: 300,
-    //         height: 100,
-    //     },
-    //     size: {
-    //         width: 720,
-    //         height: 720,
-    //     },
-    //     willSave: function(data, ready) {
-    //         var cover2  = document.getElementById('coverpic_2');
-    //         var cover2_url  = data.output.image;
-    //         cover2.style.backgroundImage = "url("+cover2_url+")";
-    //       ready(data);
-    //     },
-    //     meta: {
-    //         viewid:2
-    //   },
-    //     download: false,
-    //     instantEdit: true,
-    //     // label: 'Upload: Click here or drag an image file onto it',
-    //     buttonConfirmLabel: 'Crop',
-    //     buttonConfirmTitle: 'Crop',
-    //     buttonCancelLabel: 'Cancel',
-    //     buttonCancelTitle: 'Cancel',
-    //     buttonEditTitle: 'Edit',
-    //     buttonRemoveTitle: 'Remove',
-    //     buttonDownloadTitle: 'Download',
-    //     buttonRotateTitle: 'Rotate',
-    //     buttonUploadTitle: 'Upload',
-    //     statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
-    // });
-    // var cropper = new Slim(document.getElementById('company_logo'), {
-    //     ratio: '1:1',
-    //     minSize: {
-    //         width: 50,
-    //         height: 50,
-    //     },
-    //     size: {
-    //         width: 150,
-    //         height: 150,
-    //     },
-    //     willSave: function(data, ready) {
-    //         $('#showlogo_2').attr('src',data.output.image);
-    //         // console.log(data);
-    //       ready(data);
-    //     },
-    //     meta: {
-    //         viewid:3
-    //   },
-    //     download: false,
-    //     instantEdit: true,
-    //     // label: 'Upload: Click here or drag an image file onto it',
-    //     buttonConfirmLabel: 'Crop',
-    //     buttonConfirmTitle: 'Crop',
-    //     buttonCancelLabel: 'Cancel',
-    //     buttonCancelTitle: 'Cancel',
-    //     buttonEditTitle: 'Edit',
-    //     buttonRemoveTitle: 'Remove',
-    //     buttonDownloadTitle: 'Download',
-    //     buttonRotateTitle: 'Rotate',
-    //     buttonUploadTitle: 'Upload',
-    //     statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
-    // });
-
-    // var cropper = new Slim(document.getElementById('upload_icon'), {
-    //     ratio: '1:1',
-    //     minSize: {
-    //         width: 50,
-    //         height: 50,
-    //     },
-    //     size: {
-    //         width: 80,
-    //         height: 80,
-    //     },
-    //     willSave: function(data, ready) {
-    //         var id =$('#icon_id').val();
-    //         $('.upload_icon_preview').attr("src", data.output.image);
-    //         $('.sicon_' + id).find('.social_logo').attr("src", data.output.image);
-    //         $('.sicon_single_list_' + id).find('.social_media_name').find('img').attr("src", data.output.image);
-    //       ready(data);
-    //     },
-    //     meta: {
-    //         viewid:4
-    //   },
-    //     download: false,
-    //     instantEdit: true,
-    // });
-
-
-
-
+function preview() {
+    content_icon.src=URL.createObjectURL(event.target.files[0]);
+}
 </script>
 @endpush
