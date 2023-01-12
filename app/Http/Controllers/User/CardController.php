@@ -180,7 +180,6 @@ class CardController extends Controller
         return view('user.card.view', compact('card', 'icons', 'shareComponent'));
     }
 
-
     public function postStore(CardRequest $request)
     {
         $validity = checkPackageValidity(Auth::id());
