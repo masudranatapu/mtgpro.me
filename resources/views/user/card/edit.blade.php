@@ -223,7 +223,7 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="location" class="form-label">{{ __('Location') }}</label>
-                                                                     <input type="text" name="location" value="{{ $card->location }}" class="form-control cin" placeholder="{{ __('location') }}" required data-preview="location_show">
+                                                                     <input type="text" name="location" value="{{ $card->location }}" class="form-control cin" placeholder="{{ __('location') }}" data-preview="location_show">
                                                                  </div>
                                                             </div>
                                                             <div class="col-lg-6">

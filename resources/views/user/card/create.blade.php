@@ -289,9 +289,10 @@
                                                                 class="form-label">{{ __('Location') }}</label>
                                                             <input type="text" name="location"
                                                                 class="form-control @error('email') is-invalid @enderror cin"
-                                                                placeholder="{{ __('location') }}" required
+                                                                placeholder="{{ __('location') }}"
                                                                 data-preview="location_show"
-                                                                value="{{ old('location') }}" maxlength="50"
+                                                                value="{{ old('location') }}"
+                                                                maxlength="50"
                                                                 tabindex="{{ $tabindex++ }}">
                                                             @if ($errors->has('location'))
                                                                 <span

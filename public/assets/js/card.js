@@ -405,7 +405,7 @@ $(document).ready(function () {
                 minlength: 2,
             },
             'location': {
-                required: true,
+                required: false,
                 maxlength: 124,
                 minlength: 2,
             },
