@@ -27,7 +27,7 @@ class CardRequest extends FormRequest
             'card_for'         => 'required|string|max:124',
             'bgcolor'          => 'required|string|max:25',
             'name'             => 'required|string|max:124',
-            'location'         => 'required|string|max:124',
+            'location'         => 'nullable|string|max:124',
             'designation'      => 'required|string|max:124',
             'company_name'     => 'required|string|max:124',
             'bio'              => 'nullable|string|max:255',
