@@ -407,9 +407,19 @@
                                     <div class="row align-item-center">
                                         @if(isset($icons) && count($icons) > 0)
                                             @foreach ($icons as $key2 => $icon )
+
+                                            @php
+                                            if($card->theme_color == null){
+                                                $icon_color = $icon->icon_color;
+                                            }else{
+                                                $icon_color = $card->theme_color;
+                                            }
+
+                                            @endphp
+
                                                 @if($icon->icon_group == $igroup )
                                                     <div class="col-sm-6 col-lg-4 icon_each" data-name="{{ $icon->icon_name }}">
-                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}" data-type="{{ $icon->type }}">
+                                                        <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}" data-type="{{ $icon->type }}" data-color="{{ $icon_color }}">
                                                             <div class="icon_wrap media position-relative mb-3">
                                                                 <div class="icon_info">
                                                                     <img style="background:{{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
