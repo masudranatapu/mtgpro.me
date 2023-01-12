@@ -341,7 +341,7 @@
                                                             @foreach ($card->business_card_fields as $key => $icon )
                                                                 <li class="sicon_{{ $icon->id }} " style="@if($icon->status == 0) display:none; @endif"  >
                                                                     <a class="social_link" href="{{ makeUrl($icon->content) }}" target="_blank">
-                                                                        <img style="background:{{ $card->theme_color ?? $icon->scion->color  }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
+                                                                        <img style="background:{{ $card->theme_color ?? $icon->sicon->icon_color  }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" class="social_logo">
                                                                         <span class="icon_label">{{ $icon->label }}</span>
                                                                     </a>
                                                                 </li>
