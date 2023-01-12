@@ -136,7 +136,8 @@
                                                                                  {{-- data-fetcher="fetch.php" --}}
                                                                                  data-ratio="1:1"
                                                                                  data-size="540,540"
-                                                                                 data-max-file-size="100">
+                                                                                 data-max-file-size="100"
+                                                                                 >
                                                                                 <img src="{{ getProfile($card->profile) }}" alt=""/>
                                                                                 <input type="file" name="profile_pic" id="profile_pic">
                                                                             </div>
@@ -163,6 +164,8 @@
                                                                          class="slim"
                                                                           {{-- data-service="async.php" --}}
                                                                           {{-- data-fetcher="fetch.php" --}}
+                                                                          data-force-min-size="false"
+                                                                          data-min-size="1,1"
                                                                           data-ratio="1:1"
                                                                           data-size="440,400"
                                                                           data-max-file-size="100"
