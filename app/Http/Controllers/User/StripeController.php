@@ -35,7 +35,6 @@ class StripeController extends Controller
 
     public function stripeCheckout(Request $request)
     {
-
         // dd($request->all());
         try {
             $planId = $request->plan_id;
@@ -85,7 +84,7 @@ class StripeController extends Controller
                         $stripe->subscriptions->cancel(
                             $payment_data->id,
                             []
-                          );
+                        );
                     }
                     // $_subscription = \Stripe\Subscription::retrieve($payment_data->id);
                     // $_subscription->cancel();
