@@ -671,7 +671,7 @@ $('.editLink').on('click', function() {
             if(data.success){
                 $('.social_add_form').html(data.data.html);
             }else{
-                alert('Please reload and try again');
+                toastr.warning('Please reload and try again');
             }
          },
          error: function (jqXHR, exception) {
@@ -693,13 +693,15 @@ $(document).on('click', '.scion_remove', function() {
          success:function(data)
          {
             if(data.success){
+                console.log(data);
                 $('.tab_body .back').addClass('d-none');
                 $('.tab_body .edit_social_form').addClass('d-none');
                 $('.tab_body .add_link').removeClass('d-none');
                 $('.tab_body .social_media_list').removeClass('d-none');
                 $('.sicon_single_list_'+id).hide();
+                toastr.success(data.message);
             }else{
-                alert('Please reload and try again');
+                toastr.warning('Please reload and try again');
             }
          },
          error: function (jqXHR, exception) {
