@@ -99,6 +99,11 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('review',['as'=>'review.store','uses'=>'UserController@storeReview']);
     Route::post('review/{id}',['as'=>'review.update','uses'=>'UserController@updateReview']);
 
+    //Login User Password Reset
+    Route::get('password/reset',['as'=>'password.reset','uses'=>'UserController@passwordReset']);
+    Route::get('password/password-reset/{token}',['as'=>'password.password-reset','uses'=>'UserController@getresetPassword']);
+    Route::post('reset/new/password', [ 'as' => 'reset.new.password', 'uses' => 'UserController@resetNewPassword']);
+
 });
 
 
