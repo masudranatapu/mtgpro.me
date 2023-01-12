@@ -278,12 +278,13 @@ $(document).on('input', '#filter', function(){
 // social content modal
 $(document).on('click', '.onclickIcon' ,function() {
     var name = $(this).data('name');
+    var color = $(this).data('color');
     var type = $(this).data('type');
     var title = $(this).data('title');
     var image = $(this).data('image');
     var id = $(this).data('id');
     var ftitle = '';
-    var html = '<li class="sicon_'+id+'"><a class="social_link" href="" target="_blank"><img src="'+image+'" alt="email" class="social_logo"><span class="icon_label link_title_show">'+title+'</span></a></li>';
+    var html = '<li class="sicon_'+id+'"><a class="social_link" href="" target="_blank"><img style="background:'+color+'" src="'+image+'" alt="email" class="social_logo"><span class="icon_label link_title_show">'+title+'</span></a></li>';
     $('.social_icon ul').append(html);
 
     $('#content_icon').attr('src',image);
