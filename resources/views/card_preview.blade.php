@@ -167,6 +167,13 @@
             margin-bottom: 4px;
         }
     </style>
+    @if($cardinfo->theme_color)
+        <style>
+            .save_contact a{background: {{ $cardinfo->theme_color }}}
+            .offcanvas_btn a{background: {{ $cardinfo->theme_color }}}
+        </style>
+    @endif
+
 </head>
 
 <body>
@@ -245,8 +252,9 @@
                                                                     href="{{ makeUrl($contact->content) }}"
                                                                     target="_blank">
                                             @endif
-                                            <img class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
+                                            <img style="border-radius: 15px; background:{{ $cardinfo->theme_color ?? $contact->sicon->icon_color }}" class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
                                                 alt="{{ $contact->label }}" width="75" height="75">
+
                                             <span>{{ $contact->label }}</span>
                                             </a>
                                         </li>

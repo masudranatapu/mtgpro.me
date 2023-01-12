@@ -404,7 +404,7 @@
                                                         <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}" data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}" data-id="{{ $icon->id }}" data-type="{{ $icon->type }}">
                                                             <div class="icon_wrap media position-relative mb-3">
                                                                 <div class="icon_info">
-                                                                    <img style="background:{{ $icon->scion->color ?? ''  }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
+                                                                    <img style="background:{{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
                                                                     <span>{{ $icon->icon_title }}</span>
 
                                                                 </div>
