@@ -36,7 +36,6 @@ class CardUpdateRequest extends FormRequest
 
         ];
 
-
         return $rules;
     }
 
