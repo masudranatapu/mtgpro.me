@@ -232,9 +232,6 @@
                                         }
 
                                     @endphp
-
-
-
                                         <li>
                                             @if ($contact->type == 'address')
                                                 <a title="" class="text-decoration-none"
@@ -437,7 +434,7 @@
         </div>
         <div class="offcanvas-body">
             <div class="contact_body">
-                <form action="{{ route('getConnect') }}" method="post">
+                <form action="{{ route('getConnect') }}" id="connect-form" method="post">
                     @csrf
                     <input type="hidden" name="card_id" id="card_id" value="{{ $cardinfo->id }}" />
                     <div class="heading mb-4 text-center">
@@ -530,6 +527,42 @@
         //                 }
         //             });
         //     });
+
+
+$(document).on('submit', "#connect-form", function (e) {
+    e.preventDefault();
+    var form = $("#connect-form");
+    $.ajax({
+        url: $(this).attr("action"),
+        type: $(this).attr("method"),
+        dataType: "JSON",
+        data: new FormData(this),
+        async: true,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $("body").css("cursor", "progress");
+        },
+        success: function (response) {
+            if (response.status == 1) {
+            $('#connect-form')[0].reset();
+            // $('.contact_modal').addClass('d-none');
+                toastr.success(response.msg);
+            } else {
+                toastr.error(response.msg);
+            }
+        },
+        error: function (jqXHR, exception) {
+            toastr.error('Something wrong');
+        },
+        complete: function (response) {
+            $("body").css("cursor", "default");
+        }
+    });
+});
+    toastr.options = {
+        "positionClass": "toast-top-center",
+    };
     </script>
     {!! Toastr::message() !!}
 </body>
