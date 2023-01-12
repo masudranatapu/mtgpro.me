@@ -228,10 +228,11 @@
                                         if($cardinfo->theme_color == null){
                                             $icon_color = $contact->sicon->icon_color;
                                         }else{
-                                            $icon_color = $cardinfo->theme_colo;
+                                            $icon_color = $cardinfo->theme_color;
                                         }
 
                                     @endphp
+
 
 
                                         <li>
