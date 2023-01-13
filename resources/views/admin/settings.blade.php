@@ -43,13 +43,13 @@
                                             <select name="app_type" id="app_type" class="form-control" required>
                                                 <option value="VCARD"
                                                     {{ $settings->application_type == 'VCARD' ? ' selected' : '' }}>
-                                                {{ __('vCard Only') }}</option>
-                                                <option value="STORE"
+                                                {{ __('vCarv') }}</option>
+                                                {{-- <option value="STORE"
                                                     {{ $settings->application_type == 'STORE' ? ' selected' : '' }}>
                                                 {{ __('WhatsApp Store Only') }}</option>
                                                 <option value="BOTH"
                                                     {{ $settings->application_type == 'BOTH' ? ' selected' : '' }}>
-                                                {{ __('Both') }}</option>
+                                                {{ __('Both') }}</option> --}}
                                             </select>
                                             @error('app_type')
                                                 <span class="help-block text-danger">{{ $message }}</span>
