@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Str;
+use \Config;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Setting;
@@ -12,7 +13,6 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use \Config;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
@@ -156,12 +156,11 @@ class AuthController extends Controller
                 ]);
                 Auth::login($isExist);
             } else {
-
-                $base_name = preg_replace('/\..+$/', '', $data->name);
-                $base_name = explode(' ', $base_name);
-                $base_name = implode('-', $base_name);
-                $base_name = Str::lower($base_name);
-                $name = $base_name . "-" . uniqid();
+                $base_name  = preg_replace('/\..+$/', '', $data->name);
+                $base_name  = explode(' ', $base_name);
+                $base_name  = implode('-', $base_name);
+                $base_name  = Str::lower($base_name);
+                $name       = $base_name ."-".uniqid();
                 $user              = new User;
                 $user->name        = $data->name;
                 $user->email       = $data->email ?? $falsemail;
