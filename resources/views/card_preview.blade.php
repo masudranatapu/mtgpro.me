@@ -422,7 +422,7 @@
     <div class="contact_modal offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasExample"
         aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <button type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+            <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
                         fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
@@ -548,6 +548,8 @@ $(document).on('submit', "#connect-form", function (e) {
             $('#connect-form')[0].reset();
             // $('.contact_modal').addClass('d-none');
                 toastr.success(response.msg);
+                closeMenu();
+
             } else {
                 toastr.error(response.msg);
             }
@@ -560,6 +562,11 @@ $(document).on('submit', "#connect-form", function (e) {
         }
     });
 });
+
+        function closeMenu()
+        {
+            $('#offcanvas_close').click()
+        }
     toastr.options = {
         "positionClass": "toast-top-center",
     };
