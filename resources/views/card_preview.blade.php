@@ -166,6 +166,14 @@
             padding-top: 11px;
             margin-bottom: 4px;
         }
+        .loading-spinner {
+            display: none;
+        }
+
+        .loading-spinner.active {
+            display: inline-block;
+        }
+
     </style>
     @if($cardinfo->theme_color)
         <style>
@@ -484,13 +492,15 @@
                     <div class="mb-3">
                         <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
                             class="form-control @error('message') is-invalid @enderror" placeholder="{{ __('Notes on this interaction') }}"
-                            tabindex="{{ $tabindex++ }}"></textarea>
+                            tabindex="{{ $tabindex++ }}" required></textarea>
                         @if ($errors->has('message'))
                             <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary w-100"
-                        style="background: #111 !important;">{{ __('Connect') }}</button>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
+                            <span class="btn-txt">{{ __('Connect') }}</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -542,14 +552,19 @@ $(document).on('submit', "#connect-form", function (e) {
         contentType: false,
         beforeSend: function () {
             $("body").css("cursor", "progress");
+            $('.contact-spinner').toggleClass('active');
+            $(this).find('.contact-spinner').prop('disabled', true);
+            $(".btn-txt").text("Processing ...");
         },
         success: function (response) {
             if (response.status == 1) {
             $('#connect-form')[0].reset();
             // $('.contact_modal').addClass('d-none');
                 toastr.success(response.msg);
+                $('.contact-spinner').removeClass('active');
+                $('.contact-spinner').attr("disabled", false);
+                $(".btn-txt").text("Connect");
                 closeMenu();
-
             } else {
                 toastr.error(response.msg);
             }
@@ -559,6 +574,9 @@ $(document).on('submit', "#connect-form", function (e) {
         },
         complete: function (response) {
             $("body").css("cursor", "default");
+            $('.contact-spinner').removeClass('active');
+            $('.contact-spinner').attr("disabled", false);
+            $(".btn-txt").text("Connect");
         }
     });
 });
