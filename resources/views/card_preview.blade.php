@@ -181,9 +181,7 @@
             .offcanvas_btn a{background: {{ $cardinfo->theme_color }}}
         </style>
     @endif
-
 </head>
-
 <body>
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
@@ -211,10 +209,6 @@
                     <div class="save_contact mt-5 mb-5">
                         <a href="{{ route('download.vCard', $cardinfo->card_id) }}"
                             class="text-decoration-none save-contact w-50 d-inline-block">{{ __('Save Contact') }}</a>
-
-                        {{-- <a href="{{ route('download.vCard',$cardinfo->card_id) }}" class="text-decoration-none save-contact w-50 d-inline-block">
-                            {{ __('Save Contact') }}
-                        </a> --}}
                         <a href="javascript:void(0)" class="text-decoration-none d-inline-block btn-secondary"
                             data-bs-toggle="modal" data-bs-target="#shareModal">
                             {{ __('Share') }}
@@ -223,9 +217,9 @@
                     <div class="social_media">
                         <ul>
                             <?php
-                            $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-                            $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-                            $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+                                $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
+                                $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+                                $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                             ?>
                             @if (!empty($cardinfo->business_card_fields))
                                 @foreach ($cardinfo->business_card_fields as $contact)
@@ -240,21 +234,17 @@
                                         }
                                         //link,mail,mobile,number,text,username
                                     @endphp
-
                                         <li>
                                             @if ($contact->type == 'address')
                                                 <a title="" class="text-decoration-none"
                                                     href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
                                                     target="_blank">
                                                 @elseif ($contact->type == 'mail')
-                                                    <a class="text-decoration-none"
-                                                        href="mailto:{{ $contact->content }}">
+                                                    <a class="text-decoration-none" href="mailto:{{ $contact->content }}">
                                                     @elseif ($contact->type == 'mobile')
-                                                        <a class="text-decoration-none"
-                                                            href="tel:{{ $contact->content }}">
+                                                        <a class="text-decoration-none" href="tel:{{ $contact->content }}">
                                                         @elseif ($contact->type == 'text')
-                                                            <a class="text-decoration-none"
-                                                                href="{{ $contact->content }}" target="_blank">
+                                                            <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
                                                             @elseif ($contact->type == 'whatsapp')
                                                                 @if ($android !== false || $ipad !== false || $iphone !== false)
                                                                     <a class="text-decoration-none"
@@ -266,13 +256,10 @@
                                                                             target="_blank">
                                                                 @endif
                                                             @else
-                                                                <a class="text-decoration-none"
-                                                                    href="{{ makeUrl($contact->content) }}"
-                                                                    target="_blank">
+                                                                <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
                                             @endif
                                             <img style="border-radius: 15px; background:{{ $icon_color }}" class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
                                                 alt="{{ $contact->label }}" width="75" height="75">
-
                                             <span>{{ $contact->label }}</span>
                                             </a>
                                         </li>
@@ -281,8 +268,6 @@
                             @endif
                         </ul>
                     </div>
-
-
                     <div class="copyright_article">
                         @if (isFreePlan($cardinfo->user_id))
                             <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights
@@ -292,10 +277,8 @@
                                 reserved.</p>
                         @endif
                     </div>
-
                 </div>
             </div>
-
             <!-- offcanvas contact button -->
             <div class="offcanvas_btn">
                 <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
@@ -306,7 +289,6 @@
             <!-- offcanvas contact button -->
         </div>
     </div>
-
 
     <!-- Share modal -->
     <div class="share_modal modal_one">
@@ -322,9 +304,7 @@
                     <div class="modal_body">
                         <div class="text-center mb-5">
                             <h5>{{ __('Send Card') }}</h5>
-
                             <div class="py-2 mb-4 qrcode_share">
-
                                 <div class="qrcode-wrapper mb-5">
                                     <div class="qr-background">
                                         <svg viewBox="0 0 213 213" xmlns="http://www.w3.org/2000/svg">
@@ -361,8 +341,7 @@
                                     </a>
                                     <a class="btn btn-primary" title="{{ __('Social Media') }}" href="#"
                                         data-bs-toggle="modal" data-bs-target="#SocialModal">
-                                        <img class="img-fluid" src="{{ asset('assets/img/icon/connections.svg') }}"
-                                            alt="">
+                                        <img class="img-fluid" src="{{ asset('assets/img/icon/connections.svg') }}" alt="">
                                         {{ __('Social Media') }}
                                     </a>
                                 </div>
@@ -393,26 +372,22 @@
                                     <ul class="text-center">
                                         <li>
                                             <a href="#" class="" id="" title="">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="" id="" title="">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="" id="" title="">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="" id="" title="">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
                                             </a>
                                         </li>
                                     </ul>
@@ -512,75 +487,47 @@
     <script src="{{ asset('assets/js/toastr.js') }}"></script>
     <script>
         AOS.init();
-        //   $(document).on("click", ".save-contact", function (e) {
-        //         e.preventDefault();
-        //         var url = $(this).attr('href');
-        //             $.ajax({
-        //                 type: 'GET',
-        //                 url: url,
-        //                 contentType:false,
-        //                 processData:false,
-        //                 success: function (response) {
-        //                     if (response.status == 1) {
-        //                         const link = document.createElement('a');
-        //                         link.setAttribute('href', response.file_path);
-        //                         link.setAttribute('download', response.file_name);
-        //                         link.click();
-        //                     }else{
-        //                         toastr.error('Something wrong! please try again');
-        //                     }
-        //                 },
-        //                 error: function (jqXHR, exception) {
-        //                     toastr.error('Something wrong! please try again');
-        //                 },
-        //                 complete: function (data) {
-        //                     $("body").css("cursor", "default");
-        //                 }
-        //             });
-        //     });
-
-
-$(document).on('submit', "#connect-form", function (e) {
-    e.preventDefault();
-    var form = $("#connect-form");
-    $.ajax({
-        url: $(this).attr("action"),
-        type: $(this).attr("method"),
-        dataType: "JSON",
-        data: new FormData(this),
-        async: true,
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-            $("body").css("cursor", "progress");
-            $('.contact-spinner').toggleClass('active');
-            $(this).find('.contact-spinner').prop('disabled', true);
-            $(".btn-txt").text("Processing ...");
-        },
-        success: function (response) {
-            if (response.status == 1) {
-            $('#connect-form')[0].reset();
-            // $('.contact_modal').addClass('d-none');
-                toastr.success(response.msg);
-                $('.contact-spinner').removeClass('active');
-                $('.contact-spinner').attr("disabled", false);
-                $(".btn-txt").text("Connect");
-                closeMenu();
-            } else {
-                toastr.error(response.msg);
-            }
-        },
-        error: function (jqXHR, exception) {
-            toastr.error('Something wrong');
-        },
-        complete: function (response) {
-            $("body").css("cursor", "default");
-            $('.contact-spinner').removeClass('active');
-            $('.contact-spinner').attr("disabled", false);
-            $(".btn-txt").text("Connect");
-        }
-    });
-});
+        $(document).on('submit', "#connect-form", function (e) {
+            e.preventDefault();
+            var form = $("#connect-form");
+            $.ajax({
+                url: $(this).attr("action"),
+                type: $(this).attr("method"),
+                dataType: "JSON",
+                data: new FormData(this),
+                async: true,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                    $('.contact-spinner').toggleClass('active');
+                    $(this).find('.contact-spinner').prop('disabled', true);
+                    $(".btn-txt").text("Processing ...");
+                },
+                success: function (response) {
+                    if (response.status == 1) {
+                    $('#connect-form')[0].reset();
+                    // $('.contact_modal').addClass('d-none');
+                        toastr.success(response.msg);
+                        $('.contact-spinner').removeClass('active');
+                        $('.contact-spinner').attr("disabled", false);
+                        $(".btn-txt").text("Connect");
+                        closeMenu();
+                    } else {
+                        toastr.error(response.msg);
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    toastr.error('Something wrong');
+                },
+                complete: function (response) {
+                    $("body").css("cursor", "default");
+                    $('.contact-spinner').removeClass('active');
+                    $('.contact-spinner').attr("disabled", false);
+                    $(".btn-txt").text("Connect");
+                }
+            });
+        });
 
         function closeMenu()
         {
