@@ -587,6 +587,19 @@
         background:{{ $card->theme_color }}
     }
     </style>
+
+
+<script>
+    function hexToRGBA(hex, opacity) {
+        return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) { return parseInt(hex.length%2 ? l+l : l, 16) }).concat(isFinite(opacity) ? opacity : 1).join(',') + ')';
+    }
+
+    var bg = hexToRGBA('{{ $card->theme_color }}',0.1);
+    $('#clrBg').css('background',bg);
+
+
+</script>
+
 @endif
 
 @if($card->theme_color == '#fff' )
@@ -608,6 +621,7 @@
         }
     </style>
 @endif
+
 <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
@@ -781,6 +795,7 @@ function changeColor(bgcolor,color){
     // element.style.backgroundColor = color;
     var element = $("#clrBg");
     element.css("background-color", bgcolor);
+    $('.social_logo').css("background", color);
     if(color == '#fff'){
         $('.save_contact a').css("color", '#000');
         $('.save_contact a').css("border-color", '#000');
