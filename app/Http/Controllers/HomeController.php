@@ -246,7 +246,6 @@ class HomeController extends Controller
                 $suffix = '';
                 $url = $card->company_websitelink;
                 $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
-
                 $vcard->addEmail($card->card_email ?? Auth::user()->email);
 
                 if(!empty($card->bio)){
