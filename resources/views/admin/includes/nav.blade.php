@@ -95,7 +95,7 @@
                     </div>
                 </li> --}}
 
-
+{{--
                 <li class="nav-item @yield('subscribers')">
                     <a class="nav-link" href="{{ route('admin.subscriber.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -105,7 +105,7 @@
                         </span>
                         <span class="nav-link-title">{{ __('Subscribers') }}</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item @yield('reviews')">
                     <a class="nav-link" href="{{ route('admin.review.index') }}">

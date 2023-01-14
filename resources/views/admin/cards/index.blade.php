@@ -85,7 +85,7 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- <a class="dropdown-item btn-sm" href="{{ route('admin.card.edit', $row->id)}}">{{ __('Edit') }}</a> --}}
-                                                        <a class="dropdown-item btn-sm" href="#">{{ __('Edit') }}</a>
+                                                        {{-- <a class="dropdown-item btn-sm" href="#">{{ __('Edit') }}</a> --}}
                                                         <a class="dropdown-item btn-sm" target="_blank" href="{{ route('card.preview',$row->card_url) }}">{{ __('View') }}</a>
                                                         @if ($row->status == 0)
                                                             <a href="{{ route('admin.card.change-status',$row->id) }}" class="dropdown-item btn-sm">{{ __('Activate') }}</a>
