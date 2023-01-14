@@ -76,7 +76,7 @@ $tabindex =1;
                                         <span class="notice d-none position-absolute" style="color: rgb(34, 34, 34); transition: all 0.2s ease 0s;">Copied</span>
                                         </a>
                                     </h5>
-                                    <span> {{ $row->email }}</span>
+                                    <span> <a href="mailto:{{ $row->email }}">{{ $row->email }}</a></span>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <h5>Job title</h5>
@@ -94,7 +94,7 @@ $tabindex =1;
                                         <span class="notice d-none position-absolute" style="color: rgb(34, 34, 34); transition: all 0.2s ease 0s;">Copied</span>
                                     </a>
                                      </h5>
-                                    <span>{{ $row->phone }}</span>
+                                    <span><a href="tel:{{ $row->phone }}">{{ $row->phone }}</a></span>
                                 </div>
                                 <div class="col-md-8 mb-4">
                                      <h5>Note</h5>

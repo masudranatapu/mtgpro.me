@@ -23,7 +23,7 @@ class AdminMiddleware
             return $next($request);
         }
         Toastr::error(trans('You do not have the permission to access'), 'Error', ["positionClass" => "toast-top-right"]);
-        return redirect()->route('web.index')->with('error',"You do not have the permission to access");
+        return redirect()->route('home')->with('error',"You do not have the permission to access");
     }
 
 

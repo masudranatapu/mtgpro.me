@@ -35,7 +35,6 @@ class ConnectionController extends Controller
             $to_date = trim($date[1]);
         }
         $keyword = $request->search;
-
         $data = DB::table('connects')
         ->select('connects.*','users.profile_image as user_image')
         ->orderBy('connects.id','desc')
@@ -52,19 +51,28 @@ class ConnectionController extends Controller
         //     }
         // }
 
+
         if(isset($keyword)){
             $data->where(function ($query) use($keyword) {
-                $query->where('connects.name', 'like', '%' . $keyword . '%')
-                   ->orWhere('connects.email', 'like', '%' . $keyword . '%')
-                   ->orWhere('connects.company_name', 'like', '%' . $keyword . '%')
-                   ->orWhere('connects.phone', 'like', '%' . $keyword . '%');
+                $query->where('connects.name', 'like', '%' .$keyword. '%')
+                   ->orWhere('connects.email', 'like', '%' .$keyword. '%')
+                   ->orWhere('connects.company_name', 'like','%'.$keyword. '%')
+                   ->orWhere('connects.phone', 'like', '%' .$keyword. '%');
               });
         }
         if(!empty($form_date) && !empty($to_date)){
-            $data->whereBetween('connects.created_at', [date('Y/m/d', strtotime($form_date)),date('Y/m/d', strtotime($to_date))]);
+            $form_date = date('Y/m/d', strtotime($form_date));
+            $to_date = date('Y/m/d', strtotime($to_date));
+            if($form_date==$to_date){
+                $data = $data->whereDate('connects.created_at', $form_date);
+            }
+            else{
+                $data = $data->whereBetween('connects.created_at', [$form_date,$to_date]);
+            }
+            // $data = $data->whereBetween('connects.created_at', [date('Y/m/d', strtotime($form_date)),date('Y/m/d', strtotime($to_date))]);
         }
 
-        $data = $data->paginate(10);
+        $data = $data->paginate(20);
         return view('user.connections.index', compact('data'));
     }
 
@@ -111,8 +119,8 @@ class ConnectionController extends Controller
             $vcard->addCompany($connection->company_name);
         }
         if(!empty($connection->profile_image)){
-            $profile_image = str_replace(' ', '%20', public_path($connection->profile_image));
-            $vcard->addPhoto($profile_image);
+            // $profile_image = str_replace(' ', '%20', public_path($connection->profile_image));
+            $vcard->addPhoto($connection->profile_image);
         }
         return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
     }
