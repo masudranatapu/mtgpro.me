@@ -22,8 +22,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>                </div>
                 <div class="modal-body">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="pb-3">
+                        <div class="">
                             <div class="form-row">
                                 <label for="card-element">
                                     {{ __('Credit or debit card')}}
@@ -36,11 +36,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
+                        <button class="btn btn-primary" type="submit">{{ __('Pay now')}}</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
-                    <button class="btn btn-primary" type="submit">{{ __('Pay now')}}</button>
-                </div>
+
             </form>
         </div>
     </div>

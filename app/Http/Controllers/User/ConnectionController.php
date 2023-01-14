@@ -3,13 +3,14 @@ namespace App\Http\Controllers\User;
 use App\Models\Connection;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
+use App\Mail\SendConnectMail;
 use JeroenDesloovere\VCard\VCard;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
-use App\Http\Requests\SendConnectMail;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SendConnectMailRequest;
 
@@ -35,7 +36,6 @@ class ConnectionController extends Controller
             $to_date = trim($date[1]);
         }
         $keyword = $request->search;
-
         $data = DB::table('connects')
         ->select('connects.*','users.profile_image as user_image')
         ->orderBy('connects.id','desc')
@@ -52,19 +52,28 @@ class ConnectionController extends Controller
         //     }
         // }
 
+
         if(isset($keyword)){
             $data->where(function ($query) use($keyword) {
-                $query->where('connects.name', 'like', '%' . $keyword . '%')
-                   ->orWhere('connects.email', 'like', '%' . $keyword . '%')
-                   ->orWhere('connects.company_name', 'like', '%' . $keyword . '%')
-                   ->orWhere('connects.phone', 'like', '%' . $keyword . '%');
+                $query->where('connects.name', 'like', '%' .$keyword. '%')
+                   ->orWhere('connects.email', 'like', '%' .$keyword. '%')
+                   ->orWhere('connects.company_name', 'like','%'.$keyword. '%')
+                   ->orWhere('connects.phone', 'like', '%' .$keyword. '%');
               });
         }
         if(!empty($form_date) && !empty($to_date)){
-            $data->whereBetween('connects.created_at', [date('Y/m/d', strtotime($form_date)),date('Y/m/d', strtotime($to_date))]);
+            $form_date = date('Y/m/d', strtotime($form_date));
+            $to_date = date('Y/m/d', strtotime($to_date));
+            if($form_date==$to_date){
+                $data = $data->whereDate('connects.created_at', $form_date);
+            }
+            else{
+                $data = $data->whereBetween('connects.created_at', [$form_date,$to_date]);
+            }
+            // $data = $data->whereBetween('connects.created_at', [date('Y/m/d', strtotime($form_date)),date('Y/m/d', strtotime($to_date))]);
         }
 
-        $data = $data->paginate(10);
+        $data = $data->paginate(20);
         return view('user.connections.index', compact('data'));
     }
 
@@ -111,8 +120,8 @@ class ConnectionController extends Controller
             $vcard->addCompany($connection->company_name);
         }
         if(!empty($connection->profile_image)){
-            $profile_image = str_replace(' ', '%20', public_path($connection->profile_image));
-            $vcard->addPhoto($profile_image);
+            // $profile_image = str_replace(' ', '%20', public_path($connection->profile_image));
+            $vcard->addPhoto($connection->profile_image);
         }
         return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
     }
@@ -158,15 +167,16 @@ class ConnectionController extends Controller
 
 
     // public function sendConnectEmail(SendConnectMailRequest $request,$id)
-    public function sendConnectEmail(Request $request,$id)
+    public function sendConnectEmail(SendConnectMailRequest $request,$id)
     {
+        // dd($request->all());
         try {
+            $connection   = Connection::findOrFail($id);
+            $data['subject'] = $request->subject;
+            $data['message'] = $request->message;
 
-            // "email" => "midul@gmail.com"
-            // "subject" => "asas"
-            // "message" => "asas"
-            $connection   = Connection::find($id);
 
+            Mail::to($connection->email)->send(new SendConnectMail($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
             Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);

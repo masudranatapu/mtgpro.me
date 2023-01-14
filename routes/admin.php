@@ -48,6 +48,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('offline-transactions', 'TransactionsController@offlineTransactions')->name('offline.transactions');
     Route::get('offline-transaction-status/{id}/{status}', 'TransactionsController@offlineTransactionStatus')->name('offline.trans.status');
     Route::get('view-invoice/{id}', 'TransactionsController@viewInvoice')->name('view.invoice');
+
     // Account Setting
     Route::get('account', 'AccountController@account')->name('account');
     Route::get('edit-account', 'AccountController@editAccount')->name('edit.account');

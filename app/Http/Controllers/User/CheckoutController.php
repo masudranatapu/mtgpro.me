@@ -30,17 +30,13 @@ use App\Http\Requests\TransectionRequest;
 
 class CheckoutController extends Controller
 {
-
-
     protected $businesscard;
-
     public function __construct(
         BusinessCard $businesscard
         )
     {
         $this->businesscard  = $businesscard;
     }
-
 
 
     // public function __construct()
@@ -81,13 +77,14 @@ class CheckoutController extends Controller
                   $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
-                    'paid_with' => 0,
+                    'paid_with' => NULL,
                     'term' => $term_days,
                     'plan_validity' => $plan_validity,
                     'plan_activation_date' => now(),
                     'plan_details' => json_encode($plan),
                     'stripe_data' => NULL,
                     'paypal_data' => NULL,
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
                 return redirect()->route('user.plans');
             }elseif($plan->is_free==1){

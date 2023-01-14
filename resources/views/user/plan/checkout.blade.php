@@ -216,7 +216,6 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-
         var countryCode = "{{ Auth::user()->billing_country_code ?? 'us' }}";
         var input = document.querySelector("#billing_phone");
         window.intlTelInput(input, {
@@ -268,7 +267,6 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
                 }
             }
         })
-
     $(function() {
         // Set your publishable key: remember to change this to your live publishable key in production
         // See your keys here: https://dashboard.stripe.com/apikeys

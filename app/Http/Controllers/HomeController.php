@@ -66,7 +66,6 @@ class HomeController extends Controller
 
     public function getConnect(ConnectRequest $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
             $data['name' ]         = $request->name;
@@ -126,11 +125,6 @@ class HomeController extends Controller
 
     public function getPreview($cardurl)
     {
-        // if(!checkPackage()){
-        //     return redirect()->route('user.plans');
-        // }
-
-
         $user = DB::table('users')->where('username',$cardurl)->first();
         if($user == null){
             $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
@@ -155,14 +149,8 @@ class HomeController extends Controller
         if($cardinfo){
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
             $user = User::find($cardinfo->user_id);
-
-
-            // dd(DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1));
-            // $icons = SocialIcon::orderBy('order_id','desc')->get();
             $url = url($cardinfo->card_url);
-
             if(Auth::user() && ($cardinfo->user_id == Auth::id()) ){
-
             }else{
                 if($cardinfo->status == 0){
                     Toastr::warning('This card is not active now');
@@ -173,15 +161,6 @@ class HomeController extends Controller
                     return redirect()->back();
                 }
             }
-
-            // $carddetails = DB::table('business_fields')
-            // ->select('business_fields.*')
-            // // ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
-            // ->where('business_fields.card_id', $cardinfo->id)
-            // ->where('business_fields.status',1)
-            // ->orderBy('business_fields.position','ASC')
-            // ->get();
-
             return view('card_preview', compact('cardinfo','user'));
         }else{
 
@@ -251,7 +230,6 @@ class HomeController extends Controller
                 if(!empty($card->bio)){
                     $vcard->addNote($card->bio);
                 }
-
                 if(!empty($card->phone_number)){
                     $vcard->addPhoneNumber($card->phone_number,'HOME');
                 }
@@ -267,7 +245,6 @@ class HomeController extends Controller
                 {
                     $vcard->addBirthday ($card->dob);
                 }
-
                 // if(!empty($card->logo) && file_exists(public_path($card->logo))){
                 //     $logo = str_replace(' ', '%20', public_path($card->logo));
                 //     $vcard->addLogo($logo);
@@ -278,15 +255,11 @@ class HomeController extends Controller
                     $vcard->addPhoto($profile);
                 }
                 if(!empty($contacts) && count($contacts) > 0){
-
                     //link,mail,mobile,number,text,username
-
                     foreach ($contacts as $key => $contact) {
                         if ($contact->type=='link'){
                             $vcard->addURL($contact->content,$contact->label);
                         }
-                        // elseif ($contact->type=='username') {
-                        // }
                         elseif ($contact->type=='mail'){
                             $vcard->addEmail($contact->content,$contact->label);
                         }elseif ($contact->type=='mobile'){

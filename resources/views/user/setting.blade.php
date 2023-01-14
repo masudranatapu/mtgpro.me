@@ -87,10 +87,14 @@
                                                                 <h3>
                                                                     <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
                                                                     @if ($duration > 0 && $plan->is_free==0)
+
                                                                         <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
                                                                     @else
                                                                     @endif
                                                                 </h3>
+                                                                @if ($duration > 0 && $plan->is_free==0)
+                                                                <a class="float-right" title="Cancel Current Plan" href="{{ route('user.cancel-plan.stripe') }}" onclick="return confirm('Are you sure you want to cancel this plan?');">{{ __('Cancel Subscription') }}</a>
+                                                                @endif
                                                             </div>
 
                                                             <div class="card-body">
@@ -243,7 +247,7 @@
                                             <div class="tab-pane text-left fade" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                                                 <div class="setting_tab_contetn">
                                                     <div class="heading mb-4">
-                                                        <h3>{{ __('Account Settings') }} {{ $user->profile_image }}</h3>
+                                                        <h3>{{ __('Account Settings') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
                                                         <form action="{{ route('user.profile-info.update') }}" method="post">
@@ -263,7 +267,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="email" class="form-label">{{ __('Email') }}</label>
-                                                                <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}">
+                                                                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $user->email }}">
                                                                 @if($errors->has('email'))
                                                                 <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                                                                 @endif
@@ -279,7 +283,7 @@
                                                         </form>
                                                        <div class="float-right">
                                                             <a href="{{ route('user.password.reset') }}" title="{{ __('Reset Your Password') }}" class="btn btn-primary reset_password_request">{{ __('Reset Your Password') }}</a>
-                                                            <a href="#" class="btn btn-secondary text-danger" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
+                                                            <a href="javascript:void(0)" class="btn btn-secondary text-danger" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                        </div>
                                                     </div>
                                                 </div>
@@ -301,14 +305,14 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="subject" class="form-label">{{ __('Subject') }} <span class="text-dark">*</span></label>
-                                                                <input type="text" name="subject" id="subject" class="form-control" placeholder="{{ __('Subject') }}" required>
+                                                                <input type="text" name="subject" id="subject" class="form-control @error('subject') is-invalid @enderror" placeholder="{{ __('Subject') }}" required>
                                                                 @if($errors->has('subject'))
                                                                 <span class="help-block text-danger">{{ $errors->first('subject') }}</span>
                                                                 @endif
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
-                                                                <textarea name="message" id="message" cols="30" rows="7" placeholder="{{ __('Message') }}" class="form-control" required style="height:120px;"></textarea>
+                                                                <textarea name="message" id="message" cols="30" rows="7" placeholder="{{ __('Message') }}" class="form-control @error('message') is-invalid @enderror" required style="height:120px;"></textarea>
                                                                 @if($errors->has('message'))
                                                                 <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                                                                 @endif
@@ -334,7 +338,7 @@
                                                             @csrf
                                                             <div class="form-group">
                                                                 <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
-                                                                <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="{{ __('Messag') }}e" class="form-control" required style="height:120px;"></textarea>
+                                                                <textarea name="request_message" id="request_message" cols="30" rows="7" placeholder="{{ __('Message') }}" class="form-control @error('request_message') is-invalid @enderror" required style="height:120px;"></textarea>
                                                                 @if($errors->has('request_message'))
                                                                 <span class="help-block text-danger">{{ $errors->first('request_message') }}</span>
                                                                 @endif
@@ -377,7 +381,7 @@
                             <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}</p>
 
                             <div class="mb-3">
-                                <input type="text" name="confirm" id="confirm" class="form-control" placeholder="Type 'delete' to delete your account." required>
+                                <input type="text" name="confirm" id="confirm" class="form-control @error('confirm') is-invalid @enderror" placeholder="Type 'delete' to delete your account." required>
                                 @if($errors->has('confirm'))
                                 <span class="help-block text-danger">{{ $errors->first('confirm') }}</span>
                                 @endif
@@ -388,7 +392,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -411,14 +414,14 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="billing_email" class="form-label">{{ __('Email') }}</label>
-                                <input type="text" name="billing_email" id="billing_email" class="form-control" value="{{ $user->billing_email }}" required>
+                                <input type="text" name="billing_email" id="billing_email" class="form-control @error('billing_email') is-invalid @enderror" value="{{ $user->billing_email }}" required>
                                 @if($errors->has('billing_email'))
                                 <span class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
                                 @endif
                             </div>
                             <div class="mb-3">
                                 <label for="billing_country" class="form-label">{{ _('Country / Region') }}</label>
-                                <select name="billing_country" id="billing_country" class="form-control">
+                                <select name="billing_country" id="billing_country" class="form-control @error('billing_country') is-invalid @enderror">
                                     <option value="" class="d-none">-- {{ __('Choose') }} --</option>
                                     @foreach ($countries as $key=>$country)
                                     <option value="{{ $country }}" {{ $user->billing_country==$country ? 'selected':'' }}>{{ $country }}</option>
@@ -430,7 +433,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="billing_zipcode" class="form-label">{{ __('Zip Code') }}</label>
-                                <input type="number" name="billing_zipcode" id="billing_zipcode" class="form-control" value="{{ $user->billing_zipcode }}" required>
+                                <input type="number" name="billing_zipcode" id="billing_zipcode" class="form-control @error('billing_zipcode') is-invalid @enderror" value="{{ $user->billing_zipcode }}" required>
                                 @if($errors->has('billing_zipcode'))
                                 <span class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
                                 @endif
