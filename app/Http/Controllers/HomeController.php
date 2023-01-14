@@ -268,10 +268,11 @@ class HomeController extends Controller
                     $vcard->addBirthday ($card->dob);
                 }
 
-                if(!empty($card->logo) && file_exists(public_path($card->logo))){
-                    $logo = str_replace(' ', '%20', public_path($card->logo));
-                    $vcard->addLogo($logo);
-                }
+                // if(!empty($card->logo) && file_exists(public_path($card->logo))){
+                //     $logo = str_replace(' ', '%20', public_path($card->logo));
+                //     $vcard->addLogo($logo);
+                //     // $vcard->addLogo($logo);
+                // }
                 if(!empty($card->profile) && file_exists(public_path($card->profile))){
                     $profile = str_replace(' ', '%20', public_path($card->profile));
                     $vcard->addPhoto($profile);

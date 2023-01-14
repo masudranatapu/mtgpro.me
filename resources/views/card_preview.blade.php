@@ -238,19 +238,20 @@
                                         }else{
                                             $icon_color = $cardinfo->theme_color;
                                         }
-
+                                        //link,mail,mobile,number,text,username
                                     @endphp
+
                                         <li>
                                             @if ($contact->type == 'address')
                                                 <a title="" class="text-decoration-none"
                                                     href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
                                                     target="_blank">
-                                                @elseif ($contact->type == 'email')
+                                                @elseif ($contact->type == 'mail')
                                                     <a class="text-decoration-none"
-                                                        href="mailto:{{ $contact->content }}" target="_blank">
-                                                    @elseif ($contact->type == 'phone')
+                                                        href="mailto:{{ $contact->content }}">
+                                                    @elseif ($contact->type == 'mobile')
                                                         <a class="text-decoration-none"
-                                                            href="tel:{{ $contact->content }}" target="_blank">
+                                                            href="tel:{{ $contact->content }}">
                                                         @elseif ($contact->type == 'text')
                                                             <a class="text-decoration-none"
                                                                 href="{{ $contact->content }}" target="_blank">
@@ -297,8 +298,8 @@
 
             <!-- offcanvas contact button -->
             <div class="offcanvas_btn">
-                <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                    aria-controls="offcanvasExample">
+                <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
+                    aria-controls="offcanvasContact">
                     {{ __('Connect') }}
                 </a>
             </div>
@@ -385,7 +386,7 @@
                         </button>
                     </div>
                     <div class="modal_body">
-                        <h5 class="mb-5 text-center">Share Your Card</h5>
+                        <h5 class="mb-5 text-center">{{ __('Share Your Card') }}</h5>
                         <div id="social-links">
                             <div class="row">
                                 <div class="col-12 col-sm-12">
@@ -427,8 +428,8 @@
 
 
     <!-- Contact Offcanvas form -->
-    <div class="contact_modal offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasExample"
-        aria-labelledby="offcanvasExampleLabel">
+    <div class="contact_modal offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasContact"
+        aria-labelledby="offcanvasContactLabel">
         <div class="offcanvas-header">
             <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
                 <span>
