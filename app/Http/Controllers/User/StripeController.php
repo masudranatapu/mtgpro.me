@@ -214,6 +214,44 @@ class StripeController extends Controller
     }
 
 
+    public function cancelCurrentPlan(Request $request)
+    {
+        // Carbon::now()->addDays(5);
+        $config         = DB::table('config')->get();
+        $user = DB::table('users')->where('id',Auth::user()->id)->first();
+        $plan = DB::table('plans')->where('id', $user->plan_id)->first();
+        $payment_data = json_decode($user->stripe_data);
+        $term_days = $plan->validity;
+        $plan_validity = \Carbon\Carbon::now()->addDays($plan->validity);
+        // plan_validity
+        // plan_activation_date
+        //Unsubscription Stripe
+        $stripe = new \Stripe\StripeClient($config[10]->config_value);
+        $stripe = $stripe->subscriptions->cancel(
+            $payment_data->id,
+            []
+          );
+          $this->businesscard->updateDataByCuurentPlan($plan->id);
+        User::where('id', Auth::user()->id)->update([
+            'plan_id' => $plan->id,
+            'paid_with' => 0,
+            'term' => $term_days,
+            'plan_validity' => $plan_validity,
+            'plan_activation_date' => \Carbon\Carbon::now(),
+            'plan_details' => json_encode($plan),
+            'stripe_data' => NULL,
+            'paypal_data' => NULL,
+            'stripe_customer_id' => NULL,
+        ]);
+        return redirect()->route('user.plans');
+        // if(!empty($payment_data)){
+        //     $stripe->subscriptions->cancel(
+        //         $payment_data->id,
+        //         []
+        //     );
+        // }
+    }
+
 
 
 //    public function stripeToken(Request $request)
@@ -224,6 +262,9 @@ class StripeController extends Controller
 //
 //
 //    }
+
+
+
 
     public function stripePaymentStatus(Request $request, $paymentId)
     {

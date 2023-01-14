@@ -87,10 +87,14 @@
                                                                 <h3>
                                                                     <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
                                                                     @if ($duration > 0 && $plan->is_free==0)
+
                                                                         <span class="float-right">{{__($duration)}} {{ __(Str::plural('day',$duration)) }} {{ __('left') }}</span>
                                                                     @else
                                                                     @endif
                                                                 </h3>
+                                                                @if ($duration > 0 && $plan->is_free==0)
+                                                                <a class="float-right" title="Cancel Current Plan" href="{{ route('user.cancel-plan.stripe') }}" onclick="return confirm('Are you sure you want to cancel this plan?');">{{ __('Cancel Subscription') }}</a>
+                                                                @endif
                                                             </div>
 
                                                             <div class="card-body">

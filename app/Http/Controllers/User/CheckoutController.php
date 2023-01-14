@@ -30,17 +30,13 @@ use App\Http\Requests\TransectionRequest;
 
 class CheckoutController extends Controller
 {
-
-
     protected $businesscard;
-
     public function __construct(
         BusinessCard $businesscard
         )
     {
         $this->businesscard  = $businesscard;
     }
-
 
 
     // public function __construct()
