@@ -4,7 +4,7 @@
 @section('social_icon','active')
 @section('content')
 <div class="page-wrapper">
-    {{--         <div class="container-xl">
+    {{-- <div class="container-xl">
         <!-- Page title -->
         <div class="page-header d-print-none mt-2 mb-3">
             <div class="row align-items-center">
@@ -59,40 +59,42 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($socileicons as $key => $socile)
+                                        @foreach($socileicons as $key => $item)
                                             <tr>
                                                 <td>{{$key + 1}}</td>
-                                                <td>{{$socile->icon_group}}</td>
-                                                <td><img src="{{ asset($socile->icon_image) }}" width="35" alt="icon image"></td>
-                                                <td>{{$socile->icon_name}}</td>
+                                                <td>{{$item->icon_group}}</td>
                                                 <td>
-                                                    {{ $socile->type }}
-                                                    @if($socile->type == 'username')
-                                                    <div>{{ $socile->main_link }}</div>
+                                                    <img style="background: {{ $item->icon_color }}" src="{{ asset($item->icon_image) }}" width="35" alt="icon image">
+                                                </td>
+                                                <td>{{$item->icon_name}}</td>
+                                                <td>
+                                                    {{ $item->type }}
+                                                    @if($item->type == 'username')
+                                                    <div>{{ $item->main_link }}</div>
                                                     @endif
 
                                                 </td>
-                                                <td>{{$socile->icon_title}}</td>
-                                                <td>{{$socile->example_text}}</td>
+                                                <td>{{$item->icon_title}}</td>
+                                                <td>{{$item->example_text}}</td>
                                                 <td>
-                                                    @if($socile->status == 1)
+                                                    @if($item->status == 1)
                                                         <span class="badge bg-success">{{ __('Active')}}</span>
                                                     @else
                                                         <span class="badge bg-info">{{ __('Inactive')}}</span>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($socile->is_paid == 1)
+                                                    @if($item->is_paid == 1)
                                                         <span class="badge bg-success">{{ __('Paid')}}</span>
                                                     @else
                                                         <span class="badge bg-info">{{ __('Free')}}</span>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.social-icon.edit', $socile->id) }}" title="Edit socile icon" class="btn btn-primary btn-sm mb-1" style="min-width: 55px;">
+                                                    <a href="{{ route('admin.social-icon.edit', $item->id) }}" title="Edit socile icon" class="btn btn-primary btn-sm mb-1" style="min-width: 55px;">
                                                         {{ __('Edit')}}
                                                     </a>
-                                                    <a href="{{ route('admin.social-icon.destroy', $socile->id) }}" title="Edit socile icon" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Are you sure, you want to delete socile icon ?')" style="min-width: 55px;">
+                                                    <a href="{{ route('admin.social-icon.destroy', $item->id) }}" title="Edit socile icon" class="btn btn-danger btn-sm mb-1" onclick="return confirm('Are you sure, you want to delete socile icon ?')" style="min-width: 55px;">
                                                         {{ __('Delete')}}
                                                     </a>
                                                 </td>

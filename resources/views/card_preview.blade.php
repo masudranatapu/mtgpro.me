@@ -180,7 +180,11 @@
             .save_contact a{background: {{ $cardinfo->theme_color }}}
             .offcanvas_btn a{background: {{ $cardinfo->theme_color }}}
         </style>
+
     @endif
+
+
+
 </head>
 <body>
     <div class="template">
@@ -538,6 +542,24 @@
     };
     </script>
     {!! Toastr::message() !!}
+
+
+@if($cardinfo->theme_color)
+
+
+<script>
+    function hexToRGBA(hex, opacity) {
+        return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) { return parseInt(hex.length%2 ? l+l : l, 16) }).concat(isFinite(opacity) ? opacity : 1).join(',') + ')';
+    }
+
+    var bg = hexToRGBA('{{ $cardinfo->theme_color }}',0.1);
+    $('.card_view_wrapper').css('background',bg);
+
+
+</script>
+
+@endif
+
 </body>
 
 </html>
