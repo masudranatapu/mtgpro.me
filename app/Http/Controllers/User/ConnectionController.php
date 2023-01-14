@@ -3,13 +3,14 @@ namespace App\Http\Controllers\User;
 use App\Models\Connection;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
+use App\Mail\SendConnectMail;
 use JeroenDesloovere\VCard\VCard;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
-use App\Http\Requests\SendConnectMail;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SendConnectMailRequest;
 
@@ -166,15 +167,16 @@ class ConnectionController extends Controller
 
 
     // public function sendConnectEmail(SendConnectMailRequest $request,$id)
-    public function sendConnectEmail(Request $request,$id)
+    public function sendConnectEmail(SendConnectMailRequest $request,$id)
     {
+        // dd($request->all());
         try {
+            $connection   = Connection::findOrFail($id);
+            $data['subject'] = $request->subject;
+            $data['message'] = $request->message;
 
-            // "email" => "midul@gmail.com"
-            // "subject" => "asas"
-            // "message" => "asas"
-            $connection   = Connection::find($id);
 
+            Mail::to($connection->email)->send(new SendConnectMail($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
             Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
