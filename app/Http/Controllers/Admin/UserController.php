@@ -7,7 +7,7 @@ use App\Models\Plan;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\Transaction;
-use App\Models\Card;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use App\Models\BusinessField;
 use App\Mail\SendEmailInvoice;
@@ -58,7 +58,7 @@ class UserController extends Controller
         if ($user_details == null) {
             return view('errors.404');
         } else {
-            $user_cards = Card::where('user_id',$id)->where('status','!=',2)->orderBy('card_url','asc')->get();
+            $user_cards = BusinessCard::where('user_id',$id)->where('status','!=',2)->orderBy('card_url','asc')->get();
             $settings = Setting::where('status', 1)->first();
             return view('admin.users.view-user', compact('user_details', 'user_cards', 'settings'));
         }
@@ -265,7 +265,7 @@ class UserController extends Controller
             } else {
 
                 // Making all cards inactive, For Plan change
-                Card::where('user_id', $user_details->user_id)->update([
+                BusinessCard::where('user_id', $user_details->user_id)->update([
                     'card_status' => 'inactive',
                 ]);
 
@@ -378,21 +378,21 @@ class UserController extends Controller
     {
         $user = User::where('id', $request->query('id'))->first();
         if($user->is_delete==1){
-            $user_cards = Card::where('user_id', $user->id)->get();
+            $user_cards = BusinessCard::where('user_id', $user->id)->get();
             foreach ($user_cards as $key => $value) {
                 BusinessField::where('card_id', $value->id)->delete();
             }
             Transaction::where('user_id', $user->id)->delete();
-            Card::where('user_id', $user->id)->delete();
+            BusinessCard::where('user_id', $user->id)->delete();
             User::where('id', $user->id)->delete();
         }else{
-            $user_cards = Card::where('user_id', $user->id)->get();
+            $user_cards = BusinessCard::where('user_id', $user->id)->get();
             foreach ($user_cards as $key => $value) {
                 BusinessField::where('card_id', $value->id)->update([
                     'status'=> 2,
                 ]);
             }
-            Card::where('user_id', $user->id)->update([
+            BusinessCard::where('user_id', $user->id)->update([
                 'status'=> 2,
                 'is_deleted' => 1,
                 'deleted_at' => date('Y-m-d H:i:s'),
@@ -446,13 +446,13 @@ class UserController extends Controller
             Toastr::error(trans('Already have an account by this email address !'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
-        $user_cards = Card::where('user_id', $id)->get();
+        $user_cards = BusinessCard::where('user_id', $id)->get();
             foreach ($user_cards as $key => $value) {
                 BusinessField::where('card_id', $value->id)->where('status',2)->update([
                     'status'=> 1,
                 ]);
             }
-            Card::where('user_id', $id)->where('status',2)->update([
+            BusinessCard::where('user_id', $id)->where('status',2)->update([
                 'status'=> 1,
                 'is_deleted' => 0,
                 'deleted_at' => NULL,
