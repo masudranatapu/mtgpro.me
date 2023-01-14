@@ -231,7 +231,7 @@ class HomeController extends Controller
             ->get();
                 $vcard = new VCard();
                 if(!empty($card->card_url)){
-                    $vcard_url = URL::to('/') . "/" . $card->card_url;
+                    $vcard_url = URL::to($card->card_url);
                     $vcard->addURL($vcard_url);
                 }
                 // define variables
@@ -244,24 +244,25 @@ class HomeController extends Controller
                 $additional = '';
                 $prefix = '';
                 $suffix = '';
-                $tel = $card->ccode . $card->phone_number;
                 $url = $card->company_websitelink;
-                $company = $card->company_name;
-                $whatsapp = '';
                 $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
+
                 $vcard->addEmail($card->card_email ?? Auth::user()->email);
+
                 if(!empty($card->bio)){
-                $vcard->addNote($card->bio);
+                    $vcard->addNote($card->bio);
                 }
-                if(!empty($tel)){
-                    $vcard->addPhoneNumber($tel,'HOME');
+
+                if(!empty($card->phone_number)){
+                    $vcard->addPhoneNumber($card->phone_number,'HOME');
                 }
+
                 if($card->designation){
                     $vcard->addRole($card->designation);
                     $vcard->addJobtitle($card->designation);
                 }
-                if(!empty($company)){
-                    $vcard->addCompany($company);
+                if(!empty($card->company_name)){
+                    $vcard->addCompany($card->company_name);
                 }
                 if(!empty($card->dob))
                 {
@@ -277,14 +278,21 @@ class HomeController extends Controller
                     $vcard->addPhoto($profile);
                 }
                 if(!empty($contacts) && count($contacts) > 0){
-                    foreach ($contacts as $key => $contact) {
 
+                    //link,mail,mobile,number,text,username
+
+                    foreach ($contacts as $key => $contact) {
                         if ($contact->type=='link'){
-                            $vcard->addURL ($contact->content,$contact->label);
+                            $vcard->addURL($contact->content,$contact->label);
                         }
-                        elseif ($contact->type=='email'){
-                            $vcard->addEmail ( $contact->content,$contact->label);
-                        }elseif ($contact->type=='phone'){
+                        // elseif ($contact->type=='username') {
+                        // }
+                        elseif ($contact->type=='mail'){
+                            $vcard->addEmail($contact->content,$contact->label);
+                        }elseif ($contact->type=='mobile'){
+                            $vcard->addPhoneNumber($contact->content,$contact->label);
+
+                        }elseif ($contact->type=='number'){
                             $vcard->addPhoneNumber($contact->content,$contact->label);
                         }
                         elseif ($contact->type=='address'){
@@ -298,28 +306,7 @@ class HomeController extends Controller
                         }
                     }
                 }
-                // save vcard on disk
-                // $path = public_path('assets/vcard/');
-                // $vcard->setSavePath($path);
-                // $vcard->save();
-                // $file_name =  $vcard->getFilename();
-                // $file_extension = $vcard->getFileExtension();
-                // $final_name =$file_name.'.'.$file_extension;
-                // return response()->json([
-                // 'status' => 1,
-                // 'file_path' => 'assets/vcard/'.$final_name,
-                // 'file_name'=>$final_name
-                // ]);
-                // return 'assets/vcard/'.$final_name;
-
-                // return Response::download($path, $final_name, $headers);
-                // return response()->download($path.$final_name);
-
-            // // 5. return the vcard
-            // return $response;
-
             DB::table('business_cards')->where('card_id',$id)->increment('total_vcf_download', 1);
-
             return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
         }
     }
