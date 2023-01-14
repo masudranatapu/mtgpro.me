@@ -2,11 +2,12 @@
 namespace App\Http\Controllers\User;
 use DB;
 use Auth;
-use App\User;
 use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Plan;
+use App\Models\User;
 use Stripe\StripeClient;
+use Stripe\Subscription;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use App\Models\BusinessCard;
@@ -216,6 +217,8 @@ class StripeController extends Controller
 
     public function cancelCurrentPlan(Request $request)
     {
+        DB::beginTransaction();
+        try {
         // Carbon::now()->addDays(5);
         $config         = DB::table('config')->get();
         $user = DB::table('users')->where('id',Auth::user()->id)->first();
@@ -234,7 +237,7 @@ class StripeController extends Controller
           $this->businesscard->updateDataByCuurentPlan($plan->id);
         User::where('id', Auth::user()->id)->update([
             'plan_id' => $plan->id,
-            'paid_with' => 0,
+            'paid_with' => NULL,
             'term' => $term_days,
             'plan_validity' => $plan_validity,
             'plan_activation_date' => \Carbon\Carbon::now(),
@@ -242,14 +245,17 @@ class StripeController extends Controller
             'stripe_data' => NULL,
             'paypal_data' => NULL,
             'stripe_customer_id' => NULL,
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
-        return redirect()->route('user.plans');
-        // if(!empty($payment_data)){
-        //     $stripe->subscriptions->cancel(
-        //         $payment_data->id,
-        //         []
-        //     );
-        // }
+
+    } catch (\Exception $e) {
+        DB::rollback();
+        Toastr::error('Something\'s wrong. please check again', 'Success', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    }
+    DB::commit();
+    Toastr::success('Plan successfully changed', 'Success', ["positionClass" => "toast-top-center"]);
+    return redirect()->route('user.plans');
     }
 
 
