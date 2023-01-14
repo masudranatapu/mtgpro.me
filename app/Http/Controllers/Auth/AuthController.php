@@ -141,13 +141,12 @@ class AuthController extends Controller
             // ->with('error','oops! your account has been deactivated! please contact website administrator');
         }
         try {
-            // dd($data);
+
             if (!empty($data->email)) {
                 $isExist  = User::where(['email' => $data->email])->first();
             } else {
                 $isExist  = User::where('provider', $provider)->where('social_id', $data->id)->first();
             }
-
 
             if (!empty($isExist)) {
                 $isExist->update([
