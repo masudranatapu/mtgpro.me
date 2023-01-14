@@ -156,10 +156,17 @@ class AuthController extends Controller
                 ]);
                 Auth::login($isExist);
             } else {
+
+                $base_name = preg_replace('/\..+$/', '', $data->name);
+                $base_name = explode(' ', $base_name);
+                $base_name = implode('-', $base_name);
+                $base_name = Str::lower($base_name);
+                $name = $base_name . "-" . uniqid();
+
                 $user              = new User;
                 $user->name        = $data->name;
                 $user->email       = $data->email ?? $falsemail;
-                $user->username    = $data->username ??  trim($data->name);
+                $user->username    = $data->username ??  $name;
                 $user->profile_image = $data->avatar;
                 $user->provider    = $provider;
                 $user->social_id   = $data->id;
