@@ -20,14 +20,12 @@ class StripeController extends Controller
 {
 
     protected $businesscard;
-
     public function __construct(
         BusinessCard $businesscard
         )
     {
         $this->businesscard  = $businesscard;
     }
-
 
     public function webhook()
     {
