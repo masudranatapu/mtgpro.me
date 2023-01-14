@@ -51,7 +51,7 @@ class BusinessCard extends Model
             ->where('c.status', '!=', 2)
             ->where('c.user_id', Auth::user()->id)
             ->paginate($paginate);
-        return $this->formatResponse(true, '', 'web.index', $data);
+        return $this->formatResponse(true, '', 'home', $data);
     }
 
     public function getView($request, $id)
