@@ -155,7 +155,6 @@
                             <a href="{{ route('admin.social-icon.index') }}" class="dropdown-item @yield('social_icon')">{{ __('Social Icon') }}</a>
                             <a href="{{ route('admin.tax.setting') }}" class="dropdown-item @yield('invoice')">{{ __('Invoice & Tax') }}</a>
                             <a href="{{ route('admin.clear') }}" class="dropdown-item @yield('clear_cache')">{{ __('Clear cache') }}</a>
-                            <a href="{{ route('admin.themes') }}" class="dropdown-item @yield('themes')"><span class="nav-link-title">{{ __('Themes') }}</span></a>
                             <a href="{{ route('admin.admin-users') }}" class="dropdown-item @yield('admin-users')"><span class="nav-link-title">{{ __('Admin Users') }}</span></a>
                             <a href="{{ route('admin.change.password') }}" class="dropdown-item @yield('change_password')"><span class="nav-link-title">{{ __('Change Password') }}</span></a>
                         </div>

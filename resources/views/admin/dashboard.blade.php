@@ -119,31 +119,6 @@
                         </a>
                         </div>
                     </div>
-
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card dash-card">
-                        <div class="card-body">
-                            <a href="#">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="subheader">{{ __('WHATSAPP STORES') }}</div>
-                                </div>
-                                <div class="h1">{{ $whatsapp_stores ?? 0 }} <small style="font-size: 12px;text-align: right;">{{ __('Comming Soon')}}</small></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card dash-card">
-                        <div class="card-body">
-                            <a href="#">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="subheader">{{ __('SIGNATURES') }} </div>
-                                </div>
-                                <div class="h1">{{ $signatures ?? 0 }} <small style="font-size: 12px;text-align: right;">{{ __('Comming Soon')}}</small></div>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
