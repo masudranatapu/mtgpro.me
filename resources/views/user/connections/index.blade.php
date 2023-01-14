@@ -112,7 +112,7 @@ if (!empty($daterange)) {
                                                             <a href="{{ route('user.connections.details', [$row->email, $row->id]) }}"
                                                                 class="text-dark">
                                                                 <div class="media position-relative align-items-center">
-                                                                    <img src="{{ getProfile($row->user_image) }}"
+                                                                    <img src="{{ getAvatar($row->profile_image) }}"
                                                                         width="50"
                                                                         class="rounded-circle mr-2 bg-light p-1"
                                                                         alt="{{ $row->name }}" width="80">
@@ -125,7 +125,7 @@ if (!empty($daterange)) {
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
-                                                        <img src="{{ getProfile($row->profile_image) }}" width="42"
+                                                        <img src="{{getAvatar($row->user_image)}}" width="42"
                                                             class="img-circle mr-2" alt="{{ $row->name }}"
                                                             title="{{ $row->name }}">
                                                     </td>

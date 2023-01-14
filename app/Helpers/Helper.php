@@ -99,7 +99,8 @@ if (!function_exists('getAvatar')) {
         if(!empty($path)){
               return $path;
             } else {
-            return asset('assets/img/card/personal.png');
+            // return asset('assets/img/card/personal.png');
+            return asset('assets/img/default-profile.png');
         }
     }
 }

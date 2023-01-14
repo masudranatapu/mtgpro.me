@@ -30,7 +30,9 @@
 
     $bill_date = date('d', strtotime($user->plan_activation_date));
 
+
 @endphp
+
 
 @section('settings','active')
 @section('content')
@@ -241,7 +243,7 @@
                                             <div class="tab-pane text-left fade" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                                                 <div class="setting_tab_contetn">
                                                     <div class="heading mb-4">
-                                                        <h3>{{ __('Account Settings') }}</h3>
+                                                        <h3>{{ __('Account Settings') }} {{ $user->profile_image }}</h3>
                                                     </div>
                                                     <div class="setting_form">
                                                         <form action="{{ route('user.profile-info.update') }}" method="post">
@@ -547,29 +549,7 @@
             }
         });
     });
-
-// var cropper = new Slim(document.getElementById('profile_pic'), {
-//         ratio: '1:1',
-//         minSize: {
-//             width: 150,
-//             height: 150,
-//         },
-//         size: {
-//             width: 600,
-//             height: 600,
-//         },
-//         willSave: function(data, ready) {
-//             $('#profilePic_2').attr('src',data.output.image);
-//           ready(data);
-//         },
-//         meta: {
-//             viewid:1
-//       },
-//         download: false,
-//         instantEdit: true,
-//     });
-
-$(document).on('click', ".reset_password_request", function (e) {
+    $(document).on('click', ".reset_password_request", function (e) {
         e.preventDefault();
         var route = $(this).attr('href');
         $.ajax({
