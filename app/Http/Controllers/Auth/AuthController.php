@@ -162,11 +162,22 @@ class AuthController extends Controller
                 $base_name = implode('-', $base_name);
                 $base_name = Str::lower($base_name);
                 $name = $base_name . "-" . uniqid();
-
                 $user              = new User;
                 $user->name        = $data->name;
                 $user->email       = $data->email ?? $falsemail;
-                $user->username    = $data->username ??  $name;
+                if(!empty($data->username)){
+                    $exist_username = DB::table('users')->where('username',$data->username)->first();
+                    if(!empty($exist_username)){
+                        $user->username    = $name;
+                    }
+                    else{
+                        $user->username    = $data->username;
+                    }
+
+                }else{
+                    $user->username    = $data->username ??  $name;
+                }
+
                 $user->profile_image = $data->avatar;
                 $user->provider    = $provider;
                 $user->social_id   = $data->id;
