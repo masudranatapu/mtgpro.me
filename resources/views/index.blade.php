@@ -141,7 +141,7 @@ $settings  = getSetting();
                     </div>
                 </div>
                 <div class="col-lg-7 col-12">
-                    @if(!empty($banner['banner_video']))
+                    @if(!empty($banner['banner_video']) && file_exists(public_path($banner['banner_video'])))
                     <div class="embed-responsive embed-responsive-21by9">
                         {{-- <iframe class="embed-responsive-item" src="{{ asset($banner['banner_video']) }}" allowfullscreen="true" frameborder="0" muted="" autoplay="" loop=""></iframe> --}}
                         <video class="embed-responsive-item banner-video" muted="" autoplay="" loop="" src="{{ asset($banner['banner_video']) }}" type="video/mp4">
