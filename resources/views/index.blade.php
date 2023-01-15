@@ -8,6 +8,11 @@
 
 @push('custom_css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <style>
+        video.banner-video {
+            width: 900px;
+        }
+    </style>
 @endpush
 
 @section('meta_tag')
@@ -38,17 +43,26 @@
     <div class="banner section">
         <div class="container">
             <div class="row g-0 align-items-center">
-                <div class="col-lg-5">
+                <div class="col-lg-5 col-12">
                     <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
-                        <h2>{{__($banner['banner_title'])}} <span>Contacts Solutions</span></h2>
+                        <h2>{!! __($banner['banner_title']) !!}</h2>
                         <p>{{__($banner['banner_description'])}}</p>
-                        <a href="{{ route('tutorials') }}" class="btn btn-dark">{{__($banner['banner_button'])}} </a>
+                        <a href="{{ route('login') }}" class="btn btn-dark">{{__($banner['banner_button'])}} </a>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-7 col-12">
+                    @if(!empty($banner['banner_video']))
+                    <div class="embed-responsive embed-responsive-21by9">
+                        {{-- <iframe class="embed-responsive-item" src="{{ asset($banner['banner_video']) }}" allowfullscreen="true" frameborder="0" muted="" autoplay="" loop=""></iframe> --}}
+                        <video class="embed-responsive-item banner-video" muted="" autoplay="" loop="" src="{{ asset($banner['banner_video']) }}" type="video/mp4">
+                            <img src="{{ asset($banner['banner_photo']) }}" alt="Fast /">
+                        </video>
+                      </div>
+                    @else
                     <div class="banner_logo text-center" data-aos="zoom-in">
                         <img src="{{ asset($banner['banner_photo']) }}" class="img-fluid" alt="image">
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

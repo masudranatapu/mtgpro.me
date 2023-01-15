@@ -36,16 +36,14 @@
         <meta property="fb:pages" content="" />
         <meta property="fb:app_id" content="" />
         <meta property="fb:admins" content=""/>
-
-
-
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}" />
-    <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=2') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}" />
+        <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=2') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+        @stack('custom_css')
 
     <!-- Scripts -->
     <!-- Fonts -->
