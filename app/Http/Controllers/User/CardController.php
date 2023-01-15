@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\FirstCardRequest;
 use App\Http\Requests\CardUpdateRequest;
-
 class CardController extends Controller
 {
     protected $businessCard;
@@ -47,10 +46,6 @@ class CardController extends Controller
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
         $icons = SocialIcon::where('status', 1)->orderBy('order_id', 'desc')->get();
-
-        // if(count($cards) == 0 ){
-        //     return view('user.card.first_card',compact('cards'));
-        // }
         $user_id = Auth::id();
         //validity
         $validity = checkPackageValidity($user_id);
@@ -58,8 +53,6 @@ class CardController extends Controller
             Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
-
-
         $check = checkCardLimit($user_id);
         if ($check == false) {
             Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
@@ -67,22 +60,20 @@ class CardController extends Controller
         }
         $plan_details = User::where('id', $user_id)->first();
         $user_email = SocialIcon::where('icon_name', 'email')->first();
-
         $user = User::find($user_id);
         return view('user.card.create', compact('cards', 'icons', 'plan_details', 'user_email', 'user'));
     }
+
 
     public function getEdit(Request $request, $id)
     {
         $user_id = Auth::id();
         $card = $this->businessCard->getView($request, $id);
         $icons = SocialIcon::where('status', 1)->orderBy('id', 'desc')->get();
-        // dd($icons);
-        // dd($card->business_card_fields);
         $user = User::find($user_id);
-        // dd($card);
         return view('user.card.edit', compact('card', 'icons', 'user'));
     }
+
 
     public function siconUpdate(Request $request)
     {
@@ -106,74 +97,16 @@ class CardController extends Controller
         return response()->json($data);
     }
 
-
-    // public function getVideoDelete($id,$index)
-    // {
-    //     DB::beginTransaction();
-    //     try {
-    //         $card = BusinessCard::where('business_cards.id',$id)->first();
-    //         if($card->business_card_fields){
-    //             $card_fields = $card->business_card_fields->content;
-    //             $arr_card_fields = json_decode($card_fields,true);
-    //             if($arr_card_fields['section_video']){
-    //                 $comment = $arr_card_fields;
-    //                 if(isset($arr_card_fields['section_video'][$index])){
-    //                     unset($arr_card_fields['section_video'][$index]);
-    //                 }
-    //                 $comment['section_video'] = $arr_card_fields['section_video'];
-    //                 $jcomment = json_encode($comment);
-    //                 BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
-    //             }
-    //         }
-    //     } catch (\Throwable $th) {
-    //         DB::rollback();
-    //         $data['status'] = 'failed';
-    //         return response()->json($data);
-    //     }
-    //     DB::commit();
-    //     $data['status'] = 'success';
-    //     return response()->json($data);
-    // }
-
-
-    // public function getTestimonialDelete($id,$index)
-    // {
-    //     DB::beginTransaction();
-    //     try {
-    //         $card = BusinessCard::where('business_cards.id',$id)->first();
-    //         if($card->business_card_fields){
-    //             $card_fields = $card->business_card_fields->content;
-    //             $arr_card_fields = json_decode($card_fields,true);
-    //             if($arr_card_fields['section_testimonial']){
-    //                 $comment = $arr_card_fields;
-    //                 if(isset($arr_card_fields['section_testimonial'][$index])){
-    //                     unset($arr_card_fields['section_testimonial'][$index]);
-    //                 }
-    //                 $comment['section_testimonial'] = $arr_card_fields['section_testimonial'];
-    //                 $jcomment = json_encode($comment);
-    //                 BusinessField::where('card_id',$id)->update(['content' => $jcomment]);
-    //             }
-    //         }
-    //     } catch (\Throwable $th) {
-    //         DB::rollback();
-    //         $data['status'] = 'failed';
-    //         return response()->json($data);
-    //     }
-    //     DB::commit();
-    //     $data['status'] = 'success';
-    //     return response()->json($data);
-    // }
-
-
     public function getView(Request $request, $id)
     {
         $card = $this->businessCard->getView($request, $id);
+
         if (empty($card)) {
             abort(404);
         }
+
         $icons = SocialIcon::orderBy('order_id', 'desc')->get();
         $url = url($card->card_url);
-
         $shareComponent = \Share::page($url, 'Hello! This is my vCard.')->facebook()->twitter()->linkedin()->telegram()->whatsapp();
         return view('user.card.view', compact('card', 'icons', 'shareComponent'));
     }
@@ -185,8 +118,6 @@ class CardController extends Controller
             Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
-
-
         $check = checkCardLimit(Auth::id());
         if ($check == false) {
             Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
@@ -219,9 +150,7 @@ class CardController extends Controller
         $reserve_word = config('app.reserve_word');
         $data['status'] = false;
         $data['message'] = 'This link is not available';
-
         if (!in_array($link_text, $reserve_word)) {
-
             //check in database business_cards card_url
             if ($request->mode == 'edit') {
                 $card_url = BusinessCard::where('card_url', $link_text)->where('id', '<>', $request->id)->first();
@@ -233,8 +162,6 @@ class CardController extends Controller
                 $data['message'] = 'This link is available';
             }
         }
-
-
         return response()->json($data);
     }
 
@@ -246,8 +173,6 @@ class CardController extends Controller
         BusinessField::where('card_id', $id)->update([
             'status' => 2
         ]);
-        // BusinessCard::where('id',$id)->delete();
-        // BusinessField::where('card_id',$id)->delete();
         if ($request->ajax()) {
             return response()->json(['status' => 1, 'message' => 'Card deleted successfully!'], 200);
         }
@@ -272,7 +197,6 @@ class CardController extends Controller
         return response()->json($response, $response->code);
     }
 
-
     public function getInitCard()
     {
         $card = $this->businessCard->where('user_id', Auth::user()->id)->first();
@@ -291,18 +215,6 @@ class CardController extends Controller
             if (!empty($card)) {
                 return redirect()->route('user.card');
             }
-            //validity
-            $validity = checkPackageValidity(Auth::id());
-            //   if($validity == false){
-            //       Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
-            //       return redirect()->route('user.plans');
-            //   }
-
-            //   $check = checkCardLimit(Auth::id());
-            //   if($check == false){
-            //       Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
-            //       return redirect()->back();
-            //   }
             $card               = new BusinessCard();
             $card->card_id      = uniqid();
             $card->user_id      = Auth::id();
@@ -331,10 +243,8 @@ class CardController extends Controller
             $card->card_for     = 'Work';
             $card->save();
 
-
             if (!empty($request->phone_number)) {
                 $mobile_icon =  DB::table('social_icon')->where('icon_name', 'phone')->first();
-                // dd($mobile_icon);
                 $_icon = new BusinessField();
                 $_icon->card_id = $card->id;
                 $_icon->type = 'mobile';
@@ -364,16 +274,13 @@ class CardController extends Controller
             $fields->save();
 
             $user = User::where('id',Auth::id())->first();
-
             if($user->name == null){
                 $user->name = $request->name;
             }
             $user->active_card_id = $card->id;
             $user->update();
-
             $card = $this->businessCard->getView($request,$card->id);
             Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
-
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
@@ -392,13 +299,9 @@ class CardController extends Controller
         DB::beginTransaction();
         try {
             $card = BusinessCard::findOrFail($request->id);
-            // $card->status = !$card->status;
-            // $card->save();
             BusinessCard::where('id',$request->id)->update(['status'=>1]);
             BusinessCard::where('id','<>',$request->id)->update(['status'=>0]);
             User::where('id',$card->user_id)->update(['active_card_id' =>$request->id]);
-
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([

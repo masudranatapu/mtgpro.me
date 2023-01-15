@@ -30,7 +30,7 @@
                             <h1 class="m-0">
                                 <a href="{{ route('user.card') }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                                 <img src="{{ getProfile($user->profile_image) }}" width="50" class="img-circle mr-2" alt="{{ $card->title }}">
-                                {{ $card->card_for ?? '' }}
+                                {{ $card->card_for }}
                             </h1>
                         </div>
                     </div>

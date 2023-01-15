@@ -41,18 +41,6 @@ class ConnectionController extends Controller
         ->orderBy('connects.id','desc')
         ->leftJoin('users','users.id','=','connects.user_id')
         ->where('connects.user_id',Auth::user()->id);
-
-        // if($request->search){
-        //     $search = $request->search;
-        //     $search = explode(' ',$search);
-        //     if($search){
-        //         foreach ($search as $key => $value) {
-        //             $data->where("connects.name", "like", "%$value%");
-        //         }
-        //     }
-        // }
-
-
         if(isset($keyword)){
             $data->where(function ($query) use($keyword) {
                 $query->where('connects.name', 'like', '%' .$keyword. '%')
@@ -70,9 +58,7 @@ class ConnectionController extends Controller
             else{
                 $data = $data->whereBetween('connects.created_at', [$form_date,$to_date]);
             }
-            // $data = $data->whereBetween('connects.created_at', [date('Y/m/d', strtotime($form_date)),date('Y/m/d', strtotime($to_date))]);
         }
-
         $data = $data->paginate(20);
         return view('user.connections.index', compact('data'));
     }
@@ -165,17 +151,12 @@ class ConnectionController extends Controller
         return redirect()->back();
     }
 
-
-    // public function sendConnectEmail(SendConnectMailRequest $request,$id)
     public function sendConnectEmail(SendConnectMailRequest $request,$id)
     {
-        // dd($request->all());
         try {
             $connection   = Connection::findOrFail($id);
             $data['subject'] = $request->subject;
             $data['message'] = $request->message;
-
-
             Mail::to($connection->email)->send(new SendConnectMail($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -204,7 +185,6 @@ class ConnectionController extends Controller
                     ]);
                 }
             }
-
             $file = fopen($path.$fileName, 'w');
             $columns = array('Name', 'Email', 'Phone', 'Title', 'Image','Company Name');
             fputcsv($file, $columns);

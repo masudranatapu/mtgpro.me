@@ -777,7 +777,7 @@
         meta: {
             viewid: 1
         },
-        download: true,
+        download: false,
         instantEdit: true,
     });
 
@@ -801,7 +801,7 @@
         meta: {
             viewid: 1
         },
-        download: true,
+        download: false,
         instantEdit: true,
         // label: 'Upload: Click here or drag an image file onto it',
         buttonConfirmLabel: 'Crop',
@@ -833,7 +833,7 @@
         meta: {
             viewid: 1
         },
-        download: true,
+        download: false,
         instantEdit: true,
         // label: 'Upload: Click here or drag an image file onto it',
         buttonConfirmLabel: 'Crop',
