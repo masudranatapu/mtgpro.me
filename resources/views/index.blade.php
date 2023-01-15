@@ -145,7 +145,7 @@ $settings  = getSetting();
                     <div class="embed-responsive embed-responsive-21by9">
                         {{-- <iframe class="embed-responsive-item" src="{{ asset($banner['banner_video']) }}" allowfullscreen="true" frameborder="0" muted="" autoplay="" loop=""></iframe> --}}
                         <video class="embed-responsive-item banner-video" muted="" autoplay="" loop="" src="{{ asset($banner['banner_video']) }}" type="video/mp4">
-                            <img src="{{ asset($banner['banner_photo']) }}" alt="Fast /">
+                            <img src="{{ asset($banner['banner_photo']) }}" alt="{{ strip_tags($banner['banner_title']) }}">
                         </video>
                       </div>
                     @else
