@@ -303,7 +303,7 @@
                                                         <h3>{{ __('Support') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form action="{{ route('user.support.send-mail') }}" method="post">
+                                                        <form action="{{ route('user.support.send-mail') }}" id="supportmailForm" method="post">
                                                             @csrf
                                                             <div class="form-group">
                                                                 <label for="emalil_to" class="form-label">{{ __('To') }}</label>
@@ -342,7 +342,7 @@
                                                         <p>{{ __('Do you have an idea for a feature that would make better for you? Let us know!') }}</p>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form action="{{ route('user.support.feature-request') }}" method="post">
+                                                        <form action="{{ route('user.support.feature-request') }}" id="featureRequest" method="post">
                                                             @csrf
                                                             <div class="form-group">
                                                                 <label for="request_message" class="form-label">{{ __('Message') }} <span class="text-dark">*</span></label>
@@ -540,9 +540,24 @@
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
+    // $(this).find(":submit").prop('disabled', true);
+        $("#supportmailForm").submit(function () {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
+        $("#featureRequest").submit(function () {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
+
     $(document).on('submit', "#accountDeletionForm", function (e) {
         e.preventDefault();
         var form = $("#accountDeletionForm");
+        var _this = $(this).find(":submit");
         $.ajax({
             type: 'post',
             data: form.serialize(),
@@ -550,7 +565,9 @@
             async: true,
             beforeSend: function () {
                 $("body").css("cursor", "progress");
-                $('.deletion-spinner').toggleClass('active');
+                $(_this).children(".loading-spinner").toggleClass('active');
+                $(_this).attr("disabled", true);
+                $(_this).children(".btn-txt").text("Processing");
             },
             success: function (response) {
                 if (response.status == 1) {
@@ -560,11 +577,16 @@
                 } else {
                     toastr.error(response.message);
                 }
-                $('.deletion-spinner').removeClass('active');
+                $(_this).attr("disabled", false);
+                 $(_this).children(".loading-spinner").removeClass('active');
+                 $(_this).children(".btn-txt").text("Delete Account");
+
             },
             error: function (jqXHR, exception) {
                 toastr.error('Something wrong');
-                $('.deletion-spinner').removeClass('active');
+                 $(_this).attr("disabled", false);
+                 $(_this).children(".loading-spinner").removeClass('active');
+                 $(_this).children(".btn-txt").text("Delete Account");
             },
             complete: function (response) {
                 $("body").css("cursor", "default");

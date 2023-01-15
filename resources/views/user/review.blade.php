@@ -40,7 +40,7 @@
             width: 53px;
             color: orange;
         }
-        .review_content p {
+        /* .review_content p {
             margin: 0;
             font-size: 14px;
             text-align: justify;
@@ -96,7 +96,7 @@
         .pending{
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
-        }
+        } */
     </style>
 @endpush
 
@@ -163,7 +163,7 @@
                         <div class="review-card card card-lg ">
                             <div class="card-body">
                                 <div class="review_edit_form">
-                                    <form action="{{ route('user.review.store') }}" method="post">
+                                    <form action="{{ route('user.review.store') }}" id="reviewForm" method="post">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="display_name" class="form-label">{{ __('Display name') }}</label>
@@ -188,7 +188,10 @@
                                         @endif
                                     </div>
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                            <span class="btn-txt">{{ __('Save') }}</span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -202,7 +205,7 @@
                         <div class="card card-lg show_form" style="display: none" >
                             <div class="card-body">
                                 <div class="review_edit_form">
-                                    <form action="{{ route('user.review.update',$review->id ?? '') }}" method="post">
+                                    <form action="{{ route('user.review.update',$review->id ?? '') }}" id="reviewForm" method="post">
                                         @csrf
                                         <div class="mb-3">
                                         <label for="display_name" class="form-label">{{ __('Display Name') }}</label>
@@ -227,7 +230,10 @@
                                         @endif
                                         </div>
                                         <div class="mb-3">
-                                            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                <span class="btn-txt">{{ __('Update') }}</span>
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -243,17 +249,23 @@
 
 @push('custom_js')
     <script>
+        $("#reviewForm").submit(function () {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
         $(document).ready(function(){
             $('.edit_review').on('click', function(){
                 $('.edit_review').fadeOut()
                 $('.show_form').fadeIn()
             });
         });
-        
+
         function countChars(obj){
             var maxLength = 250;
             var strLength = obj.value.length;
-            
+
             if(strLength > maxLength){
                 document.getElementById("charNum").innerHTML = '<span style="color: red;">'+strLength+' out of '+maxLength+' characters</span>';
             }else{

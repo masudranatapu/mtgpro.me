@@ -138,6 +138,8 @@ class UserController extends Controller
 
     public function storeReview(Request $request)
     {
+        DB::beginTransaction();
+        try {
         $this->validate($request, [
             'display_name' => 'required|string|max:50',
             'display_title' => 'required|string|max:50',
@@ -155,13 +157,20 @@ class UserController extends Controller
             'created_by' => Auth::user()->id,
         ]);
 
-        Toastr::success('Review submitted successfully:-)','Success');
+    } catch (\Exception $e) {
+        DB::rollback();
+        Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
-
+    }
+    DB::commit();
+    Toastr::success(trans('Review submitted successfully'), 'Success', ["positionClass" => "toast-top-center"]);
+    return redirect()->back();
     }
 
     public function updateReview(Request $request,$id)
     {
+        DB::beginTransaction();
+        try {
         $this->validate($request, [
             'display_name' => 'required|string|max:50',
             'display_title' => 'required|string|max:50',
@@ -178,11 +187,15 @@ class UserController extends Controller
                 'status' => 0,
             ]);
 
-        Toastr::success('Review Updated successfully:-)','Success');
+    } catch (\Exception $e) {
+        DB::rollback();
+        Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
-
     }
-
+    DB::commit();
+    Toastr::success(trans('Review submitted successfully'), 'Success', ["positionClass" => "toast-top-center"]);
+    return redirect()->back();
+}
     public function changeEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
