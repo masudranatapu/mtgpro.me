@@ -161,8 +161,6 @@
                                                                          <label class="form-label">{{ __('Company Logo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 440px x 440px (1:1)"></i></label>
                                                                          <div
                                                                          class="slim"
-                                                                          {{-- data-service="async.php" --}}
-                                                                          {{-- data-fetcher="fetch.php" --}}
                                                                           data-force-min-size="false"
                                                                           data-min-size="1,1"
                                                                           data-ratio="1:1"

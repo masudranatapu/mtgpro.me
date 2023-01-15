@@ -255,9 +255,13 @@
                                                             <div class="form-group profile-pic">
                                                                 <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
                                                                 <div class="slim"
+                                                                    data-force-min-size="false"
+                                                                    data-min-size="1,1"
                                                                     data-ratio="1:1"
-                                                                    data-size="540,540"
-                                                                    data-max-file-size="100">
+                                                                    data-size="440,400"
+                                                                    data-max-file-size="100"
+                                                                    data-min-file-size="1"
+                                                                    >
                                                                 <img src="{{ getAvatar($user->profile_image) }}" alt=""/>
                                                                 <input type="file" name="profile_pic" id="profile_pic">
                                                                 </div>
