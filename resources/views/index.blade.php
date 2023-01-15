@@ -12,6 +12,101 @@ $settings  = getSetting();
             height: auto;
             overflow: hidden;
         }
+
+    .switch-wrapper {
+        position: relative;
+        display: inline-flex;
+        border-radius: 20px;
+        background: white;
+    }
+
+    .switch-wrapper [type="radio"] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"],
+    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
+        color: #fff;
+    }
+
+    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"]:hover,
+    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"]:hover {
+        background: transparent;
+    }
+
+    .switch-wrapper [type="radio"]:checked#monthly+label[for="yearly"]~.highlighter {
+        transform: none;
+    }
+
+    .switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
+        transform: translateX(100%);
+    }
+
+    .switch-wrapper label {
+        font-size: 14px;
+        z-index: 1;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: color 0.25s ease-in-out;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        line-height: 44px;
+        padding: 0px 36px 30px 30px;
+        width: 100%;
+        display: inline-block;
+        height: 47px;
+    }
+
+    .switch-wrapper .highlighter {
+        position: absolute;
+        top: 3px;
+        left: 4px;
+        width: calc(49% - 4px);
+        height: calc(100% - 8px);
+        border-radius: 20px;
+        background: #212121;
+        transition: transform 0.25s ease-in-out;
+    }
+
+    .current-plan-btn {
+        color: rgba(0, 0, 0, 0.26);
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.12)!important;
+        cursor: default;
+        pointer-events: none;
+        width: 100%;
+        font-size: 13px;
+        box-shadow: none;
+        font-weight: 600;
+        border-radius: 100px;
+    }
+    .btn-primary {
+        background: #212121;
+        border: none !important;
+        outline: none;
+        box-shadow: none;
+        padding: 12px 42px !important;
+        border-radius: 50px !important;
+        font-size: 13px;
+    }
+    .card {
+        box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+        margin-bottom: 1rem;
+    }
+    .pricing-card {
+        border: solid 1px #bdbdbd;
+        cursor: pointer;
+        height: 728px;
+        padding: 24px;
+        /* margin-right: 15px; */
+        border-radius: 20px;
+        background-color: #fff;
+    }
+    .pricing-card:hover {
+        border: 1px solid #4B8CE2;
+        filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.11));
+    }
     </style>
 @endpush
 @section('meta_tag')
@@ -45,7 +140,7 @@ $settings  = getSetting();
                     <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
                         <h2>{!! __($banner['banner_title']) !!}</h2>
                         <p>{!! __($banner['banner_description']) !!}</p>
-                        <a href="{{ route('login') }}" class="btn btn-dark">{{__($banner['banner_button'])}} </a>
+                        <a href="{{ route('login') }}" class="btn btn-dark mb-sm-2">{{__($banner['banner_button'])}} </a>
                     </div>
                 </div>
                 <div class="col-lg-7 col-12">
@@ -191,24 +286,20 @@ $settings  = getSetting();
             </div>
         </div>
     </div>
+
     <div class="pricing section pt-5 pb-5" id="pricing">
         <div class="container">
             <div class="row">
                 <div class="section_title mb-5 text-center" data-aos="fade-up">
                     <h4>{{ __('Choose your best plan') }}</h4>
-                    <div class="plan_type switchBtn text-center mb-2 mt-3">
-                        <div class="form-check form-switch d-inline">
-                            <label class="form-check-label" for="CheckedAnnualy">
-                                <input class="form-check-input" name="planType" checked="" type="radio" value="annual" id="CheckedAnnualy">
-                                    {{ __('Annual')}}
-                            </label>
-                        </div>
-                        <div class="form-check form-switch d-inline">
-                            <label class="form-check-label" for="monthlyChecked">
-                                <input class="form-check-input" name="planType"  type="radio" value="monthly" id="monthlyChecked">
-                                    {{ __('Monthly')}}
-                            </label>
-                        </div>
+                    <div class="plan_type switchBtn text-center mb-4 mt-3">
+                        <div class="switch-wrapper">
+                            <input id="monthly" name="planType" value="annual" type="radio" name="switch" checked>
+                            <input id="yearly" name="planType" value="monthly" type="radio" name="switch">
+                            <label for="monthly">Annual</label>
+                            <label for="yearly">Monthly</label>
+                            <span class="highlighter"></span>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -218,15 +309,15 @@ $settings  = getSetting();
                         @php
                             $planfeatures = json_decode($plan->features);
                         @endphp
-                        <div class="col-md-3 col-lg-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                        <div class="col-md-3 col-lg-3 col-12 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
                             <div class="pricing-card card card-md">
                                 <div class="card-body text-center">
-                                    <div class="text-capitalize text-dark font-weight-bold">
-                                        {{$plan->plan_name}}
+                                    <div class="text-capitalize text-dark">
+                                        <h6 class="font-weight-bold">{{$plan->plan_name}}</h6>
                                     </div>
                                     @if ((Auth::user()) && (Auth::user()->plan_id==$plan->id))
                                         <div class="text-center mt-4">
-                                            <a href="javascript:void(0)" class="down-plan-model btn btn-danger" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
+                                            <a href="javascript:void(0)" class="current-plan-btn btn-block btn-primary w-100" title="{{ __('Active Plan')}}">{{ __('Active Plan')}}</a>
                                         </div>
                                     @else
                                         <div class="text-center mt-4">
@@ -253,20 +344,16 @@ $settings  = getSetting();
                     @endforeach
                 @endif
             </div>
-            </div>
         </div>
     </div>
 
     <div class="video_sec section">
-
         <div class="container">
             <!-- row -->
             <div class="row d-flex justify-content-center">
-
                 <div class="section_title mb-5 text-center" data-aos="fade-up">
                     <h4>{{ __('What is Contacts Solutions') }}</h4>
                 </div>
-
                 <div class="col-lg-9">
                     <div class="video_iframe" data-aos="zoom-in">
                         <div class="ratio ratio-16x9">
