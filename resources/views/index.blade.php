@@ -57,7 +57,6 @@ $settings  = getSetting();
         display: inline-block;
         height: 47px;
     }
-
     .switch-wrapper .highlighter {
         position: absolute;
         top: 3px;
@@ -68,7 +67,6 @@ $settings  = getSetting();
         background: #212121;
         transition: transform 0.25s ease-in-out;
     }
-
     .current-plan-btn {
         color: rgba(0, 0, 0, 0.26);
         box-shadow: none;
@@ -90,21 +88,20 @@ $settings  = getSetting();
         border-radius: 50px !important;
         font-size: 13px;
     }
-    .card {
+    /* .card {
         box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
         margin-bottom: 1rem;
-    }
+    } */
     .pricing-card {
         border: solid 1px #bdbdbd;
         cursor: pointer;
-        height: 728px;
+        height: 600px;
         padding: 24px;
-        /* margin-right: 15px; */
         border-radius: 20px;
         background-color: #fff;
     }
     .pricing-card:hover {
-        border: 1px solid #4B8CE2;
+        border: 1px solid var(--primary);;
         filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.11));
     }
     </style>
@@ -144,11 +141,11 @@ $settings  = getSetting();
                     </div>
                 </div>
                 <div class="col-lg-7 col-12">
-                    @if(!empty($banner['banner_video']))
+                    @if(!empty($banner['banner_video']) && file_exists(public_path($banner['banner_video'])))
                     <div class="embed-responsive embed-responsive-21by9">
                         {{-- <iframe class="embed-responsive-item" src="{{ asset($banner['banner_video']) }}" allowfullscreen="true" frameborder="0" muted="" autoplay="" loop=""></iframe> --}}
                         <video class="embed-responsive-item banner-video" muted="" autoplay="" loop="" src="{{ asset($banner['banner_video']) }}" type="video/mp4">
-                            <img src="{{ asset($banner['banner_photo']) }}" alt="Fast /">
+                            <img src="{{ asset($banner['banner_photo']) }}" alt="{{ strip_tags($banner['banner_title']) }}">
                         </video>
                       </div>
                     @else
