@@ -1073,3 +1073,10 @@ body {
 .login_wrapper.min-height {
     min-height: 600px;
 }
+.loading-spinner {
+    display: none;
+}
+
+.loading-spinner.active {
+    display: inline-block;
+}

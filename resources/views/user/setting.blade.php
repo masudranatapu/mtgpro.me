@@ -286,7 +286,10 @@
                                                             </div>
                                                         </form>
                                                        <div class="float-right">
-                                                            <a href="{{ route('user.password.reset') }}" title="{{ __('Reset Your Password') }}" class="btn btn-primary reset_password_request">{{ __('Reset Your Password') }}</a>
+                                                            <a href="{{ route('user.password.reset') }}" title="{{ __('Reset Your Password') }}" class="btn btn-primary reset_password_request">
+                                                                <i class="loading-spinner reset-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                <span class="btn-txt">{{ __('Reset Your Password') }}</span>
+                                                            </a>
                                                             <a href="javascript:void(0)" class="btn btn-secondary text-danger" data-toggle="modal" data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                        </div>
                                                     </div>
@@ -322,7 +325,10 @@
                                                                 @endif
                                                             </div>
                                                             <div class="form-group mt-4">
-                                                                <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                    <span class="btn-txt">{{ __('Send') }}</span>
+                                                                </button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -336,8 +342,6 @@
                                                         <p>{{ __('Do you have an idea for a feature that would make better for you? Let us know!') }}</p>
                                                     </div>
                                                     <div class="setting_form">
-
-
                                                         <form action="{{ route('user.support.feature-request') }}" method="post">
                                                             @csrf
                                                             <div class="form-group">
@@ -348,7 +352,10 @@
                                                                 @endif
                                                             </div>
                                                             <div class="form-group mt-4">
-                                                                <button type="submit" class="btn btn-primary">{{ __('Send Feedback') }}</button>
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                    <span class="btn-txt">{{ __('Send Feedback') }}</span>
+                                                                </button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -392,7 +399,10 @@
                             </div>
                             <div class="modal-footer pb-3">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                                <button type="submit" class="btn btn-primary">{{ __('Delete Account') }}</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                    <span class="btn-txt">{{ __('Delete Account') }}</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -444,7 +454,10 @@
                             </div>
                             <div class="modal-footer pb-3">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                                <button type="submit" class="btn btn-primary">{{ __('Save billing details') }}</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                    <span class="btn-txt">{{ __('Save billing details') }}</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -512,7 +525,10 @@
                             </div>
                             <div class="modal-footer pb-3">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Cancel') }}</button>
-                                <button type="submit" class="btn btn-primary">{{ __('Save payment method') }}</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                    <span class="btn-txt">{{ __('Save payment method') }}</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -524,7 +540,6 @@
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
-
     $(document).on('submit', "#accountDeletionForm", function (e) {
         e.preventDefault();
         var form = $("#accountDeletionForm");
@@ -559,13 +574,16 @@
     $(document).on('click', ".reset_password_request", function (e) {
         e.preventDefault();
         var route = $(this).attr('href');
+        var _this = this;
         $.ajax({
             type: 'get',
             url:route,
             async: true,
             beforeSend: function () {
                 $("body").css("cursor", "progress");
-                $('.reset-spinner').toggleClass('active');
+                $(_this).children(".loading-spinner").toggleClass('active');
+                $(_this).attr("disabled", true);
+                $(_this).children(".btn-txt").text("Processing");
             },
             success: function (response) {
                 if (response.status == 1) {
@@ -573,17 +591,22 @@
                 } else {
                     toastr.error(response.message);
                 }
-                $('.reset-spinner').removeClass('active');
+                $(_this).attr("disabled", false);
+                $(_this).children(".loading-spinner").removeClass('active');
+                $(_this).children(".btn-txt").text("Reset Your Password");
             },
             error: function (jqXHR, exception) {
                 toastr.error('Something wrong');
-                $('.reset-spinner').removeClass('active');
+                $(_this).attr("disabled", false);
+                $(_this).children(".loading-spinner").removeClass('active');
+                $(_this).children(".btn-txt").text("Reset Your Password");
 
             },
             complete: function (response) {
                 $("body").css("cursor", "default");
             }
         });
+
     });
 
 </script>
