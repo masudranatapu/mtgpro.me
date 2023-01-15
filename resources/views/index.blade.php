@@ -46,7 +46,7 @@
                 <div class="col-lg-5 col-12">
                     <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
                         <h2>{!! __($banner['banner_title']) !!}</h2>
-                        <p>{{__($banner['banner_description'])}}</p>
+                        <p>{!! __($banner['banner_description']) !!}</p>
                         <a href="{{ route('login') }}" class="btn btn-dark">{{__($banner['banner_button'])}} </a>
                     </div>
                 </div>

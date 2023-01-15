@@ -450,7 +450,7 @@ class SettingsController extends Controller
             $banner_video = $request->file('banner_video');
             $base_name = preg_replace('/\..+$/', '', $banner_video->getClientOriginalName());
             $video_name = $base_name . "-" . uniqid() . "." .$banner_video->getClientOriginalExtension();
-            $file_path = 'assets/uploads/video';
+            $file_path = 'assets/uploads/videos';
             if (! File::exists($file_path)) {
                 File::makeDirectory($file_path);
             }
