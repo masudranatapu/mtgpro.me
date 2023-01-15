@@ -39,6 +39,7 @@
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
                                             <th>{{ __('Name') }}</th>
+                                            <th>{{ __('Card Url') }}</th>
                                             <th>{{ __('Email') }}</th>
                                             <th>{{ __('Current Plan') }}</th>
                                             <th>{{ __('Created At') }}</th>
@@ -52,12 +53,19 @@
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>
-                                                <div>Name: <a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a></div>
-                                                <div>User: <a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->username }}</a> </div>
+                                                <div style="max-width: 150px; overflow:hidden; display: grid">
+                                                    <div><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a></div>
+                                                    <div style="font-size:12px;font-style: italic; text-transform: lowercase;">User:<a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->username }}</a> </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('card.preview',$row->card_url) }}" style="max-width: 100px; overflow:hidden; display: grid">{{ $row->card_url }}</a>
                                             </td>
                                             <td class="text-muted">
-                                                {{ $row->card_email }} <br>
-                                                {{ $row->phone_number }}
+                                                <div style="max-width: 130px; overflow:hidden; display: grid">
+                                                    {{ $row->card_email }} <br>
+                                                    {{ $row->phone_number }}
+                                                </div>
                                             </td>
                                             <td class="text-muted text-capitalize">
                                                 {{ $row->plan_name }}
