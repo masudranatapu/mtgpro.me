@@ -494,10 +494,10 @@ blockquote span{
                                     <td class="content-cell">
                                         <div class="f-fallback">
 
-                                            <h1>Subject:{{ $data['subject'] }}</h1>
+                                            <h1>Subject : {{ $data['subject'] }}</h1>
                                             <blockquote>{{ $data['message'] }}</blockquote>
-                                            <p>Email:{{ $data['email'] }}</p>
-                                            <p>User Name:{{ $data['username'] }}</p>
+                                            <p>Email : {{ $data['email'] }}</p>
+                                            <p>User Name : {{ $data['username'] }}</p>
                                             <!-- Action -->
                                             </p>{{ $settings->site_name }}</p>
                                             <table class="body-sub" role="presentation">

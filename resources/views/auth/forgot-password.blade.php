@@ -14,7 +14,7 @@ $settings = getSetting();
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     </head>
     <body>
-        <div class="login_section pt-5 pb-5">
+        <div class="login_section pt-5 pb-5 min-height">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-sm-9 col-md-7 col-lg-5 col-xl-4">

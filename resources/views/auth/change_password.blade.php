@@ -10,7 +10,7 @@
     </nav>
 </div> --}}
 <div class="container">
-        <div class="row justify-content-center my-4">
+        <div class="row justify-content-center my-4 min-height">
             <div class="col-md-8">
                 <div class="card">
                     @include('common.flash')

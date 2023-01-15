@@ -3,7 +3,7 @@
 @section('content')
 <div class="login_sec section" style="margin:35px 0px;">
     <div class="container">
-        <div class="login_wrapper">
+        <div class="login_wrapper min-height">
             <div class="row d-flex justify-content-center">
                 <div class="col-11 col-sm-8 col-md-7 col-lg-6 col-xl-4">
                     <div class="login_form">

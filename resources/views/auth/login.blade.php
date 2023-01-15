@@ -1,11 +1,8 @@
 @extends('layouts.app')
 @section('title') {{ __('Login') }} @endsection
-
 @section('content')
-
-
-   <!-- ======================= Sign In  =========================== -->
-   <div class="login_sec section" style="margin:35px 0px;">
+ <!-- ======================= Sign In  =========================== -->
+<div class="login_sec section" style="margin:35px 0px;">
     <!-- container -->
     <div class="container">
         <div class="login_wrapper">
@@ -45,7 +42,7 @@
                             </div>
 
                             <div class="forgot_pass text-center">
-                                <a href="{{ route('password.request') }}">{{ __('Forgot password') }}?</a>
+                                <a href="{{ route('password.request') }}" class="text-dark">{{ __('Forgot password') }}?</a>
                             </div>
 
                             <div class="bottom text-center">
