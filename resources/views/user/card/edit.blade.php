@@ -40,7 +40,6 @@
                 <div class="container-fluid">
                     <div class="account_setting create_card_wrapper">
                         <div class="row align-item-center">
-
                             <div class="col-xl-8">
                                 <div class="row">
                                     <!-- tabs button -->
