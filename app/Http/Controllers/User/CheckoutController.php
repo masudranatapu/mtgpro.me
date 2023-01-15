@@ -7,12 +7,10 @@ use App\Models\User;
 use PayPal\Api\Item;
 use PayPal\Api\Payer;
 use PayPal\Api\Amount;
-use App\Models\Gateway;
 use PayPal\Api\Details;
 use PayPal\Api\Payment;
 use PayPal\Api\ItemList;
 use Stripe\StripeClient;
-use Stripe\PaymentIntent;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
 use App\Models\BusinessCard;
@@ -23,10 +21,8 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use PayPal\Auth\OAuthTokenCredential;
-use App\Http\Requests\CheckoutRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\TransectionRequest;
-
 
 class CheckoutController extends Controller
 {
