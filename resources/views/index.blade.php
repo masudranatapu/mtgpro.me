@@ -97,7 +97,7 @@ $settings  = getSetting();
     .pricing-card {
         border: solid 1px #bdbdbd;
         cursor: pointer;
-        height: 728px;
+        height: 554px;
         padding: 24px;
         /* margin-right: 15px; */
         border-radius: 20px;
