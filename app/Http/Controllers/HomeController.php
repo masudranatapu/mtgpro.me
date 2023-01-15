@@ -364,20 +364,16 @@ class HomeController extends Controller
     }
 
     public function getBlog(){
-
-
         return view('pages.blog');
     }
+
     public function getBlogDetails(){
-
-
         return view('pages.blog_details');
     }
 
 
     public function rss()
     {
-
     return response()->view('rss.index')->header('Content-Type', 'application/xml');
     }
 
