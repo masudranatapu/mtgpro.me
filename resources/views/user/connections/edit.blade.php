@@ -42,7 +42,9 @@ $tabindex = 1;
                                                     data-ratio="1:1"
                                                     data-size="540,540"
                                                     data-max-file-size="100">
-                                                    <img src="{{ asset($row->profile_image) }}" alt="{{ $row->name }}"/>
+                                                    @if ($row->profile_image)
+                                                        <img src="{{ $row->profile_image }}" alt="{{ $row->name }}"/>
+                                                    @endif
                                                     <input type="file" name="profile_pic" id="profile_pic">
                                                 </div>
                                             </div>

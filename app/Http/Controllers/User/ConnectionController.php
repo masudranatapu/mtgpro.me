@@ -130,7 +130,7 @@ class ConnectionController extends Controller
                         $image_name =  $this->businessCard->uploadBase64ToImage($image,$file_name,'jpg');
                     }
                 }
-                $connection->profile_image  = $image_name;
+                $connection->profile_image  = asset($image_name);
             }
             $connection->name       = $request->name;
             $connection->email      = $request->email;
