@@ -14,9 +14,7 @@ use App\Http\Requests\CardRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
-use Intervention\Image\Facades\Image;
 use App\Http\Requests\FirstCardRequest;
 use App\Http\Requests\CardUpdateRequest;
 
@@ -65,7 +63,7 @@ class CardController extends Controller
         $check = checkCardLimit($user_id);
         if ($check == false) {
             Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
-            return redirect()->back();
+            return redirect()->route('user.plans');
         }
         $plan_details = User::where('id', $user_id)->first();
         $user_email = SocialIcon::where('icon_name', 'email')->first();
@@ -374,7 +372,7 @@ class CardController extends Controller
             $user->update();
 
             $card = $this->businessCard->getView($request,$card->id);
-            // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+            Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
 
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -388,31 +386,6 @@ class CardController extends Controller
     }
 
 
-
-    // public function cropImage(Request $request){
-    //     return view('user.crop-img');
-    // }
-
-
-    // public function cropImageUpload(Request $request){
-    //     if($request->has('avatar') && $request->avatar[0])
-    //     {
-    //          $output = $request->avatar;
-    //          $output = json_decode($output, TRUE);
-    //          if(isset($output) && isset($output['output']) && isset($output['output']['image']))
-    //             $image = $output['output']['image'];
-    //             if(isset($image))
-    //             {
-    //               $this->uploadBase64ToImage($image,'jpg');
-    //               return view('user.crop-img');
-    //             }
-    //             return view('user.crop-img');
-    //         //  return 'no picture file';
-    //     }
-    //     // dd($request->all());
-
-    //     return view('user.crop-img');
-    // }
 
     public function getChangeCardStatus(Request $request)
     {

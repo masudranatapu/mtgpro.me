@@ -40,7 +40,7 @@ class AuthController extends Controller
     public function postRegister(RegistrationRequest $request)
     {
         try {
-            $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
+            $plans = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
             $checkExist = User::where('email', $request->email)->whereNotNull('email')->first();
             if (!empty($checkExist)) {
                 Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
@@ -131,7 +131,7 @@ class AuthController extends Controller
     public function handleProviderCallback(string $provider)
     {
         // dd($provider);
-        $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
+        $plans = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
         $data = Socialite::driver($provider)->stateless()->user();
         $falsemail = trim(str_replace(' ','_',$data->name)) . '@gmail.com';
         $check_deactive = User::where('email', $data->email)->where('status', 0)->first();
@@ -158,9 +158,9 @@ class AuthController extends Controller
             } else {
                 $base_name  = preg_replace('/\..+$/', '', $data->name);
                 $base_name  = explode(' ', $base_name);
-                $base_name  = implode('-', $base_name);
+                $base_name  = implode('_', $base_name);
                 $base_name  = Str::lower($base_name);
-                $name       = $base_name ."-".uniqid();
+                $name       = $base_name ."_".uniqid();
                 $user              = new User;
                 $user->name        = $data->name;
                 $user->email       = $data->email ?? $falsemail;

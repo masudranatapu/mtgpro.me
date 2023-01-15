@@ -48,6 +48,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">{{ ucfirst(str_replace('_', ' ', $item->section_title)) }}</label>
                                                             @if(($item->is_video == 1))
+
                                                             <input type="file" name="{{ $item->section_title }}" value="" class="form-control" />
                                                                 <small class="help-block text-danger">Preferred Size (794x594) PX</small>
                                                                 {!! $errors->first($item->section_title, '<span class="help-block text-danger">:message</span>') !!}

@@ -17,9 +17,7 @@
             display: block;
             border-radius: 100px;
             position: relative;
-            /* overflow: hidden; */
         }
-
         .card-status label:after {
             content: '';
             position: absolute;
@@ -164,8 +162,6 @@
         $(document).on('click', '.changeTrg', function() {
             var card_id = $(this).attr('data-id');
             var status = $(this).attr('data-status');
-
-
             $.ajax({
                 type: 'POST',
                 url: "{{ URL::route('user.card.change-status') }}",
@@ -185,37 +181,13 @@
                         $('#change_status_' + card_id).removeClass('inactive');
                         $('#change_status_' + card_id).removeClass('changeTrg');
                         $('#change_status_' + card_id + ' i').show();
-                        // if (status == 1) {
-                        //     $('#change_status_' + card_id + ' i').hide();
-                        //     $('#change_status_' + card_id).attr('data-status', 0);
-                        // }
-                        // if (status == 0) {
-                        //     $('#change_status_' + card_id + ' i').show();
-                        //     $('#change_status_' + card_id).attr('data-status', 1);
-                        // }
+
                     } else {
                         toastr.warning(data.msg);
                     }
                 },
             });
 
-
-
-            // $.ajax({
-            //     type: 'GET',
-            //     url: get_url + '/card/change-status/'+card_id,
-            //     async: true,
-            //     beforeSend: function () {
-            //         $("body").css("cursor", "progress");
-            //     },
-            //     success: function (response) {
-            //         $("#personalized_link_help").text(response.message).removeClass('text-danger').addClass('text-success');
-
-            //     },
-            //     complete: function (data) {
-            //         $("body").css("cursor", "default");
-            //     }
-            // });
 
 
         })
