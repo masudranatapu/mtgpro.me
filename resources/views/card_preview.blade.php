@@ -228,17 +228,20 @@
                             {{-- @dd($cardinfo->business_card_fields) --}}
                             @if (!empty($cardinfo->business_card_fields))
                                 @foreach ($cardinfo->business_card_fields as $contact)
+                                    @if($contact->sicon)
+
                                     @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->sicon->is_paid == 1)
+
                                     @else
 
-                                    @php
-                                        if($cardinfo->theme_color == null){
-                                            $icon_color = $contact->sicon->icon_color;
-                                        }else{
-                                            $icon_color = $cardinfo->theme_color;
-                                        }
-                                        //link,mail,mobile,number,text,username
-                                    @endphp
+                                        @php
+                                            if($cardinfo->theme_color == null){
+                                                $icon_color = $contact->sicon->icon_color;
+                                            }else{
+                                                $icon_color = $cardinfo->theme_color;
+                                            }
+                                            //link,mail,mobile,number,text,username
+                                        @endphp
                                         <li>
                                             @if ($contact->type == 'address')
                                                 <a title="" class="text-decoration-none"
@@ -268,6 +271,7 @@
                                             <span>{{ $contact->label }}</span>
                                             </a>
                                         </li>
+                                    @endif
                                     @endif
                                 @endforeach
                             @endif
