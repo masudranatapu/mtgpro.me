@@ -1,39 +1,36 @@
 @extends('layouts.app')
-
 @section('home','active')
-
-@section('title')
-    Your Digital Business Card
-@endsection
-
+<?php
+$settings  = getSetting();
+?>
+@section('title') {{ $settings->site_title ?? '' }} @endsection
 @push('custom_css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <style>
         video.banner-video {
-            width: 900px;
+            width: 100%;
+            overflow: hidden;
         }
     </style>
 @endpush
-
 @section('meta_tag')
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta property="og:description" content="" />
-    <meta name="twitter:description" content="">
+    <meta name="keywords" content="{{ $settings->seo_keywords }}" />
+    <meta name="description" content="{{$settings->seo_meta_description}}" />
+    <meta property="og:description" content="{{$settings->seo_meta_description}}" />
+    <meta name="twitter:description" content="{{$settings->seo_meta_description}}">
     <meta property="og:url" content="{{Request::url()}}" />
     <meta property="og:type" content="WEBSITE" />
-    <meta property="og:title" content=": Your Digital Business Card" />
-    <meta name="twitter:title" content=": Your Digital Business Card">
+    <meta property="og:title" content="{{ $settings->site_name }}: {{ $settings->site_title ?? '' }}" />
+    <meta name="twitter:title" content="{{ $settings->site_name }}: {{ $settings->site_title ?? '' }}">
     <meta name="twitter:card" value="summary_large_image">
-    <meta property="og:image" content="" />
-    <meta name="twitter:image" content="">
+    <meta property="og:image" content="{{ asset($settings->seo_image) }}" />
+    <meta name="twitter:image" content="{{ asset($settings->seo_image) }}">
     <meta name="twitter:site" content="{{Request::url()}}" />
     <meta name="twitter:url" content="{{Request::url()}}" />
     <link rel="canonical" href="{{Request::url()}}">
-    <meta property="og:site_name" content="" />
+    <meta property="og:site_name" content="{{$settings->site_name}}" />
     <meta property="og:type" content="website" />
 @endsection
-
 @section('content')
     <!-- Banner -->
     @if(isset($home_data['banner']))
