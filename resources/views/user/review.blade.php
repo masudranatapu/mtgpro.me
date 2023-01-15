@@ -129,7 +129,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="review_profile me-3">
                                                     @if($review->user_image)
-                                                        <img src="{{ asset($review->user_image) }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
+                                                        <img src="{{ getAvatar($review->user_image) }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
                                                     @else
                                                         <img src="{{ getProfile() }} " class="rounded-circle border" width="60" alt="image" class="img-fluid">
                                                     @endif

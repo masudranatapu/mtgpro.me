@@ -250,7 +250,7 @@
                                                         <h3>{{ __('Account Settings') }}</h3>
                                                     </div>
                                                     <div class="setting_form">
-                                                        <form action="{{ route('user.profile-info.update') }}" method="post">
+                                                        <form action="{{ route('user.profile-info.update') }}" id="updateProfile" method="post">
                                                             @csrf
                                                             <div class="form-group profile-pic">
                                                                 <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="Ideal dimensions: 300px x 300px (1:1)"></i> </label>
@@ -282,7 +282,10 @@
 
                                                             </div>
                                                             <div class="form-group mt-4">
-                                                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                    <span class="btn-txt">{{ __('Save') }}</span>
+                                                                </button>
                                                             </div>
                                                         </form>
                                                        <div class="float-right">
@@ -540,6 +543,8 @@
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
+
+
     // $(this).find(":submit").prop('disabled', true);
         $("#supportmailForm").submit(function () {
             $(this).find(":submit").children(".loading-spinner").toggleClass('active');
@@ -553,6 +558,14 @@
             $(this).find(":submit").children(".btn-txt").text("Processing");
             $("*").css("cursor", "wait");
         });
+        $("#updateProfile").submit(function () {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
+
+
 
     $(document).on('submit', "#accountDeletionForm", function (e) {
         e.preventDefault();
@@ -580,7 +593,6 @@
                 $(_this).attr("disabled", false);
                  $(_this).children(".loading-spinner").removeClass('active');
                  $(_this).children(".btn-txt").text("Delete Account");
-
             },
             error: function (jqXHR, exception) {
                 toastr.error('Something wrong');

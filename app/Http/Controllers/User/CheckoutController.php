@@ -55,7 +55,10 @@ class CheckoutController extends Controller
         $data = [];
         $planId = $request->plan_id;
         $is_yearly = $request->is_yearly;
-        $plan = DB::table('plans')->where('id', $planId)->first();
+        $plan = DB::table('plans')->where('id', $planId)->where('status',1)->first();
+        if(empty($plan)){
+            abort(404);
+        }
         $user = DB::table('users')->where('id',Auth::user()->id)->first();
         $payment_data = json_decode($user->stripe_data);
         $term_days = $plan->validity;
@@ -63,13 +66,20 @@ class CheckoutController extends Controller
         $plan_validity->addDays($term_days);
         if($plan) {
             if($plan->is_free==1 && !empty($payment_data->id)){
-                //Unsubscription Stripe
-                $stripe = new \Stripe\StripeClient($config[10]->config_value);
-                $stripe = $stripe->subscriptions->cancel(
+               $stripe = new \Stripe\StripeClient($config[10]->config_value);
+                //Check subscription
+                $check_subscription = $stripe->subscriptions->retrieve(
                     $payment_data->id,
                     []
                   );
-                  $this->businesscard->updateDataByCuurentPlan($plan->id);
+                  if($check_subscription->status=='active'){
+                    //Unsubscription Stripe
+                    $stripe = $stripe->subscriptions->cancel(
+                        $payment_data->id,
+                        []
+                    );
+                  }
+                $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => NULL,
@@ -83,6 +93,7 @@ class CheckoutController extends Controller
                 ]);
                 return redirect()->route('user.plans');
             }elseif($plan->is_free==1){
+                dd(2);
                 $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
