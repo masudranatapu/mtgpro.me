@@ -9,6 +9,7 @@ $settings  = getSetting();
     <style>
         video.banner-video {
             width: 100%;
+            height: auto;
             overflow: hidden;
         }
     </style>
@@ -277,33 +278,33 @@ $settings  = getSetting();
         </div>
     </div>
     @if($reviews->count() > 0)
-        <div class="testimonial_sec section">
+    <div class="testimonial_sec section">
             <!-- container -->
-            <div class="container">
+        <div class="container">
                 <!-- row -->
-                <div class="row d-flex justify-content-center">
+            <div class="row d-flex justify-content-center">
                     <!-- section heading -->
-                    <div class="section_title mb-5 text-center" data-aos="fade-up">
-                        <h4>{{ __('See What Teams are Saying') }}</h4>
-                    </div>
-                    <div class="review_wrapper owl-carousel">
-                        @foreach($reviews as $review)
-                            <div class="item review_wrap text-center" data-aos="zoom-in">
-                                <div class="review_item">
-                                    <span class="icon"><i class="fa fa-quote-left"></i></span>
-                                    <p style="min-height: 130px">{{ __($review->details) }}</p>
-                                </div>
-                                <div class="review_user">
-                                    <img src="@if($review->user->profile_image) {{ asset($review->user->profile_image) }} @else {{ asset('assets/img/default-profile.png') }} @endif" alt="image">
-                                    <h3>{{ __($review->display_name ?? '') }}</h3>
-                                    <span>{{ __($review->display_title ?? '') }}</span>
-                                </div>
+                <div class="section_title mb-5 text-center" data-aos="fade-up">
+                    <h4>{{ __('See What Teams are Saying') }}</h4>
+                </div>
+                <div class="review_wrapper owl-carousel">
+                    @foreach($reviews as $review)
+                        <div class="item review_wrap text-center" data-aos="zoom-in">
+                            <div class="review_item">
+                                <span class="icon"><i class="fa fa-quote-left"></i></span>
+                                <p style="min-height: 130px">{{ __($review->details) }}</p>
                             </div>
-                        @endforeach
-                    </div>
+                            <div class="review_user">
+                                <img src="@if($review->user->profile_image) {{ asset($review->user->profile_image) }} @else {{ asset('assets/img/default-profile.png') }} @endif" alt="image">
+                                <h3>{{ __($review->display_name ?? '') }}</h3>
+                                <span>{{ __($review->display_title ?? '') }}</span>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
+    </div>
     @endif
     <!-- ======================= Faq  =========================== -->
     @if($faqs->count() > 0)
@@ -343,20 +344,14 @@ $settings  = getSetting();
         </div>
     @endif
 @endsection
-
 @push('custom_js')
     <script>
-
         $(document).ready(function(){
             getPackage();
-
             $("input[name='planType']").click(function(){
                 getPackage();
-
             });
-
         });
-
         function getPackage(){
             var radioValue = $("input[name='planType']:checked").val();
             if(radioValue == 'monthly'){
@@ -370,9 +365,7 @@ $settings  = getSetting();
                     var newUrl = url.href;
                     $(item).attr('href', newUrl);
                 });
-
             }
-
             if(radioValue == 'annual'){
                 $('.planpriceyearly').removeClass('d-none');
                 $('.planpricemonthly').addClass('d-none');
@@ -385,8 +378,6 @@ $settings  = getSetting();
                     $(item).attr('href', newUrl);
                 });
             }
-
         }
-
     </script>
 @endpush
