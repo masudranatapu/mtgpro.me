@@ -137,6 +137,7 @@ class HomeController extends Controller
             }
 
         }else{
+            //by username
             $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
             ->where('business_cards.id', $user->active_card_id)
             ->leftJoin('users','users.id','business_cards.user_id')
