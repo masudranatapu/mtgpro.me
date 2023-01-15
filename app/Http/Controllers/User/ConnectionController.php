@@ -105,10 +105,11 @@ class ConnectionController extends Controller
         if(!empty($company)){
             $vcard->addCompany($connection->company_name);
         }
-        if(!empty($connection->profile_image)){
-            // $profile_image = str_replace(' ', '%20', public_path($connection->profile_image));
-            $vcard->addPhoto($connection->profile_image);
-        }
+
+        // if(!empty($connection->profile_image)){
+        //     // $profile_image = str_replace(' ', '%20', public_path($connection->profile_image));
+        //     $vcard->addPhoto($connection->profile_image);
+        // }
         return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
     }
 
