@@ -242,9 +242,9 @@ class AuthController extends Controller
         $base_name  = explode(' ', $base_name);
         $base_name  = implode('_', $base_name);
         $base_name  = Str::lower($base_name);
-        $exist = DB::table('users')->where('username',$base_name)->first();
-        if(!empty($exist)){
-          return  $base_name ."_".uniqid();
+        $exist = DB::table('users')->where('username',$base_name)->count();
+        if($exist > 0){
+          return  $base_name.$exist+1;
         }
         return $base_name;
     }
