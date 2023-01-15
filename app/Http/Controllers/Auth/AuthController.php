@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use Str;
 use \Config;
 use Carbon\Carbon;
+use App\Models\Plan;
 use App\Models\User;
 use App\Models\Setting;
 use App\Mail\WelcomeMail;
@@ -21,12 +22,13 @@ class AuthController extends Controller
 {
     protected $user;
     public function __construct(
-        User            $user
+        User            $user,
+        Plan            $plan
     ) {
         $this->user     = $user;
+        $this->plan     = $plan;
 
         $link = Setting::first();
-        // dd($link);
 
         Config::set('services.google.client_id', $link->google_client_id);
         Config::set('services.google.client_secret', $link->google_client_secret);
@@ -40,7 +42,8 @@ class AuthController extends Controller
     public function postRegister(RegistrationRequest $request)
     {
         try {
-            $plans = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
+            $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
+            $term_days = $plan->validity;
             $checkExist = User::where('email', $request->email)->whereNotNull('email')->first();
             if (!empty($checkExist)) {
                 Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
@@ -49,7 +52,11 @@ class AuthController extends Controller
             $user                       = new User();
             $user->name                 = trim($request->name);
             $user->email                = trim($request->email);
-            $user->username             = trim($request->username);
+            if(!empty($request->username) && $this->checkExistUserName($request->username)==false){
+                $user->username    = $request->username;
+            }else{
+                $user->username    = $this->makeUserName($request->name);
+            }
             $user->password             = bcrypt($request->password);
             $user->gender               = NULL;
             $user->dob                  = NULL;
@@ -59,10 +66,15 @@ class AuthController extends Controller
             $user->role_id              = 1;
             $user->user_type            = 2;
             // for plan info
-            $user->plan_id              = $plans->id;
-            $user->plan_details         = json_encode($plans);
-            $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addYear(5)->format('Y-m-d');
-            $user->plan_activation_date = Carbon::now();
+            if(!empty($plan)){
+                $user->plan_id              = $plan->id;
+                $user->plan_details         = json_encode($plan);
+                $user->plan_validity        = $this->plan->planValidity($plan->id);
+                $user->plan_activation_date = Carbon::now();
+                $user->term                 = $term_days;
+            }
+
+
             $location                   = $this->user->getLocation();
             if ($location) {
                 $user->billing_country  = $location->countryName;
@@ -131,7 +143,8 @@ class AuthController extends Controller
     public function handleProviderCallback(string $provider)
     {
         // dd($provider);
-        $plans = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
+        $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
+        $term_days = $plan->validity;
         $data = Socialite::driver($provider)->stateless()->user();
         $falsemail = trim(str_replace(' ','_',$data->name)) . '@gmail.com';
         $check_deactive = User::where('email', $data->email)->where('status', 0)->first();
@@ -159,25 +172,17 @@ class AuthController extends Controller
                 $base_name  = preg_replace('/\..+$/', '', $data->name);
                 $base_name  = explode(' ', $base_name);
                 $base_name  = implode('_', $base_name);
-                $base_name  = Str::lower($base_name);
-                $name       = $base_name ."_".uniqid();
+                $name  = Str::lower($base_name);
+                $_unique_name       = $base_name ."_".uniqid();
                 $user              = new User;
                 $user->name        = $data->name;
                 $user->email       = $data->email ?? $falsemail;
-                if(!empty($data->username)){
-                    $exist_username = DB::table('users')->where('username',$data->username)->first();
-                    if(!empty($exist_username)){
-                        $user->username    = $name;
-                    }
-                    else{
-                        $user->username    = $data->username;
-                    }
-
+                if(!empty($data->username) && $this->checkExistUserName($data->username)==false){
+                    $user->username    = $data->username;
                 }else{
-                    $user->username    = $data->username ??  $name;
+                    $user->username    = $this->makeUserName($data->name);
                 }
-
-                $user->profile_image = $data->avatar;
+                $user->profile_image = $data->avatar ?? NULL;
                 $user->provider    = $provider;
                 $user->social_id   = $data->id;
                 $user->status      = 1;
@@ -195,11 +200,14 @@ class AuthController extends Controller
                     // $user->latitude         = $location->latitude;
                     // $user->longitude        = $location->longitude;
                 }
-                // for plan info
-                $user->plan_id     = $plans->id;
-                $user->plan_details = json_encode($plans);
-                $user->plan_validity = Carbon::parse(date('Y-m-d'))->addYear(3)->format('Y-m-d');
-                $user->plan_activation_date = Carbon::now();
+                 // for plan info
+                if(!empty($plan)){
+                    $user->plan_id              = $plan->id;
+                    $user->plan_details         = json_encode($plan);
+                    $user->plan_validity        = $this->plan->planValidity($plan->id);
+                    $user->plan_activation_date = Carbon::now();
+                    $user->term                 = $term_days;
+                }
                 $user->save();
                 Auth::login($user);
                 if ($user->email) {
@@ -213,4 +221,32 @@ class AuthController extends Controller
         }
         return redirect()->route('user.card');
     }
+
+
+    public function checkExistUserName($name)
+    {
+        $name  = Str::lower($name);
+        $name = trim($name);
+        $exist = DB::table('users')->where('username',$name)->first();
+        if(!empty($exist)){
+            return true;
+        }
+        return false;
+    }
+
+
+    public function makeUserName($name)
+    {
+        $base_name  = trim($name);
+        $base_name  = preg_replace('/\..+$/', '', $data->name);
+        $base_name  = explode(' ', $base_name);
+        $base_name  = implode('_', $base_name);
+        $base_name  = Str::lower($base_name);
+        $exist = DB::table('users')->where('username',$base_name)->first();
+        if(!empty($exist)){
+          return  $base_name;
+        }
+        return $base_name ."_".uniqid();
+    }
+
 }

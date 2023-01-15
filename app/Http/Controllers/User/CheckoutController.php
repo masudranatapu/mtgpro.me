@@ -61,7 +61,6 @@ class CheckoutController extends Controller
         $term_days = $plan->validity;
         $plan_validity = \Carbon\Carbon::now();
         $plan_validity->addDays($term_days);
-        $term_days = $plan->validity;
         if($plan) {
             if($plan->is_free==1 && !empty($payment_data->id)){
                 //Unsubscription Stripe

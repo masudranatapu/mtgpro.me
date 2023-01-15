@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="forgot_pass text-center">
-                                <a href="{{ route('password.request') }}" class="text-dark">{{ __('Forgot password') }}?</a>
+                                <a href="{{ route('password.request') }}" title="{{ __('Forgot password') }}" class="text-dark">{{ __('Forgot password') }}?</a>
                             </div>
 
                             <div class="bottom text-center">
