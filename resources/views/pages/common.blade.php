@@ -66,9 +66,7 @@ h2, .h2, h2.title {
     <meta property="og:type" content="website" />
 @endsection
 @section('content')
-    <!-- ======================= Terms Conditions  =========================== -->
     <div class="termsconditon_sec mt-5 mb-5">
-        <!-- container -->
         <div class="container">
             <div class="page_wrapper">
                 <div class="page_title mb-4">
@@ -77,14 +75,11 @@ h2, .h2, h2.title {
                 <div class="page_content">
                     @if($page->url_slug == 'contact-us')
                         @include('pages._contact_us')
-
                     @endif
-
                    {!! $page->body !!}
                 </div>
             </div>
         </div>
-        <!-- container -->
     </div>
     @endsection
     @push('custom_js')

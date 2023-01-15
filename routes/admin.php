@@ -28,7 +28,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('view-user/{id}', 'UserController@viewUser')->name('view.user');
     Route::get('change-user-plan/{id}', 'UserController@ChangeUserPlan')->name('change.user.plan');
     Route::post('update-user-plan', 'UserController@UpdateUserPlan')->name('update.user.plan');
-    Route::get('update-status/{id}', 'UserController@updateStatus')->name('update.status');
+    Route::get('update-status', 'UserController@updateStatus')->name('update.status');
     Route::get('active-user/{id}', 'UserController@activeStatus')->name('update.active-user');
     Route::get('delete-user', 'UserController@deleteUser')->name('delete.user');
     Route::get('login-as/{id}', 'UserController@authAs')->name('login-as.user');

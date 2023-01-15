@@ -43,6 +43,11 @@
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">{{ __('Sign In') }}</button>
                             </div>
+
+                            <div class="forgot_pass text-center">
+                                <a href="{{ route('password.request') }}">{{ __('Forgot password') }}?</a>
+                            </div>
+
                             <div class="bottom text-center">
                                 <p>{{ __("Don't have an account?") }} <a href="{{ route('register') }}" title="{{ __('Sign Up') }}">{{ __('Sign Up') }}</a></p>
                             </div>
