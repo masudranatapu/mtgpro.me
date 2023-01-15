@@ -235,18 +235,18 @@ class AuthController extends Controller
     }
 
 
-    public function makeUserName($name)
+    public function makeUserName($base_name)
     {
-        $base_name  = trim($name);
-        $base_name  = preg_replace('/\..+$/', '', $data->name);
+        $base_name  = trim($base_name);
+        $base_name  = preg_replace('/\..+$/', '', $base_name);
         $base_name  = explode(' ', $base_name);
         $base_name  = implode('_', $base_name);
         $base_name  = Str::lower($base_name);
         $exist = DB::table('users')->where('username',$base_name)->first();
         if(!empty($exist)){
-          return  $base_name;
+          return  $base_name ."_".uniqid();
         }
-        return $base_name ."_".uniqid();
+        return $base_name;
     }
 
 }
