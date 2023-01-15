@@ -140,11 +140,17 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-        $this->validate($request, [
-            'display_name' => 'required|string|max:50',
-            'display_title' => 'required|string|max:50',
-            'details' => 'required|string|min:10|max:250',
-        ]);
+
+            $validator = Validator::make($request->all(), [
+                'display_name' => 'required|string|max:50',
+                'display_title' => 'required|string|max:50',
+                'details' => 'required|string|min:10|max:250',
+              ]);
+
+              if ($validator->fails())
+              {
+                return redirect()->back()->withErrors($validator)->withInput();
+              }
 
         DB::table('reviews')->insert([
             'user_id' => Auth::user()->id,
@@ -158,6 +164,7 @@ class UserController extends Controller
         ]);
 
     } catch (\Exception $e) {
+        dd($e->getMessage());
         DB::rollback();
         Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
@@ -171,11 +178,16 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'display_name' => 'required|string|max:50',
             'display_title' => 'required|string|max:50',
             'details' => 'required|string|min:10|max:250',
-        ]);
+          ]);
+
+          if ($validator->fails())
+          {
+            return redirect()->back()->withErrors($validator)->withInput();
+          }
 
         DB::table('reviews')
             ->where('id',$id)
