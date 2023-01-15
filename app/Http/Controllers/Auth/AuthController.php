@@ -223,12 +223,12 @@ class AuthController extends Controller
     }
 
 
-    public function checkExistUserName($name)
+    public function checkExistUserName($base_name)
     {
-        $name  = Str::lower($name);
-        $name = trim($name);
-        $exist = DB::table('users')->where('username',$name)->first();
-        if(!empty($exist)){
+        $base_name   = trim($base_name);
+        $base_name   = Str::lower($base_name);
+        $exist = DB::table('users')->where('username',$base_name)->count();
+        if($exist > 0){
             return true;
         }
         return false;
