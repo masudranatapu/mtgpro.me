@@ -1,7 +1,5 @@
 @extends('desktop.layouts.app')
-@section('title')
-{{ __('Change Password')}}
-@endsection
+@section('title'){{ __('Change Password')}}@endsection
 @section('content')
 {{-- <div class="container">
     <nav class="breadcrumb_sec">

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title') {{ __('Register') }} @endsection
 
 @section('content')
     <!-- ======================= Sign Up  =========================== -->

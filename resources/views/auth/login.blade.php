@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title') {{ __('Login') }} @endsection
 
 @section('content')
 

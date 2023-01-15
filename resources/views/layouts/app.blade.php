@@ -53,10 +53,8 @@
 </head>
 <body>
     @include('layouts.header')
-
     @yield('content')
     @include('layouts.footer')
-
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
@@ -110,6 +108,23 @@
             });
         @endforeach
     @endif
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        // "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        // "preventDuplicates": false,
+        // "onclick": null,
+        // "showDuration": "300",
+        // "hideDuration": "1000",
+        // "timeOut": "5000",
+        // "extendedTimeOut": "1000",
+        // "showEasing": "swing",
+        // "hideEasing": "linear",
+        // "showMethod": "fadeIn",
+        // "hideMethod": "fadeOut"
+    };
 </script>
 </body>
 </html>

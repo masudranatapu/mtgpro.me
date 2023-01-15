@@ -64,7 +64,7 @@
                                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Dashboard')}}">{{ __('Dashboard')}}</a></li>
                                             @else
                                             <li><a class="dropdown-item" href="{{ route('user.card') }}" title="{{ __('Card')}}">{{ __('Card')}}</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('Settings')}}">{{ __('Settings')}}</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('dashboard') }}" title="{{ __('My account')}}">{{ __('My account')}}</a></li>
                                             @endif
 
 
