@@ -38,7 +38,7 @@
                                     <thead>
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
-                                            <th>{{ __('Full Name') }}</th>
+                                            <th>{{ __('Name') }}</th>
                                             <th>{{ __('Email') }}</th>
                                             <th>{{ __('Current Plan') }}</th>
                                             <th>{{ __('Created At') }}</th>
@@ -51,7 +51,9 @@
                                         @foreach ($cards as $row)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a>
+                                            <td>
+                                                <div>Name: <a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a></div>
+                                                <div>User: <a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->username }}</a> </div>
                                             </td>
                                             <td class="text-muted">
                                                 {{ $row->card_email }} <br>
