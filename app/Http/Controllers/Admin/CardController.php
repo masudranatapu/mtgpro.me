@@ -19,7 +19,7 @@ class CardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request,$paginate=20)
+    public function index(Request $request)
     {
         $cards = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
@@ -30,7 +30,7 @@ class CardController extends Controller
         ->leftJoin('plans as p','u.plan_id','p.id')
         ->orderBy('c.created_at', 'desc')
         ->where('c.status', '!=' , 2)
-        ->paginate($paginate);
+        ->get();
         $settings = Setting::where('status', 1)->first();
         return view('admin.cards.index', compact('cards', 'settings'));
     }
