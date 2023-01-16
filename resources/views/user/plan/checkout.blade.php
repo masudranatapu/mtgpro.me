@@ -89,7 +89,8 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
                                         <div class="col-md-4 col-xl-4">
                                             <div class="mb-3 form-group">
                                                 <label class="form-label">{{ __('Email')}} <span class="text-danger">*</span></label>
-                                                <input type="email" class="form-control @error('billing_email') is-invalid @enderror" name="billing_email" placeholder="{{ __('Email')}}..." required value="{{$user->email}}">
+                                                <input type="email" class="form-control validated @error('billing_email') is-invalid @enderror" name="billing_email" placeholder="{{ __('Email')}}..." required value="{{$user->email}}"  data-validation-required-message=
+                                                "Please enter your address" required>
                                                 @if($errors->has('billing_email'))
                                                     <span class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
                                                 @endif
@@ -98,8 +99,7 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
                                         <div class="col-md-4 col-xl-4">
                                             <div class="mb-3 form-group">
                                                 <label class="form-label">{{ __('Billing Address')}} <span class="text-danger">*</span></label>
-                                                <textarea class="form-control validated @error('billing_address') is-invalid @enderror" name="billing_address" cols="10" rows="3" placeholder="{{ __('Billing Address')}}..."  required data-validation-required-message=
-                                                "Please enter your address">{{$user->billing_address}}</textarea>
+                                                <textarea class="form-control validated @error('billing_address') is-invalid @enderror" name="billing_address" cols="10" rows="3" placeholder="{{ __('Billing Address')}}..." required>{{$user->billing_address}}</textarea>
                                                 @if($errors->has('billing_address'))
                                                 <span class="help-block text-danger">{{ $errors->first('billing_address') }}</span>
                                                 @endif
@@ -212,6 +212,7 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
 @endsection
 {{-- @dd($config[9]->config_value) --}}
 @push('custom_js')
+{{-- <script src="{{ asset('assets/js/jqBootstrapValidation.js') }}"></script> --}}
 <script src="{{ asset('assets/js/countrySelect.min.js') }}"></script>
 <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
 <script src="https://js.stripe.com/v3/"></script>
@@ -315,5 +316,6 @@ input.country_selector,.country_selector button {height: 35px;margin: 0;padding:
         // Submit the form
         form.submit();
     }
+//   $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
 </script>
 @endpush

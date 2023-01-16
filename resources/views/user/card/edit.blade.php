@@ -888,9 +888,7 @@ $('.onclickIcon').on('click', function() {
 $(document).ready(function() {
   var _URL = window.URL || window.webkitURL;
   $("#upload_icon").change(function(e) {
-
    var icon_id =  $('#icon_id').val();
-
     var file = this.files[0], img;
     if (Math.round(file.size / (1024 * 1024)) > 1) {
        toastr.error('Please select image size less than 1 MB');
@@ -903,7 +901,6 @@ $(document).ready(function() {
         $(".error_line").fadeOut();
         $('#content_icon').attr('src',URL.createObjectURL(file));
         $('.sicon_' + icon_id).find('.social_logo').attr("src",URL.createObjectURL(file));
-
         return true;
       };
       img.onerror = function() {
