@@ -30,7 +30,7 @@ $tabindex = 1;
             <div class="account_setting create_card_wrapper p-5">
                 <div class="row d-flex justify-content-center align-item-center">
                     <div class="col-xl-8">
-                         <form action="{{route('user.connections.update',$row->id)}}" method="post">
+                         <form action="{{route('user.connections.update',$row->id)}}" id="connectionUpdate" method="post">
                                     @csrf
                                     <input type="hidden" name="card_id" id="card_id" value="{{$row->card_id}}" />
                                     <div class="row">
@@ -93,7 +93,10 @@ $tabindex = 1;
                                         @endif
                                     </div>
                                     <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}" class="btn btn-secondary mr-2">{{ __('Cancel') }}</a>
-                                    <button type="submit" class="btn btn-primary" style="background: #111 !important;">{{ __('Update') }}</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                        <span class="btn-txt">{{ __('Update') }}</span>
+                                    </button>
                                 </form>
                     </div>
                 </div>
@@ -105,5 +108,11 @@ $tabindex = 1;
 @push('custom_js')
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script>
+         $("#connectionUpdate").submit(function () {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
 </script>
 @endpush
