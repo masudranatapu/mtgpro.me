@@ -166,6 +166,7 @@ return [
         5 => 'link',
         6 => 'mail',
         7 => 'address',
+        8 => 'file',
     ],
 
 
