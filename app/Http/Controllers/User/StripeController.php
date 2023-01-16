@@ -80,10 +80,22 @@ class StripeController extends Controller
                     //Unsubscription Stripe
                     $payment_data = json_decode($userData->stripe_data);
                     if(!empty($payment_data)){
-                        $stripe->subscriptions->cancel(
+                        // $stripe->subscriptions->cancel(
+                        //     $payment_data->id,
+                        //     []
+                        // );
+                         //Check subscription
+                        $check_subscription = $stripe->subscriptions->retrieve(
                             $payment_data->id,
                             []
                         );
+                        if($check_subscription->status=='active'){
+                            //Unsubscription Stripe
+                            $stripe = $stripe->subscriptions->cancel(
+                                $payment_data->id,
+                                []
+                            );
+                        }
                     }
                     // $_subscription = \Stripe\Subscription::retrieve($payment_data->id);
                     // $_subscription->cancel();
@@ -228,10 +240,24 @@ class StripeController extends Controller
         // plan_activation_date
         //Unsubscription Stripe
         $stripe = new \Stripe\StripeClient($config[10]->config_value);
-        $stripe = $stripe->subscriptions->cancel(
+
+         //Check subscription
+         $check_subscription = $stripe->subscriptions->retrieve(
             $payment_data->id,
             []
           );
+          if($check_subscription->status=='active'){
+            //Unsubscription Stripe
+            $stripe = $stripe->subscriptions->cancel(
+                $payment_data->id,
+                []
+            );
+          }
+
+        // $stripe = $stripe->subscriptions->cancel(
+        //     $payment_data->id,
+        //     []
+        //   );
           $this->businesscard->updateDataByCuurentPlan($plan->id);
         User::where('id', Auth::user()->id)->update([
             'plan_id' => $plan->id,
