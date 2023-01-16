@@ -300,12 +300,6 @@
                                                 </a>
                                             </li>
                                         @endif
-
-                                        {{-- <li>
-                                            <a href="#" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}>
-                                                <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
-                                            </a>
-                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -315,26 +309,6 @@
             </div>
         </div>
     </div>
-
-
-    {{-- @if($android !== false || $ipad !== false || $iphone !== false)
-    <li class="list-inline-item">
-        <a href="whatsapp://send?text={{Request::url()}}"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
-        <i class="la la-whatsapp" aria-hidden="true" style="background-color: #26c281"></i>
-        </a>
-     </li>
-    @else
-        <li class="list-inline-item">
-        <a href="https://web.whatsapp.com/send?text={{Request::url()}}" target="__blank"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
-        <i class="la la-whatsapp" aria-hidden="true" style="background-color: #26c281"></i>
-        </a>
-     </li>
-    @endif
-     <li class="list-inline-item">
-        <a href="https://www.pinterest.com/pin/create/button/" class="social_share pinterest" title="{{__('Share on instagram')}}" target="_blank" rel="noopener">
-        <i class="la la-pinterest-p" aria-hidden="true"></i></a>
-     </li> --}}
-
 
 
     <!-- Contact Offcanvas form -->
