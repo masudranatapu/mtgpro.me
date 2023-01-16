@@ -61,16 +61,14 @@
                                             <td>
                                                 @if ($row->status==1)
                                                 <a href="{{ route('card.preview',$row->card_url) }}"
-                                                    target="__blank" style="max-width: 100px; overflow:hidden; display: grid">{{ $row->card_url }}</a>
+                                                    target="__blank">{{ $row->card_url }}</a>
                                                 @else
                                                 {{ $row->card_url }}
                                                 @endif
                                             </td>
                                             <td class="text-muted">
-                                                <div style="max-width: 130px; overflow:hidden; display: grid">
-                                                    {{ $row->card_email }} <br>
-                                                    {{ $row->phone_number }}
-                                                </div>
+                                                {{ $row->card_email }} <br>
+                                                {{ $row->phone_number }}
                                             </td>
                                             <td class="text-muted text-capitalize">
                                                 {{ $row->plan_name }}
@@ -120,7 +118,6 @@
                                         @endif
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
