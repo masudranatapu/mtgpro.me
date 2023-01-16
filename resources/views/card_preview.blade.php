@@ -34,8 +34,8 @@
     <title>{{ $title }} </title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
     @if (!empty($twitter_id))
-        <meta name="twitter:site" content="{{ '@' . $twitter_id }}" />
-        <meta name="twitter:creator" content="{{ '@' . $twitter_id }}" />
+    <meta name="twitter:site" content="{{ '@' . $twitter_id }}" />
+    <meta name="twitter:creator" content="{{ '@' . $twitter_id }}" />
     @endif
     <meta name="description" content="{{ $description }}" />
     <meta property="og:title" content="{{ $user_name }}" />
@@ -47,7 +47,7 @@
     <meta property="og:type" content="profile" />
     <meta property="profile:first_name" content="{{ $cardinfo->title }}" />
     @if (!empty($cardinfo->title2))
-        <meta property="profile:last_name" content="{{ $cardinfo->title2 }}" />
+    <meta property="profile:last_name" content="{{ $cardinfo->title2 }}" />
     @endif
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{ $user_name }}" />
@@ -60,24 +60,39 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}">
     @if($cardinfo->theme_color)
-        <style>
-            .save_contact a{background: {{ $cardinfo->theme_color }}}
-            .offcanvas_btn a{background: {{ $cardinfo->theme_color }}}
-        </style>
+    <style>
+        .save_contact a {
+            background: {
+                    {
+                    $cardinfo->theme_color
+                }
+            }
+        }
+
+        .offcanvas_btn a {
+            background: {
+                    {
+                    $cardinfo->theme_color
+                }
+            }
+        }
+    </style>
 
     @endif
 </head>
+
 <body>
     <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
    var js, fjs = d.getElementsByTagName(s)[0];
    if (d.getElementById(id)) return;
    js = d.createElement(s); js.id = id;
    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
    fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-</script>
+    </script>
 
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
@@ -96,15 +111,16 @@
                         <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
                         <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
                         @if (!empty($cardinfo->location))
-                            <h6>{{ $cardinfo->location }}</h6>
+                        <h6>{{ $cardinfo->location }}</h6>
                         @endif
                         @if (!empty($cardinfo->location))
-                            <p>{{ $cardinfo->bio }}</p>
+                        <p>{{ $cardinfo->bio }}</p>
                         @endif
                     </div>
                     <div class="save_contact mt-5 mb-5">
                         <a href="{{ route('download.vCard', $cardinfo->card_id) }}"
-                            class="text-decoration-none save-contact w-50 d-inline-block">{{ __('Save Contact') }}</a>
+                            class="text-decoration-none save-contact d-inline-block">{{ __('Save Contact') }}</a>
+
                         <a href="javascript:void(0)" class="text-decoration-none d-inline-block btn-secondary"
                             data-bs-toggle="modal" data-bs-target="#shareModal">
                             {{ __('Share') }}
@@ -119,61 +135,65 @@
                             ?>
                             {{-- @dd($cardinfo->business_card_fields) --}}
                             @if (!empty($cardinfo->business_card_fields))
-                                @foreach ($cardinfo->business_card_fields as $contact)
-                                    @if($contact->sicon)
+                            @foreach ($cardinfo->business_card_fields as $contact)
+                            @if($contact->sicon)
 
-                                    @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->sicon->is_paid == 1)
+                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->sicon->is_paid ==
+                            1)
 
-                                    @else
+                            @else
 
-                                        @php
-                                            if($cardinfo->theme_color == null){
-                                                $icon_color = $contact->sicon->icon_color;
-                                            }else{
-                                                $icon_color = $cardinfo->theme_color;
-                                            }
-                                            //link,mail,mobile,number,text,username
-                                        @endphp
-                                        <li>
-                                            @if ($contact->type == 'address')
-                                                <a title="" class="text-decoration-none"
-                                                    href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
-                                                    target="_blank">
-                                            @elseif ($contact->type == 'mail')
-                                                    <a class="text-decoration-none" href="mailto:{{ $contact->content }}">
-                                            @elseif ($contact->type == 'mobile')
-                                                        <a class="text-decoration-none" href="tel:{{ $contact->content }}">
+                            @php
+                            if($cardinfo->theme_color == null){
+                            $icon_color = $contact->sicon->icon_color;
+                            }else{
+                            $icon_color = $cardinfo->theme_color;
+                            }
+                            //link,mail,mobile,number,text,username
+                            @endphp
+                            <li>
+                                @if ($contact->type == 'address')
+                                <a title="" class="text-decoration-none"
+                                    href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
+                                    @elseif ($contact->type == 'mail')
+                                    <a class="text-decoration-none" href="mailto:{{ $contact->content }}">
+                                        @elseif ($contact->type == 'mobile')
+                                        <a class="text-decoration-none" href="tel:{{ $contact->content }}">
                                             @elseif ($contact->type == 'text')
-                                                            <a class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
-                                            @elseif ($contact->icon == 'whatsapp')
+                                            <a class="text-decoration-none" href="{{ $contact->content }}"
+                                                target="_blank">
+                                                @elseif ($contact->icon == 'whatsapp')
                                                 @if ($android !== false || $ipad !== false || $iphone !== false)
+                                                <a class="text-decoration-none"
+                                                    href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
+                                                    @else
                                                     <a class="text-decoration-none"
-                                                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
-                                                @else
-                                                    <a class="text-decoration-none"
-                                                    href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
-                                                @endif
-                                            @else
-                                                <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
-                                            @endif
-                                            <img style="border-radius: 15px; background:{{ $icon_color }}" class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
-                                                alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @endif
-                                @endforeach
+                                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
+                                                        @endif
+                                                        @else
+                                                        <a class="text-decoration-none"
+                                                            href="{{ makeUrl($contact->content) }}" target="_blank">
+                                                            @endif
+                                                            <img style="border-radius: 15px; background:{{ $icon_color }}"
+                                                                class="img-fluid"
+                                                                src="{{ getIcon($contact->icon_image) }}"
+                                                                alt="{{ $contact->label }}" width="75" height="75">
+                                                            <span>{{ $contact->label }}</span>
+                                                        </a>
+                            </li>
+                            @endif
+                            @endif
+                            @endforeach
                             @endif
                         </ul>
                     </div>
                     <div class="copyright_article">
                         @if (isFreePlan($cardinfo->user_id))
-                            <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights
-                                reserved.</p>
+                        <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights
+                            reserved.</p>
                         @else
-                            <p> Copyright © <a href="javascript:void(0)">{{ $cardinfo->title }}</a> All rights
-                                reserved.</p>
+                        <p> Copyright © <a href="javascript:void(0)">{{ $cardinfo->title }}</a> All rights
+                            reserved.</p>
                         @endif
                     </div>
                 </div>
@@ -223,24 +243,25 @@
                                     </div>
                                     <div class="qr-code">
                                         {{-- {!! QrCode::size(200)->color(74, 74, 74, 80)
-                                            ->mergeString('/public/assets/img/qrlogo.png', .3)
-                                            ->generate(url($cardinfo->card_url)) !!} --}}
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url)) !!}
+                                        ->mergeString('/public/assets/img/qrlogo.png', .3)
+                                        ->generate(url($cardinfo->card_url)) !!} --}}
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))
+                                        !!}
                                     </div>
                                     {{-- <div class="qr-logo">
-                                            <img src="{{ asset('assets/img/qrlogo.png') }}" alt="" width="50px">
-                                        </div> --}}
+                                        <img src="{{ asset('assets/img/qrlogo.png') }}" alt="" width="50px">
+                                    </div> --}}
                                 </div>
 
                                 <div class="mt-4">
                                     <a href="{{ route('qr', $cardinfo->card_id) }}"
-                                        class="download_btn btn btn-primary mr-1"
-                                        title="{{ __('Download QR code') }}">
+                                        class="download_btn btn btn-primary mr-1" title="{{ __('Download QR code') }}">
                                         <i class="fa fa-download"></i>{{ __('Download QR code') }}
                                     </a>
                                     <a class="btn btn-primary" title="{{ __('Social Media') }}" href="#"
                                         data-bs-toggle="modal" data-bs-target="#SocialModal">
-                                        <img class="img-fluid" src="{{ asset('assets/img/icon/connections.svg') }}" alt="">
+                                        <img class="img-fluid" src="{{ asset('assets/img/icons/connections.svg') }}"
+                                            alt="">
                                         {{ __('Social Media') }}
                                     </a>
                                 </div>
@@ -254,8 +275,8 @@
 
     <!-- Social Modal modal -->
     <div class="share_modal email_modal">
-        <div class="modal animate__animated animate__fadeIn" id="SocialModal" tabindex="-1"
-            data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal animate__animated animate__fadeIn" id="SocialModal" tabindex="-1" data-bs-backdrop="static"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -270,34 +291,47 @@
                                 <div class="col-12 col-sm-12">
                                     <ul class="text-center">
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0)" class="social_share" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}">
-                                                <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="{{ __('Share on facebook') }}">
+                                            <a href="javascript:void(0)" class="social_share"
+                                                data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"
+                                                title="{{__('Share on Facebook')}}">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/facebook.svg') }}"
+                                                    alt="{{ __('Share on facebook') }}">
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
                                             <a href="javascript:void(0)" class="social_share" data-url="https://twitter.com/intent/tweet?text=Hello%21+This+is+my+vCard.&amp;url={{Request::url()}}
                                             " title="{{__('Share on Twitter')}}">
-                                                <img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icons/twitter.svg') }}"
+                                                    alt="">
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0)" class="social_share" data-url="https://telegram.me/share/url?url={{Request::url()}}&text="  title="{{__('Share on Telegram')}}">
-                                                <img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
+                                            <a href="javascript:void(0)" class="social_share"
+                                                data-url="https://telegram.me/share/url?url={{Request::url()}}&text="
+                                                title="{{__('Share on Telegram')}}">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/telegram.svg') }}" alt="">
                                             </a>
                                         </li>
 
                                         @if($android !== false || $ipad !== false || $iphone !== false)
-                                            <li class="list-inline-item">
-                                                <a href="whatsapp://send?text={{Request::url()}}"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
-                                                    <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
-                                                </a>
-                                            </li>
+                                        <li class="list-inline-item">
+                                            <a href="whatsapp://send?text={{Request::url()}}" class="whatsapp"
+                                                title="{{__('Share on Whatsapp')}}" data-action="share/whatsapp/share">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="">
+                                            </a>
+                                        </li>
                                         @else
-                                                <li class="list-inline-item">
-                                                <a href="https://web.whatsapp.com/send?text={{Request::url()}}" target="__blank"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
-                                                    <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
-                                                </a>
-                                            </li>
+                                        <li class="list-inline-item">
+                                            <a href="https://web.whatsapp.com/send?text={{Request::url()}}"
+                                                target="__blank" class="whatsapp" title="{{__('Share on Whatsapp')}}"
+                                                data-action="share/whatsapp/share">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="">
+                                            </a>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -316,9 +350,8 @@
         <div class="offcanvas-header">
             <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
-                        fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="bevel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel">
                         <path d="M12 5v13M5 12l7 7 7-7"></path>
                     </svg>
                 </span>
@@ -334,18 +367,18 @@
                     </div>
                     <div class="mb-3">
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="form-control @error('name') is-invalid @enderror"
-                            placeholder="{{ __('Name') }}" required tabindex="{{ $tabindex++ }}">
+                            class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
+                            required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('name'))
-                            <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
                         <input type="text" name="email" id="email" value="{{ old('email') }}"
-                            class="form-control @error('email') is-invalid @enderror"
-                            placeholder="{{ __('Email') }}" required tabindex="{{ $tabindex++ }}">
+                            class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}"
+                            required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('email'))
-                            <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
@@ -353,7 +386,7 @@
                             class="form-control @error('phone') is-invalid @enderror"
                             placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('phone'))
-                            <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
@@ -361,29 +394,29 @@
                             class="form-control @error('title') is-invalid @enderror"
                             placeholder="{{ __('Job Title') }}" required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('title'))
-                            <span class="help-block text-danger">{{ $errors->first('title') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('title') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="company_name" id="company_name"
-                            value="{{ old('company_name') }}"
+                        <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}"
                             class="form-control @error('company_name') is-invalid @enderror"
                             placeholder="{{ __('Company') }}" required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('company_name'))
-                            <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
                         <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
-                            class="form-control @error('message') is-invalid @enderror" placeholder="{{ __('Notes on this interaction') }}"
-                            tabindex="{{ $tabindex++ }}" required></textarea>
+                            class="form-control @error('message') is-invalid @enderror"
+                            placeholder="{{ __('Notes on this interaction') }}" tabindex="{{ $tabindex++ }}"
+                            required></textarea>
                         @if ($errors->has('message'))
-                            <span class="help-block text-danger">{{ $errors->first('message') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
-                            <span class="btn-txt">{{ __('Connect') }}</span>
+                        <span class="btn-txt">{{ __('Connect') }}</span>
                     </button>
                 </form>
             </div>
@@ -453,11 +486,11 @@
     {!! Toastr::message() !!}
 
 
-@if($cardinfo->theme_color)
+    @if($cardinfo->theme_color)
 
 
-<script>
-    function hexToRGBA(hex, opacity) {
+    <script>
+        function hexToRGBA(hex, opacity) {
         return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) { return parseInt(hex.length%2 ? l+l : l, 16) }).concat(isFinite(opacity) ? opacity : 1).join(',') + ')';
     }
 
@@ -465,9 +498,9 @@
     $('.card_view_wrapper').css('background',bg);
 
 
-</script>
+    </script>
 
-@endif
+    @endif
 
 </body>
 

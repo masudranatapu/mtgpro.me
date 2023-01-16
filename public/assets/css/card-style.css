@@ -101,11 +101,11 @@ a {
 
 .save_contact a {
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-    padding: 12px 45px;
+    padding: 12px 5px;
     font-size: 17px;
     font-family: 'Inter';
     font-weight: 400;
-    width: 34%;
+    width: 40%;
     border-radius: 50px;
     color: #fff;
     background: #212121;
@@ -423,12 +423,19 @@ a {
     }
 }
 
-@media screen and (max-width: 330px){
+@media screen and (max-width: 420px){
     .save_contact a{
-        width: 100% !important;
+        width: 68% !important;
         margin: 5px 0px;
     }
 }
+
+@media screen and (max-width: 310px){
+    .save_contact a{
+        width: 100% !important;
+    }
+}
+
 
 .qrcode-wrapper {
     position: relative;
@@ -436,9 +443,10 @@ a {
 
 .qr-code {
     position: absolute;
-    top: 5%;
-    left: 28%;
-}
+    top: 9%;
+    left: 0;
+    right: 0;
+  }
 
 .qr-background {
     max-width: 230px;
