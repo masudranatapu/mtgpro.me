@@ -139,23 +139,22 @@
                                                 <a title="" class="text-decoration-none"
                                                     href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
                                                     target="_blank">
-                                                @elseif ($contact->type == 'mail')
+                                            @elseif ($contact->type == 'mail')
                                                     <a class="text-decoration-none" href="mailto:{{ $contact->content }}">
-                                                    @elseif ($contact->type == 'mobile')
+                                            @elseif ($contact->type == 'mobile')
                                                         <a class="text-decoration-none" href="tel:{{ $contact->content }}">
-                                                        @elseif ($contact->type == 'text')
-                                                            <a class="text-decoration-none" href="{{ $contact->content }}" target="_blank">
-                                                            @elseif ($contact->icon == 'whatsapp')
-                                                                @if ($android !== false || $ipad !== false || $iphone !== false)
-                                                                    <a class="text-decoration-none"
-                                                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}"
-                                                                        >
-                                                                    @else
-                                                                        <a class="text-decoration-none"
-                                                                            href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
-                                                                @endif
-                                                            @else
-                                                                <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
+                                            @elseif ($contact->type == 'text')
+                                                            <a class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
+                                            @elseif ($contact->icon == 'whatsapp')
+                                                @if ($android !== false || $ipad !== false || $iphone !== false)
+                                                    <a class="text-decoration-none"
+                                                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
+                                                @else
+                                                    <a class="text-decoration-none"
+                                                    href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
+                                                @endif
+                                            @else
+                                                <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
                                             @endif
                                             <img style="border-radius: 15px; background:{{ $icon_color }}" class="img-fluid" src="{{ getIcon($contact->icon_image) }}"
                                                 alt="{{ $contact->label }}" width="75" height="75">

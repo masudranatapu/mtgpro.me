@@ -257,11 +257,9 @@ function isAnnualPlan($user_id){
     $subscription_end = new \Carbon\Carbon($user->plan_validity);
     $subscription_start = new \Carbon\Carbon($user->plan_activation_date);
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
-
     if($diff_in_days > 364 && $user->is_free==0){
         return true;
     }
-
     return false;
 }
 

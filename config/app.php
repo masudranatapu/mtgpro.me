@@ -165,6 +165,7 @@ return [
         4 => 'username',
         5 => 'link',
         6 => 'mail',
+        7 => 'address',
     ],
 
 
