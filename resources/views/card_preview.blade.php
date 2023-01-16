@@ -270,18 +270,19 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12">
                                     <ul class="text-center">
-                                        <li>
+                                        <li class="list-inline-item">
                                             <a href="javascript:void(0)" class="social_share" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="{{ __('Share on facebook') }}">
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="social_share" data-url="https://twitter.com/share?text={{Request::url()}}" title="{{__('Share on Twitter')}}">
+                                        <li class="list-inline-item">
+                                            <a href="javascript:void(0)" class="social_share" data-url="https://twitter.com/intent/tweet?text=Hello%21+This+is+my+vCard.&amp;url={{Request::url()}}
+                                            " title="{{__('Share on Twitter')}}">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="social_share" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}">
+                                        <li class="list-inline-item">
+                                            <a href="javascript:void(0)" class="social_share" data-url="https://telegram.me/share/url?url={{Request::url()}}&text="  title="{{__('Share on Telegram')}}">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
                                             </a>
                                         </li>
