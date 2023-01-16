@@ -250,13 +250,18 @@ function isFreePlan($user_id){
     return false;
 }
 function isAnnualPlan($user_id){
-    $user = DB::table('users')->select('plans.is_free')
+    $user = DB::table('users')->select('users.*','plans.is_free')
     ->leftJoin('plans','plans.id','=','users.plan_id')
     ->where('users.id',$user_id)
     ->first();
-    if($user->is_free==1){
+    $subscription_end = new \Carbon\Carbon($user->plan_validity);
+    $subscription_start = new \Carbon\Carbon($user->plan_activation_date);
+    $diff_in_days = $subscription_start->diffInDays($subscription_end);
+
+    if($diff_in_days > 364 && $user->is_free==0){
         return true;
     }
+
     return false;
 }
 
