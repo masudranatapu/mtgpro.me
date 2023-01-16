@@ -392,7 +392,7 @@
                     <div class="mb-3">
                         <input type="text" name="title" id="job_title" value="{{ old('title') }}"
                             class="form-control @error('title') is-invalid @enderror"
-                            placeholder="{{ __('Job Title') }}" required tabindex="{{ $tabindex++ }}">
+                            placeholder="{{ __('Job Title (Optional)') }}" tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('title'))
                         <span class="help-block text-danger">{{ $errors->first('title') }}</span>
                         @endif
@@ -400,7 +400,7 @@
                     <div class="mb-3">
                         <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}"
                             class="form-control @error('company_name') is-invalid @enderror"
-                            placeholder="{{ __('Company') }}" required tabindex="{{ $tabindex++ }}">
+                            placeholder="{{ __('Company (Optional)') }}" tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('company_name'))
                         <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                         @endif
@@ -408,7 +408,7 @@
                     <div class="mb-3">
                         <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
                             class="form-control @error('message') is-invalid @enderror"
-                            placeholder="{{ __('Notes on this interaction') }}" tabindex="{{ $tabindex++ }}"
+                            placeholder="{{ __('Questions, Comments or Important Details') }}" tabindex="{{ $tabindex++ }}"
                             required></textarea>
                         @if ($errors->has('message'))
                         <span class="help-block text-danger">{{ $errors->first('message') }}</span>
@@ -416,7 +416,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
-                        <span class="btn-txt">{{ __('Connect') }}</span>
+                        <span class="btn-txt">{{ __('Connect with me') }}</span>
                     </button>
                 </form>
             </div>

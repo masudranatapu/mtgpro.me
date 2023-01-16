@@ -26,8 +26,8 @@ class ConnectRequest extends FormRequest
             'name'        => 'required|string|max:124',
             'email'       => 'required|email|max:150',
             'phone'       => 'required|max:20',
-            'title'   => 'nullable|string|max:124',
-            'company_name'     => 'required|string|max:124',
+            'title'       => 'nullable|string|max:124',
+            'company_name'     => 'string|max:124',
             'message'        => 'required|string|max:1024',
         ];
         return $rules;
@@ -39,8 +39,8 @@ class ConnectRequest extends FormRequest
            'card_id.required'       => 'Please enter your card',
            'name.required'          => 'Please enter your name',
            'email.required'         => 'Please enter your email',
-           'title.required'         => 'Please enter your job title',
-           'company.required'       => 'Please enter your company name',
+        //    'title.required'         => 'Please enter your job title',
+        //    'company.required'       => 'Please enter your company name',
            'message.required'          => 'Please enter your message',
         ];
     }
