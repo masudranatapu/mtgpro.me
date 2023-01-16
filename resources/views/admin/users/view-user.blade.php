@@ -38,6 +38,10 @@
                                     class="badge bg-green-lt">{{ $user_details->role_id == 2 ? 'User' : ''}}</span>
                             </div>
                         </div>
+
+                        {{-- @dd($user_details) --}}
+
+                        @if ($user_details->id != Auth::user()->id)
                         <div class="d-flex">
                             <a href="mailto:{{ $user_details->email == '' ? 'Not Available' : $user_details->email }}"
                                 class="card-btn">
@@ -59,6 +63,7 @@
                                     <path d="M20 12h-13l3 -3m0 6l-3 -3" /></svg>
                                 {{ __('Login via Admin') }}</a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-6">
@@ -97,7 +102,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn-sm btn btn-info" href="{{ route('user.card.edit', $user_card->id)}}"><i class="fa fa-pencil-alt"></i></a>
+                                                {{-- <a class="btn-sm btn btn-info" href="{{ route('user.card.edit', $user_card->id)}}"><i class="fa fa-pencil-alt"></i></a> --}}
                                                 <a class="btn-sm btn btn-success" target="_blank" href="{{ route('card.preview',$user_card->card_url) }}"><i class="fa fa-link"></i></a>
                                                 <a class="btn-sm btn btn-danger" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="{{ route('admin.card.delete',$user_card->id) }}"class="dropdown-item btn-sm"><i class="fa fa-trash"></i></a>
                                             </div>

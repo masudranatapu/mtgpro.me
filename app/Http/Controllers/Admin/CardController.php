@@ -76,7 +76,7 @@ class CardController extends Controller
         DB::beginTransaction();
         try {
             $card_status = DB::table('business_cards')->where('id',$id)->first();
-            if($card_status->status==1){
+            if($card_status->status==1 || $card_status->status==0){
                 DB::table('business_fields')->where('card_id',$id)->update([
                     'status'=> 0
                 ]);
@@ -107,14 +107,15 @@ class CardController extends Controller
     {
         $cards = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
-        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status'
+        'c.profile','c.created_at','p.plan_name','c.user_id','c.status'
         )
-        ->leftJoin('business_fields as cf','cf.card_id','c.id')
+        // ->leftJoin('business_fields as cf','cf.card_id','c.id')
         ->leftJoin('users as u','c.user_id','u.id')
         ->leftJoin('plans as p','u.plan_id','p.id')
         ->orderBy('c.created_at', 'desc')
         ->where('c.status',2)
         ->whereNotNull('c.deleted_at')
+        ->groupBy('c.id')
         ->paginate($paginate);
         $settings = Setting::where('status', 1)->first();
         return view('admin.cards.trash-list', compact('cards', 'settings'));

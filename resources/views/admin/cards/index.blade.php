@@ -59,7 +59,12 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('card.preview',$row->card_url) }}" style="max-width: 100px; overflow:hidden; display: grid">{{ $row->card_url }}</a>
+                                                @if ($row->status==1)
+                                                <a href="{{ route('card.preview',$row->card_url) }}"
+                                                    target="__blank" style="max-width: 100px; overflow:hidden; display: grid">{{ $row->card_url }}</a>
+                                                @else
+                                                {{ $row->card_url }}
+                                                @endif
                                             </td>
                                             <td class="text-muted">
                                                 <div style="max-width: 130px; overflow:hidden; display: grid">
