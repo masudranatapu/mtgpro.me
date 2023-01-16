@@ -250,7 +250,10 @@ function isFreePlan($user_id){
     return false;
 }
 function isAnnualPlan($user_id){
-    $user = DB::table('users')->select('plans.is_free')->leftJoin('plans','plans.id','=','users.plan_id')->where('users.id',$user_id)->first();
+    $user = DB::table('users')->select('plans.is_free')
+    ->leftJoin('plans','plans.id','=','users.plan_id')
+    ->where('users.id',$user_id)
+    ->first();
     if($user->is_free==1){
         return true;
     }

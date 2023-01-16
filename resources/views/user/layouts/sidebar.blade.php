@@ -56,7 +56,7 @@ $settings = getSetting();
                         {{ __('Insights') }}
                     </a>
                 </li>
-                @if (isAnnualPlan())
+                @if (isAnnualPlan(Auth::user()->id))
                 <li class="nav-item">
                     <a href="{{ route('user.free-marketing-material') }}" class="nav-link @yield('Free Marketing Material')">
                         <span class="icon">
