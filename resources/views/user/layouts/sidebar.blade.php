@@ -56,6 +56,7 @@ $settings = getSetting();
                         {{ __('Insights') }}
                     </a>
                 </li>
+                @if (isAnnualPlan())
                 <li class="nav-item">
                     <a href="{{ route('user.free-marketing-material') }}" class="nav-link @yield('Free Marketing Material')">
                         <span class="icon">
@@ -64,6 +65,8 @@ $settings = getSetting();
                         {{ __('Free Marketing Material') }}
                     </a>
                 </li>
+                @endif
+
                 <li class="nav-item">
                     <a href="{{ route('user.setting') }}" class="nav-link @yield('settings')">
                         <span class="icon">
