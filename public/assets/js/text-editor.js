@@ -40,7 +40,7 @@ $(document).ready(function() {
     focus: false
 });
 
-$('#text-editor').summernote('fontSize', 14);
+$('.summernote').summernote('fontSize', 14);
 $('.note-current-fontsize').text('14');
 
 });

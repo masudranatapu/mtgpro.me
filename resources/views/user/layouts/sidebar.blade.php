@@ -57,6 +57,14 @@ $settings = getSetting();
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('user.free-marketing-material') }}" class="nav-link @yield('Free Marketing Material')">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/insights.svg') }}" alt="{{ __('Free Marketing Material') }}">
+                        </span>
+                        {{ __('Free Marketing Material') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.setting') }}" class="nav-link @yield('settings')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="{{ __('Settings') }}">

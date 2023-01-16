@@ -77,5 +77,14 @@ class DashboardControler extends Controller
         return view('user.plan.index', compact('user_plan','plans','currency','user'));
     }
 
+    public function getFreeMarketing(Request $request)
+    {
+        $page = DB::table('custom_pages')->where('url_slug','free-marketing-material')->first();
+        if(empty($page)){
+            abort(404);
+        }
+        return view('pages.common',compact('page'));
+    }
+
 
 }

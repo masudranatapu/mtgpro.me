@@ -67,6 +67,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('setting',['as'=>'setting','uses'=>'DashboardControler@getSetting']);
     Route::get('plans',['as'=>'plans','uses'=>'DashboardControler@getPlanList']);
 
+    Route::get('free-marketing-material',['as'=>'free-marketing-material','uses'=>'DashboardControler@getFreeMarketing']);
+
     Route::get('cancel-plan/stripe',['as'=>'cancel-plan.stripe','uses'=>'StripeController@cancelCurrentPlan']);
 
     Route::get('checkout',['as'=>'checkout','uses'=>'CheckoutController@checkout']);
