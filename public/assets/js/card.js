@@ -388,11 +388,11 @@ $(document).ready(function () {
 
     $('.card_validation').validate({
         rules: {
-            'card_url': {
-                required: true,
-                maxlength: 124,
-                minlength: 2,
-            },
+            // 'card_url': {
+            //     required: true,
+            //     maxlength: 124,
+            //     minlength: 2,
+            // },
 
             'card_for': {
                 required: true,
@@ -424,15 +424,9 @@ $(document).ready(function () {
                 required: false,
                 maxlength: 255,
             },
-
-
-
-
         },
         messages: {},
-
         submitHandler: function(form) {
-
             $('.save-card-spinner').addClass('active');
             $(this).find('.save-card').prop('disabled', true);
             $(".btn-txt").text("Processing ...");

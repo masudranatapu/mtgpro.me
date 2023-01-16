@@ -113,10 +113,8 @@
                                                 <div class="tab_body about_user">
                                                      <form action="{{ route('user.card.update',$card->id) }}" method="post" enctype="multipart/form-data" novalidate="novalidate" class="card_validation">
                                                         @csrf
-
                                                         <input type="hidden" name="mode" value="edit" />
                                                         <input type="hidden" name="id" value="{{ $card->id }}" />
-
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
@@ -131,8 +129,6 @@
                                                                             <label class="form-label">{{ __('Profile picture') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 540px x 540px (1:1)"></i></label>
                                                                             <div
                                                                                 class="slim"
-                                                                                 {{-- data-service="async.php" --}}
-                                                                                 {{-- data-fetcher="fetch.php" --}}
                                                                                  data-ratio="1:1"
                                                                                  data-size="540,540"
                                                                                  data-max-file-size="100"
@@ -147,8 +143,6 @@
                                                                             <label class="form-label">{{ __('Cover photo') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br/>
                                                                             <div
                                                                                 class="slim cover_group"
-                                                                                 {{-- data-service="async.php" --}}
-                                                                                 {{-- data-fetcher="fetch.php" --}}
                                                                                  data-ratio="3:1"
                                                                                  data-size="780,300"
                                                                                  data-max-file-size="100">
@@ -226,31 +220,46 @@
                                                                 <div class="form-group">
                                                                      <label for="name" class="form-label">{{ __('Name') }}</label>
                                                                      <input type="text" name="name" value="{{ $card->title }}" class="form-control cin" placeholder="{{ __('name') }}" required data-preview="name_show">
-                                                                 </div>
+                                                                    @if($errors->has('name'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="location" class="form-label">{{ __('Location') }}</label>
                                                                      <input type="text" name="location" value="{{ $card->location }}" class="form-control cin" placeholder="{{ __('location') }}" data-preview="location_show">
-                                                                 </div>
+                                                                    @if($errors->has('location'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('location') }}</span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                     <label for="designation" class="form-label">{{ __('Job Title') }}</label>
-                                                                     <input type="text" name="designation" value="{{ $card->designation }}" id="designation" class="form-control cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show">
-                                                                 </div>
+                                                                    <label for="designation" class="form-label">{{ __('Job Title') }}</label>
+                                                                    <input type="text" name="designation" value="{{ $card->designation }}" id="designation" class="form-control cin_desig_comp" placeholder="{{ __('job') }}" required data-preview="desig_comp_show">
+                                                                    @if($errors->has('designation'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('designation') }}</span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                      <label for="company_name" class="form-label">{{ __('Company') }}</label>
                                                                      <input type="text" name="company_name" id="company_name" value="{{ $card->company_name }}" class="form-control cin_desig_comp" placeholder="{{ __('company') }}" required data-preview="desig_comp_show">
-                                                                 </div>
+                                                                    @if($errors->has('company_name'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                      <label for="bio" class="form-label">{{ __('Bio') }}</label>
                                                                      <textarea name="bio" id="bio" cols="30" rows="10" class="form-control cin" placeholder="{{ __('Bio') }}" data-preview="bio_show" >{{ $card->bio }}</textarea>
-                                                                 </div>
+                                                                    @if($errors->has('bio'))
+                                                                        <span class="help-block text-danger">{{ $errors->first('bio') }}</span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                             {{-- <div class="col-12 mb-3">
                                                                 <div class="form-group">
@@ -267,7 +276,6 @@
                                                                     @endif
                                                                 </div>
                                                             </div> --}}
-
                                                             <div class="col-12">
                                                                 <div class="float-right">
                                                                      <button type="submit" class="btn btn-primary save-card">
@@ -355,12 +363,8 @@
                                     </div>
                                     <div class="view_btn text-center mt-3">
                                         <a href="{{ route('card.preview',$card->card_url) }}" target="_blank">
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9 2H14V7" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M8 8L14.0104 1.98959" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M5.5 3H3.5C2.67157 3 2 3.67157 2 4.5V12.5C2 13.3284 2.67157 14 3.5 14H11.5C12.3284 14 13 13.3284 13 12.5V10.5" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                            <span>View Card</span>
+                                            <img src="{{ asset('assets/img/icon/website.svg') }}" alt="WebSite">
+                                            <span>{{__('View Card') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -424,15 +428,12 @@
                                                                 <div class="icon_info">
                                                                     <img style="background:{{ $icon->icon_color }}" src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
                                                                     <span>{{ $icon->icon_title }}</span>
-
                                                                 </div>
-
                                                                 @if($icon->is_paid == '1')
                                                                     <div style="padding: 5px 20px;" title="Paid link">
                                                                         <img src="{{ asset('assets/img/logo/pro.png') }}" alt="" width="22"  />
                                                                     </div>
                                                                 @endif
-
                                                                 <div class="icon float-right">
                                                                     <i class="fa fa-plus"></i>
                                                                 </div>
@@ -443,10 +444,8 @@
                                             @endforeach
                                         @endif
                                     </div>
-
                                 @endforeach
                             @endif
-
                         </div>
                         <!-- add content form -->
                         <div class="add_form_wrap second_modal d-none">
@@ -465,29 +464,32 @@
                                                     </div> --}}
                                                 </div>
                                                <label class="imgLabel" for="upload_icon" >
-                                                    <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden onchange="preview()">
+                                                    {{-- <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden onchange="preview()"> --}}
+                                                    <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
                                                     <img id="content_icon" src="{{ getIcon() }}" alt="" width="100" height="100">
                                                     {{-- <span>Select photo here or drag and drop <br /> one in place of current</span> --}}
+                                                    <span class="help-block text-danger"></span>
+
                                                 </label>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label"><span id="content_link"></span> <span class="text-dark">*</span></label>
                                                 <input type="text" name="content" class="form-control content_input" placeholder="" required>
-                                                @if($errors->has('logo'))
-                                                    <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+                                                @if($errors->has('content'))
+                                                    <span class="help-block text-danger">{{ $errors->first('content') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
                                                 <label for="label" class="form-label">{{ __('Link title') }}</label>
                                                 <input type="text" name="label" class="form-control mcin" data-preview="link_title_show" placeholder="Title" required id="content_title" data-id="" maxlength="20">
-                                                @if($errors->has('logo'))
-                                                    <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+                                                @if($errors->has('label'))
+                                                    <span class="help-block text-danger">{{ $errors->first('label') }}</span>
                                                 @endif
                                             </div>
 
                                             <div class="form-group text-center float-lg-right">
                                                 <button type="button" class="btn btn-secondary backfirstModal mr-2">{{ __('Cancel') }}</button>
-                                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                <button type="submit" class="btn btn-primary" id="icon-save-btn">{{ __('Save') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -646,15 +648,12 @@ new Sortable(dropItems, {
                 $("body").css("cursor", "progress");
             },
             success: function (response) {
-                // console.log(response);
                 toastr.success(response.message);
             },
             complete: function (data) {
                 $("body").css("cursor", "default");
             }
         });
-
-
     }
 });
 // social content modal
@@ -689,193 +688,163 @@ $('.onclickIcon').on('click', function() {
     // $('.out').attr('src',icon_name)
     $('.second_modal').removeClass('d-none');
 });
-$('.backfirstModal').on('click', function() {
-    $('.first_modal').removeClass('d-none');
-    $('.second_modal').addClass('d-none');
-    $('#filter').val('');
-    $('.icon_each').css('display','block');
+    $('.backfirstModal').on('click', function() {
+        $('.first_modal').removeClass('d-none');
+        $('.second_modal').addClass('d-none');
+        $('#filter').val('');
+        $('.icon_each').css('display','block');
 
-});
-$('.modalClose').on('click', function() {
-    $('.first_modal').removeClass('d-none');
-    $('.second_modal').addClass('d-none');
-});
-
-
-
-
-// Show content for edit
-$('.editLink').on('click', function() {
-    $('.tab_body .back').removeClass('d-none');
-    $('.tab_body .edit_social_form').removeClass('d-none');
-    $('.tab_body .add_link').addClass('d-none');
-    $('.tab_body .social_media_list').addClass('d-none');
-    var id = $(this).data('id');
-    $.ajax({
-         url: `{{ route('user.card.sicon_edit') }}`,
-         type: "get",
-         data:{id},
-         success:function(data)
-         {
-            if(data.success){
-                $('.social_add_form').html(data.data.html);
-            }else{
-                toastr.warning('Please reload and try again');
-            }
-         },
-         error: function (jqXHR, exception) {
-         },
-         complete: function (response) {}
-     });
-});
-
-// if(document.getElementById("upload_icon") != null){
-// var cropper = new Slim(document.getElementById('upload_icon'), {
-//         ratio: '1:1',
-//         minSize: {
-//             width: 50,
-//             height: 50,
-//         },
-//         size: {
-//             width: 100,
-//             height: 100,
-//         },
-//         willSave: function(data, ready) {
-//             $('#profilePic_2').attr('src',icon_name);
-//           ready(data);
-//         },
-//          download: false,
-//         instantEdit: true,
-//     });
-// }
-
-//Icon content remove
-$(document).on('click', '.scion_remove', function() {
-    var url = $(this).data('url');
-    var id = $(this).data('id');
-    $.ajax({
-         url: url,
-         type: "post",
-         data:{"id": id,"_token": "{{ csrf_token() }}",},
-         success:function(data)
-         {
-            if(data.success){
-                console.log(data);
-                $('.tab_body .back').addClass('d-none');
-                $('.tab_body .edit_social_form').addClass('d-none');
-                $('.tab_body .add_link').removeClass('d-none');
-                $('.tab_body .social_media_list').removeClass('d-none');
-                $('.sicon_single_list_'+id).hide();
-                toastr.success(data.message);
-            }else{
-                toastr.warning('Please reload and try again');
-            }
-         },
-         error: function (jqXHR, exception) {
-         },
-         complete: function (response) {}
-     });
-
-});
-
-$('.tab_body .back').on('click', function() {
-    $('.tab_body .back').addClass('d-none');
-    $('.tab_body .edit_social_form').addClass('d-none');
-    $('.tab_body .add_link').removeClass('d-none');
-    $('.tab_body .social_media_list').removeClass('d-none');
-});
-
-
-// color change
-function changeColor(bgcolor,color){
-    // var element = document.getElementById("clrBg");
-    // element.style.backgroundColor = color;
-    var element = $("#clrBg");
-    element.css("background-color", bgcolor);
-    $('.social_logo').css("background", color);
-    if(color == '#fff'){
-        $('.save_contact a').css("color", '#000');
-        $('.save_contact a').css("border-color", '#000');
-        $('.save_contact a').css("background-color", '#fff');
-    }else if(color == '#000'){
-        $('.save_contact a').css("color", '#fff');
-        $('.save_contact a').css("border-color", '#fff');
-        $('.save_contact a').css("background-color", '#000');
-    } else {
-        $('.save_contact a').css("color", '#fff');
-        $('.save_contact a').css("border-color", color);
-        $('.save_contact a').css("background-color", color);
-    }
-}
-$(document).on('input','#colorPicker',function(){
-    let color = $(this).val();
-    var element = document.getElementById("clrBg");
-    element.style.backgroundColor = color;
-})
-
-
-//Active/Inactive Content
-$("input:checkbox.sicon_control").click(function() {
-    var id = $(this).val();
-    var status = '';
-    if(!$(this).is(":checked")){
-       $('.sicon_'+id).hide();
-       status = 'unchecked';
-
-    }else{
-        $('.sicon_'+id).show();
-        status = 'checked';
-    }
-    $.ajax({
-         url: `{{ route('user.card.sicon_update') }}`,
-         type: "post",
-         data:{"id": id,"status":status,"_token": "{{ csrf_token() }}",},
-         success:function(data)
-         {
-            // console.log(data);
-         },
-         error: function (jqXHR, exception) {
-         },
-         complete: function (response) {
-         }
-     });
-
-});
-
-  $(document).on('submit', "#iconUpdateForm", function (e) {
-    e.preventDefault();
-    var form = $("#iconUpdateForm");
-    $.ajax({
-        url: $(this).attr("action"),
-        type: $(this).attr("method"),
-        dataType: "JSON",
-        data: new FormData(this),
-        async: true,
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-            $("body").css("cursor", "progress");
-        },
-        success: function (response) {
-            if (response.status == 1) {
-               $('.sicon_' + response.data.id).find('.social_link').attr("href", response.data.content);
-               $('.sicon_' + response.data.id).find('.social_logo').attr("src", response.data.logo);
-               $('.sicon_' + response.data.id).find('.icon_label').html(response.data.label);
-               $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('img').attr("src", response.data.logo);
-               $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('span').html(response.data.label);
-                toastr.success(response.message);
-            } else {
-                toastr.error(response.message);
-            }
-        },
-        error: function (jqXHR, exception) {
-            toastr.error('Something wrong');
-        },
-        complete: function (response) {
-            $("body").css("cursor", "default");
-        }
     });
-});
+    $('.modalClose').on('click', function() {
+        $('.first_modal').removeClass('d-none');
+        $('.second_modal').addClass('d-none');
+    });
+
+    // Show content for edit
+    $('.editLink').on('click', function() {
+        $('.tab_body .back').removeClass('d-none');
+        $('.tab_body .edit_social_form').removeClass('d-none');
+        $('.tab_body .add_link').addClass('d-none');
+        $('.tab_body .social_media_list').addClass('d-none');
+        var id = $(this).data('id');
+        $.ajax({
+            url: `{{ route('user.card.sicon_edit') }}`,
+            type: "get",
+            data:{id},
+            success:function(data)
+            {
+                if(data.success){
+                    $('.social_add_form').html(data.data.html);
+                }else{
+                    toastr.warning('Please reload and try again');
+                }
+            },
+            error: function (jqXHR, exception) {
+            },
+            complete: function (response) {}
+        });
+    });
+
+    //Icon content remove
+    $(document).on('click', '.scion_remove', function() {
+        var url = $(this).data('url');
+        var id = $(this).data('id');
+        $.ajax({
+            url: url,
+            type: "post",
+            data:{"id": id,"_token": "{{ csrf_token() }}",},
+            success:function(data)
+            {
+                if(data.success){
+                    console.log(data);
+                    $('.tab_body .back').addClass('d-none');
+                    $('.tab_body .edit_social_form').addClass('d-none');
+                    $('.tab_body .add_link').removeClass('d-none');
+                    $('.tab_body .social_media_list').removeClass('d-none');
+                    $('.sicon_single_list_'+id).hide();
+                    toastr.success(data.message);
+                }else{
+                    toastr.warning('Please reload and try again');
+                }
+            },
+            error: function (jqXHR, exception) {
+            },
+            complete: function (response) {}
+        });
+
+    });
+
+    $('.tab_body .back').on('click', function() {
+        $('.tab_body .back').addClass('d-none');
+        $('.tab_body .edit_social_form').addClass('d-none');
+        $('.tab_body .add_link').removeClass('d-none');
+        $('.tab_body .social_media_list').removeClass('d-none');
+    });
+
+    // color change
+    function changeColor(bgcolor,color){
+        var element = $("#clrBg");
+        element.css("background-color", bgcolor);
+        $('.social_logo').css("background", color);
+        if(color == '#fff'){
+            $('.save_contact a').css("color", '#000');
+            $('.save_contact a').css("border-color", '#000');
+            $('.save_contact a').css("background-color", '#fff');
+        }else if(color == '#000'){
+            $('.save_contact a').css("color", '#fff');
+            $('.save_contact a').css("border-color", '#fff');
+            $('.save_contact a').css("background-color", '#000');
+        } else {
+            $('.save_contact a').css("color", '#fff');
+            $('.save_contact a').css("border-color", color);
+            $('.save_contact a').css("background-color", color);
+        }
+    }
+    $(document).on('input','#colorPicker',function(){
+        let color = $(this).val();
+        var element = document.getElementById("clrBg");
+        element.style.backgroundColor = color;
+    })
+    //Active/Inactive Content
+    $("input:checkbox.sicon_control").click(function() {
+        var id = $(this).val();
+        var status = '';
+        if(!$(this).is(":checked")){
+        $('.sicon_'+id).hide();
+        status = 'unchecked';
+        }else{
+            $('.sicon_'+id).show();
+            status = 'checked';
+        }
+        $.ajax({
+            url: `{{ route('user.card.sicon_update') }}`,
+            type: "post",
+            data:{"id": id,"status":status,"_token": "{{ csrf_token() }}",},
+            success:function(data)
+            {
+            },
+            error: function (jqXHR, exception) {
+            },
+            complete: function (response) {
+            }
+        });
+    });
+
+    $(document).on('submit', "#iconUpdateForm", function (e) {
+        e.preventDefault();
+        var form = $("#iconUpdateForm");
+        $.ajax({
+            url: $(this).attr("action"),
+            type: $(this).attr("method"),
+            dataType: "JSON",
+            data: new FormData(this),
+            async: true,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                $('.sicon_' + response.data.id).find('.social_link').attr("href", response.data.content);
+                $('.sicon_' + response.data.id).find('.social_logo').attr("src", response.data.logo);
+                $('.sicon_' + response.data.id).find('.icon_label').html(response.data.label);
+                $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('img').attr("src", response.data.logo);
+                $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('span').html(response.data.label);
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    });
+
   $(document).on('submit', "#iconCreateForm", function (e) {
     e.preventDefault();
     var form = $("#iconUpdateForm");
@@ -912,8 +881,40 @@ $("input:checkbox.sicon_control").click(function() {
         }
     });
 });
-function preview() {
-    content_icon.src=URL.createObjectURL(event.target.files[0]);
-}
+// function preview() {
+//     content_icon.src=URL.createObjectURL(event.target.files[0]);
+// }
+
+$(document).ready(function() {
+  var _URL = window.URL || window.webkitURL;
+  $("#upload_icon").change(function(e) {
+
+   var icon_id =  $('#icon_id').val();
+
+    var file = this.files[0], img;
+    if (Math.round(file.size / (1024 * 1024)) > 1) {
+       toastr.error('Please select image size less than 1 MB');
+       return false;
+    }
+    if (file) {
+      img = new Image();
+      img.onload = function() {
+        $('#icon-save-btn').prop('disabled', false);
+        $(".error_line").fadeOut();
+        $('#content_icon').attr('src',URL.createObjectURL(file));
+        $('.sicon_' + icon_id).find('.social_logo').attr("src",URL.createObjectURL(file));
+
+        return true;
+      };
+      img.onerror = function() {
+        $('#icon-save-btn').prop('disabled', true);
+        $(".error_line").fadeIn();
+        return false;
+      };
+      img.src = _URL.createObjectURL(file);
+    }
+  });
+});
+
 </script>
 @endpush
