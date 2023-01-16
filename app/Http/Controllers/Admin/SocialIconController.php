@@ -93,17 +93,12 @@ class SocialIconController extends Controller
             'is_paid' => $request->is_paid,
             'created_at' => Carbon::now(),
         ]);
-        
+
         Toastr::success('Social icon successfully save :-)','Success');
         return redirect()->route('admin.social-icon.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //

@@ -75,6 +75,15 @@ $settings = getSetting();
                         {{ __('Settings') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('user.calculator') }}" class="nav-link @yield('calculator')">
+                        <span class="icon">
+                            <i class="fa fa-calculator" aria-hidden="true"></i>
+                            {{-- <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="{{ __('calculator') }}"> --}}
+                        </span>
+                        {{ __('Mortgage calculator') }}
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- user profile -->

@@ -86,5 +86,11 @@ class DashboardControler extends Controller
         return view('pages.common',compact('page'));
     }
 
+    public function getCalculator(Request $request)
+    {
+
+        return view('user.mortgage-calculator');
+    }
+
 
 }
