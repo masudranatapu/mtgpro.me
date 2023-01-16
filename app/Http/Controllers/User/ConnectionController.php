@@ -161,11 +161,19 @@ class ConnectionController extends Controller
             Mail::to($connection->email)->send(new SendConnectMail($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
-            Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
-            return redirect()->back();
+            // Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
+            // return redirect()->back();
+            return response()->json([
+                'status' => 0,
+                'msg'=> trans('Something wrong! Please try again'),
+            ]);
         }
-        Toastr::success('Email successfully sent', 'Success', ["positionClass" => "toast-top-center"]);
-        return redirect()->back();
+        // Toastr::success('Email successfully sent', 'Success', ["positionClass" => "toast-top-center"]);
+        // return redirect()->back();
+        return response()->json([
+            'status' => 1,
+            'msg'=> trans('Email successfully sent'),
+        ]);
     }
 
     public function getExportCsv(Request $request)

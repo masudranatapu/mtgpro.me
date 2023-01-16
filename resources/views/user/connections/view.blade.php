@@ -131,5 +131,6 @@ $(document).on('click', '.copy_btn', function(e) {
     //     progressBar: true,
     // });
 });
+
 </script>
 @endpush

@@ -8,7 +8,7 @@
                 </button>
               </div>
             <div class="modal-body">
-                <form action="{{route('user.connection.send-mail',$row->id)}}" method="post">
+                <form action="{{route('user.connection.send-mail',$row->id)}}" id="sendConnectionMail" method="post">
                     @csrf
                     <input type="hidden" name="connection_id" id="connection_id" value="{{$row->id}}" />
                     <div class="mb-3">
@@ -32,9 +32,55 @@
                         <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary">{{ __('Send Message') }}</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                        <span class="btn-txt">{{ __('Send Message') }}</span>
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+@push('custom_js')
+<script>
+$(document).on('submit', "#sendConnectionMail", function (e) {
+        e.preventDefault();
+        var form = $("#sendConnectionMail");
+        var _this = $(this).find(":submit");
+        $.ajax({
+            type: 'post',
+            data: form.serialize(),
+            url: form.attr('action'),
+            async: true,
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+                $(_this).children(".loading-spinner").toggleClass('active');
+                $(_this).attr("disabled", true);
+                $(_this).children(".btn-txt").text("Processing");
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.msg);
+                    $('#sendConnectionMail')[0].reset();
+                    $('#connectMail').modal('hide');
+                    // location.reload();
+                } else {
+                    toastr.error(response.msg);
+                }
+                $(_this).attr("disabled", false);
+                 $(_this).children(".loading-spinner").removeClass('active');
+                 $(_this).children(".btn-txt").text("Send Message");
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+                 $(_this).attr("disabled", false);
+                 $(_this).children(".loading-spinner").removeClass('active');
+                 $(_this).children(".btn-txt").text("Send Message");
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    });
+</script>
+@endpush
