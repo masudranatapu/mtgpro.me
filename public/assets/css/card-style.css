@@ -116,12 +116,6 @@ a {
     -o-transition: all 0.4s ease;
 }
 
-.save_contact .btn-secondary {
-    /* background: #fff !important; */
-    /* color: #212121; */
-    /* border-color: #fff; */
-}
-
 .save_contact a:hover {
     box-shadow: none;
 }
@@ -434,4 +428,120 @@ a {
         width: 100% !important;
         margin: 5px 0px;
     }
+}
+
+.qrcode-wrapper {
+    position: relative;
+}
+
+.qr-code {
+    position: absolute;
+    top: 5%;
+    left: 28%;
+}
+
+.qr-background {
+    max-width: 230px;
+    margin: 0 auto;
+}
+
+.qr-logo {
+    position: absolute;
+    top: 40%;
+    left: 42%;
+}
+
+.qr-logo img {
+    padding: 0px;
+    background: #EBF8FB;
+    opacity: 90%;
+}
+
+#social-links ul {
+    padding-left: 0;
+}
+
+#social-links ul li {
+    display: inline-block;
+}
+
+#social-links ul li a {
+    padding: 3px;
+    border-radius: 5px;
+    margin: 1px;
+    font-size: 25px;
+}
+
+#social-links .fa-facebook-square {
+    background-color: #3B5998;
+    color: #fff;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+#social-links .fa-twitter {
+    background-color: #00ACED;
+    color: #fff;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+#social-links .fa-linkedin {
+    background-color: #007FB1;
+    color: #fff;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+#social-links .fa-whatsapp {
+    background-color: #25D366;
+    color: #fff;
+    padding: 8px;
+    border: 1px solid;
+    border-radius: 50% 55% 54% 56%;
+    font-size: 22px;
+}
+
+#social-links .fa-reddit {
+    background-color: #FF4500;
+    color: #fff;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+#social-links .fa-telegram {
+    background-color: #0088cc;
+    color: #fff;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+.card_share ul li i {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    background: #000;
+    color: #fff;
+    font-size: 26px;
+    border-radius: 50px;
+    padding-top: 11px;
+    margin-bottom: 4px;
+}
+.loading-spinner {
+    display: none;
+}
+
+.loading-spinner.active {
+    display: inline-block;
 }

@@ -4,7 +4,6 @@
 <head>
     <?php
     $cardinfo = $cardinfo ?? [];
-
     $shareComponent = $shareComponent ?? [];
     $settings = getSetting();
     $tabindex = 1;
@@ -25,6 +24,9 @@
     } else {
         $title = $user_name;
     }
+    $android = stripos($_SERVER['HTTP_USER_AGENT'], "android");
+    $iphone = stripos($_SERVER['HTTP_USER_AGENT'], "iphone");
+    $ipad = stripos($_SERVER['HTTP_USER_AGENT'], "ipad");
 
     ?>
     <meta charset="UTF-8">
@@ -57,124 +59,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}">
-    <style>
-        .qrcode-wrapper {
-            position: relative;
-        }
-
-        .qr-code {
-            position: absolute;
-            top: 5%;
-            left: 28%;
-        }
-
-        .qr-background {
-            max-width: 230px;
-            margin: 0 auto;
-        }
-
-        .qr-logo {
-            position: absolute;
-            top: 40%;
-            left: 42%;
-        }
-
-        .qr-logo img {
-            padding: 0px;
-            background: #EBF8FB;
-            opacity: 90%;
-        }
-
-        #social-links ul {
-            padding-left: 0;
-        }
-
-        #social-links ul li {
-            display: inline-block;
-        }
-
-        #social-links ul li a {
-            padding: 3px;
-            border-radius: 5px;
-            margin: 1px;
-            font-size: 25px;
-        }
-
-        #social-links .fa-facebook-square {
-            background-color: #3B5998;
-            color: #fff;
-            padding: 10px;
-            border: 1px solid;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        #social-links .fa-twitter {
-            background-color: #00ACED;
-            color: #fff;
-            padding: 10px;
-            border: 1px solid;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        #social-links .fa-linkedin {
-            background-color: #007FB1;
-            color: #fff;
-            padding: 10px;
-            border: 1px solid;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        #social-links .fa-whatsapp {
-            background-color: #25D366;
-            color: #fff;
-            padding: 8px;
-            border: 1px solid;
-            border-radius: 50% 55% 54% 56%;
-            font-size: 22px;
-        }
-
-        #social-links .fa-reddit {
-            background-color: #FF4500;
-            color: #fff;
-            padding: 10px;
-            border: 1px solid;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        #social-links .fa-telegram {
-            background-color: #0088cc;
-            color: #fff;
-            padding: 10px;
-            border: 1px solid;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        .card_share ul li i {
-            display: block;
-            width: 50px;
-            height: 50px;
-            margin: 0 auto;
-            background: #000;
-            color: #fff;
-            font-size: 26px;
-            border-radius: 50px;
-            padding-top: 11px;
-            margin-bottom: 4px;
-        }
-        .loading-spinner {
-            display: none;
-        }
-
-        .loading-spinner.active {
-            display: inline-block;
-        }
-
-    </style>
     @if($cardinfo->theme_color)
         <style>
             .save_contact a{background: {{ $cardinfo->theme_color }}}
@@ -182,11 +66,19 @@
         </style>
 
     @endif
-
-
-
 </head>
 <body>
+    <!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) return;
+   js = d.createElement(s); js.id = id;
+   js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+   fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
             <div class="card_cover">
@@ -260,8 +152,7 @@
                                                                         >
                                                                     @else
                                                                         <a class="text-decoration-none"
-                                                                            href="https://web.whatsapp.com/send?phone={{ $contact->content }}"
-                                                                            >
+                                                                            href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
                                                                 @endif
                                                             @else
                                                                 <a class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
@@ -380,25 +271,40 @@
                                 <div class="col-12 col-sm-12">
                                     <ul class="text-center">
                                         <li>
-                                            <a href="#" class="" id="" title="">
-                                                <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="">
+                                            <a href="javascript:void(0)" class="social_share" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icon/facebook.svg') }}" alt="{{ __('Share on facebook') }}">
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" class="" id="" title="">
+                                            <a href="javascript:void(0)" class="social_share" data-url="https://twitter.com/share?text={{Request::url()}}" title="{{__('Share on Twitter')}}">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/twitter.svg') }}" alt="">
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" class="" id="" title="">
+                                            <a href="javascript:void(0)" class="social_share" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}">
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/telegram.svg') }}" alt="">
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#" class="" id="" title="">
+
+                                        @if($android !== false || $ipad !== false || $iphone !== false)
+                                            <li class="list-inline-item">
+                                                <a href="whatsapp://send?text={{Request::url()}}"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
+                                                    <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
+                                                </a>
+                                            </li>
+                                        @else
+                                                <li class="list-inline-item">
+                                                <a href="https://web.whatsapp.com/send?text={{Request::url()}}" target="__blank"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
+                                                    <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        {{-- <li>
+                                            <a href="#" data-url="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"  title="{{__('Share on Facebook')}}>
                                                 <img class="img-fluid" src="{{ asset('assets/img/icon/whatsapp.svg') }}" alt="">
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -408,6 +314,25 @@
             </div>
         </div>
     </div>
+
+
+    {{-- @if($android !== false || $ipad !== false || $iphone !== false)
+    <li class="list-inline-item">
+        <a href="whatsapp://send?text={{Request::url()}}"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
+        <i class="la la-whatsapp" aria-hidden="true" style="background-color: #26c281"></i>
+        </a>
+     </li>
+    @else
+        <li class="list-inline-item">
+        <a href="https://web.whatsapp.com/send?text={{Request::url()}}" target="__blank"  class="whatsapp"  title="{{__('Share on Whatsapp')}}"  data-action="share/whatsapp/share">
+        <i class="la la-whatsapp" aria-hidden="true" style="background-color: #26c281"></i>
+        </a>
+     </li>
+    @endif
+     <li class="list-inline-item">
+        <a href="https://www.pinterest.com/pin/create/button/" class="social_share pinterest" title="{{__('Share on instagram')}}" target="_blank" rel="noopener">
+        <i class="la la-pinterest-p" aria-hidden="true"></i></a>
+     </li> --}}
 
 
 
@@ -496,6 +421,11 @@
     <script src="{{ asset('assets/js/toastr.js') }}"></script>
     <script>
         AOS.init();
+        $('.social_share').click(function(){
+            var url = $(this).data('url');
+            window.open(url, '', 'window settings');
+        });
+
         $(document).on('submit', "#connect-form", function (e) {
             e.preventDefault();
             var form = $("#connect-form");
