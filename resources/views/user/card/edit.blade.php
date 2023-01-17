@@ -677,7 +677,8 @@ $icon_group = Config::get('app.icon_group');
                                                                     d="M16.3906 3.22412V5.93348C16.9357 5.70401 17.2902 5.17021 17.2902 4.5788C17.2902 3.98739 16.9357 3.45359 16.3906 3.22412Z"
                                                                     fill="black"></path>
                                                                 <rect x="2.16797" y="2.09521" width="12.1921"
-                                                                    height="4.96716" rx="0.90312" fill="black"></rect>
+                                                                    height="4.96716" rx="0.90312" fill="black">
+                                                                </rect>
                                                             </svg>
                                                         </div>
                                                     </div>
@@ -764,10 +765,6 @@ $icon_group = Config::get('app.icon_group');
         </div>
     </div>
 </div>
-
-
-
-
 
 @endsection
 
@@ -1021,7 +1018,6 @@ $icon_group = Config::get('app.icon_group');
             },
             success: function (response) {
                 if (response.status == 1) {
-
                 $('.sicon_' + response.data.id).find('.social_link').attr("href", response.data.content);
                 $('.sicon_' + response.data.id).find('.social_logo').attr("src", response.data.logo);
                 $('.sicon_' + response.data.id).find('.icon_label').html(response.data.label);

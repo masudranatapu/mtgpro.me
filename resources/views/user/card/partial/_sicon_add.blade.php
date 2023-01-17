@@ -51,8 +51,9 @@ enctype="multipart/form-data">
     <button type="button" class="btn btn-secondary backfirstModal mr-2">{{
         __('Cancel') }}
     </button>
-    <button type="submit" class="btn btn-primary" id="icon-save-btn">{{
-        __('Save') }}
+    <button type="submit" class="btn btn-primary" id="icon-save-btn">
+        <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+        <span class="btn-txt">{{ __('Save') }}</span>
     </button>
 </div>
 </form>
