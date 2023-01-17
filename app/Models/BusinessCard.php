@@ -58,7 +58,7 @@ class BusinessCard extends Model
         ->where('business_cards.id', $id)
         // ->with('business_card_fields')
         ->where('business_cards.user_id', Auth::user()->id)->first();
-        $row->business_card_fields = BusinessField::select('business_fields.*','social_icon.icon_color')->where('business_fields.card_id',$row->id)->join('social_icon','social_icon.id','=','business_fields.icon_id')->get();
+        $row->business_card_fields = BusinessField::select('business_fields.*','social_icon.icon_color','social_icon.icon_title')->where('business_fields.card_id',$row->id)->join('social_icon','social_icon.id','=','business_fields.icon_id')->get();
 
         return $row;
     }

@@ -19,13 +19,13 @@ enctype="multipart/form-data">
 <input type="hidden" name="card_id" value="{{ $card->id }}">
 <input type="hidden" name="icon_id" id="icon_id" value="{{ $icon->id }}">
 <div class="form-group">
-     {{-- <label class="imgLabel" for="upload_icon"> --}}
+     <label class="imgLabel" for="upload_icon">
         <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
         <img id="content_icon" src="{{ getIcon($icon->icon_image) }}" style="background: {{ $icon->icon_color ?? '#f9f9f9' }}" alt="" width="100" height="100">
-    {{-- </label> --}}
-        @if($errors->has('logo'))
-            <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
-        @endif
+    </label>
+    @if($errors->has('logo'))
+        <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+    @endif
 </div>
 <div class="form-group">
     <label class="form-label">
@@ -40,7 +40,7 @@ enctype="multipart/form-data">
 </div>
 <div class="form-group">
     <label for="label" class="form-label">{{ __('Link title') }}</label>
-    <input type="text" name="label" class="form-control mcin"
+    <input type="text" name="label" class="form-control mcin" value="{{ $icon->icon_title }}"
         data-preview="link_title_show" placeholder="Title" required
         id="content_title" data-id="" maxlength="20">
     @if($errors->has('label'))
@@ -57,34 +57,34 @@ enctype="multipart/form-data">
 </div>
 </form>
 <script>
-       var cropper = new Slim(document.getElementById('upload_icon'), {
-        ratio: '1:1',
-        minSize: {
-            width: 50,
-            height: 50,
-        },
-        size: {
-            width: 440,
-            height: 440,
-        },
-        willSave: function(data, ready) {
-            $('#showlogo_2').attr('src', data.output.image);
-            ready(data);
-        },
+    //    var cropper = new Slim(document.getElementById('upload_icon'), {
+    //     ratio: '1:1',
+    //     minSize: {
+    //         width: 50,
+    //         height: 50,
+    //     },
+    //     size: {
+    //         width: 440,
+    //         height: 440,
+    //     },
+    //     willSave: function(data, ready) {
+    //         $('#showlogo_2').attr('src', data.output.image);
+    //         ready(data);
+    //     },
 
-        download: false,
-        instantEdit: true,
-        // label: 'Upload: Click here or drag an image file onto it',
-        buttonConfirmLabel: 'Crop',
-        buttonConfirmTitle: 'Crop',
-        buttonCancelLabel: 'Cancel',
-        buttonCancelTitle: 'Cancel',
-        buttonEditTitle: 'Edit',
-        buttonRemoveTitle: 'Remove',
-        buttonDownloadTitle: 'Download',
-        buttonRotateTitle: 'Rotate',
-        buttonUploadTitle: 'Upload',
-        statusImageTooSmall: 'This photo is too small. The minimum size is 360 * 240 pixels.'
-    });
+    //     download: false,
+    //     instantEdit: true,
+    //     // label: 'Upload: Click here or drag an image file onto it',
+    //     buttonConfirmLabel: 'Crop',
+    //     buttonConfirmTitle: 'Crop',
+    //     buttonCancelLabel: 'Cancel',
+    //     buttonCancelTitle: 'Cancel',
+    //     buttonEditTitle: 'Edit',
+    //     buttonRemoveTitle: 'Remove',
+    //     buttonDownloadTitle: 'Download',
+    //     buttonRotateTitle: 'Rotate',
+    //     buttonUploadTitle: 'Upload',
+    //     statusImageTooSmall: 'This photo is too small. The minimum size is 360 * 240 pixels.'
+    // });
 
 </script>

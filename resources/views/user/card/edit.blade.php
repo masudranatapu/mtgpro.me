@@ -885,14 +885,14 @@ $icon_group = Config::get('app.icon_group');
 
     });
     $('.backfirstModal').on('click', function() {
-        $('.first_modal').modal('show');
+        $('.first_modal').removeClass('d-none');
         $('.second_modal').modal('hide');
         $('#filter').val('');
         $('.icon_each').css('display','block');
 
     });
     $('.modalClose').on('click', function() {
-        $('.first_modal').modal('show');
+        $('.first_modal').removeClass('d-none');
         $('.second_modal').modal('hide');
     });
 
@@ -1061,7 +1061,8 @@ $icon_group = Config::get('app.icon_group');
             $('input[name="logo"]').val('');
             $('#iconCreateForm')[0].reset();
             $('.second_modal').modal('hide');
-            $('.first_modal').modal('hide');
+            // $('.first_modal').modal('hide');
+            $('.first_modal').removeClass('d-none');
                 toastr.success(response.message);
             } else {
                 toastr.error(response.message);
