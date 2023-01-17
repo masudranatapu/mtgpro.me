@@ -122,7 +122,7 @@ $icon_group = Config::get('app.icon_group');
 
                                             <div class="edit_social_form add_form_wrap d-none"
                                                 style="padding-top:14px;">
-                                                <div class="social_add_form">
+                                                <div class="social_add_form" id="social_edit_form">
                                                     <!-- dynamic content push here -->
                                                 </div>
                                             </div>
@@ -910,7 +910,7 @@ $icon_group = Config::get('app.icon_group');
             success:function(data)
             {
                 if(data.success){
-                    $('.social_add_form').html(data.data.html);
+                    $('#social_edit_form').html(data.data.html);
                 }else{
                     toastr.warning('Please reload and try again');
                 }
