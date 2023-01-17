@@ -161,7 +161,8 @@ $icon_group = Config::get('app.icon_group');
                                                                         data-size="540,540" data-max-file-size="100">
                                                                         <img src="{{ getProfile($card->profile) }}"
                                                                             alt="" />
-                                                                        <input type="file" name="profile_pic" id="profile_pic">
+                                                                        <input type="file" name="profile_pic"
+                                                                            id="profile_pic">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -527,8 +528,9 @@ $icon_group = Config::get('app.icon_group');
                             </div>
                         </form>
                     </div>
-                    <div class="second_modal">
-                        <h5><a href="javascript:void(0)" class="backfirstModal"><i class="fa fa-angle-left"></i> Back</a></h5>
+                    <div class="second_modal d-none">
+                        <h5><a href="javascript:void(0)" class="backfirstModal"><i class="fa fa-angle-left"></i>
+                                Back</a></h5>
                     </div>
                     <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -564,7 +566,7 @@ $icon_group = Config::get('app.icon_group');
                                     <div class="icon_wrap media position-relative mb-3">
                                         <div class="icon_info">
                                             <img style="background:{{ $icon->icon_color }}"
-                                                src="{{ getIcon($icon->icon_image) }}"  alt="{{ $icon->icon }}" />
+                                                src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
                                             <span>{{ $icon->icon_title }}</span>
                                         </div>
                                         @if($icon->is_paid == '1')
@@ -590,15 +592,17 @@ $icon_group = Config::get('app.icon_group');
                         <div class="row no-gutters">
                             <div class="col-lg-8">
                                 <div class="social_add_form" id="social_add_form">
-                                    {{-- <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm" method="post"
-                                        enctype="multipart/form-data">
+                                    {{-- <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm"
+                                        method="post" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="card_id" value="{{ $card->id }}">
                                         <input type="hidden" name="icon_id" id="icon_id" value="">
                                         <div class="form-group">
-                                             <label class="imgLabel" for="upload_icon">
-                                                <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
-                                                <img id="content_icon" src="{{ getIcon() }}" alt="" width="100" height="100">
+                                            <label class="imgLabel" for="upload_icon">
+                                                <input type="file" class="form-control upload_icon" name="logo"
+                                                    id="upload_icon" data-id="" hidden>
+                                                <img id="content_icon" src="{{ getIcon() }}" alt="" width="100"
+                                                    height="100">
                                                 @if($errors->has('logo'))
                                                 <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
                                                 @endif
@@ -717,7 +721,8 @@ $icon_group = Config::get('app.icon_group');
                                                                             target="_blank">
                                                                             <img src="{{ getIcon($icon->icon_image) }}"
                                                                                 alt="{{ $icon->icon }}"
-                                                                                class="social_logo" style="background: {{ $icon->icon_color }}">
+                                                                                class="social_logo"
+                                                                                style="background: {{ $icon->icon_color }}">
                                                                             <span class="icon_label link_title_show">{{
                                                                                 $icon->label }}</span>
                                                                         </a>
@@ -847,7 +852,7 @@ $icon_group = Config::get('app.icon_group');
     });
     // social content modal
     $('.onclickIcon').on('click', function() {
-        $('.first_modal').modal('hide');
+        // $('.first_modal').modal('hide');
         var icon_id = $(this).attr('data-id');
         var card_id = $(this).attr('data-card');
         // var icon_name = $(this).attr('data-image');
