@@ -244,7 +244,7 @@ class HomeController extends Controller
                 }
                 if(!empty($card->dob))
                 {
-                    $vcard->addBirthday ($card->dob);
+                    $vcard->addBirthday($card->dob);
                 }
 
                 if(!empty($card->profile) && file_exists(public_path($card->profile))){
