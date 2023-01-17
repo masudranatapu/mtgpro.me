@@ -158,7 +158,7 @@
                             }
                             //link,mail,mobile,number,text,username,file,address
                             @endphp
-                            <div class="col-4 mb-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 @if ($contact->type == 'address')
                                 <a title="{{ $contact->label }}" class="text-decoration-none"
                                     href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
