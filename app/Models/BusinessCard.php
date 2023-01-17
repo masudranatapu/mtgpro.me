@@ -429,7 +429,7 @@ class BusinessCard extends Model
         try {
             $sid = $request->id;
             $icon = BusinessField::leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
-            ->select('business_fields.*','social_icon.icon_color')
+            ->select('business_fields.*','social_icon.icon_color','social_icon.icon_title')
             ->where('business_fields.id', $sid)->first();
             $data['html'] = view('user.card.partial._sicon_edit', compact('icon'))->render();
         } catch (\Exception $e) {

@@ -1,10 +1,24 @@
+<?php
 
+if($icon->type=='mobile'){
+$type = "number";
+
+}
+else if($icon->type=='mail'){
+    $type = "address";
+}
+else{
+    $type = $icon->type;
+}
+
+
+?>
 <form action="{{ route('user.card.sicon_update') }}" method="post" id="iconUpdateForm" enctype="multipart/form-data">
     @csrf
     <input id="id" type="hidden" name="id" value="{{ $icon->id }}">
 
     <div class="form-group">
-        <label class="imgLabel" for="logo">
+        <label class="imgLabel" for="upload_icon">
             <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden>
             <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" style="background-color:{{ $icon->icon_color ?? '#f9f9f9' }} " alt="">
         </label>
@@ -15,7 +29,7 @@
     </div>
 
     <div class="form-group">
-        <label class="form-label" style="">{{ $icon->icon.' link' }} <span class="text-dark">*</span></label>
+        <label class="form-label" style="">{{ $icon->icon_title }} {{ $type }} <span class="text-dark">*</span></label>
         <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' link' }}" required value="{{ $icon->content }}">
         @if($errors->has('content'))
         <span class="help-block text-danger">{{ $errors->first('content') }}</span>

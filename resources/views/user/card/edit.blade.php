@@ -1,6 +1,5 @@
 @extends('user.layouts.app')
 @section('title') {{ __('Edit card') }} @endsection
-
 @push('custom_css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
 <style>
@@ -1022,11 +1021,17 @@ $icon_group = Config::get('app.icon_group');
             },
             success: function (response) {
                 if (response.status == 1) {
+
                 $('.sicon_' + response.data.id).find('.social_link').attr("href", response.data.content);
                 $('.sicon_' + response.data.id).find('.social_logo').attr("src", response.data.logo);
                 $('.sicon_' + response.data.id).find('.icon_label').html(response.data.label);
                 $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('img').attr("src", response.data.logo);
                 $('.sicon_single_list_' + response.data.id).find('.social_media_name').find('span').html(response.data.label);
+
+                $('.tab_body .back').addClass('d-none');
+                $('.tab_body .edit_social_form').addClass('d-none');
+                $('.tab_body .add_link').removeClass('d-none');
+                $('.tab_body .social_media_list').removeClass('d-none');
                     toastr.success(response.message);
                 } else {
                     toastr.error(response.message);
