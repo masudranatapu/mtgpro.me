@@ -27,8 +27,8 @@ class ConnectRequest extends FormRequest
             'email'       => 'required|email|max:150',
             'phone'       => 'required|max:20',
             'title'       => 'nullable|string|max:124',
-            'company_name'     => 'string|max:124',
-            'message'        => 'required|string|max:1024',
+            'company_name'=> 'nullable|string|max:124',
+            'message'     => 'required|string|max:1024',
         ];
         return $rules;
     }

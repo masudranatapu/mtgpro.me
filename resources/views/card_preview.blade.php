@@ -68,7 +68,6 @@
                 }
             }
         }
-
         .offcanvas_btn a {
             background: {
                     {
@@ -77,10 +76,8 @@
             }
         }
     </style>
-
     @endif
 </head>
-
 <body>
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
@@ -138,49 +135,48 @@
                             @foreach ($cardinfo->business_card_fields as $contact)
                             @if($contact->sicon)
 
-                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->sicon->is_paid ==
-                            1)
-
+                            @if (isset($user->userPlan)
+                            && $user->userPlan->is_free == 1
+                            && $contact->sicon->is_paid ==1)
                             @else
 
                             @php
-                            if($cardinfo->theme_color == null){
-                            $icon_color = $contact->sicon->icon_color;
-                            }else{
-                            $icon_color = $cardinfo->theme_color;
-                            }
-                            //link,mail,mobile,number,text,username
+                                if($cardinfo->theme_color == null){
+                                $icon_color = $contact->sicon->icon_color;
+                                }else{
+                                $icon_color = $cardinfo->theme_color;
+                                }
+                                //link,mail,mobile,number,text,username,file,address
                             @endphp
-                            <li>
-                                @if ($contact->type == 'address')
-                                <a title="" class="text-decoration-none"
-                                    href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
+                                <li>
+                                    @if ($contact->type == 'address')
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
                                     @elseif ($contact->type == 'mail')
-                                    <a class="text-decoration-none" href="mailto:{{ $contact->content }}">
-                                        @elseif ($contact->type == 'mobile')
-                                        <a class="text-decoration-none" href="tel:{{ $contact->content }}">
-                                            @elseif ($contact->type == 'text')
-                                            <a class="text-decoration-none" href="{{ $contact->content }}"
-                                                target="_blank">
-                                                @elseif ($contact->icon == 'whatsapp')
-                                                @if ($android !== false || $ipad !== false || $iphone !== false)
-                                                <a class="text-decoration-none"
-                                                    href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
-                                                    @else
-                                                    <a class="text-decoration-none"
-                                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
-                                                        @endif
-                                                        @else
-                                                        <a class="text-decoration-none"
-                                                            href="{{ makeUrl($contact->content) }}" target="_blank">
-                                                            @endif
-                                                            <img style="border-radius: 15px; background:{{ $icon_color }}"
-                                                                class="img-fluid"
-                                                                src="{{ getIcon($contact->icon_image) }}"
-                                                                alt="{{ $contact->label }}" width="75" height="75">
-                                                            <span>{{ $contact->label }}</span>
-                                                        </a>
-                            </li>
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="mailto:{{ $contact->content }}">
+                                    @elseif ($contact->type == 'mobile')
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
+                                    @elseif ($contact->type == 'text')
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
+                                    @elseif ($contact->icon == 'whatsapp')
+                                        @if ($android !== false || $ipad !== false || $iphone !== false)
+                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
+                                        @else
+                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                            href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
+                                        @endif
+                                    @else
+                                    {{-- URL --}}
+                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                            href="{{ makeUrl($contact->content) }}" target="_blank">
+                                    @endif
+                                    <img style="border-radius: 15px; background:{{ $icon_color }}" class="img-fluid"
+                                        src="{{ getIcon($contact->icon_image) }}"
+                                        alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </li>
                             @endif
                             @endif
                             @endforeach
