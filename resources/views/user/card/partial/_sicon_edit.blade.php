@@ -15,12 +15,12 @@ else{
 ?>
 <form action="{{ route('user.card.sicon_update') }}" method="post" id="iconUpdateForm" enctype="multipart/form-data">
     @csrf
-    <input id="id" type="hidden" name="id" value="{{ $icon->id }}">
+    <input id="icon_id" type="hidden" name="id" value="{{ $icon->id }}">
 
     <div class="form-group">
         <label class="imgLabel" for="upload_icon">
             <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden>
-            <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" style="background-color:{{ $icon->icon_color ?? '#f9f9f9' }} " alt="">
+            <img id="content_icon" src="{{ getIcon($icon->icon_image) }}" style="background-color:{{ $icon->icon_color ?? '#f9f9f9' }} " alt="">
         </label>
         @if($errors->has('logo'))
         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>

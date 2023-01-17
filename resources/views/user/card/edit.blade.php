@@ -1083,10 +1083,11 @@ $icon_group = Config::get('app.icon_group');
 //     content_icon.src=URL.createObjectURL(event.target.files[0]);
 // }
 
-$(document).ready(function() {
-  var _URL = window.URL || window.webkitURL;
-  $("#upload_icon").change(function(e) {
-   var icon_id =  $('#icon_id').val();
+
+
+  $(document).on('change', "#upload_icon", function (e) {
+    var _URL = window.URL || window.webkitURL;
+    var icon_id =  $('#icon_id').val();
     var file = this.files[0], img;
     if (Math.round(file.size / (1024 * 1024)) > 1) {
        toastr.error('Please select image size less than 1 MB');
@@ -1109,7 +1110,6 @@ $(document).ready(function() {
       img.src = _URL.createObjectURL(file);
     }
   });
-});
 
 </script>
 @endpush
