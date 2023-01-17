@@ -52,11 +52,15 @@ class BusinessCard extends Model
 
     public function getView($request, $id)
     {
-        return $this->select('business_cards.*', 'users.plan_details')
-            ->leftJoin('users', 'users.id', '=', 'business_cards.user_id')
-            // ->where('business_cards.status',1)
-            ->where('business_cards.id', $id)
-            ->where('business_cards.user_id', Auth::user()->id)->first();
+        $row = DB::table('business_cards')->select('business_cards.*', 'users.plan_details')
+        ->leftJoin('users', 'users.id', '=', 'business_cards.user_id')
+        // ->where('business_cards.status',1)
+        ->where('business_cards.id', $id)
+        // ->with('business_card_fields')
+        ->where('business_cards.user_id', Auth::user()->id)->first();
+        $row->business_card_fields = BusinessField::select('business_fields.*','social_icon.icon_color')->where('business_fields.card_id',$row->id)->join('social_icon','social_icon.id','=','business_fields.icon_id')->get();
+
+        return $row;
     }
 
     public function business_card_fields()

@@ -564,7 +564,7 @@ $icon_group = Config::get('app.icon_group');
                                     <div class="icon_wrap media position-relative mb-3">
                                         <div class="icon_info">
                                             <img style="background:{{ $icon->icon_color }}"
-                                                src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon }}" />
+                                                src="{{ getIcon($icon->icon_image) }}"  alt="{{ $icon->icon }}" />
                                             <span>{{ $icon->icon_title }}</span>
                                         </div>
                                         @if($icon->is_paid == '1')
@@ -705,6 +705,7 @@ $icon_group = Config::get('app.icon_group');
                                                         </div>
                                                         <div class="social_icon">
                                                             <div class="row">
+                                                                {{-- @dd($card->business_card_fields); --}}
                                                                 @if(isset($card->business_card_fields) &&
                                                                 count($card->business_card_fields)>0)
                                                                 @foreach ($card->business_card_fields as $key => $icon )
@@ -716,7 +717,7 @@ $icon_group = Config::get('app.icon_group');
                                                                             target="_blank">
                                                                             <img src="{{ getIcon($icon->icon_image) }}"
                                                                                 alt="{{ $icon->icon }}"
-                                                                                class="social_logo">
+                                                                                class="social_logo" style="background: {{ $icon->icon_color }}">
                                                                             <span class="icon_label link_title_show">{{
                                                                                 $icon->label }}</span>
                                                                         </a>
