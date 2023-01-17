@@ -355,6 +355,7 @@ class BusinessCard extends Model
         $data = [];
         DB::beginTransaction();
         try {
+
             $sid = $request->id;
             if ($request->status) {
                 $status = $request->status == 'checked' ? 1 : 0;
@@ -370,18 +371,38 @@ class BusinessCard extends Model
                     return $this->successResponse(200, 'Information not updated! Please try again', '', 0);
                 }
                 $icon = BusinessField::findOrFail($request->id);
+                $social_icon    = SocialIcon::findOrFail($icon->icon_id);
+
                 $icon->content = $request->content;
                 $icon->label =  $request->label;
-                if ($request->has('logo') && !empty($request->logo[0])) {
-                    $file_name = $this->formatName($request->label);
-                    $output = $request->logo;
-                    $output = json_decode($output, TRUE);
-                    if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                        $image = $output['output']['image'];
-                        if (isset($image)) {
-                            $icon->icon_image =  $this->uploadBase64ToImage($image, $file_name, 'png');
-                        }
-                    }
+                // if ($request->has('logo') && !empty($request->logo[0])) {
+                //     $file_name = $this->formatName($request->label);
+                //     $output = $request->logo;
+                //     $output = json_decode($output, TRUE);
+                //     if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
+                //         $image = $output['output']['image'];
+                //         if (isset($image)) {
+                //             $icon->icon_image =  $this->uploadBase64ToImage($image, $file_name, 'png');
+                //         }
+                //     }
+                // }
+                if(!is_null($request->file('logo')))
+                {
+                  $icon_ = $request->file('logo');
+                  $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                  $base_name = explode(' ', $base_name);
+                  $base_name = implode('-', $base_name);
+                  $base_name = Str::lower($base_name);
+                  $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                  $file_path = 'assets/img/icon/custom_icon/';
+                  if (!File::exists($file_path)) {
+                    File::makeDirectory($file_path, 777, true);
+                  }
+                 $icon_->move($file_path, $image_name);
+                 $icon->icon_image = $file_path.$image_name;
+                }
+                else{
+                    $icon->icon_image = $social_icon->icon_image;
                 }
                 $icon->update();
                 $data['logo'] = asset($icon->icon_image);
