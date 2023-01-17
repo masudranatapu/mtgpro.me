@@ -160,42 +160,43 @@
                             @endphp
                             <div class="col-4 col-md-3 mb-3">
                                 @if ($contact->type == 'address')
-                                <a title="{{ $contact->label }}" class="text-decoration-none"
-                                    href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
-                                    @elseif ($contact->type == 'mail')
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="mailto:{{ $contact->content }}">
-                                        @elseif ($contact->type == 'mobile')
-                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                            href="tel:{{ $contact->content }}">
-                                            @elseif ($contact->type == 'text')
-                                            <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                href="sms:{{ $contact->content }}" target="_blank">
-                                                @elseif ($contact->icon == 'whatsapp')
-                                                @if ($android !== false || $ipad !== false || $iphone !== false)
-                                                <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                    href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
-                                                    @else
-                                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
-                                                        @endif
-                                                        @else
-                                                        {{-- URL --}}
-                                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                            href="{{ makeUrl($contact->content) }}" target="_blank">
-                                                            @endif
-                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                class="img-fluid d-block mb-1"
-                                                                src="{{ getIcon($contact->icon_image) }}"
-                                                                alt="{{ $contact->label }}" width="75" height="75">
-                                                            <span>{{ $contact->label }}</span>
-                                                        </a>
-                                                    </a>
-                                                </a>
-                                            </a>
-                                        </a>
-                                    </a>
+                                <a title="{{ $contact->label }}" class="text-decoration-none"  href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                    <span>{{ $contact->label }}</span>
                                 </a>
+                                @elseif ($contact->type == 'mail')
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="mailto:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                @elseif ($contact->type == 'mobile')
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                @elseif ($contact->type == 'text')
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                    </a>
+                                @elseif ($contact->icon == 'whatsapp')
+                                    @if ($android !== false || $ipad !== false || $iphone !== false)
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    @else
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    @endif
+                                @else
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                @endif
                             </div>
                             @endif
                             @endif

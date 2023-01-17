@@ -257,7 +257,7 @@ class HomeController extends Controller
                 // }
 
                 if(!empty($contacts) && count($contacts) > 0){
-                    //link,mail,mobile,number,text,username,file,address
+                    //link,mail,mobile,number,text,username,file,address,app
                     foreach ($contacts as $key => $contact) {
                         if ($contact->type=='link'){
                             $vcard->addURL($contact->content,$contact->label);
