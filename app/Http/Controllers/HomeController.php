@@ -251,10 +251,10 @@ class HomeController extends Controller
                     $profile = str_replace(' ', '%20', public_path($card->profile));
                     $vcard->addPhoto($profile);
                 }
-                if(!empty($card->logo) && file_exists(public_path($card->logo))){
-                    $logo = str_replace(' ', '%20', public_path($card->logo));
-                    $vcard->addLogo($logo);
-                }
+                // if(!empty($card->logo) && file_exists(public_path($card->logo))){
+                //     $logo = str_replace(' ', '%20', public_path($card->logo));
+                //     $vcard->addLogo($logo);
+                // }
 
                 if(!empty($contacts) && count($contacts) > 0){
                     //link,mail,mobile,number,text,username,file,address
