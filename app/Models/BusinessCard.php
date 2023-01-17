@@ -395,14 +395,39 @@ class BusinessCard extends Model
         return $this->successResponse(200, 'Information successfully updated', $data, 1);
     }
 
+    public function getSiconCreateForm($request)
+    {
+        // dd($request->all());
+        $data = null;
+        DB::beginTransaction();
+        try {
+            $icon_id = $request->icon_id;
+            $card_id = $request->card_id;
+            $icon = SocialIcon::find($icon_id);
+            $card = BusinessCard::find($card_id);
+            // $icon = BusinessField::leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
+            // ->select('business_fields.*','social_icon.icon_color')
+            // ->where('business_fields.id', $sid)->first();
+            $data['html'] = view('user.card.partial._sicon_add', compact('icon','card'))->render();
+            // dd($data);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            return $this->successResponse($e->getCode(), 'Content not found', '', 0);
+        }
+        DB::commit();
+        return $this->successResponse(200, 'Content found', $data, 1);
+    }
     public function siconEdit($request)
     {
         $data = null;
         DB::beginTransaction();
         try {
             $sid = $request->id;
-            $icon = BusinessField::where('id', $sid)->first();
-            $data['html'] = view('user.card._sicon_edit', compact('icon'))->render();
+            $icon = BusinessField::leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
+            ->select('business_fields.*','social_icon.icon_color')
+            ->where('business_fields.id', $sid)->first();
+            $data['html'] = view('user.card.partial._sicon_edit', compact('icon'))->render();
         } catch (\Exception $e) {
             // dd($e->getMessage());
             DB::rollback();

@@ -2,18 +2,18 @@
 <form action="{{ route('user.card.sicon_update') }}" method="post" id="iconUpdateForm" enctype="multipart/form-data">
     @csrf
     <input id="id" type="hidden" name="id" value="{{ $icon->id }}">
+
     <div class="form-group">
         <label class="imgLabel" for="logo">
             <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden>
-            <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" alt="">
-            {{-- <input type="file" onchange="loadFile(event)" class="upload_icon" name="logo" id="logo" hidden> --}}
-            {{-- <input type="file" class="upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden> --}}
-            {{-- <span>Select photo here or drag and drop one in place of current</span> --}}
+            <img id="previewIcon" src="{{ getIcon($icon->icon_image) }}" style="background-color:{{ $icon->icon_color ?? '#f9f9f9' }} " alt="">
         </label>
         @if($errors->has('logo'))
         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
         @endif
+
     </div>
+
     <div class="form-group">
         <label class="form-label" style="text-transform: capitalize;">{{ $icon->icon.' profile link' }} <span class="text-dark">*</span></label>
         <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' profile link' }}" required value="{{ $icon->content }}">

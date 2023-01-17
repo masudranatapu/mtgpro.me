@@ -17,7 +17,6 @@
 @endpush
 @php
 $icon_group = Config::get('app.icon_group');
-
 @endphp
 @section('tab_content','active')
 @section('content')
@@ -72,13 +71,13 @@ $icon_group = Config::get('app.icon_group');
                                         <div class="tab_body">
                                             <!-- back button -->
                                             <div class="back d-none mb-4 float-left">
-                                                <a href="#">
+                                                <a href="javascript:void(0)">
                                                     <i class="fa fa-angle-left"></i>{{ __('Back')}}
                                                 </a>
                                             </div>
                                             <!-- add link button -->
                                             <div class="add_link mb-4 float-right">
-                                                <a href="#" class="btn btn-primary" data-toggle="modal"
+                                                <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#socialMedia">
                                                     <i class="fa fa-plus"></i> {{ __('Add Links and Contact Info')}}
                                                 </a>
@@ -162,8 +161,7 @@ $icon_group = Config::get('app.icon_group');
                                                                         data-size="540,540" data-max-file-size="100">
                                                                         <img src="{{ getProfile($card->profile) }}"
                                                                             alt="" />
-                                                                        <input type="file" name="profile_pic"
-                                                                            id="profile_pic">
+                                                                        <input type="file" name="profile_pic" id="profile_pic">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -205,12 +203,6 @@ $icon_group = Config::get('app.icon_group');
                                                             <div class="bg_btn">
                                                                 <label class="form-label">{{ __('Card Color')
                                                                     }}</label><br />
-                                                                {{-- <label for="color" class="colorcode">
-                                                                    <img src="{{ asset('assets/img/icon/color.svg') }}"
-                                                                        alt="svg">
-                                                                    <input type="color" name="color" id="color">
-                                                                </label> --}}
-
                                                                 <!-- color -->
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio"
@@ -278,19 +270,13 @@ $icon_group = Config::get('app.icon_group');
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {{-- <div class="form-control custom-switch form-group">
-                                                            <input type="checkbox" name="colorlink" id="customSwitch1"
-                                                                class="custom-control-input" id="customSwitch1">
-                                                            <label class="custom-control-label" for="customSwitch1">{{
-                                                                __('Color Link Icons') }}</label>
-                                                        </div> --}}
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group color_link_group">
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="color_link">
-                                                                        <span>Color Links Icons</span>
+                                                                        <span>{{ __('Color Links Icons') }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
@@ -375,29 +361,6 @@ $icon_group = Config::get('app.icon_group');
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    {{-- <div class="col-12 mb-3">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">{{ __('Personal link')
-                                                                }}</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text" id="card_url-addon3"
-                                                                        style="border: none">{{ route('home') }}/</span>
-                                                                </div>
-                                                                <input type="text"
-                                                                    class="form-control  @error('card_url') is-invalid @enderror "
-                                                                    id="card_url" aria-describedby="card_url-addon3"
-                                                                    maxlength="50" name="card_url"
-                                                                    value="{{$card->card_url }}">
-                                                            </div>
-                                                            <span class="help-block text-danger" id="card_url_help">{{
-                                                                $errors->first('personalized_link') }}</span>
-                                                            @if($errors->has('card_url'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('card_url') }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </div> --}}
                                                     <div class="col-12">
                                                         <div class="float-right">
                                                             <button type="submit" class="btn btn-primary save-card">
@@ -480,7 +443,7 @@ $icon_group = Config::get('app.icon_group');
                                                 <p id="bio_show">{{ $card->bio }}</p>
                                             </div>
                                             <div class="save_contact mt-4 mb-4">
-                                                <a href="#">Save Contact</a>
+                                                <a href="javascript:void(0)">Save Contact</a>
                                             </div>
                                             <div class="social_icon">
                                                 <div class="row">
@@ -539,6 +502,10 @@ $icon_group = Config::get('app.icon_group');
 </div>
 </div>
 
+
+
+
+
 <!-- Add content social media modal -->
 <div class="add_content_modal">
     <div class="modal fade" id="socialMedia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -560,8 +527,8 @@ $icon_group = Config::get('app.icon_group');
                             </div>
                         </form>
                     </div>
-                    <div class="second_modal d-none">
-                        <h5><a href="#" class="backfirstModal"><i class="fa fa-angle-left"></i> Back</a></h5>
+                    <div class="second_modal">
+                        <h5><a href="javascript:void(0)" class="backfirstModal"><i class="fa fa-angle-left"></i> Back</a></h5>
                     </div>
                     <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -593,7 +560,7 @@ $icon_group = Config::get('app.icon_group');
                                 <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}"
                                     data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}"
                                     data-id="{{ $icon->id }}" data-type="{{ $icon->type }}"
-                                    data-color="{{ $icon_color }}">
+                                    data-color="{{ $icon_color }}" data-card="{{ $card->id }}">
                                     <div class="icon_wrap media position-relative mb-3">
                                         <div class="icon_info">
                                             <img style="background:{{ $icon->icon_color }}"
@@ -622,37 +589,26 @@ $icon_group = Config::get('app.icon_group');
                     <div class="add_form_wrap second_modal d-none">
                         <div class="row no-gutters">
                             <div class="col-lg-8">
-                                <div class="social_add_form">
-                                    <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm" method="post"
+                                <div class="social_add_form" id="social_add_form">
+                                    {{-- <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="card_id" value="{{ $card->id }}">
                                         <input type="hidden" name="icon_id" id="icon_id" value="">
                                         <div class="form-group">
-                                            <div id="social_icon_up">
-                                                {{-- <div class="slim" data-ratio="1:1" data-size="100,100"
-                                                    data-force-min-size="false" data-min-size="1,1">
-                                                    <input type="file" class="form-control upload_icon" name="logo"
-                                                        id="upload_icon" data-id="" hidden>
-                                                    <img src="{{ getIcon() }}" alt="" width="100" height="100">
-                                                </div> --}}
-                                            </div>
-                                            <label class="imgLabel" for="upload_icon">
-                                                {{-- <input type="file" class="form-control upload_icon" name="logo"
-                                                    id="upload_icon" data-id="" hidden onchange="preview()"> --}}
-                                                <input type="file" class="form-control upload_icon" name="logo"
-                                                    id="upload_icon" data-id="" hidden>
-                                                <img id="content_icon" src="{{ getIcon() }}" alt="" width="100"
-                                                    height="100">
-                                                {{-- <span>Select photo here or drag and drop <br /> one in place of
-                                                    current</span> --}}
-                                                <span class="help-block text-danger"></span>
-
+                                             <label class="imgLabel" for="upload_icon">
+                                                <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
+                                                <img id="content_icon" src="{{ getIcon() }}" alt="" width="100" height="100">
+                                                @if($errors->has('logo'))
+                                                <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
+                                                @endif
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label"><span id="content_link"></span> <span
-                                                    class="text-dark">*</span></label>
+                                            <label class="form-label">
+                                                <span id="content_link"></span>
+                                                <span class="text-dark">*</span>
+                                            </label>
                                             <input type="text" name="content" class="form-control content_input"
                                                 placeholder="" required>
                                             @if($errors->has('content'))
@@ -668,14 +624,15 @@ $icon_group = Config::get('app.icon_group');
                                             <span class="help-block text-danger">{{ $errors->first('label') }}</span>
                                             @endif
                                         </div>
-
                                         <div class="form-group text-center float-lg-right">
                                             <button type="button" class="btn btn-secondary backfirstModal mr-2">{{
-                                                __('Cancel') }}</button>
+                                                __('Cancel') }}
+                                            </button>
                                             <button type="submit" class="btn btn-primary" id="icon-save-btn">{{
-                                                __('Save') }}</button>
+                                                __('Save') }}
+                                            </button>
                                         </div>
-                                    </form>
+                                    </form> --}}
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -744,7 +701,7 @@ $icon_group = Config::get('app.icon_group');
                                                             <p>{{ $card->bio }}</p>
                                                         </div>
                                                         <div class="save_contact mt-4 mb-4">
-                                                            <a href="#">{{ __('Save Contact') }}</a>
+                                                            <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
                                                         </div>
                                                         <div class="social_icon">
                                                             <div class="row">
@@ -788,7 +745,6 @@ $icon_group = Config::get('app.icon_group');
 
                                                             </ul> --}}
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -803,10 +759,14 @@ $icon_group = Config::get('app.icon_group');
         </div>
     </div>
 </div>
+
+
+
+
+
 @endsection
 
 @push('custom_js')
-
 @if($card->theme_color )
 <style>
     .card_preview_wrapper .save_contact a {
@@ -817,8 +777,6 @@ $icon_group = Config::get('app.icon_group');
         }
     }
 </style>
-
-
 <script>
     function hexToRGBA(hex, opacity) {
         return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) { return parseInt(hex.length%2 ? l+l : l, 16) }).concat(isFinite(opacity) ? opacity : 1).join(',') + ')';
@@ -851,84 +809,85 @@ $icon_group = Config::get('app.icon_group');
     }
 </style>
 @endif
-
 <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/card.js') }}?v=1"></script>
 <script>
     // drag and drop
-const dropItems = document.getElementById('drop-items');
-var get_url = $('#base_url').val();
-new Sortable(dropItems, {
-    animation: 350,
-    chosenClass: "sortable-chosen",
-    dragClass: "sortable-drag",
-    onEnd: function (/**Event*/evt) {
-        var itemEl = evt.item;
-        var id = $(itemEl).data('id');
-        var card_id = $(itemEl).data('card_id');
-        var position_new = evt.newIndex;
+    const dropItems = document.getElementById('drop-items');
+    var get_url = $('#base_url').val();
+    new Sortable(dropItems, {
+        animation: 350,
+        chosenClass: "sortable-chosen",
+        dragClass: "sortable-drag",
+        onEnd: function (/**Event*/evt) {
+            var itemEl = evt.item;
+            var id = $(itemEl).data('id');
+            var card_id = $(itemEl).data('card_id');
+            var position_new = evt.newIndex;
 
+            $.ajax({
+                type: 'get',
+                url: get_url + '/user/card/sicon_sorting/',
+                data:{id,card_id,position_new},
+                async: true,
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
+                success: function (response) {
+                    toastr.success(response.message);
+                },
+                complete: function (data) {
+                    $("body").css("cursor", "default");
+                }
+            });
+        }
+    });
+    // social content modal
+    $('.onclickIcon').on('click', function() {
+        $('.first_modal').modal('hide');
+        var icon_id = $(this).attr('data-id');
+        var card_id = $(this).attr('data-card');
+        // var icon_name = $(this).attr('data-image');
+        // var icon_bg = $(this).attr('data-color');
+        // $('#content_icon').css({'background-color': icon_bg});
+        // $('#icon_id').val(icon_id);
+        // var id = icon_id;
         $.ajax({
-            type: 'get',
-            url: get_url + '/user/card/sicon_sorting/',
-            data:{id,card_id,position_new},
-            async: true,
-            beforeSend: function () {
-                $("body").css("cursor", "progress");
+            url: `{{ route('user.card.sicon_create') }}`,
+            type: "get",
+            data:{
+                'icon_id':icon_id,
+                'card_id':card_id,
             },
-            success: function (response) {
-                toastr.success(response.message);
+            success:function(data)
+            {
+                if(data.success){
+                    $('#social_add_form').html(data.data.html);
+                    $('.second_modal').modal('show');
+                }else{
+                    toastr.warning('Please reload and try again');
+                }
             },
-            complete: function (data) {
-                $("body").css("cursor", "default");
-            }
+            error: function (jqXHR, exception) {
+            },
+            complete: function (response) {}
         });
-    }
-});
-// social content modal
-$('.onclickIcon').on('click', function() {
-    $('.first_modal').addClass('d-none');
-    var icon_id = $(this).attr('data-id');
-    var icon_name = $(this).attr('data-image');
-    console.log(icon_name);
-    $('#icon_id').val(icon_id);
-    // var html = '<div class="" data-ratio="1:1" data-size="100,100" data-force-min-size="false" data-min-size="1,1"><input type="file" name="logo" id="upload_icon" value="'+icon_name+'" hidden></div>';
-    // console.log(html);
-    // $('#social_icon_up').append(html);
-    // var cropper = new Slim(document.getElementById('upload_icon'), {
-    //     ratio: '1:1',
-    //     minSize: {
-    //         width: 50,
-    //         height: 50,
-    //     },
-    //     size: {
-    //         width: 100,
-    //         height: 100,
-    //     },
-    //     willSave: function(data, ready) {
-    //         $('.yyy').remove();
-    //       ready(data);
-    //     },
-    //      download: false,
-    //     instantEdit: true,
-    // });
-    // var html_ = '<img class="in yyy" src="'+icon_name+'" style="opacity: 1; z-index: 2;">';
-    // $('.slim-result').append(html_);
-    // $('.out').attr('src',icon_name)
-    $('.second_modal').removeClass('d-none');
-});
+
+
+
+    });
     $('.backfirstModal').on('click', function() {
-        $('.first_modal').removeClass('d-none');
-        $('.second_modal').addClass('d-none');
+        $('.first_modal').modal('show');
+        $('.second_modal').modal('hide');
         $('#filter').val('');
         $('.icon_each').css('display','block');
 
     });
     $('.modalClose').on('click', function() {
-        $('.first_modal').removeClass('d-none');
-        $('.second_modal').addClass('d-none');
+        $('.first_modal').modal('show');
+        $('.second_modal').modal('hide');
     });
 
     // Show content for edit
@@ -1021,8 +980,8 @@ $('.onclickIcon').on('click', function() {
         var id = $(this).val();
         var status = '';
         if(!$(this).is(":checked")){
-        $('.sicon_'+id).hide();
-        status = 'unchecked';
+            $('.sicon_'+id).hide();
+            status = 'unchecked';
         }else{
             $('.sicon_'+id).show();
             status = 'checked';
@@ -1030,14 +989,14 @@ $('.onclickIcon').on('click', function() {
         $.ajax({
             url: `{{ route('user.card.sicon_update') }}`,
             type: "post",
-            data:{"id": id,"status":status,"_token": "{{ csrf_token() }}",},
-            success:function(data)
-            {
+            data:{
+                "id": id,
+                "status":status,
+                "_token": "{{ csrf_token() }}",
             },
-            error: function (jqXHR, exception) {
-            },
-            complete: function (response) {
-            }
+            success:function(data){},
+            error: function (jqXHR, exception) {},
+            complete: function (response) {}
         });
     });
 
@@ -1095,8 +1054,8 @@ $('.onclickIcon').on('click', function() {
             $('#drop-items').append(response.data.html);
             $('input[name="logo"]').val('');
             $('#iconCreateForm')[0].reset();
-            $('.second_modal').addClass('d-none');
-            $('.first_modal').removeClass('d-none');
+            $('.second_modal').modal('hide');
+            $('.first_modal').modal('hide');
                 toastr.success(response.message);
             } else {
                 toastr.error(response.message);

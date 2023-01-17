@@ -219,7 +219,7 @@
             <div class="offcanvas_btn">
                 <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
                     aria-controls="offcanvasContact">
-                    {{ __('Connect') }}
+                    {{ __('Connect with me') }}
                 </a>
             </div>
             <!-- offcanvas contact button -->
@@ -433,7 +433,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
-                        <span class="btn-txt">{{ __('Connect with me') }}</span>
+                        <span class="btn-txt">{{ __('Connect') }}</span>
                     </button>
                 </form>
             </div>
