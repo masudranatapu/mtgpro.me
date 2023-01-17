@@ -1,15 +1,11 @@
 <?php
-
 namespace App\Models;
-
 use File;
-use Image;
 use App\Models\SocialIcon;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Str;
 use App\Traits\RepoResponse;
 use App\Models\BusinessField;
-use App\Helpers\StorageHelper;
 use App\Mail\EmailToCardOwner;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -107,7 +103,7 @@ class BusinessCard extends Model
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
                     $image = $output['output']['image'];
                     if (isset($image)) {
-                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
                 }
                 $card->profile  = $image_name;
@@ -119,7 +115,7 @@ class BusinessCard extends Model
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
                     $image = $output['output']['image'];
                     if (isset($image)) {
-                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
                 }
                 $card->cover = $image_name;
@@ -131,7 +127,7 @@ class BusinessCard extends Model
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
                     $image = $output['output']['image'];
                     if (isset($image)) {
-                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
                 }
                 $card->logo = $image_name;
@@ -178,22 +174,6 @@ class BusinessCard extends Model
     }
 
 
-
-    // public function getYoutubeEmbad($url){
-    //     $query = parse_url($url);
-    //     if(isset($query['query'])){
-    //        $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
-    //         $_query = $remove_extra;
-    //         $video_id = trim($_query,'v=');
-    //     }else{
-    //         $video_id = explode('/', $url);
-    //         $video_id = end($video_id);
-    //         }
-    //     $video_file = 'https://www.youtube.com/embed/'.$video_id;
-    //     return $video_file;
-    // }
-
-
     public function postUpdate($request, $id)
     {
         // dd($request->all());
@@ -229,7 +209,7 @@ class BusinessCard extends Model
                         if (File::exists($card->profile)) {
                             File::delete($card->profile);
                         }
-                        $card->profile =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $card->profile =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
                 }
             }
@@ -243,7 +223,7 @@ class BusinessCard extends Model
                         if (File::exists($card->cover)) {
                             File::delete($card->cover);
                         }
-                        $card->cover =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $card->cover =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
                 }
             }
@@ -257,7 +237,7 @@ class BusinessCard extends Model
                         if (File::exists($card->logo)) {
                             File::delete($card->logo);
                         }
-                        $card->logo =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $card->logo =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
                 }
             }
@@ -363,6 +343,8 @@ class BusinessCard extends Model
         DB::commit();
         return $this->successResponse(200, 'Information successfully created', $data, 1);
     }
+
+
     public function siconUpdate($request)
     {
         // dd($request->all());
@@ -393,7 +375,7 @@ class BusinessCard extends Model
                     if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
                         $image = $output['output']['image'];
                         if (isset($image)) {
-                            $icon->icon_image =  $this->uploadBase64ToImage($image, $file_name, 'jpg');
+                            $icon->icon_image =  $this->uploadBase64ToImage($image, $file_name, 'png');
                         }
                     }
                 }

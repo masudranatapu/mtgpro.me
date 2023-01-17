@@ -246,17 +246,18 @@ class HomeController extends Controller
                 {
                     $vcard->addBirthday ($card->dob);
                 }
-                // if(!empty($card->logo) && file_exists(public_path($card->logo))){
-                //     $logo = str_replace(' ', '%20', public_path($card->logo));
-                //     $vcard->addLogo($logo);
-                //     // $vcard->addLogo($logo);
-                // }
+
                 if(!empty($card->profile) && file_exists(public_path($card->profile))){
                     $profile = str_replace(' ', '%20', public_path($card->profile));
                     $vcard->addPhoto($profile);
                 }
+                if(!empty($card->logo) && file_exists(public_path($card->logo))){
+                    $logo = str_replace(' ', '%20', public_path($card->logo));
+                    $vcard->addLogo($logo);
+                }
+
                 if(!empty($contacts) && count($contacts) > 0){
-                    //link,mail,mobile,number,text,username
+                    //link,mail,mobile,number,text,username,file,address
                     foreach ($contacts as $key => $contact) {
                         if ($contact->type=='link'){
                             $vcard->addURL($contact->content,$contact->label);
@@ -275,8 +276,12 @@ class HomeController extends Controller
                         elseif ($contact->type=='date'){
                             $vcard->addBirthday ($contact->content);
                         }
-                        else{
+                        elseif ($contact->type=='username'){
                             $vcard->addURL($contact->content,$contact->label);
+
+                        }
+                        else{
+
                         }
                     }
                 }
