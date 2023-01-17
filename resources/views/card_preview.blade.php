@@ -68,6 +68,7 @@
                 }
             }
         }
+
         .offcanvas_btn a {
             background: {
                     {
@@ -75,9 +76,18 @@
                 }
             }
         }
+
+        .social_media a {
+            color: #212112;
+            display: block;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
     </style>
     @endif
 </head>
+
 <body>
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
@@ -124,12 +134,12 @@
                         </a>
                     </div>
                     <div class="social_media">
-                        <ul>
+                        <div class="row">
                             <?php
-                                $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-                                $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-                                $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
-                            ?>
+                            $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
+                            $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+                            $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+                        ?>
                             {{-- @dd($cardinfo->business_card_fields) --}}
                             @if (!empty($cardinfo->business_card_fields))
                             @foreach ($cardinfo->business_card_fields as $contact)
@@ -141,47 +151,57 @@
                             @else
 
                             @php
-                                if($cardinfo->theme_color == null){
-                                $icon_color = $contact->sicon->icon_color;
-                                }else{
-                                $icon_color = $cardinfo->theme_color;
-                                }
-                                //link,mail,mobile,number,text,username,file,address
+                            if($cardinfo->theme_color == null){
+                            $icon_color = $contact->sicon->icon_color;
+                            }else{
+                            $icon_color = $cardinfo->theme_color;
+                            }
+                            //link,mail,mobile,number,text,username,file,address
                             @endphp
-                                <li>
-                                    @if ($contact->type == 'address')
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
+                            <div class="col-4 mb-3">
+                                @if ($contact->type == 'address')
+                                <a title="{{ $contact->label }}" class="text-decoration-none"
+                                    href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
                                     @elseif ($contact->type == 'mail')
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="mailto:{{ $contact->content }}">
-                                    @elseif ($contact->type == 'mobile')
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
-                                    @elseif ($contact->type == 'text')
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
-                                    @elseif ($contact->icon == 'whatsapp')
-                                        @if ($android !== false || $ipad !== false || $iphone !== false)
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="mailto:{{ $contact->content }}">
+                                        @elseif ($contact->type == 'mobile')
                                         <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
-                                        @else
-                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                            href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
-                                        @endif
-                                    @else
-                                    {{-- URL --}}
-                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                            href="{{ makeUrl($contact->content) }}" target="_blank">
-                                    @endif
-                                    <img style="border-radius: 15px; background:{{ $icon_color }}" class="img-fluid"
-                                        src="{{ getIcon($contact->icon_image) }}"
-                                        alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
+                                            href="tel:{{ $contact->content }}">
+                                            @elseif ($contact->type == 'text')
+                                            <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                href="sms:{{ $contact->content }}" target="_blank">
+                                                @elseif ($contact->icon == 'whatsapp')
+                                                @if ($android !== false || $ipad !== false || $iphone !== false)
+                                                <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                    href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
+                                                    @else
+                                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
+                                                        @endif
+                                                        @else
+                                                        {{-- URL --}}
+                                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                            href="{{ makeUrl($contact->content) }}" target="_blank">
+                                                            @endif
+                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                class="img-fluid d-block mb-1"
+                                                                src="{{ getIcon($contact->icon_image) }}"
+                                                                alt="{{ $contact->label }}" width="75" height="75">
+                                                            <span>{{ $contact->label }}</span>
+                                                        </a>
+                                                    </a>
+                                                </a>
+                                            </a>
+                                        </a>
                                     </a>
-                                </li>
+                                </a>
+                            </div>
                             @endif
                             @endif
                             @endforeach
                             @endif
-                        </ul>
+                        </div>
                     </div>
                     <div class="copyright_article">
                         @if (isFreePlan($cardinfo->user_id))
@@ -404,8 +424,8 @@
                     <div class="mb-3">
                         <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
                             class="form-control @error('message') is-invalid @enderror"
-                            placeholder="{{ __('Questions, Comments or Important Details') }}" tabindex="{{ $tabindex++ }}"
-                            required></textarea>
+                            placeholder="{{ __('Questions, Comments or Important Details') }}"
+                            tabindex="{{ $tabindex++ }}" required></textarea>
                         @if ($errors->has('message'))
                         <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
