@@ -489,7 +489,7 @@ $icon_group = Config::get('app.icon_group');
                                                     @foreach ($card->business_card_fields as $key => $icon )
                                                     <div class="col-4 mb-2">
                                                         <div class="sicon_{{ $icon->id }} "
-                                                            style="@if($icon->status == 0) display:none; @endif">
+                                                            style="@if($icon->status == 0) opacity:0.5; @endif">
                                                             <a class="social_link" href="{{ makeUrl($icon->content) }}"
                                                                 target="_blank">
                                                                 <img style="background:{{ $card->theme_color ?? $icon->sicon->icon_color  }}"
