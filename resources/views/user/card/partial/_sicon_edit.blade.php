@@ -15,8 +15,8 @@
     </div>
 
     <div class="form-group">
-        <label class="form-label" style="text-transform: capitalize;">{{ $icon->icon.' profile link' }} <span class="text-dark">*</span></label>
-        <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' profile link' }}" required value="{{ $icon->content }}">
+        <label class="form-label" style="">{{ $icon->icon.' link' }} <span class="text-dark">*</span></label>
+        <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' link' }}" required value="{{ $icon->content }}">
         @if($errors->has('content'))
         <span class="help-block text-danger">{{ $errors->first('content') }}</span>
         @endif
