@@ -230,7 +230,6 @@
                                         </a>
                                     @endif
                                 </div>
-                                @else
 
                                 @elseif ( ( $contact->type == 'link') &&  ($contacts->icon_name == 'embeddedvideo') )
                                     <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
