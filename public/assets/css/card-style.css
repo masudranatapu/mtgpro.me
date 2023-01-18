@@ -425,7 +425,7 @@ a {
 
 @media screen and (max-width: 420px){
     .save_contact a{
-        width: 68% !important;
+        width: 48% !important;
         margin: 5px 0px;
     }
 }
