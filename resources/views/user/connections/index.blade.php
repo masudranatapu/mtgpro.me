@@ -10,6 +10,7 @@ $rows = $data ?? [];
 $tabindex = 1;
 $form_date = '';
 $to_date = '';
+$search = request()->get('search') ?? '';
 $daterange = request()->get('daterange') ?? '';
 if (!empty($daterange)) {
     $date = explode(' - ', $daterange);
@@ -44,7 +45,7 @@ if (!empty($daterange)) {
                     <form action="{{ route('user.connections') }}" method="get" class="form-inline float-lg-right">
                         <a href="{{ route('user.connections') }}" class="btn btn-secondary mr-3">{{ __('Refresh') }}</a>
                         <div class="mr-3 mb-2">
-                            <input type="tel" name="search" id="search" value=""
+                            <input type="tel" name="search" id="search" value="{{ $search }}"
                                 class="form-control @error('search') is-invalid @enderror"
                                 placeholder="{{ __('Search name, email,company') }}" tabindex="{{ $tabindex++ }}">
                             @if ($errors->has('search'))

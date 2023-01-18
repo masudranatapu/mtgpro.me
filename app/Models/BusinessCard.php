@@ -272,16 +272,13 @@ class BusinessCard extends Model
                 'icon_id'   => 'required',
             );
 
-
             $social_icon    = SocialIcon::findOrFail($request->icon_id);
             // dd($social_icon);
             if ($social_icon->type == 'link') {
                 $rules['content'] = 'required|url|max:255';
             }
-
             // if($social_icon->type == 'username'){
             //     $rules['content'] = 'required|url|max:255';
-
             // }
 
             $validator = Validator::make($request->all(), $rules);
@@ -567,6 +564,8 @@ class BusinessCard extends Model
         DB::commit();
         return true;
     }
+
+
     public function getYoutubeEmbad($url){
         $query = parse_url($url);
         if(isset($query['query'])){
