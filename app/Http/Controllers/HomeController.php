@@ -149,6 +149,7 @@ class HomeController extends Controller
 
 
         if($cardinfo){
+            // dd($cardinfo);
             $cardinfo->contacts = DB::table('business_fields')
             ->leftJoin('social_icon as si','si.id','=','business_fields.icon_id')
             ->select('business_fields.*','si.icon_title','si.icon_name','si.icon_color','si.main_link','si.is_paid')

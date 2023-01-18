@@ -88,7 +88,7 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                             </div>
                                                             <div class="social_media_name">
                                                                 <img src="{{ getIcon($user_email->icon_image) }}"
-                                                                    alt="{{ $user_email->icon }}">
+                                                                    alt="{{ $user_email->icon }}" style="background: {{ $email->icon_color }}">
                                                                 <span>{{ $user_email->label }}</span>
                                                             </div>
                                                         </a>
@@ -552,7 +552,7 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                     data-type="{{ $icon->type }}">
                                     <div class="icon_wrap media position-relative mb-3">
                                         <div class="icon_info">
-                                            <img src="{{ getIcon($icon->icon_image) }}" alt="{{ $icon->icon_title }}">
+                                            <img src="{{ getIcon($icon->icon_image) }}" style="background: {{ $icon->icon_color }}" alt="{{ $icon->icon_title }}">
                                             <span>{{ $icon->icon_title }}</span>
                                         </div>
                                         <div class="icon float-right">

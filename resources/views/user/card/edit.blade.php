@@ -290,8 +290,9 @@ $icon_group = Config::get('app.icon_group');
                                                                             id="color_link_icon" data-id="{{ $card->id }}"
                                                                             @if ($card->color_link==1)
                                                                                 checked
+
                                                                             @endif
-                                                                             value="">
+                                                                             value="{{ $card->color_link }}">
                                                                         <label class="custom-control-label"
                                                                             for="color_link_icon"></label>
                                                                     </div>
@@ -909,8 +910,6 @@ $icon_group = Config::get('app.icon_group');
         }else{
             $('#color_link_icon').val('0');
         }
-
-
     }
     $(document).on('input','#colorPicker',function(){
         let color = $(this).val();
@@ -1019,11 +1018,6 @@ $icon_group = Config::get('app.icon_group');
         }
     });
 });
-// function preview() {
-//     content_icon.src=URL.createObjectURL(event.target.files[0]);
-// }
-
-
 
   $(document).on('change', "#upload_icon", function (e) {
     var _URL = window.URL || window.webkitURL;
@@ -1063,30 +1057,29 @@ $(document).on('change','#color_link_icon',function(e){
           $(this).css('background-color',image_bg)
         });
     }
-    // $.ajax({
-    //         url: `{{ route('user.card.color-highlighter') }}`,
-    //         type: "get",
-    //         data:{
-    //             "card_id": card_id,
-    //             "_token": "{{ csrf_token() }}",
-    //         },
-    //          beforeSend: function () {
-    //             $("body").css("cursor", "progress");
-    //         },
-    //         success: function (response) {
-    //             if (response.status == 1) {
-    //             } else {
-    //                 toastr.error(response.message);
-    //             }
-    //         },
-    //         error: function (jqXHR, exception) {
-    //             toastr.error('Something wrong');
-    //         },
-    //         complete: function (response) {
-    //             $("body").css("cursor", "default");
-    //         }
-    //     });
-
+    $.ajax({
+            url: `{{ route('user.card.color-highlighter') }}`,
+            type: "get",
+            data:{
+                "card_id": card_id,
+                "_token": "{{ csrf_token() }}",
+            },
+             beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
 })
 </script>
 @endpush

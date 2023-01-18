@@ -1,5 +1,4 @@
 <?php
-
 if($icon->type=='mobile'){
 $type = "number";
 
@@ -7,10 +6,12 @@ $type = "number";
 else if($icon->type=='mail'){
     $type = "address";
 }
+else if($icon->type=='embed' || $icon->type=='address'){
+    $type = "";
+}
 else{
     $type = $icon->type;
 }
-
 
 ?>
 <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm" method="post"
@@ -22,6 +23,7 @@ enctype="multipart/form-data">
      <label class="imgLabel" for="upload_icon">
         <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="" hidden>
         <img id="content_icon" src="{{ getIcon($icon->icon_image) }}" style="background: {{ $icon->icon_color ?? '#f9f9f9' }}" alt="" width="100" height="100">
+        <span>Select photo here or drag and drop <br /> one in place of current</span>
     </label>
     @if($errors->has('logo'))
         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>

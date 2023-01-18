@@ -149,11 +149,17 @@
                             @else
 
                             @php
-                            if($cardinfo->theme_color == null){
-                            $icon_color = $contact->icon_color;
-                            }else{
-                            $icon_color = $cardinfo->theme_color;
+                            if($cardinfo->color_link==1){
+                                $icon_color = $cardinfo->theme_color;
                             }
+                            else{
+                                $icon_color = $contact->icon_color;
+                            }
+                            // if($cardinfo->theme_color == null){
+                            // $icon_color = $contact->icon_color;
+                            // }else{
+                            // $icon_color = $cardinfo->theme_color;
+                            // }
                             //link,mail,mobile,number,text,username,file,address
                             @endphp
                             {{-- <div class="col-4 col-md-3 mb-3"> --}}

@@ -7,6 +7,9 @@ $type = "number";
 else if($icon->type=='mail'){
     $type = "address";
 }
+else if($icon->type=='embed' || $icon->type=='address'){
+    $type = "";
+}
 else{
     $type = $icon->type;
 }
@@ -21,6 +24,7 @@ else{
         <label class="imgLabel" for="upload_icon">
             <input type="file" class="form-control upload_icon" name="logo" id="upload_icon" data-id="{{ $icon->id }}" hidden>
             <img id="content_icon" src="{{ getIcon($icon->icon_image) }}" style="background-color:{{ $icon->icon_color ?? '#f9f9f9' }} " alt="">
+            <span>Select photo here or drag and drop <br /> one in place of current</span>
         </label>
         @if($errors->has('logo'))
         <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
