@@ -127,7 +127,7 @@ class HomeController extends Controller
     {
         $user = DB::table('users')->where('username',$cardurl)->first();
         if($user == null){
-            $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
+            $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding','users.connection_title')
             ->where('business_cards.card_url', $cardurl)
             ->leftJoin('users','users.id','business_cards.user_id')
             ->leftJoin('plans','plans.id','users.plan_id')
@@ -138,16 +138,24 @@ class HomeController extends Controller
 
         }else{
             //by username
-            $cardinfo = BusinessCard::with('business_card_fields')->select('business_cards.*','plans.plan_name','plans.hide_branding')
+            $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding','users.connection_title')
             ->where('business_cards.id', $user->active_card_id)
             ->leftJoin('users','users.id','business_cards.user_id')
             ->leftJoin('plans','plans.id','users.plan_id')
             ->first();
+
         }
 
 
 
         if($cardinfo){
+            $cardinfo->contacts = DB::table('business_fields')
+            ->leftJoin('social_icon as si','si.id','=','business_fields.icon_id')
+            ->select('business_fields.*','si.icon_title','si.icon_name','si.icon_color','si.main_link','si.is_paid')
+            ->where('business_fields.card_id',$cardinfo->id)
+            ->where('business_fields.status',1)
+            ->orderBy('business_fields.position','ASC')
+            ->get();
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);

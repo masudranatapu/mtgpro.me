@@ -1673,5 +1673,6 @@ label {
     box-shadow: none;
 }
 
-
-
+li.nav-item .icon {
+    color: #bdbdbd;
+}

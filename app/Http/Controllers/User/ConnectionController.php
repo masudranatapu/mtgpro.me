@@ -60,7 +60,7 @@ class ConnectionController extends Controller
             }
         }
         $data = $data->paginate(20);
-        return view('user.connections.index', compact('data'));
+        return view('user.crm.index', compact('data'));
     }
 
     public function getView(Request $request,$email,$id)
@@ -71,7 +71,7 @@ class ConnectionController extends Controller
         ->leftJoin('users','users.id','=','connects.user_id')
         ->first();
 
-        return view('user.connections.view', compact('row'));
+        return view('user.crm.view', compact('row'));
     }
     public function getEdit(Request $request,$id)
     {
@@ -81,7 +81,7 @@ class ConnectionController extends Controller
         ->leftJoin('users','users.id','=','connects.user_id')
         ->first();
 
-        return view('user.connections.edit', compact('row'));
+        return view('user.crm.edit', compact('row'));
     }
     public function getDownloadVcf(Request $request,$id)
     {
@@ -190,7 +190,7 @@ class ConnectionController extends Controller
                     return response()->json([
                         'status' => 0,
                         'redirect_url'   => '',
-                        'msg'=> trans('Please select at least one connection'),
+                        'msg'=> trans('Please select at least one record'),
                     ]);
                 }
             }
@@ -210,7 +210,7 @@ class ConnectionController extends Controller
                 }
             }
             if(!empty($fileName) && file_exists(($path.$fileName))) {
-                $data = route('user.connections.download-csv',$fileName);
+                $data = route('user.crm.download-csv',$fileName);
             }
             return response()->json([
                 'status' => 1,

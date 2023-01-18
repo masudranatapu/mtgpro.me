@@ -167,6 +167,7 @@ return [
         6 => 'mail',
         7 => 'address',
         8 => 'file',
+        9 => 'embed',
     ],
 
 
@@ -320,6 +321,9 @@ return [
         'phpmyadmin',
         'public',
         'data-deletion-instructions',
+        'qr',
+        'privacy-policy'
+
     ],
 
 

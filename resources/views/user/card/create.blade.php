@@ -395,8 +395,7 @@ $tabindex = 1;
                                                     <div class="col-12">
                                                         <div class="float-right">
                                                             <button type="submit" class="btn btn-primary save-card">
-                                                                <i
-                                                                    class="loading-spinner save-card-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                                <i class="loading-spinner save-card-spinner fa-lg fas fa-spinner fa-spin"></i>
                                                                 <span class="btn-txt">{{ __('Save') }}</span>
                                                             </button>
                                                         </div>

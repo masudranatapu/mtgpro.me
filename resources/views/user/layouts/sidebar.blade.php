@@ -33,7 +33,7 @@ $settings = getSetting();
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('user.connections') }}" class="nav-link @yield('connections')">
+                    <a href="{{ route('user.crm') }}" class="nav-link @yield('crm')">
                         <span class="icon">
                             <svg width="16" height="16" fill="none" viewBox="0 0 16 15">
                                 <rect x="1.5" y="3.58136" width="13" height="10.0437" rx="2" stroke="#BDBDBD"
@@ -51,7 +51,7 @@ $settings = getSetting();
                                 </path>
                             </svg>
                         </span>
-                        {{ __('Connections') }}
+                        {{ __('CRM') }}
                     </a>
                 </li>
                 <li class="nav-item">

@@ -57,6 +57,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('card/{id}/edit',['as'=>'card.edit','uses'=>'CardController@getEdit']);
     Route::post('card/change-status',['as'=>'card.change-status','uses'=>'CardController@getChangeCardStatus']);
     Route::post('card/sicon_update',['as'=>'card.sicon_update','uses'=>'CardController@siconUpdate']);
+    Route::get('card/sicon_create',['as'=>'card.sicon_create','uses'=>'CardController@getSiconCreateForm']);
     Route::get('card/sicon_edit',['as'=>'card.sicon_edit','uses'=>'CardController@siconEdit']);
     Route::post('card/sicon_remove',['as'=>'card.sicon_remove','uses'=>'CardController@siconRemove']);
     Route::post('card/add_icon',['as'=>'card.add_icon','uses'=>'CardController@addCardIcon']);
@@ -88,14 +89,14 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('support/send-mail',['as'=>'support.send-mail','uses'=>'UserController@sendSupportMail']);
     Route::post('support/feature-request',['as'=>'support.feature-request','uses'=>'UserController@sendRequestToFeature']);
 
-    Route::get('connections',['as'=>'connections','uses'=>'ConnectionController@getIndex']);
-    Route::get('connections/view/{email}/{id}',['as'=>'connections.details','uses'=>'ConnectionController@getView']);
-    Route::get('connections/{id}/edit',['as'=>'connections.edit','uses'=>'ConnectionController@getEdit']);
-    Route::get('connections/{id}/download',['as'=>'connections.download','uses'=>'ConnectionController@getDownloadVcf']);
-    Route::post('connections/{id}/update',['as'=>'connections.update','uses'=>'ConnectionController@putUpdate']);
-    Route::post('connections/{id}/send-mail',['as'=>'connection.send-mail','uses'=>'ConnectionController@sendConnectEmail']);
-    Route::post('connections/bulk-export',['as'=>'connections.bulk-export','uses'=>'ConnectionController@getExportCsv']);
-    Route::get('connections/download-csv/{name}',['as'=>'connections.download-csv','uses'=>'ConnectionController@getDownloadCsv']);
+    Route::get('crm',['as'=>'crm','uses'=>'ConnectionController@getIndex']);
+    Route::get('crm/view/{email}/{id}',['as'=>'crm.details','uses'=>'ConnectionController@getView']);
+    Route::get('crm/{id}/edit',['as'=>'crm.edit','uses'=>'ConnectionController@getEdit']);
+    Route::get('crm/{id}/download',['as'=>'crm.download','uses'=>'ConnectionController@getDownloadVcf']);
+    Route::post('crm/{id}/update',['as'=>'crm.update','uses'=>'ConnectionController@putUpdate']);
+    Route::post('crm/{id}/send-mail',['as'=>'connection.send-mail','uses'=>'ConnectionController@sendConnectEmail']);
+    Route::post('crm/bulk-export',['as'=>'crm.bulk-export','uses'=>'ConnectionController@getExportCsv']);
+    Route::get('crm/download-csv/{name}',['as'=>'crm.download-csv','uses'=>'ConnectionController@getDownloadCsv']);
 
     Route::post('deletion-request',['as'=>'deletion-request','uses'=>'UserController@postDeletionRequest']);
     Route::get('card/sicon_sorting',['as'=>'sicon.sorting','uses'=>'UserController@siconSorting']);

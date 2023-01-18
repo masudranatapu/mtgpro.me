@@ -3,11 +3,12 @@
 @section('insights','active')
 <?php
 
-$total_connect = $data['total_connect'] ?? [];
-$total_card_view = $data['total_card_view'] ?? [];
-$total_contact_download = $data['total_contact_download'] ?? [];
-$total_card = $data['total_card'] ?? [];
-$current_plan = $data['current_plan'] ?? [];
+$total_connect = $data['total_connect'] ?? 0;
+$total_card_view = $data['total_card_view'] ?? 0;
+$total_contact_download = $data['total_contact_download'] ?? 0;
+$total_qrcode_download = $data['total_qrcode_download'] ?? 0;
+$total_card = $data['total_card'] ?? 0;
+$current_plan = $data['current_plan'];
 
 
 ?>
@@ -58,6 +59,18 @@ $current_plan = $data['current_plan'] ?? [];
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="small-box">
+                        <div class="inner">
+                            <h3>{{__($total_qrcode_download)}}</h3>
+                            <p>{{ __('QR Code Downloaded') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <div class="small-box">
                         <div class="inner">

@@ -277,6 +277,14 @@
                                                                 @endif
                                                             </div>
                                                             <div class="form-group">
+                                                                <label for="connection_title" class="form-label">{{ __('Connection title') }}</label>
+                                                                <input type="text" name="connection_title" id="connection_title" class="form-control @error('connection_title') is-invalid @enderror" value="{{ $user->connection_title }}">
+                                                                @if($errors->has('connection_title'))
+                                                                <span class="help-block text-danger">{{ $errors->first('connection_title') }}</span>
+                                                                @endif
+                                                            </div>
+
+                                                            <div class="form-group">
                                                                 <label for="username" class="form-label">{{ __('Username') }} (<a href="{{ route('home') }}/{{ $user->username }}" target="blank">{{ route('home') }}/{{ $user->username }}</a>)</label>
                                                                 <input type="text"  class="form-control" value="{{ $user->username }}" readonly>
 
