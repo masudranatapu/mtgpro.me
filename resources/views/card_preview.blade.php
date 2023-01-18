@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <?php
     $cardinfo = $cardinfo ?? [];
-    $shareComponent = $shareComponent ?? [];
     $settings = getSetting();
     $tabindex = 1;
     $twitter_id = '';
@@ -140,19 +138,19 @@
                             $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
                             $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                         ?>
-                            {{-- @dd($cardinfo->business_card_fields) --}}
-                            @if (!empty($cardinfo->business_card_fields))
-                            @foreach ($cardinfo->business_card_fields as $contact)
-                            @if($contact->sicon)
+                            {{-- @dd($cardinfo->contacts) --}}
+                            @if (!empty($cardinfo->contacts))
+                            @foreach ($cardinfo->contacts as $contact)
+                            @if($contact)
 
                             @if (isset($user->userPlan)
                             && $user->userPlan->is_free == 1
-                            && $contact->sicon->is_paid ==1)
+                            && $contact->is_paid ==1)
                             @else
 
                             @php
                             if($cardinfo->theme_color == null){
-                            $icon_color = $contact->sicon->icon_color;
+                            $icon_color = $contact->icon_color;
                             }else{
                             $icon_color = $cardinfo->theme_color;
                             }
@@ -164,6 +162,14 @@
                                     <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                     <span>{{ $contact->label }}</span>
                                 </a>
+                                @elseif ($contact->type == 'username')
+                                @php
+                                $make_link = $contact->main_link.$contact->content;
+                                @endphp
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($make_link) }}" target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
                                 @elseif ($contact->type == 'mail')
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="mailto:{{ $contact->content }}">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -181,12 +187,12 @@
                                     </a>
                                 @elseif ($contact->icon == 'whatsapp')
                                     @if ($android !== false || $ipad !== false || $iphone !== false)
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
                                         </a>
                                     @else
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
                                         </a>

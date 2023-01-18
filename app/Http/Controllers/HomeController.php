@@ -143,11 +143,20 @@ class HomeController extends Controller
             ->leftJoin('users','users.id','business_cards.user_id')
             ->leftJoin('plans','plans.id','users.plan_id')
             ->first();
+
         }
 
 
 
         if($cardinfo){
+            $cardinfo->contacts = DB::table('business_fields as bf')
+            ->select('bf.*','si.icon_title','si.icon_color','si.main_link','si.is_paid')
+            ->leftJoin('social_icon as si','si.id','=','bf.icon_id')
+            ->where('bf.card_id',$cardinfo->id)
+            ->where('bf.status',1)
+            ->orderBy('bf.position','ASC')
+            ->get();
+
             DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);

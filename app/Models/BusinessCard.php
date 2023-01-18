@@ -140,7 +140,7 @@ class BusinessCard extends Model
             $email_icon =  DB::table('social_icon')->where('icon_name', 'email')->first();
             $fields = new BusinessField();
             $fields->card_id = $card->id;
-            $fields->type = 'email';
+            $fields->type = 'mail';
             $fields->icon = $email_icon->icon_name;
             $fields->icon_image = $email_icon->icon_image;
             $fields->icon_id = $email_icon->id;

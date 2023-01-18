@@ -102,7 +102,7 @@
                         $planfeatures = json_decode($plan->features);
                         @endphp
                         <div
-                            class="col-md-6 col-xl-4 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                            class="col-md-6 col-xl-3 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
                             <div class="pricing-card card card-md">
                                 <div class="card-body text-center">
                                     <div class="text-capitalize text-dark font-weight-bold"> {{$plan->plan_name}}</div>
