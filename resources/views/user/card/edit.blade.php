@@ -12,6 +12,9 @@
         border-radius: 10px;
         margin-right: 10px;
     }
+    .deactivate{
+        opacity: .5;
+    }
 </style>
 @endpush
 @php
@@ -715,7 +718,7 @@ $icon_group = Config::get('app.icon_group');
                                                                 @foreach ($card->business_card_fields as $key => $icon )
                                                                 <div class="col-4 mb-2">
                                                                     <div class="sicon_{{ $icon->id }} "
-                                                                        style="@if($icon->status == 0) display:none; @endif">
+                                                                        style="@if($icon->status == 0) opacity:.5; @endif">
                                                                         <a class="social_link"
                                                                             href="{{ makeUrl($icon->content) }}"
                                                                             target="_blank">
@@ -982,10 +985,10 @@ $icon_group = Config::get('app.icon_group');
         var id = $(this).val();
         var status = '';
         if(!$(this).is(":checked")){
-            $('.sicon_'+id).hide();
+            $('.sicon_'+id).addClass('deactivate');
             status = 'unchecked';
         }else{
-            $('.sicon_'+id).show();
+            $('.sicon_'+id).removeClass('deactivate');
             status = 'checked';
         }
         $.ajax({

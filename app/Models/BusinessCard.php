@@ -382,15 +382,11 @@ class BusinessCard extends Model
                 }
                 $icon = BusinessField::findOrFail($request->id);
                 $social_icon    = SocialIcon::findOrFail($icon->icon_id);
-
                 if($social_icon->type=='embed'){
-
                     $icon->content =  $this->getYoutubeEmbad($request->content);
-
                 }else{
                     $icon->content  = $request->content;
                 }
-
                 $icon->label =  $request->label;
                 // if ($request->has('logo') && !empty($request->logo[0])) {
                 //     $file_name = $this->formatName($request->label);
