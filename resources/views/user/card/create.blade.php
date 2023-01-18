@@ -746,8 +746,12 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
         var element = $("#clrBg");
         element.css("background-color", bgcolor);
         $('.save_contact a').css("background-color", color);
-
-
+        $('#color_link_icon').prop('checked', true);
+        if($('#color_link_icon').is(':checked')){
+            $('#color_link_icon').val('1');
+        }else{
+            $('#color_link_icon').val('0');
+        }
         // .save_contact a
     }
 
