@@ -56,7 +56,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}?v=1">
     @if($cardinfo->theme_color)
     <style>
         .save_contact a {
