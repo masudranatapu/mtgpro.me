@@ -200,6 +200,7 @@ class BusinessCard extends Model
             $card->company_name = $request->company_name;
             // $card->card_url     = $request->card_url;
             $card->phone_number = $request->phone_number;
+            $card->color_link   = $request->color_link;
             $card->ccode        = $request->ccode;
             $card->card_email   = $request->card_email ?? Auth::user()->email;
             $card->updated_at   = date('Y-m-d H:i:s');

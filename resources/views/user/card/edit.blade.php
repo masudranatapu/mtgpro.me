@@ -285,7 +285,7 @@ $icon_group = Config::get('app.icon_group');
                                                                 <div class="col-6">
                                                                     <div
                                                                         class="custom-control custom-switch d-inline float-right">
-                                                                        <input type="checkbox"
+                                                                        <input type="checkbox" name="color_link"
                                                                             class="custom-control-input sicon_control"
                                                                             id="color_link_icon" data-id="{{ $card->id }}"
                                                                             @if ($card->color_link==1)
@@ -758,10 +758,6 @@ $icon_group = Config::get('app.icon_group');
             var id = $(itemEl).data('id');
             var card_id = $(itemEl).data('card_id');
             var position_new = evt.newIndex+1;
-            console.log(id);
-            console.log(card_id);
-            console.log(position_new);
-
             $.ajax({
                 type: 'get',
                 url: get_url + '/user/card/sicon_sorting/',
@@ -779,7 +775,7 @@ $icon_group = Config::get('app.icon_group');
             });
         }
     });
-    // social content modal
+    // social content modalchangeColor('rgba(47, 128, 237, 0.1)','#2F80ED')
     $('.onclickIcon').on('click', function() {
         // $('.first_modal').modal('hide');
         var icon_id = $(this).attr('data-id');
@@ -789,6 +785,8 @@ $icon_group = Config::get('app.icon_group');
         // $('#content_icon').css({'background-color': icon_bg});
         // $('#icon_id').val(icon_id);
         // var id = icon_id;
+
+
         $.ajax({
             url: `{{ route('user.card.sicon_create') }}`,
             type: "get",
@@ -904,6 +902,15 @@ $icon_group = Config::get('app.icon_group');
             $('.save_contact a').css("border-color", color);
             $('.save_contact a').css("background-color", color);
         }
+        $('#color_link_icon').prop('checked', true);
+
+        if($('#color_link_icon').is(':checked')){
+            $('#color_link_icon').val('1');
+        }else{
+            $('#color_link_icon').val('0');
+        }
+
+
     }
     $(document).on('input','#colorPicker',function(){
         let color = $(this).val();
@@ -1048,7 +1055,6 @@ $(document).on('change','#color_link_icon',function(e){
     var card_id = $(this).data('id');
     var checked =  $(this).is(':checked');
     var current_bg = $('input[name="bgcolor"]:checked').val();
-
     if(checked==true){
         $('.social_logo').css('background-color',current_bg)
     }else{
@@ -1057,30 +1063,29 @@ $(document).on('change','#color_link_icon',function(e){
           $(this).css('background-color',image_bg)
         });
     }
-    $.ajax({
-            url: `{{ route('user.card.color-highlighter') }}`,
-            type: "get",
-            data:{
-                "card_id": card_id,
-                "_token": "{{ csrf_token() }}",
-            },
-             beforeSend: function () {
-                $("body").css("cursor", "progress");
-            },
-            success: function (response) {
-                if (response.status == 1) {
-                } else {
-                    toastr.error(response.message);
-                }
-            },
-            error: function (jqXHR, exception) {
-                toastr.error('Something wrong');
-            },
-            complete: function (response) {
-                $("body").css("cursor", "default");
-            }
-        });
-
+    // $.ajax({
+    //         url: `{{ route('user.card.color-highlighter') }}`,
+    //         type: "get",
+    //         data:{
+    //             "card_id": card_id,
+    //             "_token": "{{ csrf_token() }}",
+    //         },
+    //          beforeSend: function () {
+    //             $("body").css("cursor", "progress");
+    //         },
+    //         success: function (response) {
+    //             if (response.status == 1) {
+    //             } else {
+    //                 toastr.error(response.message);
+    //             }
+    //         },
+    //         error: function (jqXHR, exception) {
+    //             toastr.error('Something wrong');
+    //         },
+    //         complete: function (response) {
+    //             $("body").css("cursor", "default");
+    //         }
+    //     });
 
 })
 </script>
