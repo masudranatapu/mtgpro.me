@@ -231,7 +231,7 @@
                                     @endif
                                 </div>
 
-                                @elseif ( ( $contact->type == 'link') &&  ($contacts->icon_name == 'embeddedvideo') )
+                                @elseif ( ( $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo') )
                                     <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
                                         <p>{{ $contact->label }}</p>
                                         <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
