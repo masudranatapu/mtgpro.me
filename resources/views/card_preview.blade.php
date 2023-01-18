@@ -156,31 +156,40 @@
                             }
                             //link,mail,mobile,number,text,username,file,address
                             @endphp
-                            <div class="col-4 col-md-3 mb-3">
+                            {{-- <div class="col-4 col-md-3 mb-3"> --}}
                                 @if ($contact->type == 'address')
+                                <div class="col-4 col-md-3 mb-3">
                                 <a title="{{ $contact->label }}" class="text-decoration-none"  href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
                                     <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                     <span>{{ $contact->label }}</span>
                                 </a>
+                                </div>
                                 @elseif ($contact->type == 'username')
                                 @php
                                 $make_link = $contact->main_link.$contact->content;
                                 @endphp
+                                <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($make_link) }}" target="__blank">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
+                                </div>
                                 @elseif ($contact->type == 'mail')
+                                <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="mailto:{{ $contact->content }}">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
+                                </div>
                                 @elseif ($contact->type == 'mobile')
+                                <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
+                                </div>
                                 @elseif ($contact->type == 'number')
+                                <div class="col-4 col-md-3 mb-3">
 
                                     @if ($contact->icon == 'wechat')
                                         <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="javascript:void(0)" data="{{ $contact->content }}">
@@ -193,13 +202,21 @@
                                             <span>{{ $contact->label }}</span>
                                         </a>
                                     @endif
-
+                                </div>
                                 @elseif ($contact->type == 'text')
+                                <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
                                     </a>
+                                </div>
+                                @elseif ($contact->type == 'embed')
+                                <div class="col-12 col-md-12 mb-3 ratio ratio-16x9">
+                                    <p>{{ $contact->label }}</p>
+                                <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
                                 @elseif ($contact->icon == 'whatsapp')
+                                <div class="col-4 col-md-3 mb-3">
                                     @if ($android !== false || $ipad !== false || $iphone !== false)
                                         <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -211,13 +228,16 @@
                                             <span>{{ $contact->label }}</span>
                                         </a>
                                     @endif
+                                </div>
                                 @else
+                                <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
+                                </div>
                                 @endif
-                            </div>
+                            {{-- </div> --}}
                             @endif
                             @endif
                             @endforeach
