@@ -274,6 +274,7 @@ class BusinessCard extends Model
 
 
             $social_icon    = SocialIcon::findOrFail($request->icon_id);
+            // dd($social_icon);
             if ($social_icon->type == 'link') {
                 $rules['content'] = 'required|url|max:255';
             }
@@ -297,7 +298,12 @@ class BusinessCard extends Model
             $icon->icon     = $social_icon->icon_name;
             $icon->icon_id  = $social_icon->id;
             $icon->created_at = date('Y-m-d H:i:s');
-            $icon->content  = $request->content;
+            if($social_icon->type=='embed'){
+                $icon->content =  $this->getYoutubeEmbad($request->content);
+            }else{
+                $icon->content  = $request->content;
+            }
+
             $icon->label    =  $request->label;
 
             // if ($request->has('logo') && !empty($request->logo[0])) {
@@ -313,6 +319,10 @@ class BusinessCard extends Model
             // } else {
             //     $icon->icon_image = $social_icon->icon_image;
             // }
+
+
+
+
 
             if(!is_null($request->file('logo')))
             {
@@ -373,7 +383,14 @@ class BusinessCard extends Model
                 $icon = BusinessField::findOrFail($request->id);
                 $social_icon    = SocialIcon::findOrFail($icon->icon_id);
 
-                $icon->content = $request->content;
+                if($social_icon->type=='embed'){
+
+                    $icon->content =  $this->getYoutubeEmbad($request->content);
+
+                }else{
+                    $icon->content  = $request->content;
+                }
+
                 $icon->label =  $request->label;
                 // if ($request->has('logo') && !empty($request->logo[0])) {
                 //     $file_name = $this->formatName($request->label);
@@ -551,10 +568,22 @@ class BusinessCard extends Model
         DB::rollback();
         return false;
     }
-    DB::commit();
-    return true;
-}
-
+        DB::commit();
+        return true;
+    }
+    public function getYoutubeEmbad($url){
+        $query = parse_url($url);
+        if(isset($query['query'])){
+           $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
+            $_query = $remove_extra;
+            $video_id = trim($_query,'v=');
+        }else{
+            $video_id = explode('/', $url);
+            $video_id = end($video_id);
+            }
+        $video_file = 'https://www.youtube.com/embed/'.$video_id;
+        return $video_file;
+    }
 
 
 
