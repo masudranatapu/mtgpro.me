@@ -329,6 +329,8 @@ class UserController extends Controller
 
     public function profileUpdate(Request $request)
     {
+
+        // dd($request->all());
         DB::beginTransaction();
         try {
             $user  = User::find(Auth::user()->id);
@@ -349,8 +351,15 @@ class UserController extends Controller
                     }
                 }
             }
+            if($request->connection_title){
+                $user->connection_title = $request->connection_title;
+            }else{
+                $user->connection_title = 'Share your info back with '.$user->name;
+            }
+
             $user->email = $request->email;
             $user->updated_at   = date("Y-m-d H:i:s");
+            // dd($user);
             $user->update();
         } catch (\Exception $e) {
             dd($e->getMessage());

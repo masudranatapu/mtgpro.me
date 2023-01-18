@@ -1,5 +1,5 @@
 @extends('user.layouts.app')
-@section('title') {{ __('My Connections') }} @endsection
+@section('title') {{ __('My CRM') }} @endsection
 @push('custom_css')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
@@ -31,7 +31,7 @@ if (!empty($daterange)) {
     }
 </style>
 
-@section('connections', 'active')
+@section('crm', 'active')
 @section('content')
 <div class="content-wrapper">
 
@@ -39,11 +39,11 @@ if (!empty($daterange)) {
         <div class="container-fluid">
             <div class="row content-header align-items-center" style="padding-left: 0 !important;">
                 <div class="col-lg-3">
-                    <h1 class="m-0">{{ __('Connections') }}</h1>
+                    <h1 class="m-0">{{ __('CRM') }}</h1>
                 </div>
                 <div class="col-lg-9">
-                    <form action="{{ route('user.connections') }}" method="get" class="form-inline float-lg-right">
-                        <a href="{{ route('user.connections') }}" class="btn btn-secondary mr-3">{{ __('Refresh') }}</a>
+                    <form action="{{ route('user.crm') }}" method="get" class="form-inline float-lg-right">
+                        <a href="{{ route('user.crm') }}" class="btn btn-secondary mr-3">{{ __('Refresh') }}</a>
                         <div class="mr-3 mb-2">
                             <input type="tel" name="search" id="search" value="{{ $search }}"
                                 class="form-control @error('search') is-invalid @enderror"
@@ -79,7 +79,7 @@ if (!empty($daterange)) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="custome_table table-responsive">
-                        <form action="{{ route('user.connections.bulk-export') }}" method="post" id="bulk_export_form">
+                        <form action="{{ route('user.crm.bulk-export') }}" method="post" id="bulk_export_form">
                             @csrf
                             @if (!empty($rows) && count($rows) > 0)
                             <table class="table " id="connections">
@@ -107,7 +107,7 @@ if (!empty($daterange)) {
                                                 <label for="radioPrimary1"></label>
                                             </div>
                                             <div class="d-inline float-left">
-                                                <a href="{{ route('user.connections.details', [$row->email, $row->id]) }}"
+                                                <a href="{{ route('user.crm.details', [$row->email, $row->id]) }}"
                                                     class="text-dark">
                                                     <div class="media position-relative align-items-center">
                                                         <img src="{{ getAvatar($row->profile_image) }}" width="50"
@@ -138,10 +138,10 @@ if (!empty($daterange)) {
                                                     {{-- <a class="dropdown-item" href="#">{{ _('Export to csv') }}</a>
                                                     --}}
                                                     <a class="dropdown-item"
-                                                        href="{{ route('user.connections.details', [$row->email, $row->id]) }}">{{
+                                                        href="{{ route('user.crm.details', [$row->email, $row->id]) }}">{{
                                                         _('View Connection') }}</a>
                                                     <a class="dropdown-item"
-                                                        href="{{ route('user.connections.download', $row->id) }}">{{
+                                                        href="{{ route('user.crm.download', $row->id) }}">{{
                                                         _('Save as contact') }}</a>
                                                     <a class="dropdown-item" href="javascript::void(0)"
                                                         data-toggle="modal" data-target="#connectMail">{{ _('Send mail')
@@ -166,7 +166,7 @@ if (!empty($daterange)) {
 </div>
 </div>
 @if (!empty($rows) && count($rows) > 0)
-@include('user.connections._send_mail_modal')
+@include('user.crm._send_mail_modal')
 @endif
 @endsection
 @push('custom_js')
@@ -246,7 +246,7 @@ if (!empty($daterange)) {
         $(document).on('submit', "#bulk_export_form", function(e) {
             e.preventDefault();
             if($('.connect_id:checkbox:checked').length == 0){
-                toastr.error('Select connect to export to csv','','positionclass = "toast-top-center"');
+                toastr.error('Select data for export','','positionclass = "toast-top-center"');
                 return false;
             }
             var form = $("#bulk_export_form");

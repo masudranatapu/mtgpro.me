@@ -28,7 +28,7 @@ $tabindex =1;
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                    <a href="{{ route('user.connections') }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
+                    <a href="{{ route('user.crm') }}" class="back_btn" title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                     <img src="{{ getProfile(Auth::user()->profile_image) }}" width="50" class="img-circle mr-2" alt="{{ $row->name }}">
                     {{ $row->name }}
                     </h1>
@@ -39,10 +39,10 @@ $tabindex =1;
     <div class="content">
         <div class="container-fluid">
             <div class="account_setting create_card_wrapper p-5">
-                <a href="{{ route('user.connections.edit',$row->id) }}" class="btn btn-secondary mr-2">
+                <a href="{{ route('user.crm.edit',$row->id) }}" class="btn btn-secondary mr-2">
                     <img src="{{ asset('assets/img/icon/edit.svg') }}" alt="{{ $row->name }}"> {{ __('Edit') }}
                 </a>
-                <a href="{{ route('user.connections.download',$row->id) }}" class="btn btn-secondary mr-2">
+                <a href="{{ route('user.crm.download',$row->id) }}" class="btn btn-secondary mr-2">
                     <img src="{{ asset('assets/img/icon/download.svg') }}" alt="{{ $row->name }}">
                     {{ __('Save as contact') }}
                 </a>
@@ -108,7 +108,7 @@ $tabindex =1;
         </div>
     </div>
 </div>
-@include('user.connections._send_mail_modal')
+@include('user.crm._send_mail_modal')
 @endsection
 @push('custom_js')
 <script>

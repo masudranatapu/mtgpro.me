@@ -17,7 +17,7 @@ $tabindex = 1;
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}" class="back_btn"
+                        <a href="{{ route('user.crm.details',[$row->email,$row->id]) }}" class="back_btn"
                             title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                         <img src="{{ getProfile('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2"
                             alt="{{ $row->name }}">
@@ -32,7 +32,7 @@ $tabindex = 1;
             <div class="account_setting create_card_wrapper p-5">
                 <div class="row d-flex justify-content-center align-item-center">
                     <div class="col-xl-8">
-                        <form action="{{route('user.connections.update',$row->id)}}" id="connectionUpdate"
+                        <form action="{{route('user.crm.update',$row->id)}}" id="connectionUpdate"
                             method="post">
                             @csrf
                             <input type="hidden" name="card_id" id="card_id" value="{{$row->card_id}}" />
@@ -107,7 +107,7 @@ $tabindex = 1;
                                 <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                                 @endif
                             </div>
-                            <a href="{{ route('user.connections.details',[$row->email,$row->id]) }}"
+                            <a href="{{ route('user.crm.details',[$row->email,$row->id]) }}"
                                 class="btn btn-secondary mr-2">{{ __('Cancel') }}</a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>

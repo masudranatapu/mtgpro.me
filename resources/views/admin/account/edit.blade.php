@@ -40,7 +40,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label required">{{ __('Full Name') }}</label>
                                                         <input type="text" class="form-control" name="full_name"
-                                                            placeholder="{{ __('Full Name') }}..."
+                                                            placeholder="{{ __('Full Name') }}"
                                                             value="{{ $user->name }}" required>
                                                             {!! $errors->first('full_name', '<label class="help-block text-danger">:message</label>') !!}
 
@@ -50,7 +50,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label required">{{ __('Email') }} </label>
                                                         <input type="text" class="form-control" name="email"
-                                                            placeholder="{{ __('Email') }}..."
+                                                            placeholder="{{ __('Email') }}"
                                                             value="{{ $user->email }}" required>
                                                             {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
@@ -58,7 +58,7 @@
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <label class="form-label" id="profile_image">{{ __('Profile Photo') }} <span class="text-danger"><small>Prefered size(200 x 200 px)</small></span></label>
-                                                        <input type="file" class="form-control" name="profile_image" placeholder="{{ __('Profile Photo') }}..."
+                                                        <input type="file" class="form-control" name="profile_image" placeholder="{{ __('Profile Photo') }}"
                                                             value="{{ $user->profile_image }}">
                                                         {!! $errors->first('profile_image', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
@@ -67,7 +67,7 @@
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <label class="form-label" id="phone">{{ __('Phone') }} </label>
-                                                        <input type="text" class="form-control" name="phone" placeholder="{{ __('Phone') }}..."
+                                                        <input type="text" class="form-control" name="phone" placeholder="{{ __('Phone') }}"
                                                             value="{{ $user->phone }}">
                                                         {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
@@ -75,23 +75,12 @@
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <label class="form-label" id="designation">{{ __('Designation') }} </label>
-                                                        <input type="text" class="form-control" name="designation" placeholder="{{ __('Designation') }}..."
+                                                        <input type="text" class="form-control" name="designation" placeholder="{{ __('Designation') }}"
                                                             value="{{ $user->designation }}">
                                                         {!! $errors->first('designation', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
 
-                                                <h2 class="page-title my-3">
-                                                    {{ __('Change Password') }}
-                                                </h2>
-                                                <div class="col-md-6 col-xl-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">{{ __('New Password') }} </label>
-                                                        <input type="password" class="form-control" name="password" placeholder="{{ __('New Password') }}..." autocomplete="new-password">
-                                                        {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
-
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <div class="form-group">
@@ -114,6 +103,13 @@
                                                             </select>
                                                             {!! $errors->first('user_type', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-xl-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{ __('Change Password') }} </label>
+                                                        <input type="password" class="form-control" name="password" placeholder="{{ __('Change Password') }}" autocomplete="new-password">
+                                                        {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
 

@@ -321,6 +321,9 @@ return [
         'phpmyadmin',
         'public',
         'data-deletion-instructions',
+        'qr',
+        'privacy-policy'
+
     ],
 
 

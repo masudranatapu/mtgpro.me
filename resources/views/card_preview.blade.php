@@ -196,6 +196,11 @@
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
                                         </a>
+                                    @elseif ($contact->icon == 'facetime')
+                                        <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
                                     @else
                                         <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -210,11 +215,7 @@
                                             <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
-                                @elseif ($contact->type == 'embed')
-                                <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
-                                    <p>{{ $contact->label }}</p>
-                                    <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
+
                                 @elseif ($contact->icon == 'whatsapp')
                                 <div class="col-4 col-md-3 mb-3">
                                     @if ($android !== false || $ipad !== false || $iphone !== false)
@@ -229,7 +230,14 @@
                                         </a>
                                     @endif
                                 </div>
+
+                                @elseif ( ( $contact->type == 'link') &&  ($contacts->icon_name == 'embeddedvideo') )
+                                    <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
+                                        <p>{{ $contact->label }}</p>
+                                        <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    </div>
                                 @else
+
                                 <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -420,7 +428,12 @@
                     @csrf
                     <input type="hidden" name="card_id" id="card_id" value="{{ $cardinfo->id }}" />
                     <div class="heading mb-4 text-center">
-                        <h4>{{ __('Share your info back with') }} {{ $user_name }}</h4>
+                        @if($cardinfo->connection_title)
+                            <h4>{{ $cardinfo->connection_title }}</h4>
+                        @else
+                            <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
+                        @endif
+
                     </div>
                     <div class="mb-3">
                         <input type="text" name="name" id="name" value="{{ old('name') }}"

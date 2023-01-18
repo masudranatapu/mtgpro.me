@@ -42,6 +42,7 @@ class DashboardControler extends Controller
         $data['total_connect'] = DB::table('connects')->where('user_id',$user_id)->count();
         $data['total_card_view'] = DB::table('business_cards')->where('user_id',$user_id)->sum('total_hit');
         $data['total_contact_download'] = DB::table('business_cards')->where('user_id',$user_id)->sum('total_vcf_download');
+        $data['total_qrcode_download'] = DB::table('business_cards')->where('user_id',$user_id)->sum('total_qr_download');
         $data['total_card'] = DB::table('business_cards')->where('user_id',$user_id)->count();
         $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans','users.plan_id','=','plans.id')->where('users.id',Auth::user()->id)->first();
 
