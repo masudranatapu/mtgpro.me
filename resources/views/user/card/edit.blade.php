@@ -287,7 +287,11 @@ $icon_group = Config::get('app.icon_group');
                                                                         class="custom-control custom-switch d-inline float-right">
                                                                         <input type="checkbox"
                                                                             class="custom-control-input sicon_control"
-                                                                            id="color_link_icon" value="">
+                                                                            id="color_link_icon" data-id="{{ $card->id }}"
+                                                                            @if ($card->color_link==1)
+                                                                                checked
+                                                                            @endif
+                                                                             value="">
                                                                         <label class="custom-control-label"
                                                                             for="color_link_icon"></label>
                                                                     </div>
@@ -446,19 +450,26 @@ $icon_group = Config::get('app.icon_group');
                                                 <p id="bio_show">{{ $card->bio }}</p>
                                             </div>
                                             <div class="save_contact mt-4 mb-4">
-                                                <a href="javascript:void(0)">Save Contact</a>
+                                                <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
                                             </div>
                                             <div class="social_icon">
                                                 <div class="row">
                                                     @if(isset($card->business_card_fields) &&
                                                     count($card->business_card_fields)>0)
                                                     @foreach ($card->business_card_fields as $key => $icon )
+                                                    <?php
+                                                    if ($card->color_link==1) {
+                                                        $icon_bg = $card->theme_color;
+                                                    }else{
+                                                        $icon_bg = $icon->sicon->icon_color;
+                                                    }
+                                                    ?>
                                                     <div class="col-4 mb-2">
-                                                        <div class="sicon_{{ $icon->id }} "
-                                                            style="@if($icon->status == 0) opacity:0.5; @endif">
+                                                        <div class="sicon_{{ $icon->id }} @if($icon->status == 0) deactivate @endif"
+                                                            style="">
                                                             <a class="social_link" href="{{ makeUrl($icon->content) }}"
                                                                 target="_blank">
-                                                                <img style="background:{{ $card->theme_color ?? $icon->sicon->icon_color  }}"
+                                                                <img style="background:{{ $icon_bg  }}" data-bg="{{ $icon->sicon->icon_color }}"
                                                                     src="{{ getIcon($icon->icon_image) }}"
                                                                     alt="{{ $icon->icon }}" class="social_logo">
                                                                 <span class="icon_label">{{ $icon->label }}</span>
@@ -468,23 +479,6 @@ $icon_group = Config::get('app.icon_group');
                                                     @endforeach
                                                     @endif
                                                 </div>
-                                                {{-- <ul>
-                                                    @if(isset($card->business_card_fields) &&
-                                                    count($card->business_card_fields)>0)
-                                                    @foreach ($card->business_card_fields as $key => $icon )
-                                                    <li class="sicon_{{ $icon->id }} "
-                                                        style="@if($icon->status == 0) display:none; @endif">
-                                                        <a class="social_link" href="{{ makeUrl($icon->content) }}"
-                                                            target="_blank">
-                                                            <img style="background:{{ $card->theme_color ?? $icon->sicon->icon_color  }}"
-                                                                src="{{ getIcon($icon->icon_image) }}"
-                                                                alt="{{ $icon->icon }}" class="social_logo">
-                                                            <span class="icon_label">{{ $icon->label }}</span>
-                                                        </a>
-                                                    </li>
-                                                    @endforeach
-                                                    @endif
-                                                </ul> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -504,9 +498,6 @@ $icon_group = Config::get('app.icon_group');
     </div>
 </div>
 </div>
-
-
-
 
 
 <!-- Add content social media modal -->
@@ -594,51 +585,6 @@ $icon_group = Config::get('app.icon_group');
                         <div class="row no-gutters">
                             <div class="col-lg-8">
                                 <div class="social_add_form" id="social_add_form">
-                                    {{-- <form action="{{ route('user.card.add_icon') }}" id="iconCreateForm"
-                                        method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="card_id" value="{{ $card->id }}">
-                                        <input type="hidden" name="icon_id" id="icon_id" value="">
-                                        <div class="form-group">
-                                            <label class="imgLabel" for="upload_icon">
-                                                <input type="file" class="form-control upload_icon" name="logo"
-                                                    id="upload_icon" data-id="" hidden>
-                                                <img id="content_icon" src="{{ getIcon() }}" alt="" width="100"
-                                                    height="100">
-                                                @if($errors->has('logo'))
-                                                <span class="help-block text-danger">{{ $errors->first('logo') }}</span>
-                                                @endif
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">
-                                                <span id="content_link"></span>
-                                                <span class="text-dark">*</span>
-                                            </label>
-                                            <input type="text" name="content" class="form-control content_input"
-                                                placeholder="" required>
-                                            @if($errors->has('content'))
-                                            <span class="help-block text-danger">{{ $errors->first('content') }}</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="label" class="form-label">{{ __('Link title') }}</label>
-                                            <input type="text" name="label" class="form-control mcin"
-                                                data-preview="link_title_show" placeholder="Title" required
-                                                id="content_title" data-id="" maxlength="20">
-                                            @if($errors->has('label'))
-                                            <span class="help-block text-danger">{{ $errors->first('label') }}</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group text-center float-lg-right">
-                                            <button type="button" class="btn btn-secondary backfirstModal mr-2">{{
-                                                __('Cancel') }}
-                                            </button>
-                                            <button type="submit" class="btn btn-primary" id="icon-save-btn">{{
-                                                __('Save') }}
-                                            </button>
-                                        </div>
-                                    </form> --}}
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -701,7 +647,7 @@ $icon_group = Config::get('app.icon_group');
                                                     </div>
                                                     <div class="card_content text-center">
                                                         <div class="profile_name mt-2">
-                                                            <h3>{{ $card->title }}</h3>
+                                                            <h3>{{ $card->title }} 1111</h3>
                                                             <h5>{{ getDesigComp($card->designation,$card->company_name)
                                                                 }}</h5>
                                                             <h6>{{ $card->location }}</h6>
@@ -717,8 +663,8 @@ $icon_group = Config::get('app.icon_group');
                                                                 count($card->business_card_fields)>0)
                                                                 @foreach ($card->business_card_fields as $key => $icon )
                                                                 <div class="col-4 mb-2">
-                                                                    <div class="sicon_{{ $icon->id }} "
-                                                                        style="@if($icon->status == 0) opacity:.5; @endif">
+                                                                    <div class="sicon_{{ $icon->id }} @if($icon->status == 0)deactivate @endif"
+                                                                        style="">
                                                                         <a class="social_link"
                                                                             href="{{ makeUrl($icon->content) }}"
                                                                             target="_blank">
@@ -734,25 +680,6 @@ $icon_group = Config::get('app.icon_group');
                                                                 @endforeach
                                                                 @endif
                                                             </div>
-                                                            {{-- <ul>
-                                                                @if(isset($card->business_card_fields) &&
-                                                                count($card->business_card_fields)>0)
-                                                                @foreach ($card->business_card_fields as $key => $icon )
-                                                                <li class="sicon_{{ $icon->id }} "
-                                                                    style="@if($icon->status == 0) display:none; @endif">
-                                                                    <a class="social_link"
-                                                                        href="{{ makeUrl($icon->content) }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ getIcon($icon->icon_image) }}"
-                                                                            alt="{{ $icon->icon }}" class="social_logo">
-                                                                        <span class="icon_label link_title_show">{{
-                                                                            $icon->label }}</span>
-                                                                    </a>
-                                                                </li>
-                                                                @endforeach
-                                                                @endif
-
-                                                            </ul> --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1117,5 +1044,44 @@ $icon_group = Config::get('app.icon_group');
     }
   });
 
+$(document).on('change','#color_link_icon',function(e){
+    var card_id = $(this).data('id');
+    var checked =  $(this).is(':checked');
+    var current_bg = $('input[name="bgcolor"]:checked').val();
+
+    if(checked==true){
+        $('.social_logo').css('background-color',current_bg)
+    }else{
+        $(".social_logo").each( function () {
+          var image_bg = $(this).attr("data-bg");
+          $(this).css('background-color',image_bg)
+        });
+    }
+    $.ajax({
+            url: `{{ route('user.card.color-highlighter') }}`,
+            type: "get",
+            data:{
+                "card_id": card_id,
+                "_token": "{{ csrf_token() }}",
+            },
+             beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+
+
+})
 </script>
 @endpush
