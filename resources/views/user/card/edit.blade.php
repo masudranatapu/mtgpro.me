@@ -1053,10 +1053,8 @@ $(document).on('change','#color_link_icon',function(e){
         $('.social_logo').css('background-color',current_bg)
     }else{
         $(".social_logo").each( function () {
-          var img =  $(this).val( $(this).attr("data-bg") ).css('background-color',current_bg);
           var image_bg = $(this).attr("data-bg");
           $(this).css('background-color',image_bg)
-        //   console.log($(this).attr("data-bg"));
         });
     }
     $.ajax({
