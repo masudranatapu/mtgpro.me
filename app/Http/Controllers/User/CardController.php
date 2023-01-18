@@ -204,6 +204,12 @@ class CardController extends Controller
         return response()->json($response, $response->code);
     }
 
+    public function colorHighlighter(Request $request)
+    {
+        $response = $this->businessCard->colorHighlighter($request);
+        return response()->json($response, $response->code);
+    }
+
     public function getInitCard()
     {
         $card = $this->businessCard->where('user_id', Auth::user()->id)->first();

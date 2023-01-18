@@ -533,6 +533,22 @@ class BusinessCard extends Model
         return $this->successResponse(200, 'Data found!', $data, 1);
     }
 
+    public function colorHighlighter($request)
+    {
+        DB::beginTransaction();
+        try {
+            $row = $this->find($request->card_id);
+            $row->color_link = !$row->color_link;
+            $row->update();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            return $this->successResponse($e->getCode(), 'Something wrong !', '', 0);
+        }
+        DB::commit();
+        return $this->successResponse(200, 'Data updated!', '', 1);
+    }
+
 
     public function formatName($name)
     {

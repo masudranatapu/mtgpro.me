@@ -58,6 +58,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('card/change-status',['as'=>'card.change-status','uses'=>'CardController@getChangeCardStatus']);
     Route::post('card/sicon_update',['as'=>'card.sicon_update','uses'=>'CardController@siconUpdate']);
     Route::get('card/sicon_create',['as'=>'card.sicon_create','uses'=>'CardController@getSiconCreateForm']);
+    Route::get('card/color-highlighter',['as'=>'card.color-highlighter','uses'=>'CardController@colorHighlighter']);
+
     Route::get('card/sicon_edit',['as'=>'card.sicon_edit','uses'=>'CardController@siconEdit']);
     Route::post('card/sicon_remove',['as'=>'card.sicon_remove','uses'=>'CardController@siconRemove']);
     Route::post('card/add_icon',['as'=>'card.add_icon','uses'=>'CardController@addCardIcon']);
