@@ -2,35 +2,6 @@
    $settings = getSetting();
    $tabindex = 1;
    ?>
-   <style>
-      button.btn.btn-info.btn-lg {
-         border-radius: 3px;
-         padding: 9px 0px;
-         text-transform: uppercase;
-         font-weight: 500;
-         outline: none !important;
-         box-shadow: none !important;
-         background: #ed6b4d !important;
-         border: none !important;
-         font-size: 15px;
-         letter-spacing: 1px;
-         transition: all 0.3s ease;
-         -webkit-transition: all 0.3s ease;
-         -moz-transition: all 0.3s ease;
-         -ms-transition: all 0.3s ease;
-         -o-transition: all 0.3s ease;
-         min-width: 200px;
-         color: #fff;
-      }
-      .form-control {
-         background: transparent !important;
-         border-radius: 0px;
-         border: none !important;
-         border-bottom: 1px solid #ddd !important;
-         outline: none !important;
-         box-shadow: none !important;
-      }
-   </style>
 <div class="page-content py-md-3">
 <div class="container">
    <div class="row justify-content-center">
@@ -99,7 +70,7 @@
                </div>
                <div class="row pt-3">
                 <div class="text-center col-12 mt-6">
-                    <button type="submit" class="btn btn-info btn-lg">
+                    <button type="submit" class="btn btn-primary">
                       <span>{{ __('SUBMIT')}}</span> <i class="fa fa-arrow-right"></i>
                     </button>
                  </div>
