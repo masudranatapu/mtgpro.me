@@ -830,7 +830,10 @@ $icon_group = Config::get('app.icon_group');
             var itemEl = evt.item;
             var id = $(itemEl).data('id');
             var card_id = $(itemEl).data('card_id');
-            var position_new = evt.newIndex;
+            var position_new = evt.newIndex+1;
+            console.log(id);
+            console.log(card_id);
+            console.log(position_new);
 
             $.ajax({
                 type: 'get',
