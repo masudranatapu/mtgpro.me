@@ -143,7 +143,7 @@ $banner = $home_data['banner'] ;
                 <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
                     <h2>{!! __($banner['banner_title']) !!}</h2>
                     <p>{!! __($banner['banner_description']) !!}</p>
-                    <a href="{{ route('login') }}" class="btn btn-dark mb-sm-2">{{__($banner['banner_button'])}} </a>
+                    <a href="{{ route('register') }}" class="btn btn-dark mb-sm-2" title="Signup">{{__($banner['banner_button'])}} </a>
                 </div>
             </div>
             <div class="col-lg-7 col-12">
