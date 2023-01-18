@@ -8,7 +8,7 @@
 @php
 $icon_group = Config::get('app.icon_group');
 $tabindex = 1;
-// $email
+$email = DB::table('social_icon')->where('icon_name','email')->first();
 @endphp
 
 @section('card', 'active')
@@ -472,14 +472,14 @@ $tabindex = 1;
                                                     elit.</p>
                                             </div>
                                             <div class="save_contact mt-4 mb-4">
-                                                <a href="javascript:void(0)">Save Contact</a>
+                                                <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
                                             </div>
                                             <div class="social_icon">
                                                 <ul id="social_icon_list">
                                                     <li>
-                                                        <a href="#" target="_blank">
+                                                        <a href="mailto:{{ Auth::user()->email }}" target="_blank">
                                                             <img src="{{ asset('assets/img/icon/email.svg') }}"
-                                                                alt="email">
+                                                                alt="email" style="background: {{ $email->icon_color }}">
                                                             <span>Email</span>
                                                         </a>
                                                     </li>
@@ -492,17 +492,6 @@ $tabindex = 1;
                             <div class="view_btn text-center mt-3">
                                 <a href="javascript:void(0)">
                                     <img src="{{ asset('assets/img/icon/website.svg') }}" alt="WebSite">
-                                    {{-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 2H14V7" stroke="#828282" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                        <path d="M8 8L14.0104 1.98959" stroke="#828282" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                        <path
-                                            d="M5.5 3H3.5C2.67157 3 2 3.67157 2 4.5V12.5C2 13.3284 2.67157 14 3.5 14H11.5C12.3284 14 13 13.3284 13 12.5V10.5"
-                                            stroke="#828282" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg> --}}
                                     <span>{{ __('View Card') }}</span>
                                 </a>
                             </div>
@@ -578,10 +567,7 @@ $tabindex = 1;
                         </div>
                         @endforeach
                         @endif
-
-
                     </div>
-
                     <!-- add content form -->
                     <div class="add_form_wrap second_modal d-none">
                         <div class="row no-gutters">
@@ -760,8 +746,12 @@ $tabindex = 1;
         var element = $("#clrBg");
         element.css("background-color", bgcolor);
         $('.save_contact a').css("background-color", color);
-
-
+        $('#color_link_icon').prop('checked', true);
+        if($('#color_link_icon').is(':checked')){
+            $('#color_link_icon').val('1');
+        }else{
+            $('#color_link_icon').val('0');
+        }
         // .save_contact a
     }
 
