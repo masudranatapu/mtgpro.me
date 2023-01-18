@@ -180,6 +180,20 @@
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
+                                @elseif ($contact->type == 'number')
+
+                                    @if ($contact->icon == 'wechat')
+                                        <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="javascript:void(0)" data="{{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    @else
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    @endif
+
                                 @elseif ($contact->type == 'text')
                                     <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -502,9 +516,25 @@
         {
             $('#offcanvas_close').click()
         }
-    toastr.options = {
-        "positionClass": "toast-top-center",
-    };
+        toastr.options = {
+            "positionClass": "toast-top-center",
+        };
+
+    $(document).on('click', '.copy_btn', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('data');
+        var textarea = document.createElement("textarea");
+        textarea.textContent = url;
+        textarea.style.position = "fixed";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        toastr.success("WeChat ID copied!",'Success', {
+            // closeButton: true,
+            // progressBar: true,
+        });
+    });
     </script>
     {!! Toastr::message() !!}
 
