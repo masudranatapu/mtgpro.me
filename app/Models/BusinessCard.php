@@ -95,7 +95,7 @@ class BusinessCard extends Model
             $card->theme_id     = $request->theme_id ?? 1;
             $card->designation  = $request->designation;
             $card->company_name = $request->company_name;
-            $card->color_link   = $request->color_link;
+            $card->color_link   = $request->color_link ?? 0;
             $card->card_url     = $card_id;
             $card->phone_number = $request->phone_number;
             $card->ccode        = $request->ccode;
@@ -320,9 +320,6 @@ class BusinessCard extends Model
             // }
 
 
-
-
-
             if(!is_null($request->file('logo')))
             {
               $icon_ = $request->file('logo');
@@ -342,11 +339,15 @@ class BusinessCard extends Model
                 $icon->icon_image = $social_icon->icon_image;
             }
             $icon->save();
+            $icon = BusinessField::select('business_fields.*','social_icon.icon_color')->where('business_fields.id',$icon->id)
+            ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
+            ->first();
             $icon_color = $social_icon->icon_color;
             if($card->theme_color){
                 $icon_color = $card->theme_color;
             }
 
+            $data['icon_html'] = view('user.card.partial._single_icon', compact('icon','icon_color'))->render();
             $data['html'] = view('user.card.partial._social_icon', compact('icon','icon_color'))->render();
         } catch (\Exception $e) {
             dd($e->getMessage());

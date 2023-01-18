@@ -454,7 +454,7 @@ $icon_group = Config::get('app.icon_group');
                                                 <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
                                             </div>
                                             <div class="social_icon">
-                                                <div class="row">
+                                                <div class="row icon_append" >
                                                     @if(isset($card->business_card_fields) &&
                                                     count($card->business_card_fields)>0)
                                                     @foreach ($card->business_card_fields as $key => $icon )
@@ -658,7 +658,7 @@ $icon_group = Config::get('app.icon_group');
                                                             <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
                                                         </div>
                                                         <div class="social_icon">
-                                                            <div class="row">
+                                                            <div class="row icon_append" id="icon_append">
                                                                 {{-- @dd($card->business_card_fields); --}}
                                                                 @if(isset($card->business_card_fields) &&
                                                                 count($card->business_card_fields)>0)
@@ -998,6 +998,7 @@ $icon_group = Config::get('app.icon_group');
         success: function (response) {
             if (response.status == 1) {
             $('#drop-items').append(response.data.html);
+            $('.icon_append').append(response.data.icon_html);
             $('input[name="logo"]').val('');
             $('#iconCreateForm')[0].reset();
             $('.second_modal').modal('hide');
