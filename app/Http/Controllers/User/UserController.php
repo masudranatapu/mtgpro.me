@@ -290,10 +290,10 @@ class UserController extends Controller
                                 );
                             }
                         }
-                        $stripe->customers->delete(
-                            $customer_id,
-                            []
-                          );
+                        // $stripe->customers->delete(
+                        //     $customer_id,
+                        //     []
+                        //   );
                     }
                 }
 
