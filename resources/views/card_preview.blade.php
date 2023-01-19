@@ -198,7 +198,7 @@
                                     </a>
                                 </div>
                                 @elseif ($contact->type == 'mobile')
-                                    @if ($contact->icon == 'facetime')
+                                    @if ($contact->icon_name == 'facetime')
                                     <div class="col-4 col-md-3 mb-3">
                                         <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -225,7 +225,7 @@
                                 @elseif ($contact->type == 'number')
                                 <div class="col-4 col-md-3 mb-3">
 
-                                    @if ($contact->icon == 'wechat')
+                                    @if ($contact->icon_name == 'wechat')
                                         <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="javascript:void(0)" data="{{ $contact->content }}">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
@@ -239,7 +239,7 @@
                                     @endif
                                 </div>
                                 @elseif ($contact->type == 'text')
-                                    @if ($contact->icon =='textSection')
+                                    @if ($contact->icon_name =='textSection')
                                     <div class="col-12 col-md-12 mb-3">
 
                                     <div class="text-box">
