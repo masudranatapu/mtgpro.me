@@ -82,6 +82,9 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
         }
+        #offcanvasCalculator{
+            height: 80%;
+        }
     </style>
     @endif
 </head>
@@ -523,7 +526,7 @@
     </div>
 
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCalculator"
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasCalculator"
         aria-labelledby="offcanvasCalculatorLabel">
         <div class="offcanvas-header">
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
