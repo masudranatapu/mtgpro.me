@@ -344,11 +344,23 @@
                                         </svg>
                                     </div>
                                     <div class="qr-code">
+
+                                        @if (isFreePlan($cardinfo->user_id))
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
+                                            ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
+                                            ->generate(url($cardinfo->card_url)) !!}
+                                        @elseif (!empty($cardinfo->logo))
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
+                                            ->merge(public_path($cardinfo->logo), 0.2, true)
+                                            ->generate(url($cardinfo->card_url)) !!}
+                                        @else
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
+                                        @endif
+
                                         {{-- {!! QrCode::size(200)->color(74, 74, 74, 80)
                                         ->mergeString('/public/assets/img/qrlogo.png', .3)
                                         ->generate(url($cardinfo->card_url)) !!} --}}
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))
-                                        !!}
+                                        {{-- {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!} --}}
                                     </div>
                                     {{-- <div class="qr-logo">
                                         <img src="{{ asset('assets/img/qrlogo.png') }}" alt="" width="50px">
