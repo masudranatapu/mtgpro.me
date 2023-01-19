@@ -247,12 +247,8 @@ class UserController extends Controller
         try {
             $data = [];
             if($request->confirm=='delete'){
-
                 $stripe = new StripeClient($config[10]->config_value);
-
-
                 $user_cards = BusinessCard::where('user_id', Auth::user()->id)->get();
-
                 foreach ($user_cards as $key => $value) {
                     BusinessField::where('card_id', $value->id)->update([
                         'status'=> 2,
@@ -264,7 +260,6 @@ class UserController extends Controller
                     'deleted_at' => date('Y-m-d H:i:s'),
                     'deleted_by' => Auth::user()->id
                 ]);
-
                 $user = User::find(Auth::user()->id);
                 if(!empty($user->stripe_customer_id)){
                     //Find Existing Customer
@@ -290,10 +285,11 @@ class UserController extends Controller
                                 );
                             }
                         }
-                        // $stripe->customers->delete(
-                        //     $customer_id,
-                        //     []
-                        //   );
+                        $stripe = new StripeClient($config[10]->config_value);
+                        $stripe->customers->delete(
+                            $customer_id,
+                            []
+                          );
                     }
                 }
 
