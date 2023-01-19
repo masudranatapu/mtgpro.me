@@ -601,7 +601,7 @@
 
 
 <?php
-$row = $data['transaction'] ?? [];
+$row = $details ?? [];
 $settings = getSetting();
 $invoice_details = json_decode($row->invoice_details);
 ?>
