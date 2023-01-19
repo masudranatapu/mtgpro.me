@@ -135,9 +135,9 @@
                         <div class="row justify-content-center">
 
                             <div class="col-4 col-md-3 mb-3">
-                                <a title="" class="text-decoration-none"  href="javascript:void(0)" data-bs-toggle="offcanvas" href="#offcanvasCalculator" role="button"
-                                aria-controls="offcanvasCalculator">
-                                    <img style="border-radius: 15px; margin:0 auto; background:" class="img-fluid d-block mb-1" src="" alt="" width="75" height="75">
+
+                                <a  href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}" class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75" height="75">
                                     <span>Mortgage Calculator</span>
                                 </a>
                                 </div>
@@ -523,20 +523,16 @@
     </div>
 
 
-    <div class="contact_modal offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasCalculator"
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCalculator"
         aria-labelledby="offcanvasCalculatorLabel">
         <div class="offcanvas-header">
-            <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
-                <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel">
-                        <path d="M12 5v13M5 12l7 7 7-7"></path>
-                    </svg>
-                </span>
-            </button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="contact_body">
+            <iframe src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0" style="width: 100%; height: 1200px; border: 0;">
+            </iframe>
+
+            <div class="">
                 <form action="{{ route('getConnect') }}" id="connect-form" method="post">
                     @csrf
                     <div class="mb-3">
@@ -561,6 +557,15 @@
                             placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('phone'))
                         <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
+                        @endif
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
+                            class="form-control @error('message') is-invalid @enderror"
+                            placeholder="{{ __('Questions, Comments or Important Details') }}"
+                            tabindex="{{ $tabindex++ }}" required></textarea>
+                        @if ($errors->has('message'))
+                        <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
