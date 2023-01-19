@@ -296,14 +296,16 @@
                                             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
                                             ->generate(url($cardinfo->card_url)) !!}
                                         @elseif (!empty($cardinfo->logo))
-                                        @dd(public_path($cardinfo->logo));
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
-                                            ->merge(public_path($cardinfo->logo), 0.2, true)
-                                            ->generate(url($cardinfo->card_url)) !!}
+                                        <img src="data:image/png;base64,
+                                        {!! base64_encode(QrCode::format('png')
+                                        ->size(200)->color(74, 74, 74, 80)
+                                        ->merge(public_path($cardinfo->logo), 0.2, true)
+                                        ->size(200)->generate(url($cardinfo->card_url))) !!} ">
                                         @else
                                         @dd(3);
                                         {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
                                         @endif --}}
+
                     <div class="copyright_article">
                         @if (isFreePlan($cardinfo->user_id))
                         <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights
@@ -361,13 +363,21 @@
                                     <div class="qr-code">
 
                                         @if (isFreePlan($cardinfo->user_id))
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
+                                        {{-- {!! QrCode::size(200)->color(74, 74, 74, 80)
                                             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
-                                            ->generate(url($cardinfo->card_url)) !!}
+                                            ->generate(url($cardinfo->card_url)) !!} --}}
+                                        <img src="data:image/png;base64,
+                                            {!! base64_encode(QrCode::format('png')
+                                            ->size(200)->color(74, 74, 74, 80)
+                                            ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
+                                            ->size(200)->generate(url($cardinfo->card_url))) !!} ">
+
                                         @elseif (!empty($cardinfo->logo))
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
-                                            ->merge(public_path($cardinfo->logo), 0.2, true)
-                                            ->generate(url($cardinfo->card_url)) !!}
+                                        <img src="data:image/png;base64,
+                                        {!! base64_encode(QrCode::format('png')
+                                        ->size(200)->color(74, 74, 74, 80)
+                                        ->merge(public_path($cardinfo->logo), 0.2, true)
+                                        ->size(200)->generate(url($cardinfo->card_url))) !!} ">
                                         @else
                                         {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
                                         @endif
