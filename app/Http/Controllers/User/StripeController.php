@@ -129,10 +129,7 @@ class StripeController extends Controller
                 else{
                     $price_id = $plan_details->stripe_plan_id;
                 }
-
-
-                // dd($stripe);
-
+                $stripe = new StripeClient($config[10]->config_value);
                  //Create new Subscription
                  $subscription = $stripe->subscriptions->create([
                     'customer' => $customer_id,
