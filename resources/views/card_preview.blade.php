@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php
     $cardinfo = $cardinfo ?? [];
@@ -82,12 +83,14 @@
             font-family: 'Inter', sans-serif;
             font-weight: 400;
         }
-        #offcanvasCalculator{
+
+        #offcanvasCalculator {
             height: 80%;
         }
     </style>
     @endif
 </head>
+
 <body>
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
@@ -138,11 +141,15 @@
 
                             <div class="col-4 col-md-3 mb-3">
 
-                                <a  href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
-                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}" class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75" height="75">
+                                <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
+                                        class="img-fluid d-block mb-1"
+                                        src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75"
+                                        height="75">
                                     <span>Mortgage Calculator</span>
                                 </a>
-                                </div>
+                            </div>
                             <?php
                             $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
                             $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
@@ -160,10 +167,10 @@
 
                             @php
                             if($cardinfo->color_link==1){
-                                $icon_color = $cardinfo->theme_color;
+                            $icon_color = $cardinfo->theme_color;
                             }
                             else{
-                                $icon_color = $contact->icon_color;
+                            $icon_color = $contact->icon_color;
                             }
                             // if($cardinfo->theme_color == null){
                             // $icon_color = $contact->icon_color;
@@ -175,49 +182,68 @@
                             {{-- <div class="col-4 col-md-3 mb-3"> --}}
                                 @if ($contact->type == 'address')
                                 <div class="col-4 col-md-3 mb-3">
-                                <a title="{{ $contact->label }}" class="text-decoration-none"  href="{{ 'https://www.google.com/maps?q=' . $contact->content }}" target="_blank">
-                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                    <span>{{ $contact->label }}</span>
-                                </a>
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
+                                        target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
                                 </div>
                                 @elseif ($contact->type == 'username')
                                 @php
                                 $make_link = $contact->main_link.$contact->content;
                                 @endphp
                                 <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($make_link) }}" target="__blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ makeUrl($make_link) }}" target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
                                 @elseif ($contact->type == 'mail')
                                 <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="mailto:{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="mailto:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
                                 @elseif ($contact->type == 'mobile')
 
-                                    @if ($contact->icon == 'facetime')
-                                    <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                @if ($contact->icon == 'facetime')
+                                <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
+                                    href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                        class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                        alt="{{ $contact->label }}" width="75" height="75">
+                                    <span>{{ $contact->label }}</span>
+                                </a>
+                                @else
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="tel:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
-                                    @else
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
-                                    </div>
-                                    @endif
+                                </div>
+                                @endif
 
 
                                 @elseif ($contact->type == 'file')
                                 <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank" href="{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank"
+                                        href="{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
@@ -225,64 +251,87 @@
                                 <div class="col-4 col-md-3 mb-3">
 
                                     @if ($contact->icon == 'wechat')
-                                        <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="javascript:void(0)" data="{{ $contact->content }}">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
+                                    <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
+                                        href="javascript:void(0)" data="{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
 
                                     @else
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="tel:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
                                     @endif
                                 </div>
                                 @elseif ($contact->type == 'text')
-                                    @if ($contact->icon =='Text Section')
-                                    <div class="text-box">
-                                        <h6>{{ $contact->label }}</h6>
-                                        <p>{!! $contact->content !!}</p>
-                                    </div>
-                                    @else
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                                <span>{{ $contact->label }}</span>
-                                        </a>
-                                    </div>
-                                    @endif
+                                @if ($contact->icon =='Text Section')
+                                <div class="text-box">
+                                    <h6>{{ $contact->label }}</h6>
+                                    <p>{!! $contact->content !!}</p>
+                                </div>
+                                @else
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="sms:{{ $contact->content }}" target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @endif
 
 
                                 @elseif ($contact->icon == 'whatsapp')
                                 <div class="col-4 col-md-3 mb-3">
                                     @if ($android !== false || $ipad !== false || $iphone !== false)
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}"
+                                        target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
                                     @else
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}"
+                                        target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
                                     @endif
                                 </div>
 
-                                @elseif ( ( $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo') )
-                                    <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
-                                        <p>{{ $contact->label }}</p>
-                                        <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="left:5%; width:90%;"></iframe>
-                                    </div>
+                                @elseif ( ( $contact->type == 'link') && ($contact->icon_name == 'embeddedvideo') )
+                                <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
+                                    <p>{{ $contact->label }}</p>
+                                    <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen style="left:5%; width:90%;"></iframe>
+                                </div>
                                 @else
 
                                 <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ makeUrl($contact->content) }}" target="_blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ makeUrl($contact->content) }}" target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
                                 @endif
-                            {{-- </div> --}}
+                                {{--
+                            </div> --}}
                             @endif
                             @endif
                             @endforeach
@@ -466,9 +515,9 @@
                     <input type="hidden" name="card_id" id="card_id" value="{{ $cardinfo->id }}" />
                     <div class="heading mb-4 text-center">
                         @if($cardinfo->connection_title)
-                            <h4>{{ $cardinfo->connection_title }}</h4>
+                        <h4>{{ $cardinfo->connection_title }}</h4>
                         @else
-                            <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
+                        <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
                         @endif
 
                     </div>
@@ -537,7 +586,9 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <iframe src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0" style="width: 100%; height: 1200px; border: 0;">
+            <iframe
+                src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0"
+                style="width: 100%; height: 1200px; border: 0;">
             </iframe>
         </div>
     </div>

@@ -7,6 +7,12 @@
 }
 
 
+@media screen and (max-width:1399px) {
+    .switch-wrapper {
+        width: 30%;
+    }
+}
+
 
 /* min width: 992px  */
 @media screen and (min-width:992px) {
@@ -81,11 +87,17 @@
     .setting_tab_contetn {
         padding: 0px 0px;
     }
+    .switch-wrapper {
+        width: 50%;
+    }
 }
 
 @media screen and (max-width:575px) {
     .company_group .slim{
         margin:inherit;
+    }
+    .switch-wrapper {
+        width: 67%;
     }
 }
 
@@ -112,5 +124,8 @@
 
     .setting_tab_contetn {
         padding: 0px 0px;
+    }
+    .switch-wrapper {
+        width: 100%;
     }
 }
