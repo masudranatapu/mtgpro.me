@@ -156,10 +156,10 @@ class HomeController extends Controller
             $url = url($cardinfo->card_url);
             if(Auth::user() && ($cardinfo->user_id == Auth::id()) ){
             }else{
-                if($cardinfo->status == 0){
-                    Toastr::warning('This card is not active now');
-                    return redirect()->route('home');
-                }
+                // if($cardinfo->status == 0){
+                //     Toastr::warning('This card is not active now');
+                //     return redirect()->route('home');
+                // }
                 if($cardinfo->status == 2){
                     Toastr::warning('This card is not available');
                     return redirect()->route('home');
