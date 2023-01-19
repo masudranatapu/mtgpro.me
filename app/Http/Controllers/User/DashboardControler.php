@@ -80,11 +80,7 @@ class DashboardControler extends Controller
 
     public function getFreeMarketing(Request $request)
     {
-        $page = DB::table('custom_pages')->where('url_slug','free-marketing-material')->first();
-        if(empty($page)){
-            abort(404);
-        }
-        return view('pages.common',compact('page'));
+        return view('user.marketing_materials');
     }
 
     public function getCalculator(Request $request)
