@@ -135,7 +135,6 @@ class HomeController extends Controller
             if($cardinfo == null){
                 return redirect()->route('user.card.create');
             }
-
         }else{
             //by username
             $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding','users.connection_title')
@@ -143,13 +142,8 @@ class HomeController extends Controller
             ->leftJoin('users','users.id','business_cards.user_id')
             ->leftJoin('plans','plans.id','users.plan_id')
             ->first();
-
         }
-
-
-
         if($cardinfo){
-            // dd($cardinfo);
             $cardinfo->contacts = DB::table('business_fields')
             ->leftJoin('social_icon as si','si.id','=','business_fields.icon_id')
             ->select('business_fields.*','si.icon_title','si.icon_name','si.icon_color','si.main_link','si.is_paid')
@@ -164,11 +158,11 @@ class HomeController extends Controller
             }else{
                 if($cardinfo->status == 0){
                     Toastr::warning('This card is not active now');
-                    return redirect()->back();
+                    return redirect()->route('home');
                 }
                 if($cardinfo->status == 2){
-                    Toastr::warning('This card has been deleted');
-                    return redirect()->back();
+                    Toastr::warning('This card is not available');
+                    return redirect()->route('home');
                 }
             }
             return view('card_preview', compact('cardinfo','user'));
