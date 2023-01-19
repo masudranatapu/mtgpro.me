@@ -132,7 +132,15 @@
                         </a>
                     </div>
                     <div class="social_media">
-                        <div class="row">
+                        <div class="row justify-content-center">
+
+                            <div class="col-4 col-md-3 mb-3">
+                                <a title="" class="text-decoration-none"  href="javascript:void(0)" data-bs-toggle="offcanvas" href="#offcanvasCalculator" role="button"
+                                aria-controls="offcanvasCalculator">
+                                    <img style="border-radius: 15px; margin:0 auto; background:" class="img-fluid d-block mb-1" src="" alt="" width="75" height="75">
+                                    <span>Mortgage Calculator</span>
+                                </a>
+                                </div>
                             <?php
                             $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
                             $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
@@ -196,7 +204,7 @@
                                 </div>
                                 @elseif ($contact->type == 'file')
                                 <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ $contact->content }}">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank" href="{{ $contact->content }}">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
@@ -508,6 +516,56 @@
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
                         <span class="btn-txt">{{ __('Connect') }}</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="contact_modal offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasCalculator"
+        aria-labelledby="offcanvasCalculatorLabel">
+        <div class="offcanvas-header">
+            <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel">
+                        <path d="M12 5v13M5 12l7 7 7-7"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="contact_body">
+                <form action="{{ route('getConnect') }}" id="connect-form" method="post">
+                    @csrf
+                    <div class="mb-3">
+                        <input type="text" name="name" id="name" value="{{ old('name') }}"
+                            class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
+                            required tabindex="{{ $tabindex++ }}">
+                        @if ($errors->has('name'))
+                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                        @endif
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="email" id="email" value="{{ old('email') }}"
+                            class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}"
+                            required tabindex="{{ $tabindex++ }}">
+                        @if ($errors->has('email'))
+                        <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                        @endif
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
+                            class="form-control @error('phone') is-invalid @enderror"
+                            placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabindex++ }}">
+                        @if ($errors->has('phone'))
+                        <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
+                        @endif
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
+                        <span class="btn-txt">{{ __('Submit') }}</span>
                     </button>
                 </form>
             </div>

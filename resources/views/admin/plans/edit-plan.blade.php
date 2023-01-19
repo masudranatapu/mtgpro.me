@@ -67,7 +67,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
+                                            {{-- <div class="col-12">
                                                 <div class="mb-3">
                                                     <label class="form-label required" >{{ __('Plan Type') }}</label>
                                                     <div class="">
@@ -77,7 +77,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-md-4 col-xl-4">
                                                 <div class="mb-3">
@@ -184,7 +184,7 @@
 
                                             <div class="col-12">
                                                 <div class="row">
-                                                    <div class="col-6 col-md-3">
+                                                    {{-- <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Personalized Link') }}</div>
                                                             <label class="form-check form-switch">
@@ -193,7 +193,7 @@
                                                                     {{ $plan_details->personalized_link == 1 ? 'checked' : '' }}>
                                                             </label>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Hide Branding') }}</div>
@@ -241,7 +241,7 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 col-md-3">
+                                                    {{-- <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Whatsapp Store') }}</div>
                                                             <label class="form-check form-switch">
@@ -257,7 +257,7 @@
                                                                 <input class="form-check-input" type="checkbox" name="is_email_signature" {{ $plan_details->is_email_signature == 1 ? 'checked' : '' }}>
                                                             </label>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('QR Code') }}</div>
