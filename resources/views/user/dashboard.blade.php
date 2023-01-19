@@ -114,21 +114,22 @@
                                         {{ $card->company_name }}</h5>
                                 </div>
                                 <div class="card_btn mt-3 mb-4">
-                                    <a href="{{ route('user.card.edit', $card->id) }}" class="btn-sm btn-secondary">{{
-                                        __('Edit Card') }}</a>
+                                    <a href="{{ route('user.card.edit', $card->id) }}" class="btn-sm btn-secondary" title="Edit card">{{
+                                        __('Edit') }}</a>
                                     @if (checkPackage())
                                     <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
                                         class="btn-sm btn-secondary changeTrg change-status {{ $card->status == 0 ? 'inactive' : '' }} "
                                         data-id="{{ $card->id }}" data-status="{{ $card->status }}">
                                         <i class="fa fa-check"
-                                            style="@if ($card->status == 0) display:none; @endif"></i>
+                                            style="@if ($card->status == 0) display:none; @endif" title="Live Card" ></i>
                                         {{ __('Live') }}
                                     </a>
                                     <a target="_blank" href="{{ route('card.preview', $card->card_url) }}"
-                                        class="btn-sm btn-secondary"> {{ __('Preview') }}</a>
+                                        class="btn-sm btn-secondary" title="Card Preview"> {{ __('Preview') }}</a>
+
                                         <a href="{{ route('qr', $card->card_id) }}"
                                             class="download_btn btn-sm btn-secondary" title="{{ __('Download QR code') }}">
-                                            {{ __('Download QR code') }}
+                                            {{ __('QR') }}
                                         </a>
                                     @endif
                                 </div>
