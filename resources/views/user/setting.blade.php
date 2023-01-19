@@ -8,6 +8,61 @@
     height: 100px;
     border-radius: 50%;
 }
+.switch-wrapper {
+        position: relative;
+        display: inline-flex;
+        border-radius: 20px;
+        background: white;
+    }
+
+    .switch-wrapper [type="radio"] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .switch-wrapper [type="radio"]:checked#yes~label[for="yes"],
+    .switch-wrapper [type="radio"]:checked#no~label[for="no"] {
+        color: #fff;
+    }
+
+    .switch-wrapper [type="radio"]:checked#yes~label[for="yes"]:hover,
+    .switch-wrapper [type="radio"]:checked#no~label[for="no"]:hover {
+        background: transparent;
+    }
+
+    .switch-wrapper [type="radio"]:checked#yes+label[for="no"]~.highlighter {
+        transform: none;
+    }
+
+    .switch-wrapper [type="radio"]:checked#no+label[for="yes"]~.highlighter {
+        transform: translateX(100%);
+    }
+
+    .switch-wrapper label {
+        font-size: 14px;
+        z-index: 1;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: color 0.25s ease-in-out;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        line-height: 44px;
+        padding: 0px 36px 30px 30px;
+        width: 100%;
+        display: inline-block;
+        height: 47px;
+    }
+
+    .switch-wrapper .highlighter {
+        position: absolute;
+        top: 3px;
+        left: 4px;
+        width: calc(49% - 4px);
+        height: calc(100% - 8px);
+        border-radius: 20px;
+        background: #212121;
+        transition: transform 0.25s ease-in-out;
+    }
 </style>
 @endpush
 
@@ -246,10 +301,25 @@
                                             <!-- account settings -->
                                             <div class="tab-pane text-left fade" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                                                 <div class="setting_tab_contetn">
+
                                                     <div class="heading mb-4">
                                                         <h3>{{ __('Account Settings') }}</h3>
                                                     </div>
+
                                                     <div class="setting_form">
+
+                                                        <div class="plan_type switchBtn text-center mb-4 mt-3">
+                                                            <div class="text-left">Notifications
+                                                                <div class="switch-wrapper">
+                                                                    <input id="yes"name="notification" class="switcher_" value="1" type="radio" name="switch" @if(Auth::user()->is_notify==1) checked @endif>
+                                                                    <input id="no" name="notification" class="switcher_" value="0" type="radio" name="switch" @if(Auth::user()->is_notify==0) checked @endif>
+                                                                    <label for="yes">Yes</label>
+                                                                    <label for="no">No</label>
+                                                                    <span class="highlighter"></span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                         <form action="{{ route('user.profile-info.update') }}" id="updateProfile" method="post">
                                                             @csrf
                                                             <div class="form-group profile-pic">
@@ -651,5 +721,37 @@
 
     });
 
+
+    $(document).on('change','.switcher_',function(e){
+    var checked =  $(this).is(':checked');
+    console.log(checked);
+    if(checked==true){
+        var current_val = $('input[name="notification"]:checked').val();
+        $.ajax({
+            url: `{{ route('user.notification-status') }}`,
+            type: "get",
+            data:{
+                "current_val": current_val,
+                "_token": "{{ csrf_token() }}",
+            },
+             beforeSend: function () {
+                $("body").css("cursor", "progress");
+            },
+            success: function (response) {
+                if (response.status == 1) {
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function (jqXHR, exception) {
+                toastr.error('Something wrong');
+            },
+            complete: function (response) {
+                $("body").css("cursor", "default");
+            }
+        });
+    }
+})
 </script>
 @endpush

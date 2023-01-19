@@ -13,61 +13,7 @@ $settings  = getSetting();
         overflow: hidden;
     }
 
-    .switch-wrapper {
-        position: relative;
-        display: inline-flex;
-        border-radius: 20px;
-        background: white;
-    }
 
-    .switch-wrapper [type="radio"] {
-        position: absolute;
-        left: -9999px;
-    }
-
-    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"],
-    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
-        color: #fff;
-    }
-
-    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"]:hover,
-    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"]:hover {
-        background: transparent;
-    }
-
-    .switch-wrapper [type="radio"]:checked#monthly+label[for="yearly"]~.highlighter {
-        transform: none;
-    }
-
-    .switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
-        transform: translateX(100%);
-    }
-
-    .switch-wrapper label {
-        font-size: 14px;
-        z-index: 1;
-        cursor: pointer;
-        border-radius: 20px;
-        transition: color 0.25s ease-in-out;
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        line-height: 44px;
-        padding: 0px 36px 30px 30px;
-        width: 100%;
-        display: inline-block;
-        height: 47px;
-    }
-
-    .switch-wrapper .highlighter {
-        position: absolute;
-        top: 3px;
-        left: 4px;
-        width: calc(49% - 4px);
-        height: calc(100% - 8px);
-        border-radius: 20px;
-        background: #212121;
-        transition: transform 0.25s ease-in-out;
-    }
 
     .current-plan-btn {
         color: rgba(0, 0, 0, 0.26);

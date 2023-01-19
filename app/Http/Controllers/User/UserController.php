@@ -458,4 +458,21 @@ class UserController extends Controller
     }
 
 
-}
+    public function putNitificationStatus(Request $request){
+        DB::beginTransaction();
+        try {
+            DB::table('users')->where('id',Auth::user()->id)->update(['is_notify' => $request->current_val]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status'=> 0,
+                'message' =>'Something wrong please try again'
+            ]);
+        }
+            DB::commit();
+            return response()->json([
+                'status'=> 1,
+                'message' =>'Successfully uploaded'
+            ]);
+        }
+    }

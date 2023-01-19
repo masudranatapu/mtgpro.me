@@ -113,6 +113,11 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('password/password-reset/{token}',['as'=>'password.password-reset','uses'=>'UserController@getresetPassword']);
     Route::post('reset/new/password', [ 'as' => 'reset.new.password', 'uses' => 'UserController@resetNewPassword']);
 
+    Route::get('notification-status',['as'=>'notification-status','uses'=>'UserController@putNitificationStatus']);
+
+
+
+
 });
 
 
