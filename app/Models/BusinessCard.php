@@ -620,7 +620,7 @@ class BusinessCard extends Model
 
 
     public function getYoutubeEmbad($url){
-        $query = parse_url($url);
+        $query = parse_url($url . '&mkds');
         if(isset($query['query'])){
            $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
             $_query = $remove_extra;
@@ -632,6 +632,7 @@ class BusinessCard extends Model
         $video_file = 'https://www.youtube.com/embed/'.$video_id;
         return $video_file;
     }
+
 
 
 
