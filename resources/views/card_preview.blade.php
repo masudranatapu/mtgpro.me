@@ -531,7 +531,6 @@
         <div class="offcanvas-body">
             <iframe src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0" style="width: 100%; height: 1200px; border: 0;">
             </iframe>
-
             <div class="">
                 <form action="{{ route('getConnect') }}" id="connect-form" method="post">
                     @csrf
@@ -568,7 +567,7 @@
                         <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">
+                    <button type="submit" class="btn btn-primary w-100" id="calculator_btn">
                         <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
                         <span class="btn-txt">{{ __('Submit') }}</span>
                     </button>
@@ -576,6 +575,7 @@
             </div>
         </div>
     </div>
+
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -652,6 +652,12 @@
             // progressBar: true,
         });
     });
+
+    $(document).on('click', '#calculator_btn', function(e) {
+        var table =$($("table").get(0)).html();;
+         console.log(table);
+    });
+
     </script>
     {!! Toastr::message() !!}
 
