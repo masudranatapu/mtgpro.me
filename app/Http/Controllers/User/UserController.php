@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\User;
+use Stripe\StripeClient;
 
 use Str;
 use App\Models\Card;
@@ -240,13 +241,14 @@ class UserController extends Controller
 
     public function postDeletionRequest(Request $request)
     {
+        $config = DB::table('config')->get();
+
         DB::beginTransaction();
         try {
             $data = [];
             if($request->confirm=='delete'){
-
+                $stripe = new StripeClient($config[10]->config_value);
                 $user_cards = BusinessCard::where('user_id', Auth::user()->id)->get();
-
                 foreach ($user_cards as $key => $value) {
                     BusinessField::where('card_id', $value->id)->update([
                         'status'=> 2,
@@ -259,6 +261,38 @@ class UserController extends Controller
                     'deleted_by' => Auth::user()->id
                 ]);
                 $user = User::find(Auth::user()->id);
+                if(!empty($user->stripe_customer_id)){
+                    //Find Existing Customer
+                    $stripe_customer = $stripe->customers->retrieve(
+                        $user->stripe_customer_id,
+                        []
+                    );
+                    $customer_id = $stripe_customer->id;
+                    if(!empty($customer_id)){
+
+                        $payment_data = json_decode($user->stripe_data);
+                        if(!empty($payment_data)){
+                            //Check subscription
+                            $check_subscription = $stripe->subscriptions->retrieve(
+                                $payment_data->id,
+                                []
+                            );
+                            if($check_subscription->status=='active'){
+                                //Unsubscription Stripe
+                                $stripe = $stripe->subscriptions->cancel(
+                                    $payment_data->id,
+                                    []
+                                );
+                            }
+                        }
+                        $stripe = new StripeClient($config[10]->config_value);
+                        $stripe->customers->delete(
+                            $customer_id,
+                            []
+                          );
+                    }
+                }
+
                 $user_email = $user->email;
                 $user->status = 2;
                 $user->email = Auth::user()->id.'-'.$user_email;

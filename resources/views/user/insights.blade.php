@@ -30,7 +30,9 @@ $current_plan = $data['current_plan'];
                     <div class="small-box">
                         <div class="inner">
                             <h3>{{__($total_connect)}}</h3>
-                            <p>{{ __('Total Connect') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                            <p>{{ __('Total Connect') }}
+                                {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                            </p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -41,7 +43,9 @@ $current_plan = $data['current_plan'];
                     <div class="small-box">
                         <div class="inner">
                             <h3>{{__($total_card_view)}}</h3>
-                            <p>{{ __('Card Views') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                            <p>{{ __('Card Views') }}
+                                {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                            </p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -52,7 +56,9 @@ $current_plan = $data['current_plan'];
                     <div class="small-box">
                         <div class="inner">
                             <h3>{{__($total_contact_download)}}</h3>
-                            <p>{{ __('Contacts Downloaded') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                            <p>{{ __('Contacts Downloaded') }}
+                                {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                            </p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -63,7 +69,9 @@ $current_plan = $data['current_plan'];
                     <div class="small-box">
                         <div class="inner">
                             <h3>{{__($total_qrcode_download)}}</h3>
-                            <p>{{ __('QR Code Downloaded') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                            <p>{{ __('QR Code Downloaded') }}
+                                {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                            </p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -75,7 +83,9 @@ $current_plan = $data['current_plan'];
                     <div class="small-box">
                         <div class="inner">
                             <h3>{{__($total_card)}}</h3>
-                            <p>{{ __('Total Cards') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                            <p>{{ __('Total Cards') }}
+                                {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                            </p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -87,7 +97,9 @@ $current_plan = $data['current_plan'];
                             <div class="small-box">
                                 <div class="inner">
                                     <h3>{{ __($current_plan->plan_name.' plan') }} </h3>
-                                    <p>{{ __('Current Plan') }} <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i></p>
+                                    <p>{{ __('Current Plan') }}
+                                        {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                                    </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>

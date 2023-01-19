@@ -299,9 +299,12 @@ class BusinessCard extends Model
             $icon->icon     = $social_icon->icon_name;
             $icon->icon_id  = $social_icon->id;
             $icon->created_at = date('Y-m-d H:i:s');
-            if($social_icon->type=='embed'){
+
+            // $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo')
+            if(($social_icon->type=='link')  &&  ($social_icon->icon_name == 'embeddedvideo')){
                 $icon->content =  $this->getYoutubeEmbad($request->content);
             }
+
             elseif ($request->hasFile('content')) {
 
                 $icon_ = $request->file('content');
@@ -398,9 +401,13 @@ class BusinessCard extends Model
                 }
                 $icon = BusinessField::findOrFail($request->id);
                 $social_icon    = SocialIcon::findOrFail($icon->icon_id);
-                if($social_icon->type=='embed'){
+                if(($social_icon->type=='link')  &&  ($social_icon->icon_name == 'embeddedvideo')){
                     $icon->content =  $this->getYoutubeEmbad($request->content);
-                }elseif ($request->hasFile('content')) {
+                }
+                // if($social_icon->type=='embed'){
+                //     $icon->content =  $this->getYoutubeEmbad($request->content);
+                // }
+                elseif ($request->hasFile('content')) {
                     $icon_ = $request->file('content');
                     $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
                     $base_name = explode(' ', $base_name);

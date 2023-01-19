@@ -114,6 +114,13 @@ else{
 // var parts = filename.split('.');
 // return parts[parts.length - 1];
 // }
+
+$('.tab_body .back').on('click', function() {
+        $('.tab_body .back').addClass('d-none');
+        $('.tab_body .edit_social_form').addClass('d-none');
+        $('.tab_body .add_link').removeClass('d-none');
+        $('.tab_body .social_media_list').removeClass('d-none');
+    });
 </script>
 
 

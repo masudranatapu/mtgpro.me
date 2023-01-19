@@ -814,7 +814,7 @@ $icon_group = Config::get('app.icon_group');
     });
     $('.backfirstModal').on('click', function() {
         $('.first_modal').removeClass('d-none');
-        $('.second_modal').modal('hide');
+        $('.second_modal').addClass('d-none');
         $('#filter').val('');
         $('.icon_each').css('display','block');
 
