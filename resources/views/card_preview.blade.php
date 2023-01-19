@@ -194,6 +194,13 @@
                                         <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
+                                @elseif ($contact->type == 'file')
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
                                 @elseif ($contact->type == 'number')
                                 <div class="col-4 col-md-3 mb-3">
 

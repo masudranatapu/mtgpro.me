@@ -268,7 +268,8 @@ class BusinessCard extends Model
         try {
             $rules = array(
                 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
-                'content'   => 'required|string|max:255',
+                // 'content'   => 'required|string|max:255',
+                'content'   => 'required',
                 'label'     => 'required|max:255',
                 'card_id'   => 'required',
                 'icon_id'   => 'required',
@@ -299,7 +300,21 @@ class BusinessCard extends Model
             $icon->created_at = date('Y-m-d H:i:s');
             if($social_icon->type=='embed'){
                 $icon->content =  $this->getYoutubeEmbad($request->content);
-            }else{
+            }
+            elseif ($request->hasFile('content')) {
+
+                $icon_ = $request->file('content');
+                $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                $base_name = explode(' ', $base_name);
+                $base_name = implode('-', $base_name);
+                $base_name = Str::lower($base_name);
+                $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                $file_path = 'assets/img/icon/custom_icon/';
+                $icon_->move($file_path, $image_name);
+                $icon->content = asset($file_path.$image_name);
+
+            }
+            else{
                 $icon->content  = $request->content;
             }
 
@@ -373,7 +388,7 @@ class BusinessCard extends Model
             } else {
                 $rules = array(
                     // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
-                    'content'   => 'required|max:255',
+                    'content'   => 'required',
                     'label'     => 'required|max:255',
                 );
                 $validator = Validator::make($request->all(), $rules);
@@ -384,7 +399,18 @@ class BusinessCard extends Model
                 $social_icon    = SocialIcon::findOrFail($icon->icon_id);
                 if($social_icon->type=='embed'){
                     $icon->content =  $this->getYoutubeEmbad($request->content);
-                }else{
+                }elseif ($request->hasFile('content')) {
+                    $icon_ = $request->file('content');
+                    $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                    $base_name = explode(' ', $base_name);
+                    $base_name = implode('-', $base_name);
+                    $base_name = Str::lower($base_name);
+                    $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                    $file_path = 'assets/img/icon/custom_icon/';
+                    $icon_->move($file_path, $image_name);
+                    $icon->content = asset($file_path.$image_name);
+                }
+                else{
                     $icon->content  = $request->content;
                 }
                 $icon->label =  $request->label;

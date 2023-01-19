@@ -34,7 +34,14 @@ else{
 
     <div class="form-group">
         <label class="form-label" style="">{{ $icon->icon_title }} {{ $type }} <span class="text-dark">*</span></label>
-        <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' link' }}" required value="{{ $icon->content }}">
+        @if ($icon->type=='file')
+        <input type="file" name="content" class="form-control content_input"
+        placeholder="{{ $icon->icon_title }} {{ $type }}" required>
+        @else
+        <input type="text" name="content" class="form-control content_input"
+        placeholder="{{ $icon->icon_title }} {{ $type }}" required value="{{ $icon->content }}">
+        @endif
+        {{-- <input type="text" name="content" class="form-control" placeholder="{{ $icon->icon.' link' }}" required value="{{ $icon->content }}"> --}}
         @if($errors->has('content'))
         <span class="help-block text-danger">{{ $errors->first('content') }}</span>
         @endif

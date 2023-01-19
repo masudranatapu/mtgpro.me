@@ -31,11 +31,17 @@ enctype="multipart/form-data">
 </div>
 <div class="form-group">
     <label class="form-label">
-        <span id="content_link">{{ $icon->icon_title }} {{ $type }}</span>
+        <span id="content_link">{{ $icon->icon_title }} {{ $type }} {{ $icon->type }}</span>
         <span class="text-dark">*</span>
     </label>
+    @if ($icon->type=='file')
+    <input type="file" name="content" class="form-control content_input"
+    placeholder="{{ $icon->icon_title }} {{ $type }}" required>
+    @else
     <input type="text" name="content" class="form-control content_input"
-        placeholder="{{ $icon->icon_title }} {{ $type }}" required>
+    placeholder="{{ $icon->icon_title }} {{ $type }}" required>
+    @endif
+
     @if($errors->has('content'))
     <span class="help-block text-danger">{{ $errors->first('content') }}</span>
     @endif
