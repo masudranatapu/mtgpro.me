@@ -44,7 +44,7 @@ if (!empty($daterange)) {
                 <div class="col-lg-9">
                     <form action="{{ route('user.crm') }}" method="get" class="form-inline float-lg-right">
                         <a href="{{ route('user.crm') }}" class="btn btn-secondary mr-3">{{ __('Refresh') }}</a>
-                        <div class="mr-3 mb-2">
+                        <div class="mr-3 mb-2 mb-xl-0">
                             <input type="tel" name="search" id="search" value="{{ $search }}"
                                 class="form-control @error('search') is-invalid @enderror"
                                 placeholder="{{ __('Search name, email,company') }}" tabindex="{{ $tabindex++ }}">
@@ -52,7 +52,7 @@ if (!empty($daterange)) {
                             <span class="help-block text-danger">{{ $errors->first('search') }}</span>
                             @endif
                         </div>
-                        <div class="mr-3 mb-2">
+                        <div class="mr-3 mb-2 mb-xl-0">
                             <input type="text" name="daterange" id="daterangepicker" value="{{ $daterange }}"
                                 class="form-control @error('daterange') is-invalid @enderror"
                                 placeholder="{{ $_by_date ?? 'YYYY/MM/DD - YYYY/MM/DD' }}" tabindex="{{ $tabindex++ }}">
@@ -124,17 +124,17 @@ if (!empty($daterange)) {
                                         </td>
                                         <td class="text-center">
                                             @if (!empty($row->email))
-                                                <a class="btn" href="mailto:{{ $row->email }}" rel="noopener noreferrer">
-                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
-                                                </a>
+                                            <a class="btn" href="mailto:{{ $row->email }}" rel="noopener noreferrer">
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            </a>
                                             @endif
                                             @if (!empty($row->phone))
-                                                <a class="btn" href="tel:{{ $row->phone }}" rel="noopener noreferrer">
-                                                    <i class="fa fa-phone" aria-hidden="true"></i>
-                                                </a>
-                                                <a class="btn" href="text:{{ $row->phone }}" rel="noopener noreferrer">
-                                                    <i class="fa fa-comment" aria-hidden="true"></i>
-                                                </a>
+                                            <a class="btn" href="tel:{{ $row->phone }}" rel="noopener noreferrer">
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="btn" href="text:{{ $row->phone }}" rel="noopener noreferrer">
+                                                <i class="fa fa-comment" aria-hidden="true"></i>
+                                            </a>
                                             @endif
                                         </td>
                                         <td class="text-center">
