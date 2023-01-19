@@ -241,8 +241,7 @@
                                 @elseif ($contact->type == 'text')
                                     @if ($contact->icon_name =='textSection')
                                     <div class="col-12 col-md-12 mb-3">
-
-                                    <div class="text-box">
+                                    <div class="text-box" style="padding: 5px; margin: 5px; border: 1px dotted #121212;">
                                         <h6>{{ $contact->label }}</h6>
                                         <p>{!! $contact->content !!}</p>
                                     </div>
