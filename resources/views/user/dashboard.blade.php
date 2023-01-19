@@ -128,7 +128,12 @@
 
                                     <a target="_blank" href="{{ route('card.preview', $card->card_url) }}"
                                         class="btn-sm btn-secondary"> {{ __('Preview') }}</a>
-
+                                    {{-- <a target="_blank" href="{{ route('card.preview', $card->card_url) }}"
+                                        class="btn-sm btn-secondary"> {{ __('Preview') }}</a> --}}
+                                        <a href="{{ route('qr', $card->card_id) }}"
+                                            class="download_btn btn-sm btn-secondary" title="{{ __('Download QR code') }}">
+                                            {{ __('Download QR code') }}
+                                        </a>
 
                                     {{-- <div class="card-status d-inline-block position-relative">
                                         <input type="checkbox" name="change-status" id="switch_{{$card->id}}"

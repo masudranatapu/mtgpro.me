@@ -25,6 +25,7 @@ class BusinessCard extends Model
                 'c.id',
                 'c.title',
                 'c.title2',
+                'c.card_id',
                 'c.phone_number',
                 'c.card_email',
                 'c.logo',

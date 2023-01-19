@@ -57,10 +57,12 @@ $invoice_details = json_decode($row->invoice_details);
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-12 d-print-none">
+            <div class="row">
+                <div class="col-md-6">
                     <h1 class="m-0">{{ __('Invoice') }}</h1>
-                    <a href="{{ route('user.invoice.download',$row->invoice_number) }}" class="btn btn-primary float-right pull-right">
+                </div>
+                <div class="col-md-6 text-right pr-md-5">
+                    <a href="{{ route('user.invoice.download',$row->invoice_number) }}" class="btn btn-primary">
                         <img src="{{ asset('assets/img/icon/download.svg') }}" alt="">
                         {{ __('Download')}}
                     </a>
