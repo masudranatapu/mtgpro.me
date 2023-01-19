@@ -497,14 +497,5 @@ $banner = $home_data['banner'] ;
                 });
             }
         }
-        const elem = document.querySelector("video");
-
-elem.audioTracks.onaddtrack = (event) => {
-  trackEditor.addTrack(event.track);
-};
-
-elem.audioTracks.onremovetrack = (event) => {
-  trackEditor.removeTrack(event.track);
-};
 </script>
 @endpush
