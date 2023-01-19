@@ -238,10 +238,13 @@
                                     @endif
                                 </div>
                                 @elseif ($contact->type == 'text')
-                                    @if ($contact->icon =='Text Section')
+                                    @if ($contact->icon =='textSection')
+                                    <div class="col-12 col-md-12 mb-3">
+
                                     <div class="text-box">
                                         <h6>{{ $contact->label }}</h6>
                                         <p>{!! $contact->content !!}</p>
+                                    </div>
                                     </div>
                                     @else
                                     <div class="col-4 col-md-3 mb-3">
