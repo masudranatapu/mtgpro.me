@@ -219,6 +219,7 @@
                                 @elseif ($contact->type == 'mobile')
 
                                 @if ($contact->icon == 'facetime')
+                                <div class="col-4 col-md-3 mb-3">
                                 <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
                                     href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
                                     <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
@@ -226,6 +227,7 @@
                                         alt="{{ $contact->label }}" width="75" height="75">
                                     <span>{{ $contact->label }}</span>
                                 </a>
+                                </div>
                                 @else
                                 <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none"
