@@ -149,25 +149,12 @@ $banner = $home_data['banner'] ;
             <div class="col-lg-7 col-12">
                 @if(!empty($banner['banner_video']) && file_exists(public_path($banner['banner_video'])))
                 <div class="embed-responsive embed-responsive-21by9">
-
-                    <video controls autoplay class="embed-responsive-item banner-video">
+                    <video class="embed-responsive-item banner-video" loop="true" autoplay="autoplay" controls muted  preload="none">
                         <source src="{{ asset($banner['banner_video']) }}" type="video/mp4">
                         {{-- <source src="movie.ogg" type="video/ogg"> --}}
+                        <img src="{{ asset($banner['banner_photo']) }}" alt="{{ strip_tags($banner['banner_title']) }}">
                         Your browser does not support the video tag.
                       </video>
-
-                    {{-- <video class="embed-responsive-item banner-video" src="{{ asset($banner['banner_video']) }}" controls  autoplay="" loop="">
-                         <source src="{{ asset($banner['banner_video']) }}" type="video/mp4">
-                        <source src="movie.ogg" type="video/ogg">
-                       Your browser does not support the video tag.
-                      </video> --}}
-
-                    {{-- <iframe class="embed-responsive-item" src="{{ asset($banner['banner_video']) }}"
-                        allowfullscreen="true" frameborder="0" muted="" autoplay="true" loop=""></iframe> --}}
-                    {{-- <video class="embed-responsive-item banner-video" autoplay="" loop=""
-                        src="{{ asset($banner['banner_video']) }}" type="video/mp4">
-                        <img src="{{ asset($banner['banner_photo']) }}" alt="{{ strip_tags($banner['banner_title']) }}">
-                    </video> --}}
                 </div>
                 @else
                 <div class="banner_logo text-center" data-aos="zoom-in">
