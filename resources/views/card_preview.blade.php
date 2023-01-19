@@ -198,12 +198,13 @@
                                     </a>
                                 </div>
                                 @elseif ($contact->type == 'mobile')
-
                                     @if ($contact->icon == 'facetime')
-                                    <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
                                     @else
                                     <div class="col-4 col-md-3 mb-3">
                                         <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
@@ -289,6 +290,20 @@
                             @endif
                         </div>
                     </div>
+                                        {{-- @if (isFreePlan($cardinfo->user_id))
+                                        @dd(1);
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
+                                            ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
+                                            ->generate(url($cardinfo->card_url)) !!}
+                                        @elseif (!empty($cardinfo->logo))
+                                        @dd(public_path($cardinfo->logo));
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)
+                                            ->merge(public_path($cardinfo->logo), 0.2, true)
+                                            ->generate(url($cardinfo->card_url)) !!}
+                                        @else
+                                        @dd(3);
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
+                                        @endif --}}
                     <div class="copyright_article">
                         @if (isFreePlan($cardinfo->user_id))
                         <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights
