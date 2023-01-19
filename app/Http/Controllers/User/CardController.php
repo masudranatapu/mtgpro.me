@@ -254,6 +254,7 @@ class CardController extends Controller
             $card->ccode        = $request->ccode;
             $card->card_email   = $request->card_email ?? Auth::user()->email;
             $card->card_for     = 'Work';
+            $card->status       = 1;
             $card->save();
 
             if (!empty($request->phone_number)) {
@@ -285,10 +286,9 @@ class CardController extends Controller
             $fields->status = 1;
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
-
             $user = User::where('id',Auth::id())->first();
             if($user->name == null){
-                $user->name = $request->name;
+                $user->name =$request->name;
             }
             $user->active_card_id = $card->id;
             $user->update();
@@ -330,4 +330,5 @@ class CardController extends Controller
             'is_active' => $card->status,
         ]);
     }
+
 }
