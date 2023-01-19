@@ -75,7 +75,7 @@
                                         <th>{{ __('vCard ID') }}</th>
                                         <th>{{ __('Title') }}</th>
                                         <th>{{ __('Created At') }}</th>
-                                        <th>{{ __('Status') }}</th>
+                                        {{-- <th>{{ __('Status') }}</th> --}}
                                         <th>{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -83,15 +83,16 @@
                                     @if (count($user_cards) != 0)
                                     @foreach ($user_cards as $user_card)
                                     <tr>
-                                        <td><a href="{{ route('card.preview', $user_card->card_url) }}"
-                                                target="_blank">{{ $user_card->card_id }}</a></td>
+                                        <td>
+                                            <a href="{{ route('card.preview', $user_card->card_url) }}" target="_blank">{{ $user_card->card_id }}</a>
+                                        </td>
                                         <td class="text-muted">
                                             {{ $user_card->title }} {{ $user_card->title2 }}
                                         </td>
                                         <td class="text-muted">
                                             {{ date('d-m-Y h:m A', strtotime($user_card->created_at)) }}
                                         </td>
-                                        <td class="text-muted">
+                                        {{-- <td class="text-muted">
                                             @if ($user_card->status == 0)
                                             <span class="badge bg-red">{{ __('Inactive') }}</span>
                                             @elseif ($user_card->status == 2)
@@ -99,7 +100,7 @@
                                             @else
                                             <span class="badge bg-green">{{ __('Active') }}</span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <div class="btn-group">
                                                 {{-- <a class="btn-sm btn btn-info" href="{{ route('user.card.edit', $user_card->id)}}"><i class="fa fa-pencil-alt"></i></a> --}}

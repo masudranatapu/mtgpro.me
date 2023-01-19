@@ -215,12 +215,20 @@
                                     @endif
                                 </div>
                                 @elseif ($contact->type == 'text')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
+                                    @if ($contact->icon =='Text Section')
+                                    <div class="text-box">
+                                        <h6>{{ $contact->label }}</h6>
+                                        <p>{!! $contact->content !!}</p>
+                                    </div>
+                                    @else
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="sms:{{ $contact->content }}" target="_blank">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                                <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
+                                    @endif
+
 
                                 @elseif ($contact->icon == 'whatsapp')
                                 <div class="col-4 col-md-3 mb-3">
