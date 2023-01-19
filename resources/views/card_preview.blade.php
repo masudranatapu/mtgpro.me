@@ -531,48 +531,6 @@
         <div class="offcanvas-body">
             <iframe src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0" style="width: 100%; height: 1200px; border: 0;">
             </iframe>
-            <div class="">
-                <form action="{{ route('getConnect') }}" id="connect-form" method="post">
-                    @csrf
-                    <div class="mb-3">
-                        <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
-                            required tabindex="{{ $tabindex++ }}">
-                        @if ($errors->has('name'))
-                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
-                        @endif
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" name="email" id="email" value="{{ old('email') }}"
-                            class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}"
-                            required tabindex="{{ $tabindex++ }}">
-                        @if ($errors->has('email'))
-                        <span class="help-block text-danger">{{ $errors->first('email') }}</span>
-                        @endif
-                    </div>
-                    <div class="mb-3">
-                        <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
-                            class="form-control @error('phone') is-invalid @enderror"
-                            placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabindex++ }}">
-                        @if ($errors->has('phone'))
-                        <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
-                        @endif
-                    </div>
-                    <div class="mb-3">
-                        <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
-                            class="form-control @error('message') is-invalid @enderror"
-                            placeholder="{{ __('Questions, Comments or Important Details') }}"
-                            tabindex="{{ $tabindex++ }}" required></textarea>
-                        @if ($errors->has('message'))
-                        <span class="help-block text-danger">{{ $errors->first('message') }}</span>
-                        @endif
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100" id="calculator_btn">
-                        <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
-                        <span class="btn-txt">{{ __('Submit') }}</span>
-                    </button>
-                </form>
-            </div>
         </div>
     </div>
 
@@ -653,10 +611,10 @@
         });
     });
 
-    $(document).on('click', '#calculator_btn', function(e) {
-        var table =$($("table").get(0)).html();;
-         console.log(table);
-    });
+    // $(document).on('click', '#calculator_btn', function(e) {
+    //     var table =$($("table").get(0)).html();;
+    //      console.log(table);
+    // });
 
     </script>
     {!! Toastr::message() !!}
