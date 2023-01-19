@@ -128,7 +128,7 @@
                                         class="btn-sm btn-secondary"> {{ __('Preview') }}</a>
                                         <a href="{{ route('qr', $card->card_id) }}"
                                             class="download_btn btn-sm btn-secondary" title="{{ __('Download QR code') }}">
-                                            {{ __('Download QR code') }}
+                                            {{ __('QR') }}
                                         </a>
                                     @endif
                                 </div>

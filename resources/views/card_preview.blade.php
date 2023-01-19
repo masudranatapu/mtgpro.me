@@ -198,12 +198,22 @@
                                     </a>
                                 </div>
                                 @elseif ($contact->type == 'mobile')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
+
+                                    @if ($contact->icon == 'facetime')
+                                    <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                         <span>{{ $contact->label }}</span>
                                     </a>
-                                </div>
+                                    @else
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
+                                    @endif
+
+
                                 @elseif ($contact->type == 'file')
                                 <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank" href="{{ $contact->content }}">
@@ -219,11 +229,7 @@
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
                                         </a>
-                                    @elseif ($contact->icon == 'facetime')
-                                        <a title="{{ $contact->label }}" class="text-decoration-none copy_btn" href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
+
                                     @else
                                         <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
