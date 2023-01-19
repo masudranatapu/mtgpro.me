@@ -160,7 +160,7 @@
                             @foreach ($cardinfo->contacts as $contact)
 
                             @if($contact)
-                            {{ $contact->position }}
+
 
                             @if (isset($user->userPlan)
                             && $user->userPlan->is_free == 1
