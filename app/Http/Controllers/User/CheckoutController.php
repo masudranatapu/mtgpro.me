@@ -93,7 +93,6 @@ class CheckoutController extends Controller
                 ]);
                 return redirect()->route('user.plans');
             }elseif($plan->is_free==1){
-                dd(2);
                 $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,

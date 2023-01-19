@@ -598,6 +598,15 @@
   border: 0;
 }
     </style>
+
+
+<?php
+$row = $data['transaction'] ?? [];
+$settings = getSetting();
+$invoice_details = json_decode($row->invoice_details);
+?>
+
+
 </head>
 
 <body>
@@ -624,154 +633,81 @@
                                             <h1>Hi {{ $invoice_details->to_billing_name }},</h1>
                                             <p>{{ $details['email_heading'] }}</p>
                                             <!-- Action -->
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <table class="table" width="100%" border="0" cellspacing="0" cellpadding="0"
-                                                            role="presentation">
-                                                            <tr>
-                                                                <td >
-                                                                    <p>{{ $settings->site_name }}</p>
-                                                                    <address>
-                                                                        {{ $invoice_details->from_billing_name }}<br>
-                                                                        {{ $invoice_details->from_billing_address }}
-                                                                        <br>
-                                                                       {{ $invoice_details->from_billing_city }},
-                                                                       {{ $invoice_details->from_billing_state }}
-                                                                       <br>
-                                                                       {{ $invoice_details->from_billing_country }},
-                                                                       {{ $invoice_details->from_billing_zipcode }}
-                                                                        <br>
-                                                                        {{ $invoice_details->from_billing_email }}
-
-                                                                        <br>
-                                                                        {{ $invoice_details->from_billing_phone }}
-                                                                        <br>
-                                                                        <br>
-                                                                        <p>Tax Number: {{ $invoice_details->from_vat_number }}</p>
-                                                                    </address>
-                                                                </td>
-                                                                <td>
-                                                                    <p class="h3"> {{ $invoice_details->to_billing_name }}</p>
-                                                                    <address>
-                                                                    {{ $invoice_details->to_billing_address }}
-                                                                    <br>
-                                                                    {{ $invoice_details->to_billing_city }}
-                                                                    {{ $invoice_details->to_billing_state }}
-                                                                    <br>
-
-                                                                    {{ $invoice_details->to_billing_country }}
-                                                                    {{ $invoice_details->to_billing_zipcode }}
-
-                                                                        <br>
-                                                                        {{ $invoice_details->to_billing_email }}
-                                                                        <br>
-                                                                        {{ $invoice_details->to_billing_phone }}
-                                                                        <br>
-                                                                    </address>
-                                                                    <h4>INVOICE DATE : {{date('d-m-Y H:i A', strtotime( $details->transaction_date))}}</h4>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <table class="table"  class="purchase_content" width="100%" cellpadding="0"
-                                            cellspacing="0">
-                                                <thead>
+                                            <table class="table table-light" style="width: 100%;margin-bottom: 1rem;color: #212529;vertical-align: top;border-color: #dee2e6;border-collapse: collapse;">
+                                                <tbody>
                                                     <tr>
-                                                        <th class="text-center" style="width: 5%"></th>
-                                                        <th>Description</th>
-                                                        <th class="text-center" style="width: 8%"></th>
-                                                        <th class="text-end" ></th>
-                                                        <th class="text-end" style="width: 10%">Amount</th>
+                                                        <td>
+                                                            {{ $settings->site_name }}
+                                                            <br>
+                                                            {{ $invoice_details->from_billing_name }}
+                                                            <br>
+                                                            {{ $invoice_details->from_billing_address }}
+                                                            <br>
+                                                            {{ $invoice_details->from_billing_city }},
+                                                            {{ $invoice_details->from_billing_state }}
+                                                            <br>
+                                                            {{ $invoice_details->from_billing_country }},
+                                                            {{ $invoice_details->from_billing_zipcode }}
+                                                            <br>
+                                                            {{ $invoice_details->from_billing_email }}
+                                                            <br>
+                                                            {{ $invoice_details->from_billing_phone }}
+                                                        </td>
+                                                        <td style="text-align: right">
+                                                            {{ $invoice_details->to_billing_name }}
+                                                            <br>
+                                                            {{ $invoice_details->to_billing_address }}
+                                                            <br>
+                                                            {{ $invoice_details->to_billing_city }}
+                                                            {{ $invoice_details->to_billing_state }}
+                                                            <br>
+                                                            {{ $invoice_details->to_billing_country }}
+                                                            {{ $invoice_details->to_billing_zipcode }}
+                                                            <br>
+                                                            {{ $invoice_details->to_billing_email }}
+                                                            <br>
+                                                            {{ $invoice_details->to_billing_phone }}
+                                                            <br>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align: left;">INVOICE NO : {{ $row->invoice_prefix }}-{{ $row->invoice_number }}</td>
+                                                        <td style="text-align: right;">INVOICE DATE : {{date('d-m-Y H:i A', strtotime( $row->transaction_date))}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <table style="width: 100%;margin-bottom: 1rem;color: #212529;vertical-align: top;border-collapse: collapse;">
+                                                <thead style="vertical-align: bottom;border-color: inherit;border-style: solid;border-width: 0;">
+                                                    <tr>
+                                                        <th colspan="4" style="text-align: left;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">Description</th>
+                                                        <th style="width: 10%;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">Amount</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody><tr>
-                                                    <td class="text-center">1</td>
-                                                    <td>
-                                                        <p class="strong mb-1">Extended : {{ $details->desciption }}</p>
-                                                        <div class="text-muted">Via :
-                                                        {{ $details->payment_gateway_name }}</div>
-                                                    </td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-end"></td>
-                                                    <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
-                                                </tr>
+                                                <tbody style="vertical-align: inherit;border-color: inherit;border-style: solid;border-width: 0;">
+                                                    <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                        <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;">
+                                                           {{ $row->desciption }}
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;text-align: right;">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                                    </tr>
+                                                    <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                        <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">Subtotal</td>
+                                                        <td style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;" class="text-end">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
+                                                    </tr>
+                                                    <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                        <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">Tax Amount</td>
+                                                        <td style="width: 23%;border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
+                                                    </tr>
+                                                    <tr style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                        <td colspan="4" style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">Total</td>
+                                                        <td style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">
+                                                            <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                                <tr>
-                                                    <td colspan="4" class="title strong text-end">Subtotal</td>
-                                                    <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->subtotal,2) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4" class="title strong text-end">Tax Amount</td>
-                                                    <td class="text-end" style="width: 23%">$ {{ CurrencyFormat($invoice_details->tax_amount,2) }}</td>
-                                                </tr>
 
-                                                <tr>
-                                                    <td colspan="4" class="title font-weight-bold text-uppercase text-end">Total</td>
-                                                    <td class="font-weight-bold text-end">
-                                                        <strong>$ {{ CurrencyFormat($invoice_details->invoice_amount,2) }}</strong>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                           <!-- <table class="purchase" width="100%" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td>
-                                                        <h3>{{ __('Invoice Number :') }} {{ $details['transaction_id'] }}</h3>
-                                                    </td>
-                                                    <td>
-                                                        <h3 class="align-right">{{ __('Invoice Date :') }} {{ $details['transaction_date'] }}</h3>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <table class="purchase_content" width="100%" cellpadding="0"
-                                                            cellspacing="0">
-                                                            <tr>
-                                                                <th class="purchase_heading" align="left">
-                                                                    <p class="f-fallback">{{ __('Description') }}</p>
-                                                                </th>
-                                                                <th class="purchase_heading" align="right">
-                                                                    <p class="f-fallback">{{ __('Amount') }}</p>
-                                                                </th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="80%" class="purchase_item"><span
-                                                                        class="f-fallback">{{ $details['description'] }}</span>
-                                                                </td>
-                                                                <td class="align-right" width="20%"
-                                                                    class="purchase_item"><span
-                                                                        class="f-fallback">{{ $details['invoice_currency'] }} {{ $details['subtotal'] }}</span>
-                                                                </td>
-                                                            </tr>
-							                                <tr>
-                                                                <td width="80%" class="purchase_footer" valign="middle">
-                                                                    <p
-                                                                        class="f-fallback purchase_total purchase_total--label">
-                                                                        {{ __('Tax') }}</p>
-                                                                </td>
-                                                                <td width="20%" class="purchase_footer" valign="middle">
-                                                                    <p class="f-fallback purchase_total">
-                                                                        {{ $details['invoice_currency'] }} {{ $details['tax_amount'] }}</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="80%" class="purchase_footer" valign="middle">
-                                                                    <p
-                                                                        class="f-fallback purchase_total purchase_total--label">
-                                                                        {{ __('Total') }}</p>
-                                                                </td>
-                                                                <td width="20%" class="purchase_footer" valign="middle">
-                                                                    <p class="f-fallback purchase_total">
-                                                                        {{ $details['invoice_currency'] }} {{ $details['invoice_amount'] }}</p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>-->
                                             <p>{{ __('If you have any questions about this invoice, simply reply to this email
                                                 or reach out to our') }} <a
                                                     href="mailto:{{ $invoice_details->from_billing_email }}">{{ __('support team') }}</a> {{ __('for help.') }}

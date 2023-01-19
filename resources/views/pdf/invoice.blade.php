@@ -58,7 +58,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align: left;">INVOICE NO : {{ $row->invoice_prefix }}-{{ $row->gobiz_transaction_id }}</td>
+                                                <td style="text-align: left;">INVOICE NO : {{ $row->invoice_prefix }}-{{ $row->invoice_number }}</td>
                                                 <td style="text-align: right;">INVOICE DATE : {{date('d-m-Y H:i A', strtotime( $row->transaction_date))}}</td>
                                             </tr>
                                         </tbody>
