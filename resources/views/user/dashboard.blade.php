@@ -116,7 +116,6 @@
                                 <div class="card_btn mt-3 mb-4">
                                     <a href="{{ route('user.card.edit', $card->id) }}" class="btn-sm btn-secondary">{{
                                         __('Edit Card') }}</a>
-
                                     @if (checkPackage())
                                     <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
                                         class="btn-sm btn-secondary changeTrg change-status {{ $card->status == 0 ? 'inactive' : '' }} "
@@ -125,33 +124,20 @@
                                             style="@if ($card->status == 0) display:none; @endif"></i>
                                         {{ __('Live') }}
                                     </a>
-
                                     <a target="_blank" href="{{ route('card.preview', $card->card_url) }}"
                                         class="btn-sm btn-secondary"> {{ __('Preview') }}</a>
-                                    {{-- <a target="_blank" href="{{ route('card.preview', $card->card_url) }}"
-                                        class="btn-sm btn-secondary"> {{ __('Preview') }}</a> --}}
                                         <a href="{{ route('qr', $card->card_id) }}"
                                             class="download_btn btn-sm btn-secondary" title="{{ __('Download QR code') }}">
                                             {{ __('Download QR code') }}
                                         </a>
-
-                                    {{-- <div class="card-status d-inline-block position-relative">
-                                        <input type="checkbox" name="change-status" id="switch_{{$card->id}}"
-                                            value="{{$card->status}}" {{ $card->status==1 ? 'checked':'' }}
-                                        class="change-status" data-id="{{ $card->id }}" /><label
-                                            for="switch_{{$card->id}}">Toggle</label>
-                                    </div> --}}
                                     @endif
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 @endforeach
                 @endif
-
             </div>
         </div>
     </div>
@@ -165,8 +151,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-
         $(document).on('click', '.changeTrg', function() {
             var card_id = $(this).attr('data-id');
             var status = $(this).attr('data-status');
@@ -195,8 +179,6 @@
                     }
                 },
             });
-
-
 
         })
 </script>
