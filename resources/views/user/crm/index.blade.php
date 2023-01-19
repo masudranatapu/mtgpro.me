@@ -82,7 +82,7 @@ if (!empty($daterange)) {
                         <form action="{{ route('user.crm.bulk-export') }}" method="post" id="bulk_export_form">
                             @csrf
                             @if (!empty($rows) && count($rows) > 0)
-                            <table class="table " id="connections">
+                            <table class="table" id="connections">
                                 <thead>
                                     <tr>
                                         <th class="text-left">
@@ -92,6 +92,7 @@ if (!empty($daterange)) {
                                             </label>
                                             {{ _('Connection') }}
                                         </th>
+                                        <th>{{ __('Call to action') }}</th>
                                         <th>{{ _('Connected with') }}</th>
                                         <th>{{ _('Date') }}</th>
                                         <th>{{ _('Action') }}</th>
@@ -120,6 +121,21 @@ if (!empty($daterange)) {
                                                     </div>
                                                 </a>
                                             </div>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (!empty($row->email))
+                                                <a class="btn" href="mailto:{{ $row->email }}" rel="noopener noreferrer">
+                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                </a>
+                                            @endif
+                                            @if (!empty($row->phone))
+                                                <a class="btn" href="tel:{{ $row->phone }}" rel="noopener noreferrer">
+                                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn" href="text:{{ $row->phone }}" rel="noopener noreferrer">
+                                                    <i class="fa fa-comment" aria-hidden="true"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                         <td class="text-center">
                                             <img src="{{getAvatar($row->user_image)}}" width="42"
