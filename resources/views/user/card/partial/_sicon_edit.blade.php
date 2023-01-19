@@ -14,7 +14,6 @@ else{
     $type = $icon->type;
 }
 
-
 ?>
 <form action="{{ route('user.card.sicon_update') }}" method="post" id="iconUpdateForm" enctype="multipart/form-data">
     @csrf

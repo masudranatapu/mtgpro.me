@@ -141,8 +141,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-link link-secondary me-auto"
                     data-bs-dismiss="modal">{{ __('Cancel')}}</button>
-                <a href="{{ route('admin.login-as.user', $user_details->id) }}" target="_blank"
-                    class="btn btn-danger">{{ __('Yes, proceed')}}</a>
+                <a href="{{ route('admin.login-as.user', $user_details->id) }}" class="btn btn-danger">{{ __('Yes, proceed')}}</a>
             </div>
         </div>
     </div>
