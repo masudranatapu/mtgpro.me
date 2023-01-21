@@ -295,7 +295,9 @@ class HomeController extends Controller
 
     public function getQRImage($id)
     {
+
         $data = BusinessCard::where('card_id', $id)->first();
+        $user_plan = getPlan($data->user_id);
         if(empty($data)){
             abort(404);
         }
@@ -313,7 +315,7 @@ class HomeController extends Controller
             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
             ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
         }
-        elseif (!empty($data->logo)) {
+        elseif (!empty($data->logo)  && $user_plan->is_qr_code==1) {
             $image = QrCode::format('png')
             ->merge(public_path($data->logo), 0.2, true)
             ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);

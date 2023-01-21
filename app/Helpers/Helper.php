@@ -264,7 +264,13 @@ function isAnnualPlan($user_id){
 }
 
 
-
+function getPlan($user_id){
+    return DB::table('users')
+    ->select('plans.*')
+    ->leftJoin('plans','plans.id','=','users.plan_id')
+    ->where('users.id',$user_id)
+    ->first();
+}
 
 
 

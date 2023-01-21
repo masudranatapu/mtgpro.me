@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Setting;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,31 @@ class AuthController extends Controller
         Config::set('services.facebook.redirect', preg_replace("/^http:/i", "https:", url('/auth/facebook/callback')));
     }
 
+    public function postLogin(LoginRequest $request)
+    {
+        try {
+            $check_deactive = User::where('email',$request->email)->where('status',0)->first();
+            if(!empty($check_deactive)){
+                Toastr::error(trans('Oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back();
+            }
+            $check_deleted = User::where('email',$request->email)->where('status',2)->first();
+            if(!empty($check_deleted)){
+                Toastr::error(trans('Your account has been deleted ! Please create new account using a different email and/or mobile number'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back();
+            }
+            $user = Auth::attempt([
+                'email'          => $request->email,
+                'password'       => $request->password
+            ]);
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+        return redirect()->route('user.card');
+    }
     public function postRegister(RegistrationRequest $request)
     {
         try {

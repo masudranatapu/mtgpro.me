@@ -13,7 +13,7 @@
                         <div class="login_title mb-4 text-center">
                             <h3>{{ __('Sign In') }}</h3>
                         </div>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('post-login') }}">
                             @csrf
                             <div class="social_login mb-2 mt-2 text-center">
                                 <a href="{{ route('social.login', 'facebook') }}" class="fa_facebook"><i class="fab fa-facebook"></i></a>

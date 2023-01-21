@@ -69,7 +69,7 @@ $tabindex =1;
                                             </div>
                                         </div>
 
-{{--
+                                        {{--
                                         <div class="col-12">
                                             <div class="mb-3">
                                                 <label class="form-label required" >{{ __('Plan Type') }}</label>

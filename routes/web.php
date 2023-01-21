@@ -43,6 +43,7 @@ Route::get('data-deletion-instructions',['as'=>'data-deletion-instructions','use
 Route::get('login/{provider}', ['as' => 'social.login', 'uses' => 'Auth\AuthController@redirectToProvider']);
 Route::get('auth/{provider}/callback', ['as' => 'social.login.callback', 'uses' => 'Auth\AuthController@handleProviderCallback']);
 Route::post('post-register', ['as' => 'post-register', 'uses' => 'Auth\AuthController@postRegister']);
+Route::post('post-login', ['as' => 'post-login', 'uses' => 'Auth\AuthController@postLogin']);
 Auth::routes();
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'], 'where' => ['locale' => '[a-zA-Z]{2}']], function () {

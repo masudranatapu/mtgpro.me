@@ -3,6 +3,7 @@
 <head>
     <?php
     $cardinfo = $cardinfo ?? [];
+    $user_plan = getPlan($cardinfo->user_id);
     $settings = getSetting();
     $tabindex = 1;
     $twitter_id = '';
@@ -255,8 +256,6 @@
                                         </a>
                                     </div>
                                     @endif
-
-
                                 @elseif ($contact->icon == 'whatsapp')
                                 <div class="col-4 col-md-3 mb-3">
                                     @if ($android !== false || $ipad !== false || $iphone !== false)
@@ -293,12 +292,13 @@
                             @endif
                         </div>
                     </div>
+
                                         {{-- @if (isFreePlan($cardinfo->user_id))
                                         @dd(1);
                                         {!! QrCode::size(200)->color(74, 74, 74, 80)
                                             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
                                             ->generate(url($cardinfo->card_url)) !!}
-                                        @elseif (!empty($cardinfo->logo))
+                                        @elseif (!empty($cardinfo->logo) && $user_plan->is_qr_code==1)
                                         <img src="data:image/png;base64,
                                         {!! base64_encode(QrCode::format('png')
                                         ->size(200)->color(74, 74, 74, 80)
@@ -308,7 +308,7 @@
                                         @dd(3);
                                         {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
                                         @endif --}}
-
+                    @if($user_plan->hide_branding)
                     <div class="copyright_article">
                         @if (isFreePlan($cardinfo->user_id))
                         <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a> All rights
@@ -318,6 +318,7 @@
                             reserved.</p>
                         @endif
                     </div>
+                    @endif
                 </div>
             </div>
             <!-- offcanvas contact button -->
