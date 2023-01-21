@@ -421,7 +421,15 @@ class HomeController extends Controller
     }
 
 
+    public function shopPage()
+    {
+         return view('pages.shop');
+    }
 
+    public function shopDetails()
+    {
+        return view('pages.shop_details');
+    }
 
 
 
