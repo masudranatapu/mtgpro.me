@@ -36,8 +36,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     // user.change-status
     //Review
     Route::get('review', 'ReviewController@index')->name('review.index');
-    Route::get('review/{id}/update/{status}', 'ReviewController@update')->name('review.update');
-    Route::get('review/{id}/delete', 'ReviewController@delete')->name('review.delete');
+    Route::get('review/create', 'ReviewController@getCreate')->name('review.create');
+    Route::post('review/store', 'ReviewController@postStore')->name('review.store');
+    Route::get('review/{id}/edit', 'ReviewController@getEdit')->name('review.edit');
+    Route::post('review/{id}/update', 'ReviewController@putUpdate')->name('review.update');
+    Route::get('review/{id}/status-update/{status}', 'ReviewController@updateStatus')->name('review.status-update');
+    Route::get('review/{id}/delete', 'ReviewController@getDelete')->name('review.delete');
 
     // Payment Gateways
     Route::get('payment-methods', 'PaymentMethodController@paymentMethods')->name('payment.methods');

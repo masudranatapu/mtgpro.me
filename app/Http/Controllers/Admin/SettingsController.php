@@ -481,9 +481,9 @@ class SettingsController extends Controller
         }
 
 
-        if ($request->hasFile('feature_card1_photo')) {
+        if ($request->hasFile('feature_card_icon_1')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card1_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_1')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -492,17 +492,17 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card1_photo = $request->file('feature_card1_photo');
-            $name  = time() . '.' . $feature_card1_photo->getClientOriginalExtension();
-            Image::make($feature_card1_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_1 = $request->file('feature_card_icon_1');
+            $name  = time() . '.' . $feature_card_icon_1->getClientOriginalExtension();
+            Image::make($feature_card_icon_1)->save('assets/uploads/banner/' . $name);
 
-            $feature_card1_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card1_photo')->update(['section_content' => $feature_card1_photo_path]);
+            $feature_card_icon_1_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_1')->update(['section_content' => $feature_card_icon_1_path]);
         }
 
-        if ($request->hasFile('feature_card2_photo')) {
+        if ($request->hasFile('feature_card_icon_2')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card2_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_2')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -511,16 +511,16 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card2_photo = $request->file('feature_card2_photo');
-            $name  = time() . '.' . $feature_card2_photo->getClientOriginalExtension();
-            Image::make($feature_card2_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_2 = $request->file('feature_card_icon_2');
+            $name  = time() . '.' . $feature_card_icon_2->getClientOriginalExtension();
+            Image::make($feature_card_icon_2)->save('assets/uploads/banner/' . $name);
 
-            $feature_card2_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card2_photo')->update(['section_content' => $feature_card2_photo_path]);
+            $feature_card_icon_2_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_2')->update(['section_content' => $feature_card_icon_2_path]);
         }
-        if ($request->hasFile('feature_card3_photo')) {
+        if ($request->hasFile('feature_card_icon_3')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card3_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_3')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -529,17 +529,17 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card3_photo = $request->file('feature_card3_photo');
-            $name  = time() . '.' . $feature_card3_photo->getClientOriginalExtension();
-            Image::make($feature_card3_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_3 = $request->file('feature_card_icon_3');
+            $name  = time() . '.' . $feature_card_icon_3->getClientOriginalExtension();
+            Image::make($feature_card_icon_3)->save('assets/uploads/banner/' . $name);
 
-            $feature_card3_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card3_photo')->update(['section_content' => $feature_card3_photo_path]);
+            $feature_card_icon_3_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_3')->update(['section_content' => $feature_card_icon_3_path]);
         }
 
-        if ($request->hasFile('feature_card4_photo')) {
+        if ($request->hasFile('feature_card_icon_4')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card4_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_4')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -548,16 +548,16 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card4_photo = $request->file('feature_card4_photo');
-            $name  = time() . '.' . $feature_card4_photo->getClientOriginalExtension();
-            Image::make($feature_card4_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_4 = $request->file('feature_card_icon_4');
+            $name  = time() . '.' . $feature_card_icon_4->getClientOriginalExtension();
+            Image::make($feature_card_icon_4)->save('assets/uploads/banner/' . $name);
 
-            $feature_card4_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card4_photo')->update(['section_content' => $feature_card4_photo_path]);
+            $feature_card_icon_4_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_4')->update(['section_content' => $feature_card_icon_4_path]);
         }
-        if ($request->hasFile('feature_card5_photo')) {
+        if ($request->hasFile('feature_card_icon_5')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card5_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_5')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -566,16 +566,16 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card5_photo = $request->file('feature_card5_photo');
-            $name  = time() . '.' . $feature_card5_photo->getClientOriginalExtension();
-            Image::make($feature_card5_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_5 = $request->file('feature_card_icon_5');
+            $name  = time() . '.' . $feature_card_icon_5->getClientOriginalExtension();
+            Image::make($feature_card_icon_5)->save('assets/uploads/banner/' . $name);
 
-            $feature_card5_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card5_photo')->update(['section_content' => $feature_card5_photo_path]);
+            $feature_card_icon_5_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_5')->update(['section_content' => $feature_card_icon_5_path]);
         }
-        if ($request->hasFile('feature_card6_photo')) {
+        if ($request->hasFile('feature_card_icon_6')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card6_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_6')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -584,16 +584,16 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card6_photo = $request->file('feature_card6_photo');
-            $name  = time() . '.' . $feature_card6_photo->getClientOriginalExtension();
-            Image::make($feature_card6_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_6 = $request->file('feature_card_icon_6');
+            $name  = time() . '.' . $feature_card_icon_6->getClientOriginalExtension();
+            Image::make($feature_card_icon_6)->save('assets/uploads/banner/' . $name);
 
-            $feature_card6_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card6_photo')->update(['section_content' => $feature_card6_photo_path]);
+            $feature_card_icon_6_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_6')->update(['section_content' => $feature_card_icon_6_path]);
         }
-        if ($request->hasFile('feature_card7_photo')) {
+        if ($request->hasFile('feature_card_icon_7')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card7_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_7')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -602,12 +602,12 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card7_photo = $request->file('feature_card7_photo');
-            $name  = time() . '.' . $feature_card7_photo->getClientOriginalExtension();
-            Image::make($feature_card7_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_7 = $request->file('feature_card_icon_7');
+            $name  = time() . '.' . $feature_card_icon_7->getClientOriginalExtension();
+            Image::make($feature_card_icon_7)->save('assets/uploads/banner/' . $name);
 
-            $feature_card7_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card7_photo')->update(['section_content' => $feature_card7_photo_path]);
+            $feature_card_icon_7_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_7')->update(['section_content' => $feature_card_icon_7_path]);
         }
 
         if($request->what_mini_title){
@@ -615,9 +615,9 @@ class SettingsController extends Controller
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_mini_title')->update(['section_content' => $what_mini_title]);
         }
 
-        if ($request->hasFile('feature_card8_photo')) {
+        if ($request->hasFile('feature_card_icon_8')) {
             // __delete old image
-            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card8_photo')->first();
+            $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_8')->first();
             if($old_data){
                 $imagePath = public_path($old_data->section_content);
                 if(File::exists($imagePath)){
@@ -626,12 +626,12 @@ class SettingsController extends Controller
             }
 
             // __add new image
-            $feature_card8_photo = $request->file('feature_card8_photo');
-            $name  = time() . '.' . $feature_card8_photo->getClientOriginalExtension();
-            Image::make($feature_card8_photo)->save('assets/uploads/banner/' . $name);
+            $feature_card_icon_8 = $request->file('feature_card_icon_8');
+            $name  = time() . '.' . $feature_card_icon_8->getClientOriginalExtension();
+            Image::make($feature_card_icon_8)->save('assets/uploads/banner/' . $name);
 
-            $feature_card8_photo_path = 'assets/uploads/banner/' . $name;
-            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card8_photo')->update(['section_content' => $feature_card8_photo_path]);
+            $feature_card_icon_8_path = 'assets/uploads/banner/' . $name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_8')->update(['section_content' => $feature_card_icon_8_path]);
         }
         if ($request->hasFile('feature_card9_photo')) {
             // __delete old image

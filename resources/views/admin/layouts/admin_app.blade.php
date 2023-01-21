@@ -18,13 +18,14 @@
         <link href="{{ asset('assets/css/tabler-payments.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('assets/css/tabler-vendors.min.css') }}" rel="stylesheet" />
 
-        <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}"> --}}
         <link href="{{ asset('assets/css/demo.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('assets/css/styles.css?v-2') }}" rel="stylesheet" />
         <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> -->
         <!-- datatable -->
         <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-
+        {{-- <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"> --}}
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
 
         <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
         <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
