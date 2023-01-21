@@ -216,6 +216,7 @@ $banner = $home_data['banner'] ;
             @php
             $planfeatures = json_decode($plan->features);
             @endphp
+
             <div
                 class="col-md-3 col-lg-3 col-12 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
                 <div class="pricing-card card card-md">
@@ -223,6 +224,11 @@ $banner = $home_data['banner'] ;
                         <div class="text-capitalize text-dark">
                             <h6 class="font-weight-bold">{{$plan->plan_name}}</h6>
                         </div>
+                        @if ($plan->recommended==1)
+                        <div class="recommended">
+                            {{ __('Recommended') }}
+                        </div>
+                        @endif
                         @if ((Auth::user()) && (Auth::user()->plan_id==$plan->id))
                         <div class="text-center mt-4">
                             <a href="javascript:void(0)" class="current-plan-btn btn-block btn-primary w-100"
