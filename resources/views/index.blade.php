@@ -270,12 +270,12 @@ $banner = $home_data['banner'] ;
         <!-- row -->
         <div class="row d-flex justify-content-center">
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>{!! __($video_section['video_section_title']) ?? '' !!}</h4>
+                <h4>{!! __($video_section['video_section_title']) ?? [] !!}</h4>
             </div>
             <div class="col-lg-9">
                 <div class="video_iframe" data-aos="zoom-in">
                     <div class="ratio ratio-16x9">
-                        {!! __($video_section['video_section_content']) ?? '' !!}
+                        {!! __($video_section['video_section_content']) ?? [] !!}
                     </div>
                 </div>
             </div>
