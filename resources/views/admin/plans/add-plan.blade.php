@@ -3,6 +3,9 @@
 @section('plans', 'active')
 @section('add_plan', 'active')
 @section('content')
+<?php
+$tabindex =1;
+?>
 <style>
 .remove-field{cursor: pointer;}
 </style>
@@ -48,7 +51,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Plan Name') }}</label>
                                                 <input type="text" class="form-control @error('plan_name') is-invalid @enderror " name="plan_name"
-                                                    placeholder="{{ __('Plan Name') }}..." required>
+                                                    placeholder="{{ __('Plan Name') }}..." required tabindex="{{ $tabindex++ }}">
                                                 @if ($errors->has('plan_name'))
                                                     <span class="help-block text-danger">{{$errors->first('plan_name') }}</span>
                                                 @endif
@@ -58,7 +61,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Description') }}</label>
                                                 <textarea class="form-control @error('plan_description') is-invalid @enderror " name="plan_description" rows="3"
-                                                    placeholder="{{ __('Description') }}.." required></textarea>
+                                                    placeholder="{{ __('Description') }}.." required tabindex="{{ $tabindex++ }}"></textarea>
                                                 @if ($errors->has('plan_description'))
                                                     <span class="help-block text-danger">{{$errors->first('plan_description') }}</span>
                                                 @endif
@@ -82,7 +85,7 @@
                                             <div class="mb-3">
                                                 <div class="form-label">{{ __('Recommended') }}</div>
                                                 <label class="form-check form-switch">
-                                                    <input class="form-check-input @error('recommended') is-invalid @enderror " type="checkbox" name="recommended">
+                                                    <input class="form-check-input @error('recommended') is-invalid @enderror " type="checkbox" name="recommended" tabindex="{{ $tabindex++ }}">
                                                 @if ($errors->has('recommended'))
                                                     <span class="help-block text-danger">{{$errors->first('recommended') }}</span>
                                                 @endif
@@ -97,7 +100,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label required" >{{ __('Is Free') }}</label>
                                                 <div class="">
-                                                    <select class="form-control @error('is_free') is-invalid @enderror " name="is_free" required id="is_free" required>
+                                                    <select class="form-control @error('is_free') is-invalid @enderror " name="is_free" required id="is_free" required tabindex="{{ $tabindex++ }}">
                                                         <option value="1">{{ __('Yes') }}</option>
                                                         <option value="0" selected>{{ __('No') }}</option>
                                                     </select>
@@ -111,7 +114,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Plan Price Monthly') }} </label>
                                                 <input type="number" class="form-control @error('plan_price_monthly') is-invalid @enderror " name="plan_price_monthly" id="plan_price_monthly" min="0" step="0.01"
-                                                    placeholder="{{ __('Plan Price Monthly') }}..." required>
+                                                    placeholder="{{ __('Plan Price Monthly') }}..." required tabindex="{{ $tabindex++ }}">
                                                 @if ($errors->has('plan_price_monthly'))
                                                     <span class="help-block text-danger">{{$errors->first('plan_price_monthly') }}</span>
                                                 @endif
@@ -121,7 +124,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Plan Price Yearly') }}</label>
                                                 <input type="number" class="form-control @error('plan_price_yearly') is-invalid @enderror " name="plan_price_yearly" id="plan_price_yearly" min="0" step="0.01"
-                                                    placeholder="{{ __('Plan Price Yearly') }}..." required>
+                                                    placeholder="{{ __('Plan Price Yearly') }}..." required tabindex="{{ $tabindex++ }}">
                                                 @if ($errors->has('plan_price_yearly'))
                                                     <span class="help-block text-danger">{{$errors->first('plan_price_yearly') }}</span>
                                                 @endif
@@ -142,7 +145,7 @@
                                                 <label class="form-label required">{{ __('No. Of vCards') }} <span
                                                         class="text-danger">({{ __('For unlimited, enter 999') }})</span></label>
                                                 <input type="number" class="form-control @error('no_of_vcards') is-invalid @enderror " name="no_of_vcards" min="1" max="999"
-                                                    placeholder="{{ __('No. Of vCards') }}..." value="1" required>
+                                                    placeholder="{{ __('No. Of vCards') }}..." value="1" required tabindex="{{ $tabindex++ }}">
                                                 @if ($errors->has('no_of_vcards'))
                                                     <span class="help-block text-danger">{{$errors->first('no_of_vcards') }}</span>
                                                 @endif
@@ -164,7 +167,7 @@
                                                         <div class="form-label">{{ __('Hide Branding') }}</div>
                                                         <label class="form-check form-switch">
                                                             <input class="form-check-input @error('hide_branding') is-invalid @enderror " type="checkbox"
-                                                                name="hide_branding">
+                                                                name="hide_branding" tabindex="{{ $tabindex++ }}">
 
                                                         </label>
                                                         @if ($errors->has('hide_branding'))
@@ -226,7 +229,7 @@
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ __('QR Code Customize') }}</div>
                                                         <label class="form-check form-switch">
-                                                            <input class="form-check-input @error('is_qr_code') is-invalid @enderror " type="checkbox" name="is_qr_code">
+                                                            <input class="form-check-input @error('is_qr_code') is-invalid @enderror " type="checkbox" name="is_qr_code" tabindex="{{ $tabindex++ }}">
                                                         </label>
                                                         @if ($errors->has('is_qr_code'))
                                                             <span class="help-block text-danger">{{$errors->first('is_qr_code') }}</span>
@@ -241,7 +244,7 @@
                                             <div class="parent-feature">
                                                 <div class="form-group mb-3 child-feature">
                                                     <label class="form-label">{{ __('Feature') }}</label>
-                                                    <input type="text" name="feature[]" class="form-control @error('feature') is-invalid @enderror " value="" required placeholder="Enter feature" >
+                                                    <input type="text" name="feature[]" class="form-control @error('feature') is-invalid @enderror " value="" required placeholder="Enter feature"  tabindex="{{ $tabindex++ }}">
                                                         @if ($errors->has('feature'))
                                                             <span class="help-block text-danger">{{$errors->first('feature') }}</span>
                                                         @endif
