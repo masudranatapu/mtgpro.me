@@ -308,14 +308,11 @@ class HomeController extends Controller
         $path = public_path('assets/uploads/qr-code/');
         $file_path = $path.$file_name;
 
-
         if (isFreePlan($data->user_id)) {
             $image = QrCode::format('png')
             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
             ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
         }
-
-
         elseif (!empty($data->logo)) {
             $image = QrCode::format('png')
             ->merge(public_path($data->logo), 0.2, true)
@@ -413,6 +410,14 @@ class HomeController extends Controller
         $page = DB::table('custom_pages')->where('url_slug','tutorials')->first();
 
         return view('pages.common',compact('page'));
+    }
+
+
+    public function getPricing(){
+        $plans = DB::table('plans')->where('status',1)->get();
+        $currency = Currency::where('is_default', 1)->first();
+
+        return view('pages.plans',compact('plans','currency'));
     }
 
 

@@ -6,57 +6,7 @@ $settings  = getSetting();
 @section('title') {{ $settings->site_title ?? '' }} @endsection
 @push('custom_css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<style>
-    video.banner-video {
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-    }
 
-
-
-    .current-plan-btn {
-        color: rgba(0, 0, 0, 0.26);
-        box-shadow: none;
-        background-color: rgba(0, 0, 0, 0.12) !important;
-        cursor: default;
-        pointer-events: none;
-        width: 100%;
-        font-size: 13px;
-        box-shadow: none;
-        font-weight: 600;
-        border-radius: 100px;
-    }
-
-    .btn-primary {
-        background: #212121;
-        border: none !important;
-        outline: none;
-        box-shadow: none;
-        padding: 12px 42px !important;
-        border-radius: 50px !important;
-        font-size: 13px;
-    }
-
-    /* .card {
-        box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-        margin-bottom: 1rem;
-    } */
-    .pricing-card {
-        border: solid 1px #bdbdbd;
-        cursor: pointer;
-        height: 600px;
-        padding: 24px;
-        border-radius: 20px;
-        background-color: #fff;
-    }
-
-    .pricing-card:hover {
-        border: 1px solid var(--primary);
-        ;
-        filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.11));
-    }
-</style>
 @endpush
 @section('meta_tag')
 <meta name="keywords" content="{{ $settings->seo_keywords }}" />
