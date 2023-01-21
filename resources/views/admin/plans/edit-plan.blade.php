@@ -52,18 +52,23 @@
                                             <div class="col-12">
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('Plan Name') }}</label>
-                                                    <input type="text" class="form-control" name="plan_name"
+                                                    <input type="text" class="form-control @error('plan_name') is-invalid @enderror " name="plan_name"
                                                            placeholder="{{ __('Plan Name') }}..."
                                                            value="{{ $plan_details->plan_name }}" required>
+                                                    @if ($errors->has('plan_name'))
+                                                        <span class="help-block text-danger">{{$errors->first('plan_name') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('Description') }}</label>
-                                                    <textarea class="form-control" name="plan_description" rows="3"
+                                                    <textarea class="form-control @error('plan_description') is-invalid @enderror " name="plan_description" rows="3"
                                                               placeholder="{{ __('Description') }}.."
                                                               required>{{ $plan_details->plan_description }}</textarea>
-
+                                                        @if ($errors->has('plan_description'))
+                                                            <span class="help-block text-danger">{{$errors->first('plan_description') }}</span>
+                                                        @endif
                                                 </div>
                                             </div>
 
@@ -83,10 +88,13 @@
                                                 <div class="mb-3">
                                                     <div class="form-label">{{ __('Recommended') }}</div>
                                                     <label class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input @error('recommended') is-invalid @enderror " type="checkbox"
                                                                name="recommended"
                                                             {{ $plan_details->recommended == 1 ? 'checked' : '' }}>
                                                     </label>
+                                                    @if ($errors->has('recommended'))
+                                                        <span class="help-block text-danger">{{$errors->first('recommended') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <h2 class="page-title my-3">
@@ -97,10 +105,13 @@
                                                 <div class="mb-3">
                                                     <label class="form-label required" >{{ __('Is Free') }}</label>
                                                     <div class="">
-                                                        <select class="form-control" name="is_free" required id="is_free" required>
+                                                        <select class="form-control @error('is_free') is-invalid @enderror " name="is_free" required id="is_free" required>
                                                             <option value="1"{{ $plan_details->is_free==1 ? 'selected':'' }}>{{ __('Yes') }}</option>
                                                             <option value="0"{{ $plan_details->is_free==0 ? 'selected':'' }}>{{ __('No') }}</option>
                                                         </select>
+                                                        @if ($errors->has('is_free'))
+                                                            <span class="help-block text-danger">{{$errors->first('is_free') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,16 +119,22 @@
                                             <div class="col-md-6 col-xl-6 plan-price {{  $plan_details->is_free==1 ? 'd-none':'' }}" >
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('Plan Price Monthly') }} </label>
-                                                    <input type="number" class="form-control" name="plan_price_monthly" id="plan_price_monthly" data-price="{{ $plan_details->plan_price_monthly }}" min="0" step="0.01"
+                                                    <input type="number" class="form-control @error('plan_price_monthly') is-invalid @enderror " name="plan_price_monthly" id="plan_price_monthly" data-price="{{ $plan_details->plan_price_monthly }}" min="0" step="0.01"
                                                         placeholder="{{ __('Plan Price Monthly') }}..." value="{{ $plan_details->plan_price_monthly }}" required>
+                                                    @if ($errors->has('plan_price_monthly'))
+                                                        <span class="help-block text-danger">{{$errors->first('plan_price_monthly') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-xl-6 plan-price {{  $plan_details->is_free==1 ? 'd-none':'' }}">
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('Plan Price Yearly') }}</label>
-                                                    <input type="number" class="form-control" name="plan_price_yearly" id="plan_price_yearly" data-price="{{ $plan_details->plan_price_yearly }}" min="0" step="0.01"
+                                                    <input type="number" class="form-control @error('plan_price_yearly') is-invalid @enderror " name="plan_price_yearly" id="plan_price_yearly" data-price="{{ $plan_details->plan_price_yearly }}" min="0" step="0.01"
                                                         placeholder="{{ __('Plan Price Yearly') }}..." value="{{ $plan_details->plan_price_yearly }}" required>
+                                                    @if ($errors->has('plan_price_yearly'))
+                                                        <span class="help-block text-danger">{{$errors->first('plan_price_yearly') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             {{-- <div class="col-md-6 col-xl-6">
@@ -136,10 +153,13 @@
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('No. Of vCards') }} <span
                                                             class="text-danger">({{ __('For unlimited, enter 999') }})</span></label>
-                                                    <input type="number" class="form-control" name="no_of_vcards"
+                                                    <input type="number" class="form-control @error('no_of_vcards') is-invalid @enderror " name="no_of_vcards"
                                                            min="1" max="999"
                                                            placeholder="{{ __('No. Of vCards') }}..."
                                                            value="{{ $plan_details->no_of_vcards }}" required>
+                                                    @if ($errors->has('no_of_vcards'))
+                                                        <span class="help-block text-danger">{{$errors->first('no_of_vcards') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             {{--  <div class="col-md-4 col-xl-4">
@@ -197,10 +217,14 @@
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Hide Branding') }}</div>
                                                             <label class="form-check form-switch">
-                                                                <input class="form-check-input" type="checkbox"
+                                                                <input class="form-check-input @error('hide_branding') is-invalid @enderror " type="checkbox"
                                                                        name="hide_branding"
                                                                     {{ $plan_details->hide_branding == 1 ? 'checked' : '' }}>
                                                             </label>
+
+                                                            @if ($errors->has('hide_branding'))
+                                                                <span class="help-block text-danger">{{$errors->first('hide_branding') }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     {{-- <div class="col-6 col-md-3">
@@ -261,13 +285,16 @@
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('QR Code Customize') }}</div>
                                                             <label class="form-check form-switch">
-                                                                <input class="form-check-input" type="checkbox" name="is_qr_code" {{ $plan_details->is_qr_code == 1 ? 'checked' : '' }}>
+                                                                <input class="form-check-input @error('is_qr_code') is-invalid @enderror " type="checkbox" name="is_qr_code" {{ $plan_details->is_qr_code == 1 ? 'checked' : '' }}>
                                                             </label>
+
+                                                            @if ($errors->has('is_qr_code'))
+                                                                <span class="help-block text-danger">{{$errors->first('is_qr_code') }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
 
 
                                             <div class="col-12">
@@ -278,10 +305,13 @@
                                                         @foreach($features as $feature)
                                                         <div class="form-group mb-3 child-feature">
                                                             <div class="input-group mb-3 ">
-                                                                <input type="text" class="form-control" placeholder="Add more feature" name="feature[]" value="{{ $feature }}" >
+                                                                <input type="text" class="form-control @error('feature') is-invalid @enderror " placeholder="Add more feature" name="feature[]" value="{{ $feature }}" >
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text bg-danger text-white remove-field">X</span>
                                                                 </div>
+                                                                @if ($errors->has('feature'))
+                                                                <span class="help-block text-danger">{{$errors->first('feature') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         @endforeach

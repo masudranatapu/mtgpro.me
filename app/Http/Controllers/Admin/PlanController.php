@@ -72,13 +72,19 @@ class PlanController extends Controller
         $validator = Validator::make($request->all(), [
             'plan_name' => 'required',
             'plan_description' => 'required',
-            'plan_type'=> 'required',
-            'plan_price' => 'required',
+            // 'plan_type'=> 'required',
+            // 'plan_price' => 'required',
             'is_free'=>'required',
             'plan_price_monthly'=>'required',
             'plan_price_yearly'=>'required',
             'no_of_vcards' => 'required'
         ]);
+
+          if ($validator->fails())
+          {
+            return redirect()->back()->withErrors($validator)->withInput();
+          }
+
 
         if ($request->personalized_link == null) { $personalized_link = 0;} else { $personalized_link = 1;}
 
@@ -212,12 +218,17 @@ class PlanController extends Controller
             'plan_name' => 'required',
             'plan_description' => 'required',
             'is_free'=> 'required',
-            'plan_type'=>'required',
+            // 'plan_type'=>'required',
             'plan_price_monthly'=>'required',
             'plan_price_yearly'=>'required',
-            'plan_price' => 'required',
+            // 'plan_price' => 'required',
             'no_of_vcards' => 'required'
         ]);
+        if ($validator->fails())
+        {
+          return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 
         if ($request->personalized_link == null) {
             $personalized_link = 0;

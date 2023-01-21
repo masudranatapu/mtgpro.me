@@ -44,7 +44,7 @@
                             </div>
                             <div class="col">
                                 <div class="float-end">
-                                    <a href="{{route('admin.add.plan')}}" class="btn btn-primary">Add Plan</a>
+                                    <a href="{{route('admin.add.plan')}}" class="btn btn-primary"><i class="lar la-plus"></i> Add Plan</a>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,6 @@
                                                 @if ($plan->is_free == 1)
                                                 {{ __('Free') }}
                                                 @else
-                                                <small class="d-block">{{ __('Forever') }}: {{ number_format($plan->plan_price,2) }}</small>
                                                 <small class="d-block">{{ __('Yearly') }}: {{ number_format($plan->plan_price_yearly,2) }}</small>
                                                 <small class="d-block">{{ __('Monthly') }}:{{ number_format($plan->plan_price_monthly,2) }}</small>
                                                 <small class="d-block">{{ __('Discount') }}:{{ number_format($plan->discount_percentage,2) }}%</small>
@@ -98,10 +97,7 @@
                                                 <small class="d-block">{{ __('Support') }}:{{ $plan->free_support == 1 ? 'Free' : 'No' }}</small>
                                             </td>
                                             <td>
-                                                <small class="d-block">{{ __('Vcard') }}:{{ $plan->is_vcard == 1 ? 'Yes' : 'No' }}</small>
-                                                <small class="d-block">{{ __('Whatsapp Store') }}:{{ $plan->is_whatsapp_store == 1 ? 'Yes' : 'No' }}</small>
-                                                <small class="d-block">{{ __('Email Signature') }}:{{ $plan->is_email_signature == 1 ? 'Yes' : 'No' }}</small>
-                                                <small class="d-block">{{ __('QR Code') }}:{{ $plan->is_qr_code == 1 ? 'Free' : 'No' }}</small>
+                                                <small class="d-block">{{ __('QR Code Customize') }}:{{ $plan->is_qr_code == 1 ? 'Free' : 'No' }}</small>
 
                                             </td>
                                             <td class="text-muted">
