@@ -50,7 +50,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive px-2 py-2">
-                                <table class="table table-vcenter card-table" id="table">
+                                <table class="table table-bordered card-table" id="table">
                                     <thead>
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
@@ -83,7 +83,7 @@
                                                 @else
                                                 <small class="d-block">{{ __('Yearly') }}: {{ number_format($plan->plan_price_yearly,2) }}</small>
                                                 <small class="d-block">{{ __('Monthly') }}:{{ number_format($plan->plan_price_monthly,2) }}</small>
-                                                <small class="d-block">{{ __('Discount') }}:{{ number_format($plan->discount_percentage,2) }}%</small>
+                                                {{-- <small class="d-block">{{ __('Discount') }}:{{ number_format($plan->discount_percentage,2) }}%</small> --}}
 
 
                                                 @endif

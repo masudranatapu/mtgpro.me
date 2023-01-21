@@ -85,6 +85,8 @@ class PlanController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
           }
 
+        DB::beginTransaction();
+        try {
 
         if ($request->personalized_link == null) { $personalized_link = 0;} else { $personalized_link = 1;}
 
@@ -172,9 +174,14 @@ class PlanController extends Controller
         $plan->is_qr_code = $is_qr_code;
         $plan->save();
 
-
+    } catch (\Exception $e) {
+        dd($e->getMessage());
+        DB::rollback();
+        Toastr::error(trans('Sometning wrong ! please try again'), 'Error', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    }
+        DB::commit();
         Toastr::success(trans('New Plan Created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
-
         return redirect()->route('admin.plans');
     }
 
@@ -228,6 +235,9 @@ class PlanController extends Controller
         {
           return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        DB::beginTransaction();
+        try {
 
 
         if ($request->personalized_link == null) {
@@ -310,15 +320,20 @@ class PlanController extends Controller
         $updateData['is_email_signature']       = $is_email_signature;
         $updateData['is_qr_code']               = $is_qr_code;
         $updateData['features']                 = json_encode($request->get('feature') ?? []);
-
-
-
         Plan::where('plan_id', $request->plan_id)->update($updateData);
 
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            Toastr::error(trans('Sometning wrong ! please try again'), 'Error', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+            DB::commit();
+            Toastr::success(trans('Plan Details Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('admin.plans');
+        }
 
-        Toastr::success(trans('Plan Details Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
-        return redirect()->route('admin.plans', $request->plan_id);
-    }
+
 
     // Delete Plan
     public function deletePlan(Request $request)
