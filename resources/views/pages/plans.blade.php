@@ -113,7 +113,39 @@
     </div>
     @endsection
     @push('custom_js')
-        <script>
-        </script>
+    <script>
+        $(document).ready(function(){
+                getPackage();
+                $("input[name='planType']").click(function(){
+                    getPackage();
+                });
+            });
+            function getPackage(){
+                var radioValue = $("input[name='planType']:checked").val();
+                if(radioValue == 'monthly'){
+                    $('.planpriceyearly').addClass('d-none');
+                    $('.planpricemonthly').removeClass('d-none');
+                    $.each($('.choose-plan'), function (index, item) {
+                        var currentUrl = $(item).attr('href');
+                        var url = new URL(currentUrl);
+                        url.searchParams.set("is_yearly", 0);
+                        var newUrl = url.href;
+                        $(item).attr('href', newUrl);
+                    });
+                }
+                if(radioValue == 'annual'){
+                    $('.planpriceyearly').removeClass('d-none');
+                    $('.planpricemonthly').addClass('d-none');
+
+                    $.each($('.choose-plan'), function (index, item) {
+                        var currentUrl = $(item).attr('href');
+                        var url = new URL(currentUrl);
+                        url.searchParams.set("is_yearly", 1);
+                        var newUrl = url.href;
+                        $(item).attr('href', newUrl);
+                    });
+                }
+            }
+    </script>
     @endpush
 
