@@ -57,13 +57,10 @@
                                             @endif
                                     </div>
                                     <div class="mb-3">
-                                        <label for="display_title" class="form-label">{{ __('Order id') }}</label>
-                                            <select id="my-select" class="form-control" name="order_id">
-                                                <option value="1" {{ $review->order_id==1 ? 'selected':''  }}>Yes</option>
-                                                <option value="0" {{ $review->order_id==0 ? 'selected':''  }}>No</option>
-                                            </select>
-                                            @if($errors->has('status'))
-                                            <span class="help-block text-danger">{{ $errors->first('status') }}</span>
+                                        <label for="order_id" class="form-label">{{ __('Order id') }}</label>
+                                        <input type="text" class="form-control @error('order_id') is-invalid @enderror" value="{{ old('order_id') ?? $review->order_id }}" name="order_id" id="order_id" required>
+                                            @if($errors->has('order_id'))
+                                            <span class="help-block text-danger">{{ $errors->first('order_id') }}</span>
                                             @endif
                                     </div>
 
