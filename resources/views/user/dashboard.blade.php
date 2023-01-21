@@ -164,6 +164,7 @@
         $(document).on('click', '.changeTrg', function() {
             var card_id = $(this).attr('data-id');
             var status = $(this).attr('data-status');
+            if (confirm('Are you sure ?')) {
             $.ajax({
                 type: 'POST',
                 url: "{{ URL::route('user.card.change-status') }}",
@@ -189,6 +190,7 @@
                     }
                 },
             });
+         }
 
         })
 </script>
