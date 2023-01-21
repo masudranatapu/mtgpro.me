@@ -199,7 +199,7 @@
                                                 </div> --}}
                                                 <div class="col-6 col-md-3">
                                                     <div class="mb-3">
-                                                        <div class="form-label">{{ __('QR Code Customization') }}</div>
+                                                        <div class="form-label">{{ __('QR Code Customize') }}</div>
                                                         <label class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox" name="is_qr_code">
                                                         </label>
