@@ -163,7 +163,7 @@
                     <li class="nav-item dropdown @yield('admin')">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <img src="{{ getProfile(Auth::user()->profile_image) }}" alt="{{ auth::user()->name }}" >
+                                    <img width="30" src="{{ getProfile(Auth::user()->profile_image) }}" class="img-fluid" alt="{{ auth::user()->name }}" >
                                 </span>
                                 <span class="nav-link-title">
                                     {{ auth::user()->name }}

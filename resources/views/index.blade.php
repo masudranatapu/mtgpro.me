@@ -62,7 +62,12 @@ $banner = $home_data['banner'] ;
     </div>
 </div>
 @endif
+
 <!-- ======================= Featured  =========================== -->
+@if (isset($home_data['features']))
+@php
+    $features = $home_data['features'];
+@endphp
 <div class="featured section">
     <!-- container -->
     <div class="container">
@@ -78,11 +83,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_1'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Share With Anyone') }}</h3>
-                            <p>{{ __('Others don’t need an app or a Popl device') }}</p>
+                            <h3>{!! __($features['feature_card_title_1']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_1'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -92,11 +97,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_2'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Brand Consistency') }}</h3>
-                            <p>{{ __('Use templates and bulk edits to maintain cards at scale') }}</p>
+                            <h3>{!! __($features['feature_card_title_2']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_2'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -106,11 +111,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/security.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_3'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Security is Key') }}</h3>
-                            <p>{{ __('We protect your privacy at all times and never share.') }}</p>
+                            <h3>{!! __($features['feature_card_title_3']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_3'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -120,11 +125,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/support.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_4'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('24/7 Support') }}</h3>
-                            <p>{{ __('We’re here to help with free setup, onboarding, and more.') }}</p>
+                            <h3>{!! __($features['feature_card_title_4']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_4'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -134,11 +139,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/card.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_5'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Unlimited Cards') }}</h3>
-                            <p>{{ __('As your team grows, we grow with you.') }}</p>
+                            <h3>{!! __($features['feature_card_title_5']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_5'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -148,11 +153,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_6'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Free Smart Products') }}</h3>
-                            <p>{{ __('Lorem, ipsum dolor, sit amet consectetur adipisicing elit.') }}</p>
+                            <h3>{!! __($features['feature_card_title_6']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_6'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -162,11 +167,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_7'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Share With Anyone') }}</h3>
-                            <p>{{ __('Lorem, ipsum dolor, sit amet consectetur adipisicing elit.') }}</p>
+                            <h3>{!! __($features['feature_card_title_7']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_7'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -175,11 +180,11 @@ $banner = $home_data['banner'] ;
                 <div class="feature_wrapper text-center mb-4" data-aos="zoom-in">
                     <div class="feature_item">
                         <div class="feature_icon mb-3">
-                            <img src="{{ asset('assets/img/icon/team.png') }}" alt="image">
+                            <img src="{{ asset($features['feature_card_icon_8'])}}" alt="image">
                         </div>
                         <div class="feature_name">
-                            <h3>{{ __('Share With Anyone') }}</h3>
-                            <p>{{ __('Lorem, ipsum dolor, sit amet consectetur adipisicing elit.') }}</p>
+                            <h3>{!! __($features['feature_card_title_8']) ?? '' !!}</h3>
+                            <p>{!! __($features['feature_card_description_8'])!!}</p>
                         </div>
                     </div>
                 </div>
@@ -187,6 +192,7 @@ $banner = $home_data['banner'] ;
         </div>
     </div>
 </div>
+@endif
 
 <div class="pricing section pt-5 pb-5" id="pricing">
     <div class="container">
@@ -255,25 +261,28 @@ $banner = $home_data['banner'] ;
         </div>
     </div>
 </div>
-
+@if (isset($home_data['video_section']))
+@php
+    $video_section = $home_data['video_section'];
+@endphp
 <div class="video_sec section">
     <div class="container">
         <!-- row -->
         <div class="row d-flex justify-content-center">
             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                <h4>{{ __('What is Contacts Solutions') }}</h4>
+                <h4>{!! __($video_section['video_section_title']) ?? '' !!}</h4>
             </div>
             <div class="col-lg-9">
                 <div class="video_iframe" data-aos="zoom-in">
                     <div class="ratio ratio-16x9">
-                        <iframe class="video_link" src="https://www.youtube.com/embed/Zx_Ud23OsME" title="video"
-                            allowfullscreen></iframe>
+                        {!! __($video_section['video_section_content']) ?? '' !!}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endif
 @if($reviews->count() > 0)
 <div class="testimonial_sec section">
     <!-- container -->
