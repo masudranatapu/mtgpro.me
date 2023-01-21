@@ -118,7 +118,6 @@ $icon_group = Config::get('app.icon_group');
                                                 </div>
                                                 @endforeach
                                                 @endif
-
                                             </div>
                                             <!-- edit social link form -->
 

@@ -1,6 +1,10 @@
 <?php
 ?>
-<div class="single_list media position-relative sicon_single_list_{{ $icon->id }}">
+
+<div class="single_list media position-relative sicon_single_list_{{ $icon->id }}"
+    data-id="{{ $icon->id }}" data-card_id="{{ $icon->card_id }}">
+
+{{-- <div class="single_list media position-relative sicon_single_list_{{ $icon->id }}"> --}}
     <a href="javascript:void(0)" class="editLink" data-id="{{ $icon->id }}">
         <div class="drag_drap">
             <img src="{{ asset('assets/img/icon/bar-2.svg') }}" alt="icon">
