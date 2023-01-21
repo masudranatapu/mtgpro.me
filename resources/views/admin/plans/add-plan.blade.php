@@ -89,23 +89,23 @@
                                                 <label class="form-label required" >{{ __('Is Free') }}</label>
                                                 <div class="">
                                                     <select class="form-control" name="is_free" required id="is_free" required>
-                                                        <option value="1">{{ __('Free') }}</option>
-                                                        <option value="0">{{ __('Paid') }}</option>
+                                                        <option value="1">{{ __('Yes') }}</option>
+                                                        <option value="0" selected>{{ __('No') }}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-xl-6">
+                                        <div class="col-md-6 col-xl-6 plan-price">
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Plan Price Monthly') }} </label>
-                                                <input type="number" class="form-control" name="plan_price_monthly" min="0" step="0.01"
+                                                <input type="number" class="form-control" name="plan_price_monthly" id="plan_price_monthly" min="0" step="0.01"
                                                     placeholder="{{ __('Plan Price Monthly') }}..." required>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-xl-6">
+                                        <div class="col-md-6 col-xl-6 plan-price">
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Plan Price Yearly') }}</label>
-                                                <input type="number" class="form-control" name="plan_price_yearly" min="0" step="0.01"
+                                                <input type="number" class="form-control" name="plan_price_yearly" id="plan_price_yearly" min="0" step="0.01"
                                                     placeholder="{{ __('Plan Price Yearly') }}..." required>
                                             </div>
                                         </div>
@@ -268,6 +268,17 @@
               $(this).closest('.child-feature').remove();
               e.preventDefault();
         });
+
+        $(document).on('change','#is_free',function(e){
+            var val = $(this).val();
+            if(val==1){
+                $('.plan-price').hide(500);
+                $('#plan_price_yearly').val(0);
+                $('#plan_price_monthly').val(0);
+            }else{
+                $('.plan-price').show(500);
+            }
+        })
 </script>
 
 @endsection
