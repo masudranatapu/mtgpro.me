@@ -605,8 +605,8 @@ class BusinessCard extends Model
         try {
         $plan = Plan::findOrFail($plan_id);
         $take = $plan->no_of_vcards;
-        $keep =  BusinessCard::where('user_id', Auth::user()->id)->latest()->take($take)->pluck('id');
-        BusinessCard::where('user_id', Auth::user()->id)->whereNotIn('id', $keep)->update([
+        $keep =  BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->latest()->take($take)->pluck('id');
+        BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->whereNotIn('id', $keep)->update([
             'status' => 0,
             'card_status' => 'deactivate',
         ]);

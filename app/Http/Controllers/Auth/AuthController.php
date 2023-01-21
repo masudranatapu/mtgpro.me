@@ -8,6 +8,7 @@ use App\Models\Plan;
 use App\Models\User;
 use App\Models\Setting;
 use App\Mail\WelcomeMail;
+use App\Models\BusinessCard;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
@@ -22,12 +23,16 @@ use App\Http\Requests\ChangePasswordRequest;
 class AuthController extends Controller
 {
     protected $user;
+    protected $plan;
+    protected $businessCard;
     public function __construct(
         User            $user,
-        Plan            $plan
+        Plan            $plan,
+        BusinessCard    $businessCard
     ) {
         $this->user     = $user;
         $this->plan     = $plan;
+        $this->businessCard = $businessCard;
 
         $link = Setting::first();
 
@@ -57,13 +62,25 @@ class AuthController extends Controller
                 'email'          => $request->email,
                 'password'       => $request->password
             ]);
+            if($user==false){
+
+                Toastr::error(trans('oops! You have entered invalid credentials'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back();
+            }
+
         } catch (\Exception $e) {
             dd($e->getMessage());
             Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
-        if(Auth::user()->user_type==1){
+
+        if(Auth::check() && Auth::user()->user_type==1){
             return redirect()->route('dashboard');
+        }
+        if(Auth::check() && checkPackageValidity(Auth::user()->id)==false){
+            DB::table('business_cards')->where('user_id',Auth::user()->id)->update([
+                'status' => 0
+            ]);
         }
         return redirect()->route('user.card');
     }

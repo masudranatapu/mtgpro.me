@@ -311,10 +311,18 @@ class CardController extends Controller
     {
         DB::beginTransaction();
         try {
-            $card = BusinessCard::findOrFail($request->id);
-            BusinessCard::where('id',$request->id)->update(['status'=>1]);
-            BusinessCard::where('id','<>',$request->id)->update(['status'=>0]);
-            User::where('id',$card->user_id)->update(['active_card_id' =>$request->id]);
+            if(checkPackageValidity(Auth::user()->id)){
+                $card = BusinessCard::findOrFail($request->id);
+                BusinessCard::where('id',$request->id)->update(['status'=>1]);
+                BusinessCard::where('id','<>',$request->id)->update(['status'=>0]);
+                User::where('id',$card->user_id)->update(['active_card_id' =>$request->id]);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'Your package is expired please update the first',
+                ]);
+            }
+
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
