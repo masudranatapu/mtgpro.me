@@ -231,7 +231,18 @@
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
                                             <span>{{ $contact->label }}</span>
                                         </a>
-
+                                    @elseif ($contact->icon == 'whatsapp')
+                                        @if ($android !== false || $ipad !== false || $iphone !== false)
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                        @else
+                                            <a title="{{ $contact->label }}" class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
+                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
+                                                <span>{{ $contact->label }}</span>
+                                            </a>
+                                        @endif
                                     @else
                                         <a title="{{ $contact->label }}" class="text-decoration-none" href="tel:{{ $contact->content }}">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
@@ -256,20 +267,7 @@
                                         </a>
                                     </div>
                                     @endif
-                                @elseif ($contact->icon == 'whatsapp')
-                                <div class="col-4 col-md-3 mb-3">
-                                    @if ($android !== false || $ipad !== false || $iphone !== false)
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://api.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
-                                    @else
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" href="https://web.whatsapp.com/send?phone={{ $contact->content }}" target="__blank">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}" class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}" alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
-                                    @endif
-                                </div>
+
 
                                 @elseif ( ( $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo') )
                                     <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
