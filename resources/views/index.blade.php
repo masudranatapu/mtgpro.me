@@ -218,7 +218,7 @@ $banner = $home_data['banner'] ;
             @endphp
 
             <div
-                class="col-md-3 col-lg-3 col-12 @if($plan->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                class="col-md-3 col-lg-3 col-12">
                 <div class="pricing-card card card-md">
                     <div class="card-body text-center">
                         <div class="text-capitalize text-dark">

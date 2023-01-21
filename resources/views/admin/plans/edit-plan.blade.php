@@ -121,7 +121,7 @@
                                                         placeholder="{{ __('Plan Price Yearly') }}..." value="{{ $plan_details->plan_price_yearly }}" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xl-6">
+                                            {{-- <div class="col-md-6 col-xl-6">
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('Plan Price Forever') }} </label>
                                                     <input type="number" class="form-control" name="plan_price" min="0"
@@ -129,7 +129,7 @@
                                                            placeholder="{{ __('Price') }}..."
                                                            value="{{ $plan_details->plan_price }}" required>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <h2 class="page-title my-3">
                                                 {{ __('Plan Features') }}
                                             </h2>
@@ -204,7 +204,7 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 col-md-3">
+                                                    {{-- <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Free Setup') }}</div>
                                                             <label class="form-check form-switch">
@@ -223,7 +223,7 @@
                                                                     {{ $plan_details->free_support == 1 ? 'checked' : '' }}>
                                                             </label>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
 
@@ -232,7 +232,7 @@
                                                     {{ __('Package Limitation') }}
                                                 </h2>
                                                 <div class="row">
-                                                    <div class="col-6 col-md-3">
+                                                    {{-- <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Vcards') }}</div>
                                                             <label class="form-check form-switch">
@@ -240,7 +240,7 @@
                                                                     name="is_vcard" {{ $plan_details->is_vcard == 1 ? 'checked' : '' }}>
                                                             </label>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     {{-- <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Whatsapp Store') }}</div>

@@ -109,13 +109,13 @@
                                                     placeholder="{{ __('Plan Price Yearly') }}..." required>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-xl-6">
+                                        {{-- <div class="col-md-6 col-xl-6">
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Plan Price Forever') }} </label>
                                                 <input type="number" class="form-control" name="plan_price" min="0" step="0.01"
                                                     placeholder="{{ __('Price') }}..." required>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <h2 class="page-title my-3">
                                             {{ __('Plan Features') }}
                                         </h2>
@@ -147,7 +147,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-md-3">
+                                                {{-- <div class="col-6 col-md-3">
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ __('Free Setup') }}</div>
                                                         <label class="form-check form-switch">
@@ -162,7 +162,7 @@
                                                             <input class="form-check-input" type="checkbox" name="free_support">
                                                         </label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
 
@@ -171,7 +171,7 @@
                                         </h2>
                                         <div class="col-12">
                                             <div class="row">
-                                                <div class="col-6 col-md-3">
+                                                {{-- <div class="col-6 col-md-3">
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ __('Vcards') }}</div>
                                                         <label class="form-check form-switch">
@@ -179,7 +179,7 @@
                                                                 name="is_vcard">
                                                         </label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 {{-- <div class="col-6 col-md-3">
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ __('Whatsapp Store') }}</div>
@@ -199,7 +199,7 @@
                                                 </div> --}}
                                                 <div class="col-6 col-md-3">
                                                     <div class="mb-3">
-                                                        <div class="form-label">{{ __('QR Code') }}</div>
+                                                        <div class="form-label">{{ __('QR Code Customization') }}</div>
                                                         <label class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox" name="is_qr_code">
                                                         </label>
