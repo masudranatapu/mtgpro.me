@@ -102,6 +102,9 @@
    }(document, 'script', 'facebook-jssdk'));
     </script>
 
+    @if (checkPackageValidity($cardinfo->user_id)==false)
+    @include('_plan_expired_error')
+    @else
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
             <div class="card_cover">
@@ -329,6 +332,9 @@
             <!-- offcanvas contact button -->
         </div>
     </div>
+    @endif
+
+
 
     <!-- Share modal -->
     <div class="share_modal modal_one">

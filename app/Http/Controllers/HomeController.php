@@ -126,6 +126,7 @@ class HomeController extends Controller
     public function getPreview($cardurl)
     {
         $user = DB::table('users')->where('username',$cardurl)->first();
+
         if($user == null){
             $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding','users.connection_title')
             ->where('business_cards.card_url', $cardurl)
@@ -144,6 +145,12 @@ class HomeController extends Controller
             ->first();
         }
         if($cardinfo){
+
+            // if(checkPackageValidity($cardinfo->user_id) == false){
+
+            //     dd(checkPackageValidity($cardinfo->user_id));
+
+            // }
             $cardinfo->contacts = DB::table('business_fields')
             ->leftJoin('social_icon as si','si.id','=','business_fields.icon_id')
             ->select('business_fields.*','si.icon_title','si.icon_name','si.icon_color','si.main_link','si.is_paid')
