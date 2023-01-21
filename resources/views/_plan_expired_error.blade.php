@@ -44,7 +44,7 @@
                         <h1 class="text-center ">404</h1>
                     </div>
                     <div class="contant_box_404">
-                        <h3 class="h2">Look like you're lost</h3>
+                        <h3 class="h2">Look like you're lost (-)</h3>
                         <p>The card you are looking for not avaible!</p>
                         <a href="{{ route('home') }}" class="link_404">Go to Home</a>
                         <a href="{{ route('contact-us') }}" class="btn btn-primary">Contact Us</a>
@@ -54,3 +54,7 @@
         </div>
     </div>
 </section>
+
+
+
+
