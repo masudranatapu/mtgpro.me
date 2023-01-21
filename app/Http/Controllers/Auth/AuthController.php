@@ -57,11 +57,13 @@ class AuthController extends Controller
                 'email'          => $request->email,
                 'password'       => $request->password
             ]);
-
         } catch (\Exception $e) {
             dd($e->getMessage());
             Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
+        }
+        if(Auth::user()->user_type==1){
+            return redirect()->route('dashboard');
         }
         return redirect()->route('user.card');
     }
