@@ -124,7 +124,16 @@
                                             style="@if ($card->status == 0) display:none; @endif" title="Live Card" ></i>
                                         {{ __('Live') }}
                                     </a>
-                                    <a target="_blank" href="{{ route('card.preview', $card->card_url) }}"
+                                    <?php
+
+                                    if($card->status==1){
+                                        $url = Auth::user()->username;
+                                    }
+                                    else{
+                                        $url =  $card->card_url;
+                                    }
+                                    ?>
+                                    <a target="_blank" href="{{ route('card.preview', $url) }}"
                                         class="btn-sm btn-secondary" title="Card Preview"> {{ __('Preview') }}</a>
 
                                         <a href="{{ route('qr', $card->card_id) }}"
