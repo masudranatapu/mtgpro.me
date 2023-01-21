@@ -84,17 +84,14 @@
                                                 <small class="d-block">{{ __('Yearly') }}: {{ number_format($plan->plan_price_yearly,2) }}</small>
                                                 <small class="d-block">{{ __('Monthly') }}:{{ number_format($plan->plan_price_monthly,2) }}</small>
                                                 {{-- <small class="d-block">{{ __('Discount') }}:{{ number_format($plan->discount_percentage,2) }}%</small> --}}
-
-
                                                 @endif
-
                                             </td>
                                             <td>{{ $plan->no_of_vcards }}</td>
                                             <td>
                                                 <small class="d-block">{{ __('Personal link') }}:{{ $plan->personalized_link == 1 ? 'Yes' : 'No' }}</small>
                                                 <small class="d-block">{{ __('Branding') }}:{{ $plan->hide_branding == 1 ? 'Yes' : 'No' }}</small>
-                                                <small class="d-block">{{ __('Setup') }}:{{ $plan->free_setup == 1 ? 'Free' : 'No' }}</small>
-                                                <small class="d-block">{{ __('Support') }}:{{ $plan->free_support == 1 ? 'Free' : 'No' }}</small>
+                                                {{-- <small class="d-block">{{ __('Setup') }}:{{ $plan->free_setup == 1 ? 'Free' : 'No' }}</small> --}}
+                                                {{-- <small class="d-block">{{ __('Support') }}:{{ $plan->free_support == 1 ? 'Free' : 'No' }}</small> --}}
                                             </td>
                                             <td>
                                                 <small class="d-block">{{ __('QR Code Customize') }}:{{ $plan->is_qr_code == 1 ? 'Free' : 'No' }}</small>
@@ -111,7 +108,6 @@
                                                 @if (!empty($gateway))
                                                 @foreach ($gateway as $gate)
                                                 @if ($plan->is_free==0)
-
                                                 @if ($gate->payment_gateway_name=='Paypal')
                                                     <p title="Monthly" >Paypal(M):
                                                         @if($plan->paypal_plan_id) {{ $plan->paypal_plan_id }}
@@ -157,16 +153,6 @@
                                                     <a class="btn btn-sm btn-warning" href="#"
                                                         onclick="getPlan('{{ $plan->plan_id }}'); return false;">{{ __('Deactivate') }}</a>
                                                     @endif
-                                                    {{-- @if($plan->shareable == 1)
-                                                        <input id="planUrl{!! $plan->id !!}" value="{!! config('app.url') .'plan?id='. $plan->plan_id !!}" hidden readonly>
-                                                        <a class="btn btn-sm btn-default"
-                                                           onclick="copyUrl({{$plan->id}})">Copy Link</a>
-                                                    @endif
-                                                    @if ($plan->shareable == 0)
-                                                        <a class="btn btn-sm btn-success" href="{{ route('admin.shareable-update', $plan->plan_id)}}">{{ __('Shareable') }}</a>
-                                                    @else
-                                                        <a class="btn btn-sm btn-danger" href="{{ route('admin.shareable-update', $plan->plan_id)}}">{{ __('Non Shareable') }}</a>
-                                                    @endif --}}
                                                 </div>
                                             </td>
                                         </tr>

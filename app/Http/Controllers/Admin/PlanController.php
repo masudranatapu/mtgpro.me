@@ -82,31 +82,11 @@ class PlanController extends Controller
 
           if ($validator->fails())
           {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->with('toast_error', $validator->messages()->all()[0])->withInput();
           }
 
         DB::beginTransaction();
         try {
-
-        if ($request->personalized_link == null) { $personalized_link = 0;} else { $personalized_link = 1;}
-
-        if ($request->hide_branding == null) {
-            $hide_branding = 0;
-            $is_watermark_enabled = 0;
-        } else {
-            $hide_branding = 1;
-            $is_watermark_enabled = 1;
-        }
-
-        if ($request->free_setup == null) {$free_setup = 0;} else {$free_setup = 1;}
-        if ($request->free_support == null) {$free_support = 0;} else {$free_support = 1;}
-        if ($request->recommended == null) {$recommended = 0;} else {$recommended = 1;}
-
-        if ($request->is_vcard == null) {$is_vcard = 0;} else { $is_vcard = 1;}
-        if ($request->is_whatsapp_store == null) {$is_whatsapp_store = 0;} else { $is_whatsapp_store = 1;}
-        if ($request->is_email_signature == null) {$is_email_signature = 0;} else { $is_email_signature = 1;}
-        if ($request->is_qr_code == null) {$is_qr_code = 0;} else { $is_qr_code = 1;}
-
 
         if ($request->validity >= 360) {
             $interval = 'year';
@@ -114,24 +94,18 @@ class PlanController extends Controller
             $interval = 'month';
         }
 
-        if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        }
+        // $config = DB::table('config')->get();
+        // $stripe = new StripeClient($config[10]->config_value);
+        // $product = $stripe->products->create([
+        //     'name' => $request->plan_name
+        // ]);
 
-        $config = DB::table('config')->get();
-
-        $stripe = new StripeClient($config[10]->config_value);
-
-        $product = $stripe->products->create([
-            'name' => $request->plan_name
-        ]);
-
-        $stripe_plan = $stripe->plans->create([
-            'amount' => $request->plan_price * 100,
-            'currency' => 'usd',
-            'interval' => $interval,
-            'product' => $product->id,
-        ]);
+        // $stripe_plan = $stripe->plans->create([
+        //     'amount' => $request->plan_price * 100,
+        //     'currency' => 'usd',
+        //     'interval' => $interval,
+        //     'product' => $product->id,
+        // ]);
 //
 ////            $planStripeData['plan_id'] = $plan->id;
 ////            $plan_details->stripe_data = json_encode($planStripeData);
@@ -142,36 +116,40 @@ class PlanController extends Controller
 //
 //        return $stripe_plan;
 
-        $plan = new Plan;
-        $plan->plan_id = uniqid();
-        $plan->plan_name = $request->plan_name;
+        $plan               = new Plan;
+        $plan->plan_id      = uniqid();
+        $plan->plan_name    = $request->plan_name;
         $plan->plan_description = $request->plan_description;
-        $plan->plan_type = $request->plan_type;
-        $plan->recommended = $recommended;
-        $plan->plan_price = $request->plan_price;
-        $plan->is_free = $request->is_free;
+        // $plan->plan_type    = $request->plan_type;
+        // if($request->recommended==1){
+        //     DB::table('plans')->where('recommended',1)
+
+        // }
+        $plan->recommended  = $request->recommended=='on' ? '1':'0';
+        $plan->plan_price   = $request->plan_price;
+        $plan->is_free      = $request->is_free;
         $plan->plan_price_monthly = $request->plan_price_monthly;
         $plan->plan_price_yearly = $request->plan_price_yearly;
         $plan->no_of_vcards = $request->no_of_vcards;
-        $plan->plans_type = 1;
+        $plan->plans_type   = 1;
         // $plan->no_of_services = $request->no_of_services;
         // $plan->no_of_galleries = $request->no_of_galleries;
         // $plan->no_of_features = $request->no_of_features;
         // $plan->no_of_paymenno_of_servicests = $request->no_of_payments;
-        $plan->personalized_link = $personalized_link;
-        $plan->hide_branding = $hide_branding;
-        $plan->free_setup = $free_setup;
-        $plan->free_support = $free_support;
-        $plan->is_watermark_enabled = $is_watermark_enabled;
-        $plan->stripe_data = json_encode($stripe_plan);
-        $plan->stripe_plan_id = $stripe_plan->id;
+        $plan->personalized_link = $request->personalized_link ?? 0;
+        $plan->hide_branding = $request->hide_branding=='on' ? '1':'0';
+        $plan->free_setup = $request->free_setup ?? 0;
+        $plan->free_support = $request->free_support ?? 0;
+        $plan->is_watermark_enabled = $request->is_watermark_enabled ?? 0;
+        // $plan->stripe_data = json_encode($stripe_plan);
+        // $plan->stripe_plan_id = $stripe_plan->id;
         $plan->name = $plan->plan_name;
         $plan->slug = Str::slug($plan->plan_name);
         $plan->features = json_encode($request->get('feature') ?? []);
-        $plan->is_vcard = $is_vcard;
-        $plan->is_whatsapp_store = $is_whatsapp_store;
-        $plan->is_email_signature = $is_email_signature;
-        $plan->is_qr_code = $is_qr_code;
+        $plan->is_vcard = $request->is_vcard ?? 1;
+        $plan->is_whatsapp_store = $request->is_whatsapp_store ?? 0;
+        $plan->is_email_signature = $request->is_email_signature ?? 0;
+        $plan->is_qr_code = $request->is_qr_code=='on' ? '1':'0';
         $plan->save();
 
     } catch (\Exception $e) {
@@ -198,25 +176,6 @@ class PlanController extends Controller
         }
     }
 
-    public function shareableUpdate($id)
-    {
-        $plan_details = Plan::where('plan_id', $id)->first();
-        if ($plan_details == null) {
-            return view('errors.404');
-        } else {
-            if ($plan_details->shareable == 1){
-                $plan_details->update(['shareable' => 0]);
-                Toastr::success(trans('Plan has been shareable Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
-                return back();
-            }else{
-                $plan_details->update(['shareable' => 1]);
-
-                Toastr::success(trans('Plan has been non shareable Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
-                return back();
-            }
-        }
-    }
-
     // Update Plan
     public function updatePlan(Request $request)
     {
@@ -236,39 +195,10 @@ class PlanController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // dd($request->all());
+
         DB::beginTransaction();
         try {
-
-
-        if ($request->personalized_link == null) {
-            $personalized_link = 0;
-        } else {
-            $personalized_link = 1;
-        }
-
-        if ($request->hide_branding == null) {
-            $hide_branding = 0;
-            $is_watermark_enabled = 0;
-        } else {
-            $hide_branding = 1;
-            $is_watermark_enabled = 1;
-        }
-
-        if ($request->free_setup == null) {$free_setup = 0;} else {$free_setup = 1;}
-        if ($request->free_support == null) {$free_support = 0;} else {$free_support = 1;}
-        if ($request->recommended == null) {$recommended = 0;} else {$recommended = 1;}
-
-
-        if ($request->is_vcard == null) {$is_vcard = 0;} else { $is_vcard = 1;}
-        if ($request->is_whatsapp_store == null) {$is_whatsapp_store = 0;} else { $is_whatsapp_store = 1;}
-        if ($request->is_email_signature == null) {$is_email_signature = 0;} else { $is_email_signature = 1;}
-        if ($request->is_qr_code == null) {$is_qr_code = 0;} else { $is_qr_code = 1;}
-
-        if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        }
-        $plan = Plan::where('plan_id', $request->plan_id)->first();
-        $updateData = [];
 
         /*
         if($request->plan_price_monthly !=  $plan->plan_price_monthly){
@@ -299,28 +229,27 @@ class PlanController extends Controller
               $updateData['stripe_data_yearly'] = json_encode($stripe_plan);
         }
         */
-
-
-        $updateData['plan_name']                = $request->plan_name;
-        $updateData['plan_description']         = $request->plan_description;
-        $updateData['plan_type']                =  $request->plan_type;
-        $updateData['recommended']              = $recommended;
-        $updateData['plan_price']               = $request->is_free == 0 ? $request->plan_price : 0;
-        $updateData['is_free']                  = $request->is_free;
-        $updateData['plan_price_monthly']       = $request->is_free == 0 ? $request->plan_price_monthly : 0;
-        $updateData['plan_price_yearly']        = $request->is_free == 0 ? $request->plan_price_yearly : 0;
-        $updateData['no_of_vcards']             = $request->no_of_vcards;
-        $updateData['personalized_link']        = $personalized_link;
-        $updateData['hide_branding']            = $hide_branding;
-        $updateData['free_setup']               = $free_setup;
-        $updateData['free_support']             = $free_support;
-        $updateData['is_watermark_enabled']     = $is_watermark_enabled;
-        $updateData['is_vcard']                 = $is_vcard;
-        $updateData['is_whatsapp_store']        = $is_whatsapp_store;
-        $updateData['is_email_signature']       = $is_email_signature;
-        $updateData['is_qr_code']               = $is_qr_code;
-        $updateData['features']                 = json_encode($request->get('feature') ?? []);
-        Plan::where('plan_id', $request->plan_id)->update($updateData);
+        $plan = Plan::where('plan_id',$request->plan_id)->first();
+        $plan->plan_name                = $request->plan_name;
+        $plan->plan_description         = $request->plan_description;
+        $plan->plan_type               =  $request->plan_type;
+        $plan->recommended              = $request->recommended=='on' ? '1':'0';
+        $plan->plan_price               = $request->is_free == 0 ? $request->plan_price : 0;
+        $plan->is_free                  = $request->is_free;
+        $plan->plan_price_monthly       = $request->is_free == 0 ? $request->plan_price_monthly : 0;
+        $plan->plan_price_yearly        = $request->is_free == 0 ? $request->plan_price_yearly : 0;
+        $plan->no_of_vcards             = $request->no_of_vcards;
+        $plan->personalized_link        = $request->personalized_link;
+        $plan->hide_branding            = $request->hide_branding=='on' ? '1':'0';
+        $plan->free_setup               = $request->free_setup;
+        $plan->free_support             = $request->free_support;
+        $plan->is_watermark_enabled     = $request->is_watermark_enabled;
+        $plan->is_vcard                 = $request->is_vcard;
+        $plan->is_whatsapp_store        = $request->is_whatsapp_store;
+        $plan->is_email_signature       = $request->is_email_signature;
+        $plan->is_qr_code               = $request->is_qr_code=='on' ? '1':'0';
+        $plan->features                 = json_encode($request->get('feature') ?? []);
+        $plan->update();
 
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -331,7 +260,7 @@ class PlanController extends Controller
             DB::commit();
             Toastr::success(trans('Plan Details Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.plans');
-        }
+    }
 
 
 
