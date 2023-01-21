@@ -33,6 +33,11 @@ Route::get('contact-us',['as'=>'contact-us','uses'=>'HomeController@getContact']
 Route::post('contact',['as'=>'contact.post','uses'=>'HomeController@postContact']);
 Route::get('help',['as'=>'help','uses'=>'HomeController@getHelp']);
 Route::get('tutorials',['as'=>'tutorials','uses'=>'HomeController@getTutorials']);
+Route::get('shop',['as'=>'shop','uses'=>'HomeController@shopPage']);
+Route::get('shop/details',['as'=>'product.details','uses'=>'HomeController@shopDetails']);
+
+
+
 
  //Blog
 // Route::get('blog',['as'=>'blog','uses'=>'BlogController@getBlogList']);

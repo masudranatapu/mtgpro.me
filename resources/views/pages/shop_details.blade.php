@@ -1,0 +1,263 @@
+@extends('layouts.app')
+@section('shop','active')
+<?php
+    $rows = $data ?? [];
+?>
+@section('title') {{ __('Terms & Conditions') }} @endsection
+@push('custom_css')
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+
+@endpush
+@section('meta_tag')
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="">
+<meta property="og:url" content="{{Request::url()}}" />
+<meta property="og:type" content="WEBSITE" />
+<meta property="og:title" content=": Your Digital Business Card" />
+<meta name="twitter:title" content=": Your Digital Business Card">
+<meta name="twitter:card" value="summary_large_image">
+<meta property="og:image" content="" />
+<meta name="twitter:image" content="">
+<meta name="twitter:site" content="{{Request::url()}}" />
+<meta name="twitter:url" content="{{Request::url()}}" />
+<link rel="canonical" href="{{Request::url()}}">
+<meta property="og:site_name" content="" />
+<meta property="og:type" content="website" />
+@endsection
+@section('content')
+<!-- ======================= Terms Conditions  =========================== -->
+<div class="shop_details_sec mt-5 mb-5">
+    <!-- container -->
+    <div class="container">
+        <div class="page_wrapper">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="singel_pro_gallery">
+                        <div class="gallery_single carousel carousel-main" data-flickity>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/1.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/2.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/3.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/4.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/5.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/1.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/2.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/3.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                        </div>
+
+                        <div class="carousel carousel-nav mt-3">
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/1.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/2.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/3.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/4.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/5.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/1.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/2.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                            <div class="carousel-cell">
+                                <img src="{{ asset('assets/img/products/3.jpg') }}" class="img-fluid" alt="image">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="single_pro_content">
+                        <h2>Mtgpro Card</h2>
+                        <span>$444</span>
+                        <p>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <span>50 Reviews</span>
+                        </p>
+                        <div class="qtyfield mb-4">
+                            <span>Qty</span>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-bg-minus qty_number" data-type="minus"
+                                        data-field="qty">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </span>
+                                <input type="text" name="qty" id="qty" class="text-center custome_control" value="0"
+                                    min="0" max="10" readonly>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-danger qty_number" data-type="plus"
+                                        data-field="qty">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="add_to_cart">
+                            <a href="#">Add to Cart</a>
+                        </div>
+
+                        <div class="short_info mt-4">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quod eveniet delectus quos
+                                sint temporibus molestiae consequatur ad blanditiis culpa, libero odit iusto, deserunt
+                                molestias eos error maiores nostrum maxime!</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- details info --}}
+            <div class="details_tabs mt-5">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                            aria-selected="true">Description</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                            type="button" role="tab" aria-controls="nav-profile"
+                            aria-selected="false">Compatibility</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Shipping &
+                            Returns</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="single_pro_details">
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                                piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
+                                McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of
+                                the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                                the cites of the word in classical literature, discovered the undoubtable source. Lorem
+                                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The
+                                Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the
+                                theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+                                "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus vitae veritatis
+                                dolorem, rem saepe quibusdam tempora, neque quo voluptatum officia omnis amet, vel
+                                quisquam excepturi. Quod, rem. Nam, repudiandae laudantium!</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus vitae veritatis
+                                dolorem, rem saepe quibusdam tempora, neque quo voluptatum officia omnis amet, vel
+                                quisquam excepturi. Quod, rem. Nam, repudiandae laudantium!</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="single_pro_details">
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                                piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
+                                McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of
+                                the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                                the cites of the word in classical literature, discovered the undoubtable source. Lorem
+                                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The
+                                Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the
+                                theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+                                "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus vitae veritatis
+                                dolorem, rem saepe quibusdam tempora, neque quo voluptatum officia omnis amet, vel
+                                quisquam excepturi. Quod, rem. Nam, repudiandae laudantium!</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus vitae veritatis
+                                dolorem, rem saepe quibusdam tempora, neque quo voluptatum officia omnis amet, vel
+                                quisquam excepturi. Quod, rem. Nam, repudiandae laudantium!</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="single_pro_details">
+                            <ul>
+                                <li><strong>Please expect your order to arrive within 1-2 weeks.</strong></li>
+                                <li>Your order will be processed within 1-3 business days before it is shipped.</li>
+                                <li>Standard US shipping time is 3-7 business days.</li>
+                                <li>Expedited shipping options are available during checkout.</li>
+                                <li>International shipping options are also available.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- container -->
+</div>
+@endsection
+
+@push('custom_js')
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+<script>
+    // quantity field
+    $('.qty_number').click(function(e) {
+        e.preventDefault();
+        fieldName      = $(this).attr('data-field');
+        type           = $(this).attr('data-type');
+        var input      = $("input[name='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('min')) {
+                    $(this).attr('disabled', true);
+                }
+            } else if (type == 'plus') {
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('max')) {
+                    $(this).attr('disabled', true);
+                }
+            }
+        } else {
+            input.val(0);
+        }
+    });
+
+
+    // single gallery
+    $('.carousel-main').flickity({
+        wrapAround: false,
+        contain: false,
+        fade: true
+    });
+    // 2nd carousel, navigation
+    $('.carousel-nav').flickity({
+        asNavFor: '.carousel-main',
+        contain: true,
+        pageDots: false
+
+    });
+</script>
+
+@endpush
