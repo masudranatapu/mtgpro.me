@@ -1732,3 +1732,25 @@ li.nav-item .icon {
         margin: 7px;
     }
 
+
+    #offcanvasCalculator ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+    }
+
+    #offcanvasCalculator ::-webkit-scrollbar-button {
+        background: #fff;
+    }
+
+    #offcanvasCalculator ::-webkit-scrollbar-track-piece {
+        background: #fff;
+    }
+
+    #offcanvasCalculator ::-webkit-scrollbar-thumb {
+        background: #ccc;
+    }
+
+
+
+
+
