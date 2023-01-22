@@ -23,7 +23,7 @@ class CardController extends Controller
     {
         $cards = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
-        'c.profile','c.created_at','p.plan_name','c.user_id','c.status','u.username'
+        'c.profile','c.created_at','p.plan_name','c.user_id','c.status','u.username','u.active_card_id'
         )
         // ->leftJoin('business_fields as cf','cf.card_id','c.id')
         ->leftJoin('users as u','c.user_id','u.id')
