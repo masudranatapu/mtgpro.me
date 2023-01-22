@@ -74,6 +74,11 @@ class BusinessCard extends Model
         return $this->hasOne(Theme::class, 'theme_id', 'theme_id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
 
     public function postStore($request)
     {

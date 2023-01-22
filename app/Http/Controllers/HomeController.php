@@ -304,6 +304,7 @@ class HomeController extends Controller
     {
 
         $data = BusinessCard::where('card_id', $id)->first();
+
         $user_plan = getPlan($data->user_id);
         if(empty($data)){
             abort(404);
@@ -317,20 +318,26 @@ class HomeController extends Controller
         $path = public_path('assets/uploads/qr-code/');
         $file_path = $path.$file_name;
 
+        if($data->user->active_card_id == $data->id){
+            $card_url = $data->user->username;
+        }else{
+            $card_url = $data->card_url;
+        }
+
         if (isFreePlan($data->user_id)) {
             $image = QrCode::format('png')
             ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
-            ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
+            ->size(800)->color(74, 74, 74, 80)->generate(url($card_url), $file_path);
         }
         elseif (!empty($data->logo)  && $user_plan->is_qr_code==1) {
             $image = QrCode::format('png')
             ->merge(public_path($data->logo), 0.2, true)
-            ->size(800)->color(74, 74, 74, 80)->generate(url($data->card_url), $file_path);
+            ->size(800)->color(74, 74, 74, 80)->generate(url($card_url), $file_path);
         }
         else{
             $image = QrCode::format('png')
             ->size(800)->color(74, 74, 74, 80)
-            ->generate(url($data->card_url), $file_path);
+            ->generate(url($card_url), $file_path);
         }
 
         DB::table('business_cards')->where('card_id',$id)->increment('total_qr_download', 1);
