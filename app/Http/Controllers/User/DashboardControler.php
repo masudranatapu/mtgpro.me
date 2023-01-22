@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 use DB;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\MarketingMaterials;
 use App\Models\Currency;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -80,7 +81,8 @@ class DashboardControler extends Controller
 
     public function getFreeMarketing(Request $request)
     {
-        return view('user.marketing_materials');
+        $marketing_materials = MarketingMaterials::orderBy('order_id', 'asc')->paginate(6);
+        return view('user.marketing_materials',compact('marketing_materials'));
     }
 
     public function getCalculator(Request $request)

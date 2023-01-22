@@ -73,7 +73,7 @@ $settings = getSetting();
                 @if (isAnnualPlan(Auth::user()->id))
                 <li class="nav-item">
                     <a href="{{ route('user.free-marketing-material') }}"
-                        class="nav-link @yield('Free Marketing Material')">
+                        class="nav-link @yield('marketing_metarials')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/insights.svg') }}"
                                 alt="{{ __('Free Marketing Material') }}">

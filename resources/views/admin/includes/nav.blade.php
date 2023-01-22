@@ -71,9 +71,18 @@
                     </li>
                     <li class="nav-item @yield('users')">
                         <a class="nav-link" href="{{ route('admin.users') }}">
-                           <i class="fa fa-user-alt"></i> &nbsp;
+                        <i class="fa fa-user-alt"></i> &nbsp;
                             <span class="nav-link-title">
                                 {{ __('Users') }}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item @yield('marketing_materials_list')">
+                        <a class="nav-link" href="{{ route('admin.marketing.materials')}}">
+                        <i class="fa fa-user-alt"></i> &nbsp;
+                            <span class="nav-link-title">
+                                {{ __('Marketing Materials') }}
                             </span>
                         </a>
                     </li>
