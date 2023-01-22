@@ -14,8 +14,9 @@
                         <div class="card-header">
                             <div class="col">
                                 <div class="float-left">
-                                    {{ __('Marketing Material/Create') }} |
-                                    <a href="{{ route('admin.marketing.materials')}}" class="@yield('user_list')"><i class="fa fa-user"></i> {{ __('All Marketing Materials') }}</a>
+                                    <a href="{{ route('admin.marketing.materials')}}" class="@yield('user_list')"> {{ __('All Marketing Materials') }}</a> |
+                                    {{ __('Marketing Material/Create') }}
+
                                 </div>
                             </div>
                             <div class="col">
@@ -41,7 +42,7 @@
                                         @endif
                                     </div>
                                     <div class="mb-3">
-                                       <label class="form-label" id="image">{{ __('Image') }} <span class="text-danger"><small>Prefered size(200 x 200 px)</small></span></label>
+                                       <label class="form-label" id="image">{{ __('Image') }} <span class="text-danger"><small>Prefered size(400 x 400 px)</small></span></label>
                                        <input type="file" class="form-control" name="image" placeholder="{{ __('Image') }}" value=""required>
                                         @if($errors->has('image'))
                                             <span class="help-block text-danger">{{ $errors->first('image') }}</span>
