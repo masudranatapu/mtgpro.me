@@ -202,7 +202,7 @@
                                     @if($contact->icon_name == 'snapchat')
                                     <div class="col-4 col-md-3 mb-3">
                                         <a title="{{ $contact->label }}" class="text-decoration-none"
-                                            href="snapchat:{{ $contact->content }}" target="__blank">
+                                            href="{{ $contact->main_link }}/add/{{ $contact->content }}" target="__blank">
                                             <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
                                                 class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
                                                 alt="{{ $contact->label }}" width="75" height="75">
