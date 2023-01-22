@@ -56,8 +56,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('My Cards') }} <a class="create_plus_icon"
-                            href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a></h1>
+                    <h1 class="m-0">{{ __('My Cards') }}
+                        <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a>
+                        &nbsp; <a href="{{ route('home')  }}/{{ Auth::user()->username }}">Live card</a>
+                    </h1>
                 </div>
             </div>
         </div>

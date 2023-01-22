@@ -27,7 +27,7 @@
 <meta property="og:type" content="website" />
 @endsection
 @section('content')
-<!-- ======================= Terms Conditions  =========================== -->
+<!-- ======================= Shop  =========================== -->
 <div class="shop_sec mt-5 mb-5">
     <!-- container -->
     <div class="container">

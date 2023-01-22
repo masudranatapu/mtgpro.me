@@ -6,8 +6,9 @@
 @section('title') {{ __('Terms & Conditions') }} @endsection
 @push('custom_css')
 <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 @endpush
+
 @section('meta_tag')
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -27,15 +28,16 @@
 <meta property="og:type" content="website" />
 @endsection
 @section('content')
-<!-- ======================= Terms Conditions  =========================== -->
+<!-- ======================= Shop Details  =========================== -->
 <div class="shop_details_sec mt-5 mb-5">
     <!-- container -->
     <div class="container">
         <div class="page_wrapper">
+
             <div class="row g-4">
                 <div class="col-lg-6">
                     <div class="singel_pro_gallery">
-                        <div class="gallery_single carousel carousel-main" data-flickity>
+                        <div class="gallery_single carousel carousel-main">
                             <div class="carousel-cell">
                                 <img src="{{ asset('assets/img/products/1.jpg') }}" class="img-fluid" alt="image">
                             </div>
@@ -138,7 +140,7 @@
             </div>
 
             {{-- details info --}}
-            <div class="details_tabs mt-5">
+            <div class="details_tabs mt-5 mb-4">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
@@ -205,6 +207,286 @@
                 </div>
             </div>
 
+
+            {{-- review --}}
+            <div class="user_reviews">
+                <div class="header mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <h3>Reviews</h3>
+                        </div>
+                        <div class="col-6">
+                            <a href="#review_form" class="float-end">Write a Review</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review_wrap">
+                    <div class="total_review mb-3">
+                        <h5>40 Reviews</h5>
+                    </div>
+                    {{-- review item --}}
+                    <div class="review_item">
+                        <div class="d-flex position-relative">
+                            <div class="user_img">
+                                <img src="{{ asset('assets/img/user.jpg') }}" class="flex-shrink-0 me-3" alt="">
+                            </div>
+                            <div class="review_article">
+                                <h3>Augustin H.
+                                    <span>Verified Buyer</span>
+                                    <span class="float-end">12/22/23</span>
+                                </h3>
+                                <div class="star mb-3">
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                </div>
+                                <h4>Works great!</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, beatae dolorem
+                                    debitis similique, minima cumque qui ex nobis asperiores consectetur, modi
+                                    perspiciatis possimus! Nobis maxime eaque velit nisi voluptatum repudiandae?</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- review item --}}
+                    <div class="review_item">
+                        <div class="d-flex position-relative">
+                            <div class="user_img">
+                                <img src="{{ asset('assets/img/user.jpg') }}" class="flex-shrink-0 me-3" alt="">
+                            </div>
+                            <div class="review_article">
+                                <h3>Augustin H.
+                                    <span>Verified Buyer</span>
+                                    <span class="float-end">12/22/23</span>
+                                </h3>
+                                <div class="star mb-3">
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                </div>
+                                <h4>Works great!</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, beatae dolorem
+                                    debitis similique, minima cumque qui ex nobis asperiores consectetur, modi
+                                    perspiciatis possimus! Nobis maxime eaque velit nisi voluptatum repudiandae?</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- review item --}}
+                    <div class="review_item">
+                        <div class="d-flex position-relative">
+                            <div class="user_img">
+                                <img src="{{ asset('assets/img/user.jpg') }}" class="flex-shrink-0 me-3" alt="">
+                            </div>
+                            <div class="review_article">
+                                <h3>Augustin H.
+                                    <span>Verified Buyer</span>
+                                    <span class="float-end">12/22/23</span>
+                                </h3>
+                                <div class="star mb-3">
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star-0"></i>
+                                </div>
+                                <h4>Works great!</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, beatae dolorem
+                                    debitis similique, minima cumque qui ex nobis asperiores consectetur, modi
+                                    perspiciatis possimus! Nobis maxime eaque velit nisi voluptatum repudiandae?</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- review item --}}
+                    <div class="review_item">
+                        <div class="d-flex position-relative">
+                            <div class="user_img">
+                                <img src="{{ asset('assets/img/user.jpg') }}" class="flex-shrink-0 me-3" alt="">
+                            </div>
+                            <div class="review_article">
+                                <h3>Augustin H.
+                                    <span>Verified Buyer</span>
+                                    <span class="float-end">12/22/23</span>
+                                </h3>
+                                <div class="star mb-3">
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                    <i class="star_icon fa fa-star"></i>
+                                </div>
+                                <h4>Works great!</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, beatae dolorem
+                                    debitis similique, minima cumque qui ex nobis asperiores consectetur, modi
+                                    perspiciatis possimus! Nobis maxime eaque velit nisi voluptatum repudiandae?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- write a review --}}
+                <div class="review_form mt-5 mb-5" id="review_form">
+                    <form action="#" method="post">
+                        <div class="title mb-3">
+                            <h3>Write a Review</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label for="score" class="form-label">Score</label>
+                            <div id="rateYo"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" name="title" id="title" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review" class="form-label">Review</label>
+                            <textarea name="review" id="review" cols="30" rows="5" class="form-control"
+                                style="height: 120px !important;" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </div>
+                    </form>
+                </div>
+                {{-- write a review --}}
+            </div>
+
+            {{-- related products --}}
+            <div class="related_products mb-5">
+                <div class="title text-center mb-4">
+                    <h3>You may also like</h3>
+                </div>
+                <div class="product_carousel_item">
+                    <div class="related_carousel">
+                        <div class="owl-carousel">
+                            {{-- carousel item --}}
+                            <div class="item">
+                                <div class="product_item">
+                                    <div class="product_img text-center">
+                                        <a href="{{ route('product.details') }}">
+                                            <img src="{{ asset('assets/img/products/1.jpg') }}" class="img-fluid"
+                                                alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="product_content">
+                                        <div class="product_title text-center mb-4">
+                                            <h3><a href="{{ route('product.details') }}">Mtgpro Card</a></h3>
+                                        </div>
+                                        <div class="product_article">
+                                            <p>
+                                                <a href="{{ route('product.details') }}">
+                                                    Add to Cart
+                                                </a>
+                                                <span class="float-end">$2333</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- carousel item --}}
+                            <div class="item">
+                                <div class="product_item">
+                                    <div class="product_img text-center">
+                                        <a href="{{ route('product.details') }}">
+                                            <img src="{{ asset('assets/img/products/2.jpg') }}" class="img-fluid"
+                                                alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="product_content">
+                                        <div class="product_title text-center mb-4">
+                                            <h3><a href="{{ route('product.details') }}">Mtgpro Card</a></h3>
+                                        </div>
+                                        <div class="product_article">
+                                            <p>
+                                                <a href="{{ route('product.details') }}">
+                                                    Add to Cart
+                                                </a>
+                                                <span class="float-end">$2333</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- carousel item --}}
+                            <div class="item">
+                                <div class="product_item">
+                                    <div class="product_img text-center">
+                                        <a href="{{ route('product.details') }}">
+                                            <img src="{{ asset('assets/img/products/3.jpg') }}" class="img-fluid"
+                                                alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="product_content">
+                                        <div class="product_title text-center mb-4">
+                                            <h3><a href="{{ route('product.details') }}">Mtgpro Card</a></h3>
+                                        </div>
+                                        <div class="product_article">
+                                            <p>
+                                                <a href="{{ route('product.details') }}">
+                                                    Add to Cart
+                                                </a>
+                                                <span class="float-end">$2333</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- carousel item --}}
+                            <div class="item">
+                                <div class="product_item">
+                                    <div class="product_img text-center">
+                                        <a href="{{ route('product.details') }}">
+                                            <img src="{{ asset('assets/img/products/4.jpg') }}" class="img-fluid"
+                                                alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="product_content">
+                                        <div class="product_title text-center mb-4">
+                                            <h3><a href="{{ route('product.details') }}">Mtgpro Card</a></h3>
+                                        </div>
+                                        <div class="product_article">
+                                            <p>
+                                                <a href="{{ route('product.details') }}">
+                                                    Add to Cart
+                                                </a>
+                                                <span class="float-end">$2333</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- carousel item --}}
+                            <div class="item">
+                                <div class="product_item">
+                                    <div class="product_img text-center">
+                                        <a href="{{ route('product.details') }}">
+                                            <img src="{{ asset('assets/img/products/5.jpg') }}" class="img-fluid"
+                                                alt="image">
+                                        </a>
+                                    </div>
+                                    <div class="product_content">
+                                        <div class="product_title text-center mb-4">
+                                            <h3><a href="{{ route('product.details') }}">Mtgpro Card</a></h3>
+                                        </div>
+                                        <div class="product_article">
+                                            <p>
+                                                <a href="{{ route('product.details') }}">
+                                                    Add to Cart
+                                                </a>
+                                                <span class="float-end">$2333</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- container -->
@@ -213,6 +495,7 @@
 
 @push('custom_js')
 <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
 <script>
     // quantity field
@@ -245,19 +528,57 @@
     });
 
 
-    // single gallery
+    // product gallery
     $('.carousel-main').flickity({
-        wrapAround: false,
-        contain: false,
-        fade: true
+        wrapAround: true,
+        contain: true,
     });
-    // 2nd carousel, navigation
+    // navigation
     $('.carousel-nav').flickity({
         asNavFor: '.carousel-main',
         contain: true,
-        pageDots: false
-
+        pageDots: false,
     });
+
+    //rateYo star icon
+    $(function () {
+        $("#rateYo").rateYo({
+            starWidth: '30px',
+            fullStar: true,
+            mormalFill: 'yellow',
+            ratedFill: 'orange',
+            rating: 2,
+            onSet: function(rating, rateYoInstance) {
+                // $('#rating').val(rating);
+            }
+        });
+    });
+
+    // related carousel
+    $('.related_carousel .owl-carousel').owlCarousel({
+          loop: true,
+          dots: false,
+          nav: false,
+          items:4,
+          smartSpeed: 500,
+          autoHeight: false,
+          autoplay: true,
+          responsive : {
+                0 : {
+                    items:1,
+                },
+                575 : {
+                    items:2,
+                },
+                768 : {
+                    items:3,
+                },
+                992 : {
+                    items:4,
+                }
+            }
+      });
+
 </script>
 
 @endpush

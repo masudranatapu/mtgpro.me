@@ -55,7 +55,15 @@
                                             <td>
                                                 <div style="max-width: 150px; overflow:hidden; display: grid">
                                                     <div><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a></div>
-                                                    <div style="font-size:12px;font-style: italic; text-transform: lowercase;">User:<a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->username }}</a> </div>
+
+                                                    @if($row->id == $row->active_card_id)
+                                                    <div style="font-size:12px;font-style: italic; text-transform: lowercase;">User:<a href="{{ route('home')}}/{{ $row->username }}">{{ $row->username }}  <span style="color: green;">live</span> </a>
+                                                    </div>
+                                                    @else
+                                                    <div style="font-size:12px;font-style: italic; text-transform: lowercase;">User:<a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->username }} </a>
+                                                    </div>
+                                                    @endif
+
                                                 </div>
                                             </td>
                                             <td>
