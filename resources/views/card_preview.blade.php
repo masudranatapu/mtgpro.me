@@ -195,18 +195,32 @@
                                     </a>
                                 </div>
                                 @elseif ($contact->type == 'username')
-                                @php
-                                $make_link = $contact->main_link.$contact->content;
-                                @endphp
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="{{ makeUrl($make_link) }}" target="__blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
+                                    @php
+                                    $make_link = $contact->main_link.$contact->content;
+                                    @endphp
+
+                                    @if($contact->icon_name == 'snapchat')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                            href="snapchat:{{ $contact->content }}" target="__blank">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                                alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
+                                    @else
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                            href="{{ makeUrl($make_link) }}" target="__blank">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                                alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
+                                    @endif
+
                                 @elseif ($contact->type == 'mail')
                                 <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none"
