@@ -268,9 +268,9 @@
                                 @elseif ($contact->type == 'number')
                                 <div class="col-4 col-md-3 mb-3">
 
-                                    @if ($contact->icon_name == 'wechat')
+                                    @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle' )
                                     <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
-                                        href="javascript:void(0)" data="{{ $contact->content }}">
+                                        href="javascript:void(0)" data-content="{{ $contact->content }}" data-icon_name="{{ $contact->icon_name }}" >
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
                                             class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
                                             alt="{{ $contact->label }}" width="75" height="75">
@@ -705,18 +705,31 @@
 
     $(document).on('click', '.copy_btn', function(e) {
         e.preventDefault();
-        var url = $(this).attr('data');
+
+        var content = $(this).data('content');
+        var icon_name = $(this).data('icon_name');
         var textarea = document.createElement("textarea");
-        textarea.textContent = url;
+        textarea.textContent = content;
         textarea.style.position = "fixed";
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand("copy");
         document.body.removeChild(textarea);
-        toastr.success("WeChat ID copied!",'Success', {
-            // closeButton: true,
-            // progressBar: true,
-        });
+        if(icon_name == 'zelle'){
+            toastr.success("Zelle Phone Number copied!",'Success', {
+                // closeButton: true,
+                // progressBar: true,
+            });
+        }
+
+        if(icon_name == 'wechat'){
+            toastr.success("WeChat ID copied!",'Success', {
+                // closeButton: true,
+                // progressBar: true,
+            });
+        }
+
+
     });
 
     // $(document).on('click', '#calculator_btn', function(e) {
