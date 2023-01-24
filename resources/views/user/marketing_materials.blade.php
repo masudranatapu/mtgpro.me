@@ -40,6 +40,18 @@
             width: 53px;
             color: orange;
         }
+        .custom_table{
+            background: rgb(255, 255, 255);
+            padding: 30px;
+            border-radius: 16px;
+        }
+        .custom_image {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            width: 85px;
+            height: 80px;
+        }
         /* .review_content p {
             margin: 0;
             font-size: 14px;
@@ -100,7 +112,7 @@
     </style>
 @endpush
 
-@section('review','active')
+@section('marketing_metarials','active')
 
 @section('content')
 <div class="content-wrapper">
@@ -116,10 +128,43 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6">
-                <p>Coming soon.....</p>
+                <div class="col-sm-12">
+                    <div class="card-body custom_table">
+                            <div class="px-2 py-2">
+                                <table id="dataTable" class="table table-vcenter card-table" id="table-plan">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __('Sl') }}</th>
+                                            <th>{{ __('Display Title') }}</th>
+                                            <th>{{ __('Description') }}</th>
+                                            <th>{{ __('Image') }}</th>
+                                            <th>{{ __('PDF') }}</th>
+                                       
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (!empty($marketing_materials) && $marketing_materials->count())
+                                            @foreach ($marketing_materials as $key => $value)
+                                                <tr>
+                                                    <td>{{ $key + 1;}}</td>
+                                                    <td>{{ $value->title}}</td>
+                                                    <td>{!! $value->description !!}</td>
+                                                    <td>
+                                                        <img class="custom_image" src="{{ $value->image}}" alt="Paris">
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-info" href="{{$value->file}}" download><i class="fa-solid fa-cloud-arrow-down"></i></a>
+                                                    </td>
+                                                 
+                                                  
+                                              </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                 </div>
-
             </div>
         </div>
     </div>

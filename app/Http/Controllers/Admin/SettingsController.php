@@ -385,7 +385,7 @@ class SettingsController extends Controller
         $settings = Setting::first();
         $config = DB::table('config')->get();
 
-        $section_name = DB::table('pages')->where('page_name', $id)->orderBy('order_id','asc')->groupBy('section_name')->get();
+        $section_name = DB::table('pages')->where('page_name', $id)->groupBy('section_name')->orderBy('order_id','asc')->get();
 
 
         return view('admin.pages.edit-page', compact('sections', 'settings', 'config','id','section_name'));

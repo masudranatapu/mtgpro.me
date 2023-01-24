@@ -1,5 +1,8 @@
 <?php
+
+use App\Http\Controllers\Admin\MarketingMaterialsController;
 use App\Http\Controllers\User\PlanController;
+use App\Models\MarketingMaterials;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin'], 'where' => ['locale' => '[a-zA-Z]{2}']], function () {
@@ -148,7 +151,16 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('admin-users/{id}/edit',['as'=>'admin-users.edit','uses'=>'AccountController@getEdit']);
     Route::post('admin-users/{id}/update',['as'=>'admin-users.update','uses'=>'AccountController@putUpdate']);
 
-
+    //Marketing Materials
+    Route::prefix('marketing-material')->group(function(){
+      Route::get('/',[MarketingMaterialsController::class,'index'])->name('marketing.materials');
+      Route::get('/create',[MarketingMaterialsController::class,'create'])->name('marketing.material.create');
+      Route::post('/store',[MarketingMaterialsController::class,'store'])->name('marketing.material.store');
+      Route::get('/edit/{id}',[MarketingMaterialsController::class,'edit'])->name('marketing.material.edit');
+      Route::post('/update/{id}',[MarketingMaterialsController::class,'update'])->name('marketing.material.update');
+      Route::get('/delete/{id}',[MarketingMaterialsController::class,'delete'])->name('marketing.material.delete');
+      Route::get('/status-update/{id}/{status}',[MarketingMaterialsController::class,'status'])->name('marketing.material.status');
+    });
 
 
 
