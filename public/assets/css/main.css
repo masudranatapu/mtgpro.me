@@ -1078,7 +1078,50 @@ body {
 
 
 
+.plan_type .switch-wrapper {
+    position: relative;
+    display: inline-flex;
+    border-radius: 20px;
+    background: white;
+    width: 24%;
+}
 
+.plan_type .switch-wrapper [type="radio"] {
+    position: absolute;
+    left: -9999px;
+}
+
+.plan_type .switch-wrapper label {
+    font-size: 14px;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: color 0.25s ease-in-out;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    line-height: 44px;
+    width: 100%;
+    display: inline-block;
+    height: 47px;
+}
+
+.plan_type .switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
+    transform: translateX(100%);
+}
+.plan_type .switch-wrapper .highlighter {
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: calc(49% - 4px);
+    height: calc(100% - 8px);
+    border-radius: 20px;
+    background: #212121;
+    transition: transform 0.25s ease-in-out;
+}
+
+.plan_type .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"], .plan_type .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
+    color: #fff;
+}
 
 
 
@@ -1336,10 +1379,11 @@ video.banner-video {
 }
 
 .pricing-card {
-    border: solid 1px #bdbdbd;
+    border: solid 1px #ffffff;
     cursor: pointer;
     height: 600px;
     padding: 24px;
     border-radius: 20px;
     background-color: #fff;
+    box-shadow: rgb(99 99 99 / 10%) 0px 2px 8px 0px;
 }

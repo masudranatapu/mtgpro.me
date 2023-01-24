@@ -220,7 +220,7 @@ $features = $home_data['features'];
             $planfeatures = json_decode($plan->features);
             @endphp
 
-            <div class="col-md-3 col-lg-3 col-12">
+            <div class="col-md-6 col-lg-4 col-xxl-3 mb-3" data-aos="fade-up">
                 <div class="pricing-card card card-md">
                     <div class="card-body text-center">
                         <div class="text-capitalize text-dark">

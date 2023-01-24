@@ -77,18 +77,6 @@
                 }
             }
         }
-
-        .social_media a {
-            color: #212112;
-            display: block;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-        }
-
-        #offcanvasCalculator {
-            height: 100%;
-        }
     </style>
     @endif
 </head>
@@ -271,7 +259,8 @@
 
                                     @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle' )
                                     <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
-                                        href="javascript:void(0)" data-content="{{ $contact->content }}" data-icon_name="{{ $contact->icon_name }}" >
+                                        href="javascript:void(0)" data-content="{{ $contact->content }}"
+                                        data-icon_name="{{ $contact->icon_name }}">
                                         <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
                                             class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
                                             alt="{{ $contact->label }}" width="75" height="75">

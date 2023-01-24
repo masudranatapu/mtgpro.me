@@ -13,11 +13,14 @@
         outline: none !important;
         box-shadow: none !important;
     }
-    
+
 
     .mobile_menu.offcanvas {
         width: 300px !important;
         border: none !important;
+    }
+    .plan_type .switch-wrapper {
+        width: 42%;
     }
 }
 
@@ -31,6 +34,9 @@
 
     .copyright {
         margin-bottom: 8px;
+    }
+    .plan_type .switch-wrapper {
+        width: 53%;
     }
 }
 
@@ -48,5 +54,8 @@
     .banner_content h2 {
         font-size: 25px;
         line-height: 32px;
+    }
+    .plan_type .switch-wrapper {
+        width: 83%;
     }
 }
