@@ -169,7 +169,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
         Route::get('/create', [ProductController::class, 'create'])->name('product.create');
         Route::post('/store', [ProductController::class, 'store'])->name('product.store');
-        Route::post('/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
-        Route::post('/delete/{product}', [ProductController::class, 'delete'])->name('product.delete');
+        Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+        Route::put('/update/{product}', [ProductController::class, 'update'])->name('product.update');
+        Route::delete('/delete/{product}', [ProductController::class, 'delete'])->name('product.delete');
+        Route::get('/images/{product}', [ProductController::class, 'images'])->name('product.images');
+        Route::post('/images/upload/{product}', [ProductController::class, 'imagesUpload'])->name('product.images.upload');
+        Route::delete('/images/delete/{productImage}', [ProductController::class, 'imagesDelete'])->name('product.images.delete');
     });
 });

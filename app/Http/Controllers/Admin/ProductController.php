@@ -7,6 +7,7 @@ use App\Helpers\StringHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
+use Brian2694\Toastr\Facades\Toastr;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class ProductController extends Controller
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
-            'details' => 'required',
+            'images' => 'required',
         ]);
 
 
@@ -55,27 +56,13 @@ class ProductController extends Controller
             $product->unit_price_regular = $request->regular_price;
             $product->product_type = $request->product_type;
             $product->vat = 0;
+            if ($request->has('images')) {
+                $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb');
+            }
             $product->status = $request->product_status;
             $product->created_by = Auth::id();
             $product->updated_by = Auth::id();
             $product->save();
-
-            if ($request->has('images')) {
-
-                for ($i = 0; $i < count($request->images); $i++) {
-                    if ($i == 0) {
-                        $product->thumbnail = $this->storageHelper->uploadImage($request->images[$i], 'productThumb');
-                    } else {
-                        $productImage = new ProductImage();
-                        $productImage->product_id =  $product->id;
-                        $productImage->image_name = $this->storageHelper->uploadImage($request->images[$i], 'productImages');
-                        $productImage->save();
-                    }
-                }
-            }
-            $product->save();
-
-
             $slug = Str::slug($request->name);
 
             $result = Product::where('product_slug', $slug)->first();
@@ -86,11 +73,106 @@ class ProductController extends Controller
             }
             $product->save();
             DB::commit();
-            return redirect()->route('admin.product.index')->with('success', 'product add successfully');
+            Toastr::success('Product add successfully');
+            return redirect()->route('admin.product.index');
         } catch (Exception $exception) {
-            dd($exception);
+
             DB::rollBack();
+            Toastr::error('Something Wrong');
             return redirect()->route('admin.product.index')->with('error', $exception);
         }
+    }
+
+    public function edit(Product $product)
+    {
+        $product->load('hasImages');
+        return view('admin.product.edit', compact('product'));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'regular_price' => 'required',
+            'product_type' => 'required',
+            'product_status' => 'required',
+            'details' => 'required',
+
+        ]);
+
+
+
+        try {
+            DB::beginTransaction();
+
+            $product->product_name = $request->name;
+            $product->details = $request->details;
+            $product->unit_price = $request->price;
+            $product->unit_price_regular = $request->regular_price;
+            $product->product_type = $request->product_type;
+            $product->vat = 0;
+            if ($request->has('images')) {
+                $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb');
+            }
+            $product->status = $request->product_status;
+            $product->created_by = Auth::id();
+            $product->updated_by = Auth::id();
+            $product->save();
+            $slug = Str::slug($request->name);
+
+            $result = Product::where('product_slug', $slug)->first();
+            if (isset($result)) {
+                $product->product_slug  = Str::slug($request->name . $product->id);
+            } else {
+                $product->product_slug  = $slug;
+            }
+            $product->save();
+            DB::commit();
+            Toastr::success('Product update successfully');
+            return redirect()->route('admin.product.index');
+        } catch (Exception $exception) {
+
+            DB::rollBack();
+            Toastr::error('Something Wrong');
+            return redirect()->route('admin.product.index')->with('error', $exception);
+        }
+    }
+
+    public function delete(Product $product)
+    {
+        $product->delete();
+        Toastr::error('Product delete successfully');
+        return redirect()->route('admin.product.index');
+    }
+
+
+    public function images(Product $product)
+    {
+        $product->load('hasImages');
+        return view('admin.product.product_images.index', compact('product'));
+    }
+
+    public function imagesUpload(Request $request, Product $product)
+    {
+        $request->validate([
+            'images' => 'required'
+        ]);
+
+
+        for ($i = 0; $i < count($request->images); $i++) {
+            $productImages = new ProductImage();
+            $productImages->product_id = $product->id;
+            $productImages->image_name = $this->storageHelper->uploadImage($request->images[$i], 'productImages');
+            $productImages->save();
+        }
+        Toastr::success('Product image add successfully');
+        return redirect()->back();
+    }
+    public function imagesDelete(ProductImage $productImage)
+    {
+        $productImage->delete();
+        Toastr::error('Product image delete successfully');
+        return redirect()->back();
     }
 }

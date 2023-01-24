@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
-use Str;
-use QrCode;
+
+use illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Faq;
 use App\Models\Plan;
 use App\Models\User;
@@ -19,12 +21,15 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
+use App\Mail\SendCard;
+use App\Models\Product;
 use Illuminate\Support\Facades\Response;
 
 
 class HomeController extends Controller
 {
     private $filename;
+    private $settings;
 
     public function __construct()
     {
@@ -35,62 +40,62 @@ class HomeController extends Controller
     public function getIndex()
     {
         $data = [];
-        $plans = Plan::where('status',1)->get();
+        $plans = Plan::where('status', 1)->get();
         $currency = Currency::where('is_default', 1)->first();
         $faqs = Faq::orderBy('order_id', 'DESC')->get();
         $reviews = Review::where('status', 1)->orderBy('order_id', 'DESC')->get();
-        $home_page = DB::table('pages')->where('page_name','home')->get();
+        $home_page = DB::table('pages')->where('page_name', 'home')->get();
 
         // dd($home_page);
         $home_data = [];
-        if($home_page){
+        if ($home_page) {
             foreach ($home_page as $key => $value) {
                 $home_data[$value->section_name][$value->section_title] = $value->section_content;
             }
         }
 
-        return view('index',compact('plans','currency', 'faqs', 'reviews','home_data'));
+        return view('index', compact('plans', 'currency', 'faqs', 'reviews', 'home_data'));
     }
 
     public function getPrivacyPolicy()
     {
-        $page = DB::table('custom_pages')->where('url_slug','privacy-policy')->first();
-        return view('pages.common',compact('page'));
+        $page = DB::table('custom_pages')->where('url_slug', 'privacy-policy')->first();
+        return view('pages.common', compact('page'));
     }
 
     public function getTermsCondition()
     {
-        $page = DB::table('custom_pages')->where('url_slug','terms-and-conditions')->first();
-        return view('pages.common',compact('page'));
+        $page = DB::table('custom_pages')->where('url_slug', 'terms-and-conditions')->first();
+        return view('pages.common', compact('page'));
     }
 
     public function getConnect(ConnectRequest $request)
     {
         DB::beginTransaction();
         try {
-            $data['name' ]         = $request->name;
+            $data['name']         = $request->name;
             $data['email']         = trim($request->email);
             $data['phone']         = $request->phone;
             $data['title']         = $request->title;
             $data['company_name']  = $request->company_name;
             $data['message']       = $request->message;
-            $find_user = DB::table('users')->where('email',$request->email)->first();
+            $find_user = DB::table('users')->where('email', $request->email)->first();
             $card = BusinessCard::findOrFail($request->card_id);
 
-            if(Auth::user() && $card->user_id == Auth::user()->id){
+            if (Auth::user() && $card->user_id == Auth::user()->id) {
                 // Toastr::error(trans('Not possible to send message to your card !'), 'Error', ["positionClass" => "toast-top-right"]);
                 // return redirect()->back();
                 return response()->json([
                     'status' => 0,
-                    'msg'=> trans('Not possible to send message to your card !')
+                    'msg' => trans('Not possible to send message to your card !')
                 ]);
-            }elseif (!empty(Auth::user())) {
+            } elseif (!empty(Auth::user())) {
                 $data['connect_user_id'] = Auth::user()->id;
                 $data['profile_image']   = Auth::user()->profile_image;
-            }elseif (!empty($find_user)) {
+            } elseif (!empty($find_user)) {
                 $data['connect_user_id'] = $find_user->id;
                 $data['profile_image']   = $find_user->profile_image;
-            }else{
+            } else {
                 $data['connect_user_id'] = NULL;
             }
             $data['card_id'] = $card->id;
@@ -106,7 +111,7 @@ class HomeController extends Controller
             // return redirect()->back();
             return response()->json([
                 'status' => 0,
-                'msg'=> trans('Something wrong ! please try again')
+                'msg' => trans('Something wrong ! please try again')
             ]);
         }
         DB::commit();
@@ -117,34 +122,33 @@ class HomeController extends Controller
         // return redirect()->back();
         return response()->json([
             'status' => 1,
-            'msg'=> trans('Connection send successfully')
+            'msg' => trans('Connection send successfully')
         ]);
-
     }
 
 
     public function getPreview($cardurl)
     {
-        $user = DB::table('users')->where('username',$cardurl)->first();
+        $user = DB::table('users')->where('username', $cardurl)->first();
 
-        if($user == null){
-            $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding','users.connection_title')
-            ->where('business_cards.card_url', $cardurl)
-            ->leftJoin('users','users.id','business_cards.user_id')
-            ->leftJoin('plans','plans.id','users.plan_id')
-            ->first();
-            if($cardinfo == null){
+        if ($user == null) {
+            $cardinfo = BusinessCard::select('business_cards.*', 'plans.plan_name', 'plans.hide_branding', 'users.connection_title')
+                ->where('business_cards.card_url', $cardurl)
+                ->leftJoin('users', 'users.id', 'business_cards.user_id')
+                ->leftJoin('plans', 'plans.id', 'users.plan_id')
+                ->first();
+            if ($cardinfo == null) {
                 return redirect()->route('user.card.create');
             }
-        }else{
+        } else {
             //by username
-            $cardinfo = BusinessCard::select('business_cards.*','plans.plan_name','plans.hide_branding','users.connection_title')
-            ->where('business_cards.id', $user->active_card_id)
-            ->leftJoin('users','users.id','business_cards.user_id')
-            ->leftJoin('plans','plans.id','users.plan_id')
-            ->first();
+            $cardinfo = BusinessCard::select('business_cards.*', 'plans.plan_name', 'plans.hide_branding', 'users.connection_title')
+                ->where('business_cards.id', $user->active_card_id)
+                ->leftJoin('users', 'users.id', 'business_cards.user_id')
+                ->leftJoin('plans', 'plans.id', 'users.plan_id')
+                ->first();
         }
-        if($cardinfo){
+        if ($cardinfo) {
 
             // if(checkPackageValidity($cardinfo->user_id) == false){
 
@@ -152,28 +156,28 @@ class HomeController extends Controller
 
             // }
             $cardinfo->contacts = DB::table('business_fields')
-            ->leftJoin('social_icon as si','si.id','=','business_fields.icon_id')
-            ->select('business_fields.*','si.icon_title','si.icon_name','si.icon_color','si.main_link','si.is_paid')
-            ->where('business_fields.card_id',$cardinfo->id)
-            ->where('business_fields.status',1)
-            ->orderBy('business_fields.position','ASC')
-            ->get();
-            DB::table('business_cards')->where('id',$cardinfo->id)->increment('total_hit', 1);
+                ->leftJoin('social_icon as si', 'si.id', '=', 'business_fields.icon_id')
+                ->select('business_fields.*', 'si.icon_title', 'si.icon_name', 'si.icon_color', 'si.main_link', 'si.is_paid')
+                ->where('business_fields.card_id', $cardinfo->id)
+                ->where('business_fields.status', 1)
+                ->orderBy('business_fields.position', 'ASC')
+                ->get();
+            DB::table('business_cards')->where('id', $cardinfo->id)->increment('total_hit', 1);
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);
-            if(Auth::user() && ($cardinfo->user_id == Auth::id()) ){
-            }else{
+            if (Auth::user() && ($cardinfo->user_id == Auth::id())) {
+            } else {
                 // if($cardinfo->status == 0){
                 //     Toastr::warning('This card is not active now');
                 //     return redirect()->route('home');
                 // }
-                if($cardinfo->status == 2){
+                if ($cardinfo->status == 2) {
                     Toastr::warning('This card is not available');
                     return redirect()->route('home');
                 }
             }
-            return view('card_preview', compact('cardinfo','user'));
-        }else{
+            return view('card_preview', compact('cardinfo', 'user'));
+        } else {
 
             Toastr::warning('This card is not available please create your desired card');
             return redirect()->route('user.card.create');
@@ -181,12 +185,13 @@ class HomeController extends Controller
     }
 
 
-    public function getPage($slug){
-       $data = DB::table('custom_pages')->where('url_slug',$slug)->first();
-       if(empty($data)){
-        abort(404);
-       }
-        return view('pages.index',compact('data'));
+    public function getPage($slug)
+    {
+        $data = DB::table('custom_pages')->where('url_slug', $slug)->first();
+        if (empty($data)) {
+            abort(404);
+        }
+        return view('pages.index', compact('data'));
     }
 
     public function downloadVcard(Request $request, $id)
@@ -197,10 +202,14 @@ class HomeController extends Controller
             return view('errors.404');
         } else {
             $card = DB::table('business_cards')->select(
-                'business_cards.id','business_cards.profile',
-                'business_cards.card_url','business_cards.title',
-                'business_cards.title2','business_cards.sub_title',
-                'business_cards.description','business_cards.company_name',
+                'business_cards.id',
+                'business_cards.profile',
+                'business_cards.card_url',
+                'business_cards.title',
+                'business_cards.title2',
+                'business_cards.sub_title',
+                'business_cards.description',
+                'business_cards.company_name',
                 'business_cards.company_websitelink',
                 'business_cards.ccode',
                 'business_cards.phone_number',
@@ -209,93 +218,84 @@ class HomeController extends Controller
                 'business_cards.designation',
                 'business_cards.bio',
                 'users.dob'
-                )
+            )
                 ->where('business_cards.card_id', $id)
                 ->leftJoin('users', 'business_cards.user_id', '=', 'users.id')
                 ->first();
             $contacts = DB::table('business_fields as bf')
-            ->select('bf.type','bf.label','bf.icon_image','bf.content','bf.position')
-            ->where('bf.card_id',$card->id)
-            ->where('bf.status',1)
-            ->orderBy('bf.position','ASC')
-            ->get();
-                $vcard = new VCard();
-                if(!empty($card->card_url)){
-                    $vcard_url = URL::to($card->card_url);
-                    $vcard->addURL($vcard_url);
-                }
-                // define variables
-                if(!empty($card->title2)){
-                    $lastname = $card->title2;
-                }else{
-                    $lastname = '';
-                }
-                $firstname = $card->title;
-                $additional = '';
-                $prefix = '';
-                $suffix = '';
-                $url = $card->company_websitelink;
-                $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
-                $vcard->addEmail($card->card_email ?? Auth::user()->email);
+                ->select('bf.type', 'bf.label', 'bf.icon_image', 'bf.content', 'bf.position')
+                ->where('bf.card_id', $card->id)
+                ->where('bf.status', 1)
+                ->orderBy('bf.position', 'ASC')
+                ->get();
+            $vcard = new VCard();
+            if (!empty($card->card_url)) {
+                $vcard_url = URL::to($card->card_url);
+                $vcard->addURL($vcard_url);
+            }
+            // define variables
+            if (!empty($card->title2)) {
+                $lastname = $card->title2;
+            } else {
+                $lastname = '';
+            }
+            $firstname = $card->title;
+            $additional = '';
+            $prefix = '';
+            $suffix = '';
+            $url = $card->company_websitelink;
+            $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
+            $vcard->addEmail($card->card_email ?? Auth::user()->email);
 
-                if(!empty($card->bio)){
-                    $vcard->addNote($card->bio);
-                }
-                if(!empty($card->phone_number)){
-                    $vcard->addPhoneNumber($card->phone_number,'HOME');
-                }
+            if (!empty($card->bio)) {
+                $vcard->addNote($card->bio);
+            }
+            if (!empty($card->phone_number)) {
+                $vcard->addPhoneNumber($card->phone_number, 'HOME');
+            }
 
-                if($card->designation){
-                    $vcard->addRole($card->designation);
-                    $vcard->addJobtitle($card->designation);
-                }
-                if(!empty($card->company_name)){
-                    $vcard->addCompany($card->company_name);
-                }
-                if(!empty($card->dob))
-                {
-                    $vcard->addBirthday($card->dob);
-                }
+            if ($card->designation) {
+                $vcard->addRole($card->designation);
+                $vcard->addJobtitle($card->designation);
+            }
+            if (!empty($card->company_name)) {
+                $vcard->addCompany($card->company_name);
+            }
+            if (!empty($card->dob)) {
+                $vcard->addBirthday($card->dob);
+            }
 
-                if(!empty($card->profile) && file_exists(public_path($card->profile))){
-                    $profile = str_replace(' ', '%20', public_path($card->profile));
-                    $vcard->addPhoto($profile);
-                }
-                // if(!empty($card->logo) && file_exists(public_path($card->logo))){
-                //     $logo = str_replace(' ', '%20', public_path($card->logo));
-                //     $vcard->addLogo($logo);
-                // }
+            if (!empty($card->profile) && file_exists(public_path($card->profile))) {
+                $profile = str_replace(' ', '%20', public_path($card->profile));
+                $vcard->addPhoto($profile);
+            }
+            // if(!empty($card->logo) && file_exists(public_path($card->logo))){
+            //     $logo = str_replace(' ', '%20', public_path($card->logo));
+            //     $vcard->addLogo($logo);
+            // }
 
-                if(!empty($contacts) && count($contacts) > 0){
-                    //link,mail,mobile,number,text,username,file,address,app
-                    foreach ($contacts as $key => $contact) {
-                        if ($contact->type=='link'){
-                            $vcard->addURL($contact->content,$contact->label);
-                        }
-                        elseif ($contact->type=='mail'){
-                            $vcard->addEmail($contact->content,$contact->label);
-                        }elseif ($contact->type=='mobile'){
-                            $vcard->addPhoneNumber($contact->content,$contact->label);
-
-                        }elseif ($contact->type=='number'){
-                            $vcard->addPhoneNumber($contact->content,$contact->label);
-                        }
-                        elseif ($contact->type=='address'){
-                            $vcard->addAddress($contact->content,$contact->label);
-                        }
-                        elseif ($contact->type=='date'){
-                            $vcard->addBirthday ($contact->content);
-                        }
-                        elseif ($contact->type=='username'){
-                            $vcard->addURL($contact->content,$contact->label);
-
-                        }
-                        else{
-
-                        }
+            if (!empty($contacts) && count($contacts) > 0) {
+                //link,mail,mobile,number,text,username,file,address,app
+                foreach ($contacts as $key => $contact) {
+                    if ($contact->type == 'link') {
+                        $vcard->addURL($contact->content, $contact->label);
+                    } elseif ($contact->type == 'mail') {
+                        $vcard->addEmail($contact->content, $contact->label);
+                    } elseif ($contact->type == 'mobile') {
+                        $vcard->addPhoneNumber($contact->content, $contact->label);
+                    } elseif ($contact->type == 'number') {
+                        $vcard->addPhoneNumber($contact->content, $contact->label);
+                    } elseif ($contact->type == 'address') {
+                        $vcard->addAddress($contact->content, $contact->label);
+                    } elseif ($contact->type == 'date') {
+                        $vcard->addBirthday($contact->content);
+                    } elseif ($contact->type == 'username') {
+                        $vcard->addURL($contact->content, $contact->label);
+                    } else {
                     }
                 }
-            DB::table('business_cards')->where('card_id',$id)->increment('total_vcf_download', 1);
+            }
+            DB::table('business_cards')->where('card_id', $id)->increment('total_vcf_download', 1);
             return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
         }
     }
@@ -306,41 +306,39 @@ class HomeController extends Controller
         $data = BusinessCard::where('card_id', $id)->first();
 
         $user_plan = getPlan($data->user_id);
-        if(empty($data)){
+        if (empty($data)) {
             abort(404);
         }
-        $qr_name = $data->title.'_'.$data->title2.'_qr_';
+        $qr_name = $data->title . '_' . $data->title2 . '_qr_';
         $base_name = preg_replace('/\..+$/', '', $qr_name);
-        $base_name = explode(' ',$base_name);
-        $base_name = implode('_',$base_name);
+        $base_name = explode(' ', $base_name);
+        $base_name = implode('_', $base_name);
         $base_name = Str::lower($base_name);
-        $file_name = $base_name.uniqid().".".'png';
+        $file_name = $base_name . uniqid() . "." . 'png';
         $path = public_path('assets/uploads/qr-code/');
-        $file_path = $path.$file_name;
+        $file_path = $path . $file_name;
 
-        if($data->user->active_card_id == $data->id){
+        if ($data->user->active_card_id == $data->id) {
             $card_url = $data->user->username;
-        }else{
+        } else {
             $card_url = $data->card_url;
         }
 
         if (isFreePlan($data->user_id)) {
             $image = QrCode::format('png')
-            ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
-            ->size(800)->color(74, 74, 74, 80)->generate(url($card_url), $file_path);
-        }
-        elseif (!empty($data->logo)  && $user_plan->is_qr_code==1) {
+                ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
+                ->size(800)->color(74, 74, 74, 80)->generate(url($card_url), $file_path);
+        } elseif (!empty($data->logo)  && $user_plan->is_qr_code == 1) {
             $image = QrCode::format('png')
-            ->merge(public_path($data->logo), 0.2, true)
-            ->size(800)->color(74, 74, 74, 80)->generate(url($card_url), $file_path);
-        }
-        else{
+                ->merge(public_path($data->logo), 0.2, true)
+                ->size(800)->color(74, 74, 74, 80)->generate(url($card_url), $file_path);
+        } else {
             $image = QrCode::format('png')
-            ->size(800)->color(74, 74, 74, 80)
-            ->generate(url($card_url), $file_path);
+                ->size(800)->color(74, 74, 74, 80)
+                ->generate(url($card_url), $file_path);
         }
 
-        DB::table('business_cards')->where('card_id',$id)->increment('total_qr_download', 1);
+        DB::table('business_cards')->where('card_id', $id)->increment('total_qr_download', 1);
 
         return Response::download($file_path);
     }
@@ -353,15 +351,15 @@ class HomeController extends Controller
         $name = $request->name ?? $card->title . ' ' . $card->title2;
         $comment = $request->comment ?? '';
         Mail::to($request->email)->send(new SendCard($card_url, $name, $comment));
-        if($request->ajax()){
-            return response()->json(['status'=> 1,'message' => 'Card send successfully!'], 200);
+        if ($request->ajax()) {
+            return response()->json(['status' => 1, 'message' => 'Card send successfully!'], 200);
         }
         Toastr::success(trans('Card send successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
-
     }
 
-    public function postContact(Request $request){
+    public function postContact(Request $request)
+    {
         $data               = [];
         $data['name']       = $request->name;
         $data['email']      = $request->email;
@@ -374,79 +372,88 @@ class HomeController extends Controller
     }
 
 
-    public function subscribe(Request $request){
+    public function subscribe(Request $request)
+    {
         $data               = [];
         $data['email']      = $request->email;
         DB::table('subscribers')->insert([
-            'email'=>$request->email,
-            'created_at'=> date('Y-m-d H:i:s'),
+            'email' => $request->email,
+            'created_at' => date('Y-m-d H:i:s'),
         ]);
         Mail::to($this->settings->address)->send(new SendContact($data));
         Toastr::success(trans('You have successfully subscribed!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
-    public function getBlog(){
+    public function getBlog()
+    {
         return view('pages.blog');
     }
 
-    public function getBlogDetails(){
+    public function getBlogDetails()
+    {
         return view('pages.blog_details');
     }
 
 
     public function rss()
     {
-    return response()->view('rss.index')->header('Content-Type', 'application/xml');
+        return response()->view('rss.index')->header('Content-Type', 'application/xml');
     }
 
-    public function getAboutUs(){
-        $page = DB::table('custom_pages')->where('url_slug','about')->first();
-        return view('pages.common',compact('page'));
+    public function getAboutUs()
+    {
+        $page = DB::table('custom_pages')->where('url_slug', 'about')->first();
+        return view('pages.common', compact('page'));
     }
 
-    public function getContact(){
-        $page = DB::table('custom_pages')->where('url_slug','contact-us')->first();
-        return view('pages.common',compact('page'));
+    public function getContact()
+    {
+        $page = DB::table('custom_pages')->where('url_slug', 'contact-us')->first();
+        return view('pages.common', compact('page'));
     }
 
-    public function getdDataDeletion(){
-        $page = DB::table('custom_pages')->where('url_slug','data-deletion-instructions')->first();
+    public function getdDataDeletion()
+    {
+        $page = DB::table('custom_pages')->where('url_slug', 'data-deletion-instructions')->first();
 
-        return view('pages.common',compact('page'));
+        return view('pages.common', compact('page'));
     }
 
-    public function getHelp(){
-        $page = DB::table('custom_pages')->where('url_slug','help')->first();
+    public function getHelp()
+    {
+        $page = DB::table('custom_pages')->where('url_slug', 'help')->first();
 
-        return view('pages.common',compact('page'));
+        return view('pages.common', compact('page'));
     }
 
-    public function getTutorials(){
-        $page = DB::table('custom_pages')->where('url_slug','tutorials')->first();
+    public function getTutorials()
+    {
+        $page = DB::table('custom_pages')->where('url_slug', 'tutorials')->first();
 
-        return view('pages.common',compact('page'));
+        return view('pages.common', compact('page'));
     }
 
 
-    public function getPricing(){
-        $plans = DB::table('plans')->where('status',1)->get();
+    public function getPricing()
+    {
+        $plans = DB::table('plans')->where('status', 1)->get();
         $currency = Currency::where('is_default', 1)->first();
 
-        return view('pages.plans',compact('plans','currency'));
+        return view('pages.plans', compact('plans', 'currency'));
     }
 
 
     public function shopPage()
     {
-         return view('pages.shop');
+        $products = Product::paginate(12);
+
+        return view('pages.shop', compact('products'));
     }
 
-    public function shopDetails()
+    public function shopDetails(Product $product)
     {
-        return view('pages.shop_details');
+        $product->load('hasImages');
+        return view('pages.shop_details', compact('product'));
     }
-
-
-
 }

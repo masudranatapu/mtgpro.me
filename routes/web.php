@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,13 @@ Route::post('contact', ['as' => 'contact.post', 'uses' => 'HomeController@postCo
 Route::get('help', ['as' => 'help', 'uses' => 'HomeController@getHelp']);
 Route::get('tutorials', ['as' => 'tutorials', 'uses' => 'HomeController@getTutorials']);
 Route::get('shop', ['as' => 'shop', 'uses' => 'HomeController@shopPage']);
-Route::get('shop/details', ['as' => 'product.details', 'uses' => 'HomeController@shopDetails']);
+Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'HomeController@shopDetails']);
+
+Route::get('cart', [ProductController::class, 'cart'])->name('cart');
+Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add.to.cart');
+Route::post('add-to-cart/', [ProductController::class, 'addToCartPost'])->name('addtocart');
+Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
+Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
 
 
 

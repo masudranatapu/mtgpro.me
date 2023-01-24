@@ -1,8 +1,8 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 
 @section('porducts', 'active')
-@section('title'){{ __('Product Create') }} @endsection
-@section('page-name') {{ __('Product Create') }} @endsection
+@section('title'){{ __('Product List') }} @endsection
+@section('page-name') {{ __('Product List') }} @endsection
 @push('css')
 @endpush
 <?php
@@ -34,7 +34,7 @@ $rows = $data ?? [];
                             <div class="card-header">
                                 <div class="col">
                                     <div class="float-left">
-                                        {{ __('Product Add') }}
+                                        {{ __('Product List') }}
                                     </div>
                                 </div>
                                 <div class="col">
@@ -45,16 +45,17 @@ $rows = $data ?? [];
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.product.store') }}" method="post"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('admin.product.update', ['product' => $product->id]) }}"
+                                    method="post" enctype="multipart/form-data">
+                                    @method('PUT')
                                     @csrf
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-ml-12 col-lg-12 col-xl-12 mb-2">
                                             <div class="input-field">
-                                                <img src="{{ asset('assets/img/no-image.jpg') }}" id="image"
-                                                    width="100px" onclick="pro()" ;>
-                                                <input required type="file" name="images" id="file"
-                                                    onchange="fileView()" style="display: none">
+                                                <img src="{{ getPhoto($product->thumbnail) }}" id="image" width="100px"
+                                                    onclick="pro()" ;>
+                                                <input type="file" name="images" id="file" onchange="fileView()"
+                                                    style="display: none">
                                             </div>
                                             <label for="images">Thumbnail Images</label>
                                         </div>
@@ -63,7 +64,7 @@ $rows = $data ?? [];
                                                 <label for="name">{{ __('Product Name') }}</label>
                                                 <input required type="text" name="name" id="name"
                                                     class="form-control @error('name') border-danger @enderror"
-                                                    value="{{ old('name') }}" />
+                                                    value="{{ old('name') ?? $product->product_name }}" />
                                                 @error('name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -74,7 +75,7 @@ $rows = $data ?? [];
                                                 <label for="price">{{ __('Product Unit Price') }}</label>
                                                 <input required type="number" name="price" id="price"
                                                     class="form-control @error('price') border-danger @enderror"
-                                                    value="{{ old('price') }}" />
+                                                    value="{{ old('price') ?? $product->unit_price }}" />
                                                 @error('price')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -85,7 +86,7 @@ $rows = $data ?? [];
                                                 <label for="regular_price">{{ __('Product Regular Price') }}</label>
                                                 <input required type="number" name="regular_price" id="regular_price"
                                                     class="form-control @error('regular_price') border-danger @enderror"
-                                                    value="{{ old('regular_price') }}" />
+                                                    value="{{ old('regular_price') ?? $product->unit_price_regular }}" />
                                                 @error('regular_price')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -98,10 +99,10 @@ $rows = $data ?? [];
                                                     class="form-control @error('product_type') border-danger @enderror"
                                                     id="product_type">
                                                     <option class="d-none" value="">Select Product Type</option>
-                                                    <option @if (old('product_type') == 1) selected @endif
+                                                    <option @if ($product->product_type == 1) selected @endif
                                                         value="1">Virtual
                                                     </option>
-                                                    <option @if (old('product_type') == 2) selected @endif
+                                                    <option @if ($product->product_type == 2) selected @endif
                                                         value="2">
                                                         Physical</option>
 
@@ -118,8 +119,12 @@ $rows = $data ?? [];
                                                     class="form-control @error('product_status') border-danger @enderror"
                                                     id="product_status">
                                                     <option class="d-none" value="">Select Product status</option>
-                                                    <option value="1">Publish</option>
-                                                    <option value="0">Draft</option>
+                                                    <option @if ($product->details) selected @endif
+                                                        value="1">Publish
+                                                    </option>
+                                                    <option @if (!$product->details) selected @endif
+                                                        value="0">Draft
+                                                    </option>
 
                                                 </select>
                                                 @error('product_status')
@@ -132,7 +137,7 @@ $rows = $data ?? [];
                                             <div class="input-field">
                                                 <label class="active">Details</label>
                                                 <textarea required name="details" id="details" cols="25" rows="8"
-                                                    class="form-control @error('details') border-danger @enderror">{{ old('details') }}</textarea>
+                                                    class="form-control @error('details') border-danger @enderror">{{ old('details') ?? $product->details }}</textarea>
                                             </div>
                                         </div>
 
@@ -151,6 +156,9 @@ $rows = $data ?? [];
 
 
     @push('scripts')
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/js/image-uploder.js') }}"></script>
+
         <script>
             function fileView() {
                 var imgInp = document.getElementById('file');
