@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Theme;
@@ -40,7 +42,7 @@ class DashboardController extends Controller
 
         $settings = Setting::where('status', 1)->first();
 
-        if(Auth::user()->user_type == '1'){
+        if (Auth::user()->user_type == '1') {
             $config = DB::table('config')->get();
             $currency = Currency::where('iso_code', $config['1']->config_value)->first();
             $overall_income = Transaction::where('payment_status', 'Success')->sum('transaction_amount');
@@ -53,25 +55,21 @@ class DashboardController extends Controller
             $plans = Plan::where('status', 1)->count();
             $gateways = Gateway::where('status', 1)->count();
             $whatsapp_stores = BusinessCard::where('card_type', 'store')->count();
-            $card_count  = BusinessCard::where('status',1)->count();
+            $card_count  = BusinessCard::where('status', 1)->count();
             // $signatures = TemplateContent::count();
 
 
-            return view('admin.dashboard', compact('overall_income', 'today_income', 'overall_users', 'today_users', 'plans', 'gateways', 'currency', 'settings', 'whatsapp_stores','card_count'));
-
-
-        }else{
+            return view('admin.dashboard', compact('overall_income', 'today_income', 'overall_users', 'today_users', 'plans', 'gateways', 'currency', 'settings', 'whatsapp_stores', 'card_count'));
+        } else {
 
 
 
             return redirect()->route('user.setting');
-
         }
-
     }
 
 
-/*
+    /*
     public function ContactMsg()
     {
         $settings = Setting::where('status', 1)->first();
@@ -161,31 +159,34 @@ class DashboardController extends Controller
     */
 
 
-    public function profile(){
-        if(isMobile() && (Auth::user()->user_type == 2)){
+    public function profile()
+    {
+        if (isMobile() && (Auth::user()->user_type == 2)) {
             return view('mobile.profile.profile');
         }
         return view('desktop.profile.profile');
     }
 
-    public function profileEdit(){
-        if(isMobile() && (Auth::user()->user_type == 2)){
+    public function profileEdit()
+    {
+        if (isMobile() && (Auth::user()->user_type == 2)) {
             return view('mobile.profile.profile-edit');
         }
         return view('desktop.profile.profile-edit');
     }
 
-    public function profileUpdate(Request $request){
+    public function profileUpdate(Request $request)
+    {
         DB::beginTransaction();
         try {
 
             $user = User::find(Auth::user()->id);
-            if($request->name){
+            if ($request->name) {
                 $user->name    = $request->name;
             }
-            if($request->email){
-                $checkEmail = DB::table('users')->where('email',$request->email)->whereNotNull('email')->first();
-                if(!empty($checkEmail)){
+            if ($request->email) {
+                $checkEmail = DB::table('users')->where('email', $request->email)->whereNotNull('email')->first();
+                if (!empty($checkEmail)) {
                     Toastr::error('This email already used ! Please Try with another');
                     return redirect()->back();
                 }
@@ -194,14 +195,13 @@ class DashboardController extends Controller
 
             if ($request->logo_path) {
                 $imagePath = public_path($user->profile_image);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
                 $user->profile_image    = asset($request->logo_path);
             }
 
             $user->update();
-
         } catch (\Exception $e) {
             dd($e);
             DB::rollback();
@@ -211,10 +211,5 @@ class DashboardController extends Controller
         DB::commit();
         Toastr::success('Profile Successfully updated');
         return redirect()->back();
-        }
-
-
-
-
-
+    }
 }
