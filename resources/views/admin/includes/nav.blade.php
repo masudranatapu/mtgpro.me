@@ -83,7 +83,7 @@
                         <a class="nav-link" href="{{ route('admin.product.index') }}">
                             <i class="fa fa-user-alt"></i> &nbsp;
                             <span class="nav-link-title">
-                                {{ __('Product') }}
+                                {{ __('Products') }}
                             </span>
                         </a>
                     </li>
@@ -156,23 +156,32 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                {{ __('Settings') }}
+                                {{ __('More') }}
                             </span>
                         </a>
                         <div class="dropdown-menu">
+
+                            <a href="{{ route('admin.orders')}}"
+                            class="dropdown-item @yield('product_ordrs')">
+                            {{ __('Orders') }}
+                            </a>
+
                             <a href="{{ route('admin.settings') }}"
                                 class="dropdown-item @yield('setting')">{{ __('General Settings') }}</a>
                             <a href="{{ route('admin.payment.methods') }}"
                                 class="dropdown-item @yield('payment_method')">{{ __('Payment Methods') }}</a>
+
                             <a href="{{ route('admin.transactions') }}"
-                                class="dropdown-item @yield('transaction')">{{ __('Transactions') }}</a>
+                                class="dropdown-item @yield('transaction')">
+                                {{ __('Transactions') }}
+                            </a>
                             <a class="dropdown-item @yield('marketing_materials_listn')"
                                 href="{{ route('admin.marketing.materials') }}">
                                 {{ __('Marketing Materials') }}
                             </a>
 
-                            <a href="{{ route('admin.pages') }}"
-                                class="dropdown-item @yield('page')">{{ __('Pages') }}</a>
+                            <a href="{{ route('admin.edit.home', 'home')}}"
+                                class="dropdown-item @yield('page')">{{ __('Home Pages') }}</a>
                             <a href="{{ route('admin.custom-page.list') }}"
                                 class="dropdown-item @yield('custom_page_list')">{{ __('Custom Pages') }}</a>
                             <a href="{{ route('admin.faq.list') }}"
