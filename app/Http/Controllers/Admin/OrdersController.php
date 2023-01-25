@@ -11,16 +11,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\ProductOrders;
 
-class ProductOrdersController extends Controller
+class OrdersController extends Controller
 {
    public function index(){
 
     $productOrders = DB::table('orders')
                      ->leftJoin('users', 'users.id', '=', 'orders.user_id')
                      ->select('orders.*', 'users.name as user_name')
-                     ->orderBy('id','desc')->paginate(5);   
-                  
-    return view('admin.product-orders.index', compact('productOrders'));
+                     ->orderBy('id','desc')->paginate(5);
+
+    return view('admin.orders.index', compact('productOrders'));
    }
 
    public function edit($id){
@@ -32,7 +32,7 @@ class ProductOrdersController extends Controller
                         ->first();
 
 
-        return view('admin.product-orders.edit',compact('productOrder'));
+        return view('admin.orders.edit',compact('productOrder'));
    }
 
    public function update(Request $request, $id){
@@ -54,7 +54,7 @@ class ProductOrdersController extends Controller
         ]);
 
        $productOrder = Order::find($id);
-      
+
         $productOrder->order_number = $request->order_number;
         $productOrder->quantity =       $request->quantity;
         $productOrder->discount =       $request->discount;
@@ -67,16 +67,16 @@ class ProductOrdersController extends Controller
         $productOrder->payment_status = $request->payment_status;
         $productOrder->type = $request->type;
         $productOrder->save();
-        
-       
+
+
     }catch(\Exception $e){
             DB::rollback();
             Toastr::error(trans('Data not Updated !'), 'Error', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('admin.product.orders.edit',$id);
+            return redirect()->route('admin.orders.edit',$id);
 
     }
         DB::commit();
         Toastr::success(trans('Data Successfully Updatd !'), 'Success', ["positionClass" => "toast-top-center"]);
-        return redirect()->route('admin.product.orders');
+        return redirect()->route('admin.orders');
    }
 }

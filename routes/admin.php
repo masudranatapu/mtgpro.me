@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\MarketingMaterialsController;
-use App\Http\Controllers\Admin\ProductOrdersController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\User\PlanController;
 use App\Models\MarketingMaterials;
@@ -179,10 +179,10 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     });
 
     //Product Orders
-    Route::prefix('product-orders')->group(function () {
-        Route::get('/', [ProductOrdersController::class, 'index'])->name('product.orders');
-        Route::get('/edit/{id}',[ProductOrdersController::class,'edit'])->name('product.orders.edit');
-        Route::post('/update/{id}',[ProductOrdersController::class,'update'])->name('product.orders.update');
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrdersController::class, 'index'])->name('orders');
+        Route::get('/edit/{id}',[OrdersController::class,'edit'])->name('orders.edit');
+        Route::post('/update/{id}',[OrdersController::class,'update'])->name('orders.update');
 
 
     });

@@ -24,8 +24,8 @@
                             <div class="col">
                                 <div class="float-left">
                                     {{ __('Product Orders') }}
-                                    
-                                    
+
+
                                 </div>
                             </div>
                             <div class="col">
@@ -71,7 +71,7 @@
                                                         @elseif ($value->payment_status == 1)
                                                             <span class="badge bg-green">{{ __('Paid') }}</span>
                                                         @else
-                                                         <span class="badge bg-orange">{{ __('Pending') }}</span>    
+                                                         <span class="badge bg-orange">{{ __('Pending') }}</span>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -85,10 +85,10 @@
                                                             </a>
                                                             <div class="dropdown-menu">
 
-                                                                <a href="{{ route('admin.product.orders.edit',$value->id)}}"
+                                                                <a href="{{ route('admin.orders.edit',$value->id)}}"
                                                                     class="dropdown-item btn-sm">{{ __('Edit') }}</a>
 
-                                                               
+
                                                                 <a href=""
                                                                     class="dropdown-item btn-sm">{{ __('View') }}</a>
                                                             </div>

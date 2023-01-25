@@ -25,12 +25,12 @@
                             </div>
                             <div class="col">
                                 <div class="float-end">
-                                    <a href="{{ route('admin.product.orders')}}" class="btn btn-primary">{{ __('Back')}}</a>
+                                    <a href="{{ route('admin.orders')}}" class="btn btn-primary">{{ __('Back')}}</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.product.orders.update',$productOrder->id)}}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('admin.orders.update',$productOrder->id)}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-xl-10">
@@ -109,7 +109,7 @@
                                                             value="">
                                                         {!! $errors->first('payment_method', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
-                                                </div>   
+                                                </div>
 
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
@@ -136,7 +136,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4 col-xl-4 my-3">
@@ -154,7 +154,7 @@
                                                                 </path>
                                                                 <line x1="16" y1="5" x2="19" y2="8"></line>
                                                             </svg>
-                                                            {{ __('Update') }}    
+                                                            {{ __('Update') }}
                                                         </button>
                                                     </div>
                                                 </div>
