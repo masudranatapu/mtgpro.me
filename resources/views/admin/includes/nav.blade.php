@@ -156,7 +156,7 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                {{ __('Settings') }}
+                                {{ __('More') }}
                             </span>
                         </a>
                         <div class="dropdown-menu">
@@ -164,8 +164,14 @@
                                 class="dropdown-item @yield('setting')">{{ __('General Settings') }}</a>
                             <a href="{{ route('admin.payment.methods') }}"
                                 class="dropdown-item @yield('payment_method')">{{ __('Payment Methods') }}</a>
+                            <a href="{{ route('admin.product.orders')}}"
+                                class="dropdown-item @yield('product_ordrs')">
+                                {{ __('Product Orders') }}
+                            </a>
                             <a href="{{ route('admin.transactions') }}"
-                                class="dropdown-item @yield('transaction')">{{ __('Transactions') }}</a>
+                                class="dropdown-item @yield('transaction')">
+                                {{ __('Transactions') }}
+                            </a>
                             <a class="dropdown-item @yield('marketing_materials_listn')"
                                 href="{{ route('admin.marketing.materials') }}">
                                 {{ __('Marketing Materials') }}

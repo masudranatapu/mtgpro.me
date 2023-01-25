@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\MarketingMaterialsController;
+use App\Http\Controllers\Admin\ProductOrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\User\PlanController;
 use App\Models\MarketingMaterials;
@@ -176,4 +177,14 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::post('/images/upload/{product}', [ProductController::class, 'imagesUpload'])->name('product.images.upload');
         Route::delete('/images/delete/{productImage}', [ProductController::class, 'imagesDelete'])->name('product.images.delete');
     });
+
+    //Product Orders
+    Route::prefix('product-orders')->group(function () {
+        Route::get('/', [ProductOrdersController::class, 'index'])->name('product.orders');
+        Route::get('/edit/{id}',[ProductOrdersController::class,'edit'])->name('product.orders.edit');
+        Route::post('/update/{id}',[ProductOrdersController::class,'update'])->name('product.orders.update');
+
+
+    });
+
 });
