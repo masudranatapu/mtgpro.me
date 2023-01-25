@@ -48,8 +48,35 @@
                         </tr>
                     @endif
                 </tbody>
+                <tfoot>
+
+                    <tr>
+
+                        <td colspan="5" class="text-end">
+                            <h3><strong>Total ${{ $total }}</strong></h3>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan="4"></td>
+                        <td class="text-end">
+
+
+                            <a href="{{ url('/') }}" class="btn btn-primary"><i class="fa fa-angle-left"></i> Continue
+                                Shopping</a>
+
+                            <button class="btn btn-primary">Checkout</button>
+
+                        </td>
+
+                    </tr>
+
+                </tfoot>
             </table>
+
         </div>
+
     </div>
 @endsection
 

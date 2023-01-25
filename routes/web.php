@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -44,6 +44,7 @@ Route::post('add-to-cart/', [ProductController::class, 'addToCartPost'])->name('
 Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
 
+Route::get('products/checkout', [CheckoutController::class, 'checkOut'])->name('productCheckOut');
 
 
 

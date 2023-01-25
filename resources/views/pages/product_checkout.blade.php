@@ -1,6 +1,5 @@
-@extends('user.layouts.app')
-@section('title') {{ __('Checkout') }} @endsection
-@section('checkout', 'active')
+@extends('layouts.app')
+
 @push('custom_css')
     <link rel="stylesheet" href="{{ asset('assets/css/countrySelect.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/intlTelInput.css') }}">
@@ -142,32 +141,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        @if ($plan->is_yearly)
-                                                            {{ $plan->plan_name }} - {{ __('1 Year') }}
-                                                        @else
-                                                            {{ $plan->plan_name }} - {{ __('1 Month') }}
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td class="text-bold"> $ @if ($plan->is_yearly)
-                                                        {{ $plan->plan_price_yearly }}
-                                                    @else
-                                                        {{ $plan->plan_price_monthly }}
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="h6 text-bold">{{ __('Total Payable') }}</td>
-                                                <td class="w-1 text-bold h6"> $ @if ($plan->is_yearly)
-                                                        {{ $plan->plan_price_yearly }}
-                                                    @else
-                                                        {{ $plan->plan_price_monthly }}
-                                                    @endif
-                                                </td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
