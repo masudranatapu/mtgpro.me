@@ -1,6 +1,16 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 @push('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<style>
+        img {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 85px;
+        height: 80px;
+        margin-top: 9px;
+        }
+    </style>
 @endpush('css')
 @section('content')
 @section('title') {{ __('Marketing Materials Edit')}} @endsection
@@ -41,15 +51,18 @@
                                         @endif
                                     </div>
                                     <div class="mb-3">
-                                       <label class="form-label" id="image">{{ __('Image') }} <span class="text-danger"><small>Prefered size(200 x 200 px)</small></span></label>
-                                       <input type="file" class="form-control" name="image" placeholder="{{ __('Image') }}" value=""required>
+                                       <label class="form-label" id="image">{{ __('Image') }} <span class="text-danger"><small>Prefered size(400 x 400 px)</small></span></label>
+                                       <input type="file" class="form-control" name="image" placeholder="{{ __('Image') }}" value="">
+                                       <img src="{{ $marketingMetarial->image}}" alt="Paris">
                                         @if($errors->has('image'))
                                             <span class="help-block text-danger">{{ $errors->first('image') }}</span>
                                         @endif
                                     </div>
                                     <div class="mb-3">
                                        <label class="form-label" id="file">{{ __('PDF') }}</label>
-                                       <input type="file" class="form-control" name="file" placeholder="{{ __('PDF') }}" value="" accept="application/pdf,application/vnd.ms-excel" required>
+                                       <input type="file" class="form-control" name="file" placeholder="{{ __('PDF') }}" value="" accept="application/pdf,application/vnd.ms-excel" >
+                                        <a href="{{$marketingMetarial->file}}" target="_blank" download><span class="text-success"><small>Download PDF</small></span></a>
+
                                         @if($errors->has('file'))
                                             <span class="help-block text-danger">{{ $errors->first('file') }}</span>
                                         @endif
