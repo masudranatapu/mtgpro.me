@@ -38,8 +38,8 @@
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <label class="form-label required">{{ __('User') }}</label>
-                                                        <input type="text" class="form-control" name="user_id"
-                                                            placeholder="{{ __('User') }}"
+                                                        <input type="hidden" name="user_id" value="{{$productOrder->user_id}}">
+                                                        <input type="text" class="form-control" placeholder="{{ __('User') }}"
                                                             value="{{$productOrder->user_name}}" readonly required>
                                                             {!! $errors->first('user_id', '<label class="help-block text-danger">:message</label>') !!}
 
@@ -56,9 +56,9 @@
                                                 </div>
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" id="order_number ">{{ __('Order Number ') }} </label>
-                                                        <input type="number" class="form-control" readonly value="{{$productOrder->order_number}}" name="order_number " placeholder="{{ __('Order Number ') }}"
-                                                            value="">
+                                                        <label class="form-label" id="order_number">{{ __('Order Number ') }} </label>
+                                                        <input type="text" class="form-control"  name="order_number" placeholder="{{ __('Order Number ') }}"
+                                                            value="{{$productOrder->order_number}}" readonly>
                                                         {!! $errors->first('order_number ', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
