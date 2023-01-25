@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Config;
 use App\Models\Gateway;
+use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Plan;
 use App\Models\Transaction;
 use App\Models\User;
@@ -47,20 +49,50 @@ class ProductCheckoutController extends Controller
             $userData = Auth::user();
 
 
+
             // $stripe = new StripeClient($config[10]->config_value);
             Stripe::setApiKey("sk_test_51LtUkeIH2i6FoGaEZ3Y90HVXatZKimap3Wsnbw72syI5PFoV9KtEAwGf6788R5LuLnfpCXXq9DOSo7REOtqjG8Vp00FIBEPP38");
-
-
-            $customer = Customer::create(array(
-                'email' => $request->stripeEmail,
-                'source'  => $request->stripeToken
-            ));
-            Charge::create([
+            $stripe = new StripeClient($request->stripeToken);
+            $charge = Charge::create([
                 "amount" =>  100,
                 "currency" => "USD",
-                'customer' => $customer,
+                "source" => "tok_visa",
                 "description" => env('APP_NAME')
             ]);
+
+            $totalPrice = 0;
+            $totalQuantity = 0;
+
+            foreach (session('cart') as $id => $details) {
+                $totalPrice += $details['price'] * $details['quantity'];
+                $totalQuantity += $details['quantity'];
+                $prderProducts = new OrderDetails();
+                $prderProducts->order_id = $charge->id;
+                $prderProducts->product_id = $id;
+                $prderProducts->quantity = $details['quantity'];
+                $prderProducts->unit_price = $details['price'];
+                $prderProducts->free_credit = 0;
+                $prderProducts->created_by = Auth::id();
+                $prderProducts->updated_at = now();
+                $prderProducts->save();
+            }
+
+            $order = new Order();
+            $order->order_number = $charge->id;
+            $order->quantity = $totalQuantity;
+            $order->discount = 0;
+            $order->coupon_discount = 0;
+            $order->total_price = $totalPrice;
+            $order->payment_fee = 0;
+            $order->vat = 0;
+            $order->grand_total = $totalPrice;
+            $order->discount_percentage = 0;
+            $order->user_id = Auth::id();
+            $order->order_date = now();
+            $order->payment_method = "Stripe";
+            $order->payment_status = $charge->status;
+            $order->type = "Product purchase";
+            $order->save();
 
 
 
@@ -89,31 +121,26 @@ class ProductCheckoutController extends Controller
             $invoice_details['tax_type']                    = $config[14]->config_value;
             $invoice_details['tax_value']                   = $config[25]->config_value;
 
-            $invoice_details['invoice_amount']              = null;
-            $invoice_details['subtotal']                    = null;
-            $invoice_details['tax_amount']                  = null;
+            $invoice_details['invoice_amount']              = $charge->balance_transaction;
+            $invoice_details['subtotal']                    = $charge->balance_transaction;
+            $invoice_details['tax_amount']                  = 0;
 
             $transaction = new Transaction();
             $transaction->invoice_number        = uniqid();
             $transaction->transaction_date      = date('Y-m-d H:i:s');
-            $transaction->transaction_id        = null;
+            $transaction->transaction_id        = $charge->balance_transaction;
             $transaction->user_id               = Auth::user()->id;
             $transaction->plan_id               = null;
-            $transaction->desciption            = null;
+            $transaction->order_id               = $order->id;
+            $transaction->desciption            = "from order " . $order->id;
             $transaction->payment_gateway_name  = "Stripe";
-            $transaction->transaction_amount    = null;
-            $transaction->transaction_currency  = null;
+            $transaction->transaction_amount    = $charge->amount;
+            $transaction->transaction_currency  = $charge->currency;
             $transaction->invoice_details       = json_encode($invoice_details);
             $transaction->payment_status        = "Success";
             $transaction->save();
             //update user
             DB::table('users')->where('id', $userData->id)->update([
-                'plan_id'               => null,
-                'stripe_data'           => json_encode(null),
-                'stripe_customer_id'    => $customer_id,
-                'plan_details'          => json_encode(null),
-                'plan_activation_date'  => null,
-                'plan_validity'         => null,
                 'billing_name'          => $request->billing_name,
                 'billing_address'       => $request->billing_address,
                 'billing_city'          => $request->billing_city,
@@ -129,7 +156,8 @@ class ProductCheckoutController extends Controller
             return redirect()->back();
         }
         Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
-        Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
-        return redirect()->route('user.invoice', $transaction->invoice_number);
+        Toastr::success(trans('PRoduct purchase successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
+        Session::forget('cart');
+        return redirect()->route('home');
     }
 }
