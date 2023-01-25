@@ -9,7 +9,7 @@
                         <th style="width:10%">Price</th>
                         <th style="width:8%">Quantity</th>
                         <th style="width:22%" class="text-center">Subtotal</th>
-                        <th style="width:10%"></th>
+                        <th style="width:10%">Remove</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,15 +17,15 @@
                     @if (session('cart'))
                         @foreach (session('cart') as $id => $details)
                             @php $total += $details['price'] * $details['quantity'] @endphp
-                            <tr data-id="{{ $id }}">
+                            <tr data-id="{{ $id }}" class="align-middle">
                                 <td data-th="Product">
-                                    <div class="row">
-                                        <div class="col-sm-3 hidden-xs"><img src="{{ getPhoto($details['image']) }}"
-                                                width="100" height="100" class="img-responsive" /></div>
-                                        <div class="col-sm-9">
-                                            <p>{{ $details['name'] }}</p>
-                                        </div>
-                                    </div>
+
+                                    <img src="{{ getPhoto($details['image']) }}" width="100" height="100"
+                                        class="img-responsive" />
+
+                                    <span>{{ $details['name'] }}</span>
+
+
                                 </td>
                                 <td data-th="Price">${{ $details['price'] }}</td>
                                 <td data-th="Quantity">
@@ -48,32 +48,39 @@
                         </tr>
                     @endif
                 </tbody>
-                <tfoot>
+                @if (session('cart'))
+                    <tfoot>
 
-                    <tr>
+                        <tr>
 
-                        <td colspan="5" class="text-end">
-                            <h3><strong>Total ${{ $total }}</strong></h3>
-                        </td>
+                            <td colspan="3" class="text-end">
+                                <h3><strong>Total : </strong></h3>
+                            </td>
+                            <td class="text-center">
+                                <h3><strong> ${{ $total }}</strong></h3>
+                            </td>
+                            <td></td>
 
-                    </tr>
+                        </tr>
 
-                    <tr>
+                        <tr>
 
-                        <td class="text-end" colspan="5">
+                            <td class="text-end" colspan="5">
 
 
-                            <a href="{{ url('/') }}" class="text-left btn btn-primary"><i class="fa fa-angle-left"></i>
-                                Continue
-                                Shopping</a>
+                                <a href="{{ route('shop') }}" class="text-left btn btn-primary"><i
+                                        class="fa fa-angle-left"></i>
+                                    Continue
+                                    Shopping</a>
 
-                            <button class="btn btn-primary">Checkout</button>
+                                <a href="{{ route('product.checkOut') }}" class="btn btn-primary">Checkout</a>
 
-                        </td>
+                            </td>
 
-                    </tr>
+                        </tr>
 
-                </tfoot>
+                    </tfoot>
+                @endif
             </table>
 
         </div>

@@ -126,9 +126,9 @@
 @section('content')
     <div class="content-wrapper checkout-wrapper py-4">
         <div class="content mt-5">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row g-4">
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">{{ __('Upgrade Plan') }}</h6>
@@ -136,23 +136,51 @@
                                     <table class="table">
                                         <thead class="bg-white">
                                             <tr>
-                                                <th class="w-1">{{ __('Description') }}</th>
+                                                <th class="w-1">{{ __('Product') }}</th>
+                                                <th class="w-1">{{ __('Quantity') }}</th>
                                                 <th class="w-1">{{ __('Price') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $total = 0 @endphp
+                                            @foreach ($products as $product)
+                                                @php $total += $product['price'] * $product['quantity'] @endphp
+                                                <tr class="align-middle">
+                                                    <td>
+                                                        <img src="{{ getPhoto($product['image']) }}" alt=""
+                                                            width="100px" srcset="">&emsp;
+                                                        <span> <a
+                                                                href="{{ route('product.details', ['product' => $product['slug']]) }}">{{ $product['name'] }}</a>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        {{ $product['quantity'] }}
+                                                    </td>
+                                                    <td>
+                                                        {{ getPrice($product['quantity'] + $product['price']) }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
 
                                         </tbody>
+                                        <tfoot>
+                                            <td colspan="2" class="text-end">
+                                                <strong>Total :</strong>
+                                            </td>
+                                            <td>
+                                                {{ getPrice($total) }}
+                                            </td>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-12">
-                        <form action="{{ route('user.checkout.post-transection') }}" id="order-form" method="post">
+                    <div class="col-lg-7 col-12">
+                        <form action="{{ route('product.orderCheckOut') }}" id="order-form" method="post">
                             @csrf
-                            <input type="hidden" name="plan_id" value="{{ $plan->id }}">
-                            <input type="hidden" name="is_yearly" value="{{ $plan->is_yearly ?? 0 }}">
+
+
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="card-title mb-3">{{ __('Billing Details') }}</h6>
@@ -268,7 +296,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-xl-4">
+                                        {{-- <div class="col-md-4 col-xl-4">
                                             <div class="mb-3 form-group">
                                                 <label class="form-label">{{ __('Type') }} <span
                                                         class="text-danger">*</span></label>
@@ -286,7 +314,7 @@
                                                         class="help-block text-danger">{{ $errors->first('type') }}</span>
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-4 col-xl-4">
                                             <div class="mb-3 form-group">
                                                 <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
@@ -348,7 +376,7 @@
         </div>
     </div>
 
-    @include('user.plan._partial-pay-with-stripe')
+    @include('pages.product_checkout.pay_with_stripe')
 @endsection
 {{-- @dd($config[9]->config_value) --}}
 @push('custom_js')
@@ -402,7 +430,6 @@
                     $('#stp_billing_zipcode').val($('input[name=billing_zipcode]').val());
                     $('#stp_billing_country').val($('input[name=billing_country]').val());
                     $('#stp_vat_number').val($('input[name=vat_number]').val());
-                    $('#stp_type').val($('input[name=type]').val());
                     $('#paymentStripe').modal('show');
                     return false;
                 }

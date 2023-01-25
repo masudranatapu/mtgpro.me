@@ -32,6 +32,7 @@ class ProductController extends Controller
 
             $cart[$id] = [
                 "name" => $product->product_name,
+                "slug" => $product->product_slug,
                 "quantity" => 1,
                 "price" => $product->unit_price_regular,
                 "image" => $product->thumbnail
@@ -56,6 +57,7 @@ class ProductController extends Controller
 
             $cart[$request->id] = [
                 "name" => $product->product_name,
+                "slug" => $product->product_slug,
                 "quantity" => $request->qty,
                 "price" => $product->unit_price_regular,
                 "image" => $product->thumbnail
