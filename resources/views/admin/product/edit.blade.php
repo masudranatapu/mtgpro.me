@@ -1,8 +1,8 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 
 @section('porducts', 'active')
-@section('title'){{ __('Product List') }} @endsection
-@section('page-name') {{ __('Product List') }} @endsection
+@section('title'){{ __('Product Edit') . '-' . $product->product_name }} @endsection
+@section('page-name') {{ __('Product Edit') . '-' . $product->product_name }} @endsection
 @push('css')
 @endpush
 <?php
@@ -34,7 +34,7 @@ $rows = $data ?? [];
                             <div class="card-header">
                                 <div class="col">
                                     <div class="float-left">
-                                        {{ __('Product List') }}
+                                        {{ __('Product Edit') . '-' . $product->product_name }}
                                     </div>
                                 </div>
                                 <div class="col">

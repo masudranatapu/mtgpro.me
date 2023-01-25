@@ -51,7 +51,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($request->id);
         $cart = session()->get('cart', []);
         if (isset($cart[$request->id])) {
-            $cart[$request->id]['quantity'] = $cart[$request->id]['quantity'] + $request->qty;
+            $cart[$request->id]['quantity'] =  $request->qty;
         } else {
 
             $cart[$request->id] = [

@@ -33,7 +33,7 @@ $rows = $data ?? [];
         <div class="container">
             <div class="page_wrapper">
                 <div class="page_title mb-4">
-                    <h3>Over 100 products</h3>
+                    <h3>Over {{ $products->count() ?? 0 }} products</h3>
                 </div>
                 <div class="row">
                     {{-- product item --}}

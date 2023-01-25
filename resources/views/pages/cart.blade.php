@@ -20,8 +20,8 @@
                             <tr data-id="{{ $id }}">
                                 <td data-th="Product">
                                     <div class="row">
-                                        <div class="col-sm-3 hidden-xs"><img src="{{ $details['image'] }}" width="100"
-                                                height="100" class="img-responsive" /></div>
+                                        <div class="col-sm-3 hidden-xs"><img src="{{ getPhoto($details['image']) }}"
+                                                width="100" height="100" class="img-responsive" /></div>
                                         <div class="col-sm-9">
                                             <p>{{ $details['name'] }}</p>
                                         </div>
@@ -40,6 +40,12 @@
                                 </td>
                             </tr>
                         @endforeach
+                    @else
+                        <tr>
+                            <td class="text-center text-danger" colspan="5">
+                                <h4>No product available in the cart</h4>
+                            </td>
+                        </tr>
                     @endif
                 </tbody>
             </table>
@@ -74,6 +80,7 @@
             e.preventDefault();
             var ele = $(this);
             if (confirm("Are you sure want to remove?")) {
+                console.log(ele);
                 $.ajax({
                     url: '{{ route('remove.from.cart') }}',
                     method: "DELETE",
@@ -82,7 +89,11 @@
                         id: ele.parents("tr").attr("data-id")
                     },
                     success: function(response) {
+                        console.log(response);
                         window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error);
                     }
                 });
             }
