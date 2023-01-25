@@ -59,11 +59,12 @@
                     </tr>
 
                     <tr>
-                        <td colspan="4"></td>
-                        <td class="text-end">
+
+                        <td class="text-end" colspan="5">
 
 
-                            <a href="{{ url('/') }}" class="btn btn-primary"><i class="fa fa-angle-left"></i> Continue
+                            <a href="{{ url('/') }}" class="text-left btn btn-primary"><i class="fa fa-angle-left"></i>
+                                Continue
                                 Shopping</a>
 
                             <button class="btn btn-primary">Checkout</button>
