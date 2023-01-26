@@ -157,7 +157,7 @@
                                                         {{ $product['quantity'] }}
                                                     </td>
                                                     <td>
-                                                        {{ getPrice($product['quantity'] + $product['price']) }}
+                                                        {{ getPrice($product['quantity'] * $product['price']) }}
                                                     </td>
                                                 </tr>
                                             @endforeach

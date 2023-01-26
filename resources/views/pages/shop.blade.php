@@ -58,7 +58,12 @@ $rows = $data ?? [];
                                             <a href="{{ route('add.to.cart', ['id' => $product->id]) }}">
                                                 Add to Cart
                                             </a>
-                                            <span class="float-end">{{ getprice($product->unit_price) }}</span>
+                                            @if (isset($product->unit_price))
+                                                <del class="float-end">{{ getprice($product->unit_price_regular) }}</del>
+                                                <span class="float-end">{{ getprice($product->unit_price) }}</span>
+                                            @else
+                                                <span class="float-end">{{ getprice($product->unit_price_regular) }}</span>
+                                            @endif
                                         </p>
                                     </div>
                                 </div>

@@ -10,36 +10,47 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\ProductOrders;
+use App\Models\Transaction;
 
 class OrdersController extends Controller
 {
-   public function index(){
+    public function index()
+    {
 
-    $productOrders = DB::table('orders')
-                     ->leftJoin('users', 'users.id', '=', 'orders.user_id')
-                     ->select('orders.*', 'users.name as user_name')
-                     ->orderBy('id','desc')->paginate(5);
+        $productOrders = DB::table('orders')
+            ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'users.name as user_name')
+            ->orderBy('id', 'desc')->paginate(5);
 
-    return view('admin.orders.index', compact('productOrders'));
-   }
+        return view('admin.orders.index', compact('productOrders'));
+    }
 
-   public function edit($id){
+    public function edit($id)
+    {
 
         $productOrder = DB::table('orders')
-                        ->leftJoin('users', 'users.id', '=', 'orders.user_id')
-                        ->select('orders.*', 'users.name as user_name')
-                        ->where('orders.id',$id)
-                        ->first();
+            ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'users.name as user_name')
+            ->where('orders.id', $id)
+            ->first();
+
+        $trnasection = Transaction::where('order_id', $id)->first('invoice_details');
+
+        $trnasectionDetail = json_decode($trnasection->invoice_details, true);
 
 
-        return view('admin.orders.edit',compact('productOrder'));
-   }
 
-   public function update(Request $request, $id){
+
+
+        return view('admin.orders.edit', compact('productOrder', 'trnasectionDetail'));
+    }
+
+    public function update(Request $request, $id)
+    {
         DB::beginTransaction();
         try {
 
-        $this->validate($request, [
+            $this->validate($request, [
                 'order_number'  => 'required',
                 'quantity'      => 'required',
                 'discount'      => 'required',
@@ -51,34 +62,31 @@ class OrdersController extends Controller
                 'payment_method'  => 'required',
                 'payment_status'  => 'required',
                 'type'           => 'required',
-        ]);
+            ]);
 
-       $productOrder = Order::find($id);
+            $productOrder = Order::find($id);
 
-        $productOrder->order_number = $request->order_number;
-        $productOrder->quantity =       $request->quantity;
-        $productOrder->discount =       $request->discount;
-        $productOrder->total_price =    $request->total_price;
-        $productOrder->payment_fee =    $request->payment_fee;
-        $productOrder->grand_total =    $request->grand_total;
-        $productOrder->user_id =        $request->user_id;
-        $productOrder->order_date =     date('Y-m-d',strtotime($request->order_date));
-        $productOrder->payment_method = $request->payment_method;
-        $productOrder->payment_status = $request->payment_status;
-        $productOrder->type = $request->type;
-        $productOrder->save();
-
-
-    }catch(\Exception $e){
+            $productOrder->order_number = $request->order_number;
+            $productOrder->quantity =       $request->quantity;
+            $productOrder->discount =       $request->discount;
+            $productOrder->total_price =    $request->total_price;
+            $productOrder->payment_fee =    $request->payment_fee;
+            $productOrder->grand_total =    $request->grand_total;
+            $productOrder->user_id =        $request->user_id;
+            $productOrder->order_date =     date('Y-m-d', strtotime($request->order_date));
+            $productOrder->payment_method = $request->payment_method;
+            $productOrder->payment_status = $request->payment_status;
+            $productOrder->type = $request->type;
+            $productOrder->save();
+        } catch (\Exception $e) {
             DB::rollback();
             Toastr::error(trans('Data not Updated !'), 'Error', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('admin.orders.edit',$id);
-
-    }
+            return redirect()->route('admin.orders.edit', $id);
+        }
         DB::commit();
         Toastr::success(trans('Data Successfully Updatd !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.orders');
-   }
+    }
 
 
    public function invoice($id){

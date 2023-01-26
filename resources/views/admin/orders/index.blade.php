@@ -53,52 +53,78 @@
                                     </thead>
                                     <tbody>
                                         {{-- @if (!empty(productOrders) && $productOrders->count()) --}}
-                                            @foreach ($productOrders as $key => $value)
-                                                <tr>
-                                                    <td >{{ $key + 1 }}</td>
-                                                    <td >{{ $value->order_number }}</td>
-                                                    <td >{{ $value->quantity }}</td>
-                                                    <td >{{ $value->discount }}%</td>
-                                                    <td >{{ $value->total_price }}</td>
-                                                    <td >{{ $value->payment_fee }}</td>
-                                                    <td >{{ $value->grand_total }}</td>
-                                                    <td >{{ $value->user_name }}</td>
-                                                    <td >{{ date('d M Y',strtotime($value->order_date)) }}</td>
-                                                    <td >{{ $value->payment_method }}</td>
-                                                    <td  class="text-muted">
-                                                        @if ($value->payment_status == 0)
-                                                            <span class="badge bg-red">{{ __('Non Paid') }}</span>
-                                                        @elseif ($value->payment_status == 1)
-                                                            <span class="badge bg-green">{{ __('Paid') }}</span>
-                                                        @else
-                                                         <span class="badge bg-orange">{{ __('Pending') }}</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <div class="dropdown @yield('settings')">
-                                                            <a class="btn btn-primary dropdown-toggle"
-                                                                href="#navbar-extra" data-bs-toggle="dropdown"
-                                                                role="button" aria-expanded="false">
-                                                                <span class="nav-link-title">
-                                                                    {{ __('Action') }}
-                                                                </span>
-                                                            </a>
-                                                            <div class="dropdown-menu">
+                                        @foreach ($productOrders as $key => $value)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $value->order_number }}</td>
+                                                <td>{{ $value->quantity }}</td>
+                                                <td>{{ $value->discount }}%</td>
+                                                <td>{{ $value->total_price }}</td>
+                                                <td>{{ $value->payment_fee }}</td>
+                                                <td>{{ $value->grand_total }}</td>
+                                                <td>{{ $value->user_name }}</td>
+                                                <td>{{ date('d M Y', strtotime($value->order_date)) }}</td>
+                                                <td>{{ $value->payment_method }}</td>
+                                                <td class="text-muted">
+                                                    @if ($value->payment_status == 0)
+                                                        <span class="badge bg-red">{{ __('Non Paid') }}</span>
+                                                    @elseif ($value->payment_status == 1)
+                                                        <span class="badge bg-green">{{ __('Paid') }}</span>
+                                                    @else
+                                                        <span class="badge bg-orange">{{ __('Pending') }}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown @yield('settings')">
+                                                        <a class="btn btn-primary dropdown-toggle" href="#navbar-extra"
+                                                            data-bs-toggle="dropdown" role="button"
+                                                            aria-expanded="false">
+                                                            <span class="nav-link-title">
+                                                                {{ __('Action') }}
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-menu">
 
-                                                                <a href="{{ route('admin.orders.edit',$value->id)}}"
-                                                                    class="dropdown-item btn-sm">{{ __('Edit') }}</a>
+                                                            <a href="{{ route('admin.orders.edit', $value->id) }}"
+                                                                class="dropdown-item btn-sm">{{ __('Edit') }}</a>
 
 
-                                                                <a href=""
-                                                                    class="dropdown-item btn-sm">{{ __('View') }}</a>
+                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                                data-bs-target="#OrderModal{{ $value->id }}"
+                                                                class="dropdown-item btn-sm">{{ __('View') }}</a>
 
-                                                                <a href="{{ route('admin.orders.invoice',$value->id)}}"
-                                                                    class="dropdown-item btn-sm">{{ __('Invoice') }}</a>    
-                                                            </div>
+                                                            <a href="{{ route('admin.orders.invoice', $value->id) }}"
+                                                                class="dropdown-item btn-sm">{{ __('Invoice') }}</a>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="OrderModal{{ $value->id }}" tabindex="-1"
+                                                aria-labelledby="OrderModalLabel{{ $value->id }}"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5"
+                                                                id="OrderModalLabel{{ $value->id }}">Order Details
+                                                            </h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            ...
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save
+                                                                changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                         {{-- @endif --}}
                                     </tbody>
                                 </table>

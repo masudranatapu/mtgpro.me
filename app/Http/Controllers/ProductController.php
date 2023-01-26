@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -34,12 +35,13 @@ class ProductController extends Controller
                 "name" => $product->product_name,
                 "slug" => $product->product_slug,
                 "quantity" => 1,
-                "price" => $product->unit_price_regular,
+                "price" => $product->unit_price ? $product->unit_price : $product->unit_price_regular,
                 "image" => $product->thumbnail
             ];
         }
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        Toastr::success('Product added to cart successfully!');
+        return redirect()->back()->with('success');
     }
 
 
@@ -64,7 +66,8 @@ class ProductController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        Toastr::success('Product added to cart successfully!');
+        return redirect()->back()->with('success',);
     }
 
     /**
@@ -88,8 +91,7 @@ class ProductController extends Controller
             $cart[$request->id]["quantity"] = $request->quantity;
 
             session()->put('cart', $cart);
-
-            session()->flash('success', 'Cart updated successfully');
+            Toastr::success('Cart updated successfully');
         }
     }
 
@@ -119,8 +121,7 @@ class ProductController extends Controller
 
                 session()->put('cart', $cart);
             }
-
-            session()->flash('success', 'Product removed successfully');
+            Toastr::error('Product removed from cart successfully');
         }
     }
 }

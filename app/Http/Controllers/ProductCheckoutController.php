@@ -46,19 +46,9 @@ class ProductCheckoutController extends Controller
         try {
 
             $config = DB::table('config')->get();
+
             $userData = Auth::user();
 
-
-
-            // $stripe = new StripeClient($config[10]->config_value);
-            Stripe::setApiKey("sk_test_51LtUkeIH2i6FoGaEZ3Y90HVXatZKimap3Wsnbw72syI5PFoV9KtEAwGf6788R5LuLnfpCXXq9DOSo7REOtqjG8Vp00FIBEPP38");
-            $stripe = new StripeClient($request->stripeToken);
-            $charge = Charge::create([
-                "amount" =>  100,
-                "currency" => "USD",
-                "source" => "tok_visa",
-                "description" => env('APP_NAME')
-            ]);
 
             $totalPrice = 0;
             $totalQuantity = 0;
@@ -66,19 +56,32 @@ class ProductCheckoutController extends Controller
             foreach (session('cart') as $id => $details) {
                 $totalPrice += $details['price'] * $details['quantity'];
                 $totalQuantity += $details['quantity'];
-                $prderProducts = new OrderDetails();
-                $prderProducts->order_id = $charge->id;
-                $prderProducts->product_id = $id;
-                $prderProducts->quantity = $details['quantity'];
-                $prderProducts->unit_price = $details['price'];
-                $prderProducts->free_credit = 0;
-                $prderProducts->created_by = Auth::id();
-                $prderProducts->updated_at = now();
-                $prderProducts->save();
             }
 
+
+
+
+
+            $stripe = new StripeClient($config[10]->config_value);
+            Stripe::setApiKey("sk_test_51LtUkeIH2i6FoGaEZ3Y90HVXatZKimap3Wsnbw72syI5PFoV9KtEAwGf6788R5LuLnfpCXXq9DOSo7REOtqjG8Vp00FIBEPP38");
+            $stripe = new StripeClient($request->stripeToken);
+            $charge = Charge::create([
+                "amount" =>  $totalPrice,
+                "currency" => $config[1]->config_value,
+                "source" => "tok_visa",
+                "description" => env('APP_NAME')
+            ]);
+
+            $order_Number = 1000;
+            $previous_order_Number = Order::orderBy('order_number', 'desc')->first();
+
+            if (isset($previous_order_Number)) {
+                $order_Number = $previous_order_Number->order_number + 1;
+            }
+
+
             $order = new Order();
-            $order->order_number = $charge->id;
+            $order->order_number = $order_Number;
             $order->quantity = $totalQuantity;
             $order->discount = 0;
             $order->coupon_discount = 0;
@@ -94,6 +97,18 @@ class ProductCheckoutController extends Controller
             $order->type = "Product purchase";
             $order->save();
 
+            foreach (session('cart') as $id => $details) {
+
+                $prderProducts = new OrderDetails();
+                $prderProducts->order_id = $order->id;
+                $prderProducts->product_id = $id;
+                $prderProducts->quantity = $details['quantity'];
+                $prderProducts->unit_price = $details['price'];
+                $prderProducts->free_credit = 0;
+                $prderProducts->created_by = Auth::id();
+                $prderProducts->updated_at = now();
+                $prderProducts->save();
+            }
 
 
             $invoice_details['from_billing_name']           = $config[16]->config_value;
@@ -152,11 +167,10 @@ class ProductCheckoutController extends Controller
             ]);
         } catch (Exception $error) {
             dd($error);
-            Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-center"]);
+            Toastr::error(trans('"Something went wrong!'));
             return redirect()->back();
         }
-        Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
-        Toastr::success(trans('PRoduct purchase successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
+        Toastr::success(trans('Product purchase successfully done!'));
         Session::forget('cart');
         return redirect()->route('home');
     }
