@@ -37,6 +37,9 @@
                                 <form action="{{ route('admin.orders.update', $productOrder->id) }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
+
+                                    <input type="hidden" name="vat_number" id="{{ $trnasectionDetail['to_vat_number'] }}"
+                                        value="{{ $trnasectionDetail['to_vat_number'] }}">
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-xl-10">
                                             <div class="row">
@@ -115,7 +118,8 @@
                                                 </div>
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" id="grand_total">{{ __('Grand Total') }}
+                                                        <label class="form-label"
+                                                            id="grand_total">{{ __('Grand Total') }}
                                                         </label>
                                                         <input type="number" class="form-control" readonly
                                                             value="{{ $productOrder->grand_total }}" name="grand_total"
@@ -134,23 +138,7 @@
                                                         {!! $errors->first('payment_method', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 col-xl-4">
-                                                    <div class="mb-3">
-                                                        <div class="form-group">
-                                                            <label class="form-label required"
-                                                                for="type">{{ __('Type') }} </label>
-                                                            <select id="type" class="form-control" name="type">
-                                                                <option value="1"
-                                                                    {{ $productOrder->type == 1 ? 'selected' : '' }}>
-                                                                    {{ __('Photo Frame    ') }}</option>
-                                                                <option value="2"
-                                                                    {{ $productOrder->type == 2 ? 'selected' : '' }}>
-                                                                    {{ __('Gift Card') }}</option>
-                                                            </select>
-                                                            {!! $errors->first('type', '<label class="help-block text-danger">:message</label>') !!}
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <div class="form-group">
@@ -176,12 +164,12 @@
                                                     <div class="mb-3">
                                                         <div class="form-group">
                                                             <label class="form-label required"
-                                                                for="to_billing_name">{{ __('Billing Name') }}
+                                                                for="billing_name">{{ __('Billing Name') }}
                                                             </label>
                                                             <input type="text" class="form-control" readonly
-                                                                name="to_billing_name" id=""
+                                                                name="billing_name" id=""
                                                                 value="{{ $trnasectionDetail['to_billing_name'] }}">
-                                                            {!! $errors->first('to_billing_name', '<label class="help-block text-danger">:message</label>') !!}
+                                                            {!! $errors->first('billing_name', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -189,12 +177,12 @@
                                                     <div class="mb-3">
                                                         <div class="form-group">
                                                             <label class="form-label required"
-                                                                for="to_billing_address">{{ __('Billing address') }}
+                                                                for="billing_address">{{ __('Billing address') }}
                                                             </label>
                                                             <input type="text" class="form-control"
-                                                                name="to_billing_address" id=""
+                                                                name="billing_address" id=""
                                                                 value="{{ $trnasectionDetail['to_billing_address'] }}">
-                                                            {!! $errors->first('to_billing_address', '<label class="help-block text-danger">:message</label>') !!}
+                                                            {!! $errors->first('billing_address', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -202,12 +190,12 @@
                                                     <div class="mb-3">
                                                         <div class="form-group">
                                                             <label class="form-label required"
-                                                                for="to_billing_city">{{ __('Billing city') }}
+                                                                for="billing_city">{{ __('Billing city') }}
                                                             </label>
                                                             <input type="text" class="form-control"
-                                                                name="to_billing_city" id=""
+                                                                name="billing_city" id=""
                                                                 value="{{ $trnasectionDetail['to_billing_city'] }}">
-                                                            {!! $errors->first('to_billing_city', '<label class="help-block text-danger">:message</label>') !!}
+                                                            {!! $errors->first('billing_city', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -215,12 +203,12 @@
                                                     <div class="mb-3">
                                                         <div class="form-group">
                                                             <label class="form-label required"
-                                                                for="to_billing_state">{{ __('Billing state') }}
+                                                                for="billing_state">{{ __('Billing state') }}
                                                             </label>
                                                             <input type="text" class="form-control"
-                                                                name="to_billing_state" id=""
+                                                                name="billing_state" id=""
                                                                 value="{{ $trnasectionDetail['to_billing_state'] }}">
-                                                            {!! $errors->first('to_billing_state', '<label class="help-block text-danger">:message</label>') !!}
+                                                            {!! $errors->first('billing_state', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -228,12 +216,12 @@
                                                     <div class="mb-3">
                                                         <div class="form-group">
                                                             <label class="form-label required"
-                                                                for="to_billing_zipcode">{{ __('Billing zip code') }}
+                                                                for="billing_zipcode">{{ __('Billing zip code') }}
                                                             </label>
                                                             <input type="text" class="form-control"
-                                                                name="to_billing_zipcode" id=""
+                                                                name="billing_zipcode" id=""
                                                                 value="{{ $trnasectionDetail['to_billing_zipcode'] }}">
-                                                            {!! $errors->first('to_billing_zipcode', '<label class="help-block text-danger">:message</label>') !!}
+                                                            {!! $errors->first('billing_zipcode', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -281,16 +269,16 @@
                                                 </div>
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3 form-group">
-                                                        <label for="to_billing_email"
+                                                        <label for="billing_email"
                                                             class="form-label d-block">{{ __('Email') }}
                                                             <span class="text-danger">*</span></label>
-                                                        <input id="to_billing_email" name="to_billing_email" readonly
+                                                        <input id="billing_email" name="billing_email" readonly
                                                             class="form-control" type="email" required
                                                             value="{{ $trnasectionDetail['to_billing_email'] }}">
                                                     </div>
-                                                    @if ($errors->has('to_billing_email'))
+                                                    @if ($errors->has('billing_email'))
                                                         <span
-                                                            class="help-block text-danger">{{ $errors->first('to_billing_email') }}</span>
+                                                            class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
                                                     @endif
                                                 </div>
 

@@ -66,12 +66,10 @@
                                                 <td>{{ date('d M Y', strtotime($value->order_date)) }}</td>
                                                 <td>{{ $value->payment_method }}</td>
                                                 <td class="text-muted">
-                                                    @if ($value->payment_status == 0)
-                                                        <span class="badge bg-red">{{ __('Non Paid') }}</span>
-                                                    @elseif ($value->payment_status == 1)
-                                                        <span class="badge bg-green">{{ __('Paid') }}</span>
+                                                    @if ($value->payment_status)
+                                                        <span class="badge bg-orange">{{ __('Paid') }}</span>
                                                     @else
-                                                        <span class="badge bg-orange">{{ __('Pending') }}</span>
+                                                        <span class="badge bg-red">{{ __('Pending') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -103,7 +101,7 @@
                                             <div class="modal fade" id="OrderModal{{ $value->id }}" tabindex="-1"
                                                 aria-labelledby="OrderModalLabel{{ $value->id }}"
                                                 aria-hidden="true">
-                                                <div class="modal-dialog">
+                                                <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5"
@@ -112,15 +110,20 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            ...
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-primary">Save
-                                                                changes</button>
-                                                        </div>
+                                                        <form
+                                                            action="{{ route('admin.order.status', ['order' => $value->id]) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
