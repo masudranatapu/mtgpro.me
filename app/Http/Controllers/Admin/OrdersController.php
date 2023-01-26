@@ -35,7 +35,7 @@ class OrdersController extends Controller
             ->first();
 
         $trnasection = Transaction::where('order_id', $id)->first();
-        
+
 
 
         return view('admin.orders.edit', compact('productOrder'));
