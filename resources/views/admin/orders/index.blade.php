@@ -91,6 +91,9 @@
 
                                                                 <a href=""
                                                                     class="dropdown-item btn-sm">{{ __('View') }}</a>
+
+                                                                <a href="{{ route('admin.orders.invoice',$value->id)}}"
+                                                                    class="dropdown-item btn-sm">{{ __('Invoice') }}</a>    
                                                             </div>
                                                         </div>
                                                     </td>
