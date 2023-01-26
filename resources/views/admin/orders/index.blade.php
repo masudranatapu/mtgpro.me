@@ -48,6 +48,7 @@
                                             <th width="10%">{{ __('Order Date') }}</th>
                                             <th width="10%">{{ __('Payment Method') }}</th>
                                             <th width="10%">{{ __('Payment Status') }}</th>
+                                            <th width="10%">{{ __('Order Status') }}</th>
                                             <th width="10%" class="w-1">{{ __('Actions') }}</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,15 @@
                                                         <span class="badge bg-orange">{{ __('Paid') }}</span>
                                                     @else
                                                         <span class="badge bg-red">{{ __('Pending') }}</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-muted">
+                                                    @if ($value->status == 1)
+                                                        <span class="badge bg-red">{{ __('Prossing') }}</span>
+                                                    @elseif ($value->status == 2)
+                                                        <span class="badge bg-orange">{{ __('On The Way') }}</span>
+                                                    @elseif ($value->status == 3)
+                                                        <span class="badge bg-success">{{ __('Deliverd') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -115,7 +125,25 @@
                                                             method="post">
                                                             @csrf
                                                             <div class="modal-body">
-                                                                
+                                                                <div class="form-group">
+                                                                    <label for="status">Order
+                                                                        Status</label>
+                                                                    <select name="status" class="form-control"
+                                                                        @if ($value->status == 3) disabled @endif
+                                                                        id="status">
+                                                                        <option class="d-none" value="">Select
+                                                                            Status</option>
+                                                                        <option
+                                                                            @if ($value->status == 1) selected @endif
+                                                                            value="1">Prossing</option>
+                                                                        <option
+                                                                            @if ($value->status == 2) selected @endif
+                                                                            value="2">On The Way</option>
+                                                                        <option
+                                                                            @if ($value->status == 3) selected @endif
+                                                                            value="3">Deliverd</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"

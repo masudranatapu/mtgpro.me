@@ -94,6 +94,7 @@ class ProductCheckoutController extends Controller
             $order->order_date = now();
             $order->payment_method = "Stripe";
             $order->payment_status = $charge->status == "success" ? true : false;
+            $order->status = 1;
             $order->type = "Product purchase";
             $order->save();
 

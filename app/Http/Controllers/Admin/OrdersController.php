@@ -126,13 +126,18 @@ class OrdersController extends Controller
     }
 
 
-   public function invoice($id){
+    public function invoice($id)
+    {
         $order = Order::find($id);
+        return view('admin.orders.invoice', compact('order'));
+    }
 
-         return view('admin.orders.invoice',compact('order'));
-   }
+    public function statusChange(Request $request, Order $order)
+    {
 
-
-
-
+        $order->status = $request->status;
+        $order->save();
+        Toastr::success(trans('Order Status Chanage Successfully'), 'Success');
+        return redirect()->back();
+    }
 }

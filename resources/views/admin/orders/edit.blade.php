@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('assets/css/countrySelect.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/intlTelInput.css') }}">
+    <style>
+        .iti .iti--allow-dropdown {
+            width: 100%;
+        }
+
+        .country-select {
+            width: 100%;
+        }
+    </style>
 @endpush
 @section('product_ordrs', 'active')
 @section('content')
