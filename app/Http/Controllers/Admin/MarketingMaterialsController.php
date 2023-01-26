@@ -14,7 +14,7 @@ class MarketingMaterialsController extends Controller
 {
     public function index()
     {
-        $marketing_materials = MarketingMaterials::orderBy('order_id', 'asc')->paginate(6);
+        $marketing_materials = MarketingMaterials::orderBy('order_id', 'asc')->get();
         return view('admin.marketing-materials.index', compact('marketing_materials'));
     }
 

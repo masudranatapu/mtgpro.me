@@ -143,12 +143,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         @if (!empty($marketing_materials) && $marketing_materials->count())
+
                                             @foreach ($marketing_materials as $key => $value)
+                                              
                                                 <tr>
-                                                    <td>{{ $key + 1;}}</td>
+                                                    <td>{{ $key + 1}}</td>
                                                     <td>{{ $value->title}}</td>
-                                                    <td>{!! $value->description !!}</td>
+                                                    <td>{!! $value->description  !!}</td>
                                                     <td>
                                                         <img class="custom_image" src="{{ $value->image}}" alt="Paris">
                                                     </td>
@@ -162,6 +165,11 @@
                                         @endif
                                     </tbody>
                                 </table>
+                               <div>
+                                 <center>
+                                    {{$marketing_materials->links() }}
+                                </center>
+                               </div>
                             </div>
                         </div>
                 </div>
