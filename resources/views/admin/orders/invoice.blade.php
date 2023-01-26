@@ -9,6 +9,11 @@
     </style>
 @endpush('css')
 @section('settings', 'active')
+
+<?php
+$setting = getSetting();
+?>
+
 @section('content')
     @section('title') {{ __('Order Invoice') }} @endsection
 @section('product_ordrs', 'active')
@@ -23,56 +28,48 @@
                                         <h3 class="mb-0 d-inline-block">Invoice</h3>
                                     </div>
                                     <div class="float-end">
-                                        
+
                                         <button onclick="printDiv('printableArea')" class="btn btn-primary">Print</button>
                                     </div>
                                 </div>
                             </div>
                         <div class="card invoice_wrap" id="printableArea">
-                           
+
                             <div class="card-body" style="padding-left: 5%; padding-right:5%">
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <div class="logo">
-                                            <img src="{{asset('assets/uploads/logo/arobil_logo_70x70-63b2d1dd8e53e.png')}}" width="100" alt="">
+                                            <img src="{{ getPhoto($setting->site_logo) }}" width="100" alt="">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div style="float:right">
-                                            <h4><strong>Zentune</strong></h4>
+                                            <h4><strong>{{ $setting->site_name }}</strong></h4>
                                             <address>
-
-                                                zentune@outlook.com <br>
-                                                (+61)481 850 386 <br>
-
-                                                3/1 Adpet Lane, <br>
-
-                                                Bankstown NSW, <br>
-
-                                                2200 Sydney Australia
+                                                {{ $setting->office_address }}
                                             </address>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="invoice" style="border-style: solid;border-width: 2px 0px; padding:2%; border-color:darkgray">
                                     <div class="row">
-                                        <div class="col-md-9">
-                                            <div class="invoice_title float-start">
+                                        <div class="col-8">
+                                            <div class="invoice_title ">
                                                 <h2><strong>INVOICE</strong></h2>
                                                 <span>Invoice No.</span>
-                                                <strong>{{$orderTransactions->invoice_number}}</strong> <br>
+                                                <strong>{{$order->order_number }}</strong> <br>
 
-                                                <p><b>Date: {{ date('d M Y',strtotime($orderTransactions->transaction_date))}}</b></p>
+                                                <p><b>Date: {{ date('d M Y',strtotime($order->transaction->transaction_date))}}</b></p>
 
-                                                    <p>Status: <strong class="text-success">{{$orderTransactions->payment_status}}</strong></p>
+                                                    <p>Status: <strong class="text-success">{{$order->transaction->payment_status}}</strong></p>
                                             </div>
                                         </div>
                                         @php
-                                            $invoieDetails = json_decode($orderTransactions->invoice_details, true)
+                                            $invoieDetails = json_decode($order->transaction->invoice_details, true)
                                         @endphp
-                                        <div class="col-md-3">
-                                        
-                                            <div class="invoice_address ml-120 float-end">
+                                        <div class="col-4">
+
+                                            <div class="">
                                                 <p>SOLD TO:</p>
                                                 <span class="h4"><strong>Import parts and mechanical</strong></span>
                                                 <address>
@@ -97,38 +94,51 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
+                                            @if(isset($order->order_details) && count($order->order_details) >0)
+                                            @foreach($order->order_details as $key => $detail)
                                             <tr>
-                                                <td>{{$orderDetails->product_name}}</td>
-                                                <td>{{$orderDetails->unit_price}}</td>
-                                                <td>{{$orderDetails->quantity}}</td>
-                                                <td>{{ getPrice($total =  $orderDetails->unit_price * $orderDetails->quantity)}} </td>
+                                                <td>{{$detail->product->product_name}}</td>
+                                                <td>{{$detail->unit_price}}</td>
+                                                <td>{{$detail->quantity}}</td>
+                                                <td>{{ getPrice($detail->unit_price * $detail->quantity) }} </td>
                                             </tr>
+                                            @endforeach
+                                            @endif
+
+
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td><strong>Total:</strong></td>
-                                                <td><strong>{{getPrice($total)}}</strong></td>
+                                                <td><strong>{{ getPrice($order->total_price) }}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2"></td>
-                                                <td>VAT ({{$invoiceOrder->vat}}%):</td>
-                                                <td>{{getPrice($total + $invoiceOrder->vat)}}</td>
+                                                <td>Discount</td>
+                                                <td>{{ getPrice($order->discount) }}</td>
                                             </tr>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td>VAT ({{$order->vat}}%):</td>
+                                                <td>{{ getPrice($order->vat) }}</td>
+                                            </tr>
+
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td>Payment Fee:</td>
-                                                <td>{{getPrice($invoiceOrder->payment_fee)}}</td>
+                                                <td>{{ getPrice($order->payment_fee) }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Currency: <strong>{{$orderTransactions->transaction_currency}}</strong></td>
+                                                <td>Currency: <strong style="text-transform: uppercase;">{{ $order->transaction->transaction_currency ?? '' }}</strong></td>
                                                 <td colspan="1"></td>
                                                 <td><strong>Grand Total:</strong></td>
-                                                <td><strong> {{getPrice($totalPayment = $total + $invoiceOrder->payment_fee)}} AUD</strong></td>
+                                                <td><strong> {{getPrice($order->grand_total)}}</strong></td>
                                             </tr>
                                             <tr class="bg-default">
-                                                <td>Payment Method: <strong>{{$orderTransactions->payment_gateway_name}}</strong></td>
+                                                <td>Payment Method: <strong>{{$order->transaction->payment_gateway_name}}</strong></td>
                                                 <td colspan="1"></td>
                                                 <td class="text-success">Payment:</td>
-                                                <td class="text-success"> {{getPrice($totalPayment)}} AUD</td>
+                                                <td class="text-success"> {{getPrice($order->transaction->transaction_amount)}}</td>
                                             </tr>
                                             {{-- <tr>
                                                 <td colspan="2"></td>
@@ -141,7 +151,7 @@
                             </div>
                         </div>
                     </div>
-                </div>   
+                </div>
         </div>
     </div>
     @include('admin.includes.footer')
@@ -159,5 +169,5 @@
 
             document.body.innerHTML = originalContents;
         }
-    </script>   
+    </script>
 @endsection

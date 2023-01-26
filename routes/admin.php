@@ -179,7 +179,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     });
 
     //Product Orders
-    Route::prefix('product-orders')->group(function () {
+    Route::prefix('orders')->group(function () {
         Route::get('/', [OrdersController::class, 'index'])->name('orders');
         Route::get('/edit/{id}', [OrdersController::class, 'edit'])->name('orders.edit');
         Route::post('/update/{id}', [OrdersController::class, 'update'])->name('orders.update');
