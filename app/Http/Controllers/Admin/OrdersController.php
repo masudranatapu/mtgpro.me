@@ -79,4 +79,5 @@ class OrdersController extends Controller
         Toastr::success(trans('Data Successfully Updatd !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.orders');
    }
+
 }
