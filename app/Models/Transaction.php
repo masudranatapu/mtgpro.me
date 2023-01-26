@@ -6,15 +6,14 @@ use App\Traits\ApiResponse;
 use App\Traits\RepoResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Transaction extends Model
 {
     use RepoResponse;
     use ApiResponse;
 
-    protected $casts = [
-        'invoice_details' => 'collection',
-    ];
+
 
     public function getTransectionList($request, int $paginate = 5)
     {

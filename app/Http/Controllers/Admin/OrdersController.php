@@ -34,11 +34,15 @@ class OrdersController extends Controller
             ->where('orders.id', $id)
             ->first();
 
-        $trnasection = Transaction::where('order_id', $id)->first();
+        $trnasection = Transaction::where('order_id', $id)->first('invoice_details');
+
+        $trnasectionDetail = json_decode($trnasection->invoice_details, true);
 
 
 
-        return view('admin.orders.edit', compact('productOrder'));
+
+
+        return view('admin.orders.edit', compact('productOrder', 'trnasectionDetail'));
     }
 
     public function update(Request $request, $id)
