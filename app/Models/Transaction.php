@@ -20,4 +20,7 @@ class Transaction extends Model
         $transaction = Transaction::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate($paginate);
         return  $transaction;
     }
+
+
+
 }

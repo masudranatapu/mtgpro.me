@@ -18,11 +18,7 @@ $setting = getSetting();
                 <div class="container-fluid">
                     <!-- logo -->
                     <a class="navbar-brand p-0" href="{{ route('home') }}">
-                        @if ($setting->site_logo)
-                            <img src="{{ asset($setting->site_logo) }}" alt="{{ $setting->site_name }}">
-                        @else
-                            <img src="{{ asset('assets/img/logo.png') }}" alt="{{ $setting->site_name }}">
-                        @endif
+                    <img src="{{ getPhoto($setting->site_logo) }}" alt="{{ $setting->site_name }}">
                     </a>
                     <!-- toggle bar -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample"

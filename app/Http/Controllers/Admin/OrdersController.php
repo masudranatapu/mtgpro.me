@@ -125,31 +125,14 @@ class OrdersController extends Controller
         return redirect()->route('admin.orders');
     }
 
-    public function invoice($id)
-    {
 
-        $orderTransactions  = DB::table('transactions')
-            ->select('transaction_date', 'payment_gateway_name', 'transaction_currency', 'invoice_number', 'transaction_amount', 'invoice_details', 'payment_status')
-            ->where('transactions.order_id', $id)
-            ->first();
+   public function invoice($id){
+        $order = Order::find($id);
 
-        $invoiceOrder = DB::table('orders')
-            ->leftJoin('users', 'users.id', '=', 'orders.user_id')
-            ->select('orders.*', 'users.name as user_name')
-            ->where('orders.id', $id)
-            ->first();
-        $orderDetails = DB::table('order_details')
-            ->leftJoin('products', 'products.id', '=', 'order_details.product_id')
-            ->select('order_details.*', 'products.product_name')
-            ->where('order_details.id', $id)
-            ->first();
+         return view('admin.orders.invoice',compact('order'));
+   }
 
-        // dd($orderTransactions, $invoiceOrder, $orderDetails);
 
-        return view('admin.orders.invoice', compact('invoiceOrder', 'orderDetails', 'orderTransactions'));
-    }
 
-    public function statusChange(Order $order)
-    {
-    }
+
 }
