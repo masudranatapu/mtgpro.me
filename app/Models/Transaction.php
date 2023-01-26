@@ -12,9 +12,13 @@ class Transaction extends Model
     use RepoResponse;
     use ApiResponse;
 
+    protected $casts = [
+        'invoice_details' => 'collection',
+    ];
+
     public function getTransectionList($request, int $paginate = 5)
     {
-        $transaction = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($paginate);
+        $transaction = Transaction::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate($paginate);
         return  $transaction;
     }
 }

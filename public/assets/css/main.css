@@ -36,13 +36,11 @@ video {
     vertical-align: middle;
 }
 
-
 fieldset {
     border: 0;
     margin: 0;
     padding: 0;
 }
-
 
 a {
     text-decoration: none;
@@ -59,8 +57,8 @@ textarea {
 }
 
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @font-face {
     font-family: "Gilroy-Light";
@@ -81,13 +79,13 @@ textarea {
 }
 
 body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-size: 14px;
     color: #111;
 }
 
 :root {
-    --primary: #C62F00;
+    --primary: #c62f00;
     --secondary: #070707;
     --black: #121212;
     --white: #ffffff;
@@ -104,14 +102,13 @@ body {
     color: #fff;
     font-size: 18px;
     margin: 0;
-    font-family: 'Gilroy-Bold';
+    font-family: "Gilroy-Bold";
     font-weight: 500;
 }
 
 .navbar-brand img {
     width: 126px;
 }
-
 
 /* ========================= Header =============================== */
 
@@ -126,7 +123,7 @@ body {
     color: var(--secondary);
     padding: 1px 28px !important;
     font-weight: 500;
-    font-family: 'Gilroy-Light', sans-serif;
+    font-family: "Gilroy-Light", sans-serif;
 }
 
 .header .nav-link:hover {
@@ -144,7 +141,7 @@ body {
 
 .header .navbar-toggler {
     border-radius: 3px !important;
-    border: 1px solid #EEE !important;
+    border: 1px solid #eee !important;
     padding: 4px 13px !important;
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
     outline: none !important;
@@ -158,7 +155,7 @@ body {
     line-height: 49px;
     color: var(--secondary);
     margin-bottom: 22px;
-    font-family: 'Gilroy-Bold';
+    font-family: "Gilroy-Bold";
     text-shadow: 2px 2px #00000029;
 }
 
@@ -183,7 +180,7 @@ body {
     background: var(--white);
     box-shadow: 0 4px 7px 0 rgb(0 0 0 / 20%);
     color: var(--black);
-    font-family: 'Gilroy-Bold';
+    font-family: "Gilroy-Bold";
 }
 
 .banner_content .btn-dark:hover {
@@ -193,7 +190,7 @@ body {
 
 .dropdown.user_dropdown button {
     background: transparent;
-    border: 1px solid #EEE !important;
+    border: 1px solid #eee !important;
     border-radius: 10px;
     padding: 3px 10px;
     vertical-align: middle;
@@ -204,13 +201,11 @@ body {
     font-weight: 400;
 }
 
-
 .user_dropdown .dropdown-menu {
-    border: 1px solid #EEE;
+    border: 1px solid #eee;
     width: 100%;
     font-size: 14px;
 }
-
 
 /* ========================= Feature =============================== */
 
@@ -221,7 +216,7 @@ body {
 
 .feature_wrapper .feature_name h3 {
     font-size: 18px;
-    font-family: 'Gilroy-Bold';
+    font-family: "Gilroy-Bold";
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 12px;
@@ -239,7 +234,7 @@ body {
     font-size: 27px;
     color: var(--black);
     font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 .section_title .form-check {
@@ -247,11 +242,11 @@ body {
     color: #444;
     font-weight: 600;
     margin: 0px 5px;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 .pricing {
-    background: #F8F9FC;
+    background: #f8f9fc;
 }
 
 .plan_wrapper {
@@ -281,7 +276,7 @@ body {
 }
 
 .pricing .custom-shape-divider-top-1671081492 .shape-fill {
-    fill: #FFFFFF;
+    fill: #ffffff;
 }
 
 .middle_plan {
@@ -296,7 +291,7 @@ body {
 }
 
 .plan_price span {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 23px;
     width: 120px;
     height: 120px;
@@ -317,14 +312,14 @@ body {
     font-size: 20px;
     font-weight: 600;
     color: #333;
-    font-family: 'Gilroy-Bold';
+    font-family: "Gilroy-Bold";
     padding-bottom: 1px;
 }
 
 .plan_name span {
     font-size: 15px;
     color: #444;
-    font-family: 'Inter';
+    font-family: "Inter";
 }
 
 .plan_feature ul li {
@@ -344,7 +339,7 @@ body {
 
 .plan_feature ul li .fa-times {
     color: #dc3545;
-    opacity: .5;
+    opacity: 0.5;
 }
 
 .plan_btn a {
@@ -353,7 +348,7 @@ body {
     color: var(--white);
     padding: 11px 10px;
     font-size: 16px;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight: 500;
     border-radius: 50px;
     transition: all 0.3s ease;
@@ -374,7 +369,7 @@ body {
 }
 
 .plan_feature ul li del {
-    color: #AAA;
+    color: #aaa;
 }
 
 .middle_plan .plan_btn a {
@@ -400,7 +395,9 @@ body {
 }
 
 .video_iframe .video_link {
-    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+        rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     border-radius: 20px;
 }
 
@@ -423,7 +420,7 @@ body {
     border-radius: 100px;
     margin: 0 auto;
     margin-bottom: 5px;
-    border: 2px solid #EEE;
+    border: 2px solid #eee;
 }
 
 .testimonial_sec .review_item .icon {
@@ -435,7 +432,7 @@ body {
     font-size: 15px;
     color: #555;
     line-height: 25px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: "DM Sans", sans-serif;
 }
 
 .testimonial_sec .review_user {
@@ -444,7 +441,7 @@ body {
 
 .testimonial_sec .review_user h3 {
     font-size: 17px;
-    font-family: 'Gilroy-Bold';
+    font-family: "Gilroy-Bold";
     font-weight: 500;
     color: var(--black);
     margin: 0;
@@ -454,7 +451,7 @@ body {
 .testimonial_sec .review_user span {
     font-size: 15px;
     color: #666;
-    font-family: 'Gilroy-Light';
+    font-family: "Gilroy-Light";
 }
 
 .testimonial_sec .owl-nav {
@@ -471,7 +468,7 @@ body {
 .testimonial_sec .owl-nav button i {
     font-size: 21px;
     text-align: center;
-    color: #AAA;
+    color: #aaa;
     transition: all 0.3s;
 }
 
@@ -514,10 +511,9 @@ body {
 
 .faq_sec .accordion-header button {
     font-size: 15px;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     color: var(--black);
 }
-
 
 .faq_sec .accordion-body {
     padding: 19px 20px;
@@ -536,11 +532,10 @@ body {
     padding: 44px 0px 15px 0px;
 }
 
-
 .footer_menu ul li a {
     color: var(--white);
     font-size: 14px;
-    font-family: 'Inter';
+    font-family: "Inter";
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -570,7 +565,7 @@ body {
 .footer_menu ul li a {
     color: #999;
     font-size: 14px;
-    font-family: 'Inter';
+    font-family: "Inter";
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -604,7 +599,7 @@ body {
 .widget_title h3 {
     font-size: 18px;
     color: #d4d3d3;
-    font-family: 'Gilroy-Light';
+    font-family: "Gilroy-Light";
     font-weight: 500;
 }
 
@@ -625,7 +620,7 @@ body {
 
 .page_title h3 {
     font-size: 20px;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     color: var(--black);
     font-weight: 500;
 }
@@ -638,13 +633,12 @@ body {
     text-align: justify;
 }
 
-
 /* ========================= Login =============================== */
 
 .login_form .form-label {
     font-size: 14px;
     color: var(--black);
-    font-family: 'Inter';
+    font-family: "Inter";
     font-weight: 600;
 }
 
@@ -666,14 +660,14 @@ body {
 }
 
 .login_form .form-control::placeholder {
-    color: #CCC;
+    color: #ccc;
 }
 
 .login_form .btn-primary {
     border: none;
     border-radius: 2px;
     padding: 11px 50px;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight: 500;
     background: var(--black);
     width: 100%;
@@ -682,7 +676,6 @@ body {
 .login_form .btn-primary:hover {
     background: var(--primary);
 }
-
 
 .login_title h3 {
     font-size: 23px;
@@ -728,15 +721,15 @@ body {
 }
 
 .login_form .fa_facebook {
-    background: #0D8AF0 !important;
+    background: #0d8af0 !important;
 }
 
 .login_form .fa_twitter {
-    background: #1D9BF0 !important;
+    background: #1d9bf0 !important;
 }
 
 .login_form .fa_google {
-    background: #EB4436 !important;
+    background: #eb4436 !important;
 }
 
 .login_form .bottom p {
@@ -749,11 +742,9 @@ body {
     color: var(--primary);
 }
 
-
 .product_item {
     border: 1px solid #f1f1f1;
     border-radius: 5px;
-
 }
 
 .product_title h3 a {
@@ -799,13 +790,22 @@ body {
 .product_article span {
     font-size: 18px;
     font-weight: 600;
-    font-family: 'Gilroy-Light', s;
+    font-family: "Gilroy-Light", s;
     display: inline-block;
     align-items: center;
     vertical-align: middle;
     margin-top: 6px;
 }
-
+.product_article del {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "Gilroy-Light", s;
+    display: inline-block;
+    align-items: center;
+    vertical-align: middle;
+    margin-top: 6px;
+    margin-left: 10px;
+}
 
 .product_content {
     background: #fafafa;
@@ -814,7 +814,7 @@ body {
 
 .single_pro_content h2 {
     font-size: 20px;
-    font-family: 'Gilroy-Light', sans-serif;
+    font-family: "Gilroy-Light", sans-serif;
     font-weight: 600;
     margin-bottom: 11px;
     color: #212121;
@@ -822,13 +822,12 @@ body {
 
 .single_pro_content span {
     font-size: 20px;
-    font-family: 'Gilroy-Light', sans-serif;
+    font-family: "Gilroy-Light", sans-serif;
     font-weight: 600;
     margin-bottom: 11px;
     color: #373737;
     letter-spacing: 1px;
 }
-
 
 .single_pro_content p i {
     font-size: 13px;
@@ -837,7 +836,7 @@ body {
 
 .single_pro_content p span {
     font-size: 14px !important;
-    font-family: 'Gilroy-Light', sans-serif;
+    font-family: "Gilroy-Light", sans-serif;
     font-weight: 600;
 }
 
@@ -846,10 +845,10 @@ body {
 }
 
 .single_pro_content .custome_control {
-    border: 1px solid #DDD;
+    border: 1px solid #ddd;
     height: 41px;
     font-size: 14px;
-    font-family: 'Gilroy-Light', sans-serif;
+    font-family: "Gilroy-Light", sans-serif;
     font-weight: 700;
     outline: none !important;
     box-shadow: none !important;
@@ -869,7 +868,7 @@ body {
     color: #212121;
     display: block;
     font-size: 17px;
-    font-family: 'Gilroy-Light', sans-serif;
+    font-family: "Gilroy-Light", sans-serif;
 }
 
 .add_to_cart a {
@@ -881,7 +880,7 @@ body {
     border-radius: 50px !important;
     font-size: 15px;
     color: #fff;
-    font-family: 'Gilroy-Light', s;
+    font-family: "Gilroy-Light", s;
     font-weight: 500;
 }
 
@@ -943,7 +942,7 @@ body {
     border-radius: 13px;
 }
 
-.singel_pro_gallery .carousel.carousel-nav .flickity-prev-next-button{
+.singel_pro_gallery .carousel.carousel-nav .flickity-prev-next-button {
     display: none;
 }
 
@@ -951,7 +950,10 @@ body {
     border-radius: 5px !important;
 }
 
-.gallery_single .singel_pro_gallery .flickity-prev-next-button .flickity-button-icon {
+.gallery_single
+    .singel_pro_gallery
+    .flickity-prev-next-button
+    .flickity-button-icon {
     left: 18%;
 }
 
@@ -997,7 +999,7 @@ body {
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    border: 1px solid #EEE;
+    border: 1px solid #eee;
 }
 
 .shop_details_sec .review_item .review_article h3 {
@@ -1031,7 +1033,7 @@ body {
 }
 
 .shop_details_sec .review_item {
-    border-bottom: 1px solid #EEE;
+    border-bottom: 1px solid #eee;
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
@@ -1049,7 +1051,7 @@ body {
 
 .shop_details_sec .review_form .form-control {
     height: 50px;
-    border: 1px solid #DDD;
+    border: 1px solid #ddd;
     outline: none !important;
     box-shadow: none !important;
 }
@@ -1071,12 +1073,9 @@ body {
     margin: 0;
 }
 
-
 .product_carousel_item .item {
     margin: 10px;
 }
-
-
 
 .plan_type .switch-wrapper {
     position: relative;
@@ -1098,14 +1097,18 @@ body {
     border-radius: 20px;
     transition: color 0.25s ease-in-out;
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     line-height: 44px;
     width: 100%;
     display: inline-block;
     height: 47px;
 }
 
-.plan_type .switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
+.plan_type
+    .switch-wrapper
+    [type="radio"]:checked#yearly
+    + label[for="monthly"]
+    ~ .highlighter {
     transform: translateX(100%);
 }
 .plan_type .switch-wrapper .highlighter {
@@ -1119,36 +1122,13 @@ body {
     transition: transform 0.25s ease-in-out;
 }
 
-.plan_type .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"], .plan_type .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
+.plan_type
+    .switch-wrapper
+    [type="radio"]:checked#monthly
+    ~ label[for="monthly"],
+.plan_type .switch-wrapper [type="radio"]:checked#yearly ~ label[for="yearly"] {
     color: #fff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Helper classes
@@ -1238,9 +1218,9 @@ body {
 }
 
 @media print,
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 1.25dppx),
-(min-resolution: 120dpi) {
+    (-webkit-min-device-pixel-ratio: 1.25),
+    (min-resolution: 1.25dppx),
+    (min-resolution: 120dpi) {
     /* Style adjustments for high resolution devices */
 }
 
@@ -1251,7 +1231,6 @@ body {
    ========================================================================== */
 
 @media print {
-
     *,
     *::before,
     *::after {
@@ -1315,7 +1294,7 @@ body {
 .form-control {
     padding: 13px 24px;
     align-items: center;
-    background-color: #F7F7F7 !important;
+    background-color: #f7f7f7 !important;
     border-radius: 9px;
     height: 48px;
     font-size: 14px;
@@ -1328,7 +1307,7 @@ body {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     box-shadow: inset 0 0 0 transparent;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 label {
