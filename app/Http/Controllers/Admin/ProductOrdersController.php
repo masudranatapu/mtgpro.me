@@ -79,4 +79,13 @@ class ProductOrdersController extends Controller
         Toastr::success(trans('Data Successfully Updatd !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.product.orders');
    }
+
+   public function invoice($id){
+
+        $orderInvoice = DB::table('orders')
+                ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+                ->select('orders.*', 'users.name as user_name')
+                ->where('orders.id', $id)
+                ->first();
+   }
 }
