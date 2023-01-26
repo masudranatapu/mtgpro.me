@@ -184,5 +184,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::get('/edit/{id}', [OrdersController::class, 'edit'])->name('orders.edit');
         Route::post('/update/{id}', [OrdersController::class, 'update'])->name('orders.update');
         Route::get('/invoice/{id}', [OrdersController::class, 'invoice'])->name('orders.invoice');
+        Route::post('order/status/change/{order}', [OrdersController::class, 'statusChange'])->name('order.status');
     });
 });

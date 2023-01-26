@@ -93,7 +93,8 @@ class ProductCheckoutController extends Controller
             $order->user_id = Auth::id();
             $order->order_date = now();
             $order->payment_method = "Stripe";
-            $order->payment_status = $charge->status;
+            $order->payment_status = $charge->status == "success" ? true : false;
+            $order->status = 1;
             $order->type = "Product purchase";
             $order->save();
 
