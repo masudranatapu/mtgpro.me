@@ -3,10 +3,11 @@ namespace App\Http\Controllers\User;
 use DB;
 use App\Models\Plan;
 use App\Models\User;
-use App\Models\MarketingMaterials;
+use App\Models\Order;
 use App\Models\Currency;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\MarketingMaterials;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,24 @@ class DashboardControler extends Controller
     {
 
         return view('user.mortgage-calculator');
+    }
+
+    public function myOrder(){
+
+        $productOrders = DB::table('orders')
+            ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'users.name as user_name')
+            ->where('user_id',auth::id())
+            ->orderBy('id', 'desc')->get();
+           
+        return view('user.my-order',compact('productOrders'));
+    }
+
+    public function invoice($id)
+    {
+        $order = Order::find($id);
+
+        return view('user.user-invoice', compact('order'));
     }
 
 

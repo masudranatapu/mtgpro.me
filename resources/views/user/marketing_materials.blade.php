@@ -149,7 +149,7 @@
                                             @foreach ($marketing_materials as $key => $value)
                                               
                                                 <tr>
-                                                    <td>{{ $key + 1}}</td>
+                                                    <td>{{ $marketing_materials->firstItem() + $key}}</td>
                                                     <td>{{ $value->title}}</td>
                                                     <td>{!! $value->description  !!}</td>
                                                     <td>
