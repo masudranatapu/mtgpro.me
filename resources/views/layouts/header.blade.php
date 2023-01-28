@@ -35,10 +35,6 @@ $setting = getSetting();
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('shop') }}">{{ __('Shop') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('cart') }}">{{ __('Cart') }}</a>
-                            </li>
-
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('about-us') }}">{{ __('About Us') }}</a>
@@ -105,11 +101,14 @@ $setting = getSetting();
                                 </li>
                             @endauth
 
-
-
-
-
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('cart') }}">
+                                    <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                    @if (session('cart'))
+                                    <span>({{ count(session('cart')) }})</span>
+                                    @endif
+                                </a>
+                            </li>
 
 
                         </ul>
