@@ -86,6 +86,11 @@ class DashboardControler extends Controller
         return view('user.marketing_materials',compact('marketing_materials'));
     }
 
+    public function marketingMaterialDetails($id){
+        $marketing_materials_details = MarketingMaterials::find($id);
+        return view('user.marketing_materials_details',compact('marketing_materials_details'));
+    }
+
     public function getCalculator(Request $request)
     {
 

@@ -61,7 +61,9 @@
                                                         <img src="{{ $value->image }}" alt="Paris">
                                                     </td>
                                                     <td>
-                                                       <a  href="{{$value->file}}" target="_blank" download><span class="text-success"> <i class="fa fa-download"></i> Download</a>
+                                                       @if ($value->file)
+                                                           <a  href="{{$value->file}}" target="_blank" download><span class="text-success"> <i class="fa fa-download"></i> Download</a>
+                                                       @endif
                                                     </td>
                                                     <td class="text-muted">
                                                         {{ date('d-m-Y h:m A', strtotime($value->created_at)) }}

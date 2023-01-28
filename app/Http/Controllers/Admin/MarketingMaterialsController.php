@@ -31,8 +31,8 @@ class MarketingMaterialsController extends Controller
             $this->validate($request, [
                 'title'         => 'required|max:100',
                 'order_id'      => 'required',
-                'image'         => 'required|mimes:jpeg,png,jpg,gif,svg',
-                'file'          => 'required|mimes:pdf',
+                'image'         => 'nullable',
+                'file'          => 'nullable|mimes:pdf',
                 'status'        => 'required',
                 'author_name'   => 'required',
                 'description'   => 'required',

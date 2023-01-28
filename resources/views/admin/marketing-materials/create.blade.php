@@ -43,14 +43,14 @@
                                     </div>
                                     <div class="mb-3">
                                        <label class="form-label" id="image">{{ __('Image') }} <span class="text-danger"><small>Prefered size(400 x 400 px)</small></span></label>
-                                       <input type="file" class="form-control" name="image" placeholder="{{ __('Image') }}" value=""required>
+                                       <input type="file" class="form-control" name="image" placeholder="{{ __('Image') }}" value="">
                                         @if($errors->has('image'))
                                             <span class="help-block text-danger">{{ $errors->first('image') }}</span>
                                         @endif
                                     </div>
                                     <div class="mb-3">
                                        <label class="form-label" id="file">{{ __('PDF') }}</label>
-                                       <input type="file" class="form-control" name="file" placeholder="{{ __('PDF') }}" value="" accept="application/pdf,application/vnd.ms-excel" required>
+                                       <input type="file" class="form-control" name="file" placeholder="{{ __('PDF') }}" value="" accept="application/pdf,application/vnd.ms-excel" >
                                         @if($errors->has('file'))
                                             <span class="help-block text-danger">{{ $errors->first('file') }}</span>
                                         @endif

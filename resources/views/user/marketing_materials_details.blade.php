@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title') {{ __('Marketing Materials') }}  @endsection
+@section('title') {{ __('Marketing Materials Details') }}  @endsection
 
 @push('custom_css')
     <style>
@@ -120,7 +120,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Marketing Materials') }}</h1>
+                    <h1 class="m-0">{{ __('Marketing Materials Details') }}</h1>
                 </div>
             </div>
         </div>
@@ -134,40 +134,31 @@
                                 <table id="dataTable" class="table table-vcenter card-table" id="table-plan">
                                     <thead>
                                         <tr>
-                                            <th>{{ __('Sl') }}</th>
-                                            <th>{{ __('Title') }}</th>
-                                            <th>{{ __('Image') }}</th>
-                                            <th>{{ __('PDF') }}</th>
+                                            <th scope="col">{{ __('Title') }}</th>
+                                            <th scope="col">{{ __('Description') }}</th>
+                                            <th scope="col">{{ __('Image') }}</th>
+                                            <th scope="col">{{ __('PDF') }}</th>
                                        
                                         </tr>
                                     </thead>
                                     <tbody>
                                         
-                                        @if (!empty($marketing_materials) && $marketing_materials->count())
-
-                                            @foreach ($marketing_materials as $key => $value)
-                                              
-                                                <tr>
-                                                    <td>{{ $marketing_materials->firstItem() + $key}}</td>
-                                                    <td> <a href="{{ route('user.marketing.materials.details',$value->id)}}" style="color:black">{{ $value->title}}</a> </td>
-                                                    <td>
-                                                        <img class="custom_image" src="{{ $value->image}}" alt="Paris">
-                                                    </td>
-                                                    <td>
-                                                        @if ($value->file)
-                                                            <a class="" href="{{$value->file}}" download><i class="fa-solid fa-arrow-down"></i> Download</a>
+                                        {{-- @if (!$empty($marketing_materials_details) && $marketing_materials_details->count()) --}}
+                                            <tr>
+                                                <td>{{$marketing_materials_details->title}}</td>
+                                                <td>{!!$marketing_materials_details->description !!}</td>
+                                                 <td>
+                                                        <img class="custom_image" src="{{ $marketing_materials_details->image}}" alt="Paris">
+                                                 </td>
+                                                 <td>
+                                                        @if ($marketing_materials_details->file)
+                                                            <a class="" href="{{$marketing_materials_details->file}}" download><i class="fa-solid fa-arrow-down"></i> Download</a>
                                                         @endif
                                                     </td>
-                                              </tr>
-                                            @endforeach
-                                        @endif
+                                            </tr>
+                                        {{-- @endif --}}
                                     </tbody>
                                 </table>
-                               <div>
-                                 <center>
-                                    {{$marketing_materials->links() }}
-                                </center>
-                               </div>
                             </div>
                         </div>
                 </div>
