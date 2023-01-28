@@ -33,6 +33,14 @@ $settings = getSetting();
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('user.myorder') }}" class="nav-link @yield('my_order')">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Order') }}">
+                        </span>
+                        {{ __('My Order') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.crm') }}" class="nav-link @yield('crm')">
                         <span class="icon">
                             <svg width="16" height="16" fill="none" viewBox="0 0 16 15">

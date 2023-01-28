@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCheckoutController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\User\DashboardControler;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
 
     Route::get('free-marketing-material', ['as' => 'free-marketing-material', 'uses' => 'DashboardControler@getFreeMarketing']);
     Route::get('calculator', ['as' => 'calculator', 'uses' => 'DashboardControler@getCalculator']);
+    Route::get('/my-order',[DashboardControler::class,'myOrder'])->name('myorder');
+    Route::get('/invoice/{id}', [DashboardControler::class, 'invoice'])->name('orders.invoice');
 
     Route::get('cancel-plan/stripe', ['as' => 'cancel-plan.stripe', 'uses' => 'StripeController@cancelCurrentPlan']);
 

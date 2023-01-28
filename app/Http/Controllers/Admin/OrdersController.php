@@ -20,7 +20,7 @@ class OrdersController extends Controller
         $productOrders = DB::table('orders')
             ->leftJoin('users', 'users.id', '=', 'orders.user_id')
             ->select('orders.*', 'users.name as user_name')
-            ->orderBy('id', 'desc')->paginate(5);
+            ->orderBy('id', 'desc')->get();
 
         return view('admin.orders.index', compact('productOrders'));
     }
