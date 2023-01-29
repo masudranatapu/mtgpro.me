@@ -129,8 +129,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card-body custom_table table-bordered">
-                           <table class="table">
+                    <div class="card-body custom_table table-bordered table-responsive">
+                         <table class="table ">
                             <thead>
                                 <tr>
                                     <th scope="col">{{ __('Sl.No') }}</th>
