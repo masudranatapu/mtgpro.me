@@ -26,7 +26,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Response;
 
 
-class HomeController extends Controller
+class ShopController extends Controller
 {
     private $filename;
     private $settings;
