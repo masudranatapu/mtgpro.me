@@ -1414,3 +1414,9 @@ video.banner-video {
     background-color: #fff;
     box-shadow: rgb(99 99 99 / 10%) 0px 2px 8px 0px;
 }
+
+.login_form .form-label {
+    font-size: 14px;
+    color: var(--black);
+    font-family: 'Gilroy-Bold';
+}

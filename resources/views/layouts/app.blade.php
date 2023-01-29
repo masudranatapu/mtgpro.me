@@ -135,7 +135,7 @@
                 url: "add-to-cart/" + id,
                 success: function(data) {
                     if (data.status) {
-                        toastr.success('Add to card successfully')
+                        toastr.success('Product added to cart successfully!')
                         $('#cartCounter').html(data.count);
                     } else {
                         toastr.error('Something Worng..!')
