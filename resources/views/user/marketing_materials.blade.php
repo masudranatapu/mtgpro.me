@@ -129,15 +129,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card-body custom_table">
+                    <div class="card-body">
                             <div class="px-2 py-2">
-                                <table id="dataTable" class="table table-vcenter card-table table-responsive" id="table-plan">
+                                <table  class="table custom_table table-responsive">
                                     <thead>
                                         <tr>
-                                            <th>{{ __('Sl') }}</th>
-                                            <th>{{ __('Title') }}</th>
-                                            <th>{{ __('Image') }}</th>
-                                            <th>{{ __('PDF') }}</th>
+                                            <th width="5%" scope="col">{{ __('Sl') }}</th>
+                                            <th width="40%" scope="col">{{ __('Title') }}</th>
+                                            <th width="10%" scope="col">{{ __('Image') }}</th>
+                                            <th width="10%" scope="col">{{ __('PDF') }}</th>
                                        
                                         </tr>
                                     </thead>
