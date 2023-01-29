@@ -120,7 +120,7 @@ $rows = $data ?? [];
                                             @endforeach
                                         @else
                                             <tr class="alert">
-                                                <td rowspan="5">{{ __('Data Not Found') }}</td>
+                                                <td colspan="7" class="text-center">{{ __('Data Not Found') }}</td>
                                             </tr>
                                         @endif
                                     </tbody>
