@@ -148,7 +148,7 @@
                                                 <tr class="align-middle">
                                                     <td>
                                                         <img src="{{ getPhoto($product['image']) }}" alt=""
-                                                            width="100px" srcset="">&emsp;
+                                                            width="50px" srcset="">&emsp;
                                                         <span> <a
                                                                 href="{{ route('product.details', ['product' => $product['slug']]) }}">{{ $product['name'] }}</a>
                                                         </span>
