@@ -60,10 +60,6 @@
                             <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a>
                             &nbsp; <a href="{{ route('home') }}/{{ Auth::user()->username }}">Live card</a>
 
-
-
-
-
                         </h1>
 
 

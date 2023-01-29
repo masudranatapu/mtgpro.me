@@ -37,7 +37,7 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
-        $activeCard = $this->businessCard->where('user_id', Auth::id())->where('status', true)->first();
+        $activeCard = $this->businessCard->where('user_id', Auth::id())->first();
 
         if (count($cards) < 1) {
             return redirect()->route('user.card.init-card');
