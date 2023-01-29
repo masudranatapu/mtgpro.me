@@ -60,62 +60,62 @@
         }
 
         /* .review_content p {
-                                    margin: 0;
-                                    font-size: 14px;
-                                    text-align: justify;
-                                    color: #5e5e5e;
-                                    line-height: 26px;
-                                    font-family: 'Poppins', sans-serif;
-                                    font-weight: 400;
-                                }
-                                .edit_review {
-                                    position: absolute;
-                                    top: 8px;
-                                    right: 13px;
-                                    cursor: pointer;
-                                }
-                                .edit_review i {
-                                    color: #BBB;
-                                    font-size: 19px;
-                                    transition: all 0.3s ease;
-                                }
+                                                            margin: 0;
+                                                            font-size: 14px;
+                                                            text-align: justify;
+                                                            color: #5e5e5e;
+                                                            line-height: 26px;
+                                                            font-family: 'Poppins', sans-serif;
+                                                            font-weight: 400;
+                                                        }
+                                                        .edit_review {
+                                                            position: absolute;
+                                                            top: 8px;
+                                                            right: 13px;
+                                                            cursor: pointer;
+                                                        }
+                                                        .edit_review i {
+                                                            color: #BBB;
+                                                            font-size: 19px;
+                                                            transition: all 0.3s ease;
+                                                        }
 
 
-                                .review_edit_form label {
-                                    font-size: 14px;
-                                    color: #3b3b3b;
-                                    font-family: 'Poppins';
-                                    font-weight: 400;
-                                }
+                                                        .review_edit_form label {
+                                                            font-size: 14px;
+                                                            color: #3b3b3b;
+                                                            font-family: 'Poppins';
+                                                            font-weight: 400;
+                                                        }
 
-                                .review_edit_form .form-control {
-                                    height: 44px;
-                                    border: 1px solid #DDD;
-                                    outline: none;
-                                    box-shadow: none;
-                                    border-radius: 3px;
-                                }
-                                .review_edit_form .btn {
-                                    padding: 6px 33px;
-                                    border-radius: 2px;
-                                    font-family: 'Poppins', sans-serif;
-                                    font-weight: 400;
-                                    font-size: 15px;
-                                    border: none !important;
-                                }
-                                .status{
-                                margin: 20px;
-                                float: right;
-                                }
-                                .active{
-                                    color: orange;
-                                    font-weight: 600;
-                                    font-family: 'Poppins', sans-serif;
-                                }
-                                .pending{
-                                    font-weight: 600;
-                                    font-family: 'Poppins', sans-serif;
-                                } */
+                                                        .review_edit_form .form-control {
+                                                            height: 44px;
+                                                            border: 1px solid #DDD;
+                                                            outline: none;
+                                                            box-shadow: none;
+                                                            border-radius: 3px;
+                                                        }
+                                                        .review_edit_form .btn {
+                                                            padding: 6px 33px;
+                                                            border-radius: 2px;
+                                                            font-family: 'Poppins', sans-serif;
+                                                            font-weight: 400;
+                                                            font-size: 15px;
+                                                            border: none !important;
+                                                        }
+                                                        .status{
+                                                        margin: 20px;
+                                                        float: right;
+                                                        }
+                                                        .active{
+                                                            color: orange;
+                                                            font-weight: 600;
+                                                            font-family: 'Poppins', sans-serif;
+                                                        }
+                                                        .pending{
+                                                            font-weight: 600;
+                                                            font-family: 'Poppins', sans-serif;
+                                                        } */
     </style>
 @endpush
 
@@ -140,18 +140,17 @@
                             <table class="table custom_table table-bordered table-responsive">
                                 <thead>
                                     <tr>
-                                        <th width="5%" scope="col">{{ __('Sl.No') }}</th>
-                                        <th width="8%" scope="col">{{ __('Order Number') }}</th>
-                                        <th width="5%" scope="col">{{ __('Quantity') }}</th>
-                                        <th width="6%" scope="col">{{ __('Discount') }}</th>
-                                        <th width="6%" scope="col">{{ __('Total Price') }}</th>
-                                        <th width="8%" scope="col">{{ __('Payment Fee') }}</th>
-                                        <th width="8%" scope="col">{{ __('Grand Total') }}</th>
-                                        <th width="8%" scope="col">{{ __('Order Date') }}</th>
-                                        <th width="9%" scope="col">{{ __('Payment Method') }}</th>
-                                        <th width="9%" scope="col">{{ __('Payment Status') }}</th>
+                                        <th width="5%" scope="col">{{ __('Sl') }}</th>
+                                        <th width="4%" scope="col">{{ __('Number') }}</th>
+                                        <th width="3%" scope="col">{{ __('Qty') }}</th>
+                                        <th width="3%" scope="col">{{ __('Dis.') }}</th>
+                                        <th width="6%" scope="col">{{ __('Price') }}</th>
+                                        <th width="8%" scope="col">{{ __('Pay Fee') }}</th>
+                                        <th width="8%" scope="col">{{ __('Date') }}</th>
+                                        <th width="9%" scope="col">{{ __('Provider') }}</th>
+                                        <th width="9%" scope="col">{{ __('Pay Status') }}</th>
                                         <th width="8%" scope="col">{{ __('Status') }}</th>
-                                        <th width="8%" scope="col">{{ __('Actions') }}</th>
+                                        <th width="8%" scope="col">{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -163,7 +162,7 @@
                                             <td>{{ $value->discount }}%</td>
                                             <td>{{ getPrice($value->total_price) }}</td>
                                             <td>{{ getPrice($value->payment_fee) }}</td>
-                                            <td>{{ getPrice($value->grand_total) }}</td>
+
                                             <td>{{ date('d M Y', strtotime($value->order_date)) }}</td>
                                             <td>{{ $value->payment_method }}</td>
                                             <td class="text-muted">
