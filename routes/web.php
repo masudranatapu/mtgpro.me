@@ -91,9 +91,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('free-marketing-material', ['as' => 'free-marketing-material', 'uses' => 'DashboardControler@getFreeMarketing']);
     Route::get('calculator', ['as' => 'calculator', 'uses' => 'DashboardControler@getCalculator']);
     Route::get('/my-order', [DashboardControler::class, 'myOrder'])->name('myorder');
-    Route::get('product/invoice/{id}', [DashboardControler::class, 'invoice'])->name('orders.invoice');
+    Route::get('/invoice/{id}', [DashboardControler::class, 'invoice'])->name('orders.invoice');
     Route::get('free-marketing-material-details/{id}', [DashboardControler::class, 'marketingMaterialDetails'])->name('marketing.materials.details');
-    Route::get('suggest-a-feature',[DashboardControler::class,'getFeature'])->name('suggestFeature');
 
 
     Route::get('cancel-plan/stripe', ['as' => 'cancel-plan.stripe', 'uses' => 'StripeController@cancelCurrentPlan']);
