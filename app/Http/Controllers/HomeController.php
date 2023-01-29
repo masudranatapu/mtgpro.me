@@ -162,6 +162,7 @@ class HomeController extends Controller
                 ->where('business_fields.status', 1)
                 ->orderBy('business_fields.position', 'ASC')
                 ->get();
+
             DB::table('business_cards')->where('id', $cardinfo->id)->increment('total_hit', 1);
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);
