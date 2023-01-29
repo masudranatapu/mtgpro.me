@@ -48,8 +48,8 @@ Route::post('add-to-cart/', [ProductController::class, 'addToCartPost'])->name('
 Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
 
-Route::get('products/checkout', [ProductCheckoutController::class, 'checkOut'])->name('product.checkOut');
-Route::post('products/transection', [ProductCheckoutController::class, 'orderCheckOut'])->name('product.orderCheckOut');
+Route::get('products/checkout', [ProductCheckoutController::class, 'checkout'])->name('product.checkout');
+Route::post('products/transection', [ProductCheckoutController::class, 'orderCheckout'])->name('product.orderCheckout');
 
 
 

@@ -177,7 +177,7 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-12">
-                        <form action="{{ route('product.orderCheckOut') }}" id="order-form" method="post">
+                        <form action="{{ route('product.orderCheckout') }}" id="order-form" method="post">
                             @csrf
 
 
@@ -319,8 +319,13 @@
                                             <div class="mb-3 form-group">
                                                 <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
                                                     <span class="text-danger">*</span></label>
-                                                <input id="billing_phone" name="billing_phone" class="form-control"
-                                                    type="tel" required>
+                                                <input id="billing_phone"
+                                                name="billing_phone"
+                                                class="form-control"
+                                                type="tel"
+                                                required
+                                                value="{{ Auth::user()->billing_country }}"
+                                                >
                                             </div>
                                         </div>
 

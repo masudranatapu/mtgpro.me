@@ -80,7 +80,7 @@
                                     Continue
                                     Shopping</a>
 
-                                <a href="{{ route('product.checkOut') }}" class="btn btn-primary">Checkout</a>
+                                <a href="{{ route('product.checkout') }}" class="btn btn-primary">Checkout</a>
 
                             </td>
 

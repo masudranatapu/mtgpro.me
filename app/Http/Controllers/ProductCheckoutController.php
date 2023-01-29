@@ -30,7 +30,7 @@ class ProductCheckoutController extends Controller
     {
         $this->middleware('auth');
     }
-    public function checkOut()
+    public function checkout()
     {
         $user = User::find(Auth::id());
         $config = Config::all();
@@ -43,7 +43,7 @@ class ProductCheckoutController extends Controller
     }
 
 
-    public function orderCheckOut(Request $request)
+    public function orderCheckout(Request $request)
     {
         try {
 
