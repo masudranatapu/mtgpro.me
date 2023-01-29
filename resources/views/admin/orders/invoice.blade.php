@@ -75,7 +75,8 @@ $setting = getSetting();
 
                                         <div class="">
                                             <p>SOLD TO:</p>
-                                            <span class="h4"><strong>Import parts and mechanical</strong></span>
+                                            <span class="h4"><strong>Modern Contact Solutions For Today's Mortgage
+                                                    Professional</strong></span>
                                             <address>
                                                 {{ $invoieDetails['from_billing_name'] }}</br>
                                                 {{ $invoieDetails['from_billing_email'] }}</br>
@@ -142,7 +143,8 @@ $setting = getSetting();
                                         </tr>
                                         <tr class="bg-default">
                                             <td>Payment Method:
-                                                <strong>{{ $order->transaction->payment_gateway_name }}</strong></td>
+                                                <strong>{{ $order->transaction->payment_gateway_name }}</strong>
+                                            </td>
                                             <td colspan="1"></td>
                                             <td class="text-success">Payment:</td>
                                             <td class="text-success">

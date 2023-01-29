@@ -55,7 +55,8 @@ $rows = $data ?? [];
                                     </div>
                                     <div class="product_article">
                                         <p>
-                                            <a href="{{ route('add.to.cart', ['id' => $product->id]) }}">
+                                            <a href="javascript:void(0)" data-id="{{ $product->id }}"
+                                                onclick="addToCart({{ $product->id }})">
                                                 Add to Cart
                                             </a>
                                             @if (isset($product->unit_price))
