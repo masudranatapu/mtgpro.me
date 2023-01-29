@@ -40,7 +40,7 @@ class ProductController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        return response()->json(true);
+        return response()->json(["status" => true, 'count' => count($cart)]);
     }
 
 

@@ -67,6 +67,7 @@
                                                 <td>{{ date('d M Y', strtotime($value->order_date)) }}</td>
                                                 <td>{{ $value->payment_method }}</td>
                                                 <td class="text-muted">
+
                                                     @if ($value->payment_status)
                                                         <span class="badge bg-orange">{{ __('Paid') }}</span>
                                                     @else

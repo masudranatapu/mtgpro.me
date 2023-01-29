@@ -18,7 +18,7 @@ $setting = getSetting();
                 <div class="container-fluid">
                     <!-- logo -->
                     <a class="navbar-brand p-0" href="{{ route('home') }}">
-                    <img src="{{ getPhoto($setting->site_logo) }}" alt="{{ $setting->site_name }}">
+                        <img src="{{ getPhoto($setting->site_logo) }}" alt="{{ $setting->site_name }}">
                     </a>
                     <!-- toggle bar -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample"
@@ -105,7 +105,9 @@ $setting = getSetting();
                                 <a class="nav-link" href="{{ route('cart') }}">
                                     <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                     @if (session('cart'))
-                                    <span>({{ count(session('cart')) }})</span>
+                                        <span id="cartCounter">({{ count(session('cart')) }})</span>
+                                    @else
+                                        <span id="cartCounter"></span>
                                     @endif
                                 </a>
                             </li>
