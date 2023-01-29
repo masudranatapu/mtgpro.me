@@ -17,7 +17,11 @@
                     @php $total = 0 @endphp
                     @if (session('cart'))
                         @foreach (session('cart') as $id => $details)
-                            @php $total += $details['price'] * $details['quantity'] @endphp
+                            @php
+                            $total += $details['price'] * $details['quantity'];
+                            $line_total = $details['price'] * $details['quantity'];
+
+                            @endphp
                             <tr data-id="{{ $id }}" class="align-middle">
                                 <td data-th="Photo">
 
@@ -29,12 +33,13 @@
                                 <td data-th="Product">
                                     <span>{{ $details['name'] }}</span>
                                 </td>
-                                <td data-th="Price">${{ $details['price'] }}</td>
+                                <td data-th="Price">${{ number_format($details['price'],2) }}</td>
                                 <td data-th="Quantity">
                                     <input type="number" value="{{ $details['quantity'] }}"
                                         class="form-control quantity update-cart" />
                                 </td>
-                                <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}
+                                <td data-th="Subtotal" class="text-center">
+                                    ${{ number_format($line_total,2) }}
                                 </td>
                                 <td class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm remove-from-cart"><i
@@ -59,7 +64,7 @@
                                 <h3><strong>Total : </strong></h3>
                             </td>
                             <td class="text-center">
-                                <h3><strong> ${{ $total }}</strong></h3>
+                                <h3><strong> ${{ number_format($total,2) }}</strong></h3>
                             </td>
                             <td></td>
 
