@@ -136,13 +136,13 @@
                                                                             Status</option>
                                                                         <option
                                                                             @if ($value->status == 1) selected @endif
-                                                                            value="1">Prossing</option>
+                                                                            value="1">Processing</option>
                                                                         <option
                                                                             @if ($value->status == 2) selected @endif
                                                                             value="2">On The Way</option>
                                                                         <option
                                                                             @if ($value->status == 3) selected @endif
-                                                                            value="3">Deliverd</option>
+                                                                            value="3">Delivered</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
