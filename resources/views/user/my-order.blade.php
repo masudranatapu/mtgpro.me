@@ -143,7 +143,7 @@
                                         <th width="5%" scope="col">{{ __('Sl') }}</th>
                                         <th width="4%" scope="col">{{ __('Number') }}</th>
                                         <th width="3%" scope="col">{{ __('Qty') }}</th>
-                                        <th width="3%" scope="col">{{ __('Dis.') }}</th>
+                                        <th width="3%" scope="col">{{ __('Dis') }}</th>
                                         <th width="6%" scope="col">{{ __('Price') }}</th>
                                         <th width="8%" scope="col">{{ __('Pay Fee') }}</th>
                                         <th width="8%" scope="col">{{ __('Date') }}</th>
@@ -187,8 +187,8 @@
                                             </td>
                                         </tr>
                                         @empty
-                                            <tr>
-                                                <td>
+                                            <tr >
+                                                <td colspan="11" class="text-center text-danger font-weight-bold">
                                                     No Order Yet
                                                 </td>
                                             </tr>
