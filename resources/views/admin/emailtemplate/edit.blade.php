@@ -30,7 +30,7 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label>Type</label>
-                                            <input type="text" class="form-control" name="type" value="{{ $emailtemplates->type }}">
+                                            <input type="text" class="form-control" readonly name="type" value="{{ $emailtemplates->type }}">
                                         </div>
                                         <div class="col-md-6">
                                             <label>Subject</label>
