@@ -492,8 +492,7 @@
                                         <i class="fa fa-download"></i>{{ __('Text') }}
                                     </a>
                                     <a class="btn btn-primary mx-1" title="{{ __('Email') }}"
-                                        href="mailto:{{ $cardinfo->card_email }}" data-bs-toggle="modal"
-                                        data-bs-target="#SocialModal">
+                                        href="mailto:{{ $cardinfo->card_email }}">
                                         <img class="img-fluid" src="{{ asset('assets/img/icons/connections.svg') }}"
                                             alt="">
                                         {{ __('Email') }}
