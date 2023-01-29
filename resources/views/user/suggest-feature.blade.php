@@ -128,7 +128,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <div class="card-body custom_table">
                          <div class="px-2 py-2">
                             <div class="setting_tab_contetn">
