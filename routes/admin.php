@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\MarketingMaterialsController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\User\PlanController;
 use App\Models\MarketingMaterials;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +22,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('plan/{id}/{period}/getstripe', 'PlanController@getstripe')->name('plan.getstripe');
     Route::get('plan/{id}/{period}/getpaypal', 'PlanController@createPaypalPlan')->name('plan.getpaypal');
     Route::get('delete-plan', 'PlanController@deletePlan')->name('delete.plan');
-
-
+    // plan list
     Route::get('plan-list', ['as' => 'plan-list', 'uses' => 'PlanController@getPlanList']);
-
-
     // Users
     Route::get('users', 'UserController@users')->name('users');
     Route::get('edit-user/{id}', 'UserController@editUser')->name('edit.user');
@@ -47,7 +45,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('review/{id}/update', 'ReviewController@putUpdate')->name('review.update');
     Route::get('review/{id}/status-update/{status}', 'ReviewController@updateStatus')->name('review.status-update');
     Route::get('review/{id}/delete', 'ReviewController@getDelete')->name('review.delete');
-
     // Payment Gateways
     Route::get('payment-methods', 'PaymentMethodController@paymentMethods')->name('payment.methods');
     Route::get('delete-payment-method', 'PaymentMethodController@deletePaymentMethod')->name('delete.payment.method');
@@ -57,14 +54,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('offline-transactions', 'TransactionsController@offlineTransactions')->name('offline.transactions');
     Route::get('offline-transaction-status/{id}/{status}', 'TransactionsController@offlineTransactionStatus')->name('offline.trans.status');
     Route::get('view-invoice/{id}', 'TransactionsController@viewInvoice')->name('view.invoice');
-
     // Account Setting
     Route::get('account', 'AccountController@account')->name('account');
     Route::get('edit-account', 'AccountController@editAccount')->name('edit.account');
     Route::post('update-account', 'AccountController@updateAccount')->name('update.account');
     Route::get('change-password', 'AccountController@changePassword')->name('change.password');
     Route::post('update-password', 'AccountController@updatePassword')->name('update.password');
-
     //Custom Page
     Route::get('custom-page', ['as' => 'custom-page.list', 'uses' => 'CustomPageController@getIndex']);
     Route::get('custom-page/create', ['as' => 'custom-page.create', 'uses' => 'CustomPageController@getCreate']);
@@ -74,21 +69,17 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('custom-page/{id}/update', ['as' => 'custom-page.update', 'uses' => 'CustomPageController@putUpdate']);
     Route::get('custom-page/{id}/delete', ['as' => 'custom-page.delete', 'uses' => 'CustomPageController@getDelete']);
     Route::get('ajax/text-editor/image', ['as' => 'text-editor.image', 'uses' => 'CustomPageController@postEditorImageUpload']);
-
     // Setting
     Route::get('pages', 'SettingsController@pages')->name('pages');
     Route::get('page/{home}', 'SettingsController@editHomePage')->name('edit.home');
     Route::post('page/{home}/update', 'SettingsController@updateHomePage')->name('update.home');
-
-
-
+    // setting
     Route::get('settings', 'SettingsController@settings')->name('settings');
     Route::post('change-settings', 'SettingsController@changeSettings')->name('change.settings');
     Route::get('tax-setting', 'SettingsController@taxSetting')->name('tax.setting');
     Route::post('update-tex-setting', 'SettingsController@updateTaxSetting')->name('update.tax.setting');
     Route::post('update-email-setting', 'SettingsController@updateEmailSetting')->name('update.email.setting');
     Route::get('test-email', 'SettingsController@testEmail')->name('test.email');
-
     // Clear cache
     Route::get('clear', 'SettingsController@clear')->name('clear');
     // Contact
@@ -102,8 +93,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('blog/{id}/update', 'BlogController@Update')->name('blog.update');
     Route::get('blog/delete/', 'BlogController@Delete');
     Route::post('ajax/text-editor/image', ['as' => 'ajax.text-editor.image', 'uses' => 'BlogController@textEditorImageUpload']);
-
-
     // blog
     Route::get('categories', 'CategoryController@Index')->name('category.index');
     Route::get('category/create', 'CategoryController@Create')->name('category.create');
@@ -120,8 +109,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('user-guide/edit/{id}', 'AdminController@userGuideEdit')->name('user.guide.edit');
     Route::post('user-guide/update/{id}', 'AdminController@userGuideUpdate')->name('user.guide.update');
     Route::get('user/guide/delete/', 'AdminController@DeleteUserGuide');
-
-
     // social-icon
     Route::get('social-icon', 'SocialIconController@index')->name('social-icon.index');
     Route::get('social-icon/create', 'SocialIconController@create')->name('social-icon.create');
@@ -129,8 +116,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('social-icon/{id}/edit', 'SocialIconController@edit')->name('social-icon.edit');
     Route::post('social-icon/{id}/update', 'SocialIconController@update')->name('social-icon.update');
     Route::get('social-icon/{id}/delete', 'SocialIconController@destroy')->name('social-icon.destroy');
-
-
+    // faq
     Route::get('faq', ['as' => 'faq.list', 'uses' => 'FaqController@getIndex']);
     Route::get('faq/create', ['as' => 'faq.create', 'uses' => 'FaqController@getCreate']);
     Route::post('faq/store', ['as' => 'faq.store', 'uses' => 'FaqController@postStore']);
@@ -138,21 +124,23 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('faq/{id}/view', ['as' => 'faq.view', 'uses' => 'FaqController@getView']);
     Route::post('faq/{id}/update', ['as' => 'faq.update', 'uses' => 'FaqController@putUpdate']);
     Route::get('faq/{id}/delete', ['as' => 'faq.delete', 'uses' => 'FaqController@getDelete']);
-
-
+    // cards
     Route::get('cards', 'CardController@index')->name('cards');
     Route::get('card/trash', 'CardController@getTrashList')->name('card.trash');
     Route::get('card/edit/{card_id}', 'CardController@edit')->name('card.edit');
     Route::get('card/delete/{card_id}', 'CardController@delete')->name('card.delete');
     Route::get('card/change-status/{card_id}', 'CardController@changeStatus')->name('card.change-status');
     Route::get('card/active/{card_id}', 'CardController@activeCard')->name('card.active');
-
+    // Email template
+    Route::get('email-template', 'EmailTemplateController@index')->name('email.template');
+    Route::get('email-template/edit/{id}', 'EmailTemplateController@edit')->name('email.templateedit');
+    Route::post('email-template/update/{id}', 'EmailTemplateController@update')->name('email.templateupdate');
+    // admin users
     Route::get('admin-users', ['as' => 'admin-users', 'uses' => 'AccountController@getAdminUser']);
     Route::get('admin-users/create', ['as' => 'admin-users.create', 'uses' => 'AccountController@getCreate']);
     Route::post('admin-users/store', ['as' => 'admin-users.store', 'uses' => 'AccountController@postStore']);
     Route::get('admin-users/{id}/edit', ['as' => 'admin-users.edit', 'uses' => 'AccountController@getEdit']);
     Route::post('admin-users/{id}/update', ['as' => 'admin-users.update', 'uses' => 'AccountController@putUpdate']);
-
     //Marketing Materials
     Route::prefix('marketing-material')->group(function () {
         Route::get('/', [MarketingMaterialsController::class, 'index'])->name('marketing.materials');
@@ -163,9 +151,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::get('/delete/{id}', [MarketingMaterialsController::class, 'delete'])->name('marketing.material.delete');
         Route::get('/status-update/{id}/{status}', [MarketingMaterialsController::class, 'status'])->name('marketing.material.status');
     });
-
-
-
+    // product
     Route::prefix('product')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
         Route::get('/create', [ProductController::class, 'create'])->name('product.create');
@@ -177,7 +163,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
         Route::post('/images/upload/{product}', [ProductController::class, 'imagesUpload'])->name('product.images.upload');
         Route::delete('/images/delete/{productImage}', [ProductController::class, 'imagesDelete'])->name('product.images.delete');
     });
-
     //Product Orders
     Route::prefix('orders')->group(function () {
         Route::get('/', [OrdersController::class, 'index'])->name('orders');

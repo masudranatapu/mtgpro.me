@@ -140,7 +140,7 @@
                             </span>
                         </a>
                     </li> --}}
-                    <li class="nav-item dropdown @yield('settings')">
+                    <li class="nav-item dropdown @yield('settings') @yield('email-template')">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                             role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -179,7 +179,8 @@
                                 href="{{ route('admin.marketing.materials') }}">
                                 {{ __('Marketing Materials') }}
                             </a>
-
+                            <a href="{{ route('admin.email.template') }}"
+                                class="dropdown-item @yield('email-template')">{{ __('Email Template') }}</a>
                             <a href="{{ route('admin.edit.home', 'home')}}"
                                 class="dropdown-item @yield('page')">{{ __('Home Pages') }}</a>
                             <a href="{{ route('admin.custom-page.list') }}"
