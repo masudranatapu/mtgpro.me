@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ $settings->site_name }} - @yield('title')</title>
+    <title>@yield('title')</title>
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">

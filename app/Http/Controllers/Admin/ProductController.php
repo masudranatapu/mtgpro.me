@@ -57,7 +57,7 @@ class ProductController extends Controller
             $product->product_type = $request->product_type;
             $product->vat = 0;
             if ($request->has('images')) {
-                $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb');
+                $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb', 650);
             }
             $product->status = $request->product_status;
             $product->created_by = Auth::id();
