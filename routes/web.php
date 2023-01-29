@@ -89,6 +89,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     // Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting', ['as' => 'setting', 'uses' => 'DashboardControler@getSetting']);
     Route::get('plans', ['as' => 'plans', 'uses' => 'DashboardControler@getPlanList']);
+    Route::get('suggest-feature',['as' => 'suggest-feature', 'uses' => 'DashboardControler@suggestFeature']);
 
     Route::get('free-marketing-material', ['as' => 'free-marketing-material', 'uses' => 'DashboardControler@getFreeMarketing']);
     Route::get('calculator', ['as' => 'calculator', 'uses' => 'DashboardControler@getCalculator']);
