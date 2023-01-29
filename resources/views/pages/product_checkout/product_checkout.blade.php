@@ -324,7 +324,7 @@
                                                 class="form-control"
                                                 type="tel"
                                                 required
-                                                value="{{ Auth::user()->billing_country }}"
+                                                value="{{ Auth::user()->billing_phone }}"
                                                 >
                                             </div>
                                         </div>
