@@ -79,11 +79,10 @@ class MarketingMaterialsController extends Controller
 
     public function update(Request $request, $id)
     {
-
         DB::beginTransaction();
         try {
             $this->validate($request, [
-                'title'         => 'required|max:100',
+                'title'         => 'required',
                 'order_id'      => 'required',
                 'image'         => 'nullable|mimes:jpeg,png,jpg,gif,svg',
                 'file'          => 'nullable|mimes:pdf',

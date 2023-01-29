@@ -155,7 +155,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($productOrders as $key => $value)
+                                    @forelse ($productOrders as $key => $value)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $value->order_number }}</td>
@@ -187,8 +187,15 @@
                                                     class="btn btn-sm btn-success">Invoice<a>
                                             </td>
                                         </tr>
+                                        @empty
+                                            <tr>
+                                                <td>
+                                                    No Order Yet
+                                                </td>
+                                            </tr>
                                         <!-- Modal -->
-                                    @endforeach
+                                    @endforelse
+                                
                                 </tbody>
                             </table>
                         </div>
