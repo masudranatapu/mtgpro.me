@@ -4,6 +4,7 @@
 @section('title'){{ __('Product Create') }} @endsection
 @section('page-name') {{ __('Product Create') }} @endsection
 @push('css')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 @endpush
 <?php
 $rows = $data ?? [];
@@ -131,8 +132,8 @@ $rows = $data ?? [];
                                         <div class="col-12 col-sm-12 col-ml-12 col-lg-12 col-xl-12 mt-3">
                                             <div class="input-field">
                                                 <label class="active">Details</label>
-                                                <textarea required name="details" id="details" cols="25" rows="8"
-                                                    class="form-control @error('details') border-danger @enderror">{{ old('details') }}</textarea>
+                                                <textarea required name="details" id="text-editor" cols="25" rows="8"
+                                                    class="form-control summernote @error('details') border-danger @enderror">{{ old('details') }}</textarea>
                                             </div>
                                         </div>
 
@@ -151,6 +152,8 @@ $rows = $data ?? [];
 
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/text-editor.js') }}"></script>
         <script>
             function fileView() {
                 var imgInp = document.getElementById('file');
