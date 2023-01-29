@@ -3,7 +3,8 @@
 <?php
 $rows = $data ?? [];
 ?>
-@section('title') {{ __('Terms & Conditions') }} @endsection
+@section('title') {{ __('Shop') }} @endsection
+
 @push('custom_css')
     <style>
     </style>
