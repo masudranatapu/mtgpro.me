@@ -63,6 +63,11 @@ class HomeController extends Controller
         return view('pages.common', compact('page'));
     }
 
+    public function getDisclaimer()
+    {
+        return view('pages.disclaimer');
+    }
+
     public function getTermsCondition()
     {
         $page = DB::table('custom_pages')->where('url_slug', 'terms-and-conditions')->first();
