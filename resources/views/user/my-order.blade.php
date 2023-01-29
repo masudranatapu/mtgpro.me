@@ -140,19 +140,18 @@
                             <table class="table custom_table table-bordered table-responsive">
                                 <thead>
                                     <tr>
-                                        <th width="7%" scope="col">{{ __('Sl.No') }}</th>
-                                        <th width="7%" scope="col">{{ __('Order Number') }}</th>
-                                        <th width="7%" scope="col">{{ __('Quantity') }}</th>
-                                        <th width="7%" scope="col">{{ __('Discount') }}</th>
-                                        <th width="7%" scope="col">{{ __('Total Price') }}</th>
-                                        <th width="7%" scope="col">{{ __('Payment Fee') }}</th>
-                                        <th width="7%" scope="col">{{ __('Grand Total') }}</th>
-                                        <th width="7%" scope="col">{{ __('Customer') }}</th>
-                                        <th width="7%" scope="col">{{ __('Order Date') }}</th>
-                                        <th width="7%" scope="col">{{ __('Payment Method') }}</th>
-                                        <th width="7%" scope="col">{{ __('Payment Status') }}</th>
-                                        <th width="7%" scope="col">{{ __('Status') }}</th>
-                                        <th width="7%" scope="col">{{ __('Actions') }}</th>
+                                        <th width="8%" scope="col">{{ __('Sl.No') }}</th>
+                                        <th width="8%" scope="col">{{ __('Order Number') }}</th>
+                                        <th width="8%" scope="col">{{ __('Quantity') }}</th>
+                                        <th width="8%" scope="col">{{ __('Discount') }}</th>
+                                        <th width="8%" scope="col">{{ __('Total Price') }}</th>
+                                        <th width="8%" scope="col">{{ __('Payment Fee') }}</th>
+                                        <th width="8%" scope="col">{{ __('Grand Total') }}</th>
+                                        <th width="8%" scope="col">{{ __('Order Date') }}</th>
+                                        <th width="8%" scope="col">{{ __('Payment Method') }}</th>
+                                        <th width="8%" scope="col">{{ __('Payment Status') }}</th>
+                                        <th width="8%" scope="col">{{ __('Status') }}</th>
+                                        <th width="8%" scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,7 +164,6 @@
                                             <td>{{ $value->total_price }}</td>
                                             <td>{{ $value->payment_fee }}</td>
                                             <td>{{ $value->grand_total }}</td>
-                                            <td>{{ $value->user_name }}</td>
                                             <td>{{ date('d M Y', strtotime($value->order_date)) }}</td>
                                             <td>{{ $value->payment_method }}</td>
                                             <td class="text-muted">
