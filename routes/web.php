@@ -37,8 +37,8 @@ Route::get('contact-us', ['as' => 'contact-us', 'uses' => 'HomeController@getCon
 Route::post('contact', ['as' => 'contact.post', 'uses' => 'HomeController@postContact']);
 Route::get('help', ['as' => 'help', 'uses' => 'HomeController@getHelp']);
 Route::get('tutorials', ['as' => 'tutorials', 'uses' => 'HomeController@getTutorials']);
-Route::get('shop', ['as' => 'shop', 'uses' => 'HomeController@shopPage']);
-Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'HomeController@shopDetails']);
+Route::get('shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
+Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'ShopController@details']);
 
 Route::get('disclaimer', [HomeController::class, 'getDisclaimer'])->name('disclaimer');
 

@@ -455,12 +455,12 @@ class HomeController extends Controller
     {
         $products = Product::paginate(12);
 
-        return view('pages.shop', compact('products'));
+        return view('shop.index', compact('products'));
     }
 
     public function shopDetails(Product $product)
     {
         $product->load('hasImages');
-        return view('pages.shop_details', compact('product'));
+        return view('shop.details', compact('product'));
     }
 }
