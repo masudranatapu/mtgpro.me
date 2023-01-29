@@ -129,17 +129,14 @@
         };
 
         function addToCart(id) {
-            console.log(id);
-
-
-
             $.ajax({
                 type: 'GET',
                 enctype: 'multipart/form-data',
                 url: "add-to-cart/" + id,
                 success: function(data) {
-                    if (data) {
-                        toastr.success('Add to card successfylly')
+                    if (data.status) {
+                        toastr.success('Add to card successfully')
+                        $('#cartCounter').html(data.count);
                     } else {
                         toastr.error('Something Worng..!')
                     }
