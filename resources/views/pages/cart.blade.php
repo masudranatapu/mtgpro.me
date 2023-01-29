@@ -5,10 +5,11 @@
             <table id="cart" class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th style="width:50%">Product</th>
-                        <th style="width:10%">Price</th>
-                        <th style="width:8%">Quantity</th>
-                        <th style="width:22%" class="text-center">Subtotal</th>
+                        <th style="width:10%">Photo</th>
+                        <th style="width:35%">Product</th>
+                        <th style="width:15%">Price</th>
+                        <th style="width:15%">Quantity</th>
+                        <th style="width:15%" class="text-center">Subtotal</th>
                         <th style="width:10%">Remove</th>
                     </tr>
                 </thead>
@@ -18,14 +19,15 @@
                         @foreach (session('cart') as $id => $details)
                             @php $total += $details['price'] * $details['quantity'] @endphp
                             <tr data-id="{{ $id }}" class="align-middle">
-                                <td data-th="Product">
+                                <td data-th="Photo">
 
-                                    <img src="{{ getPhoto($details['image']) }}" width="100" height="100"
+                                    <img src="{{ getPhoto($details['image']) }}" width="50"
                                         class="img-responsive" />
 
+
+                                </td>
+                                <td data-th="Product">
                                     <span>{{ $details['name'] }}</span>
-
-
                                 </td>
                                 <td data-th="Price">${{ $details['price'] }}</td>
                                 <td data-th="Quantity">
