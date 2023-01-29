@@ -67,7 +67,7 @@ $settings = getSetting();
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Review') }}">
                         </span>
-                        {{ __('Review') }}
+                        {{ __('Write a Review') }}
                     </a>
                 </li>
                 <li class="nav-item">
