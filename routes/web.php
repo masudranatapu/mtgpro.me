@@ -40,6 +40,8 @@ Route::get('tutorials', ['as' => 'tutorials', 'uses' => 'HomeController@getTutor
 Route::get('shop', ['as' => 'shop', 'uses' => 'HomeController@shopPage']);
 Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'HomeController@shopDetails']);
 
+Route::get('disclaimer', [HomeController::class, 'getDisclaimer'])->name('disclaimer');
+
 Route::get('cart', [ProductController::class, 'cart'])->name('cart');
 Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add.to.cart');
 Route::post('add-to-cart/', [ProductController::class, 'addToCartPost'])->name('addtocart');

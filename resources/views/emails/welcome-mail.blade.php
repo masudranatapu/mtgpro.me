@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <?php
+    @php
         $settings = getSetting();
-    ?>
+    @endphp
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="x-apple-disable-message-reformatting" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,15 +14,18 @@
     <style>
         /* Base ------------------------------ */
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
-       body {
+
+        body {
             width: 100% !important;
             height: 100%;
             margin: 0;
             -webkit-text-size-adjust: none;
         }
+
         a {
             color: #3869d4;
         }
+
         a img {
             border: none;
         }
@@ -29,6 +33,7 @@
         td {
             word-break: break-word;
         }
+
         .preheader {
             display: none !important;
             visibility: hidden;
@@ -40,12 +45,14 @@
             opacity: 0;
             overflow: hidden;
         }
+
         /* Type ------------------------------ */
         body,
         td,
         th {
             font-family: "Nunito Sans", Helvetica, Arial, sans-serif;
         }
+
         h1 {
             margin-top: 0;
             color: #333333;
@@ -53,6 +60,7 @@
             font-weight: bold;
             text-align: left;
         }
+
         h2 {
             margin-top: 0;
             color: #333333;
@@ -140,17 +148,21 @@
                 text-align: center !important;
             }
         }
+
         /* Attribute list ------------------------------ */
         .attributes {
             margin: 0 0 21px;
         }
+
         .attributes_content {
             background-color: #f4f4f7;
             padding: 16px;
         }
+
         .attributes_item {
             padding: 0;
         }
+
         /* Related Items ------------------------------ */
         .related {
             width: 100%;
@@ -451,8 +463,8 @@
                     <!-- Email Body -->
                     <tr>
                         <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
-                            <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0"
-                                role="presentation">
+                            <table class="email-body_inner" align="center" width="570" cellpadding="0"
+                                cellspacing="0" role="presentation">
                                 <!-- Body content -->
                                 <tr>
                                     <td class="content-cell">
@@ -464,15 +476,21 @@
                                                 <a href="{{ URL::to('/') }}">{{ $settings->site_name }}</a>
                                             </p>
                                             <p>{{ __('Simply go here') }} <a
-                                                    href="{{ URL::to('/') }}/login">{{ $settings->site_name }}</a> {{ __('to get
-                                                started create a vCard.') }}</p>
+                                                    href="{{ URL::to('/') }}/login">{{ $settings->site_name }}</a>
+                                                {{ __('to get
+                                                                                                                                                started create a vCard.') }}
+                                            </p>
                                             <p>{{ __('Have a great day!') }}</p>
                                             </p>{{ $settings->site_name }}</p>
                                             <table class="body-sub" role="presentation">
                                                 <tr>
                                                     <td>
-                                                        <p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #b0adc5; font-size: 12px; text-align: center;">
-                                                            © {{date('Y')}} {{$settings->site_name}}. {{ __('All rights reserved') }}.</p>                                              </td>
+                                                        <p
+                                                            style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #b0adc5; font-size: 12px; text-align: center;">
+                                                            © {{ date('Y') }} {{ $settings->site_name }}.
+                                                            {{ __('All rights reserved') }}.
+                                                        </p>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -486,4 +504,5 @@
         </tr>
     </table>
 </body>
+
 </html>

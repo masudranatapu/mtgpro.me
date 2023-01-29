@@ -4,7 +4,7 @@
     $setting  = getSetting();
 
 ?>
-@section('title') {{ $page->title }} @endsection
+@section('title') {{ 'Disclamimber' }} @endsection
 @push('custom_css')
 <style>
     .page_content a:hover,
@@ -70,34 +70,34 @@
 </style>
 @endpush
 @section('meta_tag')
-<meta name="keywords" content="{{ $page->meta_keywords }}" />
-<meta name="description" content="{{ $page->meta_description }}" />
-<meta property="og:description" content="{{ $page->meta_description }}" />
-<meta name="twitter:description" content="{{ $page->meta_description }}">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="">
 <meta property="og:url" content="{{Request::url()}}" />
 <meta property="og:type" content="WEBSITE" />
-<meta property="og:title" content=": {{ $setting->site_title }}" />
-<meta name="twitter:title" content=": {{ $setting->site_title }}">
-<meta name="twitter:card" value="summary_large_image">
-<meta property="og:image" content="{{ asset($setting->seo_image) }}" />
+<meta property="og:title" content=":" />
+<meta name="twitter:title" content=":">
+<meta name="twitter:card" value="">
+<meta property="og:image" content="" />
 <meta name="twitter:image" content="">
 <meta name="twitter:site" content="{{Request::url()}}" />
 <meta name="twitter:url" content="{{Request::url()}}" />
-<meta property="og:site_name" content="{{ $setting->site_title }}" />
-<meta property="og:type" content="website" />
+<meta property="og:site_name" content=" " />
+<meta property=" og:type" content="website" />
 @endsection
 @section('content')
 <div class="termsconditon_sec mt-5 mb-5">
     <div class="container">
         <div class="page_wrapper">
             <div class="page_title mb-4">
-                <h1 class="{{ $page->url_slug == 'contact-us' ? 'text-center' : '' }} ">{{ $page->title }}</h1>
+                <h1 class="#">Disclaimer</h1>
             </div>
             <div class="page_content">
-                @if($page->url_slug == 'contact-us')
-                @include('pages._contact_us')
-                @endif
-                {!! $page->body !!}
+
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, beatae soluta. Asperiores maiores
+                    tempora, doloribus nobis perferendis tenetur earum at quidem possimus velit, necessitatibus minima
+                    totam, laboriosam modi esse optio.</p>
             </div>
         </div>
     </div>
