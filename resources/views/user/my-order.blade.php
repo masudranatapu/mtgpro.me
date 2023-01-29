@@ -126,11 +126,12 @@
         </div>
     </div>
     <div class="content">
-        <div class="container-fluid">
+        <div class="container-fluid card">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card-body custom_table table-bordered">
-                           <table class="table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                           <table class="table" class="datatable">
                             <thead>
                                 <tr>
                                     <th scope="col">{{ __('Sl.No') }}</th>
@@ -140,9 +141,7 @@
                                     <th scope="col">{{ __('Total Price') }}</th>
                                     <th scope="col">{{ __('Payment Fee') }}</th>
                                     <th scope="col">{{ __('Grand Total') }}</th>
-                                    <th scope="col">{{ __('Customer') }}</th>
                                     <th scope="col">{{ __('Order Date') }}</th>
-                                    <th scope="col">{{ __('Payment Method') }}</th>
                                     <th scope="col">{{ __('Payment Status') }}</th>
                                     <th scope="col">{{ __('Status') }}</th>
                                     <th scope="col">{{ __('Actions') }}</th>
@@ -155,22 +154,21 @@
                                         <td>{{ $value->order_number }}</td>
                                         <td>{{ $value->quantity }}</td>
                                         <td>{{ $value->discount }}%</td>
-                                        <td>{{ $value->total_price }}</td>
-                                        <td>{{ $value->payment_fee }}</td>
-                                        <td>{{ $value->grand_total }}</td>
-                                        <td>{{ $value->user_name }}</td>
+                                        <td>{{ number_format($value->total_price,2) }}</td>
+                                        <td>{{ number_format($value->payment_fee,2) }}</td>
+                                        <td>{{ number_format($value->grand_total,2) }}</td>
                                         <td>{{ date('d M Y', strtotime($value->order_date)) }}</td>
-                                        <td>{{ $value->payment_method }}</td>
                                         <td class="text-muted">
                                             @if ($value->payment_status)
                                                 <span class="badge bg-orange">{{ __('Paid') }}</span>
                                             @else
-                                                <span class="badge bg-red">{{ __('Pending') }}</span>
+                                                <span class="badge bg-warning">{{ __('Pending') }}</span>
                                             @endif
+
                                         </td>
                                         <td class="text-muted">
                                             @if ($value->status == 1)
-                                                <span class="badge bg-red">{{ __('Prossing') }}</span>
+                                                <span class="badge bg-warning">{{ __('Prossing') }}</span>
                                             @elseif ($value->status == 2)
                                                 <span class="badge bg-orange">{{ __('On The Way') }}</span>
                                             @elseif ($value->status == 3)
@@ -182,10 +180,11 @@
                                         </td>
                                     </tr>
                                     <!-- Modal -->
-                                    
+
                                 @endforeach
                             </tbody>
                          </table>
+                        </div>
                     </div>
                 </div>
             </div>
