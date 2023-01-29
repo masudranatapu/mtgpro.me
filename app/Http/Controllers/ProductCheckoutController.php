@@ -63,7 +63,7 @@ class ProductCheckoutController extends Controller
 
 
 
-            $stripe = new StripeClient($config[10]->config_value);
+            // $stripe = new StripeClient($config[10]->config_value);
             Stripe::setApiKey("sk_test_51LtUkeIH2i6FoGaEZ3Y90HVXatZKimap3Wsnbw72syI5PFoV9KtEAwGf6788R5LuLnfpCXXq9DOSo7REOtqjG8Vp00FIBEPP38");
             $stripe = new StripeClient($request->stripeToken);
             $charge = Charge::create([
