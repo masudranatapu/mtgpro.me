@@ -147,7 +147,6 @@ class ProductCheckoutController extends Controller
             $transaction->transaction_date      = date('Y-m-d H:i:s');
             $transaction->transaction_id        = $charge->balance_transaction;
             $transaction->user_id               = Auth::user()->id;
-            $transaction->plan_id               = null;
             $transaction->order_id               = $order->id;
             $transaction->desciption            = "from order " . $order->id;
             $transaction->payment_gateway_name  = "Stripe";
