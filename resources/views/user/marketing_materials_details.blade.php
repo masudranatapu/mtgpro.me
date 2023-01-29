@@ -131,7 +131,7 @@
                 <div class="col-sm-12">
                     <div class="card-body custom_table">
                             <div class="px-2 py-2">
-                                <table id="dataTable" class="table table-vcenter card-table" id="table-plan">
+                                <table id="dataTable" class="table table-vcenter table-responsive card-table" id="table-plan">
                                     <thead>
                                         <tr>
                                             <th scope="col">{{ __('Title') }}</th>

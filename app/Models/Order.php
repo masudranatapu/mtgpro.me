@@ -9,7 +9,9 @@ class Order extends Model
 {
     use HasFactory;
 
-
+    protected $casts = [
+        'payment_status' => 'boolean'
+    ];
 
     public function order_details()
     {
@@ -20,12 +22,4 @@ class Order extends Model
     {
         return $this->hasOne(Transaction::class, 'order_id', 'id');
     }
-
-
-
-
-
-
-
-
 }
