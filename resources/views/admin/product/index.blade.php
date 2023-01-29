@@ -65,7 +65,8 @@ $rows = $data ?? [];
                                                             src="{{ getPhoto($row->thumbnail) }}" alt="">
 
                                                         <span>
-                                                            {{ $row->product_name }}
+                                                            <a
+                                                                href="{{ route('product.details', $row->slug) }}"></a>{{ $row->product_name }}
                                                         </span>
 
 
