@@ -40,8 +40,7 @@ class ProductController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        Toastr::success('Product added to cart successfully!');
-        return redirect()->back()->with('success');
+        return response()->json(true);
     }
 
 

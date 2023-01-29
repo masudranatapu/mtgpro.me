@@ -13,6 +13,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -69,7 +70,7 @@ class ProductCheckoutController extends Controller
                 "amount" =>  $totalPrice,
                 "currency" => $config[1]->config_value,
                 "source" => "tok_visa",
-                "description" => env('APP_NAME')
+                "description" => env('APP_NAME'),
             ]);
 
             $order_Number = 1000;
@@ -173,6 +174,6 @@ class ProductCheckoutController extends Controller
         }
         Toastr::success(trans('Product purchase successfully done!'));
         Session::forget('cart');
-        return redirect()->route('home');
+        return redirect()->route('user.myorder', ['id' => $order->id]);
     }
 }
