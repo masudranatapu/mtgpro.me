@@ -113,7 +113,7 @@ class ProductController extends Controller
             $product->product_type = $request->product_type;
             $product->vat = 0;
             if ($request->has('images')) {
-                $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb', 630, 620);
+                $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb', 400, 400);
             }
             $product->status = $request->product_status;
             $product->created_by = Auth::id();
@@ -163,7 +163,7 @@ class ProductController extends Controller
         for ($i = 0; $i < count($request->images); $i++) {
             $productImages = new ProductImage();
             $productImages->product_id = $product->id;
-            $productImages->image_name = $this->storageHelper->uploadImage($request->images[$i], 'productImages', 635);
+            $productImages->image_name = $this->storageHelper->uploadImage($request->images[$i], 'productImages', 400, 400);
             $productImages->save();
         }
         Toastr::success('Product image add successfully');
