@@ -66,7 +66,7 @@ $rows = $data ?? [];
 
                                                         <span>
                                                             <a
-                                                                href="{{ route('product.details', ['product' => $row->slug]) }}"></a>{{ $row->product_name }}
+                                                                href="{{ route('product.details', ['product' => $row->product_slug]) }}"></a>{{ $row->product_name }}
                                                         </span>
 
 
