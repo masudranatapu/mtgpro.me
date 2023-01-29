@@ -116,4 +116,8 @@ class DashboardControler extends Controller
 
         return view('user.user-invoice', compact('order'));
     }
+
+    public function getFeature(){
+        return view('user.suggest-feature');
+    }
 }

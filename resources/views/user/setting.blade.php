@@ -126,12 +126,12 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                         {{ __('Support') }}
                                     </a>
                                     <!-- request a feature -->
-                                    <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
+                                    {{-- <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
                                         href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages"
                                         aria-selected="false">
                                         <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
                                         {{ __('Request a Feature') }}
-                                    </a>
+                                    </a> --}}
                                     <!-- logout -->
                                     <a class="nav-link" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();"
@@ -497,40 +497,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                         </div>
                                     </div>
                                     <!--  Request Feature -->
-                                    <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
-                                        aria-labelledby="vert-tabs-messages-tab">
-                                        <div class="setting_tab_contetn">
-                                            <div class="heading mb-4">
-                                                <h3>{{ __('Request a Feature') }}</h3>
-                                                <p>{{ __('Do you have an idea for a feature that would make better for
-                                                    you? Let us know!') }}</p>
-                                            </div>
-                                            <div class="setting_form">
-                                                <form action="{{ route('user.support.feature-request') }}"
-                                                    id="featureRequest" method="post">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="request_message" class="form-label">{{ __('Message')
-                                                            }} <span class="text-dark">*</span></label>
-                                                        <textarea name="request_message" id="request_message" cols="30"
-                                                            rows="7" placeholder="{{ __('Message') }}"
-                                                            class="form-control @error('request_message') is-invalid @enderror"
-                                                            required style="height:120px;"></textarea>
-                                                        @if($errors->has('request_message'))
-                                                        <span class="help-block text-danger">{{
-                                                            $errors->first('request_message') }}</span>
-                                                        @endif
-                                                    </div>
-                                                    <div class="form-group mt-4">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                            <span class="btn-txt">{{ __('Send Feedback') }}</span>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -739,12 +706,12 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
             $(this).find(":submit").children(".btn-txt").text("Processing");
             $("*").css("cursor", "wait");
         });
-        $("#featureRequest").submit(function () {
-            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
-            $(this).find(":submit").attr("disabled", true);
-            $(this).find(":submit").children(".btn-txt").text("Processing");
-            $("*").css("cursor", "wait");
-        });
+        // $("#featureRequest").submit(function () {
+        //     $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+        //     $(this).find(":submit").attr("disabled", true);
+        //     $(this).find(":submit").children(".btn-txt").text("Processing");
+        //     $("*").css("cursor", "wait");
+        // });
         $("#updateProfile").submit(function () {
             $(this).find(":submit").children(".loading-spinner").toggleClass('active');
             $(this).find(":submit").attr("disabled", true);

@@ -67,7 +67,7 @@ $settings = getSetting();
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Review') }}">
                         </span>
-                        {{ __('My Review') }}
+                        {{ __('Review') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -106,6 +106,14 @@ $settings = getSetting();
                             {{-- <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="{{ __('calculator') }}"> --}}
                         </span>
                         {{ __('Mortgage calculator') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user.suggestFeature') }}" class="nav-link @yield('suggest_feature')">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
+                        </span>
+                        {{ __('Suggest a Feature') }}
                     </a>
                 </li>
             </ul>
