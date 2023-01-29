@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use Str;
 use \Config;
 use Carbon\Carbon;
@@ -48,13 +49,13 @@ class AuthController extends Controller
     public function postLogin(LoginRequest $request)
     {
         try {
-            $check_deactive = User::where('email',$request->email)->where('status',0)->first();
-            if(!empty($check_deactive)){
+            $check_deactive = User::where('email', $request->email)->where('status', 0)->first();
+            if (!empty($check_deactive)) {
                 Toastr::error(trans('Oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back();
             }
-            $check_deleted = User::where('email',$request->email)->where('status',2)->first();
-            if(!empty($check_deleted)){
+            $check_deleted = User::where('email', $request->email)->where('status', 2)->first();
+            if (!empty($check_deleted)) {
                 Toastr::error(trans('Your account has been deleted ! Please create new account using a different email and/or mobile number'), 'Error', ["positionClass" => "toast-top-center"]);
                 return redirect()->back();
             }
@@ -62,23 +63,22 @@ class AuthController extends Controller
                 'email'          => $request->email,
                 'password'       => $request->password
             ]);
-            if($user==false){
+            if ($user == false) {
 
                 Toastr::error(trans('oops! You have entered invalid credentials'), 'Error', ["positionClass" => "toast-top-center"]);
-                return redirect()->back();
+                return redirect()->back()->withInput();
             }
-
         } catch (\Exception $e) {
             dd($e->getMessage());
             Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
 
-        if(Auth::check() && Auth::user()->user_type==1){
+        if (Auth::check() && Auth::user()->user_type == 1) {
             return redirect()->route('dashboard');
         }
-        if(Auth::check() && checkPackageValidity(Auth::user()->id)==false){
-            DB::table('business_cards')->where('user_id',Auth::user()->id)->update([
+        if (Auth::check() && checkPackageValidity(Auth::user()->id) == false) {
+            DB::table('business_cards')->where('user_id', Auth::user()->id)->update([
                 'status' => 0
             ]);
         }
@@ -87,7 +87,7 @@ class AuthController extends Controller
     public function postRegister(RegistrationRequest $request)
     {
         try {
-            $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
+            $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
             $term_days = $plan->validity;
             $checkExist = User::where('email', $request->email)->whereNotNull('email')->first();
             if (!empty($checkExist)) {
@@ -97,9 +97,9 @@ class AuthController extends Controller
             $user                       = new User();
             $user->name                 = trim($request->name);
             $user->email                = trim($request->email);
-            if(!empty($request->username) && $this->checkExistUserName($request->username)==false){
+            if (!empty($request->username) && $this->checkExistUserName($request->username) == false) {
                 $user->username    = $request->username;
-            }else{
+            } else {
                 $user->username    = $this->makeUserName($request->name);
             }
             $user->password             = bcrypt($request->password);
@@ -111,7 +111,7 @@ class AuthController extends Controller
             $user->role_id              = 1;
             $user->user_type            = 2;
             // for plan info
-            if(!empty($plan)){
+            if (!empty($plan)) {
                 $user->plan_id              = $plan->id;
                 $user->plan_details         = json_encode($plan);
                 $user->plan_validity        = $this->plan->planValidity($plan->id);
@@ -188,10 +188,10 @@ class AuthController extends Controller
     public function handleProviderCallback(string $provider)
     {
         // dd($provider);
-        $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status',1)->first();
+        $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
         $term_days = $plan->validity;
         $data = Socialite::driver($provider)->stateless()->user();
-        $falsemail = trim(str_replace(' ','_',$data->name)) . '@gmail.com';
+        $falsemail = trim(str_replace(' ', '_', $data->name)) . '@gmail.com';
         $check_deactive = User::where('email', $data->email)->where('status', 0)->first();
         if (!empty($check_deactive)) {
             Toastr::error(trans('oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-right"]);
@@ -215,13 +215,13 @@ class AuthController extends Controller
                 $base_name  = explode(' ', $base_name);
                 $base_name  = implode('_', $base_name);
                 $name  = Str::lower($base_name);
-                $_unique_name       = $base_name ."_".uniqid();
+                $_unique_name       = $base_name . "_" . uniqid();
                 $user              = new User;
                 $user->name        = $data->name;
                 $user->email       = $data->email ?? $falsemail;
-                if(!empty($data->username) && $this->checkExistUserName($data->username)==false){
+                if (!empty($data->username) && $this->checkExistUserName($data->username) == false) {
                     $user->username    = $data->username;
-                }else{
+                } else {
                     $user->username    = $this->makeUserName($data->name);
                 }
                 $user->profile_image = $data->avatar ?? NULL;
@@ -242,8 +242,8 @@ class AuthController extends Controller
                     // $user->latitude         = $location->latitude;
                     // $user->longitude        = $location->longitude;
                 }
-                 // for plan info
-                if(!empty($plan)){
+                // for plan info
+                if (!empty($plan)) {
                     $user->plan_id              = $plan->id;
                     $user->plan_details         = json_encode($plan);
                     $user->plan_validity        = $this->plan->planValidity($plan->id);
@@ -269,8 +269,8 @@ class AuthController extends Controller
     {
         $base_name   = trim($base_name);
         $base_name   = Str::lower($base_name);
-        $exist = DB::table('users')->where('username',$base_name)->count();
-        if($exist > 0){
+        $exist = DB::table('users')->where('username', $base_name)->count();
+        if ($exist > 0) {
             return true;
         }
         return false;
@@ -284,11 +284,10 @@ class AuthController extends Controller
         $base_name  = explode(' ', $base_name);
         $base_name  = implode('_', $base_name);
         $base_name  = Str::lower($base_name);
-        $exist = DB::table('users')->where('username',$base_name)->count();
-        if($exist > 0){
-          return  $base_name.$exist+1;
+        $exist = DB::table('users')->where('username', $base_name)->count();
+        if ($exist > 0) {
+            return  $base_name . $exist + 1;
         }
         return $base_name;
     }
-
 }
