@@ -147,7 +147,7 @@ $rows = $data ?? [];
                         </form>
 
                         <div class="short_info mt-4">
-                            <p>{!! Str::limit($product->details, 220, '...') !!}</p>
+                            <p>{!! $product->details !!}</p>
                         </div>
 
                     </div>
