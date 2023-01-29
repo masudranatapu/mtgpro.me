@@ -220,7 +220,7 @@ class StripeController extends Controller
             }
             Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
             Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('user.invoice',$transaction->invoice_number);
+            return redirect()->route('user.planinvoice',$transaction->invoice_number);
 
     }
 

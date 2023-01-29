@@ -104,7 +104,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('checkout/paypal', ['as' => 'checkout.post-transection', 'uses' => 'CheckoutController@postTransection']);
     Route::post('checkout/stripe', ['as' => 'payment.stripe', 'uses' => 'StripeController@stripeCheckout']);
     Route::get('transactions', ['as' => 'transactions', 'uses' => 'TransactionController@getIndex']);
-    Route::get('invoice/{transection_id}', ['as' => 'invoice', 'uses' => 'TransactionController@getInvoice']);
+    Route::get('plan-invoice/{transection_id}', ['as' => 'planinvoice', 'uses' => 'TransactionController@getInvoice']);
     Route::get('invoice/download/{transection_id}', ['as' => 'invoice.download', 'uses' => 'TransactionController@getInvoicePDF']);
     Route::get('all-invoice/download', ['as' => 'all-invoice.download', 'uses' => 'TransactionController@getAllInvoicePDF']);
 

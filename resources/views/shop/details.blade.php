@@ -131,7 +131,7 @@ $rows = $data ?? [];
                                         <input type="hidden" name="id" value="{{ $product->id }}">
                                         <input type="text" name="qty" id="qty"
                                             class="text-center custome_control"
-                                            value="{{ session('cart')[$product->id]['quantity'] ?? 0 }}" min="0"
+                                            value="{{ session('cart')[$product->id]['quantity'] ?? 1 }}" min="0"
                                             max="10" readonly>
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-danger qty_number" data-type="plus"
