@@ -103,8 +103,8 @@ $setting = getSetting();
                                         @if (isset($order->order_details) && count($order->order_details) > 0)
                                             @foreach ($order->order_details as $key => $detail)
                                                 <tr>
-                                                    <td>{{ $detail->product->product_name }}</td>
-                                                    <td>{{ $detail->unit_price }}</td>
+                                                    <td>{{ $detail->product->product_name ?? '' }}</td>
+                                                    <td>{{ getPrice($detail->unit_price) }}</td>
                                                     <td>{{ $detail->quantity }}</td>
                                                     <td>{{ getPrice($detail->unit_price * $detail->quantity) }} </td>
                                                 </tr>
