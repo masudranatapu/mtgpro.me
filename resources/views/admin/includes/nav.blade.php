@@ -161,18 +161,17 @@
                         </a>
                         <div class="dropdown-menu">
 
-                            <a href="{{ route('admin.orders')}}"
-                            class="dropdown-item @yield('product_ordrs')">
-                            {{ __('Orders') }}
+                            <a href="{{ route('admin.orders') }}" class="dropdown-item @yield('product_ordrs')">
+                                {{ __('Orders') }}
                             </a>
 
                             <a href="{{ route('admin.settings') }}"
                                 class="dropdown-item @yield('setting')">{{ __('General Settings') }}</a>
+
                             <a href="{{ route('admin.payment.methods') }}"
                                 class="dropdown-item @yield('payment_method')">{{ __('Payment Methods') }}</a>
 
-                            <a href="{{ route('admin.transactions') }}"
-                                class="dropdown-item @yield('transaction')">
+                            <a href="{{ route('admin.transactions') }}" class="dropdown-item @yield('transaction')">
                                 {{ __('Transactions') }}
                             </a>
                             <a class="dropdown-item @yield('marketing_materials_listn')"
@@ -181,7 +180,7 @@
                             </a>
                             <a href="{{ route('admin.email.template') }}"
                                 class="dropdown-item @yield('email-template')">{{ __('Email Template') }}</a>
-                            <a href="{{ route('admin.edit.home', 'home')}}"
+                            <a href="{{ route('admin.edit.home', 'home') }}"
                                 class="dropdown-item @yield('page')">{{ __('Home Pages') }}</a>
                             <a href="{{ route('admin.custom-page.list') }}"
                                 class="dropdown-item @yield('custom_page_list')">{{ __('Custom Pages') }}</a>

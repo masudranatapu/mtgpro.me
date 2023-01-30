@@ -373,6 +373,16 @@
                                         @endif
                                     @endforeach
                                 @endif
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                        data-bs-target="#disclimerModal" aria-controls="false">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
+                                            class="img-fluid d-block mb-1"
+                                            src="{{ asset('assets/img/icon/notes-note.svg') }}" alt=""
+                                            width="70" height="70">
+                                        <span>User Disclimer</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -501,6 +511,26 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Disclimer modal -->
+    <div class="disclimer_modal modal_one">
+        <div class="modal fade" id="disclimerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Disclimer</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {!! $user->user_disclimer ?? '' !!}
+
                     </div>
                 </div>
             </div>
