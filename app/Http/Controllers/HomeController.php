@@ -169,7 +169,44 @@ class HomeController extends Controller
                 ->orderBy('business_fields.position', 'ASC')
                 ->get();
 
-            DB::table('business_cards')->where('id', $cardinfo->id)->increment('total_hit', 1);
+            // DB::table('business_cards')->where('id', $cardinfo->id)->increment('total_hit', 1);
+            //browsing history
+            //browsing history
+            $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+            $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
+            $new_history['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+            if ($brwInfo) {
+                $new_history['city']            = $brwInfo['geoplugin_city'];
+                $new_history['region']          = $brwInfo['geoplugin_region'];
+                $new_history['region_code']     = $brwInfo['geoplugin_regionCode'];
+                $new_history['region_name']     = $brwInfo['geoplugin_regionName'];
+                $new_history['area_code']       = $brwInfo['geoplugin_areaCode'];
+                $new_history['country_code']    = $brwInfo['geoplugin_countryCode'];
+                $new_history['country_name']    = $brwInfo['geoplugin_countryName'];
+                $new_history['continent_name']  = $brwInfo['geoplugin_continentName'];
+                $new_history['timezone']        = $brwInfo['geoplugin_timezone'];
+                $new_history['created_at']        = $brwInfo['geoplugin_timezone'];
+            }
+            $new_history['card_id'] = $cardinfo->id;
+            if (Auth::guard('web')->user()) {
+                $new_history['name']        = Auth::guard('web')->user()->name;
+                $new_history['email']       = Auth::guard('web')->user()->email;
+                $new_history['mobile']      = Auth::guard('web')->user()->mobile;
+                $new_history['username']    = Auth::guard('web')->user()->username;
+            }
+
+            $history = DB::table('history_card_browsing')
+                ->select('id', 'counter')
+                ->where(['card_id' => $cardinfo->id, 'ip_address' => $_SERVER['REMOTE_ADDR']])
+                ->first();
+
+            if ($history) {
+                $counter = $history->counter + 1;
+                DB::table('history_card_browsing')->where('id', $history->id)->update(['counter' => $counter]);
+            } else {
+                DB::table('history_card_browsing')->insert($new_history);
+            }
+            //end browsing history
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);
             if (Auth::user() && ($cardinfo->user_id == Auth::id())) {
