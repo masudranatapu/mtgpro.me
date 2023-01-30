@@ -68,11 +68,11 @@
                         <div class="d-flex justify-content-between">
 
                             <a class="btn-sm btn-primary btn-sm" href="javascript:void(0)" onclick="copy(this)"
-                                data-url="{{ route('card.preview', ['cardurl' => $activeCard->card_url]) }}">{{ __('Link To Copy') }}</a>
+                                data-url="{{ route('home') }}/{{ auth()->user()->username }}">{{ __('Link To Copy') }}</a>
                             <a class="btn-sm btn-primary btn-sm"
-                                href="mailto:{{ $activeCard->card_email }}">{{ __('Email') }}</a>
+                                href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{ __('Email') }}</a>
                             <a class="btn-sm btn-primary btn-sm"
-                                href="sms:{{ $activeCard->phone_number }}">{{ __('Text') }}</a>
+                                href="sms:?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{ __('Text') }}</a>
                         </div>
                     </div>
                 </div>

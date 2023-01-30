@@ -486,13 +486,14 @@
                                         {{ __('Social Media') }}
                                     </a>
                                 </div>
+
                                 <div class="mt-4">
-                                    <a href="sms:{{ $cardinfo->phone_number }}"
+                                    <a href="sms:?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}"
                                         class="download_btn btn btn-primary mx-1" title="{{ __('Text') }}">
                                         <i class="fa fa-download"></i>{{ __('Text') }}
                                     </a>
                                     <a class="btn btn-primary mx-1" title="{{ __('Email') }}"
-                                        href="mailto:{{ $cardinfo->card_email }}">
+                                        href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}">
                                         <img class="img-fluid" src="{{ asset('assets/img/icons/connections.svg') }}"
                                             alt="">
                                         {{ __('Email') }}
@@ -621,7 +622,7 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="email" id="email" value="{{ old('email') }}"
+                        <input type="email" name="email" id="email" value="{{ old('email') }}"
                             class="form-control @error('email') is-invalid @enderror"
                             placeholder="{{ __('Email') }}" required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('email'))
