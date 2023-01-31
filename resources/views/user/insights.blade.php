@@ -74,17 +74,19 @@ $current_plan = $data['current_plan'];
                         </a>
                     </div>
                     <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="small-box">
-                            <div class="inner">
-                                <h3>{{ __($total_qrcode_download) }}</h3>
-                                <p>{{ __('QR Code Downloaded') }}
-                                    {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
-                                </p>
+                        <a href="{{ route('user.qr.download.history') }}" class="text-dark">
+                            <div class="small-box">
+                                <div class="inner">
+                                    <h3>{{ __($total_qrcode_download) }}</h3>
+                                    <p>{{ __('QR Code Downloaded') }}
+                                        {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-bag"></i>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-sm-6 col-lg-4 col-xl-3">

@@ -23,6 +23,10 @@
             background-color: #bdbdbd;
             border-color: #bdbdbd;
         }
+
+        .content-header {
+            padding: 44px 3.5rem 22px 3.5rem !important;
+        }
     </style>
 @endpush
 
@@ -31,8 +35,10 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-12 d-flex justify-content-between">
                         <h1 class="m-0">{{ __('Card View History') }}</h1>
+                        <a href="{{ route('user.insights') }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
             </div>

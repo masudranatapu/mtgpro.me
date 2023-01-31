@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 @section('title') {{ __('Instghts') }} @endsection
-@section('Card Download History', 'active')
+@section('Qr Download History', 'active')
 
 @push('custom_css')
     <style>
@@ -36,8 +36,8 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12 d-flex justify-content-between">
-                        <h1 class="m-0">{{ __('Card Download History') }}</h1>
-                        <a href="{{route('user.insights')}}" class="btn btn-primary">Back</a>
+                        <h1 class="m-0">{{ __('Qr Download History') }}</h1>
+                        <a href="{{ route('user.insights') }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
             </div>

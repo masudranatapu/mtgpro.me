@@ -388,7 +388,7 @@ class HomeController extends Controller
             }
             //end browsing history
 
-            DB::table('business_cards')->where('card_id', $id)->increment('total_vcf_download', 1);
+            // DB::table('business_cards')->where('card_id', $id)->increment('total_vcf_download', 1);
             return Response::make($vcard->getOutput(), 200, $vcard->getHeaders(true));
         }
     }
@@ -430,7 +430,48 @@ class HomeController extends Controller
                 ->generate(url($card_url), $file_path);
         }
 
-        DB::table('business_cards')->where('card_id', $id)->increment('total_qr_download', 1);
+        // DB::table('business_cards')->where('card_id', $id)->increment('total_qr_download', 1);
+
+
+        //browsing history
+        if ($data) {
+            $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+            $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
+            $new_history['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+
+            if ($brwInfo) {
+                $new_history['city']            = $brwInfo['geoplugin_city'];
+                $new_history['region']          = $brwInfo['geoplugin_region'];
+                $new_history['region_code']     = $brwInfo['geoplugin_regionCode'];
+                $new_history['region_name']     = $brwInfo['geoplugin_regionName'];
+                $new_history['area_code']       = $brwInfo['geoplugin_areaCode'];
+                $new_history['country_code']    = $brwInfo['geoplugin_countryCode'];
+                $new_history['country_name']    = $brwInfo['geoplugin_countryName'];
+                $new_history['continent_name']  = $brwInfo['geoplugin_continentName'];
+                $new_history['timezone']        = $brwInfo['geoplugin_timezone'];
+                $new_history['created_at']      = $brwInfo['geoplugin_timezone'];
+            }
+            $new_history['card_id'] = $data->id;
+            if (Auth::guard('web')->user()) {
+                $new_history['name']        = Auth::guard('web')->user()->name;
+                $new_history['email']       = Auth::guard('web')->user()->email;
+                $new_history['mobile']      = Auth::guard('web')->user()->mobile;
+                $new_history['username']    = Auth::guard('web')->user()->username;
+            }
+
+            $history = DB::table('history_qr_downloads')
+                ->select('id', 'counter')
+                ->where(['card_id' => $data->id, 'ip_address' => $_SERVER['REMOTE_ADDR']])
+                ->first();
+
+            if ($history) {
+                $counter = $history->counter + 1;
+                DB::table('history_qr_downloads')->where('id', $history->id)->update(['counter' => $counter]);
+            } else {
+                DB::table('history_qr_downloads')->insert($new_history);
+            }
+        }
+        //end browsing history
 
         return Response::download($file_path);
     }

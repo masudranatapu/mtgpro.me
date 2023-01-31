@@ -88,6 +88,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('insights', ['as' => 'insights', 'uses' => 'DashboardControler@getInsights']);
     Route::get('card/view/history', ['as' => 'card.view.history', 'uses' => 'DashboardControler@viewHistory']);
     Route::get('card/download/history', ['as' => 'card.download.history', 'uses' => 'DashboardControler@downloadHistory']);
+    Route::get('qr/download/history', ['as' => 'qr.download.history', 'uses' => 'DashboardControler@qrdownloadHistory']);
     // Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting', ['as' => 'setting', 'uses' => 'DashboardControler@getSetting']);
     Route::get('plans', ['as' => 'plans', 'uses' => 'DashboardControler@getPlanList']);
