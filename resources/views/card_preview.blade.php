@@ -387,7 +387,6 @@
                                         </a>
                                     </div>
                                 @endif
-
                             </div>
                         </div>
 
@@ -636,6 +635,9 @@
             </button>
         </div>
         <div class="offcanvas-body">
+
+
+
             <div class="contact_body">
                 <form action="{{ route('getConnect') }}" id="connect-form" method="post">
                     @csrf
@@ -715,10 +717,87 @@
                 aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+            <div class="container">
+                <div class="d-flex justify-content-start align-items-center">
+                    <img class="" src="{{ getProfile($cardinfo->profile) }}"
+                        style="width: 100px ;height:100px;border-radius: 5%;" alt="image" /> &emsp;
+                    <span class="ml-3">
+                        <h2 class="fw-bolder">Welcome to {{ $cardinfo->title }} {{ $cardinfo->title2 }}'s mortgage.
+                        </h2>
+                    </span>
+                </div>
+            </div>
+            <hr>
             <iframe
                 src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0"
                 style="width: 100%; height: 1200px; border: 0;">
             </iframe>
+            <hr>
+            <div class="container">
+                <form action="{{ route('user.morgaged.email') }}" method="post">
+                    <div class="row">
+
+                        @csrf
+                        <input type="hidden" name="reciver" id="" value="{{ $user->email }}">
+                        <div class="mb-3 col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 ">
+                            <input type="text" name="name" id="name" value="{{ old('name') }}"
+                                class="form-control @error('name') is-invalid @enderror"
+                                placeholder="{{ __('Name') }}" required ">
+                                                 @if ($errors->has('name'))
+                            <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+                            <input type="email" name="email" id="email" value="{{ old('email') }}"
+                                class="form-control @error('email') is-invalid @enderror"
+                                placeholder="{{ __('Email') }}" required ">
+                                                 @if ($errors->has('email'))
+                            <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
+                                class="form-control @error('phone') is-invalid @enderror"
+                                placeholder="{{ __('Phone Number') }}" required ">
+                                                 @if ($errors->has('phone'))
+                            <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+                            <input type="text" name="company" id="company" value="{{ old('company') }}"
+                                class="form-control @error('company') is-invalid @enderror"
+                                placeholder="{{ __('Company') }}" required ">
+                                                 @if ($errors->has('company'))
+                            <span class="help-block text-danger">{{ $errors->first('company') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+                            <input type="text" name="job_title" id="job_title" value="{{ old('job_title') }}"
+                                class="form-control @error('job_title') is-invalid @enderror"
+                                placeholder="{{ __('Job Title') }}" required ">
+                                                 @if ($errors->has('job_title'))
+                            <span class="help-block text-danger">{{ $errors->first('job_title') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+                            <textarea type="text" name="message" id="message" class="form-control @error('message') is-invalid @enderror"
+                                placeholder="{{ __('Message') }}" required ">{{ old('message') }}</textarea>
+                            @if ($errors->has('message'))
+                                <span class="help-block text-danger">{{ $errors->first('message') }}</span>
+                            @endif
+                        </div>
+
+                        <div class="text-center">
+
+                            <button type="submit" class="btn btn-primary w-25">
+                                <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                <span class="btn-txt">{{ __('Send Message') }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 

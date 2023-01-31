@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Stripe\StripeClient;
 
-use Str;
+use Illuminate\Support\Str;
 use App\Models\Card;
 use App\Models\User;
 use App\Models\Review;
@@ -26,6 +26,8 @@ use App\Http\Requests\PassResetRequest;
 use App\Http\Requests\BillingInfoRequest;
 use App\Http\Requests\PaymentInfoRequest;
 use App\Http\Requests\SupportMailRequest;
+use App\Mail\MortgageMail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -56,7 +58,7 @@ class UserController extends Controller
             $check->is_token_active     = 1;
             $check->token_expire_at    = \Carbon\Carbon::now()->addMinute(60)->format('Y-m-d H:i:s');
             $check->save();
-            $link = \URL::to('/') . '/user/password/password-reset/' . $token . '?email=' . Auth::user()->email;
+            $link = URL::to('/') . '/user/password/password-reset/' . $token . '?email=' . Auth::user()->email;
             $data['subject'] = 'Reset Password Notification from ' . $this->settings->site_name;
             $data['user'] = $check;
             $data['link'] = $link;
@@ -502,5 +504,33 @@ class UserController extends Controller
             'status' => 1,
             'message' => 'Successfully uploaded'
         ]);
+    }
+
+    public function morgagedEmail(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'company' => 'required',
+            'job_title' => 'required',
+            'message' => 'required',
+        ]);
+
+        $data['name'] = $request->name;
+        $data['phone'] = $request->phone;
+        $data['email'] = $request->email;
+        $data['company'] = $request->company;
+        $data['job_title'] = $request->job_title;
+        $data['message'] = $request->message;
+        $data['reciver'] = User::where('email', $request->reciver)->first();
+
+        if (isset($data['reciver'])) {
+            Mail::to($data['reciver']->email)->send(new MortgageMail($data));
+            Toastr::success('Thank you for your feedback', 'Success', ["positionClass" => "toast-top-center"]);
+        } else {
+            Toastr::error('Something Worng', 'Error', ["positionClass" => "toast-top-center"]);
+        }
+        return redirect()->back();
     }
 }

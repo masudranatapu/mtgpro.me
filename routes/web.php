@@ -142,6 +142,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('reset/new/password', ['as' => 'reset.new.password', 'uses' => 'UserController@resetNewPassword']);
 
     Route::get('notification-status', ['as' => 'notification-status', 'uses' => 'UserController@putNitificationStatus']);
+
+    Route::post('/morgaged-email', ['as' => 'morgaged.email', 'uses' => 'UserController@morgagedEmail']);
 });
 
 

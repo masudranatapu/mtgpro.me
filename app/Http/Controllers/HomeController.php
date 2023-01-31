@@ -589,4 +589,6 @@ class HomeController extends Controller
         $product->load('hasImages');
         return view('shop.details', compact('product'));
     }
+
+    
 }
