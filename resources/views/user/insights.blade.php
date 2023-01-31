@@ -43,7 +43,7 @@ $current_plan = $data['current_plan'];
                     </div>
 
                     <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <a class="text-dark" href="{{ route('card.preview', Auth::user()->username) }}">
+                        <a class="text-dark" href="{{ route('user.card.view.history') }}">
 
                             <div class="small-box">
                                 <div class="inner">
@@ -59,17 +59,19 @@ $current_plan = $data['current_plan'];
                         </a>
                     </div>
                     <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="small-box">
-                            <div class="inner">
-                                <h3>{{ __($total_contact_download) }}</h3>
-                                <p>{{ __('Contacts Downloaded') }}
-                                    {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
-                                </p>
+                        <a class="text-dark" href="{{ route('user.card.download.history') }}">
+                            <div class="small-box">
+                                <div class="inner">
+                                    <h3>{{ __($total_contact_download) }}</h3>
+                                    <p>{{ __('Contacts Downloaded') }}
+                                        {{-- <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></i> --}}
+                                    </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-bag"></i>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-sm-6 col-lg-4 col-xl-3">
                         <div class="small-box">

@@ -11,6 +11,8 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\MarketingMaterials;
 use App\Http\Controllers\Controller;
+use App\Models\HistoryCardBrowsing;
+use App\Models\HistoryCardDownload;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardControler extends Controller
@@ -54,6 +56,20 @@ class DashboardControler extends Controller
         return view('user.insights', compact('data'));
     }
 
+
+    public function viewHistory(Request $request)
+    {
+        $histories = HistoryCardBrowsing::with('hasCard')->where('username', Auth::user()->username)->paginate(10);
+
+        return view('user.card_view_history', compact('histories'));
+    }
+
+    public function downloadHistory(Request $request)
+    {
+        $histories = HistoryCardDownload::where('username', Auth::user()->username)->paginate();
+        return view('user.card_download_history', compact('histories'));
+    }
+
     public function getSetting(Request $request)
     {
         $user_id = Auth::id();
@@ -87,9 +103,10 @@ class DashboardControler extends Controller
         return view('user.marketing_materials', compact('marketing_materials'));
     }
 
-    public function marketingMaterialDetails($id){
+    public function marketingMaterialDetails($id)
+    {
         $marketing_materials_details = MarketingMaterials::find($id);
-        return view('user.marketing_materials_details',compact('marketing_materials_details'));
+        return view('user.marketing_materials_details', compact('marketing_materials_details'));
     }
 
     public function getCalculator(Request $request)
@@ -117,8 +134,8 @@ class DashboardControler extends Controller
         return view('user.user-invoice', compact('order'));
     }
 
-    public function suggestFeature(){
+    public function suggestFeature()
+    {
         return view('user.suggest-feature');
     }
-
 }

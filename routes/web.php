@@ -86,16 +86,18 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('card/{id}/update', ['as' => 'card.update', 'uses' => 'CardController@postUpdate']);
     Route::get('card/{id}/delete', ['as' => 'card.delete', 'uses' => 'CardController@getDelete']);
     Route::get('insights', ['as' => 'insights', 'uses' => 'DashboardControler@getInsights']);
+    Route::get('card/view/history', ['as' => 'card.view.history', 'uses' => 'DashboardControler@viewHistory']);
+    Route::get('card/download/history', ['as' => 'card.download.history', 'uses' => 'DashboardControler@downloadHistory']);
     // Route::get('dashboard',['as'=>'dashboard','uses'=>'DashboardControler@getIndex']);
     Route::get('setting', ['as' => 'setting', 'uses' => 'DashboardControler@getSetting']);
     Route::get('plans', ['as' => 'plans', 'uses' => 'DashboardControler@getPlanList']);
-    Route::get('suggest-feature',['as' => 'suggest-feature', 'uses' => 'DashboardControler@suggestFeature']);
+    Route::get('suggest-feature', ['as' => 'suggest-feature', 'uses' => 'DashboardControler@suggestFeature']);
 
     Route::get('free-marketing-material', ['as' => 'free-marketing-material', 'uses' => 'DashboardControler@getFreeMarketing']);
     Route::get('calculator', ['as' => 'calculator', 'uses' => 'DashboardControler@getCalculator']);
-    Route::get('/my-order',[DashboardControler::class,'myOrder'])->name('myorder');
+    Route::get('/my-order', [DashboardControler::class, 'myOrder'])->name('myorder');
     Route::get('/invoice/{id}', [DashboardControler::class, 'invoice'])->name('orders.invoice');
-    Route::get('free-marketing-material-details/{id}',[DashboardControler::class,'marketingMaterialDetails'])->name('marketing.materials.details');
+    Route::get('free-marketing-material-details/{id}', [DashboardControler::class, 'marketingMaterialDetails'])->name('marketing.materials.details');
 
 
     Route::get('cancel-plan/stripe', ['as' => 'cancel-plan.stripe', 'uses' => 'StripeController@cancelCurrentPlan']);
