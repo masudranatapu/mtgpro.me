@@ -426,7 +426,7 @@ class StripeController extends Controller
 
                         // Making all cards inactive, For Plan change
                         BusinessCard::where('user_id', Auth::user()->user_id)->update([
-                            'card_status' => 'inactive',
+                            'status' => '0',
                         ]);
 
                         $plan_validity = Carbon::now();

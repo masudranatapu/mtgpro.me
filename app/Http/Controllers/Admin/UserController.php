@@ -266,7 +266,7 @@ class UserController extends Controller
 
                 // Making all cards inactive, For Plan change
                 BusinessCard::where('user_id', $user_details->user_id)->update([
-                    'card_status' => 'inactive',
+                    'status' => '0',
                 ]);
 
                 $plan_validity = Carbon::now();
@@ -377,7 +377,9 @@ class UserController extends Controller
     public function deleteUser(Request $request)
     {
         $user = User::where('id', $request->query('id'))->first();
-        if($user->is_delete==1){
+
+        if($user->status==2){
+            //Need to delete permanently with others data
             $user_cards = BusinessCard::where('user_id', $user->id)->get();
             foreach ($user_cards as $key => $value) {
                 BusinessField::where('card_id', $value->id)->delete();
@@ -385,7 +387,9 @@ class UserController extends Controller
             Transaction::where('user_id', $user->id)->delete();
             BusinessCard::where('user_id', $user->id)->delete();
             User::where('id', $user->id)->delete();
+
         }else{
+            //Need to change users and users card move to deleted
             $user_cards = BusinessCard::where('user_id', $user->id)->get();
             foreach ($user_cards as $key => $value) {
                 BusinessField::where('card_id', $value->id)->update([
@@ -394,14 +398,12 @@ class UserController extends Controller
             }
             BusinessCard::where('user_id', $user->id)->update([
                 'status'=> 2,
-                'is_deleted' => 1,
                 'deleted_at' => date('Y-m-d H:i:s'),
                 'deleted_by' => Auth::user()->id
             ]);
             DB::table('users')->where('id',$user->id)->update([
                 'email'=>$user->id.'-'.$user->email,
                 'status'=> 2,
-                'is_delete' => 1,
                 'deleted_at' => date('Y-m-d H:i:s'),
                 'deleted_by' => Auth::user()->id
             ]);

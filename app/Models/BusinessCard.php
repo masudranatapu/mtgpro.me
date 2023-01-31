@@ -91,7 +91,6 @@ class BusinessCard extends Model
             $card->card_lang    = 'en';
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
-            $card->card_status  = 'activated';
             $card->status       = 1;
             $card->title        = $request->name;
             $card->location     = $request->location;
@@ -195,7 +194,6 @@ class BusinessCard extends Model
             $card->card_lang    = 'en';
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
-            $card->card_status  = 'activated';
             $card->status       = 1;
             $card->title        = $request->name;
             $card->location     = $request->location;
@@ -613,7 +611,6 @@ class BusinessCard extends Model
         $keep =  BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->latest()->take($take)->pluck('id');
         BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->whereNotIn('id', $keep)->update([
             'status' => 0,
-            'card_status' => 'deactivate',
         ]);
     } catch (\Exception $e) {
         DB::rollback();
