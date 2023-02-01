@@ -59,9 +59,9 @@
 
     .switch-wrapper .highlighter {
         position: absolute;
-        top: 3px;
+        top: 4px;
         left: 4px;
-        width: calc(49% - 4px);
+        width: calc(49% - 2px);
         height: calc(100% - 8px);
         border-radius: 20px;
         background: #212121;
@@ -374,7 +374,8 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
 
                                                 <div class="plan_type switchBtn text-center mb-4 mt-3">
                                                     <div class="text-left">Notifications
-                                                        <div class="switch-wrapper" style="width:auto !important;">
+                                                        <div class="switch-wrapper" style="width:170px !important;background: #f7f7f7;
+                                                        border: 1px solid #EEE;">
                                                             <input id="yes" name="notification" class="switcher_"
                                                                 value="1" type="radio" name="switch" {{
                                                                 Auth::user()->is_notify == 1 ? : 'checked'}}>
@@ -464,8 +465,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                                                 class="loading-spinner reset-spinner fa-lg fas fa-spinner fa-spin"></i>
                                                             <span class="btn-txt">{{ __('Reset Your Password') }}</span>
                                                         </a>
-                                                        <a href="javascript:void(0)"
-                                                            class="btn btn-secondary text-danger mb-2"
+                                                        <a href="javascript:void(0)" class="btn btn-danger mb-2"
                                                             data-toggle="modal" data-target="#deleteAccount">{{
                                                             __('Delete
                                                             Account') }}</a>

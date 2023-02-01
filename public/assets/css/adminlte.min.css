@@ -55883,6 +55883,26 @@ body:not(.layout-fixed) .main-sidebar {
     border: none;
 }
 
+
+.btn-danger {
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+    padding: 12px 42px !important;
+    border-radius: 50px !important;
+    font-size: 13px;
+    color: #dc3545 !important;
+    background: #dc354524;
+    font-weight: 700;
+}
+
+
+.btn-danger:hover {
+    color: #fff !important;
+    background: #dc3545;
+}
+
+
 .nav-sidebar .nav-item>.nav-link {
     border-radius: 10px !important;
     color: #000000 !important;
