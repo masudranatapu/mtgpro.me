@@ -224,7 +224,7 @@ class CardController extends Controller
     }
 
 
-    public function saveBusinessCard(FirstCardRequest $request)
+    public function storeFirstCard(FirstCardRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -297,7 +297,8 @@ class CardController extends Controller
             $user->active_card_id = $card->id;
             $user->update();
             $card = $this->businessCard->getView($request, $card->id);
-            Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+            //no need
+            // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();

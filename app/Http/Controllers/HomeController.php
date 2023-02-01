@@ -491,7 +491,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function postContact(Request $request)
+    public function contactUs(Request $request)
     {
         $data               = [];
         $data['name']       = $request->name;
@@ -505,6 +505,8 @@ class HomeController extends Controller
     }
 
 
+    /*
+
     public function subscribe(Request $request)
     {
         $data               = [];
@@ -517,6 +519,8 @@ class HomeController extends Controller
         Toastr::success(trans('You have successfully subscribed!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
+
+    */
 
     public function getBlog()
     {
@@ -590,5 +594,5 @@ class HomeController extends Controller
         return view('shop.details', compact('product'));
     }
 
-    
+
 }

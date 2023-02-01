@@ -152,7 +152,7 @@ class ConnectionController extends Controller
         return redirect()->back();
     }
 
-    public function sendConnectEmail(SendConnectMailRequest $request,$id)
+    public function sendConnectReplyEmail(SendConnectMailRequest $request,$id)
     {
         try {
             $connection   = Connection::findOrFail($id);

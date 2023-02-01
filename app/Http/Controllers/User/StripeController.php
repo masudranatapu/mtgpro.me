@@ -295,12 +295,11 @@ class StripeController extends Controller
 
 
 
-
+/*
     public function stripePaymentStatus(Request $request, $paymentId)
     {
 
         dd($paymentId);
-//        dd($request->all(), $paymentId);
         if (!$paymentId) {
             return view('errors.404');
         } else {
@@ -495,7 +494,7 @@ class StripeController extends Controller
         }
     }
 
-
+*/
 
 
 

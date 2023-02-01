@@ -206,6 +206,10 @@ class UserController extends Controller
         Toastr::success(trans('Review submitted successfully'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
+
+
+    /*
+
     public function changeEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -235,6 +239,8 @@ class UserController extends Controller
         DB::commit();
         return response()->json(['status' => 1, 'message' => 'Your Email address successfully updated!', 'data' => $user->email], 200);
     }
+
+    */
 
     public function postDeletionRequest(Request $request)
     {
@@ -506,7 +512,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function morgagedEmail(Request $request)
+    public function mortgagedEmail(Request $request)
     {
         $request->validate([
             'name' => 'required',

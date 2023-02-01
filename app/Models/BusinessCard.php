@@ -162,7 +162,8 @@ class BusinessCard extends Model
             return $this->formatResponse(false, 'Unable to create Card !', 'user.card.create');
         }
         DB::commit();
-        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+        //no need mail
+        // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
         return $this->formatResponse(true, 'Card has been created successfully !', 'user.card.edit', $card->id);
     }
 

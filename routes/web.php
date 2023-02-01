@@ -25,31 +25,29 @@ Route::get('language/{locale}', function ($locale) {
 
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
-
 Route::get('/qr/{id}', ['as' => 'qr', 'uses' => 'HomeController@getQRImage']);
 Route::get('/rss/rss.xml', ['as' => 'rss', 'uses' => 'HomeController@rss']);
-
 Route::get('privacy-policy', ['as' => 'privacy-policy', 'uses' => 'HomeController@getPrivacyPolicy']);
 Route::get('terms-conditions', ['as' => 'terms-conditions', 'uses' => 'HomeController@getTermsCondition']);
 Route::get('about-us', ['as' => 'about-us', 'uses' => 'HomeController@getAboutUs']);
 Route::get('pricing', ['as' => 'pricing', 'uses' => 'HomeController@getPricing']);
 Route::get('contact-us', ['as' => 'contact-us', 'uses' => 'HomeController@getContact']);
-Route::post('contact', ['as' => 'contact.post', 'uses' => 'HomeController@postContact']);
+Route::post('contact', ['as' => 'contact-us.post', 'uses' => 'HomeController@contactUs']);
 Route::get('help', ['as' => 'help', 'uses' => 'HomeController@getHelp']);
 Route::get('tutorials', ['as' => 'tutorials', 'uses' => 'HomeController@getTutorials']);
 Route::get('shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'ShopController@details']);
 
-Route::get('disclaimer', [HomeController::class, 'getDisclaimer'])->name('disclaimer');
 
-Route::get('cart', [ProductController::class, 'cart'])->name('cart');
-Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add.to.cart');
-Route::post('add-to-cart/', [ProductController::class, 'addToCartPost'])->name('addtocart');
-Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
-Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
 
-Route::get('products/checkout', [ProductCheckoutController::class, 'checkout'])->name('product.checkout');
-Route::post('products/transection', [ProductCheckoutController::class, 'orderCheckout'])->name('product.orderCheckout');
+Route::get('disclaimer', ['as'=>'disclaimer','uses'=>'HomeController@getDisclaimer']);
+Route::get('cart', ['as'=>'cart','uses'=>'ProductController@cart']);
+Route::get('add-to-cart/{id}', ['as'=>'add.to.cart','uses'=>'ProductController@addToCart']);
+Route::post('add-to-cart/', ['as'=>'addtocart','uses'=>'ProductController@addToCartPost']);
+Route::patch('update-cart', ['as'=>'update.cart','uses'=>'ProductController@update']);
+Route::delete('remove-from-cart', ['as'=>'remove.from.cart','uses'=>'ProductController@remove']);
+Route::get('products/checkout', ['as'=>'product.checkout','uses'=>'ProductCheckoutController@checkout']);
+Route::post('products/transection', ['as'=>'product.orderCheckout','uses'=>'ProductCheckoutController@orderCheckout']);
 
 
 
@@ -72,7 +70,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('card', ['as' => 'card', 'uses' => 'CardController@getIndex']);
     Route::get('card/create', ['as' => 'card.create', 'uses' => 'CardController@getCreate']);
     Route::post('card/store', ['as' => 'card.store', 'uses' => 'CardController@postStore']);
-    Route::post('card/store-first-card', ['as' => 'card.store-first-card', 'uses' => 'CardController@saveBusinessCard']);
+    Route::post('card/store-first-card', ['as' => 'card.store-first-card', 'uses' => 'CardController@storeFirstCard']);
     Route::get('card/{id}/view', ['as' => 'card.view', 'uses' => 'CardController@getView']);
     Route::get('card/{id}/edit', ['as' => 'card.edit', 'uses' => 'CardController@getEdit']);
     Route::post('card/change-status', ['as' => 'card.change-status', 'uses' => 'CardController@getChangeCardStatus']);
@@ -96,9 +94,9 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
 
     Route::get('free-marketing-material', ['as' => 'free-marketing-material', 'uses' => 'DashboardControler@getFreeMarketing']);
     Route::get('calculator', ['as' => 'calculator', 'uses' => 'DashboardControler@getCalculator']);
-    Route::get('/my-order', [DashboardControler::class, 'myOrder'])->name('myorder');
-    Route::get('/invoice/{id}', [DashboardControler::class, 'invoice'])->name('orders.invoice');
-    Route::get('free-marketing-material-details/{id}', [DashboardControler::class, 'marketingMaterialDetails'])->name('marketing.materials.details');
+    Route::get('/my-order', ['as'=>'myorder','uses'=>'DashboardControler@myOrder']);
+    Route::get('/invoice/{id}', ['as'=>'orders.invoice','uses'=>'DashboardControler@invoice']);
+    Route::get('free-marketing-material-details/{id}', ['as'=>'marketing.materials.details','uses'=>'DashboardControler@marketingMaterialDetails']);
 
 
     Route::get('cancel-plan/stripe', ['as' => 'cancel-plan.stripe', 'uses' => 'StripeController@cancelCurrentPlan']);
@@ -124,7 +122,9 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('crm/{id}/edit', ['as' => 'crm.edit', 'uses' => 'ConnectionController@getEdit']);
     Route::get('crm/{id}/download', ['as' => 'crm.download', 'uses' => 'ConnectionController@getDownloadVcf']);
     Route::post('crm/{id}/update', ['as' => 'crm.update', 'uses' => 'ConnectionController@putUpdate']);
-    Route::post('crm/{id}/send-mail', ['as' => 'connection.send-mail', 'uses' => 'ConnectionController@sendConnectEmail']);
+
+    Route::post('crm/{id}/send-mail', ['as' => 'connection.reply-mail', 'uses' => 'ConnectionController@sendConnectReplyEmail']);
+
     Route::post('crm/bulk-export', ['as' => 'crm.bulk-export', 'uses' => 'ConnectionController@getExportCsv']);
     Route::get('crm/download-csv/{name}', ['as' => 'crm.download-csv', 'uses' => 'ConnectionController@getDownloadCsv']);
 
@@ -140,10 +140,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'UserController@passwordReset']);
     Route::get('password/password-reset/{token}', ['as' => 'password.password-reset', 'uses' => 'UserController@getresetPassword']);
     Route::post('reset/new/password', ['as' => 'reset.new.password', 'uses' => 'UserController@resetNewPassword']);
-
     Route::get('notification-status', ['as' => 'notification-status', 'uses' => 'UserController@putNitificationStatus']);
-
-    Route::post('/morgaged-email', ['as' => 'morgaged.email', 'uses' => 'UserController@morgagedEmail']);
+    Route::post('/morgaged-email', ['as' => 'morgaged.email', 'uses' => 'UserController@mortgagedEmail']);
 });
 
 
@@ -158,7 +156,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth']], function () {
 
 
 
-Route::post('sendcard/mail/{id}', ['as' => 'sendcard.mail', 'uses' => 'HomeController@sendCardMail']);
+// Route::post('sendcard/mail/{id}', ['as' => 'sendcard.mail', 'uses' => 'HomeController@sendCardMail']);
 Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');
 Route::post('getConnect', 'HomeController@getConnect')->name('getConnect');
 Route::get('{cardurl}', ['as' => 'card.preview', 'uses' => 'HomeController@getPreview']);

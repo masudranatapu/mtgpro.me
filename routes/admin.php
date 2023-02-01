@@ -51,8 +51,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     // Transactions
     Route::get('transactions', 'TransactionsController@indexTransactions')->name('transactions');
     Route::get('transaction-status/{id}/{status}', 'TransactionsController@transactionStatus')->name('trans.status');
+
+    /*
     Route::get('offline-transactions', 'TransactionsController@offlineTransactions')->name('offline.transactions');
     Route::get('offline-transaction-status/{id}/{status}', 'TransactionsController@offlineTransactionStatus')->name('offline.trans.status');
+    */
+
     Route::get('view-invoice/{id}', 'TransactionsController@viewInvoice')->name('view.invoice');
     // Account Setting
     Route::get('account', 'AccountController@account')->name('account');
@@ -93,6 +97,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('blog/{id}/update', 'BlogController@Update')->name('blog.update');
     Route::get('blog/delete/', 'BlogController@Delete');
     Route::post('ajax/text-editor/image', ['as' => 'ajax.text-editor.image', 'uses' => 'BlogController@textEditorImageUpload']);
+
     // blog
     Route::get('categories', 'CategoryController@Index')->name('category.index');
     Route::get('category/create', 'CategoryController@Create')->name('category.create');
@@ -100,6 +105,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('category/{id}/edit', 'CategoryController@Edit')->name('category.edit');
     Route::post('category/{id}/update', 'CategoryController@Update')->name('category.update');
     Route::get('category/delete/', 'CategoryController@Delete');
+
     // subscriber list
     Route::get('subscribers', 'AdminController@SubscriberList')->name('subscriber.index');
     Route::get('user-guides', 'AdminController@userGuide')->name('user.guide');
@@ -109,6 +115,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('user-guide/edit/{id}', 'AdminController@userGuideEdit')->name('user.guide.edit');
     Route::post('user-guide/update/{id}', 'AdminController@userGuideUpdate')->name('user.guide.update');
     Route::get('user/guide/delete/', 'AdminController@DeleteUserGuide');
+
     // social-icon
     Route::get('social-icon', 'SocialIconController@index')->name('social-icon.index');
     Route::get('social-icon/create', 'SocialIconController@create')->name('social-icon.create');
@@ -116,6 +123,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('social-icon/{id}/edit', 'SocialIconController@edit')->name('social-icon.edit');
     Route::post('social-icon/{id}/update', 'SocialIconController@update')->name('social-icon.update');
     Route::get('social-icon/{id}/delete', 'SocialIconController@destroy')->name('social-icon.destroy');
+
     // faq
     Route::get('faq', ['as' => 'faq.list', 'uses' => 'FaqController@getIndex']);
     Route::get('faq/create', ['as' => 'faq.create', 'uses' => 'FaqController@getCreate']);
@@ -124,6 +132,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('faq/{id}/view', ['as' => 'faq.view', 'uses' => 'FaqController@getView']);
     Route::post('faq/{id}/update', ['as' => 'faq.update', 'uses' => 'FaqController@putUpdate']);
     Route::get('faq/{id}/delete', ['as' => 'faq.delete', 'uses' => 'FaqController@getDelete']);
+
     // cards
     Route::get('cards', 'CardController@index')->name('cards');
     Route::get('card/trash', 'CardController@getTrashList')->name('card.trash');
@@ -131,44 +140,47 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('card/delete/{card_id}', 'CardController@delete')->name('card.delete');
     Route::get('card/change-status/{card_id}', 'CardController@changeStatus')->name('card.change-status');
     Route::get('card/active/{card_id}', 'CardController@activeCard')->name('card.active');
+
     // Email template
     Route::get('email-template', 'EmailTemplateController@index')->name('email.template');
     Route::get('email-template/edit/{id}', 'EmailTemplateController@edit')->name('email.templateedit');
     Route::post('email-template/update/{id}', 'EmailTemplateController@update')->name('email.templateupdate');
+
     // admin users
     Route::get('admin-users', ['as' => 'admin-users', 'uses' => 'AccountController@getAdminUser']);
     Route::get('admin-users/create', ['as' => 'admin-users.create', 'uses' => 'AccountController@getCreate']);
     Route::post('admin-users/store', ['as' => 'admin-users.store', 'uses' => 'AccountController@postStore']);
     Route::get('admin-users/{id}/edit', ['as' => 'admin-users.edit', 'uses' => 'AccountController@getEdit']);
     Route::post('admin-users/{id}/update', ['as' => 'admin-users.update', 'uses' => 'AccountController@putUpdate']);
+
     //Marketing Materials
-    Route::prefix('marketing-material')->group(function () {
-        Route::get('/', [MarketingMaterialsController::class, 'index'])->name('marketing.materials');
-        Route::get('/create', [MarketingMaterialsController::class, 'create'])->name('marketing.material.create');
-        Route::post('/store', [MarketingMaterialsController::class, 'store'])->name('marketing.material.store');
-        Route::get('/edit/{id}', [MarketingMaterialsController::class, 'edit'])->name('marketing.material.edit');
-        Route::post('/update/{id}', [MarketingMaterialsController::class, 'update'])->name('marketing.material.update');
-        Route::get('/delete/{id}', [MarketingMaterialsController::class, 'delete'])->name('marketing.material.delete');
-        Route::get('/status-update/{id}/{status}', [MarketingMaterialsController::class, 'status'])->name('marketing.material.status');
-    });
+    Route::get('/marketing-material', ['as' => 'marketing.materials', 'uses' => 'MarketingMaterialsController@index']);
+    Route::get('/marketing-material/create', ['as' => 'marketing.material.create', 'uses' => 'MarketingMaterialsController@create']);
+    Route::post('/marketing-material/store', ['as' => 'marketing.material.store', 'uses' => 'MarketingMaterialsController@store']);
+    Route::get('/marketing-material/edit/{id}', ['as' => 'marketing.material.edit', 'uses' => 'MarketingMaterialsController@edit']);
+    Route::post('/marketing-material/update/{id}', ['as' => 'marketing.material.update', 'uses' => 'MarketingMaterialsController@update']);
+    Route::get('/marketing-material/delete/{id}', ['as' => 'marketing.material.delete', 'uses' => 'MarketingMaterialsController@delete']);
+    Route::get('/status-update/{id}/{status}', ['as' => 'marketing.material.status', 'uses' => 'MarketingMaterialsController@status']);
+
+
     // product
-    Route::prefix('product')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('product.index');
-        Route::get('/create', [ProductController::class, 'create'])->name('product.create');
-        Route::post('/store', [ProductController::class, 'store'])->name('product.store');
-        Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
-        Route::put('/update/{product}', [ProductController::class, 'update'])->name('product.update');
-        Route::delete('/delete/{product}', [ProductController::class, 'delete'])->name('product.delete');
-        Route::get('/images/{product}', [ProductController::class, 'images'])->name('product.images');
-        Route::post('/images/upload/{product}', [ProductController::class, 'imagesUpload'])->name('product.images.upload');
-        Route::delete('/images/delete/{productImage}', [ProductController::class, 'imagesDelete'])->name('product.images.delete');
-    });
+    Route::get('product/', ['as'=>'product.index','uses'=>'ProductController@index']);
+    Route::get('product/create', ['as'=>'product.create','uses'=>'ProductController@create']);
+    Route::post('product/store', ['as'=>'product.store','uses'=>'ProductController@store']);
+    Route::get('product/edit/{product}', ['as'=>'product.edit','uses'=>'ProductController@edit']);
+    Route::put('product/update/{product}', ['as'=>'product.update','uses'=>'ProductController@update']);
+    Route::delete('product/delete/{product}', ['as'=>'product.delete','uses'=>'ProductController@delete']);
+    Route::get('product/images/{product}', ['as'=>'product.images','uses'=>'ProductController@images']);
+    Route::post('product/images/upload/{product}', ['as'=>'product.images.upload','uses'=>'ProductController@imagesUpload']);
+    Route::delete('product/images/delete/{productImage}', ['as'=>'product.images.delete','uses'=>'ProductController@imagesDelete']);
+
     //Product Orders
-    Route::prefix('orders')->group(function () {
-        Route::get('/', [OrdersController::class, 'index'])->name('orders');
-        Route::get('/edit/{id}', [OrdersController::class, 'edit'])->name('orders.edit');
-        Route::post('/update/{id}', [OrdersController::class, 'update'])->name('orders.update');
-        Route::get('/invoice/{id}', [OrdersController::class, 'invoice'])->name('orders.invoice');
-        Route::post('order/status/change/{order}', [OrdersController::class, 'statusChange'])->name('order.status');
-    });
+    Route::get('orders/', ['as'=>'orders','uses'=>'OrdersController@index']);
+    Route::get('orders/edit/{id}', ['as'=>'orders.edit','uses'=>'OrdersController@edit']);
+    Route::post('orders/update/{id}', ['as'=>'orders.update','uses'=>'OrdersController@update']);
+    Route::get('orders/invoice/{id}', ['as'=>'orders.invoice','uses'=>'OrdersController@invoice']);
+    Route::post('order/status/change/{order}', ['as'=>'order.status','uses'=>'OrdersController@statusChange']);
+
+
+
 });
