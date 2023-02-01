@@ -21,8 +21,11 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
+use App\Mail\AllMail;
 use App\Mail\SendCard;
+use App\Models\EmailTemplate;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -120,9 +123,14 @@ class HomeController extends Controller
                 'msg' => trans('Something wrong ! please try again')
             ]);
         }
-        DB::commit();
+        // DB::commit();
         if ($connect) {
-            Mail::to($card->card_email)->send(new ConnectMail($data));
+
+            // Mail::to($card->card_email)->send(new ConnectMail($data));
+            $message = $this->getConnectMail($card, $request->all());
+            Log::alert($message);
+
+            Mail::to($card->card_email)->send(new AllMail($message));
         }
         // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
         // return redirect()->back();
@@ -595,4 +603,43 @@ class HomeController extends Controller
     }
 
 
+
+
+    public function getConnectMail($owner, $senderData)
+    {
+
+        Log::alert($senderData['name']);
+        $mailMesssage = EmailTemplate::where('slug', 'contact-query-mail-to-card-owner')->first();
+        $mailcontent =     $mailMesssage->body;
+
+        if (isset($owner)) {
+            $user = User::find($owner->user_id);
+            $mailcontent = preg_replace("/{{owner}}/", $user->name, $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{name}}/", $senderData['name'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{email}}/", $senderData['email'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{phone}}/", $senderData['phone'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{title}}/", $senderData['title'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{company_name}}/", $senderData['company_name'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{message}}/", $senderData['message'], $mailcontent);
+        }
+        return $mailcontent;
+    }
 }
