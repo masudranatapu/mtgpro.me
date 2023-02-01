@@ -421,6 +421,7 @@ body {
     margin: 0 auto;
     margin-bottom: 5px;
     border: 2px solid #eee;
+    background: #fff;
 }
 
 .testimonial_sec .review_item .icon {
