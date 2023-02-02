@@ -254,12 +254,18 @@ $features = $home_data['features'];
                             </div>
                         </div>
                         <hr>
+
                         <ul class="list-unstyled lh-lg ">
                             @foreach($planfeatures as $features)
                             <li class="py-2">
                                 <span>{{$features}}</span>
                             </li>
                             @endforeach
+                            @if($row->free_marketing_material==1)
+                                <li class="py-2">
+                                    <span>{{__('Free Marketing Material')}}</span>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

@@ -150,6 +150,7 @@ class PlanController extends Controller
         $plan->is_whatsapp_store = $request->is_whatsapp_store ?? 0;
         $plan->is_email_signature = $request->is_email_signature ?? 0;
         $plan->is_qr_code = $request->is_qr_code=='on' ? '1':'0';
+        $plan->free_marketing_material = $request->free_marketing_material=='on' ? '1':'0';
         $plan->save();
 
     } catch (\Exception $e) {
@@ -238,6 +239,7 @@ class PlanController extends Controller
         $plan->is_free                  = $request->is_free;
         $plan->plan_price_monthly       = $request->is_free == 0 ? $request->plan_price_monthly : 0;
         $plan->plan_price_yearly        = $request->is_free == 0 ? $request->plan_price_yearly : 0;
+        $plan->free_marketing_material  = $request->free_marketing_material=='on' ? '1':'0';
         $plan->no_of_vcards             = $request->no_of_vcards;
         $plan->personalized_link        = $request->personalized_link;
         $plan->hide_branding            = $request->hide_branding=='on' ? '1':'0';

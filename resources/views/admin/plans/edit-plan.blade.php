@@ -230,6 +230,19 @@ $tabindex =1;
                                                             @endif
                                                         </div>
                                                     </div>
+                                                    <div class="col-6 col-md-3">
+                                                        <div class="mb-3">
+                                                            <div class="form-label">{{ __('Free Marketing Material') }}</div>
+                                                            <label class="form-check form-switch">
+                                                                <input class="form-check-input @error('free_marketing_material') is-invalid @enderror " type="checkbox"
+                                                                    name="free_marketing_material" {{ $plan_details->free_marketing_material == 1 ? 'checked' : '' }} tabindex="{{ $tabindex++ }}">
+
+                                                            </label>
+                                                            @if ($errors->has('free_marketing_material'))
+                                                                <span class="help-block text-danger">{{$errors->first('free_marketing_material') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                     {{-- <div class="col-6 col-md-3">
                                                         <div class="mb-3">
                                                             <div class="form-label">{{ __('Free Setup') }}</div>
