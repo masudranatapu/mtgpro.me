@@ -55820,11 +55820,26 @@ a.text-muted:hover {
 }
 
 /*# sourceMappingURL=adminlte.min.css.map */
+.page-item .page-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px !important;
+    text-align: center;
+    line-height: 22px;
+    border: none !important;
+    margin: 0px 3px;
+    background: #dfdfdf;
+    color: #000;
+    box-shadow: none !important;
+}
 
+.page-item.active .page-link {
+    background: #212121 !important;
+}
 
 body:not(.layout-fixed) .main-sidebar {
     min-height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     padding: 0px 10px;
     left: 0px;
@@ -55867,6 +55882,26 @@ body:not(.layout-fixed) .main-sidebar {
 .main-header {
     border: none;
 }
+
+
+.btn-danger {
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+    padding: 12px 42px !important;
+    border-radius: 50px !important;
+    font-size: 13px;
+    color: #dc3545 !important;
+    background: #dc354524;
+    font-weight: 700;
+}
+
+
+.btn-danger:hover {
+    color: #fff !important;
+    background: #dc3545;
+}
+
 
 .nav-sidebar .nav-item>.nav-link {
     border-radius: 10px !important;

@@ -54,10 +54,27 @@
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('My Cards') }} <a class="create_plus_icon"
-                            href="{{ route('user.card.create') }}"><i class="fab fa-plus"></i></a></h1>
+            <div class="row mb-2 align-items-center">
+                <div class="col-md-2 row">
+                    <h1 class="mb-3 mb-md-0">{{ __('My Cards') }}
+                        <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i
+                                class="fab fa-plus"></i></a>
+                        &nbsp; <a href="{{ route('home') }}/{{ Auth::user()->username }}">Live card</a>
+
+                    </h1>
+                </div>
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+
+                        <a class="btn-sm btn-primary btn-sm" href="javascript:void(0)" onclick="copy(this)"
+                            data-url="{{ route('home') }}/{{ auth()->user()->username }}">{{ __('Link To Copy') }}</a>
+                        <a class="btn-sm btn-primary btn-sm"
+                            href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+                            __('Email') }}</a>
+                        <a class="btn-sm btn-primary btn-sm"
+                            href="sms:?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+                            __('Text') }}</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,32 +131,32 @@
                                         {{ $card->company_name }}</h5>
                                 </div>
                                 <div class="card_btn mt-3 mb-4">
-                                    <a href="{{ route('user.card.edit', $card->id) }}" class="btn-sm btn-secondary" title="Edit card">{{
-                                        __('Edit') }}</a>
+                                    <a href="{{ route('user.card.edit', $card->id) }}" class="btn-sm btn-secondary"
+                                        title="Edit card">{{ __('Edit') }}</a>
                                     @if (checkPackage())
                                     <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
                                         class="btn-sm btn-secondary changeTrg change-status {{ $card->status == 0 ? 'inactive' : '' }} "
                                         data-id="{{ $card->id }}" data-status="{{ $card->status }}">
-                                        <i class="fa fa-check"
-                                            style="@if ($card->status == 0) display:none; @endif" title="Live Card" ></i>
+                                        <i class="fa fa-check" style="@if ($card->status == 0) display:none; @endif"
+                                            title="Live Card"></i>
                                         {{ __('Live') }}
                                     </a>
                                     <?php
 
-                                    if($card->status==1){
-                                        $url = Auth::user()->username;
-                                    }
-                                    else{
-                                        $url =  $card->card_url;
-                                    }
-                                    ?>
+                                                    if ($card->status == 1) {
+                                                        $url = Auth::user()->username;
+                                                    } else {
+                                                        $url = $card->card_url;
+                                                    }
+                                                    ?>
                                     <a target="_blank" href="{{ route('card.preview', $url) }}"
-                                        class="btn-sm btn-secondary" title="Card Preview"> {{ __('Preview') }}</a>
+                                        class="btn-sm btn-secondary" title="Card Preview">
+                                        {{ __('Preview') }}</a>
 
-                                        <a href="{{ route('qr', $card->card_id) }}"
-                                            class="download_btn btn-sm btn-secondary" title="{{ __('Download QR code') }}">
-                                            {{ __('QR') }}
-                                        </a>
+                                    <a href="{{ route('qr', $card->card_id) }}"
+                                        class="download_btn btn-sm btn-secondary" title="{{ __('Download QR code') }}">
+                                        {{ __('QR') }}
+                                    </a>
                                     @endif
                                 </div>
                             </div>
@@ -165,33 +182,46 @@
             var card_id = $(this).attr('data-id');
             var status = $(this).attr('data-status');
             if (confirm('Are you sure ?')) {
-            $.ajax({
-                type: 'POST',
-                url: "{{ URL::route('user.card.change-status') }}",
-                data: {
-                    '_token': $('input[name=_token]').val(),
-                    'id': card_id,
-                    'status': status,
-                },
-                success: function(data) {
-                    if (data.status == true) {
-                        toastr.success(data.msg);
-                        $('.change-status').addClass('inactive');
-                        $('.change-status').addClass('changeTrg');
-                        $('.change-status').attr('data-status', 0);
-                        $('.change-status i').hide();
-                        $('#change_status_' + card_id).attr('data-status', 1);
-                        $('#change_status_' + card_id).removeClass('inactive');
-                        $('#change_status_' + card_id).removeClass('changeTrg');
-                        $('#change_status_' + card_id + ' i').show();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ URL::route('user.card.change-status') }}",
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'id': card_id,
+                        'status': status,
+                    },
+                    success: function(data) {
+                        if (data.status == true) {
+                            toastr.success(data.msg);
+                            $('.change-status').addClass('inactive');
+                            $('.change-status').addClass('changeTrg');
+                            $('.change-status').attr('data-status', 0);
+                            $('.change-status i').hide();
+                            $('#change_status_' + card_id).attr('data-status', 1);
+                            $('#change_status_' + card_id).removeClass('inactive');
+                            $('#change_status_' + card_id).removeClass('changeTrg');
+                            $('#change_status_' + card_id + ' i').show();
 
-                    } else {
-                        toastr.warning(data.msg);
-                    }
-                },
-            });
-         }
+                        } else {
+                            toastr.warning(data.msg);
+                        }
+                    },
+                });
+            }
 
         })
+
+        function copy(event) {
+            let url = event.dataset.url;
+            console.log(url);
+            var temp = $("<input>");
+            $("body").append(temp);
+            temp.val(url).select();
+            document.execCommand("copy");
+            temp.remove();
+            toastr.success('Link copy to clipsboard');
+
+
+        }
 </script>
 @endpush

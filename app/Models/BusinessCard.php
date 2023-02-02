@@ -74,6 +74,11 @@ class BusinessCard extends Model
         return $this->hasOne(Theme::class, 'theme_id', 'theme_id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
 
     public function postStore($request)
     {
@@ -86,7 +91,6 @@ class BusinessCard extends Model
             $card->card_lang    = 'en';
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
-            $card->card_status  = 'activated';
             $card->status       = 1;
             $card->title        = $request->name;
             $card->location     = $request->location;
@@ -158,7 +162,8 @@ class BusinessCard extends Model
             return $this->formatResponse(false, 'Unable to create Card !', 'user.card.create');
         }
         DB::commit();
-        Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+        //no need mail
+        // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
         return $this->formatResponse(true, 'Card has been created successfully !', 'user.card.edit', $card->id);
     }
 
@@ -190,7 +195,6 @@ class BusinessCard extends Model
             $card->card_lang    = 'en';
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
-            $card->card_status  = 'activated';
             $card->status       = 1;
             $card->title        = $request->name;
             $card->location     = $request->location;
@@ -608,7 +612,6 @@ class BusinessCard extends Model
         $keep =  BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->latest()->take($take)->pluck('id');
         BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->whereNotIn('id', $keep)->update([
             'status' => 0,
-            'card_status' => 'deactivate',
         ]);
     } catch (\Exception $e) {
         DB::rollback();

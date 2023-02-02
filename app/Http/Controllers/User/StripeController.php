@@ -220,7 +220,7 @@ class StripeController extends Controller
             }
             Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
             Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('user.invoice',$transaction->invoice_number);
+            return redirect()->route('user.planinvoice',$transaction->invoice_number);
 
     }
 
@@ -295,12 +295,11 @@ class StripeController extends Controller
 
 
 
-
+/*
     public function stripePaymentStatus(Request $request, $paymentId)
     {
 
         dd($paymentId);
-//        dd($request->all(), $paymentId);
         if (!$paymentId) {
             return view('errors.404');
         } else {
@@ -426,7 +425,7 @@ class StripeController extends Controller
 
                         // Making all cards inactive, For Plan change
                         BusinessCard::where('user_id', Auth::user()->user_id)->update([
-                            'card_status' => 'inactive',
+                            'status' => '0',
                         ]);
 
                         $plan_validity = Carbon::now();
@@ -495,7 +494,7 @@ class StripeController extends Controller
         }
     }
 
-
+*/
 
 
 

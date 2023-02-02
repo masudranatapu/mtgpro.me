@@ -12,7 +12,8 @@
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <polyline points="5 12 3 12 12 3 21 12 19 12" />
                                     <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 {{ __('Dashboard') }}
@@ -23,10 +24,11 @@
                         <a class="nav-link" href="{{ route('admin.cards') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-id"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                                    <rect x="3" y="4" width="18" height="16" rx="3">
+                                    </rect>
                                     <circle cx="9" cy="10" r="2"></circle>
                                     <line x1="15" y1="8" x2="17" y2="8"></line>
                                     <line x1="15" y1="12" x2="17" y2="12"></line>
@@ -38,10 +40,9 @@
                             </span>
                         </a>
                     </li>
-                    <li
-                        class="nav-item dropdown @yield('plans')">
-                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
-                            aria-expanded="false">
+                    <li class="nav-item dropdown @yield('plans')">
+                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                            role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     class="icon icon-tabler icon-tabler-businessplan" width="24" height="24"
@@ -71,9 +72,18 @@
                     </li>
                     <li class="nav-item @yield('users')">
                         <a class="nav-link" href="{{ route('admin.users') }}">
-                           <i class="fa fa-user-alt"></i> &nbsp;
+                            <i class="fa fa-user-alt"></i> &nbsp;
                             <span class="nav-link-title">
                                 {{ __('Users') }}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item @yield('porducts')">
+                        <a class="nav-link" href="{{ route('admin.product.index') }}">
+                            <i class="fa fa-user-alt"></i> &nbsp;
+                            <span class="nav-link-title">
+                                {{ __('Products') }}
                             </span>
                         </a>
                     </li>
@@ -95,7 +105,7 @@
                     </div>
                 </li> --}}
 
-{{--
+                    {{--
                 <li class="nav-item @yield('subscribers')">
                     <a class="nav-link" href="{{ route('admin.subscriber.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -107,16 +117,18 @@
                     </a>
                 </li> --}}
 
-                <li class="nav-item @yield('reviews')">
-                    <a class="nav-link" href="{{ route('admin.review.index') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">{{ __('Reviews') }}</span>
-                    </a>
-                </li>
+                    <li class="nav-item @yield('reviews')">
+                        <a class="nav-link" href="{{ route('admin.review.index') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">{{ __('Reviews') }}</span>
+                        </a>
+                    </li>
 
                     {{-- <li class="nav-item  @yield('guide')">
                         <a class="nav-link" href="{{ route('admin.user.guide') }}">
@@ -128,12 +140,14 @@
                             </span>
                         </a>
                     </li> --}}
-                <li class="nav-item dropdown @yield('settings')">
-                    <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                    <li class="nav-item dropdown @yield('settings') @yield('email-template')">
+                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                            role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                     <path
                                         d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z">
@@ -142,44 +156,73 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                {{ __('Settings') }}
+                                {{ __('More') }}
                             </span>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="{{ route('admin.settings') }}" class="dropdown-item @yield('setting')">{{ __('General Settings') }}</a>
-                            <a href="{{ route('admin.payment.methods') }}" class="dropdown-item @yield('payment_method')">{{ __('Payment Methods') }}</a>
-                            <a href="{{ route('admin.transactions') }}" class="dropdown-item @yield('transaction')">{{ __('Transactions') }}</a>
-                            <a href="{{ route('admin.pages') }}" class="dropdown-item @yield('page')">{{ __('Pages') }}</a>
-                            <a href="{{ route('admin.custom-page.list') }}" class="dropdown-item @yield('custom_page_list')">{{ __('Custom Pages') }}</a>
-                            <a href="{{ route('admin.faq.list') }}" class="dropdown-item @yield('faq')">{{ __('Faqs') }}</a>
-                            <a href="{{ route('admin.social-icon.index') }}" class="dropdown-item @yield('social_icon')">{{ __('Social Icon') }}</a>
-                            <a href="{{ route('admin.tax.setting') }}" class="dropdown-item @yield('invoice')">{{ __('Invoice & Tax') }}</a>
-                            <a href="{{ route('admin.clear') }}" class="dropdown-item @yield('clear_cache')">{{ __('Clear cache') }}</a>
-                            <a href="{{ route('admin.admin-users') }}" class="dropdown-item @yield('admin-users')"><span class="nav-link-title">{{ __('Admin Users') }}</span></a>
-                            <a href="{{ route('admin.change.password') }}" class="dropdown-item @yield('change_password')"><span class="nav-link-title">{{ __('Change Password') }}</span></a>
+
+                            <a href="{{ route('admin.orders') }}" class="dropdown-item @yield('product_ordrs')">
+                                {{ __('Orders') }}
+                            </a>
+
+                            <a href="{{ route('admin.settings') }}"
+                                class="dropdown-item @yield('setting')">{{ __('General Settings') }}</a>
+
+                            <a href="{{ route('admin.payment.methods') }}"
+                                class="dropdown-item @yield('payment_method')">{{ __('Payment Methods') }}</a>
+
+                            <a href="{{ route('admin.transactions') }}" class="dropdown-item @yield('transaction')">
+                                {{ __('Transactions') }}
+                            </a>
+                            <a class="dropdown-item @yield('marketing_materials_listn')"
+                                href="{{ route('admin.marketing.materials') }}">
+                                {{ __('Marketing Materials') }}
+                            </a>
+                            <a href="{{ route('admin.email.template') }}"
+                                class="dropdown-item @yield('email-template')">{{ __('Email Template') }}</a>
+                            <a href="{{ route('admin.edit.home', 'home') }}"
+                                class="dropdown-item @yield('page')">{{ __('Home Pages') }}</a>
+                            <a href="{{ route('admin.custom-page.list') }}"
+                                class="dropdown-item @yield('custom_page_list')">{{ __('Custom Pages') }}</a>
+                            <a href="{{ route('admin.faq.list') }}"
+                                class="dropdown-item @yield('faq')">{{ __('Faqs') }}</a>
+                            <a href="{{ route('admin.social-icon.index') }}"
+                                class="dropdown-item @yield('social_icon')">{{ __('Social Icon') }}</a>
+                            <a href="{{ route('admin.tax.setting') }}"
+                                class="dropdown-item @yield('invoice')">{{ __('Invoice & Tax') }}</a>
+                            <a href="{{ route('admin.clear') }}"
+                                class="dropdown-item @yield('clear_cache')">{{ __('Clear cache') }}</a>
+                            <a href="{{ route('admin.admin-users') }}" class="dropdown-item @yield('admin-users')"><span
+                                    class="nav-link-title">{{ __('Admin Users') }}</span></a>
+                            <a href="{{ route('admin.change.password') }}"
+                                class="dropdown-item @yield('change_password')"><span
+                                    class="nav-link-title">{{ __('Change Password') }}</span></a>
                         </div>
                     </li>
 
                     <li class="nav-item dropdown @yield('admin')">
-                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <img width="30" src="{{ getProfile(Auth::user()->profile_image) }}" class="img-fluid" alt="{{ auth::user()->name }}" >
-                                </span>
-                                <span class="nav-link-title">
-                                    {{ auth::user()->name }}
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a href="{{ route('admin.account') }}" class="dropdown-item @yield('admin.account')">{{ __('Profile & account') }}</a>
-                                <a href="{{ route('logout') }}" class="dropdown-item @yield('logout')"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                <form class="logout" id="logout-form" action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                </form>
+                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                            role="button" aria-expanded="false">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <img width="30" src="{{ getProfile(Auth::user()->profile_image) }}"
+                                    class="img-fluid" alt="{{ auth::user()->name }}">
+                            </span>
+                            <span class="nav-link-title">
+                                {{ auth::user()->name }}
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="{{ route('admin.account') }}"
+                                class="dropdown-item @yield('admin.account')">{{ __('Profile & account') }}</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item @yield('logout')"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                            <form class="logout" id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            </form>
 
 
-                            </div>
-                        </li>
+                        </div>
+                    </li>
 
 
 
@@ -189,4 +232,3 @@
         </div>
     </div>
 </div>
-

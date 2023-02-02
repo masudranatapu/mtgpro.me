@@ -8,7 +8,7 @@
                 </button>
               </div>
             <div class="modal-body">
-                <form action="{{route('user.connection.send-mail',$row->id)}}" id="sendConnectionMail" method="post">
+                <form action="{{route('user.connection.reply-mail',$row->id)}}" id="sendConnectionMail" method="post">
                     @csrf
                     <input type="hidden" name="connection_id" id="connection_id" value="{{$row->id}}" />
                     <div class="mb-3">

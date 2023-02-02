@@ -149,7 +149,7 @@ class TransactionsController extends Controller
 
                     // Making all cards inactive, For Plan change
                     Card::where('user_id', $user_details->user_id)->update([
-                        'card_status' => 'inactive',
+                        'status' => 0,
                     ]);
 
                     $plan_validity = Carbon::now();

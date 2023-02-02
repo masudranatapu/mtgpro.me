@@ -39,18 +39,21 @@ $banner = $home_data['banner'] ;
                 <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
                     <h2>{!! __($banner['banner_title']) !!}</h2>
                     <p>{!! __($banner['banner_description']) !!}</p>
-                    <a href="{{ route('register') }}" class="btn btn-dark mb-sm-2" title="Signup">{{__($banner['banner_button'])}} </a>
+                    <a href="{{ route('register') }}" class="btn btn-dark mb-sm-2"
+                        title="Signup">{{__($banner['banner_button'])}} </a>
                 </div>
             </div>
             <div class="col-lg-7 col-12">
                 @if(!empty($banner['banner_video']) && file_exists(public_path($banner['banner_video'])))
                 <div class="embed-responsive embed-responsive-21by9">
-                    <video class="embed-responsive-item banner-video" loop="true" autoplay="autoplay" controls muted  preload="none">
+                    <video class="embed-responsive-item banner-video" loop="true" autoplay="autoplay" controls muted
+                        preload="none">
                         <source src="{{ asset($banner['banner_video']) }}" type="video/mp4">
-                        {{-- <source src="movie.ogg" type="video/ogg"> --}}
+                        {{--
+                        <source src="movie.ogg" type="video/ogg"> --}}
                         <img src="{{ asset($banner['banner_photo']) }}" alt="{{ strip_tags($banner['banner_title']) }}">
                         Your browser does not support the video tag.
-                      </video>
+                    </video>
                 </div>
                 @else
                 <div class="banner_logo text-center" data-aos="zoom-in">
@@ -66,7 +69,7 @@ $banner = $home_data['banner'] ;
 <!-- ======================= Featured  =========================== -->
 @if (isset($home_data['features']))
 @php
-    $features = $home_data['features'];
+$features = $home_data['features'];
 @endphp
 <div class="featured section">
     <!-- container -->
@@ -217,8 +220,7 @@ $banner = $home_data['banner'] ;
             $planfeatures = json_decode($plan->features);
             @endphp
 
-            <div
-                class="col-md-3 col-lg-3 col-12">
+            <div class="col-md-6 col-lg-4 col-xxl-3 mb-3" data-aos="fade-up">
                 <div class="pricing-card card card-md">
                     <div class="card-body text-center">
                         <div class="text-capitalize text-dark">
@@ -269,7 +271,7 @@ $banner = $home_data['banner'] ;
 </div>
 @if (isset($home_data['video_section']))
 @php
-    $video_section = $home_data['video_section'];
+$video_section = $home_data['video_section'];
 @endphp
 <div class="video_sec section">
     <div class="container">

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use Str;
 use DateTimeZone;
 use App\Mail\TestMail;
@@ -98,7 +100,7 @@ class SettingsController extends Controller
             $setting->google_client_secret  = $request->google_client_secret;
             // $setting->facebook_callback_url  = URL::to('/').'/auth/facebook/callback';
             // $setting->google_callback_url  = URL::to('/').'/auth/google/callback';
-            $setting->name              = trim( $request->mail_sender, " ");
+            $setting->name              = trim($request->mail_sender, " ");
             $setting->address           = trim($request->mail_address, " ");
             $setting->driver            = trim($request->mail_driver, " ");
             $setting->host              = trim($request->mail_host, " ");
@@ -122,45 +124,46 @@ class SettingsController extends Controller
             $setting->instagram_url     = $request->instagram_url;
             $setting->pinterest_url     = $request->pinterest_url;
             $setting->main_motto        = $request->main_motto;
-            if($request->favi_icon){
+            $setting->site_disclimer        = $request->site_disclimer;
+            if ($request->favi_icon) {
                 $favicon = $request->file('favi_icon');
                 $base_name = preg_replace('/\..+$/', '', $favicon->getClientOriginalName());
                 $base_name = explode(' ', $base_name);
                 $base_name = implode('-', $base_name);
                 $base_name = Str::lower($base_name);
-                $image_name = $base_name."-".uniqid().".".$favicon->getClientOriginalExtension();
+                $image_name = $base_name . "-" . uniqid() . "." . $favicon->getClientOriginalExtension();
                 $file_path = '/assets/uploads/icon';
                 $favicon->move(public_path($file_path), $image_name);
-                $setting->favicon = $file_path.'/'.$image_name;
+                $setting->favicon = $file_path . '/' . $image_name;
                 // $favi_icon = '/assets/uploads/icon/' . 'IMG-' . time() . '.' . $request->favi_icon->extension();
                 // $request->favi_icon->move(public_path('assets/uploads/icon'), $favi_icon);
                 // $setting->favicon    = $favi_icon;
             }
-            if($request->site_logo){
+            if ($request->site_logo) {
                 $site_logo = $request->file('site_logo');
                 $base_name = preg_replace('/\..+$/', '', $site_logo->getClientOriginalName());
                 $base_name = explode(' ', $base_name);
                 $base_name = implode('-', $base_name);
                 $base_name = Str::lower($base_name);
-                $image_name = $base_name."-".uniqid().".".$site_logo->getClientOriginalExtension();
+                $image_name = $base_name . "-" . uniqid() . "." . $site_logo->getClientOriginalExtension();
                 $file_path = '/assets/uploads/logo';
                 $site_logo->move(public_path($file_path), $image_name);
-                $setting->site_logo = $file_path.'/'.$image_name;
+                $setting->site_logo = $file_path . '/' . $image_name;
 
                 // $site_logo = '/assets/uploads/logo/' . 'IMG-' . time() . '.' . $request->site_logo->extension();
                 // $request->site_logo->move(public_path('assets/uploads/logo'), $site_logo);
                 // $setting->site_logo    = $site_logo;
             }
-            if($request->seo_image){
+            if ($request->seo_image) {
                 $seo_image = $request->file('seo_image');
                 $base_name = preg_replace('/\..+$/', '', $seo_image->getClientOriginalName());
                 $base_name = explode(' ', $base_name);
                 $base_name = implode('-', $base_name);
                 $base_name = Str::lower($base_name);
-                $image_name = $base_name."-".uniqid().".".$seo_image->getClientOriginalExtension();
+                $image_name = $base_name . "-" . uniqid() . "." . $seo_image->getClientOriginalExtension();
                 $file_path = '/assets/uploads/logo';
                 $seo_image->move(public_path($file_path), $image_name);
-                $setting->seo_image = $file_path.'/'.$image_name;
+                $setting->seo_image = $file_path . '/' . $image_name;
 
                 // $seo_image = '/assets/uploads/logo/' . 'IMG-' . time() . '.' . $request->seo_image->extension();
                 // $request->seo_image->move(public_path('assets/uploads/logo'), $seo_image);
@@ -196,8 +199,8 @@ class SettingsController extends Controller
                 'config_value' => $request->paypal_secret,
             ]);
             DB::table('config')->where('config_key', 'stripe_publishable_key')->update([
-                 'config_value' => $request->stripe_publishable_key,
-             ]);
+                'config_value' => $request->stripe_publishable_key,
+            ]);
 
             DB::table('config')->where('config_key', 'stripe_secret')->update([
                 'config_value' => $request->stripe_secret,
@@ -230,7 +233,7 @@ class SettingsController extends Controller
             // DB::table('config')->where('config_key', 'term')->update([
             //     'config_value' => $request->term,
             // ]);
-             // DB::table('config')->where('config_key', 'app_theme')->update([
+            // DB::table('config')->where('config_key', 'app_theme')->update([
             //     'config_value' => $request->app_theme,
             // ]);
             // DB::table('config')->where('config_key', 'bank_transfer')->update([
@@ -273,13 +276,13 @@ class SettingsController extends Controller
             //     'RECAPTCHA_SECRET_KEY' => $recaptcha_secret_key
             // ]);
 
-    } catch (\Exception $e) {
-        dd($e->getMessage());
-        DB::rollback();
-        return redirect()->back()->with('error','Settings not Updated');
-    }
-    DB::commit();
-     return redirect()->back()->with('success','Settings Updated Successfully!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            return redirect()->back()->with('error', 'Settings not Updated');
+        }
+        DB::commit();
+        return redirect()->back()->with('success', 'Settings Updated Successfully!');
     }
 
 
@@ -385,29 +388,29 @@ class SettingsController extends Controller
         $settings = Setting::first();
         $config = DB::table('config')->get();
 
-        $section_name = DB::table('pages')->where('page_name', $id)->orderBy('order_id','asc')->groupBy('section_name')->get();
+        $section_name = DB::table('pages')->where('page_name', $id)->groupBy('section_name')->orderBy('order_id', 'asc')->get();
 
 
-        return view('admin.pages.edit-page', compact('sections', 'settings', 'config','id','section_name'));
+        return view('admin.pages.edit-page', compact('sections', 'settings', 'config', 'id', 'section_name'));
     }
 
     public function updateHomePage(Request $request, $id)
     {
         $_path = 'assets/uploads/banner';
-        if (! File::exists($_path)) {
+        if (!File::exists($_path)) {
             File::makeDirectory($_path);
         }
-        if($request->banner_title){
+        if ($request->banner_title) {
             $banner_title = $request->banner_title;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_title')->update(['section_content' => $banner_title]);
         }
 
-        if($request->banner_description){
+        if ($request->banner_description) {
             $banner_description = $request->banner_description;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_description')->update(['section_content' => $banner_description]);
         }
 
-        if($request->banner_button){
+        if ($request->banner_button) {
             $banner_button = $request->banner_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_button')->update(['section_content' => $banner_button]);
         }
@@ -417,9 +420,9 @@ class SettingsController extends Controller
         if ($request->hasFile('banner_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -433,30 +436,31 @@ class SettingsController extends Controller
         }
 
         if ($request->hasFile('banner_video')) {
-              $rules=[
-                'banner_video'          =>'mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:100040|required'];
-             $validator = Validator($request->all(),$rules);
+            $rules = [
+                'banner_video'          => 'mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:100040|required'
+            ];
+            $validator = Validator($request->all(), $rules);
 
-             if ($validator->fails()){
-                 return redirect()->back()->withErrors($validator)->withInput();
-             }
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
             $old_file = DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_video')->first();
-            if(!empty($old_file)){
-                if(File::exists(public_path($old_file->section_content))){
+            if (!empty($old_file)) {
+                if (File::exists(public_path($old_file->section_content))) {
                     File::delete(public_path($old_file->section_content));
                 }
             }
             $banner_video = $request->file('banner_video');
             $base_name = preg_replace('/\..+$/', '', $banner_video->getClientOriginalName());
-            $video_name = $base_name . "-" . uniqid() . "." .$banner_video->getClientOriginalExtension();
+            $video_name = $base_name . "-" . uniqid() . "." . $banner_video->getClientOriginalExtension();
             $file_path = 'assets/uploads/videos';
-            if (! File::exists($file_path)) {
+            if (!File::exists($file_path)) {
                 File::makeDirectory($file_path);
             }
             $banner_video->move($file_path, $video_name);
-            $video_file = '/'.$file_path.'/'.$video_name;
-            DB::table('pages')->where('page_name',$id)->where('section_title','banner_video')->update(['section_content'=>$video_file]);
+            $video_file = '/' . $file_path . '/' . $video_name;
+            DB::table('pages')->where('page_name', $id)->where('section_title', 'banner_video')->update(['section_content' => $video_file]);
         }
 
 
@@ -464,9 +468,9 @@ class SettingsController extends Controller
         if ($request->hasFile('what_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'what_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -484,9 +488,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_1')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_1')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -503,9 +507,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_2')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_2')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -521,9 +525,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_3')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_3')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -540,9 +544,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_4')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_4')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -558,9 +562,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_5')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_5')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -576,9 +580,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_6')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_6')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -594,9 +598,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_7')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_7')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -610,7 +614,7 @@ class SettingsController extends Controller
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_7')->update(['section_content' => $feature_card_icon_7_path]);
         }
 
-        if($request->what_mini_title){
+        if ($request->what_mini_title) {
             $what_mini_title = $request->what_mini_title;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_mini_title')->update(['section_content' => $what_mini_title]);
         }
@@ -618,9 +622,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card_icon_8')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_icon_8')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -636,9 +640,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card9_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card9_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -655,9 +659,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card10_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card10_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -673,9 +677,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card11_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card11_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -692,9 +696,9 @@ class SettingsController extends Controller
         if ($request->hasFile('feature_card12_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card12_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -708,16 +712,16 @@ class SettingsController extends Controller
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card12_photo')->update(['section_content' => $feature_card12_photo_path]);
         }
 
-        if($request->what_mini_title){
+        if ($request->what_mini_title) {
             $what_mini_title = $request->what_mini_title;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_mini_title')->update(['section_content' => $what_mini_title]);
         }
         if ($request->hasFile('feature_card13_photo')) {
             // __delete old image
             $old_data = DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card13_photo')->first();
-            if($old_data){
+            if ($old_data) {
                 $imagePath = public_path($old_data->section_content);
-                if(File::exists($imagePath)){
+                if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
@@ -730,242 +734,242 @@ class SettingsController extends Controller
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card13_photo')->update(['section_content' => $feature_card13_photo_path]);
         }
 
-        if($request->what_mini_title){
+        if ($request->what_mini_title) {
             $what_mini_title = $request->what_mini_title;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_mini_title')->update(['section_content' => $what_mini_title]);
         }
 
-        if($request->what_title){
+        if ($request->what_title) {
             $what_title = $request->what_title;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_title')->update(['section_content' => $what_title]);
         }
 
-        if($request->what_description){
+        if ($request->what_description) {
             $what_description = $request->what_description;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_description')->update(['section_content' => $what_description]);
         }
 
-        if($request->what_li_title_1){
+        if ($request->what_li_title_1) {
             $what_li_title_1 = $request->what_li_title_1;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_li_title_1')->update(['section_content' => $what_li_title_1]);
         }
 
-        if($request->what_li_title_2){
+        if ($request->what_li_title_2) {
             $what_li_title_2 = $request->what_li_title_2;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_li_title_2')->update(['section_content' => $what_li_title_2]);
         }
 
-        if($request->what_li_title_3){
+        if ($request->what_li_title_3) {
             $what_li_title_3 = $request->what_li_title_3;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_li_title_3')->update(['section_content' => $what_li_title_3]);
         }
 
-        if($request->what_card_title_1){
+        if ($request->what_card_title_1) {
             $what_card_title_1 = $request->what_card_title_1;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_title_1')->update(['section_content' => $what_card_title_1]);
         }
-        if($request->what_card_description_1){
+        if ($request->what_card_description_1) {
             $what_card_description_1 = $request->what_card_description_1;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_description_1')->update(['section_content' => $what_card_description_1]);
         }
-        if($request->what_card_title_2){
+        if ($request->what_card_title_2) {
             $what_card_title_2 = $request->what_card_title_2;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_title_2')->update(['section_content' => $what_card_title_2]);
         }
 
-        if($request->what_card_description_2){
+        if ($request->what_card_description_2) {
             $what_card_description_2 = $request->what_card_description_2;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_description_2')->update(['section_content' => $what_card_description_2]);
         }
 
-        if($request->what_card_title_3){
+        if ($request->what_card_title_3) {
             $what_card_title_3 = $request->what_card_title_3;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_title_3')->update(['section_content' => $what_card_title_3]);
         }
 
-        if($request->what_card_description_3){
+        if ($request->what_card_description_3) {
             $what_card_description_3 = $request->what_card_description_3;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_description_3')->update(['section_content' => $what_card_description_3]);
         }
 
-        if($request->what_card_title_4){
+        if ($request->what_card_title_4) {
             $what_card_title_4 = $request->what_card_title_4;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_title_4')->update(['section_content' => $what_card_title_4]);
         }
-        if($request->what_card_description_4){
+        if ($request->what_card_description_4) {
             $what_card_description_4 = $request->what_card_description_4;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'what_card_description_4')->update(['section_content' => $what_card_description_4]);
         }
 
-        if($request->feature_card_title_1){
+        if ($request->feature_card_title_1) {
             $feature_card_title_1 = $request->feature_card_title_1;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_1')->update(['section_content' => $feature_card_title_1]);
         }
-        if($request->feature_card_description_1){
+        if ($request->feature_card_description_1) {
             $feature_card_description_1 = $request->feature_card_description_1;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_1')->update(['section_content' => $feature_card_description_1]);
         }
-        if($request->feature_card1_button){
+        if ($request->feature_card1_button) {
             $feature_card1_button = $request->feature_card1_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card1_button')->update(['section_content' => $feature_card1_button]);
         }
 
 
-        if($request->feature_card_title_2){
+        if ($request->feature_card_title_2) {
             $feature_card_title_2 = $request->feature_card_title_2;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_2')->update(['section_content' => $feature_card_title_2]);
         }
 
-        if($request->feature_card_description_2){
+        if ($request->feature_card_description_2) {
             $feature_card_description_2 = $request->feature_card_description_2;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_2')->update(['section_content' => $feature_card_description_2]);
         }
-        if($request->feature_card2_button){
+        if ($request->feature_card2_button) {
             $feature_card2_button = $request->feature_card2_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card2_button')->update(['section_content' => $feature_card2_button]);
         }
 
-        if($request->feature_card_title_3){
+        if ($request->feature_card_title_3) {
             $feature_card_title_3 = $request->feature_card_title_3;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_3')->update(['section_content' => $feature_card_title_3]);
         }
 
-        if($request->feature_card_description_3){
+        if ($request->feature_card_description_3) {
             $feature_card_description_3 = $request->feature_card_description_3;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_3')->update(['section_content' => $feature_card_description_3]);
         }
-        if($request->feature_card3_button){
+        if ($request->feature_card3_button) {
             $feature_card3_button = $request->feature_card3_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card3_button')->update(['section_content' => $feature_card3_button]);
         }
-        if($request->feature_card_title_4){
+        if ($request->feature_card_title_4) {
             $feature_card_title_4 = $request->feature_card_title_4;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_4')->update(['section_content' => $feature_card_title_4]);
         }
 
-        if($request->feature_card_description_4){
+        if ($request->feature_card_description_4) {
             $feature_card_description_4 = $request->feature_card_description_4;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_4')->update(['section_content' => $feature_card_description_4]);
         }
-        if($request->feature_card4_button){
+        if ($request->feature_card4_button) {
             $feature_card4_button = $request->feature_card4_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card4_button')->update(['section_content' => $feature_card4_button]);
         }
 
-        if($request->feature_card_title_5){
+        if ($request->feature_card_title_5) {
             $feature_card_title_5 = $request->feature_card_title_5;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_5')->update(['section_content' => $feature_card_title_5]);
         }
 
-        if($request->feature_card_description_5){
+        if ($request->feature_card_description_5) {
             $feature_card_description_5 = $request->feature_card_description_5;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_5')->update(['section_content' => $feature_card_description_5]);
         }
-        if($request->feature_card5_button){
+        if ($request->feature_card5_button) {
             $feature_card5_button = $request->feature_card5_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card5_button')->update(['section_content' => $feature_card5_button]);
         }
 
-        if($request->feature_card_title_6){
+        if ($request->feature_card_title_6) {
             $feature_card_title_6 = $request->feature_card_title_6;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_6')->update(['section_content' => $feature_card_title_6]);
         }
 
-        if($request->feature_card_description_6){
+        if ($request->feature_card_description_6) {
             $feature_card_description_6 = $request->feature_card_description_6;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_6')->update(['section_content' => $feature_card_description_6]);
         }
-        if($request->feature_card6_button){
+        if ($request->feature_card6_button) {
             $feature_card6_button = $request->feature_card6_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card6_button')->update(['section_content' => $feature_card6_button]);
         }
-        if($request->feature_card_title_7){
+        if ($request->feature_card_title_7) {
             $feature_card_title_7 = $request->feature_card_title_7;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_7')->update(['section_content' => $feature_card_title_7]);
         }
 
-        if($request->feature_card_description_7){
+        if ($request->feature_card_description_7) {
             $feature_card_description_7 = $request->feature_card_description_7;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_7')->update(['section_content' => $feature_card_description_7]);
         }
-        if($request->feature_card7_button){
+        if ($request->feature_card7_button) {
             $feature_card7_button = $request->feature_card7_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card7_button')->update(['section_content' => $feature_card7_button]);
         }
-        if($request->feature_card_title_8){
+        if ($request->feature_card_title_8) {
             $feature_card_title_8 = $request->feature_card_title_8;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_8')->update(['section_content' => $feature_card_title_8]);
         }
 
-        if($request->feature_card_description_8){
+        if ($request->feature_card_description_8) {
             $feature_card_description_8 = $request->feature_card_description_8;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_8')->update(['section_content' => $feature_card_description_8]);
         }
-        if($request->feature_card8_button){
+        if ($request->feature_card8_button) {
             $feature_card8_button = $request->feature_card8_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card8_button')->update(['section_content' => $feature_card8_button]);
         }
-        if($request->feature_card_title_9){
+        if ($request->feature_card_title_9) {
             $feature_card_title_9 = $request->feature_card_title_9;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_9')->update(['section_content' => $feature_card_title_9]);
         }
 
-        if($request->feature_card_description_9){
+        if ($request->feature_card_description_9) {
             $feature_card_description_9 = $request->feature_card_description_9;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_9')->update(['section_content' => $feature_card_description_9]);
         }
-        if($request->feature_card9_button){
+        if ($request->feature_card9_button) {
             $feature_card9_button = $request->feature_card9_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card9_button')->update(['section_content' => $feature_card9_button]);
         }
 
-        if($request->feature_card_title_10){
+        if ($request->feature_card_title_10) {
             $feature_card_title_10 = $request->feature_card_title_10;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_10')->update(['section_content' => $feature_card_title_10]);
         }
 
-        if($request->feature_card_description_10){
+        if ($request->feature_card_description_10) {
             $feature_card_description_10 = $request->feature_card_description_10;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_10')->update(['section_content' => $feature_card_description_10]);
         }
-        if($request->feature_card10_button){
+        if ($request->feature_card10_button) {
             $feature_card10_button = $request->feature_card10_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card10_button')->update(['section_content' => $feature_card10_button]);
         }
-        if($request->feature_card_title_11){
+        if ($request->feature_card_title_11) {
             $feature_card_title_11 = $request->feature_card_title_11;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_11')->update(['section_content' => $feature_card_title_11]);
         }
 
-        if($request->feature_card_description_11){
+        if ($request->feature_card_description_11) {
             $feature_card_description_11 = $request->feature_card_description_11;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_11')->update(['section_content' => $feature_card_description_11]);
         }
-        if($request->feature_card11_button){
+        if ($request->feature_card11_button) {
             $feature_card11_button = $request->feature_card11_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card11_button')->update(['section_content' => $feature_card11_button]);
         }
-        if($request->feature_card_title_12){
+        if ($request->feature_card_title_12) {
             $feature_card_title_12 = $request->feature_card_title_12;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_title_12')->update(['section_content' => $feature_card_title_12]);
         }
 
-        if($request->feature_card_description_12){
+        if ($request->feature_card_description_12) {
             $feature_card_description_12 = $request->feature_card_description_12;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card_description_12')->update(['section_content' => $feature_card_description_12]);
         }
-        if($request->feature_card12_button){
+        if ($request->feature_card12_button) {
             $feature_card12_button = $request->feature_card12_button;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'feature_card12_button')->update(['section_content' => $feature_card12_button]);
         }
 
 
-        if($request->video_section_title){
+        if ($request->video_section_title) {
             $video_section_title = $request->video_section_title;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'video_section_title')->update(['section_content' => $video_section_title]);
         }
 
-        if($request->video_section_content){
+        if ($request->video_section_content) {
             $video_section_content = $request->video_section_content;
             DB::table('pages')->where('page_name', $id)->where('section_title', 'video_section_content')->update(['section_content' => $video_section_content]);
         }
@@ -990,7 +994,8 @@ class SettingsController extends Controller
         return redirect()->back();
     }
 
-    public function testEmail() {
+    public function testEmail()
+    {
         $message = [
             'msg' => 'Test mail'
         ];
@@ -1003,7 +1008,7 @@ class SettingsController extends Controller
             Toastr::success(trans('Email configuration wrong.'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
-        if($mail == true) {
+        if ($mail == true) {
 
             Toastr::success(trans('Test mail send successfully.'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();

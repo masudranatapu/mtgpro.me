@@ -33,6 +33,14 @@ $settings = getSetting();
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('user.myorder') }}" class="nav-link @yield('my_order')">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Order') }}">
+                        </span>
+                        {{ __('My Order') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.crm') }}" class="nav-link @yield('crm')">
                         <span class="icon">
                             <svg width="16" height="16" fill="none" viewBox="0 0 16 15">
@@ -59,7 +67,7 @@ $settings = getSetting();
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="{{ __('My Review') }}">
                         </span>
-                        {{ __('My Review') }}
+                        {{ __('Write a Review') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -73,7 +81,7 @@ $settings = getSetting();
                 @if (isAnnualPlan(Auth::user()->id))
                 <li class="nav-item">
                     <a href="{{ route('user.free-marketing-material') }}"
-                        class="nav-link @yield('Free Marketing Material')">
+                        class="nav-link @yield('marketing_metarials')">
                         <span class="icon">
                             <img src="{{ asset('assets/img/icon/insights.svg') }}"
                                 alt="{{ __('Free Marketing Material') }}">
@@ -98,6 +106,14 @@ $settings = getSetting();
                             {{-- <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="{{ __('calculator') }}"> --}}
                         </span>
                         {{ __('Mortgage calculator') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user.suggest-feature') }}" class="nav-link @yield('suggest_feature')">
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
+                        </span>
+                        {{ __('Suggest a Feature') }}
                     </a>
                 </li>
             </ul>

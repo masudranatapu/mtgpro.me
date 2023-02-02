@@ -17,10 +17,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\FirstCardRequest;
 use App\Http\Requests\CardUpdateRequest;
+
 class CardController extends Controller
 {
     protected $businessCard;
     protected $plan;
+    protected $settings;
     public function __construct(
         BusinessCard $businessCard,
         Plan $plan
@@ -35,10 +37,12 @@ class CardController extends Controller
     {
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
+        $activeCard = $this->businessCard->where('user_id', Auth::id())->first();
+
         if (count($cards) < 1) {
             return redirect()->route('user.card.init-card');
         }
-        return view('user.dashboard', compact('cards'));
+        return view('user.dashboard', compact('cards', 'activeCard'));
     }
 
     public function getCreate(Request $request)
@@ -220,7 +224,7 @@ class CardController extends Controller
     }
 
 
-    public function saveBusinessCard(FirstCardRequest $request)
+    public function storeFirstCard(FirstCardRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -286,14 +290,15 @@ class CardController extends Controller
             $fields->status = 1;
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
-            $user = User::where('id',Auth::id())->first();
-            if($user->name == null){
-                $user->name =$request->name;
+            $user = User::where('id', Auth::id())->first();
+            if ($user->name == null) {
+                $user->name = $request->name;
             }
             $user->active_card_id = $card->id;
             $user->update();
-            $card = $this->businessCard->getView($request,$card->id);
-            Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
+            $card = $this->businessCard->getView($request, $card->id);
+            //no need
+            // Mail::to(Auth::user()->email)->send(new EmailToCardOwner($card));
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
@@ -311,18 +316,17 @@ class CardController extends Controller
     {
         DB::beginTransaction();
         try {
-            if(checkPackageValidity(Auth::user()->id)){
+            if (checkPackageValidity(Auth::user()->id)) {
                 $card = BusinessCard::findOrFail($request->id);
-                BusinessCard::where('id',$request->id)->update(['status'=>1]);
-                BusinessCard::where('id','<>',$request->id)->update(['status'=>0]);
-                User::where('id',$card->user_id)->update(['active_card_id' =>$request->id]);
-            }else{
+                BusinessCard::where('id', $request->id)->update(['status' => 1]);
+                BusinessCard::where('id', '<>', $request->id)->update(['status' => 0]);
+                User::where('id', $card->user_id)->update(['active_card_id' => $request->id]);
+            } else {
                 return response()->json([
                     'status' => false,
                     'msg' => 'Your package is expired please update the first',
                 ]);
             }
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
@@ -338,5 +342,4 @@ class CardController extends Controller
             'is_active' => $card->status,
         ]);
     }
-
 }

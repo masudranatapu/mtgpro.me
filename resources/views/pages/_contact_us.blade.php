@@ -9,7 +9,7 @@
          <div class="text-center">
             <h4 class="text-center contact-section-title">{{ __('Get In Touch')}}</h2>
          </div>
-         <form method="POST" action="{{ route('contact.post') }}" class="form-horizontal" id="contact-form" enctype="multipart/form-data">
+         <form method="POST" action="{{ route('contact-us.post') }}" class="form-horizontal" id="contact-form" enctype="multipart/form-data">
             <div class="">
                @csrf
                <div class="row">
