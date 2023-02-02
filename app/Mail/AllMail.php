@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class AllMail extends Mailable
 {
@@ -29,6 +30,7 @@ class AllMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.allMail')->with($this->message);
+
+        return $this->view('emails.allMail')->with('content', $this->message);
     }
 }

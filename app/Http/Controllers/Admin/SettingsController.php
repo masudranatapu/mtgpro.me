@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Str;
+use Illuminate\Support\Str;
 use DateTimeZone;
 use App\Mail\TestMail;
 use App\Models\Setting;

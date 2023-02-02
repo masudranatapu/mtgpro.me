@@ -26,7 +26,10 @@ use App\Http\Requests\PassResetRequest;
 use App\Http\Requests\BillingInfoRequest;
 use App\Http\Requests\PaymentInfoRequest;
 use App\Http\Requests\SupportMailRequest;
+use App\Mail\AllMail;
 use App\Mail\MortgageMail;
+use App\Models\EmailTemplate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,7 +65,9 @@ class UserController extends Controller
             $data['subject'] = 'Reset Password Notification from ' . $this->settings->site_name;
             $data['user'] = $check;
             $data['link'] = $link;
-            Mail::to(Auth::user()->email)->send(new ResetEmail($data));
+            // Mail::to(Auth::user()->email)->send(new ResetEmail($data));
+            $content = $this->passwordResetMail($check, $link);
+            Mail::to(Auth::user()->email)->send(new AllMail($content));
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
@@ -259,7 +264,6 @@ class UserController extends Controller
                 }
                 BusinessCard::where('user_id', Auth::user()->id)->update([
                     'status' => 2,
-                    'is_deleted' => 1,
                     'deleted_at' => date('Y-m-d H:i:s'),
                     'deleted_by' => Auth::user()->id
                 ]);
@@ -301,15 +305,17 @@ class UserController extends Controller
                 $user->email = Auth::user()->id . '-' . $user_email;
                 $user->deleted_at = date("Y-m-d H:i:s");
                 $user->deleted_by  = Auth::user()->id;
-                $user->is_delete = 1;
+
                 $user->update();
                 Auth::logout();
-                Mail::to($user_email)->send(new AccountDeletion($data));
+                // Mail::to($user_email)->send(new AccountDeletion($data));
+                $content = $this->accountDeletionMail();
+                Mail::to($user_email)->send(new AllMail($content));
             } else {
                 return response()->json(['status' => 0, 'message' => 'Please type `delete` for account deletion'], 200);
             }
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            Log::alert($e);
             DB::rollback();
 
             return response()->json(['status' => 0, 'message' => 'Something wrong! Please try again'], 200);
@@ -538,5 +544,32 @@ class UserController extends Controller
             Toastr::error('Something Worng', 'Error', ["positionClass" => "toast-top-center"]);
         }
         return redirect()->back();
+    }
+
+
+    public function passwordResetMail(User $user, $link)
+    {
+        Log::alert([$user, $link]);
+
+        $mailTemplate = EmailTemplate::where('slug', 'password-reset')->first();
+        $content = $mailTemplate->body;
+
+
+        if (isset($user)) {
+
+            $content = preg_replace("/{{name}}/", $user->name, $content);
+        }
+        if (isset($link)) {
+
+            $content = preg_replace("/{{link}}/", $link, $content);
+        }
+
+        return $content;
+    }
+
+    public function accountDeletionMail()
+    {
+        $mailTemplate = EmailTemplate::where('slug', 'account-delatation')->first();
+        return $mailTemplate->body;
     }
 }
