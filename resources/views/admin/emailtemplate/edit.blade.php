@@ -3,7 +3,7 @@
 @section('email-template', 'active')
 
 @push('css')
-
+    <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}">
 @endpush
 
 @section('title')
@@ -25,22 +25,25 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.email.templateupdate', $emailtemplates->id) }}" method="post">
+                                <form action="{{ route('admin.email.templateupdate', $emailtemplates->id) }}"
+                                    method="post">
                                     @csrf
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label>Type</label>
-                                            <input type="text" class="form-control" readonly name="type" value="{{ $emailtemplates->type }}">
+                                            <input type="text" class="form-control" readonly name="type"
+                                                value="{{ $emailtemplates->type }}">
                                         </div>
                                         <div class="col-md-6">
                                             <label>Subject</label>
-                                            <input type="text" class="form-control" name="subject" value="{{ $emailtemplates->subject }}">
+                                            <input type="text" class="form-control" name="subject"
+                                                value="{{ $emailtemplates->subject }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-12">
                                             <label>Body</label>
-                                            <textarea name="body" class="form-control" cols="30" rows="10">{{ $emailtemplates->body }}</textarea>
+                                            <textarea name="body" class="form-control" cols="30" rows="10" id="mail_body">{{ $emailtemplates->body }}</textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -60,5 +63,26 @@
 @endsection
 
 @section('scripts')
+
+    <script src="{{ asset('assets/js/summernote.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#mail_body').summernote({
+
+                height: 300,
+                toolbar: [
+                    ['style', ['bold', 'underline', 'italic', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['view', ['codeview', ]],
+
+                ],
+
+            });
+        });
+    </script>
 
 @endsection

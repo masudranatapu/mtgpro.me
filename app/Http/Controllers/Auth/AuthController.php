@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Str;
-use \Config;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
 use App\Models\Plan;
 use App\Models\User;
@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Mail\AllMail;
+use App\Models\EmailTemplate;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -138,7 +141,9 @@ class AuthController extends Controller
             $user->save();
             if ($user) {
                 Auth::login($user);
-                Mail::to($user->email)->send(new WelcomeMail($user));
+                // Mail::to($user->email)->send(new WelcomeMail($user));
+                $content = $this->wellcomeMail($user);
+                Mail::to($user->email)->send(new AllMail($content));
                 return redirect()->route('user.card');
             }
         } catch (\Exception $e) {
@@ -253,7 +258,9 @@ class AuthController extends Controller
                 $user->save();
                 Auth::login($user);
                 if ($user->email) {
-                    Mail::to($user->email)->send(new WelcomeMail($user));
+                    // Mail::to($user->email)->send(new WelcomeMail($user));
+                    $content = $this->wellcomeMail($user);
+                    Mail::to($user->email)->send(new AllMail($content));
                 }
             }
         } catch (\Exception $e) {
@@ -289,5 +296,30 @@ class AuthController extends Controller
             return  $base_name . $exist + 1;
         }
         return $base_name;
+    }
+
+
+
+    public function wellcomeMail(User $user)
+    {
+        Log::alert($user);
+        $setting = getSetting();
+
+        $mail = EmailTemplate::where('slug', 'welcome-mail')->first();
+        $content = $mail->body;
+
+        if ($user->email) {
+
+            if ($user->username) {
+                $content = preg_replace("/{{user_name}}/", $user->name, $content);
+            }
+            if ($user->email) {
+                $content = preg_replace("/{{email}}/", $user->email, $content);
+            }
+            if ($user) {
+                $content = preg_replace("/{{site_name}}/", $setting->site_name, $content);
+            }
+        }
+        return $content;
     }
 }

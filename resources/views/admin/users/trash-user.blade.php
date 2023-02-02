@@ -1,8 +1,8 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 @section('content')
-@section('title') User List @endsection
+    @section('title') User List @endsection
 @section('users', 'active')
-@section('trash_list','active')
+@section('trash_list', 'active')
 <div class="page-wrapper">
     {{-- <div class="container-xl">
         <div class="page-header d-print-none mt-2 mb-3">
@@ -27,13 +27,15 @@
                         <div class="card-header">
                             <div class="col">
                                 <div class="float-left">
-                                    <a href="{{ route('admin.users') }}" class="@yield('user_list')"><i class="fa fa-user"></i> {{ __('All Users') }}</a>  |
-                                    <a href="{{ route('admin.user.trash-list') }}" class="@yield('trash_list')"> <i class="fa fa-trash-alt"></i> Trash list</a>
+                                    <a href="{{ route('admin.users') }}" class="@yield('user_list')"><i
+                                            class="fa fa-user"></i> {{ __('All Users') }}</a> |
+                                    <a href="{{ route('admin.user.trash-list') }}" class="@yield('trash_list')"> <i
+                                            class="fa fa-trash-alt"></i> Trash list</a>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="float-end">
-                                    <a id="export" class="btn btn-primary">{{ __('Export as CSV')}}</a>
+                                    <a id="export" class="btn btn-primary">{{ __('Export as CSV') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -53,66 +55,70 @@
                                     </thead>
                                     <tbody>
                                         @if (!empty($users) && $users->count())
-                                        @foreach ($users as $user)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td><a
-                                                    href="{{ route('admin.view.user', $user->id)}}">{{ $user->name }}</a>
-                                            </td>
-                                            <td class="text-muted">
-                                                {{ $user->email }}
-                                            </td>
-                                            <td class="text-muted text-capitalize">
-                                                <?php $plan_data = json_decode($user->plan_details,TRUE); ?>
-                                                @if ($plan_data == null)
-                                                {{ __('No Plan') }}
-                                                @else
-                                                {{ $plan_data['plan_name'] }}
-                                                <span>
-                                                    @if ($plan_data['plan_price'] == '0')
-                                                    ({{ __('Free') }})
-                                                    @else
-                                                    ({{ $config[1]->config_value}}
-                                                    {{ $plan_data['plan_price'] }})
-                                                    @endif
-                                                </span>
-                                                @endif
-                                            </td>
-                                            <td class="text-muted">
-                                                {{ date('d-m-Y h:m A', strtotime($user->created_at)) }}
-                                            </td>
-                                            <td class="text-muted">
-                                                @if ($user->status == 0)
-                                                <span class="badge bg-red">{{ __('Inactive') }}</span>
-                                                @else
-                                                <span class="badge bg-green">{{ __('Active') }}</span>
-                                                @endif
-                                            </td>
-                                          <td>
+                                            @foreach ($users as $user)
+                                                <tr>
+                                                    <td>{{ $loop->index + 1 }}</td>
+                                                    <td><a
+                                                            href="{{ route('admin.view.user', $user->id) }}">{{ $user->name }}</a>
+                                                    </td>
+                                                    <td class="text-muted">
+                                                        {{ $user->email }}
+                                                    </td>
+                                                    <td class="text-muted text-capitalize">
+                                                        <?php $plan_data = json_decode($user->plan_details, true); ?>
+                                                        @if ($plan_data == null)
+                                                            {{ __('No Plan') }}
+                                                        @else
+                                                            {{ $plan_data['plan_name'] }}
+                                                            <span>
+                                                                @if ($plan_data['plan_price'] == '0')
+                                                                    ({{ __('Free') }})
+                                                                @else
+                                                                    ({{ $config[1]->config_value }}
+                                                                    {{ $plan_data['plan_price'] }})
+                                                                @endif
+                                                            </span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-muted">
+                                                        {{ date('d-m-Y h:m A', strtotime($user->created_at)) }}
+                                                    </td>
+                                                    <td class="text-muted">
+                                                        @if ($user->status == 0)
+                                                            <span class="badge bg-red">{{ __('Inactive') }}</span>
+                                                        @else
+                                                            <span class="badge bg-green">{{ __('Active') }}</span>
+                                                        @endif
+                                                    </td>
+                                                    
 
-                                            <td>
-                                                <div class="dropdown @yield('settings')">
-                                                    <a class="btn btn-info dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
-                                                        aria-expanded="false">
-                                                        <span class="nav-link-title">
-                                                            {{ __('Action') }}
-                                                        </span>
-                                                    </a>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item btn-sm"onclick="if (confirm('You want to active?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="{{ route('admin.update.active-user',$user->id) }}" >{{ __('Active') }}</a>
-                                                        <a class="dropdown-item btn-sm"  onclick="deleteUser('{{ $user->id }}'); return false;" href="javascript:void(0)" >{{ __('Premanent Delete') }}</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                                    <td>
+                                                        <div class="dropdown @yield('settings')">
+                                                            <a class="btn btn-info dropdown-toggle" href="#navbar-extra"
+                                                                data-bs-toggle="dropdown" role="button"
+                                                                aria-expanded="false">
+                                                                <span class="nav-link-title">
+                                                                    {{ __('Action') }}
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item btn-sm"onclick="if (confirm('You want to active?')){return true;}else{event.stopPropagation(); event.preventDefault();};"
+                                                                    href="{{ route('admin.update.active-user', $user->id) }}">{{ __('Active') }}</a>
+                                                                <a class="dropdown-item btn-sm"
+                                                                    onclick="deleteUser('{{ $user->id }}'); return false;"
+                                                                    href="javascript:void(0)">{{ __('Premanent Delete') }}</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
 
 
-                                        </tr>
-                                        @endforeach
+                                                </tr>
+                                            @endforeach
                                         @else
-                                        <tr class="text-center font-weight-bold">
-                                            <td colspan="7">{{ __('No Users Found.') }}</td>
-                                        </tr>
+                                            <tr class="text-center font-weight-bold">
+                                                <td colspan="7">{{ __('No Users Found.') }}</td>
+                                            </tr>
                                         @endif
                                     </tbody>
                                 </table>
@@ -131,13 +137,13 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="modal-title">{{ __('Are you sure?')}}</div>
-                <div>{{ __('If you proceed, you will active/deactivate this user data.')}}</div>
+                <div class="modal-title">{{ __('Are you sure?') }}</div>
+                <div>{{ __('If you proceed, you will active/deactivate this user data.') }}</div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link link-secondary me-auto"
-                    data-bs-dismiss="modal">{{ __('Cancel')}}</button>
-                <a class="btn btn-danger" id="user_id">{{ __('Yes, proceed')}}</a>
+                    data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                <a class="btn btn-danger" id="user_id">{{ __('Yes, proceed') }}</a>
             </div>
         </div>
     </div>
@@ -147,13 +153,13 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="modal-title text-danger text-capitalize">{{ __('WARNING!')}}</div>
-                <div>{{ __('This action will remove user account and user data. It is not revertable action.')}}</div>
+                <div class="modal-title text-danger text-capitalize">{{ __('WARNING!') }}</div>
+                <div>{{ __('This action will remove user account and user data. It is not revertable action.') }}</div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link link-secondary me-auto"
-                    data-bs-dismiss="modal">{{ __('Cancel')}}</button>
-                <a class="btn btn-danger" id="deleted_user_id">{{ __('Yes, proceed')}}</a>
+                    data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                <a class="btn btn-danger" id="deleted_user_id">{{ __('Yes, proceed') }}</a>
             </div>
         </div>
     </div>
@@ -161,16 +167,17 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js" integrity="sha512-XmZS54be9JGMZjf+zk61JZaLZyjTRgs41JLSmx5QlIP5F+sSGIyzD2eJyxD4K6kGGr7AsVhaitzZ2WTfzpsQzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/table2csv@1.1.3/src/table2csv.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js"
+    integrity="sha512-XmZS54be9JGMZjf+zk61JZaLZyjTRgs41JLSmx5QlIP5F+sSGIyzD2eJyxD4K6kGGr7AsVhaitzZ2WTfzpsQzg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/table2csv@1.1.3/src/table2csv.min.js"></script>
 
-    <script>
-        $('#export').click(()=>{
-            $("table").first().table2csv({
-                filename: 'users.csv'
-            }); // -default action is 'download'
-        })
-
-    </script>
+<script>
+    $('#export').click(() => {
+        $("table").first().table2csv({
+            filename: 'users.csv'
+        }); // -default action is 'download'
+    })
+</script>
 
 @endsection
