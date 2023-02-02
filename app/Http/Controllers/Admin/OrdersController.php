@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AllMail;
 use App\Models\EmailTemplate;
 use App\Models\Order;
 use App\Models\ProductOrders;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
@@ -140,9 +142,10 @@ class OrdersController extends Controller
         $order->save();
         Toastr::success(trans('Order Status Chanage Successfully'), 'Success');
 
-        $content=$this->orderStatusChangeMail($order);
+        $user = User::find($order->user_id);
 
-        
+        $content = $this->orderStatusChangeMail($order);
+        Mail::to($user->email)->send(new AllMail($content));
         return redirect()->back();
     }
 
