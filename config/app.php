@@ -108,7 +108,7 @@ return [
     */
 
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     | Available locales
     |--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ return [
         'Russian' => 'ru',
         'French' => 'fr',
     ],
-     'languages' => [
+    'languages' => [
         'ar' => 'Arabic',
         'bn' => 'Bangla',
         'bg' => 'Bulgarian',
@@ -226,6 +226,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
          * Package Service Providers...

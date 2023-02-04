@@ -69,13 +69,13 @@
                                                         @if ($plan_data == null)
                                                             {{ __('No Plan') }}
                                                         @else
-                                                            {{ $plan_data['plan_name'] }}
+                                                            {{ $plan_data['plan_name'] ?? '' }}
                                                             <span>
-                                                                @if ($plan_data['plan_price'] == '0')
+                                                                @if ($plan_data['plan_price'] ?? '0' == '0')
                                                                     ({{ __('Free') }})
                                                                 @else
                                                                     ({{ $config[1]->config_value }}
-                                                                    {{ $plan_data['plan_price'] }})
+                                                                    {{ $plan_data['plan_price'] ?? '0' }})
                                                                 @endif
                                                             </span>
                                                         @endif
@@ -90,7 +90,7 @@
                                                             <span class="badge bg-green">{{ __('Active') }}</span>
                                                         @endif
                                                     </td>
-                                                    
+
 
                                                     <td>
                                                         <div class="dropdown @yield('settings')">
