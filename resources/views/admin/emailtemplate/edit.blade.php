@@ -25,6 +25,30 @@
                                 </div>
                             </div>
                             <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>sl</th>
+                                            <th>Tags</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($emailtemplates->hasTags as $tags)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $tags->tags }}</td>
+                                                <td>{{ $tags->discription }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p class="text-danger text-center">No Tags found</p>
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                                 <form action="{{ route('admin.email.templateupdate', $emailtemplates->id) }}"
                                     method="post">
                                     @csrf

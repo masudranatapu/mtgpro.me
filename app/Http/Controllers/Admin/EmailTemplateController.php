@@ -20,7 +20,7 @@ class EmailTemplateController extends Controller
 
     public function edit($id)
     {
-        $emailtemplates = EmailTemplate::findOrFail($id);
+        $emailtemplates = EmailTemplate::with('hasTags')->findOrFail($id);
         return view('admin.emailtemplate.edit', compact('emailtemplates'));
     }
 
