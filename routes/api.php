@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group([
+
+    'middleware' => 'api',
 
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+], function () {
+
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register',  [AuthController::class, 'register']);
+});
 
 Route::get('/general-settings', [HomeController::class, 'getSettings']);
+
+
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('/crete-first-card', [CardController::class, 'storefirstCard']);
+    Route::get('my-card', [CardController::class, 'myCard']);
+    Route::post('/crete-card', [CardController::class, 'postStore']);
+});

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Requests;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -50,9 +52,9 @@ class CardRequest extends FormRequest
             // 'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'
         ];
         $social_icon = DB::table('social_icon')->get();
-        if($social_icon){
+        if ($social_icon) {
             foreach ($social_icon as $key => $value) {
-                $rules[$value->icon_name.'.*'] = 'nullable|string|max:224';
+                $rules[$value->icon_name . '.*'] = 'nullable|string|max:224';
             }
         }
 
