@@ -163,6 +163,7 @@ class AuthController extends ResponceController
         // $user->browser          = $this->user->getBrowser();
         $user->save();
         if ($user) {
+            $user->load('hasCards');
             Auth::guard('api')->login($user);
             // Mail::to($user->email)->send(new WelcomeMail($user));
             $content = $this->wellcomeMail($user);
@@ -172,6 +173,7 @@ class AuthController extends ResponceController
 
 
             $user_data = [
+                "id" => $user->id,
                 "name" => $user->name,
                 "email" => $user->email,
                 "username" => $user->username,
@@ -183,7 +185,7 @@ class AuthController extends ResponceController
                 "role_id" => $user->role_id,
                 "user_type" => $user->user_type,
                 "plan_id" => $user->plan_id,
-                "plan_details" => $user->plan_details,
+                "plan_details" => json_decode($user->plan_details, true),
                 "plan_validity" => $user->plan_validity,
                 "plan_activation_date" => $user->plan_activation_date,
                 "term" => $user->term,
@@ -194,11 +196,12 @@ class AuthController extends ResponceController
                 "billing_zipcode" => $user->billing_zipcode,
                 "updated_at" => $user->updated_at,
                 "created_at" => $user->created_at,
-                "id" => $user->id
+                "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0
+
             ];
             $message = "User registered";
             $data = [
-                'expires_in' => $token,
+                'access_token' => $token,
                 'user' => $user_data
             ];
 
@@ -268,7 +271,7 @@ class AuthController extends ResponceController
             $this->sendError($message, $e->getMessage());
             // return response()->json(['token_absent'], $e->getMessage());
         }
-        $message = "User Found";
+        $message = "Successfully Loging";
         return $this->sendResponse(200, $message, $user);
         // return response()->json(compact('user'));
     }
@@ -310,6 +313,7 @@ class AuthController extends ResponceController
         $user = $this->authApiGuard->user();
 
         $user_data = [
+            "id" => $user->id,
             "name" => $user->name,
             "email" => $user->email,
             "username" => $user->username,
@@ -320,7 +324,7 @@ class AuthController extends ResponceController
             "status" => $user->status,
             "role_id" => $user->role_id,
             "user_type" => $user->user_type,
-            "plan_id" => $user->plan_id,
+            "plan_id" => (int)$user->plan_id,
             "plan_details" => json_decode($user->plan_details, true),
             "plan_validity" => $user->plan_validity,
             "plan_activation_date" => $user->plan_activation_date,
@@ -332,7 +336,8 @@ class AuthController extends ResponceController
             "billing_zipcode" => $user->billing_zipcode,
             "updated_at" => $user->updated_at,
             "created_at" => $user->created_at,
-            "id" => $user->id
+            "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0
+
         ];
 
         $data = [
@@ -345,7 +350,7 @@ class AuthController extends ResponceController
 
         ];
 
-        $message = "User Found";
+        $message = "Successfully Login";
         return $this->sendResponse(200, $message, $data);
         // return response()->json([
         //     'access_token' => $token,
@@ -415,7 +420,7 @@ class AuthController extends ResponceController
 
 
 
-        $message = "User Found";
+        $message = "Successfully Login";
         return $this->sendResponse(200, $message, $data);
     }
     public function wellcomeMail(User $user)
