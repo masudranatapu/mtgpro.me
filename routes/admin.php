@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\MarketingMaterialsController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\EmailTemplateController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\User\PlanController;
 use App\Models\MarketingMaterials;
 use Illuminate\Support\Facades\Route;
@@ -164,23 +165,29 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
 
 
     // product
-    Route::get('product/', ['as'=>'product.index','uses'=>'ProductController@index']);
-    Route::get('product/create', ['as'=>'product.create','uses'=>'ProductController@create']);
-    Route::post('product/store', ['as'=>'product.store','uses'=>'ProductController@store']);
-    Route::get('product/edit/{product}', ['as'=>'product.edit','uses'=>'ProductController@edit']);
-    Route::put('product/update/{product}', ['as'=>'product.update','uses'=>'ProductController@update']);
-    Route::delete('product/delete/{product}', ['as'=>'product.delete','uses'=>'ProductController@delete']);
-    Route::get('product/images/{product}', ['as'=>'product.images','uses'=>'ProductController@images']);
-    Route::post('product/images/upload/{product}', ['as'=>'product.images.upload','uses'=>'ProductController@imagesUpload']);
-    Route::delete('product/images/delete/{productImage}', ['as'=>'product.images.delete','uses'=>'ProductController@imagesDelete']);
+    Route::get('product/', ['as' => 'product.index', 'uses' => 'ProductController@index']);
+    Route::get('product/create', ['as' => 'product.create', 'uses' => 'ProductController@create']);
+    Route::post('product/store', ['as' => 'product.store', 'uses' => 'ProductController@store']);
+    Route::get('product/edit/{product}', ['as' => 'product.edit', 'uses' => 'ProductController@edit']);
+    Route::put('product/update/{product}', ['as' => 'product.update', 'uses' => 'ProductController@update']);
+    Route::delete('product/delete/{product}', ['as' => 'product.delete', 'uses' => 'ProductController@delete']);
+    Route::get('product/images/{product}', ['as' => 'product.images', 'uses' => 'ProductController@images']);
+    Route::post('product/images/upload/{product}', ['as' => 'product.images.upload', 'uses' => 'ProductController@imagesUpload']);
+    Route::delete('product/images/delete/{productImage}', ['as' => 'product.images.delete', 'uses' => 'ProductController@imagesDelete']);
 
     //Product Orders
-    Route::get('orders/', ['as'=>'orders','uses'=>'OrdersController@index']);
-    Route::get('orders/edit/{id}', ['as'=>'orders.edit','uses'=>'OrdersController@edit']);
-    Route::post('orders/update/{id}', ['as'=>'orders.update','uses'=>'OrdersController@update']);
-    Route::get('orders/invoice/{id}', ['as'=>'orders.invoice','uses'=>'OrdersController@invoice']);
-    Route::post('order/status/change/{order}', ['as'=>'order.status','uses'=>'OrdersController@statusChange']);
+    Route::get('orders/', ['as' => 'orders', 'uses' => 'OrdersController@index']);
+    Route::get('orders/edit/{id}', ['as' => 'orders.edit', 'uses' => 'OrdersController@edit']);
+    Route::post('orders/update/{id}', ['as' => 'orders.update', 'uses' => 'OrdersController@update']);
+    Route::get('orders/invoice/{id}', ['as' => 'orders.invoice', 'uses' => 'OrdersController@invoice']);
+    Route::post('order/status/change/{order}', ['as' => 'order.status', 'uses' => 'OrdersController@statusChange']);
 
 
-
+    // Coupons
+    Route::get('coupon/', ['as' => 'coupon.index', 'uses' => 'CouponController@index']);
+    Route::get('coupon/create', ['as' => 'coupon.create', 'uses' => 'CouponController@create']);
+    Route::post('coupon/store', ['as' => 'coupon.store', 'uses' => 'CouponController@store']);
+    Route::get('coupon/edit/{coupon}', ['as' => 'coupon.edit', 'uses' => 'CouponController@edit']);
+    Route::put('coupon/update/{coupon}', ['as' => 'coupon.update', 'uses' => 'CouponController@update']);
+    Route::delete('coupon/delete/{coupon}', ['as' => 'coupon.delete', 'uses' => 'CouponController@destroy']);
 });

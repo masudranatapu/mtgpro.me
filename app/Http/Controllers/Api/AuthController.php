@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -108,10 +109,11 @@ class AuthController extends ResponceController
             'password_confirmation' => 'min:8'
         ]);
 
+
         if ($validate->fails()) {
 
 
-            return $this->sendError("Validation Error", $validate->errors());
+            return $this->sendError("Validation Error", $validate->errors('username'));
         }
 
         $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
