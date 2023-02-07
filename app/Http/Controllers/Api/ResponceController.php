@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class ResponceController extends Controller
 {
@@ -40,20 +41,36 @@ class ResponceController extends Controller
         return response()->json($response, $code);
     }
 
-    public function uploadBase64ToImage($file, $file_name, $file_prefix)
-    {
-        $file_path = sprintf("assets/uploads/avatar/");
-        $file_name = sprintf('%s.%s', $file_name, $file_prefix);
-        $upload_path = public_path() . '/' . $file_path;
-        if (stripos($file, 'data:image/jpeg;base64,') === 0) {
-            $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
-        } else if (stripos($file, 'data:image/png;base64,') === 0) {
-            $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
-        } else {
-            return false;
+    /**
+ * base64 image upload
+ *
+ * @param string $img
+ * @param string $path
+ * @return void
+ */
+function uploadBase64FileToPublic($img, string $path)
+{
+    // return $path;
+    if ($img && $path) {
+        $folderPath = public_path($path);
+
+        if (!File::isDirectory($folderPath)) {
+            File::makeDirectory($folderPath, 0777, true, true);
         }
-        $result = file_put_contents($upload_path . $file_name, $img);
-        return $file_path . $file_name;
+
+        $image_parts = explode(";base64,", $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName = uniqid() . '.' . $image_type;
+        $filePath = $folderPath . $fileName;
+
+        file_put_contents($filePath, $image_base64);
+
+        return $path . $fileName;
+    } else {
+        return null;
     }
 
+}
 }
