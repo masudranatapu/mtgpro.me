@@ -75,7 +75,11 @@
                                         <td>{{ $history->device_id ?? '' }}</td>
                                         <td>
                                             <span class="d-block">{{ $history->timezone}}</span>
+                                            @if (!empty($history->updated_at))
+                                            <span class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->updated_at)) }}</span>
+                                            @else
                                             <span class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->created_at)) }}</span>
+                                            @endif
                                         </td>
                                         <td>{{ $history->user_agent ?? '' }}</td>
                                         <td>{{ $history->city ? $history->city . ' ,' : '' }}

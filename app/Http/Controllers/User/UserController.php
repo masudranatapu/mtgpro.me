@@ -514,7 +514,7 @@ class UserController extends Controller
         DB::commit();
         return response()->json([
             'status' => 1,
-            'message' => 'Successfully uploaded'
+            'message' => 'Successfully updated'
         ]);
     }
 

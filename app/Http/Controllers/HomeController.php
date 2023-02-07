@@ -125,13 +125,12 @@ class HomeController extends Controller
                 'msg' => trans('Something wrong ! please try again')
             ]);
         }
+        $user = DB::table('users')->where('id',$card->user_id)->first();
         // DB::commit();
-        if ($connect) {
-
+        if (!empty($connect) && $user->is_notify==1) {
             // Mail::to($card->card_email)->send(new ConnectMail($data));
             $message = $this->getConnectMail($card, $request->all());
             Log::alert($message);
-
             Mail::to($card->card_email)->send(new AllMail($message));
         }
         // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
@@ -204,7 +203,11 @@ class HomeController extends Controller
 
                 if ($history) {
                     $counter = $history->counter + 1;
-                    DB::table('history_card_browsing')->where('id', $history->id)->update(['counter' => $counter]);
+                    DB::table('history_card_browsing')->where('id', $history->id)->update(
+                        [
+                            'counter' => $counter,
+                            'modified_at' => date('Y-m-d H:i:s')
+                        ]);
                 } else {
                     DB::table('history_card_browsing')->insert($new_history);
                 }
