@@ -33,10 +33,12 @@ class HomeController extends Controller
 {
     private $filename;
     private $settings;
-
-    public function __construct()
+    private $user;
+    public function __construct(
+        User $user
+    )
     {
-
+        $this->user = $user;
         $this->settings = getSetting();
     }
 
@@ -123,13 +125,12 @@ class HomeController extends Controller
                 'msg' => trans('Something wrong ! please try again')
             ]);
         }
+        $user = DB::table('users')->where('id',$card->user_id)->first();
         // DB::commit();
-        if ($connect) {
-
+        if (!empty($connect) && $user->is_notify==1) {
             // Mail::to($card->card_email)->send(new ConnectMail($data));
             $message = $this->getConnectMail($card, $request->all());
             Log::alert($message);
-
             Mail::to($card->card_email)->send(new AllMail($message));
         }
         // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
@@ -162,12 +163,20 @@ class HomeController extends Controller
                 ->leftJoin('plans', 'plans.id', 'users.plan_id')
                 ->first();
 
+                $location                   = $this->user->getLocation();
+
+                // dd($location);
+
             //browsing history
             if ($cardinfo) {
                 $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+
+                // dd($_SERVER['HTTP_USER_AGENT']);
                 $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
-                $new_history['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                $new_history['user_agent'] = $this->user->getBrowser();
+                // dd($location->timezone);
                 if ($brwInfo) {
+
                     $new_history['city']            = $brwInfo['geoplugin_city'];
                     $new_history['region']          = $brwInfo['geoplugin_region'];
                     $new_history['region_code']     = $brwInfo['geoplugin_regionCode'];
@@ -177,7 +186,7 @@ class HomeController extends Controller
                     $new_history['country_name']    = $brwInfo['geoplugin_countryName'];
                     $new_history['continent_name']  = $brwInfo['geoplugin_continentName'];
                     $new_history['timezone']        = $brwInfo['geoplugin_timezone'];
-                    $new_history['created_at']        = $brwInfo['geoplugin_timezone'];
+                    $new_history['created_at']      = date('Y-m-d H:i:s');
                 }
                 $new_history['card_id'] = $cardinfo->id;
                 if (Auth::guard('web')->user()) {
@@ -194,7 +203,11 @@ class HomeController extends Controller
 
                 if ($history) {
                     $counter = $history->counter + 1;
-                    DB::table('history_card_browsing')->where('id', $history->id)->update(['counter' => $counter]);
+                    DB::table('history_card_browsing')->where('id', $history->id)->update(
+                        [
+                            'counter' => $counter,
+                            'modified_at' => date('Y-m-d H:i:s')
+                        ]);
                 } else {
                     DB::table('history_card_browsing')->insert($new_history);
                 }
