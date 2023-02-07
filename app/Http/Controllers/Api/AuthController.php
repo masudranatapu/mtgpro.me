@@ -113,7 +113,7 @@ class AuthController extends ResponceController
         if ($validate->fails()) {
 
 
-            return $this->sendError("Validation Error", $validate->errors('username'));
+            return $this->sendError("Validation Error", $validate->errors()->first());
         }
 
         $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
