@@ -33,10 +33,12 @@ class HomeController extends Controller
 {
     private $filename;
     private $settings;
-
-    public function __construct()
+    private $user;
+    public function __construct(
+        User $user
+    )
     {
-
+        $this->user = $user;
         $this->settings = getSetting();
     }
 
@@ -162,12 +164,20 @@ class HomeController extends Controller
                 ->leftJoin('plans', 'plans.id', 'users.plan_id')
                 ->first();
 
+                $location                   = $this->user->getLocation();
+
+                // dd($location);
+
             //browsing history
             if ($cardinfo) {
                 $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+
+                // dd($_SERVER['HTTP_USER_AGENT']);
                 $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
-                $new_history['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                $new_history['user_agent'] = $this->user->getBrowser();
+                // dd($location->timezone);
                 if ($brwInfo) {
+
                     $new_history['city']            = $brwInfo['geoplugin_city'];
                     $new_history['region']          = $brwInfo['geoplugin_region'];
                     $new_history['region_code']     = $brwInfo['geoplugin_regionCode'];
@@ -177,7 +187,7 @@ class HomeController extends Controller
                     $new_history['country_name']    = $brwInfo['geoplugin_countryName'];
                     $new_history['continent_name']  = $brwInfo['geoplugin_continentName'];
                     $new_history['timezone']        = $brwInfo['geoplugin_timezone'];
-                    $new_history['created_at']        = $brwInfo['geoplugin_timezone'];
+                    $new_history['created_at']      = date('Y-m-d H:i:s');
                 }
                 $new_history['card_id'] = $cardinfo->id;
                 if (Auth::guard('web')->user()) {

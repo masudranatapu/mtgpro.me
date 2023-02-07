@@ -56,7 +56,11 @@
                                     <th>{{ __('Card Title') }}</th>
                                     <th>{{ __('Number Of Visits') }}</th>
                                     <th>{{ __('Device Id') }}</th>
-                                    <th>{{ __('Ip Address') }}</th>
+                                    <th>
+                                        {{-- {{ __('Ip Address') }} --}}
+                                        TimeZone
+
+                                    </th>
                                     <th>{{ __('User Agent') }}</th>
                                     <th>{{ __('Address') }}</th>
                                     {{-- <th>{{ __('Number Of Visits') }}</th> --}}
@@ -69,7 +73,10 @@
                                         <td>{{ $history->hasCard->card_for ?? '' }}</td>
                                         <td>{{ $history->counter }}</td>
                                         <td>{{ $history->device_id ?? '' }}</td>
-                                        <td>{{ $history->ip_address ?? '' }}</td>
+                                        <td>
+                                            <span class="d-block">{{ $history->timezone}}</span>
+                                            <span class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->created_at)) }}</span>
+                                        </td>
                                         <td>{{ $history->user_agent ?? '' }}</td>
                                         <td>{{ $history->city ? $history->city . ' ,' : '' }}
                                             {{ $history->country_name ?? '' }}
@@ -77,8 +84,6 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-
-
                         </table>
                         <div class="mt-2 d-flex justify-content-center">
                             {{ $histories->links() }}
