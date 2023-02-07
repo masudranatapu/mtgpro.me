@@ -36,9 +36,6 @@ class ProductCheckoutController extends Controller
         $config = Config::all();
         $gateways = Gateway::where('status', 1)->get();
         $products = Session::get('cart');
-
-
-
         return view('pages.product_checkout.product_checkout', compact('user', 'config', 'gateways', 'products'));
     }
 
@@ -187,7 +184,7 @@ class ProductCheckoutController extends Controller
                 return redirect()->route('home');
             }
         } catch (Exception $error) {
-            dd($error);
+
             Toastr::error(trans('"Something went wrong!'));
             return redirect()->back();
         }

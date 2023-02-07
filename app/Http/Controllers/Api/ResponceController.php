@@ -39,4 +39,21 @@ class ResponceController extends Controller
         }
         return response()->json($response, $code);
     }
+
+    public function uploadBase64ToImage($file, $file_name, $file_prefix)
+    {
+        $file_path = sprintf("assets/uploads/avatar/");
+        $file_name = sprintf('%s.%s', $file_name, $file_prefix);
+        $upload_path = public_path() . '/' . $file_path;
+        if (stripos($file, 'data:image/jpeg;base64,') === 0) {
+            $img = base64_decode(str_replace('data:image/jpeg;base64,', '', $file));
+        } else if (stripos($file, 'data:image/png;base64,') === 0) {
+            $img = base64_decode(str_replace('data:image/png;base64,', '', $file));
+        } else {
+            return false;
+        }
+        $result = file_put_contents($upload_path . $file_name, $img);
+        return $file_path . $file_name;
+    }
+
 }

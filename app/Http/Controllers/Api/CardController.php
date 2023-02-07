@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CardController extends ResponceController
 {
@@ -149,24 +150,27 @@ class CardController extends ResponceController
 
 
         $rules = [
-            'card_for'         => 'required|string|max:124',
-            'bgcolor'          => 'required|string|max:25',
             'name'             => 'required|string|max:124',
             'location'         => 'required|string|max:124',
+            'bio'              => 'required|string|max:255',
+            'bgcolor'          => 'required|string|max:25',
             'designation'      => 'required|string|max:124',
             'company_name'     => 'required|string|max:124',
-            'bio'              => 'required|string|max:255',
-            'card_url'         => 'unique:business_cards,card_url|string|max:124',
-            // 'profile_pic'      => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
+            'color_link'       => 'required|string|max:124',
+            'phone_number'     => 'required|string|max:124',
+            'card_for'         => 'nullable|string|max:124',
+            'location'         => 'required|string|max:124',
+            'phone_number'     => 'unique:business_cards,card_url|string|max:124',
+            'profile_pic'      => 'required',
             // 'cover_pic'        => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
             // 'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'
         ];
-        $social_icon = DB::table('social_icon')->get();
-        if ($social_icon) {
-            foreach ($social_icon as $key => $value) {
-                $rules[$value->icon_name . '.*'] = 'required|string|max:224';
-            }
-        }
+        // $social_icon = DB::table('social_icon')->get();
+        // if ($social_icon) {
+        //     foreach ($social_icon as $key => $value) {
+        //         $rules[$value->icon_name . '.*'] = 'required|string|max:224';
+        //     }
+        // }
 
 
         $validation = Validator::make($request->all(), $rules);
@@ -213,6 +217,7 @@ class CardController extends ResponceController
             $card->ccode        = $request->ccode;
             $card->card_email   = $request->card_email ?? Auth::guard('api')->user()->email;
             $card->created_at   = date('Y-m-d H:i:s');
+
             if ($request->has('profile_pic') && !empty($request->profile_pic[0])) {
                 $file_name = $this->formatName($request->name);
                 $output = $request->profile_pic;
@@ -222,8 +227,8 @@ class CardController extends ResponceController
                     if (isset($image)) {
                         $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
+                    $card->profile  = $image_name;
                 }
-                $card->profile  = $image_name;
             }
             if ($request->has('cover_pic') && !empty($request->cover_pic[0])) {
                 $file_name = $this->formatName($request->name);
@@ -234,8 +239,8 @@ class CardController extends ResponceController
                     if (isset($image)) {
                         $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
+                    $card->cover = $image_name;
                 }
-                $card->cover = $image_name;
             }
             if ($request->has('company_logo') && !empty($request->company_logo[0])) {
                 $file_name = $this->formatName($request->name);
@@ -246,8 +251,8 @@ class CardController extends ResponceController
                     if (isset($image)) {
                         $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
                     }
+                    $card->logo = $image_name;
                 }
-                $card->logo = $image_name;
             }
             $card->save();
             $email_icon =  DB::table('social_icon')->where('icon_name', 'email')->first();
@@ -264,13 +269,27 @@ class CardController extends ResponceController
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return $this->sendError("Exception Error",$e->getMessage());
             DB::rollback();
-            return $this->formatResponse(false, 'Unable to create Card !', 'user.card.create');
+
         }
         DB::commit();
 
 
         return $this->sendResponse(200, "Card create Successfully", $card, true,);
+
     }
+
+
+
+    public function formatName($name)
+    {
+        $base_name = preg_replace('/\..+$/', '', $name);
+        $base_name = explode(' ', $base_name);
+        $base_name = implode('-', $base_name);
+        $base_name = Str::lower($base_name);
+        $name = $base_name . "-" . uniqid();
+        return $name;
+    }
+
 }
