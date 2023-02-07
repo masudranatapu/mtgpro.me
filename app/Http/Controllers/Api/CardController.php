@@ -75,7 +75,7 @@ class CardController extends ResponceController
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
                     $image = $output['output']['image'];
                     if (isset($image)) {
-                        $card->profile =  $this->businessCard->uploadBase64ToImage($image, $file_name, 'jpg');
+                        $card->profile =  $this->uploadBase64FileToPublic($output, "/profilePic");
                     }
                 }
             }
@@ -223,10 +223,7 @@ class CardController extends ResponceController
                 $output = $request->profile_pic;
                 $output = json_decode($output, TRUE);
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image = $output['output']['image'];
-                    if (isset($image)) {
-                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
-                    }
+                    $image_name =  $this->uploadBase64FileToPublic($output, '/profilePic');
                     $card->profile  = $image_name;
                 }
             }
@@ -235,10 +232,9 @@ class CardController extends ResponceController
                 $output = $request->cover_pic;
                 $output = json_decode($output, TRUE);
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image = $output['output']['image'];
-                    if (isset($image)) {
-                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
-                    }
+                    $image_name =  $this->uploadBase64FileToPublic($output, '/coverPic');
+
+
                     $card->cover = $image_name;
                 }
             }
@@ -247,10 +243,8 @@ class CardController extends ResponceController
                 $output = $request->company_logo;
                 $output = json_decode($output, TRUE);
                 if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image = $output['output']['image'];
-                    if (isset($image)) {
-                        $image_name =  $this->uploadBase64ToImage($image, $file_name, 'png');
-                    }
+                    $image_name =  $this->uploadBase64FileToPublic($output, '/companyLogo');
+
                     $card->logo = $image_name;
                 }
             }
@@ -292,4 +286,5 @@ class CardController extends ResponceController
         return $name;
     }
 
-}
+
+    }
