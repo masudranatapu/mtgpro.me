@@ -118,7 +118,7 @@ class CheckoutController extends Controller
     public function postTransection(Request $request)
     {
 
-        dd($request->all());
+      
 
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");

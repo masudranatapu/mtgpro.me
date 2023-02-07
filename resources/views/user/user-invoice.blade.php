@@ -60,62 +60,62 @@
         }
 
         /* .review_content p {
-                                    margin: 0;
-                                    font-size: 14px;
-                                    text-align: justify;
-                                    color: #5e5e5e;
-                                    line-height: 26px;
-                                    font-family: 'Poppins', sans-serif;
-                                    font-weight: 400;
-                                }
-                                .edit_review {
-                                    position: absolute;
-                                    top: 8px;
-                                    right: 13px;
-                                    cursor: pointer;
-                                }
-                                .edit_review i {
-                                    color: #BBB;
-                                    font-size: 19px;
-                                    transition: all 0.3s ease;
-                                }
+                                                                        margin: 0;
+                                                                        font-size: 14px;
+                                                                        text-align: justify;
+                                                                        color: #5e5e5e;
+                                                                        line-height: 26px;
+                                                                        font-family: 'Poppins', sans-serif;
+                                                                        font-weight: 400;
+                                                                    }
+                                                                    .edit_review {
+                                                                        position: absolute;
+                                                                        top: 8px;
+                                                                        right: 13px;
+                                                                        cursor: pointer;
+                                                                    }
+                                                                    .edit_review i {
+                                                                        color: #BBB;
+                                                                        font-size: 19px;
+                                                                        transition: all 0.3s ease;
+                                                                    }
 
 
-                                .review_edit_form label {
-                                    font-size: 14px;
-                                    color: #3b3b3b;
-                                    font-family: 'Poppins';
-                                    font-weight: 400;
-                                }
+                                                                    .review_edit_form label {
+                                                                        font-size: 14px;
+                                                                        color: #3b3b3b;
+                                                                        font-family: 'Poppins';
+                                                                        font-weight: 400;
+                                                                    }
 
-                                .review_edit_form .form-control {
-                                    height: 44px;
-                                    border: 1px solid #DDD;
-                                    outline: none;
-                                    box-shadow: none;
-                                    border-radius: 3px;
-                                }
-                                .review_edit_form .btn {
-                                    padding: 6px 33px;
-                                    border-radius: 2px;
-                                    font-family: 'Poppins', sans-serif;
-                                    font-weight: 400;
-                                    font-size: 15px;
-                                    border: none !important;
-                                }
-                                .status{
-                                margin: 20px;
-                                float: right;
-                                }
-                                .active{
-                                    color: orange;
-                                    font-weight: 600;
-                                    font-family: 'Poppins', sans-serif;
-                                }
-                                .pending{
-                                    font-weight: 600;
-                                    font-family: 'Poppins', sans-serif;
-                                } */
+                                                                    .review_edit_form .form-control {
+                                                                        height: 44px;
+                                                                        border: 1px solid #DDD;
+                                                                        outline: none;
+                                                                        box-shadow: none;
+                                                                        border-radius: 3px;
+                                                                    }
+                                                                    .review_edit_form .btn {
+                                                                        padding: 6px 33px;
+                                                                        border-radius: 2px;
+                                                                        font-family: 'Poppins', sans-serif;
+                                                                        font-weight: 400;
+                                                                        font-size: 15px;
+                                                                        border: none !important;
+                                                                    }
+                                                                    .status{
+                                                                    margin: 20px;
+                                                                    float: right;
+                                                                    }
+                                                                    .active{
+                                                                        color: orange;
+                                                                        font-weight: 600;
+                                                                        font-family: 'Poppins', sans-serif;
+                                                                    }
+                                                                    .pending{
+                                                                        font-weight: 600;
+                                                                        font-family: 'Poppins', sans-serif;
+                                                                    } */
     </style>
 @endpush
 
@@ -214,32 +214,41 @@
                                                         <td>{{ $detail->product->product_name ?? '' }}</td>
                                                         <td>{{ getPrice($detail->unit_price) }}</td>
                                                         <td>{{ $detail->quantity }}</td>
-                                                        <td>{{ getPrice($detail->unit_price * $detail->quantity) }} </td>
+                                                        <td class="text-right">
+                                                            {{ getPrice($detail->unit_price * $detail->quantity) }} </td>
                                                     </tr>
                                                 @endforeach
                                             @endif
 
-
+                                            @if (isset($order->coupon_id))
+                                                <tr>
+                                                    <td colspan="2"></td>
+                                                    <td><strong>Coupon Discount:</strong></td>
+                                                    <td class="text-right"><strong> -
+                                                            {{ getPrice($order->coupon_discount) }}</strong></td>
+                                                </tr>
+                                            @endif
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td><strong>Total:</strong></td>
-                                                <td><strong>{{ getPrice($order->total_price) }}</strong></td>
+                                                <td class="text-right"><strong>{{ getPrice($order->total_price) }}</strong>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td>Discount</td>
-                                                <td>{{ getPrice($order->discount) }}</td>
+                                                <td class="text-right">{{ getPrice($order->discount) }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td>VAT ({{ $order->vat }}%):</td>
-                                                <td>{{ getPrice($order->vat) }}</td>
+                                                <td class="text-right">{{ getPrice($order->vat) }}</td>
                                             </tr>
 
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td>Payment Fee:</td>
-                                                <td>{{ getPrice($order->payment_fee) }}</td>
+                                                <td class="text-right">{{ getPrice($order->payment_fee) }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Currency: <strong
@@ -247,16 +256,21 @@
                                                 </td>
                                                 <td colspan="1"></td>
                                                 <td><strong>Grand Total:</strong></td>
-                                                <td><strong> {{ getPrice($order->grand_total) }}</strong></td>
+                                                <td class="text-right"><strong>
+                                                        {{ getPrice($order->grand_total) }}</strong>
+                                                </td>
                                             </tr>
                                             <tr class="bg-default">
-                                                <td>Payment Method:
+                                                <td class="text-right">Payment Method:
                                                     <strong>{{ $order->transaction->payment_gateway_name }}</strong>
                                                 </td>
                                                 <td colspan="1"></td>
                                                 <td class="text-success">Payment:</td>
-                                                <td class="text-success">
-                                                    {{ getPrice($order->transaction->transaction_amount) }}</td>
+                                                <td class="text-success text-right">
+                                                    <strong>
+                                                        {{ getPrice($order->transaction->transaction_amount) }}
+                                                    </strong>
+                                                </td>
                                             </tr>
                                             {{-- <tr>
                                                 <td colspan="2"></td>

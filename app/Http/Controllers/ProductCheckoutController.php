@@ -62,6 +62,11 @@ class ProductCheckoutController extends Controller
                 }
 
 
+                if (session()->has('coupon')) {
+                    $totalPrice = $totalPrice - session('coupon')->amount;
+                }
+
+
 
 
 
@@ -82,12 +87,21 @@ class ProductCheckoutController extends Controller
                     $order_Number = $previous_order_Number->order_number + 1;
                 }
 
-                Log::alert($charge->status);
+
                 $order = new Order();
                 $order->order_number = $order_Number;
                 $order->quantity = $totalQuantity;
                 $order->discount = 0;
-                $order->coupon_discount = 0;
+
+                if (session()->has('coupon')) {
+                    $order->coupon_discount = session('coupon')->amount;
+                    $order->coupon_id = session('coupon')->id;
+                } else {
+                    $order->coupon_discount = 0;
+                    $order->coupon_id = null;
+                }
+
+
                 $order->total_price = $totalPrice;
                 $order->payment_fee = 0;
                 $order->vat = 0;
@@ -179,6 +193,9 @@ class ProductCheckoutController extends Controller
         }
         Toastr::success(trans('Product purchase successfully done!'));
         Session::forget('cart');
+        if (session()->has('coupon')) {
+            Session::forget('coupon');
+        }
         return redirect()->route('user.orders.invoice', ['id' => $order->id]);
     }
 }
