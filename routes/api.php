@@ -36,4 +36,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/crete-first-card', [CardController::class, 'storefirstCard']);
     Route::get('my-card', [CardController::class, 'myCard']);
     Route::post('/crete-card', [CardController::class, 'postStore']);
+    Route::put('/update-card/{businessCard}', [CardController::class, 'postUpdate']);
 });
