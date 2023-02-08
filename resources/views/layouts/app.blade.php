@@ -148,6 +148,9 @@
             });
 
         }
+        function addedToCart(id){
+            toastr.error('Already Added to Cart!');
+        }
     </script>
 </body>
 
