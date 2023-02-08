@@ -38,6 +38,20 @@ class ShopController extends Controller
     }
 
 
+    public function getCart(Request $request)
+    {
+        dd($request);
+        $this->resp = $this->businessCard->getPaginatedList($request);
+        $cards = $this->resp->data;
+        $activeCard = $this->businessCard->where('user_id', Auth::id())->first();
+
+        if (count($cards) < 1) {
+            return redirect()->route('user.card.init-card');
+        }
+        return view('user.dashboard', compact('cards', 'activeCard'));
+    }
+
+
     public function index()
     {
         $products = Product::paginate(12);
