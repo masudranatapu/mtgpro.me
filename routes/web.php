@@ -41,7 +41,7 @@ Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'u
 
 
 Route::get('disclaimer', ['as' => 'disclaimer', 'uses' => 'HomeController@getDisclaimer']);
-Route::get('shopcart', ['as' => 'shopcart', 'uses' => 'ProductController@shopcart']);
+Route::get('cart', ['as' => 'cart', 'uses' => 'ProductController@cart']);
 Route::get('add-to-cart/{id}', ['as' => 'add.to.cart', 'uses' => 'ProductController@addToCart']);
 Route::post('add-to-cart/', ['as' => 'addtocart', 'uses' => 'ProductController@addToCartPost']);
 Route::patch('update-cart', ['as' => 'update.cart', 'uses' => 'ProductController@update']);

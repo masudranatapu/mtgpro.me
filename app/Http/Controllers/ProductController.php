@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->only(['cart',]);
+        // $this->middleware('auth')->only(['cart']);
     }
 
 
@@ -129,7 +129,7 @@ class ProductController extends Controller
                             return response()->json(['status' => true, 'message' => 'Coupon Applied']);
                         }
                     } else {
-                        return response()->json(['status' => false, 'message' => 'Invalid Coupon']);
+                        return response()->json(['status' => false, 'message' => 'Please login first']);
                     }
                 } else {
                     $orderResult = Order::where('coupon_id', $result->id)->where('user_id', Auth::id())->first();
