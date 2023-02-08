@@ -24,7 +24,7 @@
         "simplesoftwareio/simple-qrcode": "^4.2",
         "stevebauman/location": "^6.5",
         "stripe/stripe-php": "^10.3",
-        "tymon/jwt-auth": "*"
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
