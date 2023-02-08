@@ -51,14 +51,12 @@ class ResponceController extends Controller
      */
     function uploadBase64FileToPublic($img, string $path)
     {
-        // return $path;
+
         if ($img && $path) {
             $folderPath = public_path($path);
-
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
             }
-
             $image_parts = explode(";base64,", $img);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
