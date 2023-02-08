@@ -7,11 +7,13 @@ use App\Http\Requests\CardRequest;
 use App\Models\BusinessCard;
 use App\Models\BusinessField;
 use App\Models\Plan;
+use App\Models\SocialIcon;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -351,6 +353,105 @@ class CardController extends ResponceController
 
         return $this->sendResponse(200, "Card create Successfully", $businessCard, true,);
     }
+
+
+    public function addCardIcon(Request $request)
+    {
+
+
+
+        $data = [];
+        DB::beginTransaction();
+        try {
+            $rules = array(
+                'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
+                'content'   => 'required',
+                'label'     => 'required|max:255',
+                'card_id'   => 'required',
+                'icon_id'   => 'required',
+            );
+
+
+            $social_icon    = SocialIcon::findOrFail($request->icon_id);
+            if ($social_icon->type == 'link') {
+                $rules['content'] = 'required|url|max:255';
+            }
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return $this->sendError(200, $validator->errors()->first(), 200);
+            }
+
+
+
+
+
+            $card = BusinessCard::find($request->card_id);
+            $icon           = new BusinessField();
+            $icon->card_id  = $request->card_id;
+            $icon->type     = $social_icon->type;
+            $icon->position = BusinessField::where('card_id', $request->card_id)->max('position') + 1;
+            $icon->status   = 1;
+            $icon->icon     = $social_icon->icon_name;
+            $icon->icon_id  = $social_icon->id;
+            $icon->created_at = date('Y-m-d H:i:s');
+
+            // $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo')
+            if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
+                $icon->content =  $this->getYoutubeEmbad($request->content);
+            } elseif ($request->hasFile('content')) {
+
+                $icons = $this->uploadBase64FileToPublic($request->content, "/cardContent");
+
+                $icon->content = $icons;
+            } else {
+                $icon->content  = $request->content;
+            }
+
+            $icon->label    =  $request->label;
+
+
+
+            if (!is_null($request->file('logo'))) {
+                $iconLogo = $this->uploadBase64FileToPublic($request->logo, "iconLogo");
+                $icon->icon_image = $iconLogo;
+            } else {
+                $icon->icon_image = $social_icon->icon_image;
+            }
+            $icon->save();
+
+
+            $icon = BusinessField::select('business_fields.*', 'social_icon.icon_color')->where('business_fields.id', $icon->id)
+                ->leftJoin('social_icon', 'social_icon.id', '=', 'business_fields.icon_id')
+                ->first();
+            $icon_color = $social_icon->icon_color;
+            if ($card->theme_color) {
+                $icon_color = $card->theme_color;
+            }
+            DB::commit();
+            return $this->sendResponse(200, "Icon Updated", $icon, true, []);
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
+            return $this->sendResponse(200, $e, $data, 0);
+        }
+    }
+
+    public function removeCardIcon(BusinessField $businessField)
+    {
+
+        DB::beginTransaction();
+        try {
+            $id = $businessField->icon_id;
+            BusinessField::where('id', $id)->delete();
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            DB::rollback();
+            return $this->sendError("Exception Error", 'Content not deleted', 0);
+        }
+        DB::commit();
+        return $this->sendResponse(200, 'Icon deleted successfully', [], true, []);
+    }
+
 
 
 

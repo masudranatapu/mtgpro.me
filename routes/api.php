@@ -29,12 +29,14 @@ Route::group([
 });
 
 Route::get('/general-settings', [HomeController::class, 'getSettings']);
-
+Route::get('/get-social-icons', [HomeController::class, 'getSocialIcons']);
 
 
 Route::middleware(['auth:api'])->group(function () {
     Route::post('/crete-first-card', [CardController::class, 'storefirstCard']);
     Route::get('my-card', [CardController::class, 'myCard']);
-    Route::post('/crete-card', [CardController::class, 'postStore']);
+    Route::post('crete-card', [CardController::class, 'postStore']);
     Route::put('/update-card/{businessCard}', [CardController::class, 'postUpdate']);
+    Route::post('add-icons', [CardController::class, 'addCardIcon']);
+    Route::delete('remove-icons/{businessField}', [CardController::class, 'removeCardIcon']);
 });
