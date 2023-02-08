@@ -41,36 +41,36 @@ class ResponceController extends Controller
         return response()->json($response, $code);
     }
 
+
     /**
- * base64 image upload
- *
- * @param string $img
- * @param string $path
- * @return void
- */
-function uploadBase64FileToPublic($img, string $path)
-{
-    // return $path;
-    if ($img && $path) {
-        $folderPath = public_path($path);
+     * base64 image upload
+     *
+     * @param string $img
+     * @param string $path
+     * @return void
+     */
+    function uploadBase64FileToPublic($img, string $path)
+    {
+        // return $path;
+        if ($img && $path) {
+            $folderPath = public_path($path);
 
-        if (!File::isDirectory($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
+            if (!File::isDirectory($folderPath)) {
+                File::makeDirectory($folderPath, 0777, true, true);
+            }
+
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = uniqid() . '.' . $image_type;
+            $filePath = $folderPath . $fileName;
+
+            file_put_contents($filePath, $image_base64);
+
+            return $path . $fileName;
+        } else {
+            return null;
         }
-
-        $image_parts = explode(";base64,", $img);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1]);
-        $fileName = uniqid() . '.' . $image_type;
-        $filePath = $folderPath . $fileName;
-
-        file_put_contents($filePath, $image_base64);
-
-        return $path . $fileName;
-    } else {
-        return null;
     }
-
-}
 }

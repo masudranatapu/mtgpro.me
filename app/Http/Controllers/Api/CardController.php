@@ -8,6 +8,7 @@ use App\Models\BusinessCard;
 use App\Models\BusinessField;
 use App\Models\Plan;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -162,15 +163,9 @@ class CardController extends ResponceController
             'location'         => 'required|string|max:124',
             'phone_number'     => 'unique:business_cards,card_url|string|max:124',
             'profile_pic'      => 'required',
-            // 'cover_pic'        => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000',
-            // 'company_logo'     => 'nullable|mimes:jpeg,jpg,png,webp,gif | max:10000'
+
         ];
-        // $social_icon = DB::table('social_icon')->get();
-        // if ($social_icon) {
-        //     foreach ($social_icon as $key => $value) {
-        //         $rules[$value->icon_name . '.*'] = 'required|string|max:224';
-        //     }
-        // }
+
 
 
         $validation = Validator::make($request->all(), $rules);
@@ -218,35 +213,27 @@ class CardController extends ResponceController
             $card->card_email   = $request->card_email ?? Auth::guard('api')->user()->email;
             $card->created_at   = date('Y-m-d H:i:s');
 
-            if ($request->has('profile_pic') && !empty($request->profile_pic[0])) {
+            if ($request->has('profile_pic') && !empty($request->profile_pic)) {
                 $file_name = $this->formatName($request->name);
                 $output = $request->profile_pic;
-                $output = json_decode($output, TRUE);
-                if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image_name =  $this->uploadBase64FileToPublic($output, '/profilePic');
-                    $card->profile  = $image_name;
-                }
+
+                $image_name =  $this->uploadBase64FileToPublic($output, 'profilePic');
+                $card->profile  = $image_name;
             }
             if ($request->has('cover_pic') && !empty($request->cover_pic[0])) {
                 $file_name = $this->formatName($request->name);
                 $output = $request->cover_pic;
-                $output = json_decode($output, TRUE);
-                if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image_name =  $this->uploadBase64FileToPublic($output, '/coverPic');
+
+                $image_name =  $this->uploadBase64FileToPublic($output, 'coverPic');
 
 
-                    $card->cover = $image_name;
-                }
+                $card->cover = $image_name;
             }
             if ($request->has('company_logo') && !empty($request->company_logo[0])) {
                 $file_name = $this->formatName($request->name);
                 $output = $request->company_logo;
-                $output = json_decode($output, TRUE);
-                if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image_name =  $this->uploadBase64FileToPublic($output, '/companyLogo');
-
-                    $card->logo = $image_name;
-                }
+                $image_name =  $this->uploadBase64FileToPublic($output, 'companyLogo');
+                $card->logo = $image_name;
             }
             $card->save();
             $email_icon =  DB::table('social_icon')->where('icon_name', 'email')->first();
@@ -263,16 +250,110 @@ class CardController extends ResponceController
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
         } catch (\Exception $e) {
-            return $this->sendError("Exception Error",$e->getMessage());
+            return $this->sendError("Exception Error", $e->getMessage());
             DB::rollback();
-
         }
         DB::commit();
 
 
         return $this->sendResponse(200, "Card create Successfully", $card, true,);
-
     }
+
+
+
+    public function postUpdate(BusinessCard $businessCard, Request $request)
+    {
+
+
+        $rules = [
+            'name'             => 'required|string|max:124',
+            'location'         => 'required|string|max:124',
+            'bio'              => 'required|string|max:255',
+            'bgcolor'          => 'required|string|max:25',
+            'designation'      => 'required|string|max:124',
+            'company_name'     => 'required|string|max:124',
+            'color_link'       => 'required|string|max:124',
+            'phone_number'     => 'required|string|max:124',
+            'card_for'         => 'nullable|string|max:124',
+            'location'         => 'required|string|max:124',
+            'phone_number'     => 'unique:business_cards,card_url|string|max:124',
+            'profile_pic'      => 'required',
+
+        ];
+
+        $validation = Validator::make($request->all(), $rules);
+        if ($validation->fails()) {
+            return $this->sendError('Validation Error', $validation->errors()->first(), 200);
+        }
+        DB::beginTransaction();
+        try {
+            $businessCard->user_id      = Auth::guard('api')->id();
+            $businessCard->card_lang    = 'en';
+            $businessCard->card_type    = 'vcard';
+            $businessCard->card_for     = $request->card_for;
+            $businessCard->status       = 1;
+            $businessCard->title        = $request->name;
+            $businessCard->location     = $request->location;
+            $businessCard->bio          = $request->bio;
+            $businessCard->sub_title    = $request->sub_title ?? '';
+            $businessCard->theme_color  = $request->bgcolor ?? '#fff';
+            $businessCard->theme_id     = $request->theme_id ?? 1;
+            $businessCard->designation  = $request->designation;
+            $businessCard->company_name = $request->company_name;
+            $businessCard->color_link   = $request->color_link ?? 0;
+            $businessCard->phone_number = $request->phone_number;
+            $businessCard->ccode        = $request->ccode;
+            $businessCard->card_email   = $request->card_email ?? Auth::guard('api')->user()->email;
+            $businessCard->created_at   = date('Y-m-d H:i:s');
+
+            if ($request->has('profile_pic') && !empty($request->profile_pic)) {
+                $file_name = $this->formatName($request->name);
+                $output = $request->profile_pic;
+
+                $image_name =  $this->uploadBase64FileToPublic($output, 'profilePic');
+                $businessCard->profile  = $image_name;
+            }
+            if ($request->has('cover_pic') && !empty($request->cover_pic[0])) {
+                $file_name = $this->formatName($request->name);
+                $output = $request->cover_pic;
+
+                $image_name =  $this->uploadBase64FileToPublic($output, 'coverPic');
+
+
+                $businessCard->cover = $image_name;
+            }
+            if ($request->has('company_logo') && !empty($request->company_logo[0])) {
+                $file_name = $this->formatName($request->name);
+                $output = $request->company_logo;
+                $image_name =  $this->uploadBase64FileToPublic($output, 'companyLogo');
+                $businessCard->logo = $image_name;
+            }
+            $businessCard->save();
+            $email_icon =  DB::table('social_icon')->where('icon_name', 'email')->first();
+            $fields = new BusinessField();
+            $fields->card_id = $businessCard->id;
+            $fields->type = 'mail';
+            $fields->icon = $email_icon->icon_name;
+            $fields->icon_image = $email_icon->icon_image;
+            $fields->icon_id = $email_icon->id;
+            $fields->label = $email_icon->icon_title;
+            $fields->content = Auth::guard('api')->user()->email;
+            $fields->position = 1;
+            $fields->status = 1;
+            $fields->created_at = date('Y-m-d H:i:s');
+            $fields->save();
+        } catch (Exception $e) {
+            return $this->sendError("Exception Error", $e->getMessage());
+            DB::rollback();
+        }
+        DB::commit();
+
+
+        return $this->sendResponse(200, "Card create Successfully", $businessCard, true,);
+    }
+
+
+
 
 
 
@@ -285,6 +366,4 @@ class CardController extends ResponceController
         $name = $base_name . "-" . uniqid();
         return $name;
     }
-
-
-    }
+}
