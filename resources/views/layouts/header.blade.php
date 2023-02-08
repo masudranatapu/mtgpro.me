@@ -102,7 +102,7 @@ $setting = getSetting();
                             @endauth
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('cart') }}">
+                                <a class="nav-link" href="{{ route('shopcart') }}">
                                     <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                     @if (session('cart'))
                                         <span id="cartCounter">({{ count(session('cart')) }})</span>
