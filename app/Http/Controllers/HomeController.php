@@ -62,6 +62,7 @@ class HomeController extends Controller
         return view('index', compact('plans', 'currency', 'faqs', 'reviews', 'home_data'));
     }
 
+
     public function getPrivacyPolicy()
     {
         $page = DB::table('custom_pages')->where('url_slug', 'privacy-policy')->first();

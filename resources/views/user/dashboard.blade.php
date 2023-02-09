@@ -47,6 +47,18 @@
     .btn-sm.inactive {
         color: rgb(151 140 140) !important;
     }
+
+    @media screen and (max-width:480px) {
+        .btn-primary {
+            display: inline-block;
+        }
+    }
+
+    @media screen and (max-width:380px) {
+        .btn-primary {
+            padding: 12px 27px !important;
+        }
+    }
 </style>
 @endpush
 
@@ -70,19 +82,20 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                     </h1>
                 </div>
                 <div class="col-md-8">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-sm-flex justify-content-between">
 
-                        <a class="btn-sm btn-primary btn-sm" href="javascript:void(0)" onclick="copy(this)"
+                        <a class="btn-sm btn-primary btn-sm mb-1" href="javascript:void(0)" onclick="copy(this)"
                             data-url="{{ route('home') }}/{{ auth()->user()->username }}">{{ __('Link To Copy') }}</a>
-                        <a class="btn-sm btn-primary btn-sm"
+                        <a class="btn-sm btn-primary btn-sm mb-1"
                             href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Email') }}</a>
 
-    @if ( $ipad == false || $iphone == false)
+                        @if ( $ipad == false || $iphone == false)
 
-        <a class="btn-sm btn-primary btn-sm" href="sms:+?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
-        __('Text') }}</a>
-    @endif
+                        <a class="btn-sm btn-primary btn-sm mb-1"
+                            href="sms:+?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+                            __('Text') }}</a>
+                        @endif
 
 
 

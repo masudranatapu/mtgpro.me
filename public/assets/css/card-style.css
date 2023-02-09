@@ -219,7 +219,8 @@ a {
 
 
 
-.modal, .offcanvas-backdrop {
+.modal,
+.offcanvas-backdrop {
     backdrop-filter: blur(4px);
     background: linear-gradient(315deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 30%) 100%);
     backdrop-filter: blur(4px);
@@ -356,8 +357,8 @@ a {
 }
 
 .offcanvas.show:not(.hiding),
-.offcanvas.showing{
-    bottom:0;
+.offcanvas.showing {
+    bottom: 0;
 }
 
 .contact_modal.offcanvas-bottom {
@@ -418,22 +419,23 @@ a {
     margin-top: 21px;
 }
 
-@media screen and (max-width: 450px){
-    .save_contact a{
-        padding: 12px 20px;
+@media screen and (max-width: 450px) {
+    .save_contact a {
+        padding: 12px 4px;
+        font-size: 13px;
     }
 }
 
-@media screen and (max-width: 419px){
-    .save_contact a{
-        width: 66% !important;
-        margin: 5px 0px;
+@media screen and (max-width: 419px) {
+    .save_contact a {
+        width: 46% !important;
+        margin: 5px 3px;
     }
 }
 
-@media screen and (max-width: 310px){
-    .save_contact a{
-        width: 100% !important;
+@media screen and (max-width:400px) {
+    .contact_modal .contact_body {
+        padding: 12px 10px 0px 10px;
     }
 }
 
@@ -447,7 +449,7 @@ a {
     top: 9%;
     left: 0;
     right: 0;
-  }
+}
 
 .qr-background {
     max-width: 230px;
@@ -547,6 +549,7 @@ a {
     padding-top: 11px;
     margin-bottom: 4px;
 }
+
 .loading-spinner {
     display: none;
 }
@@ -575,10 +578,21 @@ a {
     height: 100%;
 }
 
-@media screen and (min-width:420px) {
-    .save_contact {
-        display: flex;
-        justify-content: space-evenly;
-    }
+.share_modal.modal_one .modal-content {
+    border: none;
+    box-shadow: 0px 12px 40px rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    padding: 30px 8px;
+}
 
+
+.share_modal.modal_one .btn-primary {
+    padding: 12px 5px !important;
+    line-height: 22px;
+}
+
+@media screen and (max-width:380px) {
+    .share_modal.modal_one .btn-primary {
+        font-size: 12px;
+    }
 }

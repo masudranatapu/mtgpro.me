@@ -308,6 +308,27 @@ body {
     color: var(--white);
 }
 
+.pricing-card {
+    overflow: hidden;
+    position: relative;
+}
+
+.pricing-card .ribbon-wrapper {
+    top: 27px;
+    left: -53px;
+    background: #c62f00;
+    font-size: 12px;
+    padding: 5px 50px;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    transform: rotate(-45deg);
+    font-family: 'Gilroy-Bold', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+
 .plan_name h2 {
     font-size: 20px;
     font-weight: 600;
@@ -1403,12 +1424,12 @@ video.banner-video {
 
 .pricing-card {
     border: solid 1px #ffffff;
-    cursor: pointer;
-    height: 600px;
     padding: 24px;
     border-radius: 20px;
     background-color: #fff;
     box-shadow: rgb(99 99 99 / 10%) 0px 2px 8px 0px;
+    height: 100%;
+    vertical-align: middle;
 }
 
 .login_form .form-label {
