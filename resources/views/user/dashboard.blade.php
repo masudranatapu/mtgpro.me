@@ -78,11 +78,11 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                             href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Email') }}</a>
 
-@if ( $ipad == false || $iphone == false)
+    @if ( $ipad == false || $iphone == false)
 
-    <a class="btn-sm btn-primary btn-sm" href="sms:+0?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
-    __('Text') }}</a>
-@endif
+        <a class="btn-sm btn-primary btn-sm" href="sms:+?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+        __('Text') }}</a>
+    @endif
 
 
 
