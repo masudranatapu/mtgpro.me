@@ -20,17 +20,17 @@ class BusinessCard extends Model
 {
     use RepoResponse;
     use ApiResponse;
-    protected $appends = ['profile_pic', 'cover_pic', 'company_logo'];
+    protected $appends = ['profile_pic_url', 'cover_pic_url', 'company_logo_url'];
 
-    public function getProfilePicAttribute()
+    public function getProfilePicUrlAttribute()
     {
         return getPhoto($this->profile);
     }
-    public function getCoverPicAttribute()
+    public function getCoverPicUrlAttribute()
     {
         return getPhoto($this->cover);
     }
-    public function getCompanyLogoAttribute()
+    public function getCompanyLogoUrlAttribute()
     {
         return getPhoto($this->logo);
     }
