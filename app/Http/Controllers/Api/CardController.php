@@ -444,7 +444,6 @@ class CardController extends ResponceController
             $id = $businessField->icon_id;
             BusinessField::where('id', $id)->delete();
         } catch (\Exception $e) {
-            // dd($e->getMessage());
             DB::rollback();
             return $this->sendError("Exception Error", 'Content not deleted', 0);
         }
