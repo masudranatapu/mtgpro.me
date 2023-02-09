@@ -162,7 +162,7 @@ $tabindex =1;
                                                         </label>
                                                     </div>
                                                 </div> --}}
-                                                <div class="col-6 col-md-3">
+                                                {{-- <div class="col-6 col-md-3">
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ __('Hide Branding') }}</div>
                                                         <label class="form-check form-switch">
@@ -174,7 +174,7 @@ $tabindex =1;
                                                             <span class="help-block text-danger">{{$errors->first('hide_branding') }}</span>
                                                         @endif
                                                     </div>
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="col-6 col-md-3">
                                                     <div class="mb-3">

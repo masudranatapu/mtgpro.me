@@ -4617,16 +4617,16 @@
         },
         {
             "name": "stevebauman/location",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stevebauman/location.git",
-                "reference": "8ceac08537058138071534d49b17556cae2b656e"
+                "reference": "d6ff3d91039d4bdd4a60102537dd7e4d1b84dca0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stevebauman/location/zipball/8ceac08537058138071534d49b17556cae2b656e",
-                "reference": "8ceac08537058138071534d49b17556cae2b656e",
+                "url": "https://api.github.com/repos/stevebauman/location/zipball/d6ff3d91039d4bdd4a60102537dd7e4d1b84dca0",
+                "reference": "d6ff3d91039d4bdd4a60102537dd7e4d1b84dca0",
                 "shasum": ""
             },
             "require": {
@@ -4679,9 +4679,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stevebauman/location/issues",
-                "source": "https://github.com/stevebauman/location/tree/v6.5.0"
+                "source": "https://github.com/stevebauman/location/tree/v6.6.0"
             },
-            "time": "2022-05-12T13:11:31+00:00"
+            "time": "2023-02-08T16:20:35+00:00"
         },
         {
             "name": "stripe/stripe-php",
