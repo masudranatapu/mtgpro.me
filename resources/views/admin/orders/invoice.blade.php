@@ -60,16 +60,16 @@ $setting = getSetting();
                                             <strong>{{ $order->order_number }}</strong> <br>
 
                                             <p><b>Date:
-                                                    {{ date('d M Y', strtotime($order->transaction->transaction_date)) }}</b>
+                                                    {{ date('d M Y', strtotime($order->transaction->transaction_date ?? '')) }}</b>
                                             </p>
 
                                             <p>Status: <strong
-                                                    class="text-success">{{ $order->transaction->payment_status }}</strong>
+                                                    class="text-success">{{ $order->transaction->payment_status ?? '' }}</strong>
                                             </p>
                                         </div>
                                     </div>
                                     @php
-                                        $invoieDetails = json_decode($order->transaction->invoice_details, true);
+                                        $invoieDetails = json_decode($order->transaction->invoice_details ?? '', true);
                                     @endphp
                                     <div class="col-4">
 
@@ -78,11 +78,11 @@ $setting = getSetting();
                                             <span class="h4"><strong>Modern Contact Solutions For Today's Mortgage
                                                     Professional</strong></span>
                                             <address>
-                                                {{ $invoieDetails['from_billing_name'] }}</br>
-                                                {{ $invoieDetails['from_billing_email'] }}</br>
-                                                {{ $invoieDetails['from_billing_address'] }}</br>
-                                                {{ $invoieDetails['from_billing_state'] }}</br>
-                                                {{ $invoieDetails['from_billing_phone'] }}</br>
+                                                {{ $invoieDetails['from_billing_name'] ?? '' }}</br>
+                                                {{ $invoieDetails['from_billing_email'] ?? '' }}</br>
+                                                {{ $invoieDetails['from_billing_address'] ?? '' }}</br>
+                                                {{ $invoieDetails['from_billing_state'] ?? '' }}</br>
+                                                {{ $invoieDetails['from_billing_phone'] ?? '' }}</br>
                                             </address>
                                         </div>
                                     </div>
@@ -104,14 +104,20 @@ $setting = getSetting();
                                             @foreach ($order->order_details as $key => $detail)
                                                 <tr>
                                                     <td>{{ $detail->product->product_name ?? '' }}</td>
-                                                    <td>{{ getPrice($detail->unit_price) }}</td>
-                                                    <td>{{ $detail->quantity }}</td>
+                                                    <td>{{ getPrice($detail->unit_price) ?? 0 }}</td>
+                                                    <td>{{ $detail->quantity ?? 0 }}</td>
                                                     <td>{{ getPrice($detail->unit_price * $detail->quantity) }} </td>
                                                 </tr>
                                             @endforeach
                                         @endif
 
-
+                                        @if (isset($order->coupon_id))
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td><strong>Coupon Discount:</strong></td>
+                                                <td><strong>{{ getPrice($order->coupon_discount) }}</strong></td>
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <td colspan="2"></td>
                                             <td><strong>Total:</strong></td>
@@ -143,12 +149,12 @@ $setting = getSetting();
                                         </tr>
                                         <tr class="bg-default">
                                             <td>Payment Method:
-                                                <strong>{{ $order->transaction->payment_gateway_name }}</strong>
+                                                <strong>{{ $order->transaction->payment_gateway_name ?? '' }}</strong>
                                             </td>
                                             <td colspan="1"></td>
                                             <td class="text-success">Payment:</td>
                                             <td class="text-success">
-                                                {{ getPrice($order->transaction->transaction_amount) }}</td>
+                                                {{ getPrice($order->transaction->transaction_amount ?? 0) }}</td>
                                         </tr>
                                         {{-- <tr>
                                                 <td colspan="2"></td>

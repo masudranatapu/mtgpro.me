@@ -18,28 +18,29 @@
                     @if (session('cart'))
                         @foreach (session('cart') as $id => $details)
                             @php
-                            $total += $details['price'] * $details['quantity'];
-                            $line_total = $details['price'] * $details['quantity'];
+                                $total += $details['price'] * $details['quantity'];
+
+                                $line_total = $details['price'] * $details['quantity'];
 
                             @endphp
+
                             <tr data-id="{{ $id }}" class="align-middle">
                                 <td data-th="Photo">
 
-                                    <img src="{{ getPhoto($details['image']) }}" width="50"
-                                        class="img-responsive" />
+                                    <img src="{{ getPhoto($details['image']) }}" width="50" class="img-responsive" />
 
 
                                 </td>
                                 <td data-th="Product">
                                     <span>{{ $details['name'] }}</span>
                                 </td>
-                                <td data-th="Price">${{ number_format($details['price'],2) }}</td>
+                                <td data-th="Price">{{ getPrice($details['price']) }}</td>
                                 <td data-th="Quantity">
                                     <input type="number" value="{{ $details['quantity'] }}"
-                                        class="form-control quantity update-cart" />
+                                        class="form-control quantity update-cart allownumericwithoutdecimal"  />
                                 </td>
                                 <td data-th="Subtotal" class="text-center">
-                                    ${{ number_format($line_total,2) }}
+                                    {{ getPrice($line_total) }}
                                 </td>
                                 <td class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm remove-from-cart"><i
@@ -51,22 +52,60 @@
                         <tr>
                             <td class="text-center text-danger" colspan="5">
                                 <h4>No product available in the cart</h4>
+
                             </td>
                         </tr>
                     @endif
                 </tbody>
                 @if (session('cart'))
                     <tfoot>
+                        <tr>
+                            <td colspan="2">
+                                @if (session()->has('coupon'))
+                                    <p>Remove coupon</p>
+                                @else
+                                    <p>Apply coupon</p>
+                                @endif
+                            </td>
+                            <td>
 
+                            </td>
+                            <td>
+
+                                <input type="text" class="form-control" @if (session()->has('coupon')) disabled @endif
+                                    id="couponCode" value="{{ session('coupon')->coupon_code ?? '' }}" placeholder="Enter coupon code">
+
+                            </td>
+                            <td>
+                                @if (session()->has('coupon'))
+                                <button type="button" class="btn btn-primary" id="couponRemove">Remove</button>
+                            @else
+                                <button type="button" class="btn btn-primary" id="couponApply">Apply</button>
+                            @endif
+                            </td>
+                            <td id="cupponPrice" class="text-center">
+                                @if (session()->has('coupon'))
+                                    - {{ getPrice(session('coupon')->amount) }}
+                                @endif
+                            </td>
+                        </tr>
                         <tr>
 
-                            <td colspan="3" class="text-end">
+                            <td colspan="4" class="text-end">
                                 <h3><strong>Total : </strong></h3>
                             </td>
                             <td class="text-center">
-                                <h3><strong> ${{ number_format($total,2) }}</strong></h3>
+                                <h3><strong>
+                                        @if (session()->has('coupon'))
+                                            {{ getprice($total - session('coupon')->amount) }}
+                                        @else
+                                            {{ getprice($total) }}
+                                        @endif
+                                    </strong>
+                                </h3>
                             </td>
-                            <td></td>
+                            <td>
+                            </td>
 
                         </tr>
 
@@ -99,6 +138,14 @@
 
 @push('custom_js')
     <script type="text/javascript">
+
+$(".allownumericwithoutdecimal").on("keypress keyup blur",function (event) {
+           $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+});
+
         $(".update-cart").change(function(e) {
             e.preventDefault();
             var ele = $(this);
@@ -140,5 +187,69 @@
                 });
             }
         });
+
+        $('#couponApply').click(function() {
+            let code = $('#couponCode').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('check.coupon') }}",
+                data: {
+                    code: code
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data) {
+                        const {
+                            status,
+                            message
+                        } = data;
+
+                        if (status) {
+                            toastr.success(message);
+                            window.location.reload();
+
+                        } else {
+                            toastr.error(message);
+                        }
+
+                    }
+                }
+            });
+        });
+
+        $('#couponRemove').click(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('remove.coupon') }}",
+                success: function(data) {
+                    console.log(data);
+                    if (data) {
+                        const {
+                            status,
+                            message
+                        } = data;
+
+                        if (status) {
+                            toastr.success(message);
+                            window.location.reload();
+
+                        } else {
+                            toastr.error(message);
+                        }
+
+                    }
+                }
+            });
+        })
     </script>
 @endpush

@@ -1,7 +1,7 @@
 <!-- sidebar menu -->
 <?php
 $settings = getSetting();
-
+$plan= getPlan(Auth::user()->id);
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ route('user.card') }}" class="brand-link">
@@ -78,7 +78,8 @@ $settings = getSetting();
                         {{ __('Insights') }}
                     </a>
                 </li>
-                @if (isAnnualPlan(Auth::user()->id))
+                {{-- @if (isAnnualPlan(Auth::user()->id)) --}}
+                @if ($plan->free_marketing_material=='1')
                 <li class="nav-item">
                     <a href="{{ route('user.free-marketing-material') }}"
                         class="nav-link @yield('marketing_metarials')">

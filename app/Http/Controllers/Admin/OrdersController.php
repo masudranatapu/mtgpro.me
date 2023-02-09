@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AllMail;
+use App\Models\EmailTemplate;
 use App\Models\Order;
 use App\Models\ProductOrders;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
@@ -138,6 +141,49 @@ class OrdersController extends Controller
         $order->status = $request->status;
         $order->save();
         Toastr::success(trans('Order Status Chanage Successfully'), 'Success');
+
+        $user = User::find($order->user_id);
+
+        $content = $this->orderStatusChangeMail($order);
+        Mail::to($user->email)->send(new AllMail($content));
         return redirect()->back();
+    }
+
+
+    public function orderStatusChangeMail(Order $order)
+    {
+        $order->load('transaction');
+        $status = "";
+        if (isset($order)) {
+            if ($order->status = 1) {
+                $status = "on The Way";
+            } else if ($order->status = 1) {
+                $status = "Deliverd";
+            }
+
+            $user = User::find($order->user_id);
+
+            $tempete = EmailTemplate::where('slug', 'plan-purchase')->first();
+
+            $content = $tempete->body;
+
+            if (isset($user->username)) {
+
+                $content = preg_replace("/{{user_name}}/", $user->username, $content);
+            }
+
+            if (isset($user->total_price)) {
+                $content = preg_replace("/{{order_cost}}/", $user->total_price, $content);
+            }
+            if (isset($user->transaction)) {
+
+                $content = preg_replace("/{{transaction_number}}/", $user->transaction->transaction_id, $content);
+            }
+            if (isset($user->status)) {
+
+                $content = preg_replace("/{{order_status}}/", $status, $content);
+            }
+        }
+        return $content;
     }
 }

@@ -137,6 +137,7 @@
                     if (data.status) {
                         toastr.success('Product added to cart successfully!')
                         $('#cartCounter').html(data.count);
+                        $('.product_id_'+id).html('Added')
                     } else {
                         toastr.error('Something Worng..!')
                     }
@@ -146,6 +147,9 @@
                 }
             });
 
+        }
+        function addedToCart(id){
+            toastr.error('Already Added to Cart!');
         }
     </script>
 </body>

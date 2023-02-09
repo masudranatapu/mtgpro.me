@@ -108,7 +108,7 @@ return [
     */
 
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     | Available locales
     |--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ return [
         'Russian' => 'ru',
         'French' => 'fr',
     ],
-     'languages' => [
+    'languages' => [
         'ar' => 'Arabic',
         'bn' => 'Bangla',
         'bg' => 'Bulgarian',
@@ -240,6 +240,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 
@@ -296,6 +297,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+
 
     ],
 

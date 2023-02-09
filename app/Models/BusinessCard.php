@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 use File;
 use App\Models\SocialIcon;
 use App\Traits\ApiResponse;
@@ -11,12 +13,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class BusinessCard extends Model
 {
     use RepoResponse;
     use ApiResponse;
+    protected $appends = ['profile_pic_url', 'cover_pic_url', 'company_logo_url'];
+
+    public function getProfilePicUrlAttribute()
+    {
+        return getPhoto($this->profile);
+    }
+    public function getCoverPicUrlAttribute()
+    {
+        return getPhoto($this->cover);
+    }
+    public function getCompanyLogoUrlAttribute()
+    {
+        return getPhoto($this->logo);
+    }
+
+
+
 
     public function getPaginatedList($request, int $paginate = 20)
     {
@@ -54,12 +74,25 @@ class BusinessCard extends Model
     public function getView($request, $id)
     {
         $row = DB::table('business_cards')->select('business_cards.*', 'users.plan_details')
-        ->leftJoin('users', 'users.id', '=', 'business_cards.user_id')
-        // ->where('business_cards.status',1)
-        ->where('business_cards.id', $id)
-        // ->with('business_card_fields')
-        ->where('business_cards.user_id', Auth::user()->id)->first();
-        $row->business_card_fields = BusinessField::select('business_fields.*','social_icon.icon_color','social_icon.icon_title')->where('business_fields.card_id',$row->id)->join('social_icon','social_icon.id','=','business_fields.icon_id')->get();
+            ->leftJoin('users', 'users.id', '=', 'business_cards.user_id')
+            // ->where('business_cards.status',1)
+            ->where('business_cards.id', $id)
+            // ->with('business_card_fields')
+            ->where('business_cards.user_id', Auth::user()->id)->first();
+        $row->business_card_fields = BusinessField::select('business_fields.*', 'social_icon.icon_color', 'social_icon.icon_title')->where('business_fields.card_id', $row->id)->join('social_icon', 'social_icon.id', '=', 'business_fields.icon_id')->get();
+
+        return $row;
+    }
+    public function getViewApi($request, $id)
+    {
+
+        $row = DB::table('business_cards')->select('business_cards.*', 'users.plan_details')
+            ->leftJoin('users', 'users.id', '=', 'business_cards.user_id')
+            // ->where('business_cards.status',1)
+            ->where('business_cards.id', $id)
+            // ->with('business_card_fields')
+            ->where('business_cards.user_id', Auth::guard('api')->id())->first();
+        $row->business_card_fields = BusinessField::select('business_fields.*', 'social_icon.icon_color', 'social_icon.icon_title')->where('business_fields.card_id', $id)->join('social_icon', 'social_icon.id', '=', 'business_fields.icon_id')->get();
 
         return $row;
     }
@@ -305,24 +338,20 @@ class BusinessCard extends Model
             $icon->created_at = date('Y-m-d H:i:s');
 
             // $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo')
-            if(($social_icon->type=='link')  &&  ($social_icon->icon_name == 'embeddedvideo')){
+            if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
                 $icon->content =  $this->getYoutubeEmbad($request->content);
-            }
-
-            elseif ($request->hasFile('content')) {
+            } elseif ($request->hasFile('content')) {
 
                 $icon_ = $request->file('content');
                 $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
                 $base_name = explode(' ', $base_name);
                 $base_name = implode('-', $base_name);
                 $base_name = Str::lower($base_name);
-                $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                $image_name = $base_name . "-" . uniqid() . "." . $icon_->getClientOriginalExtension();
                 $file_path = 'assets/img/icon/custom_icon/';
                 $icon_->move($file_path, $image_name);
-                $icon->content = asset($file_path.$image_name);
-
-            }
-            else{
+                $icon->content = asset($file_path . $image_name);
+            } else {
                 $icon->content  = $request->content;
             }
 
@@ -343,35 +372,33 @@ class BusinessCard extends Model
             // }
 
 
-            if(!is_null($request->file('logo')))
-            {
-              $icon_ = $request->file('logo');
-              $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
-              $base_name = explode(' ', $base_name);
-              $base_name = implode('-', $base_name);
-              $base_name = Str::lower($base_name);
-              $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
-              $file_path = 'assets/img/icon/custom_icon/';
-              if (!File::exists($file_path)) {
-                File::makeDirectory($file_path, 777, true);
-              }
-             $icon_->move($file_path, $image_name);
-             $icon->icon_image = $file_path.$image_name;
-            }
-            else{
+            if (!is_null($request->file('logo'))) {
+                $icon_ = $request->file('logo');
+                $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                $base_name = explode(' ', $base_name);
+                $base_name = implode('-', $base_name);
+                $base_name = Str::lower($base_name);
+                $image_name = $base_name . "-" . uniqid() . "." . $icon_->getClientOriginalExtension();
+                $file_path = 'assets/img/icon/custom_icon/';
+                if (!File::exists($file_path)) {
+                    File::makeDirectory($file_path, 777, true);
+                }
+                $icon_->move($file_path, $image_name);
+                $icon->icon_image = $file_path . $image_name;
+            } else {
                 $icon->icon_image = $social_icon->icon_image;
             }
             $icon->save();
-            $icon = BusinessField::select('business_fields.*','social_icon.icon_color')->where('business_fields.id',$icon->id)
-            ->leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
-            ->first();
+            $icon = BusinessField::select('business_fields.*', 'social_icon.icon_color')->where('business_fields.id', $icon->id)
+                ->leftJoin('social_icon', 'social_icon.id', '=', 'business_fields.icon_id')
+                ->first();
             $icon_color = $social_icon->icon_color;
-            if($card->theme_color){
+            if ($card->theme_color) {
                 $icon_color = $card->theme_color;
             }
 
-            $data['icon_html'] = view('user.card.partial._single_icon', compact('icon','icon_color'))->render();
-            $data['html'] = view('user.card.partial._social_icon', compact('icon','icon_color'))->render();
+            $data['icon_html'] = view('user.card.partial._single_icon', compact('icon', 'icon_color'))->render();
+            $data['html'] = view('user.card.partial._social_icon', compact('icon', 'icon_color'))->render();
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
@@ -405,7 +432,7 @@ class BusinessCard extends Model
                 }
                 $icon = BusinessField::findOrFail($request->id);
                 $social_icon    = SocialIcon::findOrFail($icon->icon_id);
-                if(($social_icon->type=='link')  &&  ($social_icon->icon_name == 'embeddedvideo')){
+                if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
                     $icon->content =  $this->getYoutubeEmbad($request->content);
                 }
                 // if($social_icon->type=='embed'){
@@ -417,12 +444,11 @@ class BusinessCard extends Model
                     $base_name = explode(' ', $base_name);
                     $base_name = implode('-', $base_name);
                     $base_name = Str::lower($base_name);
-                    $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
+                    $image_name = $base_name . "-" . uniqid() . "." . $icon_->getClientOriginalExtension();
                     $file_path = 'assets/img/icon/custom_icon/';
                     $icon_->move($file_path, $image_name);
-                    $icon->content = asset($file_path.$image_name);
-                }
-                else{
+                    $icon->content = asset($file_path . $image_name);
+                } else {
                     $icon->content  = $request->content;
                 }
                 $icon->label =  $request->label;
@@ -437,22 +463,20 @@ class BusinessCard extends Model
                 //         }
                 //     }
                 // }
-                if(!is_null($request->file('logo')))
-                {
-                  $icon_ = $request->file('logo');
-                  $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
-                  $base_name = explode(' ', $base_name);
-                  $base_name = implode('-', $base_name);
-                  $base_name = Str::lower($base_name);
-                  $image_name = $base_name."-".uniqid().".".$icon_->getClientOriginalExtension();
-                  $file_path = 'assets/img/icon/custom_icon/';
-                  if (!File::exists($file_path)) {
-                    File::makeDirectory($file_path, 777, true);
-                  }
-                 $icon_->move($file_path, $image_name);
-                 $icon->icon_image = $file_path.$image_name;
-                }
-                else{
+                if (!is_null($request->file('logo'))) {
+                    $icon_ = $request->file('logo');
+                    $base_name = preg_replace('/\..+$/', '', $icon_->getClientOriginalName());
+                    $base_name = explode(' ', $base_name);
+                    $base_name = implode('-', $base_name);
+                    $base_name = Str::lower($base_name);
+                    $image_name = $base_name . "-" . uniqid() . "." . $icon_->getClientOriginalExtension();
+                    $file_path = 'assets/img/icon/custom_icon/';
+                    if (!File::exists($file_path)) {
+                        File::makeDirectory($file_path, 777, true);
+                    }
+                    $icon_->move($file_path, $image_name);
+                    $icon->icon_image = $file_path . $image_name;
+                } else {
                     $icon->icon_image = $social_icon->icon_image;
                 }
                 $icon->update();
@@ -484,7 +508,7 @@ class BusinessCard extends Model
             // $icon = BusinessField::leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
             // ->select('business_fields.*','social_icon.icon_color')
             // ->where('business_fields.id', $sid)->first();
-            $data['html'] = view('user.card.partial._sicon_add', compact('icon','card'))->render();
+            $data['html'] = view('user.card.partial._sicon_add', compact('icon', 'card'))->render();
             // dd($data);
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -500,9 +524,9 @@ class BusinessCard extends Model
         DB::beginTransaction();
         try {
             $sid = $request->id;
-            $icon = BusinessField::leftJoin('social_icon','social_icon.id','=','business_fields.icon_id')
-            ->select('business_fields.*','social_icon.icon_color','social_icon.icon_title')
-            ->where('business_fields.id', $sid)->first();
+            $icon = BusinessField::leftJoin('social_icon', 'social_icon.id', '=', 'business_fields.icon_id')
+                ->select('business_fields.*', 'social_icon.icon_color', 'social_icon.icon_title')
+                ->where('business_fields.id', $sid)->first();
             $data['html'] = view('user.card.partial._sicon_edit', compact('icon'))->render();
         } catch (\Exception $e) {
             // dd($e->getMessage());
@@ -607,37 +631,33 @@ class BusinessCard extends Model
     {
         DB::beginTransaction();
         try {
-        $plan = Plan::findOrFail($plan_id);
-        $take = $plan->no_of_vcards;
-        $keep =  BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->latest()->take($take)->pluck('id');
-        BusinessCard::where('user_id', Auth::user()->id)->where('status',1)->whereNotIn('id', $keep)->update([
-            'status' => 0,
-        ]);
-    } catch (\Exception $e) {
-        DB::rollback();
-        return false;
-    }
+            $plan = Plan::findOrFail($plan_id);
+            $take = $plan->no_of_vcards;
+            $keep =  BusinessCard::where('user_id', Auth::user()->id)->where('status', 1)->latest()->take($take)->pluck('id');
+            BusinessCard::where('user_id', Auth::user()->id)->where('status', 1)->whereNotIn('id', $keep)->update([
+                'status' => 0,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
         DB::commit();
         return true;
     }
 
 
-    public function getYoutubeEmbad($url){
+    public function getYoutubeEmbad($url)
+    {
         $query = parse_url($url . '&mkds');
-        if(isset($query['query'])){
-           $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
+        if (isset($query['query'])) {
+            $remove_extra = substr($query['query'], 0, strpos($query['query'], "&"));
             $_query = $remove_extra;
-            $video_id = trim($_query,'v=');
-        }else{
+            $video_id = trim($_query, 'v=');
+        } else {
             $video_id = explode('/', $url);
             $video_id = end($video_id);
-            }
-        $video_file = 'https://www.youtube.com/embed/'.$video_id;
+        }
+        $video_file = 'https://www.youtube.com/embed/' . $video_id;
         return $video_file;
     }
-
-
-
-
-
 }

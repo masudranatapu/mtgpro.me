@@ -131,14 +131,14 @@
                     <div class="col-lg-5">
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="card-title">{{ __('Upgrade Plan') }}</h6>
+                                <h6 class="card-title">{{ __('Product Purchese') }}</h6>
                                 <div class="card-table">
                                     <table class="table">
                                         <thead class="bg-white">
                                             <tr>
                                                 <th class="w-1">{{ __('Product') }}</th>
                                                 <th class="w-1">{{ __('Quantity') }}</th>
-                                                <th class="w-1">{{ __('Price') }}</th>
+                                                <th class="w-1 text-end">{{ __('Price') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -156,7 +156,7 @@
                                                     <td>
                                                         {{ $product['quantity'] }}
                                                     </td>
-                                                    <td>
+                                                    <td class="text-end">
                                                         {{ getPrice($product['quantity'] * $product['price']) }}
                                                     </td>
                                                 </tr>
@@ -164,12 +164,34 @@
 
                                         </tbody>
                                         <tfoot>
-                                            <td colspan="2" class="text-end">
-                                                <strong>Total :</strong>
-                                            </td>
-                                            <td>
-                                                {{ getPrice($total) }}
-                                            </td>
+
+                                            @if (session()->has('coupon'))
+                                                <tr>
+
+                                                    <td colspan="2" class="text-end">
+                                                        <strong>Coupon Discount :</strong>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        {{ getPrice(session('coupon')->amount) }}
+                                                    </td>
+                                                </tr>
+                                            @else
+                                            @endif
+                                            <tr>
+
+
+
+                                                <td colspan="2" class="text-end">
+                                                    <strong>Total :</strong>
+                                                </td>
+                                                <td class="text-end">
+                                                    @if (session()->has('coupon'))
+                                                        {{ getPrice($total - session('coupon')->amount) }}
+                                                    @else
+                                                        {{ getPrice($total) }}
+                                                    @endif
+                                                </td>
+                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -319,13 +341,8 @@
                                             <div class="mb-3 form-group">
                                                 <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
                                                     <span class="text-danger">*</span></label>
-                                                <input id="billing_phone"
-                                                name="billing_phone"
-                                                class="form-control"
-                                                type="tel"
-                                                required
-                                                value="{{ Auth::user()->billing_phone }}"
-                                                >
+                                                <input id="billing_phone" name="billing_phone" class="form-control"
+                                                    type="tel" required value="{{ Auth::user()->billing_phone }}">
                                             </div>
                                         </div>
 

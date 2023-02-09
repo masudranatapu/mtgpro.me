@@ -2,6 +2,8 @@
 @section('shop', 'active')
 <?php
 $rows = $data ?? [];
+$cart = session('cart');
+
 ?>
 @section('title') {{ __('Shop') }} @endsection
 
@@ -50,16 +52,23 @@ $rows = $data ?? [];
                                 </div>
                                 <div class="product_content">
                                     <div class="product_title text-center mb-4">
-                                        <h3><a
-                                                href="{{ route('product.details', ['product' => $product->product_slug]) }}">{{ $product->product_name }}</a>
+                                        <h3><a href="{{ route('product.details', ['product' => $product->product_slug]) }}">{{ $product->product_name }}</a>
                                         </h3>
                                     </div>
                                     <div class="product_article">
                                         <p>
+                                            @if (array_key_exists($product->id,$cart))
                                             <a href="javascript:void(0)" data-id="{{ $product->id }}"
-                                                onclick="addToCart({{ $product->id }})">
+                                                onclick="addedToCart({{ $product->id }})" >
+                                                Added
+                                            </a>
+                                            @else
+                                            <a href="javascript:void(0)" data-id="{{ $product->id }}"
+                                                onclick="addToCart({{ $product->id }})" class="product_id_{{ $product->id }}">
                                                 Add to Cart
                                             </a>
+                                            @endif
+
                                             @if (isset($product->unit_price))
                                                 <del class="float-end">{{ getprice($product->unit_price_regular) }}</del>
                                                 <span class="float-end">{{ getprice($product->unit_price) }}</span>

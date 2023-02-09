@@ -164,6 +164,9 @@
                             <a href="{{ route('admin.orders') }}" class="dropdown-item @yield('product_ordrs')">
                                 {{ __('Orders') }}
                             </a>
+                            <a href="{{ route('admin.coupon.index') }}" class="dropdown-item @yield('coupon')">
+                                {{ __('Coupon') }}
+                            </a>
 
                             <a href="{{ route('admin.settings') }}"
                                 class="dropdown-item @yield('setting')">{{ __('General Settings') }}</a>

@@ -49,6 +49,12 @@
     }
 </style>
 @endpush
+
+@php
+$iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+$ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+@endphp
+
 @section('dashboard', 'active')
 @section('content')
 <div class="content-wrapper">
@@ -71,9 +77,15 @@
                         <a class="btn-sm btn-primary btn-sm"
                             href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Email') }}</a>
-                        <a class="btn-sm btn-primary btn-sm"
-                            href="sms:?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
-                            __('Text') }}</a>
+
+    @if ( $ipad == false || $iphone == false)
+
+        <a class="btn-sm btn-primary btn-sm" href="sms:+?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+        __('Text') }}</a>
+    @endif
+
+
+
                     </div>
                 </div>
             </div>

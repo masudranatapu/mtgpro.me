@@ -144,9 +144,9 @@
                                     </a>
                                 </div>
                                 <?php
-                                $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-                                $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-                                $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+                                // $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
+                                // $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+                                // $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                                 ?>
                                 {{-- @dd($cardinfo->contacts) --}}
                                 @if (!empty($cardinfo->contacts))
@@ -405,19 +405,13 @@
                     @dd(3);
                     {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
                     @endif --}}
-                        @if ($user_plan->hide_branding)
+
                             <div class="copyright_article">
-                                @if (isFreePlan($cardinfo->user_id))
-                                    <p> Copyright © <a href="{{ route('home') }}">{{ $settings->site_name }}</a>
-                                        All rights
-                                        reserved.</p>
-                                @else
-                                    <p> Copyright © <a href="javascript:void(0)">{{ $cardinfo->title }}</a> All
-                                        rights
-                                        reserved.</p>
-                                @endif
+                                <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.</p>
+
                             </div>
-                        @endif
+
+
                     </div>
                 </div>
                 <!-- offcanvas contact button -->

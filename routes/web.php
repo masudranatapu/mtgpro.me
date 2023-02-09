@@ -40,14 +40,17 @@ Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'u
 
 
 
-Route::get('disclaimer', ['as'=>'disclaimer','uses'=>'HomeController@getDisclaimer']);
-Route::get('cart', ['as'=>'cart','uses'=>'ProductController@cart']);
-Route::get('add-to-cart/{id}', ['as'=>'add.to.cart','uses'=>'ProductController@addToCart']);
-Route::post('add-to-cart/', ['as'=>'addtocart','uses'=>'ProductController@addToCartPost']);
-Route::patch('update-cart', ['as'=>'update.cart','uses'=>'ProductController@update']);
-Route::delete('remove-from-cart', ['as'=>'remove.from.cart','uses'=>'ProductController@remove']);
-Route::get('products/checkout', ['as'=>'product.checkout','uses'=>'ProductCheckoutController@checkout']);
-Route::post('products/transection', ['as'=>'product.orderCheckout','uses'=>'ProductCheckoutController@orderCheckout']);
+Route::get('disclaimer', ['as' => 'disclaimer', 'uses' => 'HomeController@getDisclaimer']);
+Route::get('cart', ['as' => 'cart', 'uses' => 'ProductController@cart']);
+Route::get('add-to-cart/{id}', ['as' => 'add.to.cart', 'uses' => 'ProductController@addToCart']);
+Route::post('add-to-cart/', ['as' => 'addtocart', 'uses' => 'ProductController@addToCartPost']);
+Route::patch('update-cart', ['as' => 'update.cart', 'uses' => 'ProductController@update']);
+Route::delete('remove-from-cart', ['as' => 'remove.from.cart', 'uses' => 'ProductController@remove']);
+Route::post('check/coupon', ['as' => 'check.coupon', 'uses' => 'ProductController@checkCoupon']);
+Route::post('remove/coupon', ['as' => 'remove.coupon', 'uses' => 'ProductController@removeCoupon']);
+Route::get('products/checkout', ['as' => 'product.checkout', 'uses' => 'ProductCheckoutController@checkout']);
+Route::post('products/transection', ['as' => 'product.orderCheckout', 'uses' => 'ProductCheckoutController@orderCheckout']);
+
 
 
 
@@ -94,9 +97,9 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
 
     Route::get('free-marketing-material', ['as' => 'free-marketing-material', 'uses' => 'DashboardControler@getFreeMarketing']);
     Route::get('calculator', ['as' => 'calculator', 'uses' => 'DashboardControler@getCalculator']);
-    Route::get('/my-order', ['as'=>'myorder','uses'=>'DashboardControler@myOrder']);
-    Route::get('/invoice/{id}', ['as'=>'orders.invoice','uses'=>'DashboardControler@invoice']);
-    Route::get('free-marketing-material-details/{id}', ['as'=>'marketing.materials.details','uses'=>'DashboardControler@marketingMaterialDetails']);
+    Route::get('/my-order', ['as' => 'myorder', 'uses' => 'DashboardControler@myOrder']);
+    Route::get('/invoice/{id}', ['as' => 'orders.invoice', 'uses' => 'DashboardControler@invoice']);
+    Route::get('free-marketing-material-details/{id}', ['as' => 'marketing.materials.details', 'uses' => 'DashboardControler@marketingMaterialDetails']);
 
 
     Route::get('cancel-plan/stripe', ['as' => 'cancel-plan.stripe', 'uses' => 'StripeController@cancelCurrentPlan']);

@@ -17,26 +17,19 @@ class Plan extends Model
     ];
 
 
-    public function getPlanList($request, int $per_page = 20){
-        $data = $this->where('status',1)->orderBy('id','ASC')->paginate($per_page);
+    public function getPlanList($request, int $per_page = 20)
+    {
+        $data = $this->where('status', 1)->orderBy('id', 'ASC')->paginate($per_page);
         return $this->formatResponse(true, '', 'user.plans', $data);
     }
 
 
-    public function planValidity($planId){
+    public function planValidity($planId)
+    {
         $plan = DB::table('plans')->where('id', $planId)->first();
         $term_days = $plan->validity;
         $plan_validity = Carbon::now();
         $plan_validity->addDays($term_days);
         return $plan_validity;
     }
-
-
-
-
-
-
-
-
-
 }

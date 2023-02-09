@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
+use App\Models\Order;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
+    function __construct()
+    {
+        // $this->middleware('auth')->only(['cart']);
+    }
+
 
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return view()
      */
     public function cart()
     {
@@ -69,15 +78,6 @@ class ProductController extends Controller
         return redirect()->back()->with('success',);
     }
 
-    /**
-
-     * Write code on Method
-
-     *
-
-     * @return response()
-
-     */
 
     public function update(Request $request)
 
@@ -94,33 +94,64 @@ class ProductController extends Controller
         }
     }
 
-
-
-    /**
-
-     * Write code on Method
-
-     *
-
-     * @return response()
-
-     */
-
     public function remove(Request $request)
 
     {
-
         if ($request->id) {
-
             $cart = session()->get('cart');
-
             if (isset($cart[$request->id])) {
-
                 unset($cart[$request->id]);
-
                 session()->put('cart', $cart);
             }
             Toastr::error('Product removed from cart successfully');
         }
+    }
+
+    public function checkCoupon(Request $request)
+    {
+        $result = Coupon::where('coupon_code', $request->code)->first();
+
+        if (isset($result)) {
+            $date = date('Y-m-d');
+            $date = date('Y-m-d', strtotime($date));
+            $couponValidDateBegin = date('Y-m-d', strtotime($result->valid_from));
+            $couponValidDateEnd = date('Y-m-d', strtotime($result->valid_to));
+
+            if (($date >= $couponValidDateBegin) && ($date <= $couponValidDateEnd)) {
+                if ($result->coupon_for == "for_specific_user") {
+
+                    if ($result->user_id == Auth::id()) {
+                        $orderResult = Order::where('coupon_id', $result->id)->where('user_id', Auth::id())->first();
+                        if (isset($orderResult)) {
+                            return response()->json(['status' => false, 'message' => 'Coupon Already Used']);
+                        } else {
+                            Session::put('coupon', $result);
+                            return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                        }
+                    } else {
+                        return response()->json(['status' => false, 'message' => 'Please login first']);
+                    }
+                } else {
+                    $orderResult = Order::where('coupon_id', $result->id)->where('user_id', Auth::id())->first();
+                    if (isset($orderResult)) {
+                        return response()->json(['status' => false, 'message' => 'Coupon Already Used']);
+                    } else {
+                        Session::put('coupon', $result);
+                        return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                    }
+                }
+            } else {
+                return response()->json(['status' => false, 'message' => 'Coupon Expired']);
+            }
+        } else {
+            return response()->json(['status' => false, 'message' => 'Invalid Coupon']);
+        }
+    }
+
+
+    public function removeCoupon(Request $request)
+    {
+        Session::forget('coupon');
+        return response()->json(['status' => true, 'message' => 'Coupon removed']);
     }
 }

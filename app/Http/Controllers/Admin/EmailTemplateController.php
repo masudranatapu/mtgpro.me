@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\EmailTemplate;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
@@ -19,7 +20,7 @@ class EmailTemplateController extends Controller
 
     public function edit($id)
     {
-        $emailtemplates = EmailTemplate::findOrFail($id);
+        $emailtemplates = EmailTemplate::with('hasTags')->findOrFail($id);
         return view('admin.emailtemplate.edit', compact('emailtemplates'));
     }
 
@@ -33,6 +34,7 @@ class EmailTemplateController extends Controller
 
         EmailTemplate::findOrFail($id)->update([
             'type' => $request->type,
+            'slug' => Str::slug($request->type),
             'subject' => $request->subject,
             'body' => $request->body,
             'updated_at' => Carbon::now(),

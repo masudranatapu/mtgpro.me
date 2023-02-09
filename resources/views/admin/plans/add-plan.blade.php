@@ -162,7 +162,7 @@ $tabindex =1;
                                                         </label>
                                                     </div>
                                                 </div> --}}
-                                                <div class="col-6 col-md-3">
+                                                {{-- <div class="col-6 col-md-3">
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ __('Hide Branding') }}</div>
                                                         <label class="form-check form-switch">
@@ -172,6 +172,20 @@ $tabindex =1;
                                                         </label>
                                                         @if ($errors->has('hide_branding'))
                                                             <span class="help-block text-danger">{{$errors->first('hide_branding') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> --}}
+
+                                                <div class="col-6 col-md-3">
+                                                    <div class="mb-3">
+                                                        <div class="form-label">{{ __('Free Marketing Material') }}</div>
+                                                        <label class="form-check form-switch">
+                                                            <input class="form-check-input @error('free_marketing_material') is-invalid @enderror " type="checkbox"
+                                                                name="free_marketing_material" tabindex="{{ $tabindex++ }}">
+
+                                                        </label>
+                                                        @if ($errors->has('free_marketing_material'))
+                                                            <span class="help-block text-danger">{{$errors->first('free_marketing_material') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
