@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class ResponceController extends Controller
 {
@@ -63,7 +64,6 @@ class ResponceController extends Controller
             $image_base64 = base64_decode($image_parts[1]);
             $fileName = uniqid() . '.' . $image_type;
             $filePath = $folderPath . $fileName;
-
             file_put_contents($filePath, $image_base64);
 
             return $path . $fileName;

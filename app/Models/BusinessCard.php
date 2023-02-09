@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use File;
+use Illuminate\Support\Facades\File;
 use App\Models\SocialIcon;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Str;

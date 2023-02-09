@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -168,8 +169,6 @@ class CardController extends ResponceController
 
         ];
 
-
-
         $validation = Validator::make($request->all(), $rules);
 
 
@@ -252,8 +251,8 @@ class CardController extends ResponceController
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
         } catch (\Exception $e) {
-            return $this->sendError("Exception Error", $e->getMessage());
             DB::rollback();
+            return $this->sendError("Exception Error", $e->getMessage());
         }
         DB::commit();
 
@@ -345,21 +344,19 @@ class CardController extends ResponceController
             $fields->created_at = date('Y-m-d H:i:s');
             $fields->save();
         } catch (Exception $e) {
-            return $this->sendError("Exception Error", $e->getMessage());
             DB::rollback();
+            dd($e);
+            return $this->sendError("Exception Error", $e->getMessage());
         }
         DB::commit();
 
 
-        return $this->sendResponse(200, "Card create Successfully", $businessCard, true,);
+        return $this->sendResponse(200, "Card Updated Successfully", $businessCard, true,);
     }
 
 
     public function addCardIcon(Request $request)
     {
-
-
-
         $data = [];
         DB::beginTransaction();
         try {
@@ -436,13 +433,101 @@ class CardController extends ResponceController
         }
     }
 
-    public function removeCardIcon(BusinessField $businessField)
+
+
+
+    public function siconUpdate($request)
     {
 
+        $data = [];
         DB::beginTransaction();
         try {
-            $id = $businessField->icon_id;
-            BusinessField::where('id', $id)->delete();
+
+            $sid = $request->id;
+            if ($request->status) {
+                $status = $request->status;
+                DB::table('business_fields')->where('id', $sid)->update(['status' => $status]);
+            } else {
+                $rules = array(
+                    // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
+                    'content'   => 'required',
+                    'label'     => 'required|max:255',
+                );
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return $this->sendError(200, 'Information not updated! Please try again', '', 0);
+                }
+                $icon = BusinessField::findOrFail($request->id);
+                $social_icon    = SocialIcon::findOrFail($icon->icon_id);
+                if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
+                    $icon->content =  $this->businessCard->getYoutubeEmbad($request->content);
+                } elseif ($request->hasFile('content')) {
+                    $custotomIconPath = $this->uploadBase64FileToPublic($request->content, "customIconPath");
+                    $icon->content = $custotomIconPath;
+                } else {
+                    $icon->content  = $request->content;
+                }
+                $icon->label =  $request->label;
+                // if ($request->has('logo') && !empty($request->logo[0])) {
+                //     $file_name = $this->formatName($request->label);
+                //     $output = $request->logo;
+                //     $output = json_decode($output, TRUE);
+                //     if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
+                //         $image = $output['output']['image'];
+                //         if (isset($image)) {
+                //             $icon->icon_image =  $this->uploadBase64ToImage($image, $file_name, 'png');
+                //         }
+                //     }
+                // }
+                if (!is_null($request->file('logo'))) {
+                    $icon_ = $request->file('logo');
+
+                    $icon->icon_image = $this->uploadBase64FileToPublic($icon_, "customLogo");;
+                } else {
+                    $icon->icon_image = $social_icon->icon_image;
+                }
+                $icon->update();
+                $data['logo'] = asset($icon->icon_image);
+                $data['content'] = $icon->content;
+                $data['label'] = $icon->label;
+                $data['status'] = $icon->status;
+                $data['id'] = $icon->id;
+            }
+        } catch (\Exception $e) {
+
+            DB::rollback();
+            return $this->sendError("Exception Error",'Information not updated! Please try again', $data, 0);
+        }
+        DB::commit();
+        return $this->sendResponse(200, 'Information successfully updated', $data, 1);
+    }
+
+
+    public function removeCardIcon(Request $request)
+    {
+        $rules = array(
+            'card_id'   => 'required',
+            'icon_id'   => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first(), 200);
+        }
+        DB::beginTransaction();
+        try {
+
+            $cardResult = BusinessField::where('card_id', $request->card_id)->get();
+
+            if (isset($cardResult) && count($cardResult) > 0) {
+                $iconResult = BusinessField::where('card_id', $request->card_id)->where('icon_id', $request->icon_id)->first();
+                if (isset($iconResult)) {
+                    BusinessField::where('card_id', $request->card_id)->where('icon_id', $request->icon_id)->delete();
+                } else {
+                    return $this->sendError(200, "Invalid Icon", 200);
+                }
+            } else {
+                return $this->sendError(200, "Invalid Card", 200);
+            }
         } catch (\Exception $e) {
             DB::rollback();
             return $this->sendError("Exception Error", 'Content not deleted', 0);
