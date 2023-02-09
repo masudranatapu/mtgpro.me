@@ -73,15 +73,8 @@ class CardController extends ResponceController
             $card->card_url     = uniqid();
             $card->card_type    = 'vcard';
             if ($request->has('photo') && !empty($request->photo[0])) {
-                $file_name = $this->businessCard->formatName($request->name);
                 $output = $request->photo;
-                $output = json_decode($output, TRUE);
-                if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                    $image = $output['output']['image'];
-                    if (isset($image)) {
-                        $card->profile =  $this->uploadBase64FileToPublic($output, "/profilePic");
-                    }
-                }
+                $card->profile =  $this->uploadBase64FileToPublic($output, "profilePic");
             }
             $card->title        = $request->name;
             $card->designation  = $request->designation;
@@ -259,8 +252,6 @@ class CardController extends ResponceController
 
         return $this->sendResponse(200, "Card create Successfully", $card, true,);
     }
-
-
 
     public function postUpdate(BusinessCard $businessCard, Request $request)
     {
@@ -455,7 +446,7 @@ class CardController extends ResponceController
                 );
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
-                    return $this->sendError(200, 'Information not updated! Please try again', '', 0);
+                    return $this->sendError("Validation Error", $validator->errors()->first(), 200);
                 }
                 $icon = BusinessField::findOrFail($request->id);
                 $social_icon    = SocialIcon::findOrFail($icon->icon_id);
@@ -468,17 +459,7 @@ class CardController extends ResponceController
                     $icon->content  = $request->content;
                 }
                 $icon->label =  $request->label;
-                // if ($request->has('logo') && !empty($request->logo[0])) {
-                //     $file_name = $this->formatName($request->label);
-                //     $output = $request->logo;
-                //     $output = json_decode($output, TRUE);
-                //     if (isset($output) && isset($output['output']) && isset($output['output']['image'])) {
-                //         $image = $output['output']['image'];
-                //         if (isset($image)) {
-                //             $icon->icon_image =  $this->uploadBase64ToImage($image, $file_name, 'png');
-                //         }
-                //     }
-                // }
+
                 if (!is_null($request->file('logo'))) {
                     $icon_ = $request->file('logo');
 
@@ -496,7 +477,7 @@ class CardController extends ResponceController
         } catch (\Exception $e) {
 
             DB::rollback();
-            return $this->sendError("Exception Error",'Information not updated! Please try again', $data, 0);
+            return $this->sendError("Exception Error", 'Information not updated! Please try again', $data, 0);
         }
         DB::commit();
         return $this->sendResponse(200, 'Information successfully updated', $data, 1);

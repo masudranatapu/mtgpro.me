@@ -38,5 +38,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('crete-card', [CardController::class, 'postStore']);
     Route::put('/update-card/{businessCard}', [CardController::class, 'postUpdate']);
     Route::post('add-icons', [CardController::class, 'addCardIcon']);
+    Route::put('update-icons', [CardController::class, 'siconUpdate']);
     Route::delete('remove-icons', [CardController::class, 'removeCardIcon']);
 });
