@@ -144,9 +144,9 @@
                                     </a>
                                 </div>
                                 <?php
-                                $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-                                $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-                                $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+                                // $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
+                                // $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+                                // $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                                 ?>
                                 {{-- @dd($cardinfo->contacts) --}}
                                 @if (!empty($cardinfo->contacts))
