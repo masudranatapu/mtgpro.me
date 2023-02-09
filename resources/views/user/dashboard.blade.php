@@ -72,8 +72,13 @@
                             href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Email') }}</a>
                         <a class="btn-sm btn-primary btn-sm"
-                            href="sms:;body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+                            href="sms:+08801681944126;body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Text') }}</a>
+
+                        {{-- <a class="btn-sm btn-primary btn-sm"
+                        href="sms:+18664504185?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
+                        __('Text') }}</a> --}}
+
 
                     </div>
                 </div>
