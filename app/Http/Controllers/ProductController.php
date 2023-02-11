@@ -129,7 +129,7 @@ class ProductController extends Controller
                             return response()->json(['status' => true, 'message' => 'Coupon Applied']);
                         }
                     } else {
-                        return response()->json(['status' => false, 'message' => 'Please login first']);
+                        return response()->json(['status' => false, 'message' => 'Invalid Coupon']);
                     }
                 } else {
                     $orderResult = Order::where('coupon_id', $result->id)->where('user_id', Auth::id())->first();
