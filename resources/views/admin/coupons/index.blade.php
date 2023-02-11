@@ -31,8 +31,9 @@
                                         <tr>
                                             <th width="5%">{{ __('SL.No') }}</th>
                                             <th width="10%">{{ __('Name') }}</th>
-                                            <th width="12%">{{ __('Code') }}</th>
-                                            <th width="12%">{{ __('Amount') }}</th>
+                                            <th width="5%">{{ __('Code') }}</th>
+                                            <th width="12%">{{ __('Discount Type') }}</th>
+                                            <th width="5%">{{ __('Amount') }}</th>
                                             <th width="12%">{{ __('Availablity') }}</th>
                                             <th width="12%">{{ __('Available For') }}</th>
                                             <th width="5%">{{ __('Status') }}</th>
@@ -47,16 +48,36 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $value->name }}</td>
                                                 <td>{{ $value->coupon_code }}</td>
-                                                <td>{{ getPrice($value->amount) }}</td>
                                                 <td>
-                                                    <span class="badge bg-orange">Form</span> :
+                                                    @if ($value->discount_type == 0)
+                                                        <p>
+                                                            Amount Discount
+                                                        </p>
+                                                    @else
+                                                        <p>
+                                                            Percentage Discount
+                                                        </p>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($value->discount_type == 0)
+                                                        {{ getPrice($value->amount) }}
+                                                    @else
+                                                        {{ $value->amount }}%
+                                                    @endif
+
+
+
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-orange">&nbsp;Form&nbsp;</span> :
                                                     {{ date('d-M-Y', strtotime($value->valid_from)) }}
-                                                    <span class="badge bg-danger">To</span> :
+                                                    <span class="badge bg-danger">&emsp;To&emsp;</span> :
                                                     {{ date('d-M-Y', strtotime($value->valid_to)) }}
                                                 </td>
                                                 <td>
                                                     @if ($value->coupon_for == 'for_all')
-                                                        <span class="badge bg-orange">{{ __('For All') }}</span>
+                                                        <span class="badge bg-success">{{ __('For All') }}</span>
                                                     @else
                                                         <span
                                                             class="badge bg-orange">{{ __('For Specific User') }}</span>

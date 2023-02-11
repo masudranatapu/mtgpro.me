@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SupportMailRequest;
+use App\Mail\SupportMail;
 use App\Models\BusinessCard;
 use App\Models\SocialIcon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends ResponceController
 {
@@ -146,5 +150,55 @@ class HomeController extends ResponceController
 
             return $this->sendError('Exception Error', 'This card is not available please create your desired card');
         }
+    }
+
+    public function getInsights(Request $request)
+    {
+        $user_id = Auth::guard('api')->id();
+        $data = [];
+        $data['total_connect'] = DB::table('connects')->where('user_id', $user_id)->count();
+        $data['total_card_view'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_hit');
+        $data['total_contact_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_vcf_download');
+        $data['total_qrcode_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_qr_download');
+        $data['total_card'] = DB::table('business_cards')->where('user_id', $user_id)->count();
+        $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans', 'users.plan_id', '=', 'plans.id')->where('users.id', Auth::user()->id)->first();
+
+        $total_card_share = 0;
+
+        return $this->sendResponse(200, "User Insights", $data, true, []);
+    }
+
+    public function sendSupportMail(Request $request)
+    {
+        $rules = [
+            'subject'              => 'required',
+            'message'              => 'required',
+
+        ];
+        $validate = Validator::make($request->all(), $rules, [
+            'subject.required' => 'Please enter your subject',
+            'message.required'      => 'Please enter your message'
+        ]);
+
+        if ($validate->fails()) {
+            return $this->sendError("Validation Error", $validate->errors()->first());
+        }
+
+
+        DB::beginTransaction();
+        try {
+            $settings =  getSetting();
+            $data = [];
+            $data['subject'] = $request->subject;
+            $data['message'] = $request->message;
+            $data['email'] = Auth::guard('api')->user()->email;
+            $data['username'] = Auth::guard('api')->user()->name;
+            Mail::to($settings->support_email)->send(new SupportMail($data));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->sendError('Exception Error', 'Something wrong! Please try again');
+        }
+        DB::commit();
+        return $this->sendResponse(200, 'Thank you for your feedback', [], true);
     }
 }

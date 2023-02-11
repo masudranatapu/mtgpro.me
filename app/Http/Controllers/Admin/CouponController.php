@@ -31,7 +31,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        $users = User::all()->except(Auth::id());
+        $users = User::where('status', 1)->get()->except(Auth::id());
 
 
         return view('admin.coupons.create', compact('users'));
@@ -47,8 +47,9 @@ class CouponController extends Controller
     {
         $request->validate([
             "name" => 'required',
-            "coupon_code" => 'required',
+            "coupon_code" => 'required|min:5',
             "amount" => 'required|numeric',
+            "discount_type" => 'required',
             "status" => 'required',
             "valid_date_form" => 'required',
             "expired_date" => 'required',
@@ -59,6 +60,7 @@ class CouponController extends Controller
         $coupon = new Coupon();
         $coupon->name = $request->name;
         $coupon->coupon_code = $request->coupon_code;
+        $coupon->discount_type = $request->discount_type;
         $coupon->amount = $request->amount;
         $coupon->status = $request->status;
         $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
@@ -102,7 +104,8 @@ class CouponController extends Controller
     {
         $request->validate([
             "name" => 'required',
-            "coupon_code" => 'required',
+            "coupon_code" => 'required|min:5',
+            "discount_type" => 'required',
             "amount" => 'required|numeric',
             "status" => 'required',
             "valid_date_form" => 'required',
@@ -112,7 +115,8 @@ class CouponController extends Controller
         ]);
 
         $coupon->name = $request->name;
-        $coupon->coupon_code = $request->coupon_code;
+        $coupon->coupon_code = trim($request->coupon_code);
+        $coupon->discount_type = $request->discount_type;
         $coupon->amount = $request->amount;
         $coupon->status = $request->status;
         $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));

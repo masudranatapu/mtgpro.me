@@ -141,7 +141,7 @@ class DashboardControler extends Controller
 
     public function invoice($id)
     {
-        $order = Order::find($id);
+        $order = Order::with('hasCoupon')->find($id);
 
         return view('user.user-invoice', compact('order'));
     }

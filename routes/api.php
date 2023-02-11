@@ -36,12 +36,16 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/my-card', [CardController::class, 'myCard']);
     Route::post('crete-card', [CardController::class, 'postStore']);
     Route::put('/update-card/{businessCard}', [CardController::class, 'postUpdate']);
-    Route::post('add-icons', [CardController::class, 'addCardIcon']);
-    Route::post('update-icons/{icon}', [CardController::class, 'siconUpdate']);
-    Route::delete('remove-icons', [CardController::class, 'removeCardIcon']);
+    Route::post('/add-icons', [CardController::class, 'addCardIcon']);
+    Route::post('/update-icons/{icon}', [CardController::class, 'siconUpdate']);
+    Route::delete('/remove-icons', [CardController::class, 'removeCardIcon']);
 
 
     Route::post('/make-card-live', [CardController::class, 'getChangeCardStatus']);
+
+
+    Route::get('/insights', [HomeController::class, 'getInsights']);
+    Route::post('/support-mail-send', [HomeController::class, 'sendSupportMail']);
 });
 
 Route::get('/{cardUrl}', [HomeController::class, 'getPreview']);

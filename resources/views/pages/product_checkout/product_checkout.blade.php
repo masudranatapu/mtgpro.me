@@ -186,7 +186,11 @@
                                                 </td>
                                                 <td class="text-end">
                                                     @if (session()->has('coupon'))
-                                                        {{ getPrice($total - session('coupon')->amount) }}
+                                                        @if (session('coupon')->discount_type == '0')
+                                                            {{ getPrice($total - session('coupon')->amount) }}
+                                                        @else
+                                                            {{ getprice($total - ($total * session('coupon')->amount) / 100) }}
+                                                        @endif
                                                     @else
                                                         {{ getPrice($total) }}
                                                     @endif

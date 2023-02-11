@@ -65,7 +65,6 @@ class ResponceController extends Controller
             $fileName = uniqid() . '.' . $image_type;
             $filePath = $folderPath . '/' . $fileName;
             file_put_contents($filePath, $image_base64);
-
             return $filePath;
         } else {
             return null;

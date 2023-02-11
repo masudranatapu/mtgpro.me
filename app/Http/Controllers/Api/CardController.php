@@ -137,7 +137,9 @@ class CardController extends ResponceController
         $user = Auth::guard('api')->id();
 
 
-        $cards = BusinessCard::with('business_card_fields')->where('user_id', $user)->get();
+        $cards = BusinessCard::with(['business_card_fields' => function ($q) {
+            return $q->with('sicon');
+        }])->where('user_id', $user)->get();
 
 
         return $this->sendResponse(200, "My Business Card", $cards, true);
@@ -202,7 +204,7 @@ class CardController extends ResponceController
             $card->theme_id     = $request->theme_id ?? 1;
             $card->designation  = $request->designation;
             $card->company_name = $request->company_name;
-            $card->color_link   = $request->color_link ?? 0;
+            $card->color_link   =  filter_var($request->color_link, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
             $card->card_url     = $card_id;
             $card->phone_number = $request->phone_number;
             $card->ccode        = $request->ccode;
@@ -267,11 +269,11 @@ class CardController extends ResponceController
             'designation'      => 'required|string|max:124',
             'company_name'     => 'required|string|max:124',
             'color_link'       => 'required|string|max:124',
-            'phone_number'     => 'required|string|max:124',
+            // 'phone_number'     => 'required|string|max:124',
             'card_for'         => 'nullable|string|max:124',
             'location'         => 'required|string|max:124',
             'phone_number'     => 'unique:business_cards,card_url|string|max:124',
-            'profile_pic'      => 'required',
+            // 'profile_pic'      => 'required',
 
         ];
 
@@ -294,8 +296,8 @@ class CardController extends ResponceController
             $businessCard->theme_id     = $request->theme_id ?? 1;
             $businessCard->designation  = $request->designation;
             $businessCard->company_name = $request->company_name;
-            $businessCard->color_link   = $request->color_link ?? 0;
-            $businessCard->phone_number = $request->phone_number;
+            $businessCard->color_link   =  filter_var($request->color_link, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
+            $businessCard->phone_number = $request->phone_number ?? Auth::guard('api')->user()->phone;
             $businessCard->ccode        = $request->ccode;
             $businessCard->card_email   = $request->card_email ?? Auth::guard('api')->user()->email;
             $businessCard->created_at   = date('Y-m-d H:i:s');
@@ -370,11 +372,6 @@ class CardController extends ResponceController
             if ($validator->fails()) {
                 return $this->sendError(200, $validator->errors()->first(), 200);
             }
-
-
-
-
-
             $card = BusinessCard::find($request->card_id);
             $icon           = new BusinessField();
             $icon->card_id  = $request->card_id;
@@ -420,7 +417,6 @@ class CardController extends ResponceController
             DB::commit();
             return $this->sendResponse(200, "Icon Updated", $icon, true, []);
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
             return $this->sendResponse(200, $e, $data, 0);
         }
@@ -530,7 +526,9 @@ class CardController extends ResponceController
         try {
             if (checkPackageValidity(Auth::user()->id)) {
                 $card = BusinessCard::findOrFail($request->id);
-                BusinessCard::where('id', $request->id)->update(['status' => 1]);
+                $card->status = 1;
+                $card->save();
+                // BusinessCard::where('id', $request->id)->update(['status' => 1]);
                 BusinessCard::where('id', '<>', $request->id)->update(['status' => 0]);
                 User::where('id', $card->user_id)->update(['active_card_id' => $request->id]);
             } else {

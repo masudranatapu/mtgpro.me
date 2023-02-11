@@ -89,7 +89,23 @@
                                             </div>
                                             <div class="col-md-3 col-xl-3">
                                                 <div class="mb-3">
-                                                    <label class="form-label required">{{ __('Amount') }}</label>
+                                                    <label class="form-label required">{{ __('Discount Type') }}</label>
+                                                    <select name="discount_type" id="discount_type"
+                                                        class="form-control @error('discount_type') border-danger @enderror"
+                                                        value="{{ old('discount_type') }}" required>
+
+                                                        <option value="0" selected>Amount</option>
+                                                        <option value="1">Percentage</option>
+                                                    </select>
+                                                    @error('discount_type')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-xl-3">
+                                                <div class="mb-3">
+                                                    <label
+                                                        class="form-label required amountLabel">{{ __('Amount') }}</label>
                                                     <input type="number" name="amount"
                                                         class="form-control @error('amount') border-danger @enderror"
                                                         placeholder="{{ __('Amount') }}" value="{{ old('amount') }}"
@@ -230,7 +246,7 @@
             $('#coupon_for').change(function(e) {
                 let value = e.target.value;
 
-                if (value == "1") {
+                if (value == "for_specific_user") {
                     $('#user').css('display', 'block')
                     $('#selected_user').prop('required', true)
 
@@ -241,6 +257,30 @@
                 }
 
             })
+
+            $('#discount_type').change(function(e) {
+                let value = e.target.value;
+                discountTypeSet(value);
+            });
+
+
+
+
         });
+        $('document').ready(function() {
+            let value = $('#discount_type').val();
+            discountTypeSet(value);
+        })
+
+        function discountTypeSet(type) {
+
+
+            if (type == "0") {
+                $('.amountLabel').text("Amount")
+            } else {
+                $('.amountLabel').text("Percentage")
+
+            }
+        }
     </script>
 @endpush

@@ -90,7 +90,27 @@
                                             </div>
                                             <div class="col-md-3 col-xl-3">
                                                 <div class="mb-3">
-                                                    <label class="form-label required">{{ __('Amount') }}</label>
+                                                    <label class="form-label required">{{ __('Discount Type') }}</label>
+                                                    <select name="discount_type" id="discount_type"
+                                                        class="form-control @error('discount_type') border-danger @enderror"
+                                                        value="{{ old('discount_type') }}" required>
+
+                                                        <option value="0"
+                                                            @if ($coupon->discount_type == '0') selected @endif>Amount
+                                                        </option>
+                                                        <option value="1"
+                                                            @if ($coupon->discount_type == '1') selected @endif>Percentage
+                                                        </option>
+                                                    </select>
+                                                    @error('discount_type')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-xl-3">
+                                                <div class="mb-3">
+                                                    <label
+                                                        class="form-label required amountLabel">{{ __('Amount') }}</label>
                                                     <input type="number" name="amount"
                                                         class="form-control @error('amount') border-danger @enderror"
                                                         placeholder="{{ __('Amount') }}"
@@ -242,6 +262,12 @@
 
             });
 
+            $('#discount_type').change(function(e) {
+                let value = e.target.value;
+                discountTypeSet(value);
+            });
+
+
 
 
 
@@ -255,6 +281,19 @@
             } else {
                 $('#user').css('display', 'none')
                 $('#selected_user').prop('required', false)
+
+            }
+        }
+        $('document').ready(function() {
+            let value = $('#discount_type').val();
+            discountTypeSet(value);
+        })
+
+        function discountTypeSet(type) {
+            if (type == "0") {
+                $('.amountLabel').text("Amount")
+            } else {
+                $('.amountLabel').text("Percentage")
 
             }
         }

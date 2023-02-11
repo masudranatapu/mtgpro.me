@@ -60,7 +60,13 @@ class ProductCheckoutController extends Controller
 
 
                 if (session()->has('coupon')) {
-                    $totalPrice = $totalPrice - session('coupon')->amount;
+                    if (session('coupon')->discount_type == '0') {
+
+                        $totalPrice = $totalPrice - session('coupon')->amount;
+                    } else {
+
+                        $totalPrice = $totalPrice - ($totalPrice * session('coupon')->amount) / 100;
+                    }
                 }
 
 
@@ -88,7 +94,6 @@ class ProductCheckoutController extends Controller
                 $order = new Order();
                 $order->order_number = $order_Number;
                 $order->quantity = $totalQuantity;
-                $order->discount = 0;
 
                 if (session()->has('coupon')) {
                     $order->coupon_discount = session('coupon')->amount;
@@ -103,7 +108,14 @@ class ProductCheckoutController extends Controller
                 $order->payment_fee = 0;
                 $order->vat = 0;
                 $order->grand_total = $totalPrice;
-                $order->discount_percentage = 0;
+                if (session()->has('coupon')) {
+                    if (session('coupon')->discount_type == '1') {
+                        $order->discount_percentage = session('coupon')->amount;
+                        $order->discount = ($totalPrice * session('coupon')->amount) / 100;
+                    } else {
+                        $order->discount = session('coupon')->amount;
+                    }
+                }
                 $order->user_id = Auth::id();
                 $order->order_date = now();
                 $order->payment_method = "Stripe";

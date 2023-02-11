@@ -9,7 +9,7 @@
                         <th style="width:35%">Product</th>
                         <th style="width:15%">Price</th>
                         <th style="width:15%">Quantity</th>
-                        <th style="width:15%" class="text-center">Subtotal</th>
+                        <th style="width:20%" class="text-center">Subtotal</th>
                         <th style="width:10%">Remove</th>
                     </tr>
                 </thead>
@@ -19,9 +19,9 @@
                         @foreach (session('cart') as $id => $details)
                             @php
                                 $total += $details['price'] * $details['quantity'];
-
+                                
                                 $line_total = $details['price'] * $details['quantity'];
-
+                                
                             @endphp
 
                             <tr data-id="{{ $id }}" class="align-middle">
@@ -37,7 +37,7 @@
                                 <td data-th="Price">{{ getPrice($details['price']) }}</td>
                                 <td data-th="Quantity">
                                     <input type="number" value="{{ $details['quantity'] }}"
-                                        class="form-control quantity update-cart allownumericwithoutdecimal"  />
+                                        class="form-control quantity update-cart allownumericwithoutdecimal" />
                                 </td>
                                 <td data-th="Subtotal" class="text-center">
                                     {{ getPrice($line_total) }}
@@ -73,19 +73,25 @@
                             <td>
 
                                 <input type="text" class="form-control" @if (session()->has('coupon')) disabled @endif
-                                    id="couponCode" value="{{ session('coupon')->coupon_code ?? '' }}" placeholder="Enter coupon code">
+                                    id="couponCode" value="{{ session('coupon')->coupon_code ?? '' }}"
+                                    placeholder="Enter coupon code">
 
+                            </td>
+
+                            <td id="cupponPrice" class="text-center">
+                                @if (session()->has('coupon'))
+                                    @if (session('coupon')->discount_type == '0')
+                                        - {{ getPrice(session('coupon')->amount) }}
+                                    @else
+                                        - {{ getPrice(($total * session('coupon')->amount) / 100) }}
+                                    @endif
+                                @endif
                             </td>
                             <td>
                                 @if (session()->has('coupon'))
-                                <button type="button" class="btn btn-primary" id="couponRemove">Remove</button>
-                            @else
-                                <button type="button" class="btn btn-primary" id="couponApply">Apply</button>
-                            @endif
-                            </td>
-                            <td id="cupponPrice" class="text-center">
-                                @if (session()->has('coupon'))
-                                    - {{ getPrice(session('coupon')->amount) }}
+                                    <button type="button" class="btn btn-primary" id="couponRemove">Remove</button>
+                                @else
+                                    <button type="button" class="btn btn-primary" id="couponApply">Apply</button>
                                 @endif
                             </td>
                         </tr>
@@ -95,14 +101,22 @@
                                 <h3><strong>Total : </strong></h3>
                             </td>
                             <td class="text-center">
-                                <h3><strong>
-                                        @if (session()->has('coupon'))
-                                            {{ getprice($total - session('coupon')->amount) }}
-                                        @else
-                                            {{ getprice($total) }}
-                                        @endif
-                                    </strong>
-                                </h3>
+
+                                @if (session()->has('coupon'))
+                                    @if (session('coupon')->discount_type == '0')
+                                        <h3>{{ getprice($total * session('coupon')->amount) }}</h3>
+                                    @else
+                                        <h3>
+                                            <strong>{{ getprice($total - ($total * session('coupon')->amount) / 100) }}
+                                            </strong><span>
+                                                ({{ session('coupon')->amount }}%)
+                                            </span>
+                                        </h3>
+                                    @endif
+                                @else
+                                    {{ getprice($total) }}
+                                @endif
+
                             </td>
                             <td>
                             </td>
@@ -138,13 +152,12 @@
 
 @push('custom_js')
     <script type="text/javascript">
-
-$(".allownumericwithoutdecimal").on("keypress keyup blur",function (event) {
-           $(this).val($(this).val().replace(/[^\d].+/, ""));
+        $(".allownumericwithoutdecimal").on("keypress keyup blur", function(event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
             if ((event.which < 48 || event.which > 57)) {
                 event.preventDefault();
             }
-});
+        });
 
         $(".update-cart").change(function(e) {
             e.preventDefault();
