@@ -124,7 +124,7 @@ class BusinessCard extends Model
             $card->card_lang    = 'en';
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
-            $card->status       = 1;
+            $card->status       = 0;
             $card->title        = $request->name;
             $card->location     = $request->location;
             $card->bio          = $request->bio;

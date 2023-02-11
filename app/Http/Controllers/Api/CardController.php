@@ -133,9 +133,11 @@ class CardController extends ResponceController
 
     public function myCard()
     {
+
         $user = Auth::guard('api')->id();
 
-        $cards = BusinessCard::where('user_id', $user)->get();
+
+        $cards = BusinessCard::with('business_card_fields')->where('user_id', $user)->get();
 
 
         return $this->sendResponse(200, "My Business Card", $cards, true);
@@ -191,7 +193,7 @@ class CardController extends ResponceController
             $card->card_lang    = 'en';
             $card->card_type    = 'vcard';
             $card->card_for     = $request->card_for;
-            $card->status       = 1;
+            $card->status       = 0;
             $card->title        = $request->name;
             $card->location     = $request->location;
             $card->bio          = $request->bio;
@@ -427,60 +429,63 @@ class CardController extends ResponceController
 
 
 
-    public function siconUpdate($request)
+    public function siconUpdate(BusinessField $icon, Request $request)
     {
 
         $data = [];
         DB::beginTransaction();
         try {
 
-            $sid = $request->id;
-            if ($request->status) {
-                $status = $request->status;
-                DB::table('business_fields')->where('id', $sid)->update(['status' => $status]);
-            } else {
-                $rules = array(
-                    // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
-                    'content'   => 'required',
-                    'label'     => 'required|max:255',
-                );
-                $validator = Validator::make($request->all(), $rules);
-                if ($validator->fails()) {
-                    return $this->sendError("Validation Error", $validator->errors()->first(), 200);
-                }
-                $icon = BusinessField::findOrFail($request->id);
-                $social_icon    = SocialIcon::findOrFail($icon->icon_id);
-                if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
-                    $icon->content =  $this->businessCard->getYoutubeEmbad($request->content);
-                } elseif ($request->hasFile('content')) {
-                    $custotomIconPath = $this->uploadBase64FileToPublic($request->content, "customIconPath");
-                    $icon->content = $custotomIconPath;
-                } else {
-                    $icon->content  = $request->content;
-                }
-                $icon->label =  $request->label;
 
-                if (!is_null($request->file('logo'))) {
-                    $icon_ = $request->file('logo');
+            $rules = array(
+                // 'logo'      => 'mimes:jpeg,jpg,png,webp,gif | max:1000',
 
-                    $icon->icon_image = $this->uploadBase64FileToPublic($icon_, "customLogo");;
-                } else {
-                    $icon->icon_image = $social_icon->icon_image;
-                }
-                $icon->update();
-                $data['logo'] = asset($icon->icon_image);
-                $data['content'] = $icon->content;
-                $data['label'] = $icon->label;
-                $data['status'] = $icon->status;
-                $data['id'] = $icon->id;
+                'status' => 'required',
+                'content'   => 'required',
+                'label'     => 'required|max:255',
+            );
+            $social_icon    = SocialIcon::findOrFail($request->icon_id);
+            if ($social_icon->type == 'link') {
+                $rules['content'] = 'required|url|max:255';
             }
-        } catch (\Exception $e) {
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return $this->sendError("Validation Error", $validator->errors()->first(), 200);
+            }
 
+            $social_icon    = SocialIcon::findOrFail($icon->icon_id);
+            if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
+                $icon->content =  $this->businessCard->getYoutubeEmbad($request->content);
+            } elseif ($request->hasFile('content')) {
+                $custotomIconPath = $this->uploadBase64FileToPublic($request->content, "customIconPath");
+                $icon->content = $custotomIconPath;
+            } else {
+                $icon->content  = $request->content;
+            }
+            $icon->label =  $request->label;
+
+
+
+            if ($request->has('logo')) {
+                $icon_ = $request->logo;
+
+                $icon->icon_image = $this->uploadBase64FileToPublic($icon_, "customLogo");;
+            } else {
+                $icon->icon_image = $social_icon->icon_image;
+            }
+            $icon->status = $request->status;
+            $icon->update();
+            $data['logo'] = asset($icon->icon_image);
+            $data['content'] = $icon->content;
+            $data['label'] = $icon->label;
+            $data['status'] = $icon->status;
+            $data['id'] = $icon->id;
+        } catch (Exception $e) {
             DB::rollback();
             return $this->sendError("Exception Error", 'Information not updated! Please try again', $data, 0);
         }
         DB::commit();
-        return $this->sendResponse(200, 'Information successfully updated', $data, 1);
+        return $this->sendResponse(200, 'Information successfully updated', $data, true, []);
     }
 
 
@@ -515,6 +520,41 @@ class CardController extends ResponceController
         }
         DB::commit();
         return $this->sendResponse(200, 'Icon deleted successfully', [], true, []);
+    }
+
+
+
+    public function getChangeCardStatus(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (checkPackageValidity(Auth::user()->id)) {
+                $card = BusinessCard::findOrFail($request->id);
+                BusinessCard::where('id', $request->id)->update(['status' => 1]);
+                BusinessCard::where('id', '<>', $request->id)->update(['status' => 0]);
+                User::where('id', $card->user_id)->update(['active_card_id' => $request->id]);
+            } else {
+                return $this->sendError(
+                    'Warning',
+                    'Your package is expired please update the first',
+                );
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->sendError(
+                'Exception Error',
+                'Something wrong! Please try again',
+
+            );
+        }
+        DB::commit();
+        return $this->sendResponse(
+            200,
+            'Card status successfully updated',
+            $card,
+            true,
+            []
+        );
     }
 
 
