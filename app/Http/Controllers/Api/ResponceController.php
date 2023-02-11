@@ -54,7 +54,7 @@ class ResponceController extends Controller
     {
 
         if ($img && $path) {
-            $folderPath = public_path($path);
+            $folderPath = $path;
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
             }
@@ -63,10 +63,10 @@ class ResponceController extends Controller
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
             $fileName = uniqid() . '.' . $image_type;
-            $filePath = $folderPath . $fileName;
+            $filePath = $folderPath . '/' . $fileName;
             file_put_contents($filePath, $image_base64);
 
-            return $path . $fileName;
+            return $filePath;
         } else {
             return null;
         }
