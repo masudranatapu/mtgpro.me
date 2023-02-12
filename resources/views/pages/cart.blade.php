@@ -19,9 +19,9 @@
                         @foreach (session('cart') as $id => $details)
                             @php
                                 $total += $details['price'] * $details['quantity'];
-                                
+
                                 $line_total = $details['price'] * $details['quantity'];
-                                
+
                             @endphp
 
                             <tr data-id="{{ $id }}" class="align-middle">
@@ -104,7 +104,7 @@
                             </td>
                             @php
                                 $total = $total + ($total * $config->config_value) / 100;
-                                
+
                             @endphp
 
                         </tr>
@@ -116,7 +116,7 @@
                             <td class="text-center">
 
                                 @if (session()->has('coupon'))
-                                    @dump($toal)
+                                    {{-- @dump($toal) --}}
                                     @if (session('coupon')->discount_type == '0')
                                         <h3>{{ getprice($total * session('coupon')->amount) }}</h3>
                                     @else
