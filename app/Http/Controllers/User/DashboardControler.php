@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\MarketingMaterials;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessCard;
+use App\Models\Config;
 use App\Models\HistoryCardBrowsing;
 use App\Models\HistoryCardDownload;
 use App\Models\HistoryQrDownload;
@@ -142,8 +143,9 @@ class DashboardControler extends Controller
     public function invoice($id)
     {
         $order = Order::with('hasCoupon')->find($id);
+        $config = Config::all();
 
-        return view('user.user-invoice', compact('order'));
+        return view('user.user-invoice', compact('order','config'));
     }
 
     public function suggestFeature()

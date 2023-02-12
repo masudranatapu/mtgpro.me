@@ -36,6 +36,8 @@ class ProductCheckoutController extends Controller
         $config = Config::all();
         $gateways = Gateway::where('status', 1)->get();
         $products = Session::get('cart');
+
+
         return view('pages.product_checkout.product_checkout', compact('user', 'config', 'gateways', 'products'));
     }
 
@@ -51,22 +53,28 @@ class ProductCheckoutController extends Controller
 
             $totalPrice = 0;
             $totalQuantity = 0;
+            $shipingTotal = 0;
             if (session()->has('cart')) {
                 # code...
                 foreach (session('cart') as $id => $details) {
                     $totalPrice += $details['price'] * $details['quantity'];
                     $totalQuantity += $details['quantity'];
+                    $shipingTotal += $details['shipping_cost'];
                 }
-
+                $vat = ($totalPrice * $config[25]->config_value) / 100;
 
                 if (session()->has('coupon')) {
                     if (session('coupon')->discount_type == '0') {
 
                         $totalPrice = $totalPrice - session('coupon')->amount;
-                    } else {
+                    } elseif (session('coupon')->discount_type == '1') {
 
                         $totalPrice = $totalPrice - ($totalPrice * session('coupon')->amount) / 100;
                     }
+                }
+
+                if (!session()->has('shiping')) {
+                    $shipingTotal = 0;
                 }
 
 
@@ -77,7 +85,7 @@ class ProductCheckoutController extends Controller
                 Stripe::setApiKey("sk_test_51LtUkeIH2i6FoGaEZ3Y90HVXatZKimap3Wsnbw72syI5PFoV9KtEAwGf6788R5LuLnfpCXXq9DOSo7REOtqjG8Vp00FIBEPP38");
                 $stripe = new StripeClient($request->stripeToken);
                 $charge = Charge::create([
-                    "amount" =>  $totalPrice,
+                    "amount" =>  $totalPrice + $shipingTotal + $vat,
                     "currency" => $config[1]->config_value,
                     "source" => "tok_visa",
                     "description" => env('APP_NAME'),
@@ -103,16 +111,16 @@ class ProductCheckoutController extends Controller
                     $order->coupon_id = null;
                 }
 
-
                 $order->total_price = $totalPrice;
                 $order->payment_fee = 0;
-                $order->vat = 0;
-                $order->grand_total = $totalPrice;
+                $order->vat = $vat;
+                $order->shipping_cost = $shipingTotal;
+                $order->grand_total = $totalPrice + $shipingTotal + $vat;
                 if (session()->has('coupon')) {
                     if (session('coupon')->discount_type == '1') {
                         $order->discount_percentage = session('coupon')->amount;
                         $order->discount = ($totalPrice * session('coupon')->amount) / 100;
-                    } else {
+                    } elseif (session('coupon')->discount_type == '0') {
                         $order->discount = session('coupon')->amount;
                     }
                 }
@@ -196,7 +204,7 @@ class ProductCheckoutController extends Controller
                 return redirect()->route('home');
             }
         } catch (Exception $error) {
-
+            dd($error);
             Toastr::error(trans('"Something went wrong!'));
             return redirect()->back();
         }

@@ -142,7 +142,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php $total = 0 @endphp
+                                            @php
+                                                $total = 0;
+                                                $shipingTotal = session()->get('shiping', 0);
+                                            @endphp
                                             @foreach ($products as $product)
                                                 @php $total += $product['price'] * $product['quantity'] @endphp
                                                 <tr class="align-middle">
@@ -163,40 +166,97 @@
                                             @endforeach
 
                                         </tbody>
+
                                         <tfoot>
-
-                                            @if (session()->has('coupon'))
-                                                <tr>
-
-                                                    <td colspan="2" class="text-end">
-                                                        <strong>Coupon Discount :</strong>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        {{ getPrice(session('coupon')->amount) }}
-                                                    </td>
-                                                </tr>
-                                            @else
-                                            @endif
                                             <tr>
-
-
-
                                                 <td colspan="2" class="text-end">
-                                                    <strong>Total :</strong>
+                                                    <h5><strong> Total : </strong></h5>
                                                 </td>
-                                                <td class="text-end">
+                                                <td class="text-end">{{ getPrice($total) }}</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="text-end">
+                                                    <h5><strong>Coupon Discount :</strong></h5>
+                                                </td>
+                                                <td id="cupponPrice" class="text-end">
                                                     @if (session()->has('coupon'))
                                                         @if (session('coupon')->discount_type == '0')
-                                                            {{ getPrice($total - session('coupon')->amount) }}
+                                                            - {{ getPrice(session('coupon')->amount) }}
+                                                        @elseif (session('coupon')->discount_type == '1')
+                                                            - {{ getPrice(($total * session('coupon')->amount) / 100) }}
                                                         @else
-                                                            {{ $total - ($total * session('coupon')->amount) / 100 }}%
+                                                            {{ getPrice(0) }}
                                                         @endif
                                                     @else
-                                                        {{ getPrice($total) }}
+                                                        {{ getPrice(0) }}
                                                     @endif
                                                 </td>
                                             </tr>
+
+                                            <tr>
+                                                <td colspan="2" class="text-end">
+                                                    <h5><strong>Vat : </strong></h5>
+                                                </td>
+                                                <td class="text-end">
+
+                                                    + {{ getprice(($total * $config[25]->config_value) / 100) }}
+                                                </td>
+
+                                                @php
+                                                    $total = $total + ($total * $config[25]->config_value) / 100;
+                                                @endphp
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="text-end">
+                                                    <h5><strong>Shiping cost : </strong></h5>
+                                                </td>
+                                                <td class="text-end">
+                                                    + {{ getprice($shipingTotal) }}
+                                                </td>
+
+                                                @php
+                                                    $total = $total + $shipingTotal;
+                                                @endphp
+
+                                            </tr>
+                                            <tr>
+
+                                                <td colspan="2" class="text-end">
+                                                    <h5><strong>Grand Total : </strong></h5>
+                                                </td>
+                                                <td class="text-end">
+
+                                                    @if (session()->has('coupon'))
+                                                        @if (session('coupon')->discount_type == '0')
+                                                            <h5>{{ getprice($total - session('coupon')->amount) }}</h5>
+                                                        @elseif (session('coupon')->discount_type == '1')
+                                                            <h5>
+                                                                <strong>{{ getprice($total - ($total * session('coupon')->amount) / 100) }}
+                                                                </strong><span>
+                                                                    ({{ session('coupon')->amount }}%)
+                                                                </span>
+                                                            </h5>
+                                                        @else
+                                                            <h5>
+                                                                {{ getprice($total) }}
+                                                            </h5>
+                                                        @endif
+                                                    @else
+                                                        <h5>
+                                                            {{ getprice($total) }}
+                                                        </h5>
+                                                    @endif
+
+                                                </td>
+
+
+                                            </tr>
+
+
                                         </tfoot>
+
                                     </table>
                                 </div>
                             </div>

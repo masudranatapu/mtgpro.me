@@ -39,7 +39,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/update-card/{businessCard}', [CardController::class, 'postUpdate']);
     Route::post('/add-icons', [CardController::class, 'addCardIcon']);
     Route::post('/update-icons/{icon}', [CardController::class, 'siconUpdate']);
-    Route::delete('/remove-icons', [CardController::class, 'removeCardIcon']);
+    Route::delete('/remove-icons/{icon_id}', [CardController::class, 'removeCardIcon']);
 
 
     Route::post('/make-card-live', [CardController::class, 'getChangeCardStatus']);

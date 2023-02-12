@@ -118,10 +118,20 @@
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label required amountLabel">{{ __('Amount') }}</label>
-                                                    <input type="number" name="amount"
-                                                        class="form-control @error('amount') border-danger @enderror"
-                                                        placeholder="{{ __('Amount') }}"
-                                                        value="{{ old('amount') ?? $coupon->amount }}" id="amount">
+
+                                                    @if ($coupon->discount_type == '3')
+                                                        <input type="number" name="amount"
+                                                            class="form-control @error('amount') border-danger @enderror"
+                                                            placeholder="{{ __('Amount') }}"
+                                                            value="{{ old('amount') ?? $coupon->condition_price }}"
+                                                            id="amount">
+                                                    @else
+                                                        <input type="number" name="amount"
+                                                            class="form-control @error('amount') border-danger @enderror"
+                                                            placeholder="{{ __('Amount') }}"
+                                                            value="{{ old('amount') ?? $coupon->amount }}" id="amount">
+                                                    @endif
+
                                                     @error('amount')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror

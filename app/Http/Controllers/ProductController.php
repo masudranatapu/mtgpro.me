@@ -9,6 +9,7 @@ use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
@@ -26,8 +27,9 @@ class ProductController extends Controller
      */
     public function cart()
     {
+
         $config = Config::where('config_key', 'tax_value')->first();
-        
+
         return view('pages.cart', compact('config'));
     }
     /**
@@ -39,6 +41,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
+
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
         } else {
@@ -48,10 +51,13 @@ class ProductController extends Controller
                 "slug" => $product->product_slug,
                 "quantity" => 1,
                 "price" => $product->unit_price ? $product->unit_price : $product->unit_price_regular,
-                "image" => $product->thumbnail
+                "image" => $product->thumbnail,
+                "shipping_cost" => $product->shipping_cost
             ];
         }
+
         session()->put('cart', $cart);
+        $this->getShiping();
         return response()->json(["status" => true, 'count' => count($cart)]);
     }
 
@@ -77,7 +83,8 @@ class ProductController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        // Toastr::success('Product added to cart successfully!');
+        $this->getShiping();
+
         return redirect()->back()->with('success',);
     }
 
@@ -106,6 +113,7 @@ class ProductController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
+            $this->getShiping();
             Toastr::error('Product removed from cart successfully');
         }
     }
@@ -128,8 +136,25 @@ class ProductController extends Controller
                         if (isset($orderResult)) {
                             return response()->json(['status' => false, 'message' => 'Coupon Already Used']);
                         } else {
-                            Session::put('coupon', $result);
-                            return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                            if ($result->discount_type == 0 || $result->discount_type == 1) {
+                                Session::put('coupon', $result);
+                                return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                            } elseif ($result->discount_type == 2 || $result->discount_type == 3) {
+                                if ($result->discount_type == 3) {
+                                    $totalPrice = $this->getTotal();
+                                    if ($totalPrice > $result->condition_price) {
+                                        Session::put('coupon', $result);
+                                        Session::forget('shiping');
+                                        return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                                    } else {
+                                        return response()->json(['status' => false, 'message' => 'Please spend minimum ' . getPrice($result->condition_price)]);
+                                    }
+                                } else {
+                                    Session::put('coupon', $result);
+                                    Session::forget('shiping');
+                                    return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                                }
+                            }
                         }
                     } else {
                         return response()->json(['status' => false, 'message' => 'Invalid Coupon']);
@@ -139,8 +164,26 @@ class ProductController extends Controller
                     if (isset($orderResult)) {
                         return response()->json(['status' => false, 'message' => 'Coupon Already Used']);
                     } else {
-                        Session::put('coupon', $result);
-                        return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                        if ($result->discount_type == 0 || $result->discount_type == 1) {
+                            Session::put('coupon', $result);
+                            return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                        } elseif ($result->discount_type == 2 || $result->discount_type == 3) {
+                            if ($result->discount_type == 3) {
+                                $totalPrice = $this->getTotal();
+                                Log::alert([$totalPrice, $result->condition_price]);
+                                if ($totalPrice > $result->condition_price) {
+                                    Session::put('coupon', $result);
+                                    Session::forget('shiping');
+                                    return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                                } else {
+                                    return response()->json(['status' => false, 'message' => 'Please spend minimum ' . getPrice($result->condition_price)]);
+                                }
+                            } else {
+                                Session::put('coupon', $result);
+                                Session::forget('shiping');
+                                return response()->json(['status' => true, 'message' => 'Coupon Applied']);
+                            }
+                        }
                     }
                 }
             } else {
@@ -152,9 +195,35 @@ class ProductController extends Controller
     }
 
 
-    public function removeCoupon(Request $request)
+    public function removeCoupon()
     {
+
+        $coupon = session()->get('coupon');
+
+        if ($coupon->discount_type == 2 || $coupon->discount_type == 3) {
+            $this->getShiping();
+        }
+
         Session::forget('coupon');
         return response()->json(['status' => true, 'message' => 'Coupon removed']);
+    }
+
+
+    public function getShiping()
+    {
+        session()->forget('shiping');
+        $shipingTotal = 0;
+        foreach (session('cart') as $id => $details) {
+            $shipingTotal += $details['shipping_cost'];
+        }
+        session()->put('shiping', $shipingTotal);
+    }
+    public function getTotal()
+    {
+        $total = 0;
+        foreach (session('cart') as $id => $details) {
+            $total += $details['price'];
+        }
+        return $total;
     }
 }

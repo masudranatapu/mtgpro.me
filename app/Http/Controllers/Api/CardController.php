@@ -469,7 +469,7 @@ class CardController extends ResponceController
             } else {
                 $icon->icon_image = $social_icon->icon_image;
             }
-            $icon->status = $request->status;
+            $icon->status = filter_var($request->status, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
             $icon->update();
             $data['logo'] = asset($icon->icon_image);
             $data['content'] = $icon->content;
@@ -485,31 +485,11 @@ class CardController extends ResponceController
     }
 
 
-    public function removeCardIcon(Request $request)
+    public function removeCardIcon(BusinessField $icon_id)
     {
-        $rules = array(
-            'card_id'   => 'required',
-            'icon_id'   => 'required',
-        );
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return $this->sendError(200, $validator->errors()->first(), 200);
-        }
         DB::beginTransaction();
         try {
-
-            $cardResult = BusinessField::where('card_id', $request->card_id)->get();
-
-            if (isset($cardResult) && count($cardResult) > 0) {
-                $iconResult = BusinessField::where('card_id', $request->card_id)->where('icon_id', $request->icon_id)->first();
-                if (isset($iconResult)) {
-                    BusinessField::where('card_id', $request->card_id)->where('icon_id', $request->icon_id)->delete();
-                } else {
-                    return $this->sendError(200, "Invalid Icon", 200);
-                }
-            } else {
-                return $this->sendError(200, "Invalid Card", 200);
-            }
+            $icon_id->delete();
         } catch (\Exception $e) {
             DB::rollback();
             return $this->sendError("Exception Error", 'Content not deleted', 0);
