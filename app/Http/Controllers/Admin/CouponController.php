@@ -48,8 +48,8 @@ class CouponController extends Controller
         $request->validate([
             "name" => 'required',
             "coupon_code" => 'required|min:5',
-            "amount" => 'required|numeric',
             "discount_type" => 'required',
+            "amount" => 'required_if:discount_type,0,1,3',
             "status" => 'required',
             "valid_date_form" => 'required',
             "expired_date" => 'required',
@@ -61,7 +61,16 @@ class CouponController extends Controller
         $coupon->name = $request->name;
         $coupon->coupon_code = $request->coupon_code;
         $coupon->discount_type = $request->discount_type;
-        $coupon->amount = $request->amount;
+        if ($request->discount_type == "2" || $request->discount_type == "3") {
+            if ($request->discount_type == "3") {
+                $coupon->condition_price = $request->amount;
+                $coupon->amount = null;
+            } else {
+                $coupon->amount = null;
+            }
+        } else {
+            $coupon->amount = $request->amount;
+        }
         $coupon->status = $request->status;
         $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
         $coupon->valid_to = date('Y-m-d', strtotime($request->expired_date));
@@ -117,7 +126,16 @@ class CouponController extends Controller
         $coupon->name = $request->name;
         $coupon->coupon_code = trim($request->coupon_code);
         $coupon->discount_type = $request->discount_type;
-        $coupon->amount = $request->amount;
+        if ($request->discount_type == "2" || $request->discount_type == "3") {
+            if ($request->discount_type == "3") {
+                $coupon->condition_price = $request->amount;
+                $coupon->amount = null;
+            } else {
+                $coupon->amount = null;
+            }
+        } else {
+            $coupon->amount = $request->amount;
+        }
         $coupon->status = $request->status;
         $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
         $coupon->valid_to = date('Y-m-d', strtotime($request->expired_date));

@@ -53,17 +53,35 @@
                                                         <p>
                                                             Amount Discount
                                                         </p>
-                                                    @else
+                                                    @elseif ($value->discount_type == 1)
                                                         <p>
                                                             Percentage Discount
                                                         </p>
+                                                    @elseif ($value->discount_type == 2)
+                                                        <p>
+                                                            Free Shippong
+                                                        </p>
+                                                    @elseif ($value->discount_type == 3)
+                                                        <p>
+                                                            Free Shippong With Condition
+                                                        </p>
+                                                        <strong>Min.
+                                                            Spend: </strong> {{ getPrice($value->condition_price) }}
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if ($value->discount_type == 0)
                                                         {{ getPrice($value->amount) }}
-                                                    @else
+                                                    @elseif ($value->discount_type == 1)
                                                         {{ $value->amount }}%
+                                                    @elseif ($value->discount_type == 2)
+                                                        <p>
+                                                            Free Shippong
+                                                        </p>
+                                                    @elseif ($value->discount_type == 3)
+                                                        <p>
+                                                            Free Shippong
+                                                        </p>
                                                     @endif
 
 

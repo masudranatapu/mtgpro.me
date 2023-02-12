@@ -4,7 +4,7 @@
 @section('title'){{ __('Product Edit') . '-' . $product->product_name }} @endsection
 @section('page-name') {{ __('Product Edit') . '-' . $product->product_name }} @endsection
 @push('css')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 @endpush
 <?php
 $rows = $data ?? [];
@@ -58,7 +58,8 @@ $rows = $data ?? [];
                                                 <input type="file" name="images" id="file" onchange="fileView()"
                                                     style="display: none">
                                             </div>
-                                            <label for="images">Thumbnail Images <small>(Preferred size 600X600 px)</small></label>
+                                            <label for="images">Thumbnail Images <small>(Preferred size 600X600
+                                                    px)</small></label>
                                         </div>
                                         <div class="col-12 col-sm-12 col-ml-6 col-lg-6 col-xl-6">
                                             <div class="form-group m-1">
@@ -129,6 +130,18 @@ $rows = $data ?? [];
 
                                                 </select>
                                                 @error('product_status')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-ml-6 col-lg-6 col-xl-6">
+                                            <div class="form-group m-1">
+                                                <label class="form-label"
+                                                    for="product_status">{{ __('Shipping Cost') }}</label>
+                                                <input required type="number" name="shipping_cost" id="shipping_cost"
+                                                    class="form-control @error('shipping_cost') border-danger @enderror"
+                                                    value="{{ old('shipping_cost') ?? $product->shipping_cost }}" />
+                                                @error('shipping_cost')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

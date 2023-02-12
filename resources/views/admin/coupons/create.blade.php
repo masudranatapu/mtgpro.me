@@ -96,17 +96,19 @@
 
                                                         <option value="0" selected>Amount</option>
                                                         <option value="1">Percentage</option>
+                                                        <option value="2">Free Shipping</option>
+                                                        <option value="3">Free Shipping with Condition</option>
                                                     </select>
                                                     @error('discount_type')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 col-xl-3">
+                                            <div class="col-md-3 col-xl-3" id="amountSection">
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label required amountLabel">{{ __('Amount') }}</label>
-                                                    <input type="number" name="amount"
+                                                    <input type="number" name="amount" id="amount"
                                                         class="form-control @error('amount') border-danger @enderror"
                                                         placeholder="{{ __('Amount') }}" value="{{ old('amount') }}"
                                                         required>
@@ -276,9 +278,23 @@
 
 
             if (type == "0") {
+                $('#amountSection').css('display', 'block');
+                $('#amount').prop('required', true);
+
                 $('.amountLabel').text("Amount")
-            } else {
+            } else if (type == "1") {
+                $('#amountSection').css('display', 'block');
+                $('#amount').prop('required', true);
                 $('.amountLabel').text("Percentage")
+            } else if (type == "2") {
+                $('#amountSection').css('display', 'block');
+                $('#amount').prop('required', false);
+                $('#amountSection').css('display', 'none');
+
+            } else if (type == "3") {
+                $('#amountSection').css('display', 'block');
+                $('#amount').prop('required', true);
+                $('.amountLabel').text("Minimum Spend")
 
             }
         }

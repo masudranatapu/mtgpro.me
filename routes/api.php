@@ -29,6 +29,7 @@ Route::group([
 });
 
 Route::get('/general-settings', [HomeController::class, 'getSettings']);
+Route::get('/get-social-icons', [HomeController::class, 'getSocialIcons']);
 
 
 Route::middleware(['auth:api'])->group(function () {

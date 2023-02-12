@@ -314,6 +314,16 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Default Shipping Cost') }}
+                                                    ({{ $config[1]->config_value }})</label>
+                                                <input type="number" class="form-control required" name="shipping_cost"
+                                                    placeholder="{{ __('Default Shipping Cost') }}"
+                                                    value="{{ $settings->shipping_cost ?? 0 }}">
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -917,7 +927,7 @@
     <script>
         $(document).ready(function() {
             $('#site_disclimer').summernote({
-                
+
                 height: 150,
                 toolbar: [
                     ['style', ['bold', 'underline', 'italic', 'clear']],

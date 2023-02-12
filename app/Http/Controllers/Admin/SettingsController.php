@@ -124,7 +124,8 @@ class SettingsController extends Controller
             $setting->instagram_url     = $request->instagram_url;
             $setting->pinterest_url     = $request->pinterest_url;
             $setting->main_motto        = $request->main_motto;
-            $setting->site_disclimer        = $request->site_disclimer;
+            $setting->shipping_cost     = $request->shipping_cost;
+            $setting->site_disclimer    = $request->site_disclimer;
             if ($request->favi_icon) {
                 $favicon = $request->file('favi_icon');
                 $base_name = preg_replace('/\..+$/', '', $favicon->getClientOriginalName());

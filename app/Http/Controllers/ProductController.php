@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
@@ -25,7 +26,9 @@ class ProductController extends Controller
      */
     public function cart()
     {
-        return view('pages.cart');
+        $config = Config::where('config_key', 'tax_value')->first();
+        
+        return view('pages.cart', compact('config'));
     }
     /**
      * Write code on Method

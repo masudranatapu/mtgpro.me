@@ -29,19 +29,20 @@ class ProductController extends Controller
 
     public function create()
     {
-
-        return view('admin.product.create');
+        $setting = getSetting();
+        return view('admin.product.create', compact('setting'));
     }
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
-            'regular_price' => 'required',
+            'regular_price' => 'required|integer',
+            'price' => 'required|integer|lt:regular_price',
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
             'images' => 'required',
+            'shipping_cost' => 'required|integer'
         ]);
 
 
@@ -60,6 +61,7 @@ class ProductController extends Controller
                 $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb', 650, 620);
             }
             $product->status = $request->product_status;
+            $product->shipping_cost = $request->shipping_cost;
             $product->created_by = Auth::id();
             $product->updated_by = Auth::id();
             $product->save();
@@ -93,11 +95,12 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
-            'regular_price' => 'required',
+            'regular_price' => 'required|integer',
+            'price' => 'required|integer|lt:regular_price',
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
+            'shipping_cost' => 'required|integer'
 
         ]);
 
@@ -116,6 +119,7 @@ class ProductController extends Controller
                 $product->thumbnail = $this->storageHelper->uploadImage($request->images, 'productThumb', 400, 400);
             }
             $product->status = $request->product_status;
+            $product->shipping_cost = $request->shipping_cost;
             $product->created_by = Auth::id();
             $product->updated_by = Auth::id();
             $product->save();
