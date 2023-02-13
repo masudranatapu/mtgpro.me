@@ -373,7 +373,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                             <div class="setting_form">
 
                                                 <div class="plan_type switchBtn text-center mb-4 mt-3">
-                                                    <div class="text-left">Notifications ({{ Auth::user()->is_notify }})
+                                                    <div class="text-left">Notifications
                                                         <div class="switch-wrapper" style="width:170px !important;background: #f7f7f7;
                                                         border: 1px solid #EEE;">
 
