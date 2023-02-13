@@ -379,7 +379,7 @@
             <div class="offcanvas_btn">
                 <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
                     aria-controls="offcanvasContact">
-                    {{ __('Connect with me') }}
+                    {{ __('Connect with Me') }}
                 </a>
             </div>
             <!-- offcanvas contact button -->

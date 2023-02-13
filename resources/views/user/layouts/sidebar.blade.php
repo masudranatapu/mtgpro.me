@@ -135,7 +135,7 @@ $plan= getPlan(Auth::user()->id);
         </div>
         <!-- upgrade plan -->
         <div class="plan_upgrade text-center mb-5">
-            <a href="{{ route('user.plans') }}">{{ __('Upgrade now') }}</a>
+            <a href="{{ route('user.plans') }}">{{ __('Upgrade Now') }}</a>
         </div>
     </div>
 </aside>

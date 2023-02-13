@@ -121,7 +121,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" class="text-end">
-                                <h5><strong>Shiping cost : </strong></h5>
+                                <h5><strong>Shipping Cost : </strong></h5>
                             </td>
                             <td class="text-center">
                                 + {{ getprice($shipingTotal) }}

@@ -195,18 +195,11 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                                             month') }}.
                                                         </p>
                                                         @endif
-                                                        {{-- <p>$14.99 per member per month.</p> --}}
-                                                        {{-- <p>You will be charged <strong>$14.99 / month starting Jan
-                                                                19</strong></p> --}}
-                                                        {{-- <p>{{ __('You will be charged') }} <strong>{{
-                                                                CurrencyFormat($plan->plan_price_monthly,2) }} / month
-                                                                starting {{ date('M d, Y',
-                                                                strtotime($user->plan_activation_date) ) }}</strong></p>
-                                                        --}}
+
                                                         @else
                                                         <div class="text-center mb-5">
                                                             <a class="btn btn-primary"
-                                                                href="{{ route('user.plans') }}">{{ __('Upgrade now')
+                                                                href="{{ route('user.plans') }}">{{ __('Upgrade Now')
                                                                 }}</a>
                                                         </div>
                                                         @endif
