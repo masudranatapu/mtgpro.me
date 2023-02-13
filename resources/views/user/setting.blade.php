@@ -373,18 +373,18 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                             <div class="setting_form">
 
                                                 <div class="plan_type switchBtn text-center mb-4 mt-3">
-                                                    <div class="text-left">Notifications
+                                                    <div class="text-left">Notifications ({{ Auth::user()->is_notify }})
                                                         <div class="switch-wrapper" style="width:170px !important;background: #f7f7f7;
                                                         border: 1px solid #EEE;">
-                                                            <input id="yes" name="notification" class="switcher_"
-                                                                value="1" type="radio" name="switch" {{
-                                                                Auth::user()->is_notify == 1 ? : 'checked'}}>
-                                                            <input id="no" name="notification" class="switcher_"
-                                                                value="0" type="radio" name="switch" {{
-                                                                Auth::user()->is_notify == 0 ? : 'checked'}}>
+
+                                                            <input id="yes" name="notification" class="switcher_" value="1" type="radio" name="switch" {{
+                                                                Auth::user()->is_notify == 1 ? 'checked' : ''}}>
+
+                                                            <input id="no" name="notification" class="switcher_" value="0" type="radio" name="switch" {{
+                                                                Auth::user()->is_notify == 0 ? 'checked' : ''}}>
+
                                                             <label for="yes">Yes</label>
-                                                            <label for="no"
-                                                                style="padding-right: 54px !important;">No</label>
+                                                            <label for="no" style="padding-right: 54px !important;">No</label>
                                                             <span class="highlighter"></span>
                                                         </div>
                                                     </div>
@@ -865,8 +865,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                     url: `{{ route('user.notification-status') }}`,
                     type: "get",
                     data: {
-                        "current_val": current_val,
-                        "_token": "{{ csrf_token() }}",
+                        "current_val": current_val
                     },
                     beforeSend: function() {
                         $("body").css("cursor", "progress");
