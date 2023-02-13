@@ -256,7 +256,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2"></td>
-                                                <td>Shiping Cost</td>
+                                                <td>Shipping Cost</td>
                                                 <td class="text-right">{{ getPrice($order->shipping_cost) }}</td>
                                             </tr>
 

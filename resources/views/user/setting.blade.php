@@ -195,18 +195,11 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                                             month') }}.
                                                         </p>
                                                         @endif
-                                                        {{-- <p>$14.99 per member per month.</p> --}}
-                                                        {{-- <p>You will be charged <strong>$14.99 / month starting Jan
-                                                                19</strong></p> --}}
-                                                        {{-- <p>{{ __('You will be charged') }} <strong>{{
-                                                                CurrencyFormat($plan->plan_price_monthly,2) }} / month
-                                                                starting {{ date('M d, Y',
-                                                                strtotime($user->plan_activation_date) ) }}</strong></p>
-                                                        --}}
+
                                                         @else
                                                         <div class="text-center mb-5">
                                                             <a class="btn btn-primary"
-                                                                href="{{ route('user.plans') }}">{{ __('Upgrade now')
+                                                                href="{{ route('user.plans') }}">{{ __('Upgrade Now')
                                                                 }}</a>
                                                         </div>
                                                         @endif
@@ -376,15 +369,15 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                                     <div class="text-left">Notifications
                                                         <div class="switch-wrapper" style="width:170px !important;background: #f7f7f7;
                                                         border: 1px solid #EEE;">
-                                                            <input id="yes" name="notification" class="switcher_"
-                                                                value="1" type="radio" name="switch" {{
-                                                                Auth::user()->is_notify == 1 ? : 'checked'}}>
-                                                            <input id="no" name="notification" class="switcher_"
-                                                                value="0" type="radio" name="switch" {{
-                                                                Auth::user()->is_notify == 0 ? : 'checked'}}>
+
+                                                            <input id="yes" name="notification" class="switcher_" value="1" type="radio" name="switch" {{
+                                                                Auth::user()->is_notify == 1 ? 'checked' : ''}}>
+
+                                                            <input id="no" name="notification" class="switcher_" value="0" type="radio" name="switch" {{
+                                                                Auth::user()->is_notify == 0 ? 'checked' : ''}}>
+
                                                             <label for="yes">Yes</label>
-                                                            <label for="no"
-                                                                style="padding-right: 54px !important;">No</label>
+                                                            <label for="no" style="padding-right: 54px !important;">No</label>
                                                             <span class="highlighter"></span>
                                                         </div>
                                                     </div>
@@ -865,8 +858,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                     url: `{{ route('user.notification-status') }}`,
                     type: "get",
                     data: {
-                        "current_val": current_val,
-                        "_token": "{{ csrf_token() }}",
+                        "current_val": current_val
                     },
                     beforeSend: function() {
                         $("body").css("cursor", "progress");

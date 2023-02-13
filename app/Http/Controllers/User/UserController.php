@@ -508,6 +508,7 @@ class UserController extends Controller
 
     public function putNitificationStatus(Request $request)
     {
+        // dd($request->current_val);
         DB::beginTransaction();
         try {
             DB::table('users')->where('id', Auth::user()->id)->update(['is_notify' => $request->current_val]);

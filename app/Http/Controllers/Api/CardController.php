@@ -122,7 +122,6 @@ class CardController extends ResponceController
             $user->active_card_id = $card->id;
             $user->update();
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
         }
         DB::commit();
