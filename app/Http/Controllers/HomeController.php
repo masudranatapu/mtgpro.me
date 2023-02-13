@@ -6,7 +6,7 @@ use illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\Faq;
 use App\Models\Plan;
-use App\Models\User;
+use App\Models\senderData;
 use App\Models\Review;
 use App\Models\Currency;
 use App\Mail\ConnectMail;
@@ -23,8 +23,10 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
 use App\Mail\AllMail;
 use App\Mail\SendCard;
+use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +38,7 @@ class HomeController extends Controller
     private $user;
     public function __construct(
         User $user
-    )
-    {
+    ) {
         $this->user = $user;
         $this->settings = getSetting();
     }
@@ -126,13 +127,15 @@ class HomeController extends Controller
                 'msg' => trans('Something wrong ! please try again')
             ]);
         }
-        $user = DB::table('users')->where('id',$card->user_id)->first();
+        $user = DB::table('users')->where('id', $card->user_id)->first();
         // DB::commit();
-        if (!empty($connect) && $user->is_notify==1) {
+        if (!empty($connect) && $user->is_notify == 1) {
             // Mail::to($card->card_email)->send(new ConnectMail($data));
-            $message = $this->getConnectMail($card, $request->all());
-            Log::alert($message);
-            Mail::to($card->card_email)->send(new AllMail($message));
+            [$message, $subject] = $this->getConnectMail($card, $request->all());
+            Mail::to($card->card_email)->send(new AllMail($message, $subject));
+
+            [$message, $subject] = $this->getConnectMailCC($request->all());
+            Mail::to($card->card_email)->send(new AllMail($message, $subject));
         }
         // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
         // return redirect()->back();
@@ -164,9 +167,9 @@ class HomeController extends Controller
                 ->leftJoin('plans', 'plans.id', 'users.plan_id')
                 ->first();
 
-                $location                   = $this->user->getLocation();
+            $location                   = $this->user->getLocation();
 
-                // dd($location);
+            // dd($location);
 
             //browsing history
             if ($cardinfo) {
@@ -208,7 +211,8 @@ class HomeController extends Controller
                         [
                             'counter' => $counter,
                             'modified_at' => date('Y-m-d H:i:s')
-                        ]);
+                        ]
+                    );
                 } else {
                     DB::table('history_card_browsing')->insert($new_history);
                 }
@@ -622,9 +626,10 @@ class HomeController extends Controller
     public function getConnectMail($owner, $senderData)
     {
 
-        Log::alert($senderData['name']);
+
         $mailMesssage = EmailTemplate::where('slug', 'contact-query-mail-to-card-owner')->first();
         $mailcontent =     $mailMesssage->body;
+
 
         if (isset($owner)) {
             $user = User::find($owner->user_id);
@@ -654,6 +659,26 @@ class HomeController extends Controller
         if ($senderData) {
             $mailcontent = preg_replace("/{{message}}/", $senderData['message'], $mailcontent);
         }
-        return $mailcontent;
+        return [$mailcontent, $mailMesssage->subject];
+    }
+
+    public function getConnectMailCC($senderData)
+    {
+        $mailMesssage = EmailTemplate::where('slug', 'send-connect-to-visitors-cc-subscriber')->first();
+        $mailcontent =     $mailMesssage->body;
+        $setting = Config::first();
+
+
+
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{user_name}}/", $senderData['name'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{site_title}}/", $setting->config_value, $mailcontent);
+        }
+
+        return [$mailcontent, $mailMesssage->subject];
     }
 }

@@ -213,6 +213,8 @@ class ProductCheckoutController extends Controller
         if (session()->has('coupon')) {
             Session::forget('coupon');
         }
+        Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
+
         return redirect()->route('user.orders.invoice', ['id' => $order->id]);
     }
 }

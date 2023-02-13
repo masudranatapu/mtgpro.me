@@ -89,7 +89,7 @@ class AuthController extends ResponceController
 
             return $this->createNewToken($token);
         } catch (Exception $e) {
-            return response()->json("failed", "An error occured, please contact support.", 500);
+            return response()->json("failed", "An error occured, please contact support.");
         }
     }
 
@@ -168,8 +168,9 @@ class AuthController extends ResponceController
             $user->load('hasCards');
             Auth::guard('api')->login($user);
             // Mail::to($user->email)->send(new WelcomeMail($user));
-            $content = $this->wellcomeMail($user);
-            Mail::to($user->email)->send(new AllMail($content));
+            [$content, $subject] = $this->wellcomeMail($user);
+
+            Mail::to($user->email)->send(new AllMail($content, $subject));
 
             $token = JWTAuth::fromUser($user);
 
@@ -445,6 +446,6 @@ class AuthController extends ResponceController
                 $content = preg_replace("/{{site_name}}/", $setting->site_name, $content);
             }
         }
-        return $content;
+        return [$content, $mail->subject];
     }
 }

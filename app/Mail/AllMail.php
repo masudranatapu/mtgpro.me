@@ -17,10 +17,12 @@ class AllMail extends Mailable
      *
      * @return void
      */
-    public $message;
-    public function __construct($message)
+    public $message, $subject;
+
+    public function __construct($message, $subject)
     {
         $this->message = $message;
+        $this->subject = $subject;
     }
 
     /**
@@ -31,6 +33,6 @@ class AllMail extends Mailable
     public function build()
     {
 
-        return $this->view('emails.allMail')->with('content', $this->message);
+        return $this->view('emails.allMail')->subject($this->subject)->with('content', $this->message);
     }
 }

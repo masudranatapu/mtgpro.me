@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     use RepoResponse;
+    // protected $casts = ['features' => 'array', 'stripe_data' => 'array', 'stripe_data_yearly' => 'array'];
 
     protected $fillable = [
         'shareable'

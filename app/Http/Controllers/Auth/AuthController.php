@@ -142,8 +142,9 @@ class AuthController extends Controller
             if ($user) {
                 Auth::login($user);
                 // Mail::to($user->email)->send(new WelcomeMail($user));
+                $subject = "Wellcome";
                 $content = $this->wellcomeMail($user);
-                Mail::to($user->email)->send(new AllMail($content));
+                Mail::to($user->email)->send(new AllMail($content, $subject));
                 return redirect()->route('user.card');
             }
         } catch (\Exception $e) {
@@ -260,7 +261,8 @@ class AuthController extends Controller
                 if ($user->email) {
                     // Mail::to($user->email)->send(new WelcomeMail($user));
                     $content = $this->wellcomeMail($user);
-                    Mail::to($user->email)->send(new AllMail($content));
+                    $subject = "Wellcome";
+                    Mail::to($user->email)->send(new AllMail($content, $subject));
                 }
             }
         } catch (\Exception $e) {

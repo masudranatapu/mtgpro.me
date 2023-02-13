@@ -47,6 +47,12 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/insights', [HomeController::class, 'getInsights']);
     Route::post('/support-mail-send', [HomeController::class, 'sendSupportMail']);
+    Route::get('/user-plan', [HomeController::class, 'userplan']);
+
+
+    Route::post('/user-profile-update', [HomeController::class, 'profileUpdate']);
 });
 
+Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);
+Route::get('/get-plan', [HomeController::class, 'planList']);
 Route::get('/{cardUrl}', [HomeController::class, 'getPreview']);

@@ -28,7 +28,9 @@ use App\Http\Requests\PaymentInfoRequest;
 use App\Http\Requests\SupportMailRequest;
 use App\Mail\AllMail;
 use App\Mail\MortgageMail;
+use App\Models\Config;
 use App\Models\EmailTemplate;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -66,8 +68,9 @@ class UserController extends Controller
             $data['user'] = $check;
             $data['link'] = $link;
             // Mail::to(Auth::user()->email)->send(new ResetEmail($data));
-            $content = $this->passwordResetMail($check, $link);
-            Mail::to(Auth::user()->email)->send(new AllMail($content));
+            [$content, $subject] = $this->passwordResetMail($check, $link);
+
+            Mail::to(Auth::user()->email)->send(new AllMail($content, $subject));
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
@@ -306,15 +309,16 @@ class UserController extends Controller
                 $user->deleted_at = date("Y-m-d H:i:s");
                 $user->deleted_by  = Auth::user()->id;
 
-                $user->update();
+                $user->save();
                 Auth::logout();
                 // Mail::to($user_email)->send(new AccountDeletion($data));
-                $content = $this->accountDeletionMail();
-                Mail::to($user_email)->send(new AllMail($content));
+                [$content, $subject] = $this->accountDeletionMail();
+
+                Mail::to($user_email)->send(new AllMail($content, $subject));
             } else {
                 return response()->json(['status' => 0, 'message' => 'Please type `delete` for account deletion'], 200);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::alert($e);
             DB::rollback();
 
@@ -457,8 +461,11 @@ class UserController extends Controller
             $data['email'] = Auth::user()->email;
             $data['username'] = Auth::user()->name;
             Mail::to($settings->support_email)->send(new SupportMail($data));
+            $userId = User::find(Auth::id());
+            [$content, $subject] = $this->suggestFeatureMail($userId);
+            Mail::to(Auth::user()->email)->send(new AllMail($content, $subject));
         } catch (\Exception $e) {
-            dd($e->getMessage());
+
             DB::rollback();
             Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
@@ -549,7 +556,7 @@ class UserController extends Controller
 
     public function passwordResetMail(User $user, $link)
     {
-        Log::alert([$user, $link]);
+
 
         $mailTemplate = EmailTemplate::where('slug', 'password-reset')->first();
         $content = $mailTemplate->body;
@@ -564,12 +571,31 @@ class UserController extends Controller
             $content = preg_replace("/{{link}}/", $link, $content);
         }
 
-        return $content;
+        return [$content, $mailTemplate->subject];
     }
 
     public function accountDeletionMail()
     {
         $mailTemplate = EmailTemplate::where('slug', 'account-delatation')->first();
-        return $mailTemplate->body;
+        return [$mailTemplate->body, $mailTemplate->subject];
+    }
+    public function suggestFeatureMail(User $user)
+    {
+
+        $mailTemplate = EmailTemplate::where('slug', 'request-features-to-subscriber-mail')->first();
+        $content = $mailTemplate->body;
+
+        $setting = Config::first();
+
+
+        if (isset($user)) {
+
+            $content = preg_replace("/{{user_name}}/", $user->name, $content);
+        }
+
+        $content = preg_replace("/{{site_title}}/", $setting->config_value, $content);
+
+
+        return [$content, $mailTemplate->subject];
     }
 }

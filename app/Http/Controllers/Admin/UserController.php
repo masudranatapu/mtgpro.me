@@ -245,8 +245,9 @@ class UserController extends Controller
             try {
 
                 // Mail::to($user_details->email)->send(new SendEmailInvoice($details));
-                $content = $this->changeUserPalnMail($user_details, $plan_data);
-                Mail::to($user_details->email)->send(new AllMail($content));
+                [$content, $subject] = $this->changeUserPalnMail($user_details, $plan_data);
+
+                Mail::to($user_details->email)->send(new AllMail($content, $subject));
             } catch (\Exception $e) {
                 dd($e);
             }
@@ -363,8 +364,9 @@ class UserController extends Controller
             ];
 
             try {
-                $content = $this->changeUserPalnMail($user_details, $plan_data);
-                Mail::to($user_details->email)->send(new AllMail($content));
+                [$content, $subject] = $this->changeUserPalnMail($user_details, $plan_data);
+
+                Mail::to($user_details->email)->send(new AllMail($content, $subject));
 
                 // Mail::to($user_details->email)->send(new SendEmailInvoice($details));
             } catch (\Exception $e) {
@@ -471,14 +473,12 @@ class UserController extends Controller
         }
         BusinessCard::where('user_id', $id)->where('status', 2)->update([
             'status' => 1,
-            'is_deleted' => 0,
             'deleted_at' => NULL,
             'deleted_by' => NULL
         ]);
         DB::table('users')->where('id', $id)->update([
             'email' => $trim_email,
             'status' => 1,
-            'is_delete' => 0,
             'deleted_at' => NULL,
             'deleted_by' => NULL
         ]);
@@ -545,6 +545,6 @@ class UserController extends Controller
         if (isset($plan->features)) {
             $content = preg_replace("/{{plan_feature}}/", $html, $content);
         }
-        return $content;
+        return [$content, $maitemplate->subject];
     }
 }
