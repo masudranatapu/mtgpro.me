@@ -257,8 +257,8 @@
                                         <a href="javascript:void(0)">{{ __('Save Contact')}}</a>
                                     </div>
                                     <div class="social_icon">
-                                        <ul>
-                                            <li>
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col-4">
                                                 <a href="mailto:rabin1@gmail.com" target="_blank">
                                                     <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80"
                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -309,8 +309,8 @@
                                                     </svg>
                                                     <span>{{ __('Email')}}</span>
                                                 </a>
-                                            </li>
-                                            <li>
+                                            </div>
+                                            <div class="col-4">
                                                 <a href="javascript:void(0)" target="_blank">
                                                     <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80"
                                                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -352,8 +352,9 @@
                                                     </svg>
                                                     <span>{{ __('Phone')}}</span>
                                                 </a>
-                                            </li>
-                                        </ul>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
