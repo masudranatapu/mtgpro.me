@@ -418,7 +418,7 @@ class HomeController extends ResponceController
             "profile_pic" => 'sometimes',
             "email" => 'required|email',
             "connection_title" => 'required|string',
-            "user_disclimer" => 'required',
+            "user_disclaimer" => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -446,7 +446,7 @@ class HomeController extends ResponceController
 
             $user->email = $request->email;
             $user->updated_at   = date("Y-m-d H:i:s");
-            $user->user_disclimer   = $request->user_disclimer;
+            $user->user_disclaimer   = $request->user_disclaimer;
 
             // dd($user);
             $user->save();
@@ -511,7 +511,7 @@ class HomeController extends ResponceController
             "active_card_id" => $user->active_card_id,
             "connection_title" => $user->connection_title,
             "is_notify" => $user->is_notify,
-            "user_disclimer" => $user->user_disclimer,
+            "user_disclaimer" => $user->user_disclaimer,
 
         ];
         return $this->sendResponse(200, "User information updated successfull", $data, true, []);

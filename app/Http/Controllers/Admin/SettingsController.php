@@ -125,7 +125,7 @@ class SettingsController extends Controller
             $setting->pinterest_url     = $request->pinterest_url;
             $setting->main_motto        = $request->main_motto;
             $setting->shipping_cost     = $request->shipping_cost;
-            $setting->site_disclimer    = $request->site_disclimer;
+            $setting->site_disclaimer    = $request->site_disclaimer;
             if ($request->favi_icon) {
                 $favicon = $request->file('favi_icon');
                 $base_name = preg_replace('/\..+$/', '', $favicon->getClientOriginalName());

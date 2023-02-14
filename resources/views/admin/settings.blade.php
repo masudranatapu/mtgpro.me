@@ -136,8 +136,8 @@
                                         </div>
 
                                         <div class="col-md-12 col-xl-12">
-                                            <div class="form-label">{{ __('Site Disclimer') }}</div>
-                                            <textarea required name="site_disclimer" id="site_disclimer" cols="30" rows="10" class="form-control">{{ old('site_disclimer') ?? $settings->site_disclimer }}
+                                            <div class="form-label">{{ __('Site Disclaimer') }}</div>
+                                            <textarea required name="site_disclaimer" id="site_disclaimer" cols="30" rows="10" class="form-control">{{ old('site_disclaimer') ?? $settings->site_disclaimer }}
                                             </textarea>
 
                                         </div>
@@ -926,7 +926,7 @@
     <script src="{{ asset('assets/js/summernote.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#site_disclimer').summernote({
+            $('#site_disclaimer').summernote({
 
                 height: 150,
                 toolbar: [

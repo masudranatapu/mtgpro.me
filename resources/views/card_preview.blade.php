@@ -335,43 +335,29 @@
                             @endif
 
 
-                            @if (isset($user->user_disclimer))
+                            @if (isset($user->user_disclaimer))
                             <div class="col-4 col-md-3 mb-3">
-                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#disclimerModal"
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#disclaimerModal"
                                     aria-controls="false">
                                     <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
                                         class="img-fluid d-block mb-1"
                                         src="{{ asset('assets/img/icon/notes-note.svg') }}" alt="" width="70"
                                         height="70">
-                                    <span>User Disclimer</span>
+                                    <span>User Disclaimer</span>
                                 </a>
                             </div>
                             @endif
                         </div>
                     </div>
 
-                    {{-- @if (isFreePlan($cardinfo->user_id))
-                    @dd(1);
-                    {!! QrCode::size(200)->color(74, 74, 74, 80)
-                    ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
-                    ->generate(url($cardinfo->card_url)) !!}
-                    @elseif (!empty($cardinfo->logo) && $user_plan->is_qr_code==1)
-                    <img src="data:image/png;base64,
-                                        {!! base64_encode(QrCode::format('png')
-                                        ->size(200)->color(74, 74, 74, 80)
-                                        ->merge(public_path($cardinfo->logo), 0.2, true)
-                                        ->size(200)->generate(url($cardinfo->card_url))) !!} ">
-                    @else
-                    @dd(3);
-                    {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))!!}
-                    @endif --}}
-
                     <div class="copyright_article">
-                        <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights
-                            reserved.</p>
-
+                        <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.</p>
                     </div>
-
+                    @if($settings->site_disclaimer)
+                    <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #f1f1f1;">
+                        {{  $settings->site_disclaimer  }}
+                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -422,24 +408,7 @@
                                         </svg>
                                     </div>
                                     <div class="qr-code">
-                                        {{-- @if (isFreePlan($cardinfo->user_id))
-                                        <img src="data:image/png;base64,
-                                            {!! base64_encode(QrCode::format('png')
-                                            ->size(200)->color(74, 74, 74, 80)
-                                            ->merge(public_path('assets/img/logo/qrlogo.jpg'), 0.2, true)
-                                            ->size(200)->generate(url($cardinfo->card_url))) !!} ">
-                                        @elseif (!empty($cardinfo->logo))
-                                        <img src="data:image/png;base64,
-                                            {!! base64_encode(QrCode::format('png')
-                                            ->size(200)->color(74, 74, 74, 80)
-                                            ->merge(public_path($cardinfo->logo), 0.2, true)
-                                            ->size(200)->generate(url($cardinfo->card_url))) !!} ">
-                                        @else
-                                        {!! QrCode::size(200)->color(74, 74, 74,
-                                        80)->generate(url($cardinfo->card_url))!!}
-                                        @endif --}}
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))
-                                        !!}
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url)) !!}
                                     </div>
                                 </div>
 
@@ -486,20 +455,20 @@
             </div>
         </div>
     </div>
-    <!-- Disclimer modal -->
-    <div class="disclimer_modal modal_one">
-        <div class="modal fade" id="disclimerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <!-- Disclaimer modal -->
+    <div class="disclaimer_modal modal_one">
+        <div class="modal fade" id="disclaimerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">User Disclimer</h5>
+                        <h5 class="modal-title">User Disclaimer</h5>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        {!! $user->user_disclimer ?? '' !!}
+                        {!! $user->user_disclaimer ?? '' !!}
 
                     </div>
                 </div>
@@ -593,8 +562,6 @@
             </button>
         </div>
         <div class="offcanvas-body">
-
-
 
             <div class="contact_body">
                 <form action="{{ route('getConnect') }}" id="connect-form" method="post">

@@ -144,11 +144,11 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                    <a href="javascript:void(0)" class="nav-link" data-toggle="modal"
-                                        data-target="#disclimerModal">
+                                    {{-- <a href="javascript:void(0)" class="nav-link" data-toggle="modal"
+                                        data-target="#disclaimerModal">
                                         <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
-                                        {{ __('Disclimer') }}
-                                    </a>
+                                        {{ __('Disclaimer') }}
+                                    </a> --}}
                                 </div>
                             </div>
                             <div class="col-lg-8 col-xl-9">
@@ -436,10 +436,10 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
                                                     </div>
                                                     <div class="form-group mt-4">
 
-                                                        <label class="form-label" for="user_disclimer">
-                                                            {{ __('User Disclimer') }}</label>
-                                                        <textarea required name="user_disclimer" id="user_disclimer"
-                                                            cols="30" rows="10" class="form-control">{{ old('user_disclimer') ?? $user->user_disclimer }}
+                                                        <label class="form-label" for="user_disclaimer">
+                                                            {{ __('User Disclaimer') }}</label>
+                                                        <textarea required name="user_disclaimer" id="user_disclaimer"
+                                                            cols="30" rows="10" class="form-control">{{ old('user_disclaimer') ?? $user->user_disclaimer }}
                                                             </textarea>
 
                                                     </div>
@@ -575,28 +575,25 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
     </div>
 </div>
 
-{{-- disclimer Modal --}}
-
-<div class="disclimer_modal">
-    <div class="modal fade" id="disclimerModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
+{{-- disclaimer Modal --}}
+{{-- <div class="disclaimer_modal">
+    <div class="modal fade" id="disclaimerModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
                 <div class="modal-header mb-0">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Site Disclimer') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Site Disclaimer') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal_body p-3">
-                    {!! $settings->site_disclimer ?? '' !!}
-
-
+                    {!! $settings->site_disclaimer ?? '' !!}
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Billing Address Modal -->
 
@@ -880,7 +877,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
             }
         })
         $(document).ready(function() {
-            $('#site_disclimer').summernote({
+            $('#site_disclaimer').summernote({
 
                 height: 150,
                 toolbar: [
@@ -895,7 +892,7 @@ $bill_date = date('d', strtotime($user->plan_activation_date));
             });
         });
         $(document).ready(function() {
-            $('#user_disclimer').summernote({
+            $('#user_disclaimer').summernote({
 
                 height: 150,
                 toolbar: [

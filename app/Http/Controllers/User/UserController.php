@@ -403,7 +403,7 @@ class UserController extends Controller
 
             $user->email = $request->email;
             $user->updated_at   = date("Y-m-d H:i:s");
-            $user->user_disclimer   = $request->user_disclimer;
+            $user->user_disclaimer   = $request->user_disclaimer;
 
             // dd($user);
             $user->update();
