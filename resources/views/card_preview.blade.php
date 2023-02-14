@@ -59,7 +59,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}?v=2">
     @if ($cardinfo->theme_color)
     <style>
         .save_contact a {
@@ -354,7 +354,7 @@
                         <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.</p>
                     </div>
                     @if($settings->site_disclaimer)
-                    <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #f1f1f1;">
+                    <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
                         {{  $settings->site_disclaimer  }}
                     </div>
                     @endif
