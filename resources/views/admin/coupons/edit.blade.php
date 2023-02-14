@@ -106,7 +106,7 @@
                                                         </option>
                                                         <option value="3"
                                                             @if ($coupon->discount_type == '3') selected @endif>Free Shipping
-                                                            With Cindition
+                                                            With Condition
                                                         </option>
                                                     </select>
                                                     @error('discount_type')
