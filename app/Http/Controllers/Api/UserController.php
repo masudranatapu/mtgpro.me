@@ -150,6 +150,29 @@ class UserController extends ResponceController
     }
 
 
+    public function putNitificationStatus(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'current_val' => 'required|boolean'
+        ]);
+
+        if ($validate->fails()) {
+            return $this->sendError('Validation Error', $validate->errors()->first(), 200);
+        }
+
+
+        DB::beginTransaction();
+        try {
+            DB::table('users')->where('id', Auth::guard('api')->user()->id)->update(['is_notify' => $request->current_val]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return $this->sendError('Excepton Error', 'Something wrong! Please try again', 200);
+        }
+        DB::commit();
+        return $this->sendResponse(200, 'Successfully updated', [], true, []);
+    }
+
+
     public function passwordResetMail(User $user, $link)
     {
 
