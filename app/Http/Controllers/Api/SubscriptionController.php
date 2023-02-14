@@ -28,7 +28,8 @@ class SubscriptionController extends ResponceController
             $config         = DB::table('config')->get();
             $user = DB::table('users')->where('id', Auth::guard('api')->user()->id)->first();
             $plan = DB::table('plans')->where('id', $user->plan_id)->first();
-            Log::alert($plan);
+
+
             $payment_data = json_decode($user->stripe_data);
             $term_days = $plan->validity;
             $plan_validity = \Carbon\Carbon::now()->addDays($plan->validity);
@@ -51,7 +52,7 @@ class SubscriptionController extends ResponceController
             }
 
             $this->businesscard->updateDataByCuurentPlan($plan->id);
-            User::where('id', Auth::guard('api')->user()->id)->update([
+            $user = User::where('id', Auth::guard('api')->user()->id)->update([
                 'plan_id' => $plan->id,
                 'paid_with' => NULL,
                 'term' => $term_days,
@@ -64,10 +65,11 @@ class SubscriptionController extends ResponceController
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
         } catch (\Exception $e) {
+
             DB::rollback();
             return $this->sendError('Exception Error', 'Something\'s wrong. please check again');
         }
         DB::commit();
-        return $this->sendResponse(200, "Plan successfully changed", [], true, '');
+        return $this->sendResponse(200, "Plan successfully changed", $user, true, '');
     }
 }

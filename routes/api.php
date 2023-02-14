@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\SubscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::group([
 
 Route::get('/general-settings', [HomeController::class, 'getSettings']);
 Route::get('/get-social-icons', [HomeController::class, 'getSocialIcons']);
+Route::get('/get-plan', [HomeController::class, 'planList']);
+Route::get('/get-country', [HomeController::class, 'clountyList']);
 
 
 Route::middleware(['auth:api'])->group(function () {
@@ -51,8 +54,11 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     Route::post('/user-profile-update', [HomeController::class, 'profileUpdate']);
+
+
+
+    Route::post('/cancel-plan/stripe', [SubscriptionController::class, 'cancelCurrentPlan']);
 });
 
 Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);
-Route::get('/get-plan', [HomeController::class, 'planList']);
 Route::get('/{cardUrl}', [HomeController::class, 'getPreview']);

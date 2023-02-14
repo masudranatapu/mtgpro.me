@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -29,6 +30,7 @@ class User extends Authenticatable implements JWTSubject
         'plan_id',
         'username',
     ];
+    protected $appends = ['plan_duration', 'remainng_days'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -171,5 +173,43 @@ class User extends Authenticatable implements JWTSubject
     public function hasCards(): HasMany
     {
         return $this->hasMany(BusinessCard::class, 'user_id', 'id');
+    }
+
+    public function getPlanDurationAttribute()
+    {
+        $plan = DB::table('plans')
+            // ->select('')
+            ->leftJoin('transactions', 'transactions.plan_id', '=', 'plans.id')
+            ->where('plans.id', $this->plan_id)
+            ->orderBy('transactions.id', 'DESC')
+            ->first();
+
+        $subscription_end = new \Carbon\Carbon($this->plan_validity);
+        $subscription_start = new \Carbon\Carbon($this->plan_activation_date);
+
+        $diff_in_days = $subscription_start->diffInDays($subscription_end);
+
+        if ($diff_in_days > 31) {
+            return "Yearly";
+        } else {
+            return "Monthly";
+        }
+    }
+    public function getRemainngDaysAttribute()
+    {
+        $plan = DB::table('plans')
+            // ->select('')
+            ->leftJoin('transactions', 'transactions.plan_id', '=', 'plans.id')
+            ->where('plans.id', $this->plan_id)
+            ->orderBy('transactions.id', 'DESC')
+            ->first();
+
+        $subscription_end = new \Carbon\Carbon($this->plan_validity);
+        $subscription_start = new \Carbon\Carbon($this->plan_activation_date);
+
+        $diff_in_days = $subscription_start->diffInDays($subscription_end);
+
+        $duration = now()->diffInDays(\Carbon\Carbon::parse($this->plan_validity));
+        return $duration;
     }
 }
