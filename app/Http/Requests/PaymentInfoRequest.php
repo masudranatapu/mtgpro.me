@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentInfoRequest extends FormRequest
@@ -25,7 +27,7 @@ class PaymentInfoRequest extends FormRequest
         $rules = [
             '_token'                => 'required',
             'card_number'           => 'required|max:20',
-            'card_expiration_date'  => 'required|date',
+            'card_expiration_date'  => 'required',
             'card_cvc'              => 'required|min:3|max:4',
             'name_on_card'          => 'required|max:255',
         ];
@@ -35,12 +37,10 @@ class PaymentInfoRequest extends FormRequest
     public function messages()
     {
         return [
-           'card_number.required'      => 'Please enter your card number',
-           'card_expiration_date.required'      => 'Please enter your card expiration date',
-           'card_cvc.required'      => 'Please enter your card cvc',
-           'name_on_card.required'      => 'Please enter your name on card'
+            'card_number.required'      => 'Please enter your card number',
+            'card_expiration_date.required'      => 'Please enter your card expiration date',
+            'card_cvc.required'      => 'Please enter your card cvc',
+            'name_on_card.required'      => 'Please enter your name on card'
         ];
     }
-
-
 }
