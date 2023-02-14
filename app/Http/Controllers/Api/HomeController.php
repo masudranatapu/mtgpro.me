@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\CountryHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConnectRequest;
 use App\Http\Requests\SupportMailRequest;
@@ -362,6 +363,8 @@ class HomeController extends ResponceController
     public function userplan()
     {
         $userPlan = User::find(Auth::guard('api')->id());
+
+
         $planDetails = json_decode($userPlan->plan_details, true);
         $data = [
             "id" => $planDetails['id'],
@@ -406,6 +409,8 @@ class HomeController extends ResponceController
             "is_qr_code" => $planDetails['is_qr_code'],
             "is_yearly_plan" => $planDetails['is_yearly_plan'],
             "free_marketing_material" => $planDetails['free_marketing_material'],
+            "package_type" => $userPlan->plan_duration,
+            "remaining_days" => $userPlan->remainng_days
         ];
 
         return $this->sendResponse(200, "User Current Plans", $data, true);
@@ -573,5 +578,12 @@ class HomeController extends ResponceController
             Mail::to($card->card_email)->send(new AllMail($message, $subject));
         }
         return $this->sendResponse(200, 'Something wrong ! please try again', $data, true, []);
+    }
+
+    public function clountyList()
+    {
+        $countries = CountryHelper::CountryCodes();
+
+        return $this->sendResponse(200, "All Country", $countries, true, []);
     }
 }

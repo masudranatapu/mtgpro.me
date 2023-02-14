@@ -28,46 +28,51 @@ class SubscriptionController extends ResponceController
             $config         = DB::table('config')->get();
             $user = DB::table('users')->where('id', Auth::guard('api')->user()->id)->first();
             $plan = DB::table('plans')->where('id', $user->plan_id)->first();
-            Log::alert($plan);
-            $payment_data = json_decode($user->stripe_data);
-            $term_days = $plan->validity;
-            $plan_validity = \Carbon\Carbon::now()->addDays($plan->validity);
-            // plan_validity
-            // plan_activation_date
-            //Unsubscription Stripe
-            $stripe = new \Stripe\StripeClient($config[10]->config_value);
 
-            //Check subscription
-            $check_subscription = $stripe->subscriptions->retrieve(
-                $payment_data->id,
-                []
-            );
-            if ($check_subscription->status == 'active') {
-                //Unsubscription Stripe
-                $stripe = $stripe->subscriptions->cancel(
+
+            $payment_data = json_decode($user->stripe_data);
+            if (isset($payment_data)) {
+                # code...
+
+                $term_days = $plan->validity;
+                $plan_validity = \Carbon\Carbon::now()->addDays($plan->validity);
+                $stripe = new \Stripe\StripeClient($config[10]->config_value);
+
+                //Check subscription
+                $check_subscription = $stripe->subscriptions->retrieve(
                     $payment_data->id,
                     []
                 );
-            }
+                if ($check_subscription->status == 'active') {
+                    //Unsubscription Stripe
+                    $stripe = $stripe->subscriptions->cancel(
+                        $payment_data->id,
+                        []
+                    );
+                }
 
-            $this->businesscard->updateDataByCuurentPlan($plan->id);
-            User::where('id', Auth::guard('api')->user()->id)->update([
-                'plan_id' => $plan->id,
-                'paid_with' => NULL,
-                'term' => $term_days,
-                'plan_validity' => $plan_validity,
-                'plan_activation_date' => \Carbon\Carbon::now(),
-                'plan_details' => json_encode($plan),
-                'stripe_data' => NULL,
-                'paypal_data' => NULL,
-                'stripe_customer_id' => NULL,
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]);
+                $this->businesscard->updateDataByCuurentPlanApi($plan->id);
+                $user = User::where('id', Auth::guard('api')->user()->id)->update([
+                    'plan_id' => $plan->id,
+                    'paid_with' => NULL,
+                    'term' => $term_days,
+                    'plan_validity' => $plan_validity,
+                    'plan_activation_date' => \Carbon\Carbon::now(),
+                    'plan_details' => json_encode($plan),
+                    'stripe_data' => NULL,
+                    'paypal_data' => NULL,
+                    'stripe_customer_id' => NULL,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            } else {
+                return $this->sendError('Unsubscription Error', 'Your already unsubscription from the plan');
+            }
         } catch (\Exception $e) {
+
             DB::rollback();
             return $this->sendError('Exception Error', 'Something\'s wrong. please check again');
         }
         DB::commit();
-        return $this->sendResponse(200, "Plan successfully changed", [], true, '');
+        return $this->sendResponse(200, "Plan successfully changed", $user, true, '');
     }
 }
