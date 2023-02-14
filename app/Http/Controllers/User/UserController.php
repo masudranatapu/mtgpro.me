@@ -353,17 +353,18 @@ class UserController extends Controller
 
     public function putUpdatePayment(PaymentInfoRequest $request)
     {
+
         DB::beginTransaction();
         try {
-            $user              = User::find(Auth::user()->id);
+            $user              = User::find(Auth::id());
             $user->card_number = $request->card_number;
             $user->card_expiration_date = $request->card_expiration_date;
             $user->card_cvc     = $request->card_cvc;
             $user->name_on_card = $request->name_on_card;
             $user->updated_at   = date("Y-m-d H:i:s");
-            $user->update();
+            $user->save();
+            dd($user);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             DB::rollback();
             Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
