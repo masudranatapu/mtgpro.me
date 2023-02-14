@@ -169,4 +169,10 @@ class UserController extends ResponceController
 
         return [$content, $mailTemplate->subject];
     }
+
+    public function accountDeletionMail()
+    {
+        $mailTemplate = EmailTemplate::where('slug', 'account-delatation')->first();
+        return [$mailTemplate->body, $mailTemplate->subject];
+    }
 }
