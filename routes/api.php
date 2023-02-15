@@ -34,6 +34,7 @@ Route::get('/general-settings', [HomeController::class, 'getSettings']);
 Route::get('/get-social-icons', [HomeController::class, 'getSocialIcons']);
 Route::get('/get-plan', [HomeController::class, 'planList']);
 Route::get('/get-country', [HomeController::class, 'clountyList']);
+Route::post('/get-connection', [UserController::class, 'getConnect']);
 
 
 Route::middleware(['auth:api'])->group(function () {
@@ -55,12 +56,10 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     Route::post('/user-profile-update', [HomeController::class, 'profileUpdate']);
-
-
-
     Route::post('/cancel-plan/stripe', [SubscriptionController::class, 'cancelCurrentPlan']);
     Route::post('/password-reset', [UserController::class, 'passwordReset']);
-    // Route::post('/password-reset', [UserController::class, 'passwordReset']);
+    Route::post('/account-delete', [UserController::class, 'postDeletionRequest']);
+    Route::post('/push-notifications', [UserController::class, 'putNitificationStatus']);
 });
 
 Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);
