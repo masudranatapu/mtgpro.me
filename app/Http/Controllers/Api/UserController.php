@@ -334,7 +334,7 @@ class UserController extends ResponceController
         }
 
         if ($senderData) {
-            $mailcontent = preg_replace("/{{title}}/", $senderData['title'], $mailcontent);
+            $mailcontent = preg_replace("/{{title}}/", $senderData['job_title'], $mailcontent);
         }
 
         if ($senderData) {
