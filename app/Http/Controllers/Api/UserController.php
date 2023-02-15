@@ -275,6 +275,37 @@ class UserController extends ResponceController
     }
     public function userBillingInfo()
     {
+        $user = Auth::user();
+        $data = [
+            "billing_zipcode" => $user->billing_zipcode,
+            "billing_country" => $user->billing_country,
+            "billing_email" => $user->billing_email,
+        ];
+
+        return $this->sendResponse(200, 'User Billing info', $data, true);
+    }
+    public function userBillingInfoUpdate(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'billing_zipcode' => 'required',
+            'billing_country' => 'required',
+            'billing_email' => 'required',
+        ]);
+
+
+        if ($validate->fails()) {
+            return  $this->sendError("Validation Error", $validate->errors()->first(), 200);
+        }
+
+
+        $user = User::find(Auth::id());
+
+        $user->billing_zipcode = $request->billing_zipcode;
+        $user->billing_country = $request->billing_country;
+        $user->billing_email = $request->billing_email;
+        $user->save();
+
+        return $this->sendResponse(200, 'User Billing info', $user, true);
     }
 
     public function getConnectMail($owner, $senderData)

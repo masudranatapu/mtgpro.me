@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <?php
-    $settings = getSetting();
+$settings = getSetting();
 ?>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="x-apple-disable-message-reformatting" />
@@ -452,44 +453,47 @@
 </head>
 
 <body>
-<table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-    <tr>
-        <td align="center">
-            <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-                <tr>
-                    <td class="email-masthead">
-                        <a href="{{ url('/') }}" class="f-fallback email-masthead_name">
-                            {{ $settings->site_name }}
-                        </a>
-                    </td>
-                </tr>
-                <!-- Email Body -->
-                <tr>
-                    <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
-                        <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0"
-                               role="presentation">
-                            <!-- Body content -->
-                            <tr>
-                                <td class="content-cell">
-                                    <div class="f-fallback">
-                                        <h1>{{ __('New user has been registered')}}</h1>
-                                        <table class="body-sub" role="presentation">
-                                            <tr>
-                                                <td>
-                                                    <p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #b0adc5; font-size: 12px; text-align: center;">
-                                                        © {{date('Y')}} {{$settings->site_name}}. All rights reserved.</p>                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+            <td align="center">
+                <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                        <td class="email-masthead">
+                            <a href="{{ url('/') }}" class="f-fallback email-masthead_name">
+                                {{ $settings->site_name }}
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- Email Body -->
+                    <tr>
+                        <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
+                            <table class="email-body_inner" align="center" width="570" cellpadding="0"
+                                cellspacing="0" role="presentation">
+                                <!-- Body content -->
+                                <tr>
+                                    <td class="content-cell">
+                                        <div class="f-fallback">
+                                            <h1>{{ $content }}</h1>
+                                            <table class="body-sub" role="presentation">
+                                                <tr>
+                                                    <td>
+                                                        <p
+                                                            style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #b0adc5; font-size: 12px; text-align: center;">
+                                                            © {{ date('Y') }} {{ $settings->site_name }}. All rights
+                                                            reserved.</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

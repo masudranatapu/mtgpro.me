@@ -6,19 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class AdminNotifyMail extends Mailable
 {
     use Queueable, SerializesModels;
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public $subject, $content;
+    public function __construct($mailsubject, $mailcontent)
     {
-        //
+        $this->subject = $mailsubject;
+        $this->content = $mailcontent;
     }
 
     /**
@@ -28,8 +30,7 @@ class AdminNotifyMail extends Mailable
      */
     public function build()
     {
-        return $this
-            ->subject('You have got a new customer.')
-            ->view('emails.admin-notify-mail');
+
+        return $this->subject($this->subject)->view('emails.admin-notify-mail')->with('content', $this->content);
     }
 }
