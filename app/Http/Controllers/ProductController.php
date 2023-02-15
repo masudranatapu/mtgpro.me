@@ -79,11 +79,13 @@ class ProductController extends Controller
                 "slug" => $product->product_slug,
                 "quantity" => $request->qty,
                 "price" => $product->unit_price_regular,
-                "image" => $product->thumbnail
+                "image" => $product->thumbnail,
+                "shipping_cost" => $product->shipping_cost
             ];
         }
         session()->put('cart', $cart);
         $this->getShiping();
+        Toastr::success('Add to cart successfully');
 
         return redirect()->back()->with('success',);
     }
@@ -213,8 +215,9 @@ class ProductController extends Controller
     {
         session()->forget('shiping');
         $shipingTotal = 0;
-        foreach (session('cart') as $id => $details) {
-            $shipingTotal += $details['shipping_cost'];
+        foreach (session('cart') as $details) {
+
+            $shipingTotal = $shipingTotal + $details['shipping_cost'];
         }
         session()->put('shiping', $shipingTotal);
     }

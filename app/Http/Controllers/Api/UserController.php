@@ -273,6 +273,9 @@ class UserController extends ResponceController
         $mailTemplate = EmailTemplate::where('slug', 'account-delatation')->first();
         return [$mailTemplate->body, $mailTemplate->subject];
     }
+    public function userBillingInfo()
+    {
+    }
 
     public function getConnectMail($owner, $senderData)
     {
@@ -331,5 +334,175 @@ class UserController extends ResponceController
         }
 
         return [$mailcontent, $mailMesssage->subject];
+    }
+
+
+
+    public function userplan()
+    {
+        $userPlan = User::find(Auth::guard('api')->id());
+
+
+        $planDetails = json_decode($userPlan->plan_details, true);
+        $data = [
+            "id" => $planDetails['id'],
+            "plan_type" => $planDetails['plan_type'],
+            "plan_id" => $planDetails['plan_id'],
+            "plan_name" => $planDetails['plan_name'],
+            "plan_description" => $planDetails['plan_description'],
+            "is_free" => $planDetails['is_free'],
+            "plan_price_monthly" => $planDetails['plan_price_monthly'],
+            "plan_price_yearly" => $planDetails['plan_price_yearly'],
+            "plan_price" => $planDetails['plan_price'],
+            "discount_percentage" => $planDetails['discount_percentage'],
+            "validity" => $planDetails['validity'],
+            "no_of_vcards" => $planDetails['no_of_vcards'],
+            "no_of_services" => $planDetails['no_of_services'],
+            "no_of_galleries" => $planDetails['no_of_galleries'],
+            "no_of_features" => $planDetails['no_of_features'],
+            "no_of_payments" => $planDetails['no_of_payments'],
+            "personalized_link" => $planDetails['personalized_link'],
+            "hide_branding" => $planDetails['hide_branding'],
+            "free_setup" => $planDetails['free_setup'],
+            "free_support" => $planDetails['free_support'],
+            "recommended" => $planDetails['recommended'],
+            "is_watermark_enabled" => $planDetails['is_watermark_enabled'],
+            "features" => json_decode($planDetails['features'], true),
+            "plans_type" => $planDetails['plans_type'],
+            "name" => $planDetails['name'],
+            "slug" => $planDetails['slug'],
+            "stripe_plan_id" => $planDetails['stripe_plan_id'],
+            "stripe_data" => json_decode($planDetails['stripe_data']),
+            "stripe_plan_id_yearly" => $planDetails['stripe_plan_id_yearly'],
+            "paypal_plan_id" => $planDetails['paypal_plan_id'],
+            "paypal_plan_data" => $planDetails['paypal_plan_data'],
+            "cost" => $planDetails['cost'],
+            "status" => $planDetails['status'],
+            "shareable" => $planDetails['shareable'],
+            "created_at" => $planDetails['created_at'],
+            "updated_at" => $planDetails['updated_at'],
+            "is_vcard" => $planDetails['is_vcard'],
+            "is_whatsapp_store" => $planDetails['is_whatsapp_store'],
+            "is_email_signature" => $planDetails['is_email_signature'],
+            "is_qr_code" => $planDetails['is_qr_code'],
+            "is_yearly_plan" => $planDetails['is_yearly_plan'],
+            "free_marketing_material" => $planDetails['free_marketing_material'],
+            "package_type" => $userPlan->plan_duration,
+            "remaining_days" => $userPlan->remainng_days
+        ];
+
+        return $this->sendResponse(200, "User Current Plans", $data, true);
+    }
+
+    public function userProfile()
+    {
+        $user = Auth::guard('api')->user();
+        return $this->sendResponse(200, "User profile data", $user, true);
+    }
+
+    public function profileUpdate(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            "profile_pic" => 'sometimes',
+            "email" => 'required|email',
+            "connection_title" => 'required|string',
+            "user_disclaimer" => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError("Validation Error", $validator->errors()->first());
+        }
+
+
+        DB::beginTransaction();
+        try {
+            $user  = User::find(Auth::user()->id);
+            if ($request->has('profile_pic') && !empty($request->profile_pic[0])) {
+                $file_name = $this->businessCard->formatName($request->name);
+                if ($request->has('profile_pic')) {
+
+                    $profile_image = $this->uploadBase64FileToPublic($request->profile_pic, 'profilePic');
+                    $user->profile_image = asset($profile_image);
+                }
+            }
+
+            if ($request->connection_title) {
+                $user->connection_title = $request->connection_title;
+            } else {
+                $user->connection_title = 'Share your info back with ' . $user->name;
+            }
+
+            $user->email = $request->email;
+            $user->updated_at   = date("Y-m-d H:i:s");
+            $user->user_disclaimer   = $request->user_disclaimer;
+
+            // dd($user);
+            $user->save();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->sendError("Exception Error", "Something wrong! Please try again");
+        }
+        DB::commit();
+
+        $data = [
+            "id" => $user->id,
+            "name" => $user->name,
+            "lname" => $user->lname,
+            "email" => $user->email,
+            "username" => $user->username,
+            "billing_country_code" => $user->billing_country_code,
+            "role_id" => $user->role_id,
+            "user_type" => $user->user_type,
+            "email_verified_at" => $user->email_verified_at,
+            "email_verified" => $user->email_verified,
+            "auth_type" => $user->auth_type,
+            "profile_image" => $user->profile_image,
+            "plan_id" => $user->plan_id,
+            "term" => $user->term,
+            "plan_validity" => $user->plan_validity,
+            "plan_activation_date" => $user->plan_activation_date,
+            "billing_name" => $user->billing_name,
+            "type" => $user->type,
+            "vat_number" => $user->vat_number,
+            "billing_address" => $user->billing_address,
+            "billing_city" => $user->billing_city,
+            "billing_state" => $user->billing_state,
+            "billing_zipcode" => $user->billing_zipcode,
+            "billing_country" => $user->billing_country,
+            "billing_phone" => $user->billing_phone,
+            "billing_email" => $user->billing_email,
+            "status" => $user->status,
+            "paypal_plan_id" => $user->paypal_plan_id,
+            "paypal_data" => $user->paypal_data,
+            "stripe_data" => $user->stripe_data,
+            "stripe_customer_id" => $user->stripe_customer_id,
+            "created_at" => $user->created_at,
+            "updated_at" => $user->updated_at,
+            "trial_ends_at" => $user->trial_ends_at,
+            "paid_with" => $user->paid_with,
+            "gender" => $user->gender,
+            "country_code" => $user->country_code,
+            "ccode" => $user->ccode,
+            "phone" => $user->phone,
+            "avatar" => $user->avatar,
+            "provider" => $user->provider,
+            "social_id" => $user->social_id,
+            "dob" => $user->dob,
+            "designation" => $user->designation,
+            "company_name" => $user->company_name,
+            "company_websitelink" => $user->company_websitelink,
+            "token" => $user->token,
+            "token_expire_at" => $user->token_expire_at,
+            "is_token_active" => $user->is_token_active,
+            "deleted_at" => $user->deleted_at,
+            "deleted_by" => $user->deleted_by,
+            "active_card_id" => $user->active_card_id,
+            "connection_title" => $user->connection_title,
+            "is_notify" => $user->is_notify,
+            "user_disclaimer" => $user->user_disclaimer,
+
+        ];
+        return $this->sendResponse(200, "User information updated successfull", $data, true, []);
     }
 }

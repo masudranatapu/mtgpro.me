@@ -52,10 +52,13 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/insights', [HomeController::class, 'getInsights']);
     Route::post('/support-mail-send', [HomeController::class, 'sendSupportMail']);
-    Route::get('/user-plan', [HomeController::class, 'userplan']);
+    Route::get('/user-plan', [UserController::class, 'userplan']);
+    Route::get('/billing-onfo', [UserController::class, 'userBillingInfo']);
 
 
-    Route::post('/user-profile-update', [HomeController::class, 'profileUpdate']);
+
+    Route::get('/user-profile', [UserController::class, 'userProfile']);
+    Route::post('/user-profile-update', [UserController::class, 'profileUpdate']);
     Route::post('/cancel-plan/stripe', [SubscriptionController::class, 'cancelCurrentPlan']);
     Route::post('/password-reset', [UserController::class, 'passwordReset']);
     Route::post('/account-delete', [UserController::class, 'postDeletionRequest']);
