@@ -3,9 +3,14 @@
 @section('social_icon','active')
 @section('title') Social Icon Create @endsection
 
+@php
+$social_type = Config::get('app.social_type');
+
+@endphp
+
 @section('content')
 <div class="page-wrapper">
-    {{--         <div class="container-xl">
+    {{-- <div class="container-xl">
         <!-- Page title -->
         <div class="page-header d-print-none mt-2 mb-3">
             <div class="row align-items-center">
@@ -14,7 +19,7 @@
                         {{ __('OVERVIEW') }}
                     </div>
                     <h2 class="page-title">
-                    {{ __('Add New Social Icon') }}
+                        {{ __('Add New Social Icon') }}
                     </h2>
                 </div>
                 <div class="col">
@@ -38,71 +43,98 @@
                             </div>
                             <div class="col">
                                 <div class="float-end">
-                                    <a href="{{route('admin.social-icon.index')}}" class="btn btn-primary">{{ __('Back')}}</a>
+                                    <a href="{{route('admin.social-icon.index')}}" class="btn btn-primary">{{
+                                        __('Back')}}</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                    <form action="{{route('admin.social-icon.store')}}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{route('admin.social-icon.store')}}" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                             <div class="col-12">
-                                                 <label for="" class="form-label">Preview Image</label>
-                                                 <img id="output" src="{{ asset('assets/img/no-image.jpg') }}" class="border rounded" width="80" height="80" alt="image">
+                                                <label for="" class="form-label">Preview Image</label>
+                                                <img id="output" src="{{ asset('assets/img/no-image.jpg') }}"
+                                                    class="border rounded" width="80" height="80" alt="image">
                                             </div>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="col-md-6">
-                                                <label for="" class="form-label">{{ __('Icon Image')}}</label>
-                                                <input type="file" name="icon_image" onchange="loadFile(event)" class="form-control" placeholder="{{ __('Icon image')}}">
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Icon Image')}} <span
+                                                        class="text-danger">(Prefered
+                                                        size is 80X80px)</span>
+                                                </label>
+                                                <input type="file" name="icon_image" onchange="loadFile(event)"
+                                                    class="form-control" placeholder="{{ __('Icon image')}}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Group')}}</label>
                                                 <select name="icon_group" id="icon_group" class="form-control">
-                                                     <option value="" class="d-none">-- Choose --</option>
-                                                     <option value="Recommended">Recommended</option>
-                                                     <option value="Contact">Contact</option>
-                                                     <option value="Social Media">Social Media</option>
-                                                     <option value="Music Media">Music Media</option>
-                                                     <option value="Payment">Payment</option>
-                                                     <option value="More">More</option>
+                                                    <option value="" class="d-none">-- Choose --</option>
+                                                    <option value="Recommended">Recommended</option>
+                                                    <option value="Contact">Contact</option>
+                                                    <option value="Social Media">Social Media</option>
+                                                    <option value="Music Media">Music Media</option>
+                                                    <option value="Payment">Payment</option>
+                                                    <option value="More">More</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
+
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Name')}}</label>
-                                                <input type="text" name="icon_name" value="{{ old('icon_name') }}" class="form-control" placeholder="{{ __('Icon name')}}">
+                                                <input type="text" name="icon_name" value="{{ old('icon_name') }}"
+                                                    class="form-control" placeholder="{{ __('Icon name')}}">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="" class="form-label">{{ __('Icon fa')}}</label>
-                                                <input type="text" name="icon_fa" value="{{ old('icon_fa') }}" class="form-control" placeholder="{{ __('Icon  name fa')}}">
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Title')}}</label>
-                                                <input type="text" name="icon_title" value="{{ old('icon_title') }}" class="form-control" placeholder="{{ __('Icon Title')}}">
+                                                <input type="text" name="icon_title" value="{{ old('icon_title') }}"
+                                                    class="form-control" placeholder="{{ __('Icon Title')}}">
                                             </div>
-                                            <div class="col-md-6">
+
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Type')}}</label>
+                                                <select name="type" class="form-control">
+                                                    @if(isset($social_type) && count($social_type)>0)
+                                                    @foreach($social_type as $key => $typ)
+                                                    <option value="{{ $typ }}">{{ $typ }}</option>
+                                                    @endforeach
+                                                    @endif
+
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Main Link')}}</label>
+                                                <input type="text" name="main_link" class="form-control" value=""
+                                                    placeholder="Enter main link (if type is username)">
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Icon Example')}}</label>
-                                                <input type="text" name="example_text" value="{{ old('example_text') }}" class="form-control" placeholder="{{ __('Icon Example')}}">
+                                                <input type="text" name="example_text" value="{{ old('example_text') }}"
+                                                    class="form-control" placeholder="{{ __('Icon Example')}}">
                                             </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Order Id')}}</label>
-                                                <input type="number" name="order_id" value="{{ old('order_id') }}" class="form-control" placeholder="{{ __('Order id')}}">
+                                                <input type="number" name="order_id" value="{{ old('order_id') }}"
+                                                    class="form-control" placeholder="{{ __('Order id')}}">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <label for="" class="form-label">{{ __('Status')}}</label>
-                                                <select name="status"  class="form-control">
+                                                <select name="status" class="form-control">
                                                     <option disabled>{{ __('Select One')}}</option>
                                                     <option value="1" selected>{{ __('Active')}}</option>
                                                     <option value="0">{{ __('Inactive')}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <label for="" class="form-label">{{ __('Paid Status')}}</label>
+                                                <select name="is_paid" class="form-control">
+                                                    <option disabled>{{ __('Select One')}}</option>
+                                                    <option value="0" selected>{{ __('Free')}}</option>
+                                                    <option value="1">{{ __('Paid')}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -131,8 +163,5 @@
     };
 </script>
 
-        
+
 @endsection
-
-
-    

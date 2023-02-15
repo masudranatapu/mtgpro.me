@@ -1,50 +1,110 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
-use DB;
-use Auth;
-use Socialite;
+
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
+use App\Models\Plan;
 use App\Models\User;
+use App\Models\Setting;
 use App\Mail\WelcomeMail;
-use Illuminate\Http\Request;
+use App\Models\BusinessCard;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
-
+use App\Mail\AllMail;
+use App\Models\EmailTemplate;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     protected $user;
+    protected $plan;
+    protected $businessCard;
     public function __construct(
-        User            $user
-    )
-    {
+        User            $user,
+        Plan            $plan,
+        BusinessCard    $businessCard
+    ) {
         $this->user     = $user;
+        $this->plan     = $plan;
+        $this->businessCard = $businessCard;
+
+        $link = Setting::first();
+
+        Config::set('services.google.client_id', $link->google_client_id);
+        Config::set('services.google.client_secret', $link->google_client_secret);
+        Config::set('services.google.redirect', url('/auth/google/callback'));
+
+        Config::set('services.facebook.client_id', $link->facebook_client_id);
+        Config::set('services.facebook.client_secret', $link->facebook_client_secret);
+        Config::set('services.facebook.redirect', preg_replace("/^http:/i", "https:", url('/auth/facebook/callback')));
     }
 
+    public function postLogin(LoginRequest $request)
+    {
+        try {
+            $check_deactive = User::where('email', $request->email)->where('status', 0)->first();
+            if (!empty($check_deactive)) {
+                Toastr::error(trans('Oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back();
+            }
+            $check_deleted = User::where('email', $request->email)->where('status', 2)->first();
+            if (!empty($check_deleted)) {
+                Toastr::error(trans('Your account has been deleted ! Please create new account using a different email and/or mobile number'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back();
+            }
+            $user = Auth::attempt([
+                'email'          => $request->email,
+                'password'       => $request->password
+            ]);
+            if ($user == false) {
+
+                Toastr::error(trans('oops! You have entered invalid credentials'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back()->withInput();
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        }
+
+        if (Auth::check() && Auth::user()->user_type == 1) {
+            return redirect()->route('dashboard');
+        }
+        if (Auth::check() && checkPackageValidity(Auth::user()->id) == false) {
+            DB::table('business_cards')->where('user_id', Auth::user()->id)->update([
+                'status' => 0
+            ]);
+        }
+        return redirect()->route('user.card');
+    }
     public function postRegister(RegistrationRequest $request)
     {
-        // dd($request->all());
-        date_default_timezone_set('Asia/Dhaka');
         try {
-            $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
-            $checkExist = User::where('email',$request->email)->whereNotNull('email')->first();
-
-            // dd($checkExist);
-
-            if(!empty($checkExist)){
-
-                Toastr::error(trans('Cannot create account an identical account already exists!'), 'Success', ["positionClass" => "toast-top-right"]);
-                return redirect()->back()->with('error','Already exist account')->withInput();;
+            $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
+            $term_days = $plan->validity;
+            $checkExist = User::where('email', $request->email)->whereNotNull('email')->first();
+            if (!empty($checkExist)) {
+                Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->back()->with('error', 'Already exist account')->withInput();
             }
-
             $user                       = new User();
             $user->name                 = trim($request->name);
             $user->email                = trim($request->email);
+            if (!empty($request->username) && $this->checkExistUserName($request->username) == false) {
+                $user->username    = $request->username;
+            } else {
+                $user->username    = $this->makeUserName($request->name);
+            }
             $user->password             = bcrypt($request->password);
             $user->gender               = NULL;
             $user->dob                  = NULL;
@@ -54,42 +114,54 @@ class AuthController extends Controller
             $user->role_id              = 1;
             $user->user_type            = 2;
             // for plan info
-            $user->plan_id              = $plans->id;
-            $user->plan_details         = json_encode($plans);
-            $user->plan_validity        = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
-            $user->plan_activation_date = Carbon::now();
-
-            $user->save();
-
-            if($user){
-                Auth::login($user);
-                Mail::to($user->email)->send(new WelcomeMail($user));
-                return redirect()->route('user.dashboard');
+            if (!empty($plan)) {
+                $user->plan_id              = $plan->id;
+                $user->plan_details         = json_encode($plan);
+                $user->plan_validity        = $this->plan->planValidity($plan->id);
+                $user->plan_activation_date = Carbon::now();
+                $user->term                 = $term_days;
             }
 
+
+            $location                   = $this->user->getLocation();
+            if ($location) {
+                $user->billing_country  = $location->countryName;
+                $user->billing_country_code = $location->countryCode;
+                // $user->regionCode    = $location->regionCode;
+                $user->billing_state    = $location->regionName;
+                $user->billing_city     = $location->cityName;
+                $user->billing_zipcode  = $location->zipCode;
+                // $user->isoCode          = $location->isoCode;
+                // $user->latitude         = $location->latitude;
+                // $user->longitude        = $location->longitude;
+            }
+            // $user->ip_address       = $this->user->getIP();
+            // $user->device           = $this->user->getOS();
+            // $user->browser          = $this->user->getBrowser();
+            $user->save();
+            if ($user) {
+                Auth::login($user);
+                // Mail::to($user->email)->send(new WelcomeMail($user));
+
+                [$content, $subject] = $this->wellcomeMail($user);
+                Mail::to($user->email)->send(new AllMail($content, $subject));
+                return redirect()->route('user.card');
+            }
         } catch (\Exception $e) {
             dd($e->getMessage());
-            return redirect()->back()->with('error','Account not created');
+            Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
         }
-
-        return redirect()->route('user.dashboard');
-
+        return redirect()->route('user.card');
     }
 
-
-    public function getDeactivationForm(){
+    public function getDeactivationForm()
+    {
         return view('auth.deactivation-form');
     }
 
-
-
-    public function getChangePassword(){
-
-        if(isMobile() && (Auth::user()->user_type == 2)){
-            return view('mobile.profile.change_password');
-        }else{
-
-        }
+    public function getChangePassword()
+    {
         return view('auth.change_password');
     }
 
@@ -104,7 +176,7 @@ class AuthController extends Controller
             'confirm_password' => 'required',
         ]);
         if (!Hash::check($request->current_password, $userPassword)) {
-            return back()->withErrors(['current_password'=>'Old password does not match']);
+            return back()->withErrors(['current_password' => 'Old password does not match']);
         }
         $user->password = Hash::make($request->password);
         $user->save();
@@ -114,7 +186,6 @@ class AuthController extends Controller
     }
 
 
-
     public function redirectToProvider(string $provider)
     {
         return Socialite::driver($provider)->redirect();
@@ -122,55 +193,135 @@ class AuthController extends Controller
 
     public function handleProviderCallback(string $provider)
     {
-        $plans = DB::table('plans')->where('is_free', 1)->latest()->first();
+        // dd($provider);
+        $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
+        $term_days = $plan->validity;
         $data = Socialite::driver($provider)->stateless()->user();
-        $check_deactive = User::where('email',$data->email)->where('status',0)->first();
-        if(!empty($check_deactive)){
-            return redirect()->route('login')->with('error','oops! your account has been deactivated! please contact website administrator');
+        $falsemail = trim(str_replace(' ', '_', $data->name)) . '@gmail.com';
+        $check_deactive = User::where('email', $data->email)->where('status', 0)->first();
+        if (!empty($check_deactive)) {
+            Toastr::error(trans('oops! your account has been deactivated! please contact website administrator'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('login');
         }
         try {
-            $isExist  = User::where(['email' => $data->email])->first();
-                if(!empty($isExist)){
-                    $isExist->update([
-                        'avatar'            => $data->avatar,
-                        'provider'          => $provider,
-                        'social_id'         => $data->id
-                    ]);
-                    Auth::login($isExist);
+            if (!empty($data->email)) {
+                $isExist  = User::where(['email' => $data->email])->first();
+            } else {
+                $isExist  = User::where('provider', $provider)->where('social_id', $data->id)->first();
+            }
+            if (!empty($isExist)) {
+                $isExist->update([
+                    'avatar'            => $data->avatar,
+                    'provider'          => $provider,
+                    'social_id'         => $data->id
+                ]);
+                Auth::login($isExist);
+            } else {
+                $base_name  = preg_replace('/\..+$/', '', $data->name);
+                $base_name  = explode(' ', $base_name);
+                $base_name  = implode('_', $base_name);
+                $name  = Str::lower($base_name);
+                $_unique_name       = $base_name . "_" . uniqid();
+                $user              = new User;
+                $user->name        = $data->name;
+                $user->email       = $data->email ?? $falsemail;
+                if (!empty($data->username) && $this->checkExistUserName($data->username) == false) {
+                    $user->username    = $data->username;
+                } else {
+                    $user->username    = $this->makeUserName($data->name);
                 }
-                else{
-                    $user              = new User;
-                    $user->name        = $data->name;
-                    $user->email       = $data->email;
-                    $user->profile_image = $data->avatar;
-                    $user->provider    = $provider;
-                    $user->social_id   = $data->id;
-                    $user->status      = 1;
-                    $user->role_id     = 1;
-                    $user->user_type   = 2;
-                    // for plan info
-                    $user->plan_id     = $plans->id;
-                    $user->plan_details = json_encode($plans);
-                    $user->plan_validity = Carbon::parse(date('Y-m-d'))->addMonth(1)->format('Y-m-d');
+                $user->profile_image = $data->avatar ?? NULL;
+                $user->provider    = $provider;
+                $user->social_id   = $data->id;
+                $user->status      = 1;
+                $user->role_id     = 1;
+                $user->user_type   = 2;
+                $location                   = $this->user->getLocation();
+                if ($location) {
+                    $user->billing_country     = $location->countryName;
+                    $user->billing_country_code = $location->countryCode;
+                    // $user->regionCode       = $location->regionCode;
+                    $user->billing_state       = $location->regionName;
+                    $user->billing_city        = $location->cityName;
+                    $user->billing_zipcode     = $location->zipCode;
+                    // $user->isoCode          = $location->isoCode;
+                    // $user->latitude         = $location->latitude;
+                    // $user->longitude        = $location->longitude;
+                }
+                // for plan info
+                if (!empty($plan)) {
+                    $user->plan_id              = $plan->id;
+                    $user->plan_details         = json_encode($plan);
+                    $user->plan_validity        = $this->plan->planValidity($plan->id);
                     $user->plan_activation_date = Carbon::now();
-                    $user->save();
-                    Auth::login($user);
-                    if($user->email){
-                        Mail::to($user->email)->send(new WelcomeMail($user));
-                    }
+                    $user->term                 = $term_days;
                 }
+                $user->save();
+                Auth::login($user);
+                if ($user->email) {
+                    // Mail::to($user->email)->send(new WelcomeMail($user));
+                    [$content, $subject] = $this->wellcomeMail($user);
+
+                    Mail::to($user->email)->send(new AllMail($content, $subject));
+                }
+            }
         } catch (\Exception $e) {
             dd($e->getmessage());
-            return redirect()->route('login')->with('error','Login failed. Please try again');
+            Toastr::error(trans('Login failed. Please try again'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('login');
         }
-        return redirect()->route('user.dashboard');
+        return redirect()->route('user.card');
+    }
+
+
+    public function checkExistUserName($base_name)
+    {
+        $base_name   = trim($base_name);
+        $base_name   = Str::lower($base_name);
+        $exist = DB::table('users')->where('username', $base_name)->count();
+        if ($exist > 0) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public function makeUserName($base_name)
+    {
+        $base_name  = trim($base_name);
+        $base_name  = preg_replace('/\..+$/', '', $base_name);
+        $base_name  = explode(' ', $base_name);
+        $base_name  = implode('_', $base_name);
+        $base_name  = Str::lower($base_name);
+        $exist = DB::table('users')->where('username', $base_name)->count();
+        if ($exist > 0) {
+            return  $base_name . $exist + 1;
+        }
+        return $base_name;
     }
 
 
 
+    public function wellcomeMail(User $user)
+    {
+        Log::alert($user);
+        $setting = getSetting();
 
+        $mail = EmailTemplate::where('slug', 'welcome-mail')->first();
+        $content = $mail->body;
 
+        if ($user->email) {
 
-
-
+            if ($user->username) {
+                $content = preg_replace("/{{user_name}}/", $user->name, $content);
+            }
+            if ($user->email) {
+                $content = preg_replace("/{{email}}/", $user->email, $content);
+            }
+            if ($user) {
+                $content = preg_replace("/{{site_name}}/", $setting->site_name, $content);
+            }
+        }
+        return [$content, $mail->subject];
+    }
 }

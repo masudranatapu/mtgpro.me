@@ -1,10 +1,13 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
-@section('title') {{ __('Settings')}} @endsection
+@section('title') {{ __('Settings') }} @endsection
 @section('settings', 'active')
 @section('setting', 'active')
 @section('content')
-<div class="page-wrapper">
-    {{--     <div class="container-xl">
+    @push('css')
+        <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}">
+    @endpush
+    <div class="page-wrapper">
+        {{--     <div class="container-xl">
         <!-- Page title -->
         <div class="page-header d-print-none mt-2 mb-3">
             <div class="row align-items-center">
@@ -19,131 +22,145 @@
             </div>
         </div>
     </div> --}}
-    <div class="page-body">
-        <div class="container-xl">
-            @include('common.flash')
-            <div class="row row-deck row-cards">
-                <div class="col-sm-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="col">
-                                <div class="float-left">
-                                    {{ __('Settings') }}
+        <div class="page-body">
+            <div class="container-xl">
+                @include('common.flash')
+                <div class="row row-deck row-cards">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="col">
+                                    <div class="float-left">
+                                        {{ __('Settings') }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{ route('admin.change.settings') }}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label required"
-                                            for="app_type">{{ __('Application Type') }}</label>
-                                            <select name="app_type" id="app_type" class="form-control" required>
-                                                <option value="VCARD"
-                                                    {{ $settings->application_type == 'VCARD' ? ' selected' : '' }}>
-                                                {{ __('vCard Only') }}</option>
-                                                <option value="STORE"
+                            <div class="card-body">
+                                <form action="{{ route('admin.change.settings') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label required"
+                                                    for="app_type">{{ __('Application Type') }}</label>
+                                                <select name="app_type" id="app_type" class="form-control" required>
+                                                    <option value="VCARD"
+                                                        {{ $settings->application_type == 'VCARD' ? ' selected' : '' }}>
+                                                        {{ __('vCarv') }}</option>
+                                                    {{-- <option value="STORE"
                                                     {{ $settings->application_type == 'STORE' ? ' selected' : '' }}>
                                                 {{ __('WhatsApp Store Only') }}</option>
                                                 <option value="BOTH"
                                                     {{ $settings->application_type == 'BOTH' ? ' selected' : '' }}>
-                                                {{ __('Both') }}</option>
-                                            </select>
-                                            @error('app_type')
-                                                <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                                {{ __('Both') }}</option> --}}
+                                                </select>
+                                                @error('app_type')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label required" for="timezone">{{ __('Timezone') }}</label>
-                                            <select name="timezone" id="timezone" class="form-control" required>
-                                                @foreach (timezone_identifiers_list() as $timezone)
-                                                <option value="{{ $timezone }}"
-                                                    {{ $config[2]->config_value == $timezone ? ' selected' : '' }}>
-                                                {{ $timezone }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('timezone')
-                                                <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label required" for="currency">{{ __('Currency') }}</label>
-                                            <select name="currency" id="currency" class="form-control" required>
-                                                @foreach ($currencies as $currency)
-                                                <option value="{{ $currency->iso_code }}"
-                                                    {{ $config[1]->config_value == $currency->iso_code ? ' selected' : '' }}>
-                                                {{ $currency->name }} ({{ $currency->symbol }})</option>
-                                                @endforeach
-                                            </select>
-                                            @error('currency')
-                                                <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('Email') }}</div>
-                                            <input  type="email" name="email" class="form-control" value="{{  $settings->email}}">
-                                            @error('email')
-                                                <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('Phone No') }}</div>
-                                            <input  type="phone_no" name="phone_no" class="form-control" value="{{ $settings->phone_no }}">
-                                            @error('phone_no')
-                                                <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('Office Address') }}</div>
-                                            <input  type="office_address" name="office_address" class="form-control" value="{{ $settings->office_address }}">
-                                            @error('office_address')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('Support Email') }}</div>
-                                            <input  type="support_email" name="support_email" class="form-control" value="{{ $settings->support_email }}">
-                                            @error('support_email')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <h2 class="page-title my-3">
-                                        {{ __('Paypal Settings') }}
-                                        </h2>
-                                </div>
-                                <div class="row">
-                                       <div class="col-md-4 col-xl-4">
+                                        <div class="col-md-4 col-xl-4">
                                             <div class="mb-3">
-                                                <label class="form-label required">{{ __('Mode' )}}</label>
+                                                <label class="form-label required"
+                                                    for="timezone">{{ __('Timezone') }}</label>
+                                                <select name="timezone" id="timezone" class="form-control" required>
+                                                    @foreach (timezone_identifiers_list() as $timezone)
+                                                        <option value="{{ $timezone }}"
+                                                            {{ $config[2]->config_value == $timezone ? ' selected' : '' }}>
+                                                            {{ $timezone }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('timezone')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label required"
+                                                    for="currency">{{ __('Currency') }}</label>
+                                                <select name="currency" id="currency" class="form-control" required>
+                                                    @foreach ($currencies as $currency)
+                                                        <option value="{{ $currency->iso_code }}"
+                                                            {{ $config[1]->config_value == $currency->iso_code ? ' selected' : '' }}>
+                                                            {{ $currency->name }} ({{ $currency->symbol }})</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('currency')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('Email') }}</div>
+                                                <input type="email" name="email" class="form-control"
+                                                    value="{{ $settings->email }}">
+                                                @error('email')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('Phone No') }}</div>
+                                                <input type="phone_no" name="phone_no" class="form-control"
+                                                    value="{{ $settings->phone_no }}">
+                                                @error('phone_no')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('Office Address') }}</div>
+                                                <input type="office_address" name="office_address" class="form-control"
+                                                    value="{{ $settings->office_address }}">
+                                                @error('office_address')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('Support Email') }}</div>
+                                                <input type="support_email" name="support_email" class="form-control"
+                                                    value="{{ $settings->support_email }}">
+                                                @error('support_email')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-xl-12">
+                                            <div class="form-label">{{ __('Site Disclaimer') }}</div>
+                                            <textarea required name="site_disclaimer" id="site_disclaimer" cols="30" rows="10" class="form-control">{{ old('site_disclaimer') ?? $settings->site_disclaimer }}
+                                            </textarea>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <h2 class="page-title my-3">
+                                            {{ __('Paypal Settings') }}
+                                        </h2>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label required">{{ __('Mode') }}</label>
                                                 <select type="text" class="form-select"
                                                     placeholder="Select a payment mode" id="select-tags-advanced"
                                                     name="paypal_mode" required>
                                                     <option value="sandbox"
                                                         {{ $config[3]->config_value == 'sandbox' ? 'selected' : '' }}>
-                                                    {{ __('Sandbox') }}</option>
+                                                        {{ __('Sandbox') }}</option>
                                                     <option value="live"
                                                         {{ $config[3]->config_value == 'live' ? 'selected' : '' }}>
-                                                    {{ __('Live') }}</option>
+                                                        {{ __('Live') }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -151,70 +168,70 @@
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Client Key') }}</label>
                                                 <input type="text" class="form-control" name="paypal_client_key"
-                                                value="{{ $config[4]->config_value }}"
-                                                placeholder="{{ __('Client Key') }}..." required>
+                                                    value="{{ $config[4]->config_value }}"
+                                                    placeholder="{{ __('Client Key') }}..." required>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xl-4">
                                             <div class="mb-3">
                                                 <label class="form-label" required>{{ __('Secret') }}</label>
                                                 <input type="text" class="form-control" name="paypal_secret"
-                                                value="{{ $config[5]->config_value }}"
-                                                placeholder="{{ __('Secret') }}..." required>
+                                                    value="{{ $config[5]->config_value }}"
+                                                    placeholder="{{ __('Secret') }}..." required>
                                             </div>
                                         </div>
 
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-title my-3">
-                                            {{ __('Stripe Settings') }}
-                                        </h2>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-xl-4">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Stripe Settings') }}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Publishable Key') }}</label>
                                                 <input type="text" class="form-control" name="stripe_publishable_key"
-                                                value="{{ $config[9]->config_value }}"
-                                                placeholder="{{ __('Publishable Key') }}..." required>
+                                                    value="{{ $config[9]->config_value }}"
+                                                    placeholder="{{ __('Publishable Key') }}..." required>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xl-4">
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Secret') }}</label>
                                                 <input type="text" class="form-control" name="stripe_secret"
-                                                value="{{ $config[10]->config_value }}"
-                                                placeholder="{{ __('Secret') }}..." required>
+                                                    value="{{ $config[10]->config_value }}"
+                                                    placeholder="{{ __('Secret') }}..." required>
                                             </div>
                                         </div>
 
-                                </div>
+                                    </div>
 
-                                <div class="row">
-                                   <div class="col-md-12">
-                                    <h2 class="page-title my-3">
-                                        {{ __('Site Settings') }}
-                                        </h2>
-                                   </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-xl-6">
-                                        @if($settings->seo_image)
-                                        <img src="{{ asset($settings->seo_image) }}" class="img-fluid" width="50px"/>
-                                        @endif
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('SEO image') }} <span
-                                                class="text-danger">
-                                            ({{ __('Recommended size : 728x680') }})</span></div>
-                                            <input type="file" class="form-control" name="seo_image"
-                                            placeholder="{{ __('SEO image') }}..."
-                                            accept=".png,.jpg,.jpeg,.gif,.svg" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Site Settings') }}
+                                            </h2>
                                         </div>
                                     </div>
-                                    {{--<div class="col-md-6 col-xl-6">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xl-6">
+                                            @if ($settings->seo_image)
+                                                <img src="{{ asset($settings->seo_image) }}" class="img-fluid"
+                                                    width="50px" />
+                                            @endif
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('SEO image') }} <span class="text-danger">
+                                                        ({{ __('Recommended size : 728x680') }})</span></div>
+                                                <input type="file" class="form-control" name="seo_image"
+                                                    placeholder="{{ __('SEO image') }}..."
+                                                    accept=".png,.jpg,.jpeg,.gif,.svg" />
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-6 col-xl-6">
                                         <div class="mb-3">
                                             <div class="form-label">{{ __('Login & Register Image') }} <span
                                                 class="text-danger"> ({{ __('Recommended size : 728x680') }})
@@ -223,178 +240,193 @@
                                             placeholder="{{ __('Login & Register Image') }}..."
                                             accept=".png,.jpg,.jpeg,.gif,.svg" />
                                         </div>
-                                    </div>--}}
-                                    <div class="col-md-6 col-xl-6">
-                                        @if ($settings->site_logo)
-                                        <img src="{{ asset($settings->site_logo) }}" class="img-fluid" width="150px"/>
-                                        @endif
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('Site Logo') }} <span class="text-danger">
-                                            ({{ __('Recommended size : 180x60') }})</span></div>
-                                            <input type="file" class="form-control" name="site_logo"
-                                            placeholder="{{ __('Site Logo') }}..."
-                                            accept=".png,.jpg,.jpeg,.gif,.svg" />
+                                    </div> --}}
+                                        <div class="col-md-6 col-xl-6">
+                                            @if ($settings->site_logo)
+                                                <img src="{{ asset($settings->site_logo) }}" class="img-fluid"
+                                                    width="150px" />
+                                            @endif
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('Site Logo') }} <span class="text-danger">
+                                                        ({{ __('Recommended size : 180x60') }})</span></div>
+                                                <input type="file" class="form-control" name="site_logo"
+                                                    placeholder="{{ __('Site Logo') }}..."
+                                                    accept=".png,.jpg,.jpeg,.gif,.svg" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        @if ($settings->favicon)
-                                        <img src="{{ asset($settings->favicon) }}" class="img-fluid" width="50px"/>
-                                        @endif
-                                        <div class="mb-3">
-                                            <div class="form-label">{{ __('Favicon') }} <span class="text-danger">
-                                            ({{ __('Recommended size : 200x200') }})</span></div>
-                                            <input type="file" class="form-control" name="favi_icon"
-                                            placeholder="{{ __('Favicon') }}..."
-                                            accept=".png,.jpg,.jpeg,.gif,.svg" />
+                                        <div class="col-md-6 col-xl-6">
+                                            @if ($settings->favicon)
+                                                <img src="{{ asset($settings->favicon) }}" class="img-fluid"
+                                                    width="50px" />
+                                            @endif
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ __('Favicon') }} <span class="text-danger">
+                                                        ({{ __('Recommended size : 200x200') }})</span></div>
+                                                <input type="file" class="form-control" name="favi_icon"
+                                                    placeholder="{{ __('Favicon') }}..."
+                                                    accept=".png,.jpg,.jpeg,.gif,.svg" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('App Name') }}</label>
-                                            <input type="text" class="form-control" name="app_name"
-                                            value="{{ config('app.name') }}"
-                                            placeholder="{{ __('App Name') }}..." readonly>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('App Name') }}</label>
+                                                <input type="text" class="form-control" name="app_name"
+                                                    value="{{ config('app.name') }}"
+                                                    placeholder="{{ __('App Name') }}..." readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="mb-3">
-                                            <label class="form-label required">{{ __('Site Name') }}</label>
-                                            <input type="text" class="form-control" name="site_name"
-                                            value="{{ $settings->site_name }}"
-                                            placeholder="{{ __('Site Name') }}..." required>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label required">{{ __('Site Name') }}</label>
+                                                <input type="text" class="form-control" name="site_name"
+                                                    value="{{ $settings->site_name }}"
+                                                    placeholder="{{ __('Site Name') }}..." required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="mb-3">
-                                            <label class="form-label required">{{ __('Site Title') }}</label>
-                                            <input type="text" class="form-control" name="site_title"
-                                            value="{{ $settings->site_title }}"
-                                            placeholder="{{ __('Site Title') }}..." required>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label required">{{ __('Site Title') }}</label>
+                                                <input type="text" class="form-control" name="site_title"
+                                                    value="{{ $settings->site_title }}"
+                                                    placeholder="{{ __('Site Title') }}..." required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="mb-3">
-                                            <label class="form-label required">{{ __('SEO Meta Description') }}</label>
-                                            <textarea class="form-control" name="seo_meta_desc" rows="3"
-                                            placeholder="{{ __('SEO Meta Description') }}" required>{{ $settings->seo_meta_description }}</textarea>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label
+                                                    class="form-label required">{{ __('SEO Meta Description') }}</label>
+                                                <textarea class="form-control" name="seo_meta_desc" rows="3" placeholder="{{ __('SEO Meta Description') }}"
+                                                    required>{{ $settings->seo_meta_description }}</textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('SEO Keywords') }}</label>
-                                            <textarea class="form-control required" name="meta_keywords" rows="3"
-                                            placeholder="{{ __('SEO Keywords (Keyword 1, Keyword 2)') }}" required>{{ $settings->seo_keywords }}</textarea>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('SEO Keywords') }}</label>
+                                                <textarea class="form-control required" name="meta_keywords" rows="3"
+                                                    placeholder="{{ __('SEO Keywords (Keyword 1, Keyword 2)') }}" required>{{ $settings->seo_keywords }}</textarea>
+                                            </div>
                                         </div>
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Main Motto') }}</label>
+                                                <textarea class="form-control required" name="main_motto" rows="3" placeholder="{{ __('Main moto') }}"
+                                                    required>{{ $settings->main_motto }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Default Shipping Cost') }}
+                                                    ({{ $config[1]->config_value }})</label>
+                                                <input type="number" class="form-control required" name="shipping_cost"
+                                                    placeholder="{{ __('Default Shipping Cost') }}"
+                                                    value="{{ $settings->shipping_cost ?? 0 }}">
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="col-md-6 col-xl-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Main Motto') }}</label>
-                                            <textarea class="form-control required" name="main_motto" rows="3"
-                                            placeholder="{{ __('Main moto') }}" required>{{ $settings->main_motto }}</textarea>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Share Content Settings') }}
+                                            </h2>
                                         </div>
                                     </div>
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-title my-3">
-                                            {{ __('Share Content Settings') }}
-                                        </h2>
-                                    </div>
-                                </div>
-
-                                <div class="row">
+                                    <div class="row">
                                         <div class="col-md-6 col-xl-6">
                                             <div class="mb-3">
                                                 <label class="form-label required">{{ __('Share Content') }}</label>
-                                                <textarea class="form-control" name="share_content" id="share_content"
-                                                cols="10" rows="3"
-                                                placeholder="{{ __('Share Content') }}..." required>{{ $config[30]->config_value }}</textarea>
+                                                <textarea class="form-control" name="share_content" id="share_content" cols="10" rows="3"
+                                                    placeholder="{{ __('Share Content') }}..." required>{{ $config[30]->config_value }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-xl-6">
                                             <h2 class="text-danger"> {{ __('Short Codes :') }} </h2>
-                                            <span><span class="font-weight-bold">{ business_name }</span> - {{ __('Business Name') }}</span><br>
-                                            <span><span class="font-weight-bold">{ business_url }</span> - {{ __('Business URL or Address') }}</span><br>
-                                            <span><span class="font-weight-bold">{ appName }</span> - {{ __('App Name') }}</span>
+                                            <span><span class="font-weight-bold">{ business_name }</span> -
+                                                {{ __('Business Name') }}</span><br>
+                                            <span><span class="font-weight-bold">{ business_url }</span> -
+                                                {{ __('Business URL or Address') }}</span><br>
+                                            <span><span class="font-weight-bold">{ appName }</span> -
+                                                {{ __('App Name') }}</span>
                                         </div>
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-title my-3">
-                                            {{ __('Email Configuration Settings') }}
-                                        </h2>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Sender Name') }}</label>
-                                            <input type="text" class="form-control" name="mail_sender"
-                                            value="{{ $settings->name }}"
-                                            placeholder="{{ __('Sender Name') }}..." >
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Email Configuration Settings') }}
+                                            </h2>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Sender Email Address') }}</label>
-                                            <input type="text" class="form-control" name="mail_address"
-                                            value="{{ $settings->address }}"
-                                            placeholder="{{ __('Sender Email Address') }}..." >
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Sender Name') }}</label>
+                                                <input type="text" class="form-control" name="mail_sender"
+                                                    value="{{ $settings->name }}"
+                                                    placeholder="{{ __('Sender Name') }}...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Sender Email Address') }}</label>
+                                                <input type="text" class="form-control" name="mail_address"
+                                                    value="{{ $settings->address }}"
+                                                    placeholder="{{ __('Sender Email Address') }}...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Mailer Driver') }}</label>
+                                                <input type="text" class="form-control" name="mail_driver"
+                                                    value="{{ $settings->driver }}"
+                                                    placeholder="{{ __('Mailer Driver') }}...">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Mailer Driver') }}</label>
-                                            <input type="text" class="form-control" name="mail_driver"
-                                            value="{{ $settings->driver }}"
-                                            placeholder="{{ __('Mailer Driver') }}..." >
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Mailer Host') }}</label>
+                                                <input type="text" class="form-control" name="mail_host"
+                                                    value="{{ $settings->host }}"
+                                                    placeholder="{{ __('Mailer Host') }}...">
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Mailer Host') }}</label>
-                                            <input type="text" class="form-control" name="mail_host"
-                                            value="{{ $settings->host }}"
-                                            placeholder="{{ __('Mailer Host') }}..." >
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Mailer Port') }}</label>
+                                                <input type="text" class="form-control" name="mail_port"
+                                                    value="{{ $settings->port }}"
+                                                    placeholder="{{ __('Mailer Port') }}...">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Mailer Port') }}</label>
-                                            <input type="text" class="form-control" name="mail_port"
-                                            value="{{ $settings->port }}"
-                                            placeholder="{{ __('Mailer Port') }}..." >
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Mailer Encryption') }}</label>
+                                                <input type="text" class="form-control" name="mail_encryption"
+                                                    value="{{ $settings->encryption }}"
+                                                    placeholder="{{ __('Mailer Encryption') }}...">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 col-xl-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Mailer Encryption') }}</label>
-                                            <input type="text" class="form-control" name="mail_encryption"
-                                            value="{{ $settings->encryption }}"
-                                            placeholder="{{ __('Mailer Encryption') }}..." >
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="row">
-                                       <div class="col-md-4 col-xl-4">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
                                             <div class="mb-3">
                                                 <label class="form-label">{{ __('Mailer Username') }}</label>
                                                 <input type="text" class="form-control" name="mail_username"
-                                                value="{{ $settings->username }}"
-                                                placeholder="{{ __('Mailer Username') }}..." >
+                                                    value="{{ $settings->username }}"
+                                                    placeholder="{{ __('Mailer Username') }}...">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xl-4">
                                             <div class="mb-3">
                                                 <label class="form-label">{{ __('Mailer Password') }}</label>
                                                 <input type="password" class="form-control" name="mail_password"
-                                                value="{{ $settings->password }}"
-                                                placeholder="{{ __('Mailer Password') }}..." >
+                                                    value="{{ $settings->password }}"
+                                                    placeholder="{{ __('Mailer Password') }}...">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xl-4 mt-3">
@@ -405,34 +437,38 @@
                                                 </a>
                                             </div>
                                         </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-title my-3">
-                                            {{ __('Facebook Settings') }}
-                                        </h2>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Facebook client id') }}</label>
-                                            <input type="text" class="form-control" name="facebook_client_id" value="{{ $settings->facebook_client_id }}" placeholder="{{ __('Facebook client id') }}..." >
-                                            @error('facebook_client_id')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Facebook Settings') }}
+                                            </h2>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Facebook client secret') }}</label>
-                                            <input type="text" class="form-control" name="facebook_client_secret" value="{{ $settings->facebook_client_secret }}" placeholder="{{ __('Facebook client secret') }}..." >
-                                            @error('facebook_client_secret')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Facebook client id') }}</label>
+                                                <input type="text" class="form-control" name="facebook_client_id"
+                                                    value="{{ $settings->facebook_client_id }}"
+                                                    placeholder="{{ __('Facebook client id') }}...">
+                                                @error('facebook_client_id')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="col-md-4 col-6 col-xl-4 form-group">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Facebook client secret') }}</label>
+                                                <input type="text" class="form-control" name="facebook_client_secret"
+                                                    value="{{ $settings->facebook_client_secret }}"
+                                                    placeholder="{{ __('Facebook client secret') }}...">
+                                                @error('facebook_client_secret')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-4 col-6 col-xl-4 form-group">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('Facebook callback url') }}</label>
                                             <input type="text" class="form-control" name="facebook_callback_url" value="{{ URL::to('/') }}/auth/facebook/callback" placeholder="{{ __('Facebook callback url') }}..." disabled>
@@ -441,38 +477,39 @@
                                             @enderror
                                         </div>
                                     </div> --}}
-                                </div>
+                                    </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-title my-3">
-                                            {{ __('Google Settings') }}
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Google client id') }}</label>
-                                            <input type="text" class="form-control" name="google_client_id"
-                                            value="{{ $settings->google_client_id }}"
-                                            placeholder="{{ __('Google client id') }}..." >
-                                            @error('google_client_id')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Google Settings') }}
+                                            </h2>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Google client secret') }}</label>
-                                            <input type="text" class="form-control" name="google_client_secret" value="{{ $settings->google_client_secret }}"
-                                            placeholder="{{ __('Google client secret') }}..." >
-                                            @error('google_client_secret')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Google client id') }}</label>
+                                                <input type="text" class="form-control" name="google_client_id"
+                                                    value="{{ $settings->google_client_id }}"
+                                                    placeholder="{{ __('Google client id') }}...">
+                                                @error('google_client_id')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="col-md-4 col-6 col-xl-4 form-group">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Google client secret') }}</label>
+                                                <input type="text" class="form-control" name="google_client_secret"
+                                                    value="{{ $settings->google_client_secret }}"
+                                                    placeholder="{{ __('Google client secret') }}...">
+                                                @error('google_client_secret')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-4 col-6 col-xl-4 form-group">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('Google callback url') }}</label>
                                             <input type="text" class="form-control" name="google_callback_url"
@@ -483,127 +520,145 @@
                                             @enderror
                                         </div>
                                     </div> --}}
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label required">{{ __('Google Analytics ID') }}</label>
-                                            <input type="text" class="form-control" name="google_analytics_id" value="{{ $settings->google_analytics_id }}" placeholder="{{ __('Google Analytics ID') }}..." required>
-                                        </div>
-                                        <span>{{ __('If you did not get a google analytics id, create a') }} <a
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label
+                                                    class="form-label required">{{ __('Google Analytics ID') }}</label>
+                                                <input type="text" class="form-control" name="google_analytics_id"
+                                                    value="{{ $settings->google_analytics_id }}"
+                                                    placeholder="{{ __('Google Analytics ID') }}..." required>
+                                            </div>
+                                            <span>{{ __('If you did not get a google analytics id, create a') }} <a
                                                     href="https://analytics.google.com/analytics/web/"
-                                                target="_blank">{{ __('new analytics id.') }}</a> </span>
-                                    </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label required">{{ __('Android App Url') }}</label>
-                                            <input type="text" class="form-control" name="android_app_url" value="{{ $settings->android_app_url }}" placeholder="{{ __('Android App Url') }}...">
+                                                    target="_blank">{{ __('new analytics id.') }}</a> </span>
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label required">{{ __('Android App Url') }}</label>
+                                                <input type="text" class="form-control" name="android_app_url"
+                                                    value="{{ $settings->android_app_url }}"
+                                                    placeholder="{{ __('Android App Url') }}...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label required">{{ __('IOS App Url') }}</label>
+                                                <input type="text" class="form-control" name="ios_app_url"
+                                                    value="{{ $settings->ios_app_url }}"
+                                                    placeholder="{{ __('IOS App Url') }}...">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label required">{{ __('IOS App Url') }}</label>
-                                            <input type="text" class="form-control" name="ios_app_url" value="{{ $settings->ios_app_url }}" placeholder="{{ __('IOS App Url') }}...">
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="page-title my-3">
-                                            {{ __('Social URL') }}
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Facebook URL') }}</label>
-                                            <input type="url" class="form-control" name="facebook_url"
-                                            value="{{ $settings->facebook_url }}"
-                                            placeholder="{{ __('Facebook URL') }}..." >
-                                            @error('facebook_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Social URL') }}
+                                            </h2>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Youtube Url') }}</label>
-                                            <input type="url" class="form-control" name="youtube_url" value="{{ $settings->youtube_url }}"
-                                            placeholder="{{ __('Youtube Url') }}..." >
-                                            @error('youtube_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Facebook URL') }}</label>
+                                                <input type="url" class="form-control" name="facebook_url"
+                                                    value="{{ $settings->facebook_url }}"
+                                                    placeholder="{{ __('Facebook URL') }}...">
+                                                @error('facebook_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Youtube Url') }}</label>
+                                                <input type="url" class="form-control" name="youtube_url"
+                                                    value="{{ $settings->youtube_url }}"
+                                                    placeholder="{{ __('Youtube Url') }}...">
+                                                @error('youtube_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Twitter Url') }}</label>
+                                                <input type="url" class="form-control" name="twitter_url"
+                                                    value="{{ $settings->twitter_url }}"
+                                                    placeholder="{{ __('Twitter Url') }}...">
+                                                @error('twitter_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Twitter Url') }}</label>
-                                            <input type="url" class="form-control" name="twitter_url"
-                                            value="{{ $settings->twitter_url }}"
-                                            placeholder="{{ __('Twitter Url') }}...">
-                                            @error('twitter_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Linkedin url') }}</label>
+                                                <input type="url" class="form-control" name="linkedin_url"
+                                                    value="{{ $settings->linkedin_url }}"
+                                                    placeholder="{{ __('Linkedin url') }}...">
+                                                @error('linkedin_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Linkedin url') }}</label>
-                                            <input type="url" class="form-control" name="linkedin_url" value="{{ $settings->linkedin_url }}" placeholder="{{ __('Linkedin url') }}...">
-                                            @error('linkedin_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Telegram url') }}</label>
-                                            <input type="url" class="form-control" name="telegram_url" value="{{ $settings->telegram_url }}" placeholder="{{ __('Linkedin url') }}...">
-                                            @error('telegram_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Telegram url') }}</label>
+                                                <input type="url" class="form-control" name="telegram_url"
+                                                    value="{{ $settings->telegram_url }}"
+                                                    placeholder="{{ __('Linkedin url') }}...">
+                                                @error('telegram_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                    </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('WhatsApp Number') }}</label>
-                                            <input type="text" class="form-control" name="whatsapp_number" value="{{ $settings->whatsapp_number }}" placeholder="{{ __('WhatsApp Number') }}...">
-                                            @error('whatsapp_number')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('WhatsApp Number') }}</label>
+                                                <input type="text" class="form-control" name="whatsapp_number"
+                                                    value="{{ $settings->whatsapp_number }}"
+                                                    placeholder="{{ __('WhatsApp Number') }}...">
+                                                @error('whatsapp_number')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Instagram Url') }}</label>
+                                                <input type="url" class="form-control" name="instagram_url"
+                                                    value="{{ $settings->instagram_url }}"
+                                                    placeholder="{{ __('Instagram url') }}...">
+                                                @error('instagram_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-6 col-xl-4 form-group">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('Pinterest Url') }}</label>
+                                                <input type="url" class="form-control" name="pinterest_url"
+                                                    value="{{ $settings->pinterest_url }}"
+                                                    placeholder="{{ __('Instagram url') }}...">
+                                                @error('pinterest_url')
+                                                    <span class="help-block text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Instagram Url') }}</label>
-                                            <input type="url" class="form-control" name="instagram_url" value="{{ $settings->instagram_url }}" placeholder="{{ __('Instagram url') }}...">
-                                            @error('instagram_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6 col-xl-4 form-group">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('Pinterest Url') }}</label>
-                                            <input type="url" class="form-control" name="pinterest_url" value="{{ $settings->pinterest_url }}" placeholder="{{ __('Instagram url') }}...">
-                                            @error('pinterest_url')
-                                            <span class="help-block text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-xl-10">
-                                        <div class="row">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-xl-10">
+                                            <div class="row">
 
 
-                                            {{--<h2 class="page-title my-3">
+                                                {{-- <h2 class="page-title my-3">
                                             {{ __('Default Plan Term Settings') }}
                                             </h2>
                                             <div class="col-md-6 col-xl-6">
@@ -689,9 +744,9 @@
                                                     value="{{ $settings->recaptcha_configuration['RECAPTCHA_SECRET_KEY'] }}"
                                                     placeholder="{{ __('reCAPTCHA Secret Key') }}..." readonly>
                                                 </div>
-                                            </div>--}}
+                                            </div> --}}
 
-                                            {{--  <h2 class="page-title my-3">
+                                                {{--  <h2 class="page-title my-3">
                                             {{ __('Google OAuth Settings') }}
                                             </h2>
                                             <div class="col-md-6 col-xl-6">
@@ -732,7 +787,7 @@
                                             target="_blank">{{ __(' steps') }}</a> </span>
                                             --}}
 
-                                            {{--  <h2 class="page-title my-3">
+                                                {{--  <h2 class="page-title my-3">
                                             {{ __('Razorpay Settings') }}
                                             </h2>
                                             <div class="col-md-4 col-xl-4">
@@ -752,7 +807,7 @@
                                                 </div>
                                             </div> --}}
 
-                                            {{--<div class="col-md-12 col-xl-12">
+                                                {{-- <div class="col-md-12 col-xl-12">
                                                 <div class="mb-3">
                                                     <label class="form-label required">{{ __('Theme Colors') }}</label>
                                                     <div class="row g-2">
@@ -822,11 +877,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>--}}
+                                            </div> --}}
 
 
 
-                                            {{--<h2 class="page-title my-3">
+                                                {{-- <h2 class="page-title my-3">
                                             {{ __('Tawk Chat Settings') }}
                                             </h2>
                                             <div class="col-md-6 col-xl-6">
@@ -841,29 +896,49 @@
                                                         placeholder="{{ __('Tawk Chat Key') }}" autocomplete="off">
                                                     </div>
                                                 </div>
-                                            </div>--}}
+                                            </div> --}}
 
-                                            <div class="col-md-6 col-xl-6"></div>
-                                            <!-- <span class="text-danger">{{ __('Note: Some fields are disabled due to security reasons. You can change the respective values directly from .env file') }} </span> -->
-                                            <div class="col-md-4 col-xl-4 my-3">
-                                                <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary">
-                                                    {{ __('Update') }}
-                                                    </button>
+                                                <div class="col-md-6 col-xl-6"></div>
+                                                <!-- <span class="text-danger">{{ __('Note: Some fields are disabled due to security reasons. You can change the respective values directly from .env file') }} </span> -->
+                                                <div class="col-md-4 col-xl-4 my-3">
+                                                    <div class="mb-3">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            {{ __('Update') }}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
+        @include('admin.includes.footer')
     </div>
-    @include('admin.includes.footer')
-</div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('assets/js/summernote.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#site_disclaimer').summernote({
+
+                height: 150,
+                toolbar: [
+                    ['style', ['bold', 'underline', 'italic', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                ],
+
+            });
+        });
+    </script>
+@endpush

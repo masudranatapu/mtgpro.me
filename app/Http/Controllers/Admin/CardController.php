@@ -19,18 +19,18 @@ class CardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request,$paginate=20)
+    public function index(Request $request)
     {
         $cards = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
-        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status'
+        'c.profile','c.created_at','p.plan_name','c.user_id','c.status','u.username','u.active_card_id'
         )
-        ->leftJoin('business_fields as cf','cf.card_id','c.id')
+        // ->leftJoin('business_fields as cf','cf.card_id','c.id')
         ->leftJoin('users as u','c.user_id','u.id')
         ->leftJoin('plans as p','u.plan_id','p.id')
         ->orderBy('c.created_at', 'desc')
         ->where('c.status', '!=' , 2)
-        ->paginate($paginate);
+        ->get();
         $settings = Setting::where('status', 1)->first();
         return view('admin.cards.index', compact('cards', 'settings'));
     }
@@ -67,7 +67,7 @@ class CardController extends Controller
         }
 
      $themes->update();
-     Toastr::success(trans('Theme updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+     Toastr::success(trans('Theme updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
      return redirect()->route('admin.themes');
 
     }
@@ -76,7 +76,7 @@ class CardController extends Controller
         DB::beginTransaction();
         try {
             $card_status = DB::table('business_cards')->where('id',$id)->first();
-            if($card_status->status==1){
+            if($card_status->status==1 || $card_status->status==0){
                 DB::table('business_fields')->where('card_id',$id)->update([
                     'status'=> 0
                 ]);
@@ -93,11 +93,11 @@ class CardController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
-            Toastr::error(trans('Card not updated!'), 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error(trans('Card not updated!'), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
         DB::commit();
-        Toastr::success(trans('Card Successfully removed!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Card Successfully removed!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
@@ -107,14 +107,15 @@ class CardController extends Controller
     {
         $cards = DB::table('business_cards as c')
         ->select('c.id','c.title','c.title2','c.phone_number','c.card_email','c.logo','c.card_url',
-        'c.profile','c.created_at','cf.content','p.plan_name','c.user_id','c.status'
+        'c.profile','c.created_at','p.plan_name','c.user_id','c.status'
         )
-        ->leftJoin('business_fields as cf','cf.card_id','c.id')
+        // ->leftJoin('business_fields as cf','cf.card_id','c.id')
         ->leftJoin('users as u','c.user_id','u.id')
         ->leftJoin('plans as p','u.plan_id','p.id')
         ->orderBy('c.created_at', 'desc')
         ->where('c.status',2)
         ->whereNotNull('c.deleted_at')
+        ->groupBy('c.id')
         ->paginate($paginate);
         $settings = Setting::where('status', 1)->first();
         return view('admin.cards.trash-list', compact('cards', 'settings'));
@@ -130,7 +131,7 @@ class CardController extends Controller
                 $status = 0;
             }
             BusinessCard::where('id', $id)->update(['status' => $status]);
-            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.cards');
         }
 
@@ -144,7 +145,7 @@ class CardController extends Controller
                 'is_deleted' => 0,
                 'updated_at' =>  date('Y-m-d H:i:s'),
             ]);
-            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Card Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.cards');
         }
 

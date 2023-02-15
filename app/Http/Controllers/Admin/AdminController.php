@@ -27,7 +27,7 @@ class AdminController extends Controller
     {
        $contact = DB::table('contacts')->where('id', $request->query('id'))->delete();
 
-       Toastr::success(trans('Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+       Toastr::success(trans('Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
        return redirect()->back();
     }
 
@@ -61,7 +61,7 @@ class AdminController extends Controller
         $data['title']          = $request->title;
         $data['description']    = $request->description;
         DB::table('tutorials')->insert($data);
-        Toastr::success(trans('Created Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Created Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.user.guide');
     }
 
@@ -90,7 +90,7 @@ class AdminController extends Controller
         $data['title']          = $request->title;
         $data['description']    = $request->description;
         DB::table('tutorials')->where('id', $id)->update($data);
-        Toastr::success(trans('Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.user.guide');
     }
 
@@ -98,7 +98,7 @@ class AdminController extends Controller
     {
        $blog = DB::table('tutorials')->where('id', $request->query('id'))->delete();
 
-       Toastr::success(trans('Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+       Toastr::success(trans('Deleted Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
        return redirect()->back();
     }
 

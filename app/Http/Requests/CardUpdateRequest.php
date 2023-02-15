@@ -26,16 +26,15 @@ class CardUpdateRequest extends FormRequest
     {
         $rules = [
             'card_for'              => 'required|string|max:124',
-            'bgcolor'               => 'required|string|max:25',
+            'bgcolor'               => 'nullable|string|max:25',
             'name'                  => 'required|string|max:124',
-            'location'              => 'required|string|max:124',
+            'location'              => 'nullable|string|max:124',
             'designation'           => 'required|string|max:124',
             'company_name'          => 'nullable|string|max:124',
             // 'card_url'  => 'required|unique:users,email|string|max:124',
             'bio'                   => 'nullable|string|max:255',
 
         ];
-
 
         return $rules;
     }

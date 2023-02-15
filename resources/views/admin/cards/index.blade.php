@@ -38,11 +38,12 @@
                                     <thead>
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
-                                            <th>{{ __('Full Name') }}</th>
+                                            <th>{{ __('Name') }}</th>
+                                            <th>{{ __('Card Url') }}</th>
                                             <th>{{ __('Email') }}</th>
                                             <th>{{ __('Current Plan') }}</th>
                                             <th>{{ __('Created At') }}</th>
-                                            <th>{{ __('Status') }}</th>
+                                            {{-- <th>{{ __('Status') }}</th> --}}
                                             <th class="w-1">{{ __('Actions') }}</th>
                                         </tr>
                                     </thead>
@@ -51,7 +52,27 @@
                                         @foreach ($cards as $row)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a>
+                                            <td>
+                                                <div style="max-width: 150px; overflow:hidden; display: grid">
+                                                    <div><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->title }} {{ $row->title2 }}</a></div>
+
+                                                    @if($row->id == $row->active_card_id)
+                                                    <div style="font-size:12px;font-style: italic; text-transform: lowercase;">User:<a href="{{ route('home')}}/{{ $row->username }}">{{ $row->username }}  <span style="color: green;">live</span> </a>
+                                                    </div>
+                                                    @else
+                                                    <div style="font-size:12px;font-style: italic; text-transform: lowercase;">User:<a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->username }} </a>
+                                                    </div>
+                                                    @endif
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if ($row->status==1)
+                                                <a href="{{ route('card.preview',$row->card_url) }}"
+                                                    target="__blank">{{ $row->card_url }}</a>
+                                                @else
+                                                {{ $row->card_url }}
+                                                @endif
                                             </td>
                                             <td class="text-muted">
                                                 {{ $row->card_email }} <br>
@@ -63,18 +84,13 @@
                                             <td class="text-muted">
                                                {{ \Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
                                             </td>
-                                            <td class="text-muted">
-                                                {{-- @if ($row->status == 0)
-                                                    <a href="{{ route('admin.card.change-status',$row->id) }}" class="btn-sm bg-green text-white">{{ __('Activate') }}</a>
-                                                @else
-                                                    <a href="{{ route('admin.card.change-status',$row->id) }}" class="btn-sm bg-red text-white">{{ __('Deactivate') }}</a>
-                                                @endif --}}
-                                                @if ($row->status == 0)
+                                            {{-- <td class="text-muted">
+                                               @if ($row->status == 0)
                                                 <span class="badge bg-red">{{ __('Inactive') }}</span>
                                                 @else
                                                 <span class="badge bg-green">{{ __('Active') }}</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <div class="dropdown @yield('settings')">
                                                     <a class="btn btn-info dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
@@ -85,13 +101,13 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- <a class="dropdown-item btn-sm" href="{{ route('admin.card.edit', $row->id)}}">{{ __('Edit') }}</a> --}}
-                                                        <a class="dropdown-item btn-sm" href="#">{{ __('Edit') }}</a>
+                                                        {{-- <a class="dropdown-item btn-sm" href="#">{{ __('Edit') }}</a> --}}
                                                         <a class="dropdown-item btn-sm" target="_blank" href="{{ route('card.preview',$row->card_url) }}">{{ __('View') }}</a>
-                                                        @if ($row->status == 0)
+                                                        {{-- @if ($row->status == 0)
                                                             <a href="{{ route('admin.card.change-status',$row->id) }}" class="dropdown-item btn-sm">{{ __('Activate') }}</a>
                                                         @else
                                                             <a href="{{ route('admin.card.change-status',$row->id) }}" class="dropdown-item btn-sm">{{ __('Deactivate') }}</a>
-                                                        @endif
+                                                        @endif --}}
                                                         <a class="dropdown-item btn-sm" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="{{ route('admin.card.delete',$row->id) }}"class="dropdown-item btn-sm">{{ __('Delete') }}</a>
                                                     </div>
                                                 </div>
@@ -105,7 +121,6 @@
                                         @endif
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>

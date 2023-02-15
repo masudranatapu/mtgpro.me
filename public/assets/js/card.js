@@ -261,7 +261,7 @@ $(document).on('input','#personalized_link', function() {
 }).keyup();
 
 //icon search
-$(document).on('keyup', '#filter', function(){
+$(document).on('input', '#filter', function(){
     var filter = $(this).val(), count = 0;
     $(".add_list_wrap .icon_each").each(function(){
         if ($(this).data('name').search(new RegExp(filter, "i")) < 0) {
@@ -271,7 +271,6 @@ $(document).on('keyup', '#filter', function(){
             count++;
         }
     });
-    var numberItems = count;
     $("#filter-count").text('('+count+')');
 
 });
@@ -279,15 +278,33 @@ $(document).on('keyup', '#filter', function(){
 // social content modal
 $(document).on('click', '.onclickIcon' ,function() {
     var name = $(this).data('name');
+    var color = $(this).data('color');
+    var type = $(this).data('type');
     var title = $(this).data('title');
     var image = $(this).data('image');
     var id = $(this).data('id');
-
-    var html = '<li class="sicon_'+id+'"><a class="social_link" href="" target="_blank"><img src="'+image+'" alt="email" class="social_logo"><span class="icon_label link_title_show">'+title+'</span></a></li>';
+    var ftitle = '';
+    var html = '<li class="sicon_'+id+'"><a class="social_link" href="" target="_blank"><img style="background:'+color+'" src="'+image+'" alt="email" class="social_logo"><span class="icon_label link_title_show">'+title+'</span></a></li>';
     $('.social_icon ul').append(html);
 
     $('#content_icon').attr('src',image);
-    $('#content_link').text(title+ ' profile link');
+    if(type == 'username'){
+        ftitle = title+ ' username';
+    }else if(type == 'link'){
+        ftitle = title+ ' profile link';
+    }else if(type == 'mail'){
+        ftitle = title+ ' address';
+    }else{
+        ftitle = title;
+    }
+    if(type != 'link'){
+        $('.content_input').addClass('remove_slash');
+    }else{
+        $('.content_input').removeClass('remove_slash');
+    }
+    $('#content_link').text(ftitle);
+    $("input[name='content']").attr('placeholder',ftitle);
+
     $('#content_title').val(title);
     $('#content_title').attr('data-id', id);
     $('.first_modal').addClass('d-none');
@@ -295,40 +312,139 @@ $(document).on('click', '.onclickIcon' ,function() {
 });
 
 
+// $(document).on('input','.remove_slash',function(){
+//     var str = $(this).val();
+//     var newstr = str.replace(/(\\|\/)+/ig, '');
+//     var newstr = newstr.replace('www.', '');
+//     $(this).val(newstr);
 
+// })
+
+//card_url validation
+/*
 $(document).on('input','#card_url', function() {
     var get_url = $('#base_url').val();
+    var mode = $('input[name="mode"]').val();
+    var id = $('input[name="id"]').val();
     var minLength = 2;
-    var maxLength = 100;
+    var maxLength = 124;
     var value = $(this).val().replace(/[^A-Z0-9]/gi,'');
     $('#card_url').val(value);
     $("#card_url_help").addClass('text-danger');
-    if(value.length == 0){ $("#card_url_help").html(''); return false;}
 
-    if (value.length < minLength){
-        $("#card_url_help").html("Text is short");
-    }
-    else if (value.length > maxLength)
-    {
-        $("#card_url_help").html("Text is long");
-    }else{
+    if( (value.length > minLength) && (value.length < maxLength) ){
+
         $.ajax({
             type: 'get',
             url: get_url + '/user/card/check_link/'+value,
+            data:{mode,id},
             async: true,
             beforeSend: function () {
                 $("body").css("cursor", "progress");
             },
             success: function (response) {
-                $("#card_url_help").html(response.message).removeClass('text-danger').addClass('text-success');
+                $("#card_url_help").html(response.message);
+                if(response.status == false){
+                    $("#card_url_help").removeClass('text-success').addClass('text-danger');
+                    $('.save-card').attr('disabled','disabled');
+                }
+                if(response.status == true){
+                    $("#card_url_help").removeClass('text-danger').addClass('text-success');
+                    $('.save-card').removeAttr('disabled');
+                }
             },
             complete: function (data) {
                 $("body").css("cursor", "default");
             }
         });
+    }else{
+        $("#card_url_help").text('');
     }
 
 }).keyup();
+
+*/
+
+
+
+
+$(document).ready(function () {
+
+    // jQuery.validator.addMethod('username_rule', function (value, element) {
+    //     if (/^[a-zA-Z0-9_-]+$/.test(value)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     };
+    // });
+
+    // $.validator.addMethod('email_rule', function (value, element) {
+    //     if (/^([a-zA-Z0-9_\-\.]+)\+?([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(value)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     };
+    // });
+
+    $('.card_validation').validate({
+        rules: {
+            // 'card_url': {
+            //     required: true,
+            //     maxlength: 124,
+            //     minlength: 2,
+            // },
+
+            'card_for': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+
+            'name': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'location': {
+                required: false,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'designation': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'company_name': {
+                required: true,
+                maxlength: 124,
+                minlength: 2,
+            },
+            'bio': {
+                required: false,
+                maxlength: 255,
+            },
+        },
+        messages: {},
+        submitHandler: function(form) {
+            $('.save-card-spinner').addClass('active');
+            $(this).find('.save-card').prop('disabled', true);
+            $(".btn-txt").text("Processing ...");
+            setTimeout(function(){
+                $(".save-card-spinner").removeClass("active");
+                $('.save-card').attr("disabled", false);
+                $(".btn-txt").text("Save");
+            }, 50000);
+            form.submit();
+
+          },
+          errorPlacement: function(error, element) {
+            $(element).parents('.form-group').append(error)
+        },
+    });
+
+});
+
 
 
 

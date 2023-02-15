@@ -31,50 +31,46 @@
                             </thead>
                             <tbody>
                                 @if (!empty($transactions) && $transactions->count())
-                                @foreach ($transactions as $transaction)
+                                @foreach ($transactions as $row)
                                 <tr>
-                                    <td>{{ $transaction->created_at->format('d-m-Y H:i:s A') }}</td>
-                                    <td><span class="text-muted">{{ $transaction->gobiz_transaction_id}}</span></td>
-                                    <td>{{ $transaction->transaction_id }}</td>
-                                    <td><a href="{{ route('admin.view.user', $transaction->userId)}}">{{ $transaction->userName }}</a></td>
+                                    <td>{{ $row->created_at->format('d-m-Y H:i:s A') }}</td>
+                                    <td><span class="text-muted">{{ $row->invoice_number}}</span></td>
+                                    <td>{{ $row->transaction_id }}</td>
+                                    <td><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->userName }}</a></td>
                                     <td>
-                                        {{ $transaction->payment_gateway_name }}
+                                        {{ $row->payment_gateway_name }}
                                     </td>
                                     <td>
-                                        @foreach ($currencies as $currency)
-                                        @if ($transaction->transaction_currency == $currency->iso_code)
-                                        {{ $currency->symbol }}{{ $transaction->transaction_amount }}
-                                        @endif
-                                        @endforeach
+                                        {{ $row->transaction_currency }} {{ $row->transaction_amount }}
                                     </td>
                                     <td>
-                                        @if ($transaction->payment_status == 'SUCCESS')
+                                        @if ($row->payment_status == 'SUCCESS' || $row->payment_status == 'Success')
                                         <span class="badge bg-green">{{ __('Paid') }}</span>
                                         @endif
-                                        @if ($transaction->payment_status == 'FAILED')
+                                        @if ($row->payment_status == 'FAILED')
                                         <span class="badge bg-red">{{ __('Failed') }}</span>
                                         @endif
-                                        @if ($transaction->payment_status == 'PENDING')
+                                        @if ($row->payment_status == 'PENDING')
                                         <span class="badge bg-orange">{{ __('Pending') }}</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="btn-list flex-nowrap">
-                                            @if ($transaction->payment_status == "SUCCESS")
+                                            @if ($row->payment_status == "SUCCESS")
                                             <a class="btn btn-primary btn-sm" target="_blank"
-                                            href="{{ route('admin.view.invoice', ['id' => $transaction->gobiz_transaction_id])}}">{{ __('Invoice') }}</a>
+                                            href="{{ route('admin.view.invoice', ['id' => $row->id])}}">{{ __('Invoice') }}</a>
                                             @endif
-                                            @if ($transaction->payment_status != "PENDING")
+                                            @if ($row->payment_status != "PENDING")
                                             <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.trans.status', ['id' => $transaction->gobiz_transaction_id, 'status' => 'PENDING'])}}">{{ __('Pending') }}</a>
+                                            href="{{ route('admin.trans.status', ['id' => $row->id, 'status' => 'PENDING'])}}">{{ __('Pending') }}</a>
                                             @endif
-                                            @if ($transaction->payment_status != "SUCCESS")
+                                            @if ($row->payment_status != "SUCCESS")
                                             <a class="btn btn-primary btn-sm" href="#"
-                                            onclick="getTransaction('{{ $transaction->gobiz_transaction_id }}'); return false;">{{ __('Success') }}</a>
+                                            onclick="getTransaction('{{ $row->id }}'); return false;">{{ __('Success') }}</a>
                                             @endif
-                                            @if ($transaction->payment_status != "FAILED")
+                                            @if ($row->payment_status != "FAILED")
                                             <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.trans.status', ['id' => $transaction->gobiz_transaction_id, 'status' => 'FAILED'])}}">{{ __('Failed') }}</a>
+                                            href="{{ route('admin.trans.status', ['id' => $row->id, 'status' => 'FAILED'])}}">{{ __('Failed') }}</a>
                                             @endif
                                         </div>
                                     </td>

@@ -36,7 +36,7 @@ class TransactionsController extends Controller
             'payment_status' => $status
         ]);
 
-        Toastr::success(trans('Transaction Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success(trans('Transaction Status Updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.transactions');
     }
 
@@ -124,7 +124,7 @@ class TransactionsController extends Controller
 
                 }
 
-                Toastr::success(trans('Plan activation success!'), 'Success', ["positionClass" => "toast-top-right"]);
+                Toastr::success(trans('Plan activation success!'), 'Success', ["positionClass" => "toast-top-center"]);
                 return redirect()->route('admin.offline.transactions');
             } else {
                 $message = "";
@@ -149,7 +149,7 @@ class TransactionsController extends Controller
 
                     // Making all cards inactive, For Plan change
                     Card::where('user_id', $user_details->user_id)->update([
-                        'card_status' => 'inactive',
+                        'status' => 0,
                     ]);
 
                     $plan_validity = Carbon::now();
@@ -201,7 +201,7 @@ class TransactionsController extends Controller
                 }
 
 
-                Toastr::success(trans($message), 'Success', ["positionClass" => "toast-top-right"]);
+                Toastr::success(trans($message), 'Success', ["positionClass" => "toast-top-center"]);
                 return redirect()->route('admin.offline.transactions');
             }
         } else {
@@ -211,7 +211,7 @@ class TransactionsController extends Controller
             ]);
 
 
-            Toastr::success(trans('Transaction updated successfully'), 'Success', ["positionClass" => "toast-top-right"]);
+            Toastr::success(trans('Transaction updated successfully'), 'Success', ["positionClass" => "toast-top-center"]);
 
             return redirect()->route('admin.offline.transactions');
         }

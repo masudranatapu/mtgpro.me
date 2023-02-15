@@ -1,8 +1,7 @@
 @extends('layouts.app')
+@section('title') {{ __('Register') }} @endsection
 
 @section('content')
-
-
     <!-- ======================= Sign Up  =========================== -->
     <div class="login_sec section" style="margin:35px 0px;">
         <!-- container -->
@@ -15,12 +14,12 @@
                             <div class="login_title mb-4 text-center">
                                 <h3>{{ __('Sign Up') }}</h3>
                             </div>
-                            <form method="POST" action="{{ route('register') }}">
+                            <form method="POST" action="{{ route('post-register') }}">
                                 @csrf
                                 <div class="social_login mb-2 mt-2 text-center">
                                     <a href="{{ route('social.login', 'facebook') }}" class="fa_facebook"><i class="fab fa-facebook"></i></a>
                                     <a href="{{ route('social.login', 'google') }}" class="fa_google"><i class="fab fa-google"></i></a>
-                                    <a href="{{ route('social.login', 'twitter') }}" class="fa_twitter"><i class="fab fa-twitter"></i></a>
+                                    {{-- <a href="{{ route('social.login', 'twitter') }}" class="fa_twitter"><i class="fab fa-twitter"></i></a> --}}
                                 </div>
                                 <div class="divider mb-3 text-center">
                                     <span>{{ __('Or') }}</span>
@@ -36,6 +35,13 @@
                                     <label for="email" class="form-label">{{ __('Email Address') }}</label>
                                     <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" tabindex="2" placeholder="{{ __('Email address') }}" required>
                                     @if($errors->has('email'))
+                                    <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                                    @endif
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">{{ __('Username') }}</label>
+                                    <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" tabindex="2" placeholder="{{ __('Username') }}" required>
+                                    @if($errors->has('username'))
                                     <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                                     @endif
                                 </div>
@@ -67,3 +73,5 @@
         </div>
     </div>
 @endsection
+
+

@@ -184,8 +184,8 @@ $plan_details = json_decode($user_details->plan_details);
                                                         <div class="form-group">
                                                             <label class="form-label required" for="status">{{ __('Status') }} </label>
                                                             <select id="status" class="form-control" name="status">
-                                                                <option value="1" {{ $user_details->status==1 ? 'selected': '' }}>Yes</option>
-                                                                <option value="0" {{ $user_details->status==0 ? 'selected': '' }}>No</option>
+                                                                <option value="1" {{ $user_details->status==1 ? 'selected': '' }}>Active</option>
+                                                                <option value="0" {{ $user_details->status==0 ? 'selected': '' }}>Inactive</option>
                                                             </select>
                                                             {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>

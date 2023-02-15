@@ -12,8 +12,8 @@
                             <div class="col">
                                 <div class="float-left">
                                     {{ __('All Review') }}
-                                    {{-- | --}}
-                                    {{-- <a href="{{ route('admin.user.trash-list') }}"> <i class="fa fa-trash-alt"></i> Trash list</a> --}}
+                                    |
+                                    <a href="{{ route('admin.review.create') }}" class="@yield('user_list')"><i class="la la-star"></i> {{ __('Create Review') }}</a>
                                 </div>
                             </div>
                             <div class="col">
@@ -75,10 +75,12 @@
                                                         </a>
                                                     <div class="dropdown-menu">
 
+                                                        <a href="{{ route('admin.review.edit',$review->id) }}" class="dropdown-item btn-sm" >{{ __('Edit') }}</a>
+
                                                         @if ($review->status == 0)
-                                                            <a href="{{ route('admin.review.update',['id' => $review->id, 'status' => 1]) }}" class="dropdown-item btn-sm" >{{ __('Activate') }}</a>
+                                                            <a href="{{ route('admin.review.status-update',['id' => $review->id, 'status' => 1]) }}" class="dropdown-item btn-sm" >{{ __('Activate') }}</a>
                                                         @else
-                                                            <a href="{{ route('admin.review.update',['id' => $review->id, 'status' => 0]) }}" class="dropdown-item btn-sm" >{{ __('Deactivate') }}</a>
+                                                            <a href="{{ route('admin.review.status-update',['id' => $review->id, 'status' => 0]) }}" class="dropdown-item btn-sm" >{{ __('Deactivate') }}</a>
                                                         @endif
                                                             <a href="{{ route('admin.review.delete',['id' => $review->id]) }}" class="dropdown-item btn-sm" >{{ __('Delete') }}</a>
                                                     </div>

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://mtgpro.me/'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -108,7 +108,7 @@ return [
     */
 
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     | Available locales
     |--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ return [
         'Russian' => 'ru',
         'French' => 'fr',
     ],
-     'languages' => [
+    'languages' => [
         'ar' => 'Arabic',
         'bn' => 'Bangla',
         'bg' => 'Bulgarian',
@@ -156,6 +156,18 @@ return [
         4 => 'Music Media',
         5 => 'Payment',
         6 => 'More',
+    ],
+
+    'social_type' => [
+        1 => 'mobile',
+        2 => 'number',
+        3 => 'text',
+        4 => 'username',
+        5 => 'link',
+        6 => 'mail',
+        7 => 'address',
+        8 => 'file',
+        9 => 'embed',
     ],
 
 
@@ -228,6 +240,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 
@@ -285,9 +298,35 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
 
+
     ],
 
-    'reserve_word' => ['dashboard','cart','card','user','admin','profile','clear','forgot-password','login','auth','checkout','scan','pricing','feature','theme','contact'],
+    'reserve_word' => [
+        'dashboard',
+        'cart',
+        'card',
+        'user',
+        'admin',
+        'profile',
+        'clear',
+        'forgot-password',
+        'login',
+        'auth',
+        'checkout',
+        'scan',
+        'pricing',
+        'feature',
+        'theme',
+        'contact',
+        'php',
+        'phpMyadmin',
+        'phpmyadmin',
+        'public',
+        'data-deletion-instructions',
+        'qr',
+        'privacy-policy'
+
+    ],
 
 
 ];

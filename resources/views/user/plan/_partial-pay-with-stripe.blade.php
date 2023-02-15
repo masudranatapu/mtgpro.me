@@ -18,16 +18,17 @@
                 <input type="hidden" name="type" value="" id="stp_type">
                 <div class="modal-header">
                     <h6 class="modal-title" id="paymentStripeLabel"> {{ __('Card Information')}}</h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>                </div>
                 <div class="modal-body">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="pb-3">
+                        <div class="">
                             <div class="form-row">
                                 <label for="card-element">
                                     {{ __('Credit or debit card')}}
                                 </label>
-                                <div id="card-element">
+                                <div id="card-element" style="width: 100%;">
                                     <!-- A Stripe Element will be inserted here. -->
                                 </div>
                                 <!-- Used to display Element errors. -->
@@ -35,11 +36,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
+                        <button class="btn btn-primary" type="submit">{{ __('Pay now')}}</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Close')}}</button>
-                    <button class="btn btn-primary" type="submit">{{ __('Submit')}}</button>
-                </div>
+
             </form>
         </div>
     </div>

@@ -20,6 +20,10 @@ body {
     background: #F7F7F7;
 }
 
+.dropdown-toggle::after {
+    display: none;
+}
+
 .card_step_form {
     background: #fff;
     padding: 50px 50px;
@@ -223,21 +227,21 @@ body {
     border: 1px solid;
 }
 
-.card_preview_wrapper .social_icon ul li {
+/* .card_preview_wrapper .social_icon ul li {
     display: inline-block;
     margin: 5px 10px;
+} */
+
+.card_preview_wrapper .social_icon img {
+    width: 60px;
+    height: 60px;
+    border-radius: 9px;
 }
 
-.card_preview_wrapper .social_icon ul li img {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-}
-
-.card_preview_wrapper .social_icon ul li a span {
+.card_preview_wrapper .social_icon a span {
     display: block;
     font-size: 12px;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     color: #111;
     margin-top: 4px;
     font-weight: 400;
@@ -387,6 +391,8 @@ body {
     font-family: 'DM Sans';
 }
 
+#reviewForm .form-control,
+.checkout-wrapper .form-control,
 .account_setting .form-control {
     padding: 13px 24px;
     align-items: center;
@@ -536,7 +542,7 @@ body {
 
 .create_card_wrapper .btn-primary {
     padding: 8px 21px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 200 !important;
     font-family: 'DM Sans';
 }
@@ -572,6 +578,10 @@ body {
 .social_media_list .social_media_name img {
     width: 35px;
     margin-left: 15px;
+}
+
+.social_media_list .social_media_name img {
+    border-radius: 7px !important;
 }
 
 .social_media_list .social_media_name {
@@ -1109,7 +1119,7 @@ body {
 
 .modal-content {
     border: none;
-    border-radius: 0px;
+    border-radius: 20px;
     padding: 5px 20px;
 }
 
@@ -1249,7 +1259,9 @@ body {
     box-shadow: none !important;
 }
 
-.subscription_info .card .card-header {padding: 13px 18px;}
+.subscription_info .card .card-header {
+    padding: 13px 18px;
+}
 
 .subscription_info .card .card-header h3 {
     font-size: 16px;
@@ -1265,7 +1277,9 @@ body {
     box-shadow: none !important;
 }
 
-.subscription_info .card .card-header {padding: 13px 18px;}
+.subscription_info .card .card-header {
+    padding: 13px 18px;
+}
 
 .subscription_info .card .card-header h3 {
     font-size: 16px;
@@ -1341,7 +1355,9 @@ body {
     font-weight: 400;
 }
 
-.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
     color: #545b62 !important;
     background-color: 545b62;
     border-color: #4e555b;
@@ -1361,7 +1377,7 @@ body {
 
 .invoice_table .table tr td {
     border-radius: 3px;
-    background-color: #F7F7F7;
+    /* background-color: #F7F7F7; */
     padding: 12px 12px;
     font-size: 13px;
     font-weight: 300;
@@ -1369,7 +1385,7 @@ body {
 
 .invoice_table .table tr th {
     border-radius: 3px;
-    background-color: #F7F7F7;
+    /* background-color: #F7F7F7; */
     padding: 12px 12px;
     font-size: 13px;
     border: none;
@@ -1381,5 +1397,360 @@ body {
     font-weight: 700;
 }
 
+.custome_table table {
+    border-collapse: separate;
+    border-spacing: 0px 6px;
+    border-radius: 10px !important;
+}
 
- 
+.custome_table .select_checkbox {
+    background: #fff;
+    padding: 0px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #212121;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    line-height: 36px;
+}
+
+.custome_table .table tr {
+    border-radius: 10px;
+}
+
+.custome_table .table td {
+    background: #fff;
+    vertical-align: middle;
+    color: #999;
+    font-size: 14px;
+    font-weight: 600;
+    border: none !important;
+}
+
+.custome_table th {
+    padding: 0;
+    color: #828282;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    padding: 0px 0px 10px 0px;
+    line-height: 42px;
+    border: none !important;
+    vertical-align: middle;
+}
+
+.custome_table span {
+    color: #888;
+    font-size: 14px;
+    font-weight: 300 !important;
+}
+
+
+.custome_table .dropdown-menu {
+    border: none;
+    padding: 0;
+}
+
+.custome_table .dropdown-menu a {
+    font-size: 14px;
+    padding: 7px 12px;
+    font-family: 'Inter', sans-serif;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+
+.btn-danger:not(:disabled):not(.disabled).active,
+.btn-danger:not(:disabled):not(.disabled):active,
+.show>.btn-danger.dropdown-toggle {
+    color: #000 !important;
+}
+
+
+.btn.btn-secondary {
+    background: transparent !important;
+    color: #111;
+    border: 1px solid #DDD !important;
+    font-size: 14px;
+    font-family: 'DM Sans';
+    border-radius: 50px;
+    padding: 10px 34px;
+}
+
+.save-card-spinner {
+    display: none;
+}
+
+.form-group .error {
+    color: #a74d19 !important;
+    font-size: 14px;
+    font-style: italic;
+
+}
+
+.card {
+    background: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 16px !important;
+    border: none !important;
+}
+
+label {
+    font-size: 13px;
+    color: #434343;
+    font-weight: 500 !important;
+    font-family: 'DM Sans';
+}
+
+
+.checkout-wrapper .card-header {
+    border: none;
+    padding: 0px 16px !important;
+    color: #212121;
+    font-weight: 800;
+}
+
+.checkout-wrapper .table td,
+.checkout-wrapper .table th {
+    padding: 15px 0px;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    color: #666;
+}
+
+.dashboard_item .small-box {
+    border-radius: 20px;
+    background-color: #ffffff;
+}
+
+
+.dashboard_item .small-box p {
+    margin: 0;
+    font-size: 13px;
+    font-family: 'Inter';
+}
+
+.dashboard_item .small-box>.inner {
+    padding: 15px 17px;
+}
+
+.dashboard_item .small-box h3 {
+    font-size: 26px;
+    color: #212121;
+}
+
+.connection_view h5 {
+    color: #3a3a3a;
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.connection_view span {
+    font-size: 14px;
+    color: #212121;
+    font-weight: 500;
+}
+
+/* .switch-wrapper {
+    position: relative;
+    display: inline-flex;
+    border-radius: 20px;
+    background: white;
+}
+
+.switch-wrapper [type="radio"] {
+    position: absolute;
+    left: -9999px;
+}
+
+.switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"],
+.switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
+    color: #fff;
+}
+
+.switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"]:hover,
+.switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"]:hover {
+    background: transparent;
+}
+
+.switch-wrapper [type="radio"]:checked#monthly+label[for="yearly"]~.highlighter {
+    transform: none;
+}
+
+.switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
+    transform: translateX(100%);
+}
+
+
+
+.switch-wrapper .highlighter {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: calc(49% - 4px);
+    height: calc(100% - 8px);
+    border-radius: 20px;
+    background: #212121;
+    transition: transform 0.25s ease-in-out;
+} */
+
+
+.edit_review {
+    position: absolute;
+    top: 8px;
+    right: 21px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 500px) {
+    .card {
+        padding: 10px;
+    }
+
+}
+
+.loading-spinner {
+    display: none;
+}
+
+.loading-spinner.active {
+    display: inline-block;
+}
+
+.form-group.color_link_group {
+    width: 100%;
+    border: 1px solid #E0E0E0;
+    height: 50px;
+    padding: 0 24px;
+    max-width: 510px;
+    margin-top: 15px;
+    border-radius: 8px;
+    align-items: center;
+    vertical-align: middle;
+    display: grid;
+}
+
+.color_link span {
+    font-size: 13px;
+    color: #434343;
+    font-weight: 500 !important;
+    font-family: 'DM Sans';
+}
+
+.color_link_group .custom-control-input{
+    outline:none !important;
+    box-shadow: none !important;
+}
+
+.color_link_group .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #111;
+    background-color: #111;
+    box-shadow: none;
+}
+
+li.nav-item .icon {
+    color: #bdbdbd;
+}
+ .switch-wrapper {
+        position: relative;
+        display: inline-flex;
+        border-radius: 20px;
+        background: white;
+        width:22%;
+    }
+
+    .switch-wrapper [type="radio"] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"],
+    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
+        color: #fff;
+    }
+
+    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"]:hover,
+    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"]:hover {
+        background: transparent;
+    }
+
+    .switch-wrapper [type="radio"]:checked#monthly+label[for="yearly"]~.highlighter {
+        transform: none;
+    }
+
+    .switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
+        transform: translateX(100%);
+    }
+
+    .switch-wrapper label {
+        font-size: 14px;
+        z-index: 1;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: color 0.25s ease-in-out;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        line-height: 44px;
+        /* padding: 0px 36px 30px 37px; */
+        width: 100%;
+        display: inline-block;
+        height: 47px;
+    }
+
+    .switch-wrapper .highlighter {
+        position: absolute;
+        top: 4px;
+        left: 8px;
+        width: calc(49% - 4px);
+        height: calc(100% - 8px);
+        border-radius: 20px;
+        background: #212121;
+        transition: transform 0.25s ease-in-out;
+    }
+
+
+    .share_modal .btn-primary {
+        background: #212121;
+        border: none !important;
+        outline: none;
+        box-shadow: none;
+        padding: 12px 32px !important;
+        border-radius: 50px !important;
+        font-size: 13px;
+        margin: 7px;
+    }
+
+
+    #offcanvasCalculator ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+    }
+
+    #offcanvasCalculator ::-webkit-scrollbar-button {
+        background: #fff;
+    }
+
+    #offcanvasCalculator ::-webkit-scrollbar-track-piece {
+        background: #fff;
+    }
+
+    #offcanvasCalculator ::-webkit-scrollbar-thumb {
+        background: #ccc;
+    }
+
+
+
+
+

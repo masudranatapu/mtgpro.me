@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\User;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use PayPal\Api\Item;
 use PayPal\Api\Payer;
 use PayPal\Api\Amount;
-use App\Models\Gateway;
 use PayPal\Api\Details;
 use PayPal\Api\Payment;
 use PayPal\Api\ItemList;
 use Stripe\StripeClient;
-use Stripe\PaymentIntent;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
+use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use PayPal\Api\RedirectUrls;
 use Illuminate\Support\Facades\URL;
@@ -22,63 +21,78 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use PayPal\Auth\OAuthTokenCredential;
-use App\Http\Requests\CheckoutRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\TransectionRequest;
 
-
 class CheckoutController extends Controller
 {
-
-
-    public function __construct()
-    {
-        /** PayPal api context **/
-        // $paypal_configuration = DB::table('config')->get();
-        // $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
-        // $this->apiContext->setConfig(array(
-        //     'mode' => $paypal_configuration[3]->config_value,
-        //     'http.ConnectionTimeOut' => 30,
-        //     'log.LogEnabled' => true,
-        //     'log.FileName' => storage_path() . '/logs/paypal.log',
-        //     'log.LogLevel' => 'DEBUG',
-        // ));
+    protected $businesscard;
+    public function __construct(
+        BusinessCard $businesscard
+    ) {
+        $this->businesscard  = $businesscard;
     }
+
+
+    // public function __construct()
+    // {
+    /** PayPal api context **/
+    // $paypal_configuration = DB::table('config')->get();
+    // $this->apiContext = new ApiContext(new OAuthTokenCredential($paypal_configuration[4]->config_value, $paypal_configuration[5]->config_value));
+    // $this->apiContext->setConfig(array(
+    //     'mode' => $paypal_configuration[3]->config_value,
+    //     'http.ConnectionTimeOut' => 30,
+    //     'log.LogEnabled' => true,
+    //     'log.FileName' => storage_path() . '/logs/paypal.log',
+    //     'log.LogLevel' => 'DEBUG',
+    // ));
+    // }
 
     public function checkout(Request $request)
     {
-        $config         = DB::table('config')->get();
+        $config = DB::table('config')->get();
         $data = [];
         $planId = $request->plan_id;
         $is_yearly = $request->is_yearly;
-        $plan = DB::table('plans')->where('id', $planId)->first();
-        $user = DB::table('users')->where('id',Auth::user()->id)->first();
+        $plan = DB::table('plans')->where('id', $planId)->where('status', 1)->first();
+        if (empty($plan)) {
+            abort(404);
+        }
+        $user = DB::table('users')->where('id', Auth::user()->id)->first();
         $payment_data = json_decode($user->stripe_data);
         $term_days = $plan->validity;
         $plan_validity = \Carbon\Carbon::now();
         $plan_validity->addDays($term_days);
-        $term_days = $plan->validity;
-        if($plan) {
-            if($plan->is_free==1 && !empty($payment_data->id)){
-                //Unsubscription Stribe
+        if ($plan) {
+            if ($plan->is_free == 1 && !empty($payment_data->id)) {
                 $stripe = new \Stripe\StripeClient($config[10]->config_value);
-                $stripe = $stripe->subscriptions->cancel(
+                //Check subscription
+                $check_subscription = $stripe->subscriptions->retrieve(
                     $payment_data->id,
                     []
-                  );
+                );
+                if ($check_subscription->status == 'active') {
+                    //Unsubscription Stripe
+                    $stripe = $stripe->subscriptions->cancel(
+                        $payment_data->id,
+                        []
+                    );
+                }
+                $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
-                    'paid_with' => 0,
+                    'paid_with' => NULL,
                     'term' => $term_days,
                     'plan_validity' => $plan_validity,
                     'plan_activation_date' => now(),
                     'plan_details' => json_encode($plan),
                     'stripe_data' => NULL,
                     'paypal_data' => NULL,
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
                 return redirect()->route('user.plans');
-            }
-            elseif($plan->is_free==1){
+            } elseif ($plan->is_free == 1) {
+                $this->businesscard->updateDataByCuurentPlan($plan->id);
                 User::where('id', Auth::user()->id)->update([
                     'plan_id' => $plan->id,
                     'paid_with' => 0,
@@ -88,24 +102,23 @@ class CheckoutController extends Controller
                     'plan_details' => json_encode($plan)
                 ]);
                 return redirect()->route('user.plans');
-            }
-            else{
+            } else {
                 $plan->is_yearly = $is_yearly;
                 $gateways = DB::table('gateways')->where('status', 1)->get();
-                return view('user.plan.checkout', compact('plan', 'gateways','user','config'));
+
+                return view('user.plan.checkout', compact('plan', 'gateways', 'user', 'config'));
             }
-        }
-        else {
-            Toastr::error(trans('Please select your plan'), 'Error', ["positionClass" => "toast-top-right"]);
+        } else {
+            Toastr::error(trans('Please select your plan'), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
-
     }
 
 
-    public function postTransection(Request $request){
+    public function postTransection(Request $request)
+    {
 
-        dd($request->all());
+      
 
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
@@ -171,7 +184,7 @@ class CheckoutController extends Controller
 
         $approvalUrl = $payment->getApprovalLink();
 
-        if(isset($approvalUrl)) {
+        if (isset($approvalUrl)) {
             return Redirect::away($approvalUrl);
         }
         dd($approvalUrl);
@@ -180,7 +193,6 @@ class CheckoutController extends Controller
         //  ResultPrinter::printResult("Created Payment Order Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $payment);
 
         return $payment;
-
     }
 
 

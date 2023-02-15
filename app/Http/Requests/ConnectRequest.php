@@ -26,9 +26,9 @@ class ConnectRequest extends FormRequest
             'name'        => 'required|string|max:124',
             'email'       => 'required|email|max:150',
             'phone'       => 'required|max:20',
-            'job_title'   => 'nullable|string|max:124',
-            'company'     => 'required|string|max:124',
-            'note'        => 'required|string|max:1024',
+            'title'       => 'nullable|string|max:124',
+            'company_name'=> 'nullable|string|max:124',
+            'message'     => 'required|string|max:1024',
         ];
         return $rules;
     }
@@ -39,9 +39,9 @@ class ConnectRequest extends FormRequest
            'card_id.required'       => 'Please enter your card',
            'name.required'          => 'Please enter your name',
            'email.required'         => 'Please enter your email',
-           'job_title.required'     => 'Please enter your job title',
-           'company.required'       => 'Please enter your company name',
-           'note.required'          => 'Please enter your message',
+        //    'title.required'         => 'Please enter your job title',
+        //    'company.required'       => 'Please enter your company name',
+           'message.required'          => 'Please enter your message',
         ];
     }
 

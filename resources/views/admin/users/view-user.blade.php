@@ -38,6 +38,10 @@
                                     class="badge bg-green-lt">{{ $user_details->role_id == 2 ? 'User' : ''}}</span>
                             </div>
                         </div>
+
+                        {{-- @dd($user_details) --}}
+
+                        @if ($user_details->id != Auth::user()->id)
                         <div class="d-flex">
                             <a href="mailto:{{ $user_details->email == '' ? 'Not Available' : $user_details->email }}"
                                 class="card-btn">
@@ -59,6 +63,7 @@
                                     <path d="M20 12h-13l3 -3m0 6l-3 -3" /></svg>
                                 {{ __('Login via Admin') }}</a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-6">
@@ -70,7 +75,7 @@
                                         <th>{{ __('vCard ID') }}</th>
                                         <th>{{ __('Title') }}</th>
                                         <th>{{ __('Created At') }}</th>
-                                        <th>{{ __('Status') }}</th>
+                                        {{-- <th>{{ __('Status') }}</th> --}}
                                         <th>{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -78,15 +83,16 @@
                                     @if (count($user_cards) != 0)
                                     @foreach ($user_cards as $user_card)
                                     <tr>
-                                        <td><a href="{{ route('card.preview', $user_card->card_url) }}"
-                                                target="_blank">{{ $user_card->card_id }}</a></td>
+                                        <td>
+                                            <a href="{{ route('card.preview', $user_card->card_url) }}" target="_blank">{{ $user_card->card_id }}</a>
+                                        </td>
                                         <td class="text-muted">
                                             {{ $user_card->title }} {{ $user_card->title2 }}
                                         </td>
                                         <td class="text-muted">
                                             {{ date('d-m-Y h:m A', strtotime($user_card->created_at)) }}
                                         </td>
-                                        <td class="text-muted">
+                                        {{-- <td class="text-muted">
                                             @if ($user_card->status == 0)
                                             <span class="badge bg-red">{{ __('Inactive') }}</span>
                                             @elseif ($user_card->status == 2)
@@ -94,10 +100,10 @@
                                             @else
                                             <span class="badge bg-green">{{ __('Active') }}</span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn-sm btn btn-info" href="{{ route('user.card.edit', $user_card->id)}}"><i class="fa fa-pencil-alt"></i></a>
+                                                {{-- <a class="btn-sm btn btn-info" href="{{ route('user.card.edit', $user_card->id)}}"><i class="fa fa-pencil-alt"></i></a> --}}
                                                 <a class="btn-sm btn btn-success" target="_blank" href="{{ route('card.preview',$user_card->card_url) }}"><i class="fa fa-link"></i></a>
                                                 <a class="btn-sm btn btn-danger" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="{{ route('admin.card.delete',$user_card->id) }}"class="dropdown-item btn-sm"><i class="fa fa-trash"></i></a>
                                             </div>
@@ -135,8 +141,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-link link-secondary me-auto"
                     data-bs-dismiss="modal">{{ __('Cancel')}}</button>
-                <a href="{{ route('admin.login-as.user', $user_details->id) }}" target="_blank"
-                    class="btn btn-danger">{{ __('Yes, proceed')}}</a>
+                <a href="{{ route('admin.login-as.user', $user_details->id) }}" class="btn btn-danger">{{ __('Yes, proceed')}}</a>
             </div>
         </div>
     </div>
