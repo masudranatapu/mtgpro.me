@@ -2,6 +2,7 @@
 @section('shop', 'active')
 <?php
 $rows = $data ?? [];
+$cart = session()->get('cart', []);
 ?>
 @section('title') {{ __('Shop Details') }} @endsection
 @push('custom_css')
@@ -143,7 +144,9 @@ $rows = $data ?? [];
                                 </div>
 
                                 <div class="add_to_cart">
-                                    <a href="javascript:void(0)" onclick="addTocart()">Add to Cart</a>
+
+                                        <a href="javascript:void(0)" onclick="addTocart()">Add to Cart</a>
+                                    
                                 </div>
                             </form>
 

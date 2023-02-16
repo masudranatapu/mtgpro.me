@@ -30,17 +30,19 @@ class ShopController extends Controller
 {
     private $filename;
     private $settings;
+    private $businessCard;
+    private $resp;
 
-    public function __construct()
+    public function __construct(BusinessCard $businessCard)
     {
-
+        $this->businessCard = $businessCard;
         $this->settings = getSetting();
     }
 
 
     public function getCart(Request $request)
     {
-        dd($request);
+
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
         $activeCard = $this->businessCard->where('user_id', Auth::id())->first();

@@ -166,7 +166,7 @@ class OrdersController extends Controller
 
             $user = User::find($order->user_id);
 
-            $tempete = EmailTemplate::where('slug', 'plan-purchase')->first();
+            $tempete = EmailTemplate::where('slug', 'order-status-change')->first();
 
             $content = $tempete->body;
 
@@ -178,12 +178,9 @@ class OrdersController extends Controller
                 $content = preg_replace("/{{user_name}}/", $user->username, $content);
             }
 
-            if (isset($order->total_price)) {
-                $content = preg_replace("/{{order_cost}}/", $order->total_price, $content);
-            }
-            if (isset($order->transaction)) {
+            if (isset($order->order_number)) {
 
-                $content = preg_replace("/{{transaction_number}}/", $order->transaction->transaction_id, $content);
+                $content = preg_replace("/{{order_number}}/", $order->order_number, $content);
             }
             if (isset($order->status)) {
 

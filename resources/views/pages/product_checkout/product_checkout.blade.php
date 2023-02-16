@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Product Checkout')
 
 @push('custom_css')
     <link rel="stylesheet" href="{{ asset('assets/css/countrySelect.min.css') }}" />

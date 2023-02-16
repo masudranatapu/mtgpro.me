@@ -135,7 +135,7 @@ class HomeController extends Controller
             Mail::to($card->card_email)->send(new AllMail($message, $subject));
 
             [$message, $subject] = $this->getConnectMailCC($request->all());
-            Mail::to($card->card_email)->send(new AllMail($message, $subject));
+            Mail::to(trim($request->email))->send(new AllMail($message, $subject));
         }
         // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
         // return redirect()->back();

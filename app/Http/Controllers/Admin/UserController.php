@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Mail\AllMail;
 use App\Models\EmailTemplate;
+use App\Models\Order;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -425,6 +426,8 @@ class UserController extends Controller
                 'deleted_at' => date('Y-m-d H:i:s'),
                 'deleted_by' => Auth::user()->id
             ]);
+
+            Order::where('user_id', $user->id)->delete();
         }
         Toastr::success(trans('User deleted Successfully!!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.users');

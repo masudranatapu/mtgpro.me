@@ -30,6 +30,6 @@ class SendEmailInvoice extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email-invoice')->with('details',$this->details);;
+        return $this->subject('Your Order Invoice')->view('emails.email-invoice')->with('details', $this->details);
     }
 }

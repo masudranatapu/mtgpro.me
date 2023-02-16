@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use App\Models\BusinessCard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\AdminNotifyMail;
 use App\Mail\AllMail;
 use App\Models\Config;
 use App\Models\EmailTemplate;
@@ -49,6 +50,7 @@ class StripeController extends Controller
                 return redirect()->back();
             }
             $userData = Auth::user();
+            $settings =  getSetting();
 
             $price_id = $plan_details->stripe_plan_id;
 
@@ -225,6 +227,12 @@ class StripeController extends Controller
         Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
         [$content, $subject] = $this->planPurchaseMail($transaction);
         Mail::to($request->billing_email)->send(new AllMail($content, $subject));
+
+
+
+        $adminNotifySubject = "Plan purchase notification";
+        $adminNotifyContent = $request->billing_name . " purchase a plan.";
+        Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent));
 
         Toastr::success(trans('Plan subscription successfully done!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('user.planinvoice', $transaction->invoice_number);

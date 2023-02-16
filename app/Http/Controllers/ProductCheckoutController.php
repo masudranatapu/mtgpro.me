@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminNotifyMail;
+use App\Mail\AllMail;
 use App\Models\Config;
+use App\Models\EmailTemplate;
 use App\Models\Gateway;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -50,6 +53,7 @@ class ProductCheckoutController extends Controller
 
             $userData = Auth::user();
 
+            $settings =  getSetting();
 
             $totalPrice = 0;
             $totalQuantity = 0;
@@ -213,8 +217,48 @@ class ProductCheckoutController extends Controller
         if (session()->has('coupon')) {
             Session::forget('coupon');
         }
-        Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
+        Mail::to($request->billing_email)->send(new \App\Mail\ProductOrderInvoice($transaction, $order));
+        [$content, $subject] = $this->productPurchaseMail($transaction);
+        Mail::to($request->billing_email)->send(new AllMail($content, $subject));
+
+
+        $adminNotifySubject = "Product purchase notification";
+        $adminNotifyContent = $request->billing_name . " purchase a product.";
+        Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent));
 
         return redirect()->route('user.orders.invoice', ['id' => $order->id]);
+    }
+
+
+    public function productPurchaseMail(Transaction $transaction)
+    {
+        $user = User::find($transaction->user_id);
+        $setting = Config::first();
+
+
+        $tempete = EmailTemplate::where('slug', 'product-purchase')->first();
+
+        $content = $tempete->body;
+
+        $content = preg_replace("/{{site_title}}/", $setting->config_value, $content);
+
+
+        if (isset($user->username)) {
+
+            $content = preg_replace("/{{user_name}}/", $user->username, $content);
+        }
+
+        if (isset($transaction->transaction_amount)) {
+            $content = preg_replace("/{{order_cost}}/", $transaction->transaction_amount, $content);
+        }
+        if (isset($transaction->transaction_id)) {
+
+            $content = preg_replace("/{{transaction_number}}/", $transaction->transaction_id, $content);
+        }
+        if (isset($transaction->payment_status)) {
+
+            $content = preg_replace("/{{order_status}}/", $transaction->payment_status, $content);
+        }
+        return [$content, $tempete->subject];
     }
 }

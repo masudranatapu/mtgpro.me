@@ -353,17 +353,18 @@ class UserController extends Controller
 
     public function putUpdatePayment(PaymentInfoRequest $request)
     {
+
         DB::beginTransaction();
         try {
-            $user              = User::find(Auth::user()->id);
+            $user              = User::find(Auth::id());
             $user->card_number = $request->card_number;
             $user->card_expiration_date = $request->card_expiration_date;
             $user->card_cvc     = $request->card_cvc;
             $user->name_on_card = $request->name_on_card;
             $user->updated_at   = date("Y-m-d H:i:s");
-            $user->update();
+            $user->save();
+            dd($user);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             DB::rollback();
             Toastr::error('Something wrong! Please try again', 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
@@ -376,7 +377,7 @@ class UserController extends Controller
     public function profileUpdate(Request $request)
     {
 
-        // dd($request->all());
+
         DB::beginTransaction();
         try {
             $user  = User::find(Auth::user()->id);
@@ -406,7 +407,7 @@ class UserController extends Controller
             $user->user_disclaimer   = $request->user_disclaimer;
 
             // dd($user);
-            $user->update();
+            $user->save();
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollback();
@@ -598,5 +599,48 @@ class UserController extends Controller
 
 
         return [$content, $mailTemplate->subject];
+    }
+
+    public function equalhousingShow(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->housing_logo_view = $request->status;
+        $user->save();
+
+        return response()->json(['status' => $user->housing_logo_view]);
+    }
+
+    public function userdisclaimerShow(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->disclaimer_view = $request->status;
+        $user->save();
+
+        return response()->json(['status' => $user->disclaimer_view]);
+    }
+    public function userNmlsShow(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->nmls_view = $request->status;
+        $user->save();
+        return response()->json(['status' => $user->nmls_view]);
+    }
+    public function userNmlsAdd(Request $request)
+    {
+        $request->validate([
+            'nmls_id' => 'required'
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->nmls_id = $request->nmls_id;
+        $user->save();
+        return redirect()->back();
+    }
+    public function userFormsShow(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->form_view = $request->status;
+        $user->save();
+        return response()->json(['status' => $user->nmls_view]);
     }
 }
