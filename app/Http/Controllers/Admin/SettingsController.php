@@ -39,6 +39,7 @@ class SettingsController extends Controller
         $currencies = Currency::get();
         $settings = Setting::first();
         $config = DB::table('config')->get();
+        // dd($config[24]);
 
         $email_configuration = [
             'driver' => env('MAIL_MAILER', 'smtp'),
@@ -209,6 +210,19 @@ class SettingsController extends Controller
 
             DB::table('config')->where('config_key', 'share_content')->update([
                 'config_value' => $request->share_content,
+            ]);
+
+
+            DB::table('config')->where('config_key', 'tax_name')->update([
+                'config_value' => $request->tax_name,
+            ]);
+
+            DB::table('config')->where('config_key', 'tax_number')->update([
+                'config_value' => $request->tax_number,
+            ]);
+
+            DB::table('config')->where('config_key', 'tax_value')->update([
+                'config_value' => $request->tax_value,
             ]);
 
             // if($request->primary_image){
