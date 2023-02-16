@@ -54,7 +54,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/support-mail-send', [HomeController::class, 'sendSupportMail']);
     Route::get('/user-plan', [UserController::class, 'userplan']);
     Route::get('/billing-info', [UserController::class, 'userBillingInfo']);
-    Route::post('/billing-onfo-update', [UserController::class, 'userBillingInfoUpdate']);
+    Route::post('update-billing-info', [UserController::class, 'userBillingInfoUpdate']);
 
 
 
@@ -64,6 +64,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/password-reset', [UserController::class, 'passwordReset']);
     Route::post('/account-delete', [UserController::class, 'postDeletionRequest']);
     Route::post('/push-notifications', [UserController::class, 'putNitificationStatus']);
+
+
+    Route::get('user-invoice', [UserController::class, 'userInvoice']);
 });
 
 Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);

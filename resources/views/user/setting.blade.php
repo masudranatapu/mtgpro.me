@@ -185,14 +185,14 @@
                                                                     </h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_yearly, 2) }}
                                                                         {{ __('per
-                                                                                                                                                                                                                                                                                    year') }}.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            year') }}.
                                                                     </p>
                                                                 @else
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_monthly, 2) }}
                                                                     </h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_monthly, 2) }}
                                                                         {{ __('per
-                                                                                                                                                                                                                                                                                    month') }}.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            month') }}.
                                                                     </p>
                                                                 @endif
                                                             @else
@@ -308,7 +308,7 @@
                                                                 <div class="col-md-5">
                                                                     <a href="{{ route('user.all-invoice.download') }}"
                                                                         class="btn btn-secondary float-md-right">{{ __('Download
-                                                                                                                                                                                                                                                                                        all Invoice') }}</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                all Invoice') }}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -442,8 +442,8 @@
                                                         <div class="form-group mt-4">
 
                                                             <label class="form-label" for="user_disclimer">
-                                                                {{ __('User Disclimer') }}</label>
-                                                            <textarea required name="user_disclimer" id="user_disclimer" cols="30" rows="10" class="form-control">{{ old('user_disclimer') ?? $user->user_disclimer }}
+                                                                {{ __('User Disclaimer') }}</label>
+                                                            <textarea required name="user_disclaimer" id="user_disclimer" cols="30" rows="10" class="form-control">{{ old('user_disclimer') ?? $user->user_disclimer }}
                                                             </textarea>
 
                                                         </div>
@@ -467,7 +467,7 @@
                                                             <a href="javascript:void(0)" class="btn btn-danger mb-2"
                                                                 data-toggle="modal"
                                                                 data-target="#deleteAccount">{{ __('Delete
-                                                                                                                                                                                                                                                            Account') }}</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Account') }}</a>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -555,7 +555,7 @@
                             @csrf
                             <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
                             <p>{{ __('All contacts and other data associated with this account will be permanently deleted.
-                                                                                                                This cannot be undone.') }}
+                                                                                                                                                                                                                                                                                                                    This cannot be undone.') }}
                             </p>
 
                             <div class="mb-3">
@@ -904,7 +904,7 @@
             });
         });
         $(document).ready(function() {
-            $('#user_disclaimer').summernote({
+            $('#user_disclimer').summernote({
 
                 height: 150,
                 toolbar: [

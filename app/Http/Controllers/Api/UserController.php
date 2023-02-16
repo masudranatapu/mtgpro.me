@@ -8,6 +8,7 @@ use App\Models\BusinessCard;
 use App\Models\BusinessField;
 use App\Models\Config;
 use App\Models\EmailTemplate;
+use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -535,5 +536,16 @@ class UserController extends ResponceController
 
         ];
         return $this->sendResponse(200, "User information updated successfull", $data, true, []);
+    }
+
+    public function userInvoice(Request $request)
+    {
+        $paginate = 10;
+        if (isset($request->paginate)) {
+            $paginate = $request->paginate;
+        }
+        $transaction = Transaction::where('user_id', Auth::guard('api')->user()->id)->orderBy('id', 'DESC')->paginate($paginate);
+
+        return $this->sendResponse(200, "User Invoice", $transaction, true, []);
     }
 }
