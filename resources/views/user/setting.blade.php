@@ -148,7 +148,7 @@
                                         <a href="javascript:void(0)" class="nav-link" data-toggle="modal"
                                             data-target="#disclimerModal">
                                             <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
-                                            {{ __('Disclimer') }}
+                                            {{ __('Discliamer') }}
                                         </a>
                                     </div>
                                 </div>
