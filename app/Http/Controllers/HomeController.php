@@ -173,9 +173,17 @@ class HomeController extends Controller
 
             //browsing history
             if ($cardinfo) {
-                $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+                // $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+                 
+                $runfile = 'http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR'];
 
-                // dd($_SERVER['HTTP_USER_AGENT']);
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $runfile);
+				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+				$brwInfo = curl_exec ($ch);
+				curl_close ($ch); 
+
+     
                 $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $new_history['user_agent'] = $this->user->getBrowser();
                 // dd($location->timezone);

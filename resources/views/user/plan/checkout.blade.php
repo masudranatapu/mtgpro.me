@@ -153,18 +153,22 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-bold"> $ @if ($plan->is_yearly)
-                                                        {{ $plan->plan_price_yearly }}
+                                                        {{ number_format($plan->plan_price_yearly,2) }}
                                                     @else
-                                                        {{ $plan->plan_price_monthly }}
+                                                        {{ number_format($plan->plan_price_monthly,2) }}
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>Tax</td>
+                                                <td>{{ ($config[26]->config_value) }}</td>
+                                            </tr>
+                                            <tr>
                                                 <td class="h6 text-bold">{{ __('Total Payable') }}</td>
                                                 <td class="w-1 text-bold h6"> $ @if ($plan->is_yearly)
-                                                        {{ $plan->plan_price_yearly }}
+                                                        {{ number_format($plan->plan_price_yearly,2) }}
                                                     @else
-                                                        {{ $plan->plan_price_monthly }}
+                                                        {{ number_format($plan->plan_price_monthly,2) }}
                                                     @endif
                                                 </td>
                                             </tr>
