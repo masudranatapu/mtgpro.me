@@ -145,6 +145,14 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('reset/new/password', ['as' => 'reset.new.password', 'uses' => 'UserController@resetNewPassword']);
     Route::get('notification-status', ['as' => 'notification-status', 'uses' => 'UserController@putNitificationStatus']);
     Route::post('/morgaged-email', ['as' => 'morgaged.email', 'uses' => 'UserController@mortgagedEmail']);
+
+
+
+    Route::post('/equal-housing-view', ['as' => 'equal.housing.update', 'uses' => 'UserController@equalhousingShow']);
+    Route::post('/user-disclaimer-view', ['as' => 'disclaimer.update', 'uses' => 'UserController@userdisclaimerShow']);
+    Route::post('/user-nmls-view', ['as' => 'nmls.update', 'uses' => 'UserController@userNmlsShow']);
+    Route::post('/user-nmls-add', ['as' => 'nmls.add', 'uses' => 'UserController@userNmlsAdd']);
+    Route::post('/user-forms-view', ['as' => 'forms.update', 'uses' => 'UserController@userformsShow']);
 });
 
 

@@ -144,11 +144,9 @@ $cart = session()->get('cart', []);
                                 </div>
 
                                 <div class="add_to_cart">
-                                    @if (isset($cart) && array_key_exists($product->id, $cart))
-                                        <a href="javascript:void(0)" onclick="addTocart()">Added</a>
-                                    @else
+
                                         <a href="javascript:void(0)" onclick="addTocart()">Add to Cart</a>
-                                    @endif
+                                    
                                 </div>
                             </form>
 

@@ -8,6 +8,7 @@ use App\Models\BusinessCard;
 use App\Models\BusinessField;
 use App\Models\Config;
 use App\Models\EmailTemplate;
+use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -275,6 +276,37 @@ class UserController extends ResponceController
     }
     public function userBillingInfo()
     {
+        $user = Auth::user();
+        $data = [
+            "billing_zipcode" => $user->billing_zipcode,
+            "billing_country" => $user->billing_country,
+            "billing_email" => $user->billing_email,
+        ];
+
+        return $this->sendResponse(200, 'User Billing info', $data, true);
+    }
+    public function userBillingInfoUpdate(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'billing_zipcode' => 'required',
+            'billing_country' => 'required',
+            'billing_email' => 'required',
+        ]);
+
+
+        if ($validate->fails()) {
+            return  $this->sendError("Validation Error", $validate->errors()->first(), 200);
+        }
+
+
+        $user = User::find(Auth::id());
+
+        $user->billing_zipcode = $request->billing_zipcode;
+        $user->billing_country = $request->billing_country;
+        $user->billing_email = $request->billing_email;
+        $user->save();
+
+        return $this->sendResponse(200, 'User Billing info', $user, true);
     }
 
     public function getConnectMail($owner, $senderData)
@@ -303,7 +335,7 @@ class UserController extends ResponceController
         }
 
         if ($senderData) {
-            $mailcontent = preg_replace("/{{title}}/", $senderData['title'], $mailcontent);
+            $mailcontent = preg_replace("/{{title}}/", $senderData['job_title'], $mailcontent);
         }
 
         if ($senderData) {
@@ -504,5 +536,16 @@ class UserController extends ResponceController
 
         ];
         return $this->sendResponse(200, "User information updated successfull", $data, true, []);
+    }
+
+    public function userInvoice(Request $request)
+    {
+        $paginate = 10;
+        if (isset($request->paginate)) {
+            $paginate = $request->paginate;
+        }
+        $transaction = Transaction::where('user_id', Auth::guard('api')->user()->id)->orderBy('id', 'DESC')->paginate($paginate);
+
+        return $this->sendResponse(200, "User Invoice", $transaction, true, []);
     }
 }

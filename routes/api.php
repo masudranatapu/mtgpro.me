@@ -53,7 +53,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/insights', [HomeController::class, 'getInsights']);
     Route::post('/support-mail-send', [HomeController::class, 'sendSupportMail']);
     Route::get('/user-plan', [UserController::class, 'userplan']);
-    Route::get('/billing-onfo', [UserController::class, 'userBillingInfo']);
+    Route::get('/billing-info', [UserController::class, 'userBillingInfo']);
+    Route::post('update-billing-info', [UserController::class, 'userBillingInfoUpdate']);
 
 
 
@@ -63,6 +64,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/password-reset', [UserController::class, 'passwordReset']);
     Route::post('/account-delete', [UserController::class, 'postDeletionRequest']);
     Route::post('/push-notifications', [UserController::class, 'putNitificationStatus']);
+
+
+    Route::get('user-invoice', [UserController::class, 'userInvoice']);
 });
 
 Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);
