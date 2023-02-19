@@ -653,6 +653,42 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2 class="page-title my-3">
+                                                {{ __('Tax') }}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label required">{{ __('Tax Name') }}</label>
+                                                <input type="text" class="form-control" name="tax_name"
+                                                    value="{{ $config[24]->config_value }}"
+                                                    placeholder="{{ __('Tax Name') }}..." required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" required>{{ __('Tax Value') }} %</label>
+                                                <input type="text" class="form-control" name="tax_value"
+                                                    value="{{ $config[25]->config_value }}"
+                                                    placeholder="{{ __('Tax Value') }}..." required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" required>{{ __('Tax Number') }}</label>
+                                                <input type="text" class="form-control" name="tax_number"
+                                                    value="{{ $config[26]->config_value }}"
+                                                    placeholder="{{ __('Tax Number') }}..." required>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-xl-10">
                                             <div class="row">

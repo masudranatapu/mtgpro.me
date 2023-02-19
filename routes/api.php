@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -66,6 +67,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/push-notifications', [UserController::class, 'putNitificationStatus']);
 
 
+    Route::post('stripe-checkout', [StripeController::class, 'stripeCheckout']);
     Route::get('user-invoice', [UserController::class, 'userInvoice']);
 });
 

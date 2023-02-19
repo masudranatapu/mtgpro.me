@@ -118,10 +118,12 @@ class CheckoutController extends Controller
     public function postTransection(Request $request)
     {
 
-      
+
 
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
+
+       
         //Itemized information (Optional) Lets you specify item wise information
 
         $item1 = new Item();

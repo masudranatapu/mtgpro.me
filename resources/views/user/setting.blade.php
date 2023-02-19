@@ -80,15 +80,15 @@
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
     // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-
+    
     if ($diff_in_days > 31) {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 year'));
     } else {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 month'));
     }
-
+    
     $bill_date = date('d', strtotime($user->plan_activation_date));
-
+    
 @endphp
 
 
@@ -145,11 +145,11 @@
                                             class="d-none">
                                             @csrf
                                         </form>
-                                        <a href="javascript:void(0)" class="nav-link" data-toggle="modal"
+                                        {{-- <a href="javascript:void(0)" class="nav-link" data-toggle="modal"
                                             data-target="#disclimerModal">
                                             <img src="{{ asset('assets/img/icon/request.svg') }}" alt="icon">
                                             {{ __('Discliamer') }}
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-xl-9">
@@ -185,14 +185,14 @@
                                                                     </h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_yearly, 2) }}
                                                                         {{ __('per
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            year') }}.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    year') }}.
                                                                     </p>
                                                                 @else
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_monthly, 2) }}
                                                                     </h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_monthly, 2) }}
                                                                         {{ __('per
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            month') }}.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    month') }}.
                                                                     </p>
                                                                 @endif
                                                             @else
@@ -308,7 +308,7 @@
                                                                 <div class="col-md-5">
                                                                     <a href="{{ route('user.all-invoice.download') }}"
                                                                         class="btn btn-secondary float-md-right">{{ __('Download
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                all Invoice') }}</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        all Invoice') }}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -443,7 +443,7 @@
 
                                                             <label class="form-label" for="user_disclimer">
                                                                 {{ __('User Disclaimer') }}</label>
-                                                            <textarea required name="user_disclaimer" id="user_disclimer" cols="30" rows="10" class="form-control">{{ old('user_disclimer') ?? $user->user_disclimer }}
+                                                            <textarea required name="user_disclaimer" id="user_disclimer" cols="30" rows="10" class="form-control">{{ old('user_disclimer') ?? $user->user_disclaimer }}
                                                             </textarea>
 
                                                         </div>
@@ -456,18 +456,16 @@
                                                                 <span class="btn-txt">{{ __('Save') }}</span>
                                                             </button>
 
-                                                            <a href="{{ route('user.password.reset') }}"
-                                                                title="{{ __('Reset Your Password') }}"
-                                                                class="btn btn-primary reset_password_request mb-2">
-                                                                <i
-                                                                    class="loading-spinner reset-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                                <span
-                                                                    class="btn-txt">{{ __('Reset Your Password') }}</span>
-                                                            </a>
+
+
+
+                                                            <a href="javascript:void(0)" class="btn btn-primary mb-2"
+                                                                data-toggle="modal"
+                                                                data-target="#reset_password">{{ __('Reset Your Password') }}</a>
+
                                                             <a href="javascript:void(0)" class="btn btn-danger mb-2"
                                                                 data-toggle="modal"
-                                                                data-target="#deleteAccount">{{ __('Delete
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Account') }}</a>
+                                                                data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -555,7 +553,7 @@
                             @csrf
                             <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
                             <p>{{ __('All contacts and other data associated with this account will be permanently deleted.
-                                                                                                                                                                                                                                                                                                                    This cannot be undone.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        This cannot be undone.') }}
                             </p>
 
                             <div class="mb-3">
@@ -575,6 +573,37 @@
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Account delete modal -->
+    <div class="reset_password_modal">
+        <div class="modal fade" id="reset_password" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Reset Password') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <!-- modal body -->
+                    <div class="modal_body">
+                        <div class="modal-footer pb-3">
+                            <button type="button" class="btn btn-danger"
+                                data-dismiss="modal">{{ __('Cancel') }}</button>
+                            <a href="{{ route('user.password.reset') }}" title="{{ __('Reset Your Password') }}"
+                                class="btn btn-primary reset_password_request mb-2">
+                                <i class="loading-spinner reset-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                <span class="btn-txt">{{ __('Send Link') }}</span>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -852,6 +881,7 @@
                 },
                 complete: function(response) {
                     $("body").css("cursor", "default");
+                    $('#reset_password').modal('hide');
                 }
             });
 

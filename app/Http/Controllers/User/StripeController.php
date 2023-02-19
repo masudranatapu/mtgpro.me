@@ -219,9 +219,11 @@ class StripeController extends Controller
             ]);
             $this->businesscard->updateDataByCuurentPlan($plan_details->id);
         } catch (Exception $error) {
+            dd($error);
             Toastr::error(trans('"Something went wrong!'), 'Error', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
+
         Mail::to($request->billing_email)->send(new \App\Mail\SendEmailInvoice($transaction));
         [$content, $subject] = $this->planPurchaseMail($transaction);
         Mail::to($request->billing_email)->send(new AllMail($content, $subject));

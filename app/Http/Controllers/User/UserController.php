@@ -634,13 +634,16 @@ class UserController extends Controller
         $user = User::find(Auth::id());
         $user->nmls_id = $request->nmls_id;
         $user->save();
+        Toastr::success('User NMLS-ID save successfully ', 'Success', ["positionClass" => "toast-top-center"]);
+
         return redirect()->back();
     }
     public function userFormsShow(Request $request)
     {
+
         $user = User::find(Auth::id());
         $user->form_view = $request->status;
         $user->save();
-        return response()->json(['status' => $user->nmls_view]);
+        return response()->json(['status' => $user->form_view]);
     }
 }

@@ -161,7 +161,6 @@ class UserController extends Controller
 
         $amountToBePaid = ((int)($plan_data->plan_price) * (int)($config[25]->config_value) / 100) + (int)($plan_data->plan_price);
 
-
         if (!empty($user_details) && $user_details->plan_validity == "") {
 
             $plan_validity = Carbon::now();
@@ -254,7 +253,9 @@ class UserController extends Controller
             }
             Toastr::success(trans('Plan changed success!'), 'Title', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.offline.transactions');
+
         } else {
+
             $message = "";
             if ($user_details->plan_id == $request->plan_id) {
 
@@ -493,13 +494,8 @@ class UserController extends Controller
     public function changeUserPalnMail($user, $plan)
     {
         $palnFeatures = json_decode($plan->features);
-
         $config = Config::where('config_key', 'currency')->first('config_value');
-
-
         $symbles = CountryHelper::CurrencySymbol();
-
-
         $symble = $symbles[$config->config_value];
 
         $html = "<ol>";
