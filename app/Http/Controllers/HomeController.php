@@ -189,15 +189,15 @@ class HomeController extends Controller
                 // dd($location->timezone);
                 if ($brwInfo) {
 
-                    $new_history['city']            = $brwInfo['geoplugin_city'];
-                    $new_history['region']          = $brwInfo['geoplugin_region'];
-                    $new_history['region_code']     = $brwInfo['geoplugin_regionCode'];
-                    $new_history['region_name']     = $brwInfo['geoplugin_regionName'];
-                    $new_history['area_code']       = $brwInfo['geoplugin_areaCode'];
-                    $new_history['country_code']    = $brwInfo['geoplugin_countryCode'];
-                    $new_history['country_name']    = $brwInfo['geoplugin_countryName'];
-                    $new_history['continent_name']  = $brwInfo['geoplugin_continentName'];
-                    $new_history['timezone']        = $brwInfo['geoplugin_timezone'];
+                    $new_history['city']            = $brwInfo['geoplugin_city'] ?? "";
+                    $new_history['region']          = $brwInfo['geoplugin_region'] ?? "";
+                    $new_history['region_code']     = $brwInfo['geoplugin_regionCode']?? "";
+                    $new_history['region_name']     = $brwInfo['geoplugin_regionName']?? "";
+                    $new_history['area_code']       = $brwInfo['geoplugin_areaCode']?? "";
+                    $new_history['country_code']    = $brwInfo['geoplugin_countryCode']?? "";
+                    $new_history['country_name']    = $brwInfo['geoplugin_countryName']?? "";
+                    $new_history['continent_name']  = $brwInfo['geoplugin_continentName']?? "";
+                    $new_history['timezone']        = $brwInfo['geoplugin_timezone']?? "";
                     $new_history['created_at']      = date('Y-m-d H:i:s');
                 }
                 $new_history['card_id'] = $cardinfo->id;
