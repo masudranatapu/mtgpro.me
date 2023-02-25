@@ -152,7 +152,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('/user-disclaimer-view', ['as' => 'disclaimer.update', 'uses' => 'UserController@userdisclaimerShow']);
     Route::post('/user-nmls-view', ['as' => 'nmls.update', 'uses' => 'UserController@userNmlsShow']);
     Route::post('/user-nmls-add', ['as' => 'nmls.add', 'uses' => 'UserController@userNmlsAdd']);
-    Route::post('/user-forms-view', ['as' => 'forms.update', 'uses' => 'UserController@userformsShow']);
+    Route::post('/user-cradit-auth-view', ['as' => 'cradit_auth.update', 'uses' => 'UserController@userCraditAuthShow']);
+    Route::post('/user-quick-application-view', ['as' => 'quick.application.update', 'uses' => 'UserController@quickApplication']);
 });
 
 

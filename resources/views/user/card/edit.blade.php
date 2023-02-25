@@ -5,8 +5,8 @@
     <style>
         div#social_icon_up .slim {
             /* width: 100px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 100px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        overflow: hidden; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 100px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            overflow: hidden; */
             width: 70px;
             height: 70px;
             border-radius: 10px;
@@ -87,24 +87,47 @@
         }
 
 
-        .switch-wrapper [type="radio"]:checked#forms_show~label[for="forms_show"],
-        .switch-wrapper [type="radio"]:checked#forms_hide~label[for="forms_hide"] {
+        .switch-wrapper [type="radio"]:checked#cradit_auth_show~label[for="cradit_auth_show"],
+        .switch-wrapper [type="radio"]:checked#cradit_auth_hide~label[for="cradit_auth_hide"] {
             color: #fff;
 
         }
 
 
 
-        .switch-wrapper [type="radio"]:checked#forms_show~label[for="forms_show"]:hover,
-        .switch-wrapper [type="radio"]:checked#forms_hide~label[for="forms_hide"]:hover {
+        .switch-wrapper [type="radio"]:checked#cradit_auth_show~label[for="cradit_auth_show"]:hover,
+        .switch-wrapper [type="radio"]:checked#cradit_auth_hide~label[for="cradit_auth_hide"]:hover {
             background: transparent;
         }
 
-        .switch-wrapper [type="radio"]:checked#forms_show+label[for="forms_hide"]~.highlighter {
+        .switch-wrapper [type="radio"]:checked#cradit_auth_show+label[for="cradit_auth_hide"]~.highlighter {
             transform: none;
         }
 
-        .switch-wrapper [type="radio"]:checked#forms_hide+label[for="forms_show"]~.highlighter {
+        .switch-wrapper [type="radio"]:checked#cradit_auth_hide+label[for="cradit_auth_show"]~.highlighter {
+            transform: translateX(100%);
+        }
+
+
+
+        .switch-wrapper [type="radio"]:checked#quick_application_show~label[for="quick_application_show"],
+        .switch-wrapper [type="radio"]:checked#quick_application_hide~label[for="quick_application_hide"] {
+            color: #fff;
+
+        }
+
+
+
+        .switch-wrapper [type="radio"]:checked#quick_application_show~label[for="quick_application_show"]:hover,
+        .switch-wrapper [type="radio"]:checked#quick_application_hide~label[for="quick_application_hide"]:hover {
+            background: transparent;
+        }
+
+        .switch-wrapper [type="radio"]:checked#quick_application_show+label[for="quick_application_hide"]~.highlighter {
+            transform: none;
+        }
+
+        .switch-wrapper [type="radio"]:checked#quick_application_hide+label[for="quick_application_show"]~.highlighter {
             transform: translateX(100%);
         }
 
@@ -185,9 +208,9 @@
                                             <img src="{{ asset('assets/img/icon/user.svg') }}" alt="icon">
                                             {{ __('About') }}
                                         </a>
-                                        <a class="nav-link @yield('tab_housing')" id="vert-tabs-housing-tab" data-toggle="pill"
-                                            href="#vert-tabs-housing" role="tab" aria-controls="vert-tabs-housing"
-                                            aria-selected="false">
+                                        <a class="nav-link @yield('tab_housing')" id="vert-tabs-housing-tab"
+                                            data-toggle="pill" href="#vert-tabs-housing" role="tab"
+                                            aria-controls="vert-tabs-housing" aria-selected="false">
                                             {{-- <img src="{{ asset('assets/img/icon/house.svg') }}" alt="icon"> --}}
                                             <span>
                                                 <i style="color:#c4c4c4;" class="fas fa-home"></i>&nbsp;
@@ -214,14 +237,15 @@
                                                 {{ __('User NMLS ID') }}
                                             </span>
                                         </a>
-                                        <a class="nav-link @yield('tab_forms')" id="vert-tabs-forms-tab" data-toggle="pill"
-                                            href="#vert-tabs-forms" role="tab" aria-controls="vert-tabs-forms"
-                                            aria-selected="false">
+                                        <a class="nav-link @yield('tab_cradit_auth')" id="vert-tabs-cradit_auth-tab"
+                                            data-toggle="pill" href="#vert-tabs-cradit_auth" role="tab"
+                                            aria-controls="vert-tabs-cradit_auth" aria-selected="false">
                                             {{-- <img src="{{ asset('assets/img/icon/user.svg') }}" alt="icon">
                                              --}}
                                             <span>
-                                                <i style="color:#c4c4c4;" class="fab fa-wpforms"></i>&nbsp;
-                                                {{ __('User Forms') }}
+                                                <i style="color:#c4c4c4;" class="fas fa-hand-holding-dollar"></i>&nbsp;
+
+                                                {{ __('Cradit Authorization') }}
                                             </span>
                                         </a>
                                     </div>
@@ -494,7 +518,7 @@
                                                             <div class="form-group">
                                                                 <label for="designation"
                                                                     class="form-label">{{ __('Job
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Title') }}</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Title') }}</label>
                                                                 <input type="text" name="designation"
                                                                     value="{{ $card->designation }}" id="designation"
                                                                     class="form-control cin_desig_comp"
@@ -656,25 +680,47 @@
                                             </div>
                                         </div>
                                         <!-- User form  -->
-                                        <div class="tab-pane fade" id="vert-tabs-forms" role="tabpanel"
-                                            aria-labelledby="vert-tabs-forms-tab">
+                                        <div class="tab-pane fade" id="vert-tabs-cradit_auth" role="tabpanel"
+                                            aria-labelledby="vert-tabs-cradit_auth-tab">
                                             <div class="tab_body about_user">
                                                 <div class="plan_type switchBtn text-center mb-4 mt-3">
-                                                    <div class="text-left">{{ __('User Forms') }}
+                                                    <div class="text-left">{{ __('Cradit Authorization') }}
                                                         <div class="switch-wrapper"
                                                             style="width:170px !important;background: #f7f7f7;
                                                     border: 1px solid #EEE;">
 
-                                                            <input id="forms_show" name="forms" class="switcher_"
-                                                                type="radio" value="1"
-                                                                @if (Auth::user()->form_view == '1') checked @endif>
+                                                            <input id="cradit_auth_show" name="cradit_auth"
+                                                                class="switcher_" type="radio" value="1"
+                                                                @if (Auth::user()->cradit_authorization == '1') checked @endif>
 
-                                                            <input id="forms_hide" name="forms" class="switcher_"
-                                                                type="radio" value="0"
-                                                                @if (Auth::user()->form_view == '0') checked @endif>
+                                                            <input id="cradit_auth_hide" name="cradit_auth"
+                                                                class="switcher_" type="radio" value="0"
+                                                                @if (Auth::user()->cradit_authorization == '0') checked @endif>
 
-                                                            <label for="forms_show">Yes</label>
-                                                            <label for="forms_hide"
+                                                            <label for="cradit_auth_show">Yes</label>
+                                                            <label for="cradit_auth_hide"
+                                                                style="padding-right: 54px !important;">No</label>
+                                                            <span class="highlighter"></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="plan_type switchBtn text-center mb-4 mt-3">
+                                                    <div class="text-left">{{ __('Quick Application') }}
+                                                        <div class="switch-wrapper"
+                                                            style="width:170px !important;background: #f7f7f7;
+                                                    border: 1px solid #EEE;">
+
+                                                            <input id="quick_application_show" name="quick_application"
+                                                                class="switcher_" type="radio" value="1"
+                                                                @if (Auth::user()->quick_application == '1') checked @endif>
+
+                                                            <input id="quick_application_hide" name="quick_application"
+                                                                class="switcher_" type="radio" value="0"
+                                                                @if (Auth::user()->quick_application == '0') checked @endif>
+
+                                                            <label for="quick_application_show">Yes</label>
+                                                            <label for="quick_application_hide"
                                                                 style="padding-right: 54px !important;">No</label>
                                                             <span class="highlighter"></span>
                                                         </div>
@@ -807,6 +853,30 @@
                                                                         src="{{ getPhoto('assets/img/icon/notes-note.svg') }}"
                                                                         alt="" class="social_logo">
                                                                     <span class="icon_label">User Disclaimer</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4 mb-2" id="icon_cradit_auth"
+                                                            style="display: {{ Auth::user()->cradit_authorization == 0 ? 'none' : 'block' }}">
+                                                            <div class="sicon_disclaimer" style="">
+                                                                <a class="house_link" href="#" target="_blank">
+                                                                    <img style="background:#a200b8" class="p-1"
+                                                                        data-bg=""
+                                                                        src="{{ getPhoto('assets/img/icon/craditauthorization.svg') }}"
+                                                                        alt="" class="social_logo">
+                                                                    <span class="icon_label">Cradit Authorization</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4 mb-2" id="icon_quick_application"
+                                                            style="display: {{ Auth::user()->quick_application == 0 ? 'none' : 'block' }}">
+                                                            <div class="sicon_disclaimer" style="">
+                                                                <a class="house_link" href="#" target="_blank">
+                                                                    <img style="background:#007a74" class="p-1"
+                                                                        data-bg=""
+                                                                        src="{{ getPhoto('assets/img/icon/rules.svg') }}"
+                                                                        alt="" class="social_logo">
+                                                                    <span class="icon_label">Quick Applications</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -1540,16 +1610,16 @@
 
 
         })
-        $("input[name='forms']").change(function(event) {
+        $("input[name='cradit_auth']").change(function(event) {
             let state = event.target.value;
-            console.log(state);
+            if (state == "1") {
+                $('#icon_cradit_auth').css('display', 'block')
 
-            // if (state == "1") {
-            //     $('#icon_houseing').css('display', 'block')
-            // } else {
-            //     $('#icon_houseing').css('display', 'none')
+            } else {
+                $('#icon_cradit_auth').css('display', 'none')
 
-            // }
+
+            }
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1557,7 +1627,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('user.forms.update') }}",
+                url: "{{ route('user.cradit_auth.update') }}",
                 data: {
                     status: state
                 },
@@ -1568,15 +1638,52 @@
 
                     console.log(status);
                     if (status == "1") {
-                        toastr.success("User forms id showed");
+                        toastr.success("User cradit authorization showed");
                     } else {
-                        toastr.error("User forms id hide");
+                        toastr.error("User cradit authorization hide");
+
                     }
                 }
             });
 
 
 
+        })
+        $("input[name='quick_application']").change(function(event) {
+            let state = event.target.value;
+            console.log(state);
+
+            if (state == "1") {
+                $('#icon_quick_application').css('display', 'block')
+            } else {
+                $('#icon_quick_application').css('display', 'none')
+
+            }
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('user.quick.application.update') }}",
+                data: {
+                    status: state
+                },
+                success: function(data) {
+                    const {
+                        status
+                    } = data;
+
+                    console.log(status);
+                    if (status == "1") {
+                        toastr.success("User quick appication showed");
+                    } else {
+                        toastr.error("User quick appication hide");
+
+                    }
+                }
+            });
         })
     </script>
 @endpush

@@ -638,12 +638,20 @@ class UserController extends Controller
 
         return redirect()->back();
     }
-    public function userFormsShow(Request $request)
+    public function userCraditAuthShow(Request $request)
     {
 
         $user = User::find(Auth::id());
-        $user->form_view = $request->status;
+        $user->cradit_authorization = $request->status;
         $user->save();
-        return response()->json(['status' => $user->form_view]);
+        return response()->json(['status' => $user->cradit_authorization]);
+    }
+    public function quickApplication(Request $request)
+    {
+
+        $user = User::find(Auth::id());
+        $user->quick_application = $request->status;
+        $user->save();
+        return response()->json(['status' => $user->quick_application]);
     }
 }

@@ -411,13 +411,36 @@
 
                                 @if ($user->housing_logo_view == '1')
                                     <div class="col-4 col-md-3 mb-3">
-                                        <a target="_blank" href="https://nmlsconsumeraccess.org" data-bs-toggle="modal"
-                                            data-bs-target="#equalHouseModal" aria-controls="false">
+                                        <a target="_blank" href="https://nmlsconsumeraccess.org"
+                                            data-bs-toggle="modal" data-bs-target="#equalHouseModal"
+                                            aria-controls="false">
                                             <img style="border-radius: 15px; margin:0 auto; padding:10px;"
                                                 class="img-fluid d-block mb-1"
                                                 src="{{ asset('assets/img/house.png') }}" alt=""
                                                 width="90" height="90">
                                             <span>Equal Housing Opportunity</span>
+                                        </a>
+                                    </div>
+                                @endif
+                                @if ($user->cradit_authorization == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a target="_blank" href="javascript:void(0)" aria-controls="false">
+                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#a200b8"
+                                                class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/icon/craditauthorization.svg') }}"
+                                                alt="" width="75" height="75">
+                                            <span>Cradit Authorization</span>
+                                        </a>
+                                    </div>
+                                @endif
+                                @if ($user->quick_application == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a target="_blank" href="javascript:void(0)" aria-controls="false">
+                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#007a74"
+                                                class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/icon/rules.svg') }}" alt=""
+                                                width="75" height="75">
+                                            <span>Quick Applications</span>
                                         </a>
                                     </div>
                                 @endif
@@ -796,7 +819,8 @@
                             <input type="text" name="name" id="name" value="{{ old('name') }}"
                                 class="form-control @error('name') is-invalid @enderror"
                                 placeholder="{{ __('Name') }}" required ">
-                                                                          @if ($errors->has('name'))
+
+                                @if ($errors->has('name'))
                             <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
@@ -804,7 +828,8 @@
                             <input type="email" name="email" id="email" value="{{ old('email') }}"
                                 class="form-control @error('email') is-invalid @enderror"
                                 placeholder="{{ __('Email') }}" required ">
-                                                                          @if ($errors->has('email'))
+
+                                @if ($errors->has('email'))
                             <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
@@ -812,7 +837,8 @@
                             <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
                                 class="form-control @error('phone') is-invalid @enderror"
                                 placeholder="{{ __('Phone Number') }}" required ">
-                                                                          @if ($errors->has('phone'))
+
+                                @if ($errors->has('phone'))
                             <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
@@ -820,7 +846,8 @@
                             <input type="text" name="company" id="company" value="{{ old('company') }}"
                                 class="form-control @error('company') is-invalid @enderror"
                                 placeholder="{{ __('Company') }}" required ">
-                                                                          @if ($errors->has('company'))
+
+                                @if ($errors->has('company'))
                             <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
@@ -828,7 +855,8 @@
                             <input type="text" name="job_title" id="job_title" value="{{ old('job_title') }}"
                                 class="form-control @error('job_title') is-invalid @enderror"
                                 placeholder="{{ __('Job Title') }}" required ">
-                                                                          @if ($errors->has('job_title'))
+
+                                @if ($errors->has('job_title'))
                             <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>
