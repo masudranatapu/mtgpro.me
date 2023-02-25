@@ -6,7 +6,7 @@
 @endpush
 
 @section('title')
-    {{ __('Email Template') }}
+    {{ __('Email Template Sort Code Documents') }}
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
                             <div class="card-header">
                                 <div class="col">
                                     <div class="float-left">
-                                        {{ __('Email Template') }}
+                                        {{ __('Email Template Sort Code Documents') }}
                                     </div>
                                 </div>
                                 <div class="col">

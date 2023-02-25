@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\SocialIcon;
@@ -22,6 +22,7 @@ class CardController extends Controller
 {
     protected $businessCard;
     protected $plan;
+    protected $resp;
     protected $settings;
     public function __construct(
         BusinessCard $businessCard,
