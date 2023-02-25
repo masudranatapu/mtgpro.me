@@ -413,10 +413,10 @@
                                     <div class="col-4 col-md-3 mb-3">
                                         <a target="_blank" href="https://nmlsconsumeraccess.org" data-bs-toggle="modal"
                                             data-bs-target="#equalHouseModal" aria-controls="false">
-                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:{{ $cardinfo->theme_color ?? '#EEAD12' }}"
+                                            <img style="border-radius: 15px; margin:0 auto; padding:10px;"
                                                 class="img-fluid d-block mb-1"
                                                 src="{{ asset('assets/img/house.png') }}" alt=""
-                                                width="70" height="70">
+                                                width="90" height="90">
                                             <span>Equal Housing Opportunity</span>
                                         </a>
                                     </div>
