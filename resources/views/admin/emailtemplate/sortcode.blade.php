@@ -36,9 +36,9 @@
                                         <thead>
                                             <tr>
                                                 <th>{{ __('SL.No') }}</th>
-                                                <th>{{ __('Type') }}</th>
-                                                <th>{{ __('Subject') }}</th>
-                                                <th>{{ __('Action') }}</th>
+                                                <th>{{ __('Tag') }}</th>
+                                                <th>{{ __('discription') }}</th>
+                                                <th>{{ __('Email Trmplate') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -46,6 +46,9 @@
                                             @foreach ($sort_codes as $sort_code)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
+                                                    <td>{!! $sort_code->tags !!}</td>
+                                                    <td>{!! $sort_code->discription ?? '' !!}</td>
+                                                    <td>{!! $sort_code->hasEmailTEmplate->type ?? '' !!}</td>
                                                 </tr>
                                             @endforeach
 

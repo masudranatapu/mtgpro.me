@@ -9,7 +9,7 @@ class EmailTemplateTag extends Model
 {
     use HasFactory;
 
-    public function hasEmailTEmplate()
+    public function hasEmailTemplate()
     {
         return $this->belongsTo(EmailTemplate::class, 'email_template_id', 'id');
     }
