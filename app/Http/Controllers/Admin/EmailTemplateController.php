@@ -48,7 +48,7 @@ class EmailTemplateController extends Controller
 
     public function sortCodeDoc(Request $request)
     {
-        $sort_codes = EmailTemplateTag::with('');
-        return view('admin.emailtemplate.sortcode');
+        $sort_codes = EmailTemplateTag::with('hasEmailTemplate')->get();
+        return view('admin.emailtemplate.sortcode', compact('sort_codes'));
     }
 }

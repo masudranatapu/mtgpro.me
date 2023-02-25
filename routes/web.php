@@ -169,6 +169,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth']], function () {
 
 
 // Route::post('sendcard/mail/{id}', ['as' => 'sendcard.mail', 'uses' => 'HomeController@sendCardMail']);
-Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');
 Route::post('getConnect', 'HomeController@getConnect')->name('getConnect');
+Route::post('credit-auth-form', [HomeController::class, 'creditAuthForm'])->name('creditAuthForm');
+Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');
 Route::get('{cardurl}', ['as' => 'card.preview', 'uses' => 'HomeController@getPreview']);
