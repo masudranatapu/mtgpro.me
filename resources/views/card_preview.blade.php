@@ -34,8 +34,8 @@
     <title>{{ $title }} </title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
     @if (!empty($twitter_id))
-        <meta name="twitter:site" content="{{ '@' . $twitter_id }}" />
-        <meta name="twitter:creator" content="{{ '@' . $twitter_id }}" />
+    <meta name="twitter:site" content="{{ '@' . $twitter_id }}" />
+    <meta name="twitter:creator" content="{{ '@' . $twitter_id }}" />
     @endif
     <meta name="description" content="{{ $description }}" />
     <meta property="og:title" content="{{ $user_name }}" />
@@ -47,7 +47,7 @@
     <meta property="og:type" content="profile" />
     <meta property="profile:first_name" content="{{ $cardinfo->title }}" />
     @if (!empty($cardinfo->title2))
-        <meta property="profile:last_name" content="{{ $cardinfo->title2 }}" />
+    <meta property="profile:last_name" content="{{ $cardinfo->title2 }}" />
     @endif
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -61,23 +61,23 @@
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}?v=2">
     @if ($cardinfo->theme_color)
-        <style>
-            .save_contact a {
-                background: {
-                        {
-                        $cardinfo->theme_color
-                    }
+    <style>
+        .save_contact a {
+            background: {
+                    {
+                    $cardinfo->theme_color
                 }
             }
+        }
 
-            .offcanvas_btn a {
-                background: {
-                        {
-                        $cardinfo->theme_color
-                    }
+        .offcanvas_btn a {
+            background: {
+                    {
+                    $cardinfo->theme_color
                 }
             }
-        </style>
+        }
+    </style>
     @endif
 </head>
 
@@ -96,381 +96,337 @@
     </script>
 
     @if (checkPackageValidity($cardinfo->user_id) == false)
-        @include('_plan_expired_error')
+    @include('_plan_expired_error')
     @else
-        <div class="template">
-            <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
-                <div class="card_cover">
-                    <div class="cover_img" data-aos="zoom-in">
-                        <img src="{{ getCover($cardinfo->cover) }}" alt="image">
-                    </div>
-                    <div class="card_profile" data-aos="zoom-in">
-                        <img class="profile_pic" src="{{ getProfile($cardinfo->profile) }}" alt="image">
-                        <img class="logo" src="{{ getLogo($cardinfo->logo) }}" alt="image">
-                    </div>
+    <div class="template">
+        <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
+            <div class="card_cover">
+                <div class="cover_img" data-aos="zoom-in">
+                    <img src="{{ getCover($cardinfo->cover) }}" alt="image">
                 </div>
-                <div class="card_view_body">
-                    <div class="content text-center">
-                        <div class="profile_info mt-4">
-                            <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
-                            <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
-                            @if (!empty($cardinfo->location))
-                                <h6>{{ $cardinfo->location }}</h6>
-                            @endif
-                            @if (!empty($cardinfo->bio))
-                                <p>{{ $cardinfo->bio }}</p>
-                            @endif
-                            @if (isset($user->nmls_id))
-                                @if ($user->nmls_view == '1')
-                                    <p>{{ __('NMLS ID') }} : {{ $user->nmls_id }}</p>
-                                @endif
-                            @endif
-                        </div>
-                        <div class="save_contact mt-5 mb-5">
-                            <a href="{{ route('download.vCard', $cardinfo->card_id) }}"
-                                class="text-decoration-none save-contact d-inline-block">{{ __('Save Contact') }}</a>
+                <div class="card_profile" data-aos="zoom-in">
+                    <img class="profile_pic" src="{{ getProfile($cardinfo->profile) }}" alt="image">
+                    <img class="logo" src="{{ getLogo($cardinfo->logo) }}" alt="image">
+                </div>
+            </div>
+            <div class="card_view_body">
+                <div class="content text-center">
+                    <div class="profile_info mt-4">
+                        <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
+                        <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
+                        @if (!empty($cardinfo->location))
+                        <h6>{{ $cardinfo->location }}</h6>
+                        @endif
+                        @if (!empty($cardinfo->bio))
+                        <p>{{ $cardinfo->bio }}</p>
+                        @endif
+                        @if (isset($user->nmls_id))
+                        @if ($user->nmls_view == '1')
+                        <p>{{ __('NMLS ID') }} : {{ $user->nmls_id }}</p>
+                        @endif
+                        @endif
+                    </div>
+                    <div class="save_contact mt-5 mb-5">
+                        <a href="{{ route('download.vCard', $cardinfo->card_id) }}"
+                            class="text-decoration-none save-contact d-inline-block">{{ __('Save Contact') }}</a>
 
-                            <a href="javascript:void(0)" class="text-decoration-none d-inline-block btn-secondary"
-                                data-bs-toggle="modal" data-bs-target="#shareModal">
-                                {{ __('Share') }}
-                            </a>
-                        </div>
-                        <div class="social_media">
-                            <div class="row justify-content-center">
+                        <a href="javascript:void(0)" class="text-decoration-none d-inline-block btn-secondary"
+                            data-bs-toggle="modal" data-bs-target="#shareModal">
+                            {{ __('Share') }}
+                        </a>
+                    </div>
+                    <div class="social_media">
+                        <div class="row justify-content-center">
 
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a href="javascript:void(0)" data-bs-toggle="offcanvas"
-                                        data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
-                                            class="img-fluid d-block mb-1"
-                                            src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt=""
-                                            width="75" height="75">
-                                        <span>Mortgage Calculator</span>
-                                    </a>
-                                </div>
-                                <?php
+                            <div class="col-4 col-md-3 mb-3">
+                                <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
+                                        class="img-fluid d-block mb-1"
+                                        src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75"
+                                        height="75">
+                                    <span>Mortgage Calculator</span>
+                                </a>
+                            </div>
+                            <?php
                                 // $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
                                 // $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
                                 // $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                                 ?>
-                                {{-- @dd($cardinfo->contacts) --}}
-                                @if (!empty($cardinfo->contacts))
-                                    @foreach ($cardinfo->contacts as $contact)
-                                        @if ($contact)
-                                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
-                                            @else
-                                                @php
-                                                    if ($cardinfo->color_link == 1) {
-                                                        $icon_color = $cardinfo->theme_color;
-                                                    } else {
-                                                        $icon_color = $contact->icon_color;
-                                                    }
-                                                    // if($cardinfo->theme_color == null){
-                                                    // $icon_color = $contact->icon_color;
-                                                    // }else{
-                                                    // $icon_color = $cardinfo->theme_color;
-                                                    // }
-                                                    //link,mail,mobile,number,text,username,file,address
-                                                @endphp
-                                                {{-- <div class="col-4 col-md-3 mb-3"> --}}
-                                                @if ($contact->type == 'address')
-                                                    <div class="col-4 col-md-3 mb-3">
-                                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                            href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
-                                                            target="_blank">
-                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                class="img-fluid d-block mb-1"
-                                                                src="{{ getIcon($contact->icon_image) }}"
-                                                                alt="{{ $contact->label }}" width="75"
-                                                                height="75">
-                                                            <span>{{ $contact->label }}</span>
-                                                        </a>
-                                                    </div>
-                                                @elseif ($contact->type == 'username')
-                                                    @php
-                                                        $make_link = $contact->main_link . $contact->content;
-                                                    @endphp
+                            {{-- @dd($cardinfo->contacts) --}}
+                            @if (!empty($cardinfo->contacts))
+                            @foreach ($cardinfo->contacts as $contact)
+                            @if ($contact)
+                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
+                            @else
+                            @php
+                            if ($cardinfo->color_link == 1) {
+                            $icon_color = $cardinfo->theme_color;
+                            } else {
+                            $icon_color = $contact->icon_color;
+                            }
+                            // if($cardinfo->theme_color == null){
+                            // $icon_color = $contact->icon_color;
+                            // }else{
+                            // $icon_color = $cardinfo->theme_color;
+                            // }
+                            //link,mail,mobile,number,text,username,file,address
+                            @endphp
+                            {{-- <div class="col-4 col-md-3 mb-3"> --}}
+                                @if ($contact->type == 'address')
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
+                                        target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @elseif ($contact->type == 'username')
+                                @php
+                                $make_link = $contact->main_link . $contact->content;
+                                @endphp
 
-                                                    @if ($contact->icon_name == 'snapchat')
-                                                        <div class="col-4 col-md-3 mb-3">
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none"
-                                                                href="{{ $contact->main_link }}add/{{ $contact->content }}"
-                                                                target="__blank">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        </div>
-                                                    @else
-                                                        <div class="col-4 col-md-3 mb-3">
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none"
-                                                                href="{{ makeUrl($make_link) }}" target="__blank">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        </div>
-                                                    @endif
-                                                @elseif ($contact->type == 'mail')
-                                                    <div class="col-4 col-md-3 mb-3">
-                                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                            href="mailto:{{ $contact->content }}">
-                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                class="img-fluid d-block mb-1"
-                                                                src="{{ getIcon($contact->icon_image) }}"
-                                                                alt="{{ $contact->label }}" width="75"
-                                                                height="75">
-                                                            <span>{{ $contact->label }}</span>
-                                                        </a>
-                                                    </div>
-                                                @elseif ($contact->type == 'mobile')
-                                                    @if ($contact->icon_name == 'facetime')
-                                                        <div class="col-4 col-md-3 mb-3">
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none"
-                                                                href="facetime:{{ $contact->content }}"
-                                                                data="{{ $contact->content }}">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        </div>
-                                                    @else
-                                                        <div class="col-4 col-md-3 mb-3">
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none"
-                                                                href="tel:{{ $contact->content }}">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        </div>
-                                                    @endif
-                                                @elseif ($contact->type == 'file')
-                                                    <div class="col-4 col-md-3 mb-3">
-                                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                            target="__blank" href="{{ $contact->content }}">
-                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                class="img-fluid d-block mb-1"
-                                                                src="{{ getIcon($contact->icon_image) }}"
-                                                                alt="{{ $contact->label }}" width="75"
-                                                                height="75">
-                                                            <span>{{ $contact->label }}</span>
-                                                        </a>
-                                                    </div>
-                                                @elseif ($contact->type == 'number')
-                                                    <div class="col-4 col-md-3 mb-3">
+                                @if ($contact->icon_name == 'snapchat')
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ $contact->main_link }}add/{{ $contact->content }}" target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @else
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ makeUrl($make_link) }}" target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @endif
+                                @elseif ($contact->type == 'mail')
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="mailto:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @elseif ($contact->type == 'mobile')
+                                @if ($contact->icon_name == 'facetime')
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @else
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="tel:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @endif
+                                @elseif ($contact->type == 'file')
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank"
+                                        href="{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @elseif ($contact->type == 'number')
+                                <div class="col-4 col-md-3 mb-3">
 
-                                                        @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle')
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none copy_btn"
-                                                                href="javascript:void(0)"
-                                                                data-content="{{ $contact->content }}"
-                                                                data-icon_name="{{ $contact->icon_name }}">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        @elseif ($contact->icon == 'whatsapp')
-                                                            @if ($android !== false || $ipad !== false || $iphone !== false)
-                                                                <a title="{{ $contact->label }}"
-                                                                    class="text-decoration-none"
-                                                                    href="https://api.whatsapp.com/send?phone={{ $contact->content }}"
-                                                                    target="__blank">
-                                                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                        class="img-fluid d-block mb-1"
-                                                                        src="{{ getIcon($contact->icon_image) }}"
-                                                                        alt="{{ $contact->label }}" width="75"
-                                                                        height="75">
-                                                                    <span>{{ $contact->label }}</span>
-                                                                </a>
-                                                            @else
-                                                                <a title="{{ $contact->label }}"
-                                                                    class="text-decoration-none"
-                                                                    href="https://web.whatsapp.com/send?phone={{ $contact->content }}"
-                                                                    target="__blank">
-                                                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                        class="img-fluid d-block mb-1"
-                                                                        src="{{ getIcon($contact->icon_image) }}"
-                                                                        alt="{{ $contact->label }}" width="75"
-                                                                        height="75">
-                                                                    <span>{{ $contact->label }}</span>
-                                                                </a>
-                                                            @endif
-                                                        @else
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none"
-                                                                href="tel:{{ $contact->content }}">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        @endif
-                                                    </div>
-                                                @elseif ($contact->type == 'text')
-                                                    @if ($contact->icon_name == 'textSection')
-                                                        <div class="col-12 col-md-12 mb-3">
+                                    @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle')
+                                    <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
+                                        href="javascript:void(0)" data-content="{{ $contact->content }}"
+                                        data-icon_name="{{ $contact->icon_name }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                    @elseif ($contact->icon == 'whatsapp')
+                                    @if ($android !== false || $ipad !== false || $iphone !== false)
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}"
+                                        target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                    @else
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}"
+                                        target="__blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                    @endif
+                                    @else
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="tel:{{ $contact->content }}">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                    @endif
+                                </div>
+                                @elseif ($contact->type == 'text')
+                                @if ($contact->icon_name == 'textSection')
+                                <div class="col-12 col-md-12 mb-3">
 
-                                                            <div class="text-box">
-                                                                <h6>{{ $contact->label }}</h6>
-                                                                <p>{!! $contact->content !!}</p>
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <div class="col-4 col-md-3 mb-3">
-                                                            <a title="{{ $contact->label }}"
-                                                                class="text-decoration-none"
-                                                                href="sms:{{ $contact->content }}" target="_blank">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                    class="img-fluid d-block mb-1"
-                                                                    src="{{ getIcon($contact->icon_image) }}"
-                                                                    alt="{{ $contact->label }}" width="75"
-                                                                    height="75">
-                                                                <span>{{ $contact->label }}</span>
-                                                            </a>
-                                                        </div>
-                                                    @endif
-                                                @elseif ($contact->type == 'link' && $contact->icon_name == 'embeddedvideo')
-                                                    <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
-                                                        <p>{{ $contact->label }}</p>
-                                                        <iframe src="{{ $contact->content }}"
-                                                            title="{{ $contact->label }}" frameborder="0"
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                            allowfullscreen style="left:5%; width:90%;"></iframe>
-                                                    </div>
-                                                @else
-                                                    <div class="col-4 col-md-3 mb-3">
-                                                        <a title="{{ $contact->label }}"
-                                                            class="text-decoration-none"
-                                                            href="{{ makeUrl($contact->content) }}" target="_blank">
-                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                                class="img-fluid d-block mb-1"
-                                                                src="{{ getIcon($contact->icon_image) }}"
-                                                                alt="{{ $contact->label }}" width="75"
-                                                                height="75">
-                                                            <span>{{ $contact->label }}</span>
-                                                        </a>
-                                                    </div>
-                                                @endif
-                                                {{--
+                                    <div class="text-box">
+                                        <h6>{{ $contact->label }}</h6>
+                                        <p>{!! $contact->content !!}</p>
+                                    </div>
+                                </div>
+                                @else
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="sms:{{ $contact->content }}" target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @endif
+                                @elseif ($contact->type == 'link' && $contact->icon_name == 'embeddedvideo')
+                                <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
+                                    <p>{{ $contact->label }}</p>
+                                    <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen style="left:5%; width:90%;"></iframe>
+                                </div>
+                                @else
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a title="{{ $contact->label }}" class="text-decoration-none"
+                                        href="{{ makeUrl($contact->content) }}" target="_blank">
+                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                            alt="{{ $contact->label }}" width="75" height="75">
+                                        <span>{{ $contact->label }}</span>
+                                    </a>
+                                </div>
+                                @endif
+                                {{--
                             </div> --}}
-                                            @endif
-                                        @endif
-                                    @endforeach
-                                @endif
+                            @endif
+                            @endif
+                            @endforeach
+                            @endif
 
 
-                                @if (isset($user->user_disclaimer))
-                                    @if ($user->disclaimer_view == '1')
-                                        <div class="col-4 col-md-3 mb-3">
-                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#disclaimerModal" aria-controls="false">
-                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
-                                                    class="img-fluid d-block mb-1"
-                                                    src="{{ asset('assets/img/icon/notes-note.svg') }}"
-                                                    alt="" width="70" height="70">
-                                                <span>Disclaimer</span>
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endif
-                                {{-- @if (isset($user->nmls_id))
-                                    @if ($user->nmls_view == '1')
-                                        <div class="col-4 col-md-3 mb-3">
-                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#nmlsModal" aria-controls="false">
-                                                <img style="border-radius: 15px; margin:0 auto; padding:10px; background:{{ $cardinfo->theme_color ?? '#EEAD12' }}"
-                                                    class="img-fluid d-block mb-1"
-                                                    src="{{ asset('assets/img/icon/house.svg') }}" alt=""
-                                                    width="70" height="70">
-                                                <span>User NMLS ID</span>
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endif --}}
-
-                                @if ($user->housing_logo_view == '1')
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a target="_blank" href="https://nmlsconsumeraccess.org"
-                                            data-bs-toggle="modal" data-bs-target="#equalHouseModal"
-                                            aria-controls="false">
-                                            <img style="border-radius: 15px; margin:0 auto; padding:10px;"
-                                                class="img-fluid d-block mb-1"
-                                                src="{{ asset('assets/img/house.png') }}" alt=""
-                                                width="90" height="90">
-                                            <span>Equal Housing Opportunity</span>
-                                        </a>
-                                    </div>
-                                @endif
-                                @if ($user->credit_authorization == '1')
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a target="_blank" href="javascript:void(0)" aria-controls="false">
-                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#a200b8"
-                                                class="img-fluid d-block mb-1"
-                                                src="{{ asset('assets/img/icon/craditauthorization.svg') }}"
-                                                alt="" width="75" height="75">
-                                            <span>Cradit Authorization</span>
-                                        </a>
-                                    </div>
-                                @endif
-                                @if ($user->quick_application == '1')
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a target="_blank" href="javascript:void(0)" aria-controls="false">
-                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#007a74"
-                                                class="img-fluid d-block mb-1"
-                                                src="{{ asset('assets/img/icon/rules.svg') }}" alt=""
-                                                width="75" height="75">
-                                            <span>Quick Applications</span>
-                                        </a>
-                                    </div>
-                                @endif
-
+                            @if (isset($user->user_disclaimer))
+                            @if ($user->disclaimer_view == '1')
+                            <div class="col-4 col-md-3 mb-3">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#disclaimerModal"
+                                    aria-controls="false">
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
+                                        class="img-fluid d-block mb-1"
+                                        src="{{ asset('assets/img/icon/notes-note.svg') }}" alt="" width="70"
+                                        height="70">
+                                    <span>Disclaimer</span>
+                                </a>
                             </div>
-                        </div>
-
-                        <div class="copyright_article">
-                            <p> @ {{ date('Y') }} <a
-                                    href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.
-                            </p>
-                        </div>
-                        @if ($settings->site_disclaimer)
-                            <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
-                                {!! $settings->site_disclaimer !!}
+                            @endif
+                            @endif
+                            {{-- @if (isset($user->nmls_id))
+                            @if ($user->nmls_view == '1')
+                            <div class="col-4 col-md-3 mb-3">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#nmlsModal"
+                                    aria-controls="false">
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; background:{{ $cardinfo->theme_color ?? '#EEAD12' }}"
+                                        class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/house.svg') }}"
+                                        alt="" width="70" height="70">
+                                    <span>User NMLS ID</span>
+                                </a>
                             </div>
-                        @endif
+                            @endif
+                            @endif --}}
 
+                            @if ($user->housing_logo_view == '1')
+                            <div class="col-4 col-md-3 mb-3">
+                                <a target="_blank" href="https://nmlsconsumeraccess.org" data-bs-toggle="modal"
+                                    data-bs-target="#equalHouseModal" aria-controls="false">
+                                    <img style="border-radius: 15px; margin:0 auto; border: 3px solid #275d84;"
+                                        class="img-fluid d-block mb-1" src="{{ asset('assets/img/house.png') }}" alt=""
+                                        width="75" height="75">
+                                    <span>Equal Housing Opportunity</span>
+                                </a>
+                            </div>
+                            @endif
+                            @if ($user->credit_authorization == '1')
+                            <div class="col-4 col-md-3 mb-3">
+                                <a target="_blank" href="javascript:void(0)" aria-controls="false">
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#a200b8"
+                                        class="img-fluid d-block mb-1"
+                                        src="{{ asset('assets/img/icon/craditauthorization.svg') }}" alt="" width="75"
+                                        height="75">
+                                    <span>Cradit Authorization</span>
+                                </a>
+                            </div>
+                            @endif
+                            @if ($user->quick_application == '1')
+                            <div class="col-4 col-md-3 mb-3">
+                                <a target="_blank" href="javascript:void(0)" aria-controls="false">
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#007a74"
+                                        class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/rules.svg') }}"
+                                        alt="" width="75" height="75">
+                                    <span>Quick Applications</span>
+                                </a>
+                            </div>
+                            @endif
+
+                        </div>
                     </div>
+
+                    <div class="copyright_article">
+                        <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights
+                            reserved.
+                        </p>
+                    </div>
+                    @if ($settings->site_disclaimer)
+                    <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
+                        {!! $settings->site_disclaimer !!}
+                    </div>
+                    @endif
+
                 </div>
-                <!-- offcanvas contact button -->
-                <div class="offcanvas_btn">
-                    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
-                        aria-controls="offcanvasContact">
-                        {{ __('Connect with Me') }}
-                    </a>
-                </div>
-                <!-- offcanvas contact button -->
             </div>
+            <!-- offcanvas contact button -->
+            <div class="offcanvas_btn">
+                <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
+                    aria-controls="offcanvasContact">
+                    {{ __('Connect with Me') }}
+                </a>
+            </div>
+            <!-- offcanvas contact button -->
         </div>
+    </div>
     @endif
 
 
@@ -508,7 +464,8 @@
                                         </svg>
                                     </div>
                                     <div class="qr-code">
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url)) !!}
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))
+                                        !!}
                                     </div>
                                 </div>
 
@@ -526,8 +483,7 @@
                                             <a class="btn btn-primary w-100 mx-1" title="{{ __('Social Media') }}"
                                                 href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
                                                 <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/connections.svg') }}"
-                                                    alt="">
+                                                    src="{{ asset('assets/img/icons/connections.svg') }}" alt="">
                                                 {{ __('Social Media') }}
                                             </a>
                                         </div>
@@ -542,8 +498,7 @@
                                             <a class="btn btn-primary w-100 mx-1" title="{{ __('Email') }}"
                                                 href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}">
                                                 <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/connections.svg') }}"
-                                                    alt="">
+                                                    src="{{ asset('assets/img/icons/connections.svg') }}" alt="">
                                                 {{ __('Email') }}
                                             </a>
                                         </div>
@@ -559,8 +514,8 @@
     </div>
     <!-- Disclaimer modal -->
     <div class="disclaimer_modal modal_one">
-        <div class="modal fade" id="disclaimerModal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="disclaimerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -620,8 +575,8 @@
 
     <!-- Social Modal modal -->
     <div class="share_modal email_modal">
-        <div class="modal animate__animated animate__fadeIn" id="SocialModal" tabindex="-1"
-            data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal animate__animated animate__fadeIn" id="SocialModal" tabindex="-1" data-bs-backdrop="static"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -645,12 +600,9 @@
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0)" class="social_share"
-                                                data-url="https://twitter.com/intent/tweet?text=Hello%21+This+is+my+vCard.&amp;url={{ Request::url() }}
-                                            "
-                                                title="{{ __('Share on Twitter') }}">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/twitter.svg') }}"
+                                            <a href="javascript:void(0)" class="social_share" data-url="https://twitter.com/intent/tweet?text=Hello%21+This+is+my+vCard.&amp;url={{ Request::url() }}
+                                            " title="{{ __('Share on Twitter') }}">
+                                                <img class="img-fluid" src="{{ asset('assets/img/icons/twitter.svg') }}"
                                                     alt="">
                                             </a>
                                         </li>
@@ -659,32 +611,28 @@
                                                 data-url="https://telegram.me/share/url?url={{ Request::url() }}&text="
                                                 title="{{ __('Share on Telegram') }}">
                                                 <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/telegram.svg') }}"
-                                                    alt="">
+                                                    src="{{ asset('assets/img/icons/telegram.svg') }}" alt="">
                                             </a>
                                         </li>
 
                                         @if ($android !== false || $ipad !== false || $iphone !== false)
-                                            <li class="list-inline-item">
-                                                <a href="whatsapp://send?text={{ Request::url() }}" class="whatsapp"
-                                                    title="{{ __('Share on Whatsapp') }}"
-                                                    data-action="share/whatsapp/share">
-                                                    <img class="img-fluid"
-                                                        src="{{ asset('assets/img/icons/whatsapp.svg') }}"
-                                                        alt="">
-                                                </a>
-                                            </li>
+                                        <li class="list-inline-item">
+                                            <a href="whatsapp://send?text={{ Request::url() }}" class="whatsapp"
+                                                title="{{ __('Share on Whatsapp') }}"
+                                                data-action="share/whatsapp/share">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="">
+                                            </a>
+                                        </li>
                                         @else
-                                            <li class="list-inline-item">
-                                                <a href="https://web.whatsapp.com/send?text={{ Request::url() }}"
-                                                    target="__blank" class="whatsapp"
-                                                    title="{{ __('Share on Whatsapp') }}"
-                                                    data-action="share/whatsapp/share">
-                                                    <img class="img-fluid"
-                                                        src="{{ asset('assets/img/icons/whatsapp.svg') }}"
-                                                        alt="">
-                                                </a>
-                                            </li>
+                                        <li class="list-inline-item">
+                                            <a href="https://web.whatsapp.com/send?text={{ Request::url() }}"
+                                                target="__blank" class="whatsapp" title="{{ __('Share on Whatsapp') }}"
+                                                data-action="share/whatsapp/share">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="">
+                                            </a>
+                                        </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -703,9 +651,8 @@
         <div class="offcanvas-header">
             <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
-                        fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="bevel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel">
                         <path d="M12 5v13M5 12l7 7 7-7"></path>
                     </svg>
                 </span>
@@ -719,26 +666,26 @@
                     <input type="hidden" name="card_id" id="card_id" value="{{ $cardinfo->id }}" />
                     <div class="heading mb-4 text-center">
                         @if ($cardinfo->connection_title)
-                            <h4>{{ $cardinfo->connection_title }}</h4>
+                        <h4>{{ $cardinfo->connection_title }}</h4>
                         @else
-                            <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
+                        <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
                         @endif
 
                     </div>
                     <div class="mb-3">
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="form-control @error('name') is-invalid @enderror"
-                            placeholder="{{ __('Name') }}" required tabindex="{{ $tabindex++ }}">
+                            class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
+                            required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('name'))
-                            <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
                         <input type="email" name="email" id="email" value="{{ old('email') }}"
-                            class="form-control @error('email') is-invalid @enderror"
-                            placeholder="{{ __('Email') }}" required tabindex="{{ $tabindex++ }}">
+                            class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}"
+                            required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('email'))
-                            <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
@@ -746,7 +693,7 @@
                             class="form-control @error('phone') is-invalid @enderror"
                             placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('phone'))
-                            <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
@@ -754,25 +701,24 @@
                             class="form-control @error('title') is-invalid @enderror"
                             placeholder="{{ __('Job Title (Optional)') }}" tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('title'))
-                            <span class="help-block text-danger">{{ $errors->first('title') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('title') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="company_name" id="company_name"
-                            value="{{ old('company_name') }}"
+                        <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}"
                             class="form-control @error('company_name') is-invalid @enderror"
                             placeholder="{{ __('Company (Optional)') }}" tabindex="{{ $tabindex++ }}">
                         @if ($errors->has('company_name'))
-                            <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
                         <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
                             class="form-control @error('message') is-invalid @enderror"
-                            placeholder="{{ __('Questions, Comments or Important Details') }}" tabindex="{{ $tabindex++ }}" required
-                            style="height:80px;"></textarea>
+                            placeholder="{{ __('Questions, Comments or Important Details') }}"
+                            tabindex="{{ $tabindex++ }}" required style="height:80px;"></textarea>
                         @if ($errors->has('message'))
-                            <span class="help-block text-danger">{{ $errors->first('message') }}</span>
+                        <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
@@ -789,8 +735,7 @@
         aria-labelledby="offcanvasCalculatorLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasCalculator"></h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <div class="container">
@@ -817,8 +762,8 @@
                         <input type="hidden" name="reciver" id="" value="{{ $user->email }}">
                         <div class="mb-3 col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 ">
                             <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                class="form-control @error('name') is-invalid @enderror"
-                                placeholder="{{ __('Name') }}" required ">
+                                class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
+                                required ">
 
                                  @if ($errors->has('name'))
                             <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
@@ -861,7 +806,8 @@
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
-                            <textarea type="text" name="message" id="message" class="form-control @error('message') is-invalid @enderror"
+                            <textarea type="text" name="message" id="message"
+                                class="form-control @error('message') is-invalid @enderror"
                                 placeholder="{{ __('Message') }}" required ">{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <span class=" help-block text-danger">{{ $errors->first('message') }}</span>
