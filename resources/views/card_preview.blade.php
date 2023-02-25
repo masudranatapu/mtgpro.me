@@ -536,7 +536,7 @@
                                                 class="img-fluid d-block mb-1"
                                                 src="{{ asset('assets/img/icon/craditauthorization.svg') }}"
                                                 alt="" width="75" height="75">
-                                            <span>Cradit Authorization</span>
+                                            <span>Credit Authorization</span>
                                         </a>
                                     </div>
                                 @endif
