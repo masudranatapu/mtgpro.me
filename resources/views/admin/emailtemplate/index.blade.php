@@ -25,7 +25,8 @@
                                 </div>
                                 <div class="col">
                                     <div class="float-end">
-                                        <a href="#" class="btn btn-primary">{{ __('Sort Code Document') }}</a>
+                                        <a href="{{ route('admin.email.template.sortCodes') }}"
+                                            class="btn btn-primary">{{ __('Sort Code Document') }}</a>
                                     </div>
                                 </div>
                             </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\EmailTemplate;
+use App\Models\EmailTemplateTag;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -42,5 +43,12 @@ class EmailTemplateController extends Controller
 
         Toastr::success(trans('Data Successfully Updated !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.email.template');
+    }
+
+
+    public function sortCodeDoc(Request $request)
+    {
+        $sort_codes = EmailTemplateTag::with('');
+        return view('admin.emailtemplate.sortcode');
     }
 }

@@ -18,7 +18,7 @@
     if ($cardinfo->profile) {
         $settings->favicon = $cardinfo->profile;
     }
-
+    
     if (isFreePlan($cardinfo->user_id)) {
         $title = $user_name . ' - ' . $settings->site_name;
     } else {
@@ -27,7 +27,7 @@
     $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
     $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
     $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
-
+    
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -422,7 +422,7 @@
                                         </a>
                                     </div>
                                 @endif
-                                @if ($user->cradit_authorization == '1')
+                                @if ($user->credit_authorization == '1')
                                     <div class="col-4 col-md-3 mb-3">
                                         <a target="_blank" href="javascript:void(0)" aria-controls="false">
                                             <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#a200b8"
@@ -820,7 +820,7 @@
                                 class="form-control @error('name') is-invalid @enderror"
                                 placeholder="{{ __('Name') }}" required ">
 
-                                @if ($errors->has('name'))
+                                 @if ($errors->has('name'))
                             <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
@@ -829,7 +829,7 @@
                                 class="form-control @error('email') is-invalid @enderror"
                                 placeholder="{{ __('Email') }}" required ">
 
-                                @if ($errors->has('email'))
+                                 @if ($errors->has('email'))
                             <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
@@ -838,7 +838,7 @@
                                 class="form-control @error('phone') is-invalid @enderror"
                                 placeholder="{{ __('Phone Number') }}" required ">
 
-                                @if ($errors->has('phone'))
+                                 @if ($errors->has('phone'))
                             <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
@@ -847,7 +847,7 @@
                                 class="form-control @error('company') is-invalid @enderror"
                                 placeholder="{{ __('Company') }}" required ">
 
-                                @if ($errors->has('company'))
+                                 @if ($errors->has('company'))
                             <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
@@ -856,7 +856,7 @@
                                 class="form-control @error('job_title') is-invalid @enderror"
                                 placeholder="{{ __('Job Title') }}" required ">
 
-                                @if ($errors->has('job_title'))
+                                 @if ($errors->has('job_title'))
                             <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>

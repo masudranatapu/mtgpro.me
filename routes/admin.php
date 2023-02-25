@@ -146,6 +146,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('email-template', 'EmailTemplateController@index')->name('email.template');
     Route::get('email-template/edit/{id}', 'EmailTemplateController@edit')->name('email.templateedit');
     Route::post('email-template/update/{id}', 'EmailTemplateController@update')->name('email.templateupdate');
+    Route::get('email-template/sort-code/doc', 'EmailTemplateController@sortCodeDoc')->name('email.template.sortCodes');
+
 
     // admin users
     Route::get('admin-users', ['as' => 'admin-users', 'uses' => 'AccountController@getAdminUser']);

@@ -642,9 +642,9 @@ class UserController extends Controller
     {
 
         $user = User::find(Auth::id());
-        $user->cradit_authorization = $request->status;
+        $user->credit_authorization = $request->status;
         $user->save();
-        return response()->json(['status' => $user->cradit_authorization]);
+        return response()->json(['status' => $user->credit_authorization]);
     }
     public function quickApplication(Request $request)
     {

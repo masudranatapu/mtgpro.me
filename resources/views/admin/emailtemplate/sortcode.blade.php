@@ -25,7 +25,8 @@
                                 </div>
                                 <div class="col">
                                     <div class="float-end">
-                                        <a href="#" class="btn btn-primary">{{ __('Sort Code Document') }}</a>
+                                        <a href="{{ route('admin.email.template') }}"
+                                            class="btn btn-primary">{{ __('Email Templates') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -41,19 +42,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($emailtemplates as $key => $email)
-                                                <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $email->type }}</td>
-                                                    <td>{{ $email->subject }}</td>
-                                                    <td class="text-center">
-                                                        <a href="{{ route('admin.email.templateedit', $email->id) }}"
-                                                            class="btn btn-info">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
