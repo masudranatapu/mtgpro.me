@@ -415,7 +415,7 @@
                                             data-bs-target="#equalHouseModal" aria-controls="false">
                                             <img style="border-radius: 15px; margin:0 auto; padding:10px; background:{{ $cardinfo->theme_color ?? '#EEAD12' }}"
                                                 class="img-fluid d-block mb-1"
-                                                src="{{ asset('assets/img/icon/house.svg') }}" alt=""
+                                                src="{{ asset('assets/img/house.png') }}" alt=""
                                                 width="70" height="70">
                                             <span>Equal Housing Opportunity</span>
                                         </a>
