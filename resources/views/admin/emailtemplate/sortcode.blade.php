@@ -43,6 +43,12 @@
                                         </thead>
                                         <tbody>
 
+                                            @foreach ($sort_codes as $sort_code)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                </tr>
+                                            @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
