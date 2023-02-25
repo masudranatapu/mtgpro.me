@@ -18,7 +18,7 @@
     if ($cardinfo->profile) {
         $settings->favicon = $cardinfo->profile;
     }
-    
+
     if (isFreePlan($cardinfo->user_id)) {
         $title = $user_name . ' - ' . $settings->site_name;
     } else {
@@ -27,7 +27,7 @@
     $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
     $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
     $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
-    
+
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -432,7 +432,7 @@
                         </div>
                         @if ($settings->site_disclaimer)
                             <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
-                                {{ $settings->site_disclaimer }}
+                                {!! $settings->site_disclaimer !!}
                             </div>
                         @endif
 
