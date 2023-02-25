@@ -11,6 +11,6 @@ class EmailTemplateTag extends Model
 
     public function hasEmailTEmplate()
     {
-        return $this->belongsTo(EmailTemplate::class, 'id', 'email_template_id');
+        return $this->belongsTo(EmailTemplate::class, 'email_template_id', 'id');
     }
 }
