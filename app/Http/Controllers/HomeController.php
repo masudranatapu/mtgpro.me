@@ -174,16 +174,16 @@ class HomeController extends Controller
             //browsing history
             if ($cardinfo) {
                 // $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
-                 
+
                 $runfile = 'http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR'];
 
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $runfile);
-				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-				$brwInfo = curl_exec ($ch);
-				curl_close ($ch); 
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $runfile);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $brwInfo = curl_exec($ch);
+                curl_close($ch);
 
-     
+
                 $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $new_history['user_agent'] = $this->user->getBrowser();
                 // dd($location->timezone);
@@ -191,13 +191,13 @@ class HomeController extends Controller
 
                     $new_history['city']            = $brwInfo['geoplugin_city'] ?? "";
                     $new_history['region']          = $brwInfo['geoplugin_region'] ?? "";
-                    $new_history['region_code']     = $brwInfo['geoplugin_regionCode']?? "";
-                    $new_history['region_name']     = $brwInfo['geoplugin_regionName']?? "";
-                    $new_history['area_code']       = $brwInfo['geoplugin_areaCode']?? "";
-                    $new_history['country_code']    = $brwInfo['geoplugin_countryCode']?? "";
-                    $new_history['country_name']    = $brwInfo['geoplugin_countryName']?? "";
-                    $new_history['continent_name']  = $brwInfo['geoplugin_continentName']?? "";
-                    $new_history['timezone']        = $brwInfo['geoplugin_timezone']?? "";
+                    $new_history['region_code']     = $brwInfo['geoplugin_regionCode'] ?? "";
+                    $new_history['region_name']     = $brwInfo['geoplugin_regionName'] ?? "";
+                    $new_history['area_code']       = $brwInfo['geoplugin_areaCode'] ?? "";
+                    $new_history['country_code']    = $brwInfo['geoplugin_countryCode'] ?? "";
+                    $new_history['country_name']    = $brwInfo['geoplugin_countryName'] ?? "";
+                    $new_history['continent_name']  = $brwInfo['geoplugin_continentName'] ?? "";
+                    $new_history['timezone']        = $brwInfo['geoplugin_timezone'] ?? "";
                     $new_history['created_at']      = date('Y-m-d H:i:s');
                 }
                 $new_history['card_id'] = $cardinfo->id;
@@ -688,5 +688,26 @@ class HomeController extends Controller
         }
 
         return [$mailcontent, $mailMesssage->subject];
+    }
+
+
+    public function creditAuthForm(Request $request)
+    {
+        $request->validate([
+            "authorize" => "required",
+            "name" => "required",
+            "social_security_number" => "required",
+            "date_of_birth" => "required",
+            "street" => "required",
+            "city" => "required",
+            "state" => "required",
+            "date" => "required",
+            "prior_address" => "required",
+            "start_date" => "required",
+            "end_date" => "required",
+            "license" => "required",
+        ]);
+
+        dd($request->all());
     }
 }

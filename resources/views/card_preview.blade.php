@@ -18,7 +18,7 @@
     if ($cardinfo->profile) {
         $settings->favicon = $cardinfo->profile;
     }
-    
+
     if (isFreePlan($cardinfo->user_id)) {
         $title = $user_name . ' - ' . $settings->site_name;
     } else {
@@ -27,7 +27,7 @@
     $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
     $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
     $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
-    
+
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,6 +79,112 @@
         }
     </style>
     @endif
+    <style>
+        /* Authorization Modal  */
+
+        .authorization_modal .modal-content {
+            border: none;
+            border-radius: 0px;
+        }
+
+        .authorization_modal .modal-header h1 {
+            text-align: center;
+            display: block;
+            width: 100%;
+            font-size: 18px !important;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .authorization_modal .modal-header {
+            border: none;
+        }
+
+        .authorization_modal .modal-body p {
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 24px;
+            color: #666;
+        }
+
+        .authorization_modal .modal-body p {
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 24px;
+            color: #666;
+        }
+
+        .authorization_modal .input-group-text {
+            border: none !important;
+            padding: 0 !important;
+            background: transparent !important;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 5px;
+            text-decoration: underline;
+            margin-bottom: 0;
+            height: 31px;
+        }
+
+        .authorization_modal .form-control {
+            outline: none !important;
+            box-shadow: none !important;
+            border: none;
+            border-bottom: 2px solid #e4e4e4;
+            border-radius: 0;
+            height: 23px;
+            padding: 0;
+        }
+
+        .authorization_modal h4 {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 600;
+            color: #070707;
+        }
+
+        .authorization_modal .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            padding: 7px 34px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            font-weight: 600;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        }
+
+        @media screen and (max-width:575px) {
+            .authorization_modal .input-group {
+                display: block;
+                position: inherit;
+            }
+
+            .authorization_modal .input-group-text {
+                display: block;
+                text-align: left;
+            }
+
+            .authorization_modal .form-control,
+            .authorization_modal .form-floating,
+            .authorization_modal .form-select {
+                width: 100%;
+            }
+
+            .authorization_modal .input-group-text {
+                height: 22px;
+            }
+
+
+        }
+    </style>
 </head>
 
 <body>
@@ -340,17 +446,72 @@
                             @endif
 
 
-                            @if (isset($user->user_disclaimer))
-                            @if ($user->disclaimer_view == '1')
-                            <div class="col-4 col-md-3 mb-3">
-                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#disclaimerModal"
-                                    aria-controls="false">
-                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
-                                        class="img-fluid d-block mb-1"
-                                        src="{{ asset('assets/img/icon/notes-note.svg') }}" alt="" width="70"
-                                        height="70">
-                                    <span>Disclaimer</span>
-                                </a>
+                                @if (isset($user->user_disclaimer))
+                                    @if ($user->disclaimer_view == '1')
+                                        <div class="col-4 col-md-3 mb-3">
+                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                data-bs-target="#disclaimerModal" aria-controls="false">
+                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
+                                                    class="img-fluid d-block mb-1"
+                                                    src="{{ asset('assets/img/icon/notes-note.svg') }}"
+                                                    alt="" width="70" height="70">
+                                                <span>Disclaimer</span>
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endif
+                                {{-- @if (isset($user->nmls_id))
+                                    @if ($user->nmls_view == '1')
+                                        <div class="col-4 col-md-3 mb-3">
+                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                data-bs-target="#nmlsModal" aria-controls="false">
+                                                <img style="border-radius: 15px; margin:0 auto; padding:10px; background:{{ $cardinfo->theme_color ?? '#EEAD12' }}"
+                                                    class="img-fluid d-block mb-1"
+                                                    src="{{ asset('assets/img/icon/house.svg') }}" alt=""
+                                                    width="70" height="70">
+                                                <span>User NMLS ID</span>
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endif --}}
+
+                                @if ($user->housing_logo_view == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a target="_blank" href="https://nmlsconsumeraccess.org"
+                                            data-bs-toggle="modal" data-bs-target="#equalHouseModal"
+                                            aria-controls="false">
+                                            <img style="border-radius: 15px; margin:0 auto; padding:10px;"
+                                                class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/house.png') }}" alt=""
+                                                width="90" height="90">
+                                            <span>Equal Housing Opportunity</span>
+                                        </a>
+                                    </div>
+                                @endif
+                                @if ($user->credit_authorization == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a target="_blank" href="javascript:void(0)" data-bs-toggle="modal"
+                                            data-bs-target="#craditAuthorization">
+                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#a200b8"
+                                                class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/icon/craditauthorization.svg') }}"
+                                                alt="" width="75" height="75">
+                                            <span>Cradit Authorization</span>
+                                        </a>
+                                    </div>
+                                @endif
+                                @if ($user->quick_application == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a target="_blank" href="javascript:void(0)" aria-controls="false">
+                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#007a74"
+                                                class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/icon/rules.svg') }}" alt=""
+                                                width="75" height="75">
+                                            <span>Quick Applications</span>
+                                        </a>
+                                    </div>
+                                @endif
+
                             </div>
                             @endif
                             @endif
@@ -765,7 +926,7 @@
                                 class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
                                 required ">
 
-                                 @if ($errors->has('name'))
+                                             @if ($errors->has('name'))
                             <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
@@ -774,7 +935,7 @@
                                 class="form-control @error('email') is-invalid @enderror"
                                 placeholder="{{ __('Email') }}" required ">
 
-                                 @if ($errors->has('email'))
+                                             @if ($errors->has('email'))
                             <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
@@ -783,7 +944,7 @@
                                 class="form-control @error('phone') is-invalid @enderror"
                                 placeholder="{{ __('Phone Number') }}" required ">
 
-                                 @if ($errors->has('phone'))
+                                             @if ($errors->has('phone'))
                             <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
@@ -792,7 +953,7 @@
                                 class="form-control @error('company') is-invalid @enderror"
                                 placeholder="{{ __('Company') }}" required ">
 
-                                 @if ($errors->has('company'))
+                                             @if ($errors->has('company'))
                             <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
@@ -801,7 +962,7 @@
                                 class="form-control @error('job_title') is-invalid @enderror"
                                 placeholder="{{ __('Job Title') }}" required ">
 
-                                 @if ($errors->has('job_title'))
+                                             @if ($errors->has('job_title'))
                             <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>
@@ -827,6 +988,210 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Credit Report Authorization Form -->
+    {{-- <div class="text-center m-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#craditAuthorization">
+            Authorization Modal
+        </button>
+    </div> --}}
+
+    <div class="authorization_modal modal fade" id="craditAuthorization" tabindex="-1"
+        aria-labelledby="craditAuthorizationLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="craditAuthorizationLabel">
+                        Credit Report Authorization Form
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('creditAuthForm') }}" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label for="" class="form-label">By my signature below i,</label>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <input type="text" name="authorize" id="" class="form-control"
+                                            autocomplete="off" required>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="" class="form-label">Authorize</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <p>
+                                    This authorization is valid for purposes of verifiying infomation given pursuant to
+                                    employment,leasing, rental, business negotiations, or any other lawful purpose
+                                    covered under the Fair Credit Reporting Act (FCRA)
+                                </p>
+                                <p>
+                                    The Background Check may contain information available in the Public Domain but may
+                                    not include interviews with persons other than previous employers their agents.
+                                </p>
+                                <p>
+                                    By my signature below, I hereby authrize all corporatinos, former employres, credit
+                                    agencies, educational institutions, law enforcement agencies, city, state, country
+                                    and federal courts and agencies, military services and personas to release all
+                                    information they may have about me including criminal and driving history. This
+                                    authorization shall be valid in original or copy form
+                                </p>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <div class="input-group">
+                                    <label for="name" class="form-label input-group-text">Applicant's
+                                        Name:</label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="input-group">
+                                    <label for="number" class="form-label input-group-text">Social Security
+                                        Number:</label>
+                                    <input type="text" name="number" id="number" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="input-group">
+                                    <label for="date_of_birth" class="form-label input-group-text">Date of
+                                        Birth:</label>
+                                    <input type="date" name="date_of_birth" id="date_of_birth"
+                                        class="form-control" required>
+
+                                </div>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <h4>Provide Address for the last 7 Years</h4>
+                            </div>
+                            <div class="col-lg-8 mb-4">
+                                <div class="input-group">
+                                    <label for="street" class="form-label input-group-text">Current Street
+                                        Addresss:</label>
+                                    <input type="text" name="street" id="street" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="city" class="form-label input-group-text">City:</label>
+                                    <input type="text" name="city" id="city" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="input-group">
+                                    <label for="state" class="form-label input-group-text">State:</label>
+                                    <input type="text" name="state" id="state" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="input-group">
+                                    <label for="date" class="form-label input-group-text">Start Date:</label>
+                                    <input type="date" name="date" id="date" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-8 mb-4">
+                                <div class="input-group">
+                                    <label for="prior_address" class="form-label input-group-text">Prior Street
+                                        Address:</label>
+                                    <input type="text" name="prior_address" id="prior_address"
+                                        class="form-control" required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="city" class="form-label input-group-text">City:</label>
+                                    <input type="text" name="city" id="city" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="state" class="form-label input-group-text">State:</label>
+                                    <input type="text" name="state" id="state" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="start_date" class="form-label input-group-text">Start Date:</label>
+                                    <input type="date" name="start_date" id="start_date" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="end_date" class="form-label input-group-text">End Date:</label>
+                                    <input type="date" name="end_date" id="end_date" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-8 mb-4">
+                                <div class="input-group">
+                                    <label for="license" class="form-label input-group-text">License#</label>
+                                    <input type="text" name="license" id="license" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="state" class="form-label input-group-text">State</label>
+                                    <input type="text" name="state" id="state" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-8 mb-4">
+                                <div class="input-group">
+                                    <label for="city" class="form-label input-group-text">Signature</label>
+                                    <input type="text" name="city" id="city" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label for="date" class="form-label input-group-text">Date</label>
+                                    <input type="date" name="date" id="date" class="form-control"
+                                        required>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Credit Report Authorization Form -->
 
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
