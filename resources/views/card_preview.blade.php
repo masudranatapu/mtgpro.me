@@ -389,7 +389,7 @@
                                                     class="img-fluid d-block mb-1"
                                                     src="{{ asset('assets/img/icon/notes-note.svg') }}"
                                                     alt="" width="70" height="70">
-                                                <span>User Disclaimer</span>
+                                                <span>Disclaimer</span>
                                             </a>
                                         </div>
                                     @endif
