@@ -694,20 +694,25 @@ class HomeController extends Controller
     public function creditAuthForm(Request $request)
     {
         $request->validate([
-            "authorize" => "required",
             "name" => "required",
+            "applicant_name" => "required",
             "social_security_number" => "required",
-            "date_of_birth" => "required",
-            "street" => "required",
-            "city" => "required",
-            "state" => "required",
-            "date" => "required",
+            "date_of_birth" => "required|date",
+            "current_street" => "required",
+            "current_city" => "required",
+            "current_state" => "required",
+            "current_date" => "required",
             "prior_address" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
+            "prior_city" => "required",
+            "prior_state" => "required",
+            "prior_start_date" => "required|date",
+            "prior_end_date" => "required|date",
             "license" => "required",
+            "license_state" => "required",
+            "signature" => "required",
+            "signature_date" => "required|date",
         ]);
 
-        dd($request->all());
+        
     }
 }

@@ -18,7 +18,7 @@
     if ($cardinfo->profile) {
         $settings->favicon = $cardinfo->profile;
     }
-    
+
     if (isFreePlan($cardinfo->user_id)) {
         $title = $user_name . ' - ' . $settings->site_name;
     } else {
@@ -27,7 +27,7 @@
     $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
     $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
     $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
-    
+
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -927,7 +927,7 @@
                                 class="form-control @error('name') is-invalid @enderror"
                                 placeholder="{{ __('Name') }}" required ">
 
-                                       @if ($errors->has('name'))
+                                                   @if ($errors->has('name'))
                             <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
@@ -936,7 +936,7 @@
                                 class="form-control @error('email') is-invalid @enderror"
                                 placeholder="{{ __('Email') }}" required ">
 
-                                       @if ($errors->has('email'))
+                                                   @if ($errors->has('email'))
                             <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
@@ -945,7 +945,7 @@
                                 class="form-control @error('phone') is-invalid @enderror"
                                 placeholder="{{ __('Phone Number') }}" required ">
 
-                                       @if ($errors->has('phone'))
+                                                   @if ($errors->has('phone'))
                             <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
@@ -954,7 +954,7 @@
                                 class="form-control @error('company') is-invalid @enderror"
                                 placeholder="{{ __('Company') }}" required ">
 
-                                       @if ($errors->has('company'))
+                                                   @if ($errors->has('company'))
                             <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
@@ -963,7 +963,7 @@
                                 class="form-control @error('job_title') is-invalid @enderror"
                                 placeholder="{{ __('Job Title') }}" required ">
 
-                                       @if ($errors->has('job_title'))
+                                                   @if ($errors->has('job_title'))
                             <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>
@@ -990,12 +990,6 @@
     </div>
 
 
-    <!-- Credit Report Authorization Form -->
-    {{-- <div class="text-center m-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#craditAuthorization">
-            Authorization Modal
-        </button>
-    </div> --}}
 
     <div class="authorization_modal modal fade" id="craditAuthorization" tabindex="-1"
         aria-labelledby="craditAuthorizationLabel" aria-hidden="true">
@@ -1008,7 +1002,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="{{ route('creditAuthForm') }}" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <div class="row">
@@ -1016,7 +1011,7 @@
                                         <label for="" class="form-label">By my signature below i,</label>
                                     </div>
                                     <div class="col-lg-5">
-                                        <input type="text" name="" id="" class="form-control"
+                                        <input type="text" name="name" id="" class="form-control"
                                             autocomplete="off" required>
                                     </div>
                                     <div class="col-lg-3">
@@ -1046,7 +1041,7 @@
                                 <div class="input-group">
                                     <label for="name" class="form-label input-group-text">Applicant's
                                         Name:</label>
-                                    <input type="text" name="name" id="name" class="form-control"
+                                    <input type="text" name="applicant_name" id="name" class="form-control"
                                         required>
                                 </div>
                             </div>
@@ -1054,15 +1049,15 @@
                                 <div class="input-group">
                                     <label for="number" class="form-label input-group-text">Social Security
                                         Number:</label>
-                                    <input type="text" name="number" id="number" class="form-control"
-                                        required>
+                                    <input type="text" name="social_security_number" id="number"
+                                        class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4">
                                 <div class="input-group">
                                     <label for="date_of_birth" class="form-label input-group-text">Date of
                                         Birth:</label>
-                                    <input type="number" name="date_of_birth" id="date_of_birth"
+                                    <input type="date" name="date_of_birth" id="date_of_birth"
                                         class="form-control" required>
                                 </div>
                             </div>
@@ -1073,28 +1068,28 @@
                                 <div class="input-group">
                                     <label for="street" class="form-label input-group-text">Current Street
                                         Addresss:</label>
-                                    <input type="text" name="street" id="street" class="form-control"
+                                    <input type="text" name="current_street" id="street" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="city" class="form-label input-group-text">City:</label>
-                                    <input type="text" name="city" id="city" class="form-control"
+                                    <input type="text" name="current_city" id="city" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
                                     <label for="state" class="form-label input-group-text">State:</label>
-                                    <input type="text" name="state" id="state" class="form-control"
+                                    <input type="text" name="current_state" id="state" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
                                     <label for="date" class="form-label input-group-text">Start Date:</label>
-                                    <input type="date" name="date" id="date" class="form-control"
+                                    <input type="date" name="current_date" id="date" class="form-control"
                                         required>
                                 </div>
                             </div>
@@ -1109,28 +1104,28 @@
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="city" class="form-label input-group-text">City:</label>
-                                    <input type="text" name="city" id="city" class="form-control"
+                                    <input type="text" name="prior_city" id="city" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="state" class="form-label input-group-text">State:</label>
-                                    <input type="text" name="state" id="state" class="form-control"
+                                    <input type="text" name="prior_state" id="state" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="start_date" class="form-label input-group-text">Start Date:</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control"
-                                        required>
+                                    <input type="date" name="prior_start_date" id="start_date"
+                                        class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="end_date" class="form-label input-group-text">End Date:</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control"
+                                    <input type="date" name="prior_end_date" id="end_date" class="form-control"
                                         required>
                                 </div>
                             </div>
@@ -1144,21 +1139,21 @@
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="state" class="form-label input-group-text">State</label>
-                                    <input type="text" name="state" id="state" class="form-control"
+                                    <input type="text" name="license_state" id="state" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
                                     <label for="city" class="form-label input-group-text">Signature</label>
-                                    <input type="text" name="city" id="city" class="form-control"
+                                    <input type="text" name="signature" id="city" class="form-control"
                                         required>
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
                                     <label for="date" class="form-label input-group-text">Date</label>
-                                    <input type="date" name="date" id="date" class="form-control"
+                                    <input type="date" name="signature_date" id="date" class="form-control"
                                         required>
                                 </div>
                             </div>
