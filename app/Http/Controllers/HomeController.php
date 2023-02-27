@@ -691,28 +691,119 @@ class HomeController extends Controller
     }
 
 
-    public function creditAuthForm(Request $request)
+    // public function creditReport(Request $request)
+    // {
+
+
+    //     DB::table('connects')->insert([
+    //         'name'              => $request->name,
+    //         'title'             => 'Credit Report',
+    //         'ccode'             => '',
+    //         'phone'             => '',
+    //         'email'             => '',
+    //         'company_name'      => '',
+    //         'message'           => '',
+    //         'user_id'           => '',
+    //         'card_id'           => '',
+    //         'created_at'        => '',
+    //         'created_by'        => '',
+    //         'is_active'         => 1,
+    //         'connect_user_id'   => '',
+
+    //     ]);
+
+
+    // }
+
+
+    public function creditReport(Request $request)
     {
+
         $request->validate([
-            "name" => "required",
-            "applicant_name" => "required",
-            "social_security_number" => "required",
-            "date_of_birth" => "required|date",
-            "current_street" => "required",
-            "current_city" => "required",
-            "current_state" => "required",
-            "current_date" => "required",
-            "prior_address" => "required",
-            "prior_city" => "required",
-            "prior_state" => "required",
-            "prior_start_date" => "required|date",
-            "prior_end_date" => "required|date",
-            "license" => "required",
-            "license_state" => "required",
-            "signature" => "required",
-            "signature_date" => "required|date",
+            "name"                      => "required",
+            "applicant_name"            => "required",
+            "social_security_number"    => "required",
+            "date_of_birth"             => "required|date",
+            "current_street"            => "required",
+            "current_city"              => "required",
+            "current_state"             => "required",
+            "current_date"              => "required",
+            "prior_address"             => "required",
+            "prior_city"                => "required",
+            "prior_state"               => "required",
+            "prior_start_date"          => "required|date",
+            "prior_end_date"            => "required|date",
+            "license"                   => "required",
+            "license_state"             => "required",
+            "signature"                 => "required",
+            "signature_date"            => "required|date",
         ]);
 
-        
+
+        DB::beginTransaction();
+        try {
+            $data['name']           = $request->name;
+
+            $data['applicant_name']            = $request->applicant_name;
+            $data['social_security_number']    = $request->social_security_number;
+            $data['date_of_birth']             = $request->date_of_birth;
+            $data['current_street']            = $request->current_street;
+            $data['current_city']              = $request->current_city;
+            $data['current_state']             = $request->current_state;
+            $data['current_date']              = $request->current_date;
+            $data['prior_address']             = $request->prior_address;
+            $data['prior_city']                = $request->prior_city;
+            $data['prior_state']               = $request->prior_state;
+            $data['prior_start_date']          = $request->prior_start_date;
+            $data['prior_end_date']            = $request->prior_end_date;
+            $data['license']                   = $request->license;
+            $data['license_state']             = $request->license_state;
+            $data['signature']                 = $request->signature;
+            $data['signature_date']            = $request->signature_date;
+            $data['query_type']                = 2;
+
+
+            $card = BusinessCard::findOrFail($request->card_id);
+
+            if (Auth::user() && $card->user_id == Auth::user()->id) {
+
+                Toastr::error(trans('Not possible to send message to your card !'), 'Error', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+
+            } elseif (!empty(Auth::user())) {
+                $data['connect_user_id']    = Auth::user()->id;
+                $data['profile_image']      = Auth::user()->profile_image;
+                $data['email']              = Auth::user()->email;
+            } else {
+                $data['connect_user_id'] = NULL;
+            }
+
+            $data['card_id']        = $card->id;
+            $data['created_at']     = now();
+            $data['user_id']        = $card->user_id;
+            $connect = DB::table('connects')->insert($data);
+            $data['card_id'] = $card->card_id;
+        } catch (\Throwable $th) {
+            DB::rollback();
+            dd($th->getMessage());
+            Toastr::error(trans('Something wrong ! please try again'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+
+        }
+        DB::commit();
+
+        $user = DB::table('users')->where('id', $card->user_id)->first();
+        // DB::commit();
+        if (!empty($connect) && $user->is_notify == 1) {
+           // need to send mail
+        }
+
+        Toastr::success(trans('Credit report authorization send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+
     }
+
+
+
+
 }

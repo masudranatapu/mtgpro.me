@@ -63,11 +63,11 @@ class ConnectionController extends Controller
         return view('user.crm.index', compact('data'));
     }
 
-    public function getView(Request $request,$email,$id)
+    public function getView(Request $request,$id)
     {
         $row = DB::table('connects')
         ->select('connects.*','users.profile_image')
-        ->where('connects.email',$email)->where('connects.id',$id)
+        ->where('connects.id',$id)
         ->leftJoin('users','users.id','=','connects.user_id')
         ->first();
 

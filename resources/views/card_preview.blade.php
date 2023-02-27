@@ -58,8 +58,11 @@
     <meta property="twitter:url" content="{{ Request::url() }}" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"  />
     @if ($cardinfo->theme_color)
         <style>
             .save_contact a {
@@ -911,8 +914,7 @@
                 </div>
             </div>
             <hr>
-            <iframe
-                src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0"
+            <iframe src="https://www.mortgagecalculator.org/webmasters/?downpayment=50000&homevalue=300000&loanamount=250000&interestrate=4&loanterm=30&propertytax=2400&pmi=1&homeinsurance=1000&monthlyhoa=0"
                 style="width: 100%; height: 1200px; border: 0;">
             </iframe>
             <hr>
@@ -925,51 +927,51 @@
                         <div class="mb-3 col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 ">
                             <input type="text" name="name" id="name" value="{{ old('name') }}"
                                 class="form-control @error('name') is-invalid @enderror"
-                                placeholder="{{ __('Name') }}" required ">
+                                placeholder="{{ __('Name') }}" required>
 
-                                                   @if ($errors->has('name'))
-                            <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
+                            @if ($errors->has('name'))
+                                <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
                             <input type="email" name="email" id="email" value="{{ old('email') }}"
                                 class="form-control @error('email') is-invalid @enderror"
-                                placeholder="{{ __('Email') }}" required ">
+                                placeholder="{{ __('Email') }}" required>
 
-                                                   @if ($errors->has('email'))
-                            <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
+                            @if ($errors->has('email'))
+                                <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
                             <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
                                 class="form-control @error('phone') is-invalid @enderror"
-                                placeholder="{{ __('Phone Number') }}" required ">
+                                placeholder="{{ __('Phone Number') }}" required>
 
-                                                   @if ($errors->has('phone'))
-                            <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
+                            @if ($errors->has('phone'))
+                                <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
                             <input type="text" name="company" id="company" value="{{ old('company') }}"
                                 class="form-control @error('company') is-invalid @enderror"
-                                placeholder="{{ __('Company') }}" required ">
+                                placeholder="{{ __('Company') }}" required>
 
-                                                   @if ($errors->has('company'))
+                            @if ($errors->has('company'))
                             <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
                             <input type="text" name="job_title" id="job_title" value="{{ old('job_title') }}"
                                 class="form-control @error('job_title') is-invalid @enderror"
-                                placeholder="{{ __('Job Title') }}" required ">
+                                placeholder="{{ __('Job Title') }}" required>
 
-                                                   @if ($errors->has('job_title'))
+                            @if ($errors->has('job_title'))
                             <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
                             <textarea type="text" name="message" id="message" class="form-control @error('message') is-invalid @enderror"
-                                placeholder="{{ __('Message') }}" required ">{{ old('message') }}</textarea>
+                                placeholder="{{ __('Message') }}" required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <span class=" help-block text-danger">{{ $errors->first('message') }}</span>
                             @endif
@@ -1002,8 +1004,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('creditAuthForm') }}" method="post">
+                    <form action="{{ route('credit-report') }}" method="post">
                         @csrf
+                        <input type="hidden" value="{{ $cardinfo->id }}" name="card_id" />
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <div class="row">
@@ -1011,7 +1014,7 @@
                                         <label for="" class="form-label">By my signature below i,</label>
                                     </div>
                                     <div class="col-lg-5">
-                                        <input type="text" name="name" id="" class="form-control"
+                                        <input type="text" name="name" class="form-control"
                                             autocomplete="off" required>
                                     </div>
                                     <div class="col-lg-3">
@@ -1039,17 +1042,15 @@
                             </div>
                             <div class="col-12 mb-4">
                                 <div class="input-group">
-                                    <label for="name" class="form-label input-group-text">Applicant's
-                                        Name:</label>
-                                    <input type="text" name="applicant_name" id="name" class="form-control"
-                                        required>
+                                    <label for="applicant_name" class="form-label input-group-text">Applicant's Name:</label>
+                                    <input type="text" name="applicant_name" id="applicant_name" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4">
                                 <div class="input-group">
-                                    <label for="number" class="form-label input-group-text">Social Security
+                                    <label for="social_security_number" class="form-label input-group-text">Social Security
                                         Number:</label>
-                                    <input type="text" name="social_security_number" id="number"
+                                    <input type="text" name="social_security_number" id="social_security_number"
                                         class="form-control" required>
                                 </div>
                             </div>
@@ -1057,8 +1058,8 @@
                                 <div class="input-group">
                                     <label for="date_of_birth" class="form-label input-group-text">Date of
                                         Birth:</label>
-                                    <input type="date" name="date_of_birth" id="date_of_birth"
-                                        class="form-control" required>
+                                    <input type="text" name="date_of_birth" id="date_of_birth"
+                                        class="form-control datepicker" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-4">
@@ -1066,31 +1067,27 @@
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="street" class="form-label input-group-text">Current Street
+                                    <label for="current_street" class="form-label input-group-text">Current Street
                                         Addresss:</label>
-                                    <input type="text" name="current_street" id="street" class="form-control"
-                                        required>
+                                    <input type="text" name="current_street" id="current_street" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="city" class="form-label input-group-text">City:</label>
-                                    <input type="text" name="current_city" id="city" class="form-control"
-                                        required>
+                                    <label for="current_city" class="form-label input-group-text">City:</label>
+                                    <input type="text" name="current_city" id="current_city" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
-                                    <label for="state" class="form-label input-group-text">State:</label>
-                                    <input type="text" name="current_state" id="state" class="form-control"
-                                        required>
+                                    <label for="current_state" class="form-label input-group-text">State:</label>
+                                    <input type="text" name="current_state" id="current_state" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
-                                    <label for="date" class="form-label input-group-text">Start Date:</label>
-                                    <input type="date" name="current_date" id="date" class="form-control"
-                                        required>
+                                    <label for="current_date" class="form-label input-group-text">Start Date:</label>
+                                    <input type="text" name="current_date" id="current_date" class="form-control datepicker" required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
@@ -1098,63 +1095,61 @@
                                     <label for="prior_address" class="form-label input-group-text">Prior Street
                                         Address:</label>
                                     <input type="text" name="prior_address" id="prior_address"
-                                        class="form-control" required>
+                                        class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="city" class="form-label input-group-text">City:</label>
-                                    <input type="text" name="prior_city" id="city" class="form-control"
-                                        required>
+                                    <label for="prior_city" class="form-label input-group-text">City:</label>
+                                    <input type="text" name="prior_city" id="prior_city" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="state" class="form-label input-group-text">State:</label>
-                                    <input type="text" name="prior_state" id="state" class="form-control"
-                                        required>
+                                    <label for="prior_state" class="form-label input-group-text">State:</label>
+                                    <input type="text" name="prior_state" id="prior_state" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="start_date" class="form-label input-group-text">Start Date:</label>
-                                    <input type="date" name="prior_start_date" id="start_date"
-                                        class="form-control" required>
+                                    <label for="prior_start_date" class="form-label input-group-text">Start Date:</label>
+                                    <input type="text" name="prior_start_date" id="prior_start_date"
+                                        class="form-control datepicker" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="end_date" class="form-label input-group-text">End Date:</label>
-                                    <input type="date" name="prior_end_date" id="end_date" class="form-control"
-                                        required>
+                                    <label for="prior_end_date" class="form-label input-group-text">End Date:</label>
+                                    <input type="text" name="prior_end_date" id="prior_end_date" class="form-control datepicker"
+                                    required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
                                     <label for="license" class="form-label input-group-text">License#</label>
-                                    <input type="text" name="license" id="license" class="form-control"
-                                        required>
+                                    <input type="text" name="license" id="license" class="form-control "
+                                    required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="state" class="form-label input-group-text">State</label>
-                                    <input type="text" name="license_state" id="state" class="form-control"
-                                        required>
+                                    <label for="license_state" class="form-label input-group-text">State</label>
+                                    <input type="text" name="license_state" id="license_state" class="form-control"
+                                    required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="city" class="form-label input-group-text">Signature</label>
-                                    <input type="text" name="signature" id="city" class="form-control"
-                                        required>
+                                    <label for="signature" class="form-label input-group-text">Signature</label>
+                                    <input type="text" name="signature" id="signature" class="form-control"
+                                    required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="date" class="form-label input-group-text">Date</label>
-                                    <input type="date" name="signature_date" id="date" class="form-control"
-                                        required>
+                                    <label for="signature_date" class="form-label input-group-text">Date</label>
+                                    <input type="text" name="signature_date" id="signature_date" class="form-control datepicker"
+                                    required />
                                 </div>
                             </div>
 
@@ -1174,6 +1169,8 @@
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ asset('assets/js/toastr.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" ></script>
+
     <script>
         AOS.init();
         $('.social_share').click(function() {
@@ -1278,6 +1275,21 @@
             $('.card_view_wrapper').css('background', bg);
         </script>
     @endif
+
+
+<script>
+    $( function() {
+        $('.datepicker').datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            onSelect: function(selectedDate) {
+                 // we can write code here
+             }
+      });
+    } );
+    </script>
 
 </body>
 

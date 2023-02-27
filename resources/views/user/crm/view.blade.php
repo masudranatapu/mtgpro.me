@@ -64,10 +64,22 @@ $tabindex =1;
                                         <a href="javascript:void(0)" class="copy_btn position-relative" data-clipboard-target="{{ $row->name }}">
                                             <img src="{{ asset('assets/img/icon/copy.svg') }}" alt="{{ $row->name }}">
                                             <span class="notice d-none position-absolute" style="color: rgb(34, 34, 34); transition: all 0.2s ease 0s;">Copied</span>
+
                                         </a>
                                     </h5>
                                    <span> {{ $row->name }}</span>
+
+                                <br>
+                                @if($row->query_type == 1)
+                                   <small>Connections</small>
+                               @elseif($row->query_type == 2)
+                                   <small>Credit report authorization</small>
+                               @elseif($row->query_type == 3)
+                                   <small>Quick applications</small>
+                               @endif
+
                                 </div>
+
                                 <div class="col-md-6 mb-4">
                                     <h5>
                                         Email
@@ -100,6 +112,75 @@ $tabindex =1;
                                      <h5>Note</h5>
                                     <span>{{ $row->message }}</span>
                                 </div>
+
+
+                                @if($row->applicant_name)
+                                 <div class="col-md-8 mb-4">
+                                     <h5>Applicant name</h5>
+                                    <span>{{ $row->applicant_name }}</span>
+                                </div>
+                                @endif
+
+                                @if($row->social_security_number)
+                                <div class="col-md-8 mb-4">
+                                    <h5>Social security number</h5>
+                                   <span>{{ $row->social_security_number }}</span>
+                               </div>
+                               @endif
+
+                               @if($row->date_of_birth)
+                               <div class="col-md-8 mb-4">
+                                <h5>Date of birth</h5>
+                               <span>{{ $row->date_of_birth }}</span>
+                                </div>
+                                @endif
+
+                                @if($row->current_street)
+                                <div class="col-md-8 mb-4">
+                                    <h5>Current street</h5>
+                                   <span>{{ $row->current_street }}</span>
+                               </div>
+                               @endif
+
+                               @if($row->current_city)
+                               <div class="col-md-8 mb-4">
+                                   <h5>Current city</h5>
+                                  <span>{{ $row->current_city }}</span>
+                              </div>
+                              @endif
+
+                              @if($row->current_state)
+                              <div class="col-md-8 mb-4">
+                               <h5>Current state</h5>
+                              <span>{{ $row->current_state }}</span>
+                               </div>
+                               @endif
+
+
+                               @if($row->current_date)
+                               <div class="col-md-8 mb-4">
+                                <h5>Current date</h5>
+                               <span>{{ $row->current_date }}</span>
+                           </div>
+                           @endif
+
+
+
+                          @if($row->prior_address)
+                          <div class="col-md-8 mb-4">
+                           <h5>Prior address</h5>
+                          <span>{{ $row->prior_address }}</span>
+                           </div>
+                           @endif
+
+                           @if($row->prior_city)
+                           <div class="col-md-8 mb-4">
+                            <h5>Prior city</h5>
+                           <span>{{ $row->prior_city }}</span>
+                            </div>
+                            @endif
+
+
                             </div>
                         </div>
                     </div>

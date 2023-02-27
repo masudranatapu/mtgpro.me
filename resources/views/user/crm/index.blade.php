@@ -108,7 +108,7 @@ if (!empty($daterange)) {
                                                 <label for="radioPrimary1"></label>
                                             </div>
                                             <div class="d-inline float-left">
-                                                <a href="{{ route('user.crm.details', [$row->email, $row->id]) }}"
+                                                <a href="{{ route('user.crm.details', [$row->id]) }}"
                                                     class="text-dark">
                                                     <div class="media position-relative align-items-center">
                                                         <img src="{{ getAvatar($row->profile_image) }}" width="50"
@@ -117,6 +117,15 @@ if (!empty($daterange)) {
                                                         <div class="media-body">
                                                             <h6 class="m-0">{{ $row->name }}</h6>
                                                             <span>{{ $row->email }}</span>
+
+                                                            @if($row->query_type == 1)
+                                                                <span>Connections</span>
+                                                            @elseif($row->query_type == 2)
+                                                                <span>Credit report authorization</span>
+                                                            @elseif($row->query_type == 3)
+                                                                <span>Quick applications</span>
+                                                            @endif
+
                                                         </div>
                                                     </div>
                                                 </a>
@@ -154,7 +163,7 @@ if (!empty($daterange)) {
                                                     {{-- <a class="dropdown-item" href="#">{{ _('Export to csv') }}</a>
                                                     --}}
                                                     <a class="dropdown-item"
-                                                        href="{{ route('user.crm.details', [$row->email, $row->id]) }}">{{
+                                                        href="{{ route('user.crm.details', [$row->id]) }}">{{
                                                         _('View Connection') }}</a>
                                                     <a class="dropdown-item"
                                                         href="{{ route('user.crm.download', $row->id) }}">{{

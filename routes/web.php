@@ -121,7 +121,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middl
     Route::post('support/feature-request', ['as' => 'support.feature-request', 'uses' => 'UserController@sendRequestToFeature']);
 
     Route::get('crm', ['as' => 'crm', 'uses' => 'ConnectionController@getIndex']);
-    Route::get('crm/view/{email}/{id}', ['as' => 'crm.details', 'uses' => 'ConnectionController@getView']);
+    Route::get('crm/{id}/view', ['as' => 'crm.details', 'uses' => 'ConnectionController@getView']);
     Route::get('crm/{id}/edit', ['as' => 'crm.edit', 'uses' => 'ConnectionController@getEdit']);
     Route::get('crm/{id}/download', ['as' => 'crm.download', 'uses' => 'ConnectionController@getDownloadVcf']);
     Route::post('crm/{id}/update', ['as' => 'crm.update', 'uses' => 'ConnectionController@putUpdate']);
@@ -170,6 +170,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth']], function () {
 
 // Route::post('sendcard/mail/{id}', ['as' => 'sendcard.mail', 'uses' => 'HomeController@sendCardMail']);
 Route::post('getConnect', 'HomeController@getConnect')->name('getConnect');
-Route::post('credit-auth-form', [HomeController::class, 'creditAuthForm'])->name('creditAuthForm');
+Route::post('credit-report', [HomeController::class, 'creditReport'])->name('credit-report');
 Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');
 Route::get('{cardurl}', ['as' => 'card.preview', 'uses' => 'HomeController@getPreview']);
