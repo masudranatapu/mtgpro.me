@@ -173,12 +173,103 @@ $tabindex =1;
                            </div>
                            @endif
 
-                           @if($row->prior_city)
-                           <div class="col-md-8 mb-4">
-                            <h5>Prior city</h5>
-                           <span>{{ $row->prior_city }}</span>
+                            @if($row->prior_city)
+                            <div class="col-md-8 mb-4">
+                                <h5>Prior city</h5>
+                                <span>{{ $row->prior_city }}</span>
                             </div>
                             @endif
+
+
+                            @if($row->purpose)
+                            <div class="col-md-8 mb-4">
+                                <h5>Purpose of Mortgage or Loan</h5>
+                                <span>{{ $row->purpose }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->price)
+                            <div class="col-md-8 mb-4">
+                                <h5>Price</h5>
+                                <span>{{ $row->price }}</span>
+                            </div>
+                            @endif
+
+                            @if($row->down_amount)
+                            <div class="col-md-8 mb-4">
+                                <h5>Down Amount</h5>
+                                <span>{{ $row->down_amount }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->property_type)
+                            <div class="col-md-8 mb-4">
+                                <h5>Type of Property</h5>
+                                <span>{{ $row->property_type }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->location)
+                            <div class="col-md-8 mb-4">
+                                <h5>Location</h5>
+                                <span>{{ $row->location }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->query_type == 3)
+                                @if($row->purpose == 'Purchase')
+                                <div class="col-md-8 mb-4">
+                                    <h5>Referral to Real Estate Agent</h5>
+                                    <span>{{ $row->agent ==1 ? 'Yes' : 'No' }}</span>
+                                </div>
+                                @endif
+                            @endif
+
+
+                            @if($row->occupation)
+                            <div class="col-md-8 mb-4">
+                                <h5>Occupation</h5>
+                                <span>{{ $row->occupation }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->current_employer)
+                            <div class="col-md-8 mb-4">
+                                <h5>Employed by your current emmployer</h5>
+                                <span>{{ $row->current_employer }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->annual_income)
+                            <div class="col-md-8 mb-4">
+                                <h5>Annual Income</h5>
+                                <span>{{ $row->annual_income }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->credit_score)
+                            <div class="col-md-8 mb-4">
+                                <h5>Credit Score</h5>
+                                <span>{{ $row->credit_score }}</span>
+                            </div>
+                            @endif
+
+
+                            @if($row->contact_infomation)
+                            <div class="col-md-8 mb-4">
+                                <h5>Contact Information</h5>
+                                <span>{{ $row->contact_infomation }}</span>
+                            </div>
+                            @endif
+
+
 
 
                             </div>

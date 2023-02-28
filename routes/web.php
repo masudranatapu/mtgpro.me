@@ -171,5 +171,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Route::post('sendcard/mail/{id}', ['as' => 'sendcard.mail', 'uses' => 'HomeController@sendCardMail']);
 Route::post('getConnect', 'HomeController@getConnect')->name('getConnect');
 Route::post('credit-report', [HomeController::class, 'creditReport'])->name('credit-report');
+Route::post('quick-report', [HomeController::class, 'quickReport'])->name('quick-report');
 Route::get('download/{id}', 'HomeController@downloadVcard')->name('download.vCard');
 Route::get('{cardurl}', ['as' => 'card.preview', 'uses' => 'HomeController@getPreview']);

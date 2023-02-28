@@ -162,8 +162,8 @@
         }
 
         .authorization_modal .btn-primary {
-            background: var(--primary);
-            color: var(--white);
+            background: #c62f00;
+            color: #fff;
             padding: 7px 34px;
             font-size: 16px;
             font-family: 'Inter', sans-serif;
@@ -205,6 +205,42 @@
 
 
         }
+
+        /* Loan Application Modal  */
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .custome_modal .form-control::placeholder {
+            color: #BBB;
+            font-size: 14px;
+        }
+
+        .custome_modal .form-check {
+            display: inline-block;
+            margin-right: 21px;
+        }
+
+        .custome_modal .form-check label {
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .custome_modal .form-check input {
+            cursor: pointer;
+            box-shadow: none !important;
+        }
+
+        .form-check-input:checked {
+            background-color: #c62f00;
+            border: none !important;
+        }
+
+
     </style>
 </head>
 
@@ -519,7 +555,8 @@
                             @endif
                             @if ($user->quick_application == '1')
                             <div class="col-4 col-md-3 mb-3">
-                                <a target="_blank" href="javascript:void(0)" aria-controls="false">
+                                <a target="_blank" href="javascript:void(0)" data-bs-toggle="modal"
+                                data-bs-target="#quickApplication" >
                                     <img style="border-radius: 15px; margin:0 auto; padding:10px; background:#007a74"
                                         class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/rules.svg') }}"
                                         alt="" width="75" height="75">
@@ -957,6 +994,8 @@
 
 
 
+
+    <!-- Credit Report Authorization Form -->
     <div class="authorization_modal modal fade" id="craditAuthorization" tabindex="-1"
         aria-labelledby="craditAuthorizationLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -979,10 +1018,10 @@
                                     </div>
                                     <div class="col-lg-5">
                                         <input type="text" name="name" class="form-control" autocomplete="off" required
-                                            value="{{ $user->name }}">
+                                            value="@if(Auth::user() && ($user->id != Auth::id()) ){{ Auth::user()->name }} @endif" >
                                     </div>
                                     <div class="col-lg-3">
-                                        <label for="" class="form-label">Authorize</label>
+                                        <label for="" class="form-label">Authorize {{ $user->name }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -1136,8 +1175,186 @@
             </div>
         </div>
     </div>
-    <!-- Credit Report Authorization Form -->
 
+
+    {{-- Quick from  --}}
+
+    <div class="authorization_modal modal fade custome_modal " id="quickApplication" tabindex="-1"
+        aria-labelledby="quickApplicationLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="loadApplicationModalLabel">
+                        Your Loan Application
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('quick-report') }}" method="post">
+                        @csrf
+                        <input type="hidden" value="{{ $cardinfo->id }}" name="card_id" />
+
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <div class="mb-0">
+                                    <label for="" class="form-label">Purpose of Mortgage or Loan</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input qa_purpose" type="radio" name="purpose" id="purpose_id" checked value="Purchase">
+                                    <label class="form-check-label" for="purpose_id">
+                                        Purchase
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input qa_purpose" type="radio" name="purpose" id="refinance_id" value="Refinance">
+                                    <label class="form-check-label" for="refinance_id">
+                                        Refinance
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="price" class="form-label" id="price_lbl">Price</label>
+                                    <input type="number" name="price" class="form-control" placeholder="Purchase Price"
+                                        required id="price">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4 purchase_field">
+                                <div class="form-group">
+                                    <label for="down_amount" class="form-label">Down Amount</label>
+                                    <input type="number" name="down_amount" class="form-control"
+                                        placeholder="Down Amount" required>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-4 mb-4 refinance_field" style="display:none;">
+                                <div class="form-group">
+                                    <label for="amount" class="form-label">Loan Amount</label>
+                                    <input type="number" name="loan_amount" class="form-control" placeholder="Loan Amount"
+                                        required>
+                                </div>
+                            </div> --}}
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-8 mb-4">
+                                <div class="form-group">
+                                    <label for="amount" class="form-label d-block">Type of Property</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="property_type" id="property_1" value="Single Family House" checked>
+                                        <label class="form-check-label" for="property_1" >
+                                            Single Family House
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="property_type" id="property_2" value="2+ Unit House">
+                                        <label class="form-check-label" for="property_2">
+                                            2+ Unit House
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="property_type" id="property_3" value="Conodo / Co-Op">
+                                        <label class="form-check-label" for="property_3">
+                                            Conodo / Co-Op
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4 refinance_field" style="display:none;">
+                                <div class="form-group">
+                                    <label for="estimated_value" class="form-label">Estimated
+                                        Value</label>
+                                    <input type="number" name="estimated_value" class="form-control"
+                                        placeholder="Estimated Value">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="location" class="form-label">Property
+                                        Location</label>
+                                    <input type="text" name="location" class="form-control" placeholder="location"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="company" class="form-label">Current Mortgage
+                                        Company</label>
+                                    <input type="text" name="company" class="form-control"
+                                        placeholder="Mortgage Company">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4 purchase_field">
+                                <div class="form-group">
+                                    <label for="amount" class="form-label">Would you like a Referral to
+                                        Real Estate Agent?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="agent" id="agent_1" checked value="1">
+                                        <label class="form-check-label" for="agent_1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="agent" id="agent_2" value="0">
+                                        <label class="form-check-label" for="agent_2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="occupation" class="form-label">Occupation</label>
+                                    <input type="text" name="occupation" class="form-control" placeholder="Occupation"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <div class="form-group">
+                                    <label for="current_employer" class="form-label">How long have your been employed by your current emmployer?</label>
+                                    <input type="text" name="current_employer" class="form-control"
+                                        placeholder="ex: 90 Days" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="annual_income" class="form-label">Annual Income</label>
+                                    <input type="number" name="annual_income" class="form-control"
+                                        placeholder="Annual Income" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="credit_score" class="form-label">Credit Score</label>
+                                    <input type="number" name="credit_score" class="form-control"
+                                        placeholder="Credit Score" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <div class="form-group">
+                                    <label for="contact_infomation" class="form-label">Contact
+                                        Information</label>
+                                    <textarea name="contact_infomation" id="contact_infomation" class="form-control"
+                                        cols="30" rows="8"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -1264,6 +1481,37 @@
       });
     } );
     </script>
+
+    <script>
+        //Quick from
+        // var purpose = $('input[name="purpose"]:checked').val();
+
+
+
+
+
+    </script>
+
+<script>
+    $( function() {
+        $('.qa_purpose').change(function () {
+            var purpose = $('input[name="purpose"]:checked').val();
+            if (purpose == 'Purchase' ) {
+                $('#price').attr('placeholder','Purchase price');
+                $('#price_lbl').text('Price');
+                $('.refinance_field').hide();
+
+            }else{
+                $('#price').attr('placeholder','Loan Amount');
+                $('#price_lbl').text('Loan Amount');
+
+                $('.refinance_field').show();
+            }
+        });
+
+
+    });
+</script>
 
 </body>
 

@@ -804,6 +804,88 @@ class HomeController extends Controller
     }
 
 
+    public function quickReport(Request $request)
+    {
+
+        $request->validate([
+            "purpose"               => "required|max:124|string",
+            "price"                 => "required|max:9999999999|integer",
+            "down_amount"           => "nullable|max:9999999999|integer",
+            "property_type"         => "required|string|max:124",
+            "location"              => "required|string|max:512",
+            "company"               => "required|string|max:512",
+            "agent"                 => "required|string|max:1",
+            "occupation"            => "required|string|max:512",
+            "current_employer"      => "required|string|max:512",
+            "annual_income"         => "required|string|max:512",
+            "credit_score"          => "required|string|max:512",
+            "contact_infomation"    => "required|string|max:1024",
+
+        ]);
+
+
+        DB::beginTransaction();
+        try {
+
+            $data['purpose']            = $request->purpose;
+            $data['price']              = $request->price;
+            $data['down_amount']        = $request->down_amount;
+            $data['property_type']      = $request->property_type;
+            $data['location']           = $request->location;
+            $data['company_name']       = $request->company;
+            $data['agent']              = $request->agent;
+            $data['occupation']         = $request->occupation;
+            $data['current_employer']   = $request->current_employer;
+            $data['annual_income']      = $request->annual_income;
+            $data['credit_score']       = $request->credit_score;
+            $data['contact_infomation'] = $request->contact_infomation;
+            $data['query_type']         = 3;
+
+
+            $card = BusinessCard::findOrFail($request->card_id);
+
+            if (Auth::user() && $card->user_id == Auth::user()->id) {
+
+                Toastr::error(trans('Not possible to send application to your card !'), 'Error', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+
+            } elseif (!empty(Auth::user())) {
+                $data['connect_user_id']    = Auth::user()->id;
+                $data['profile_image']      = Auth::user()->profile_image;
+                $data['email']              = Auth::user()->email;
+                $data['name']               = Auth::user()->name;
+            } else {
+                $data['connect_user_id'] = NULL;
+            }
+
+            $data['card_id']        = $card->id;
+            $data['created_at']     = now();
+            $data['user_id']        = $card->user_id;
+            $connect = DB::table('connects')->insert($data);
+            $data['card_id'] = $card->card_id;
+        } catch (\Throwable $th) {
+            DB::rollback();
+            dd($th->getMessage());
+            Toastr::error(trans('Something wrong ! please try again'), 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+
+        }
+        DB::commit();
+
+        $user = DB::table('users')->where('id', $card->user_id)->first();
+        // DB::commit();
+        if (!empty($connect) && $user->is_notify == 1) {
+           // need to send mail
+        }
+
+        Toastr::success(trans('Your loan application send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+
+    }
+
+
+
+
 
 
 }
