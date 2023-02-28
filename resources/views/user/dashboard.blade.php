@@ -162,8 +162,7 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                                     <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
                                         class="btn-sm btn-secondary changeTrg change-status {{ $card->status == 0 ? 'inactive' : '' }} "
                                         data-id="{{ $card->id }}" data-status="{{ $card->status }}">
-                                        <i class="fa fa-check" style="@if ($card->status == 0) display:none; @endif"
-                                            title="Live Card"></i>
+                                        <i class="fa fa-check" title="Live Card"></i>
                                         {{ __('Live') }}
                                     </a>
                                     <?php
