@@ -659,7 +659,6 @@
             Authorization Modal
         </button>
     </div>
-
     <div class="authorization_modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -824,6 +823,184 @@
     <!-- Credit Report Authorization Form -->
 
 
+    <!--  -->
+    <div class="text-center m-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loadApplicationModal">
+            Loan Application
+        </button>
+    </div>
+    <div class="authorization_modal custome_modal modal fade" id="loadApplicationModal" tabindex="-1"
+        aria-labelledby="loadApplicationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="loadApplicationModalLabel">
+                        Your Loan Application
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <div class="mb-0">
+                                    <label for="" class="form-label">Purpose of Mortgage or Loan</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="purpose" id="purpose_id" checked>
+                                    <label class="form-check-label" for="purpose_id">
+                                        Purchase
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="purpose" id="refinance_id">
+                                    <label class="form-check-label" for="refinance_id">
+                                        Refinance
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4 purchase_field">
+                                <div class="form-group">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" name="price" class="form-control" placeholder="Purchase Price"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4 purchase_field">
+                                <div class="form-group">
+                                    <label for="down_amount" class="form-label">Down Amount</label>
+                                    <input type="number" name="down_amount" class="form-control"
+                                        placeholder="Down Amount" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4 refinance_field" style="display:none;">
+                                <div class="form-group">
+                                    <label for="amount" class="form-label">Loan Amount</label>
+                                    <input type="number" name="amount" class="form-control" placeholder="Loan Amount"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 mb-4">
+                                <div class="form-group">
+                                    <label for="amount" class="form-label d-block">Type of Property</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="property" id="property_1">
+                                        <label class="form-check-label" for="property_1">
+                                            Single Family House
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="property" id="property_2">
+                                        <label class="form-check-label" for="property_2">
+                                            2+ Unit House
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="property" id="property_3">
+                                        <label class="form-check-label" for="property_3">
+                                            Conodo / Co-Op
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4 refinance_field" style="display:none;">
+                                <div class="form-group">
+                                    <label for="estimated_value" class="form-label">Estimated
+                                        Value</label>
+                                    <input type="number" name="estimated_value" class="form-control"
+                                        placeholder="Estimated Value" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="location" class="form-label">Property
+                                        Location</label>
+                                    <input type="text" name="location" class="form-control" placeholder="location"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="company" class="form-label">Current Mortgage
+                                        Company</label>
+                                    <input type="text" name="company" class="form-control"
+                                        placeholder="Mortgage Company">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4 purchase_field">
+                                <div class="form-group">
+                                    <label for="amount" class="form-label">Would you like a Referral to
+                                        Real Estate Agent?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="agent" id="agent_1">
+                                        <label class="form-check-label" for="agent_1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="agent" id="agent_2">
+                                        <label class="form-check-label" for="agent_2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-group">
+                                    <label for="occupation" class="form-label">Occupation</label>
+                                    <input type="text" name="occupation" class="form-control" placeholder="Occupation"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 mb-4">
+                                <div class="form-group">
+                                    <label for="current_employer" class="form-label">How long have your
+                                        been employed by your current emmployer?</label>
+                                    <input type="number" name="current_employer" class="form-control"
+                                        placeholder="Current Employer" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mb-4">
+                                <div class="form-group">
+                                    <label for="annual_income" class="form-label">Annual
+                                        Income</label>
+                                    <input type="number" name="annual_income" class="form-control"
+                                        placeholder="Annual Income" required>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <div class="form-group">
+                                    <label for="credit_score" class="form-label">Credit Score</label>
+                                    <input type="number" name="credit_score" class="form-control"
+                                        placeholder="Credit Score" required>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <div class="form-group">
+                                    <label for="contact_infomation" class="form-label">Contact
+                                        Information</label>
+                                    <textarea name="contact_infomation" id="contact_infomation" class="form-control"
+                                        cols="30" rows="8"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+
+
 
 
     <!-- ======================= Footer  =========================== -->
@@ -946,6 +1123,25 @@
             }
         });
     </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#refinance_id').change(function () {
+                if ($(this).is(':checked')) {
+                    $('.purchase_field').hide();
+                    $('.refinance_field').show();
+                }
+            });
+            $('#purpose_id').change(function () {
+                if ($(this).is(':checked')) {
+                    $('.purchase_field').show();
+                    $('.refinance_field').hide();
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

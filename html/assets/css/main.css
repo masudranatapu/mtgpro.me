@@ -763,6 +763,7 @@ body {
     border-radius: 0;
     height: 23px;
     padding: 0;
+    background: #fff !important;
 }
 
 .authorization_modal h4 {
@@ -809,17 +810,44 @@ body {
     .authorization_modal .input-group-text {
         height: 22px;
     }
-
-
 }
 
 
 
 
+/* Loan Application Modal  */
 
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+}
 
+.custome_modal .form-control::placeholder {
+    color: #BBB;
+    font-size: 14px;
+}
 
+.custome_modal .form-check {
+    display: inline-block;
+    margin-right: 21px;
+}
 
+.custome_modal .form-check label {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+}
+
+.custome_modal .form-check input {
+    cursor: pointer;
+    box-shadow: none !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary);
+    border: none !important;
+}
 
 
 
@@ -984,5 +1012,6 @@ body {
     h2,
     h3 {
         page-break-after: avoid;
+
     }
 }
