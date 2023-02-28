@@ -1009,11 +1009,11 @@
                             <div class="col-12 mb-4">
                                 <div class="row">
                                     <div class="col-lg-3">
-                                        <label for="" class="form-label">By my signature below i,</label>
+                                        <label for="" class="form-label">By my signature below I,</label>
                                     </div>
                                     <div class="col-lg-5">
                                         <input type="text" name="name" class="form-control"
-                                            autocomplete="off" required>
+                                            autocomplete="off" required value="{{ $user->name }}">
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="" class="form-label">Authorize</label>
@@ -1084,7 +1084,7 @@
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
-                                    <label for="current_date" class="form-label input-group-text">Start Date:</label>
+                                    <label for="current_date" class="form-label input-group-text">Move In Date:</label>
                                     <input type="text" name="current_date" id="current_date" class="form-control datepicker" required />
                                 </div>
                             </div>
@@ -1110,21 +1110,21 @@
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="prior_start_date" class="form-label input-group-text">Start Date:</label>
+                                    <label for="prior_start_date" class="form-label input-group-text">Move In Date:</label>
                                     <input type="text" name="prior_start_date" id="prior_start_date"
                                         class="form-control datepicker" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="prior_end_date" class="form-label input-group-text">End Date:</label>
+                                    <label for="prior_end_date" class="form-label input-group-text">Move Out Date:</label>
                                     <input type="text" name="prior_end_date" id="prior_end_date" class="form-control datepicker"
                                     required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="license" class="form-label input-group-text">License#</label>
+                                    <label for="license" class="form-label input-group-text">Driver's License#</label>
                                     <input type="text" name="license" id="license" class="form-control "
                                     required />
                                 </div>
