@@ -148,7 +148,7 @@ class ConnectionController extends Controller
             return redirect()->back();
         }
         DB::commit();
-        Toastr::success('Payment information updated', 'Success', ["positionClass" => "toast-top-center"]);
+        Toastr::success('Information updated', 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 

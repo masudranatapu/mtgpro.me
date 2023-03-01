@@ -117,9 +117,7 @@ class HomeController extends Controller
             $connect = DB::table('connects')->insert($data);
             $data['card_id'] = $card->card_id;
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             DB::rollback();
-
             // Toastr::error(trans('Something wrong ! please try again'), 'Error', ["positionClass" => "toast-top-right"]);
             // return redirect()->back();
             return response()->json([
@@ -128,9 +126,10 @@ class HomeController extends Controller
             ]);
         }
         $user = DB::table('users')->where('id', $card->user_id)->first();
-        // DB::commit();
+        DB::commit();
+
         if (!empty($connect) && $user->is_notify == 1) {
-            // Mail::to($card->card_email)->send(new ConnectMail($data));
+
             [$message, $subject] = $this->getConnectMail($card, $request->all());
             Mail::to($card->card_email)->send(new AllMail($message, $subject));
 
@@ -143,6 +142,7 @@ class HomeController extends Controller
             'status' => 1,
             'msg' => trans('Connection send successfully')
         ]);
+
     }
 
 
@@ -638,7 +638,6 @@ class HomeController extends Controller
         $mailMesssage = EmailTemplate::where('slug', 'contact-query-mail-to-card-owner')->first();
         $mailcontent =     $mailMesssage->body;
 
-
         if (isset($owner)) {
             $user = User::find($owner->user_id);
             $mailcontent = preg_replace("/{{owner}}/", $user->name, $mailcontent);
@@ -676,49 +675,20 @@ class HomeController extends Controller
         $mailcontent =     $mailMesssage->body;
         $setting = Config::first();
 
-
-
-
         if ($senderData) {
             $mailcontent = preg_replace("/{{user_name}}/", $senderData['name'], $mailcontent);
         }
-
         if ($senderData) {
             $mailcontent = preg_replace("/{{site_title}}/", $setting->config_value, $mailcontent);
         }
-
         return [$mailcontent, $mailMesssage->subject];
     }
 
 
-    // public function creditReport(Request $request)
-    // {
-
-
-    //     DB::table('connects')->insert([
-    //         'name'              => $request->name,
-    //         'title'             => 'Credit Report',
-    //         'ccode'             => '',
-    //         'phone'             => '',
-    //         'email'             => '',
-    //         'company_name'      => '',
-    //         'message'           => '',
-    //         'user_id'           => '',
-    //         'card_id'           => '',
-    //         'created_at'        => '',
-    //         'created_by'        => '',
-    //         'is_active'         => 1,
-    //         'connect_user_id'   => '',
-
-    //     ]);
-
-
-    // }
 
 
     public function creditReport(Request $request)
     {
-
         $request->validate([
             "name"                      => "required",
             "applicant_name"            => "required",
@@ -743,7 +713,6 @@ class HomeController extends Controller
         DB::beginTransaction();
         try {
             $data['name']           = $request->name;
-
             $data['applicant_name']            = $request->applicant_name;
             $data['social_security_number']    = $request->social_security_number;
             $data['date_of_birth']             = $request->date_of_birth;
@@ -762,14 +731,10 @@ class HomeController extends Controller
             $data['signature_date']            = $request->signature_date;
             $data['query_type']                = 2;
 
-
             $card = BusinessCard::findOrFail($request->card_id);
-
             if (Auth::user() && $card->user_id == Auth::user()->id) {
-
                 Toastr::error(trans('Not possible to send message to your card !'), 'Error', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
-
             } elseif (!empty(Auth::user())) {
                 $data['connect_user_id']    = Auth::user()->id;
                 $data['profile_image']      = Auth::user()->profile_image;
@@ -788,12 +753,9 @@ class HomeController extends Controller
             dd($th->getMessage());
             Toastr::error(trans('Something wrong ! please try again'), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
-
         }
         DB::commit();
-
         $user = DB::table('users')->where('id', $card->user_id)->first();
-        // DB::commit();
         if (!empty($connect) && $user->is_notify == 1) {
            // need to send mail
         }

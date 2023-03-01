@@ -534,9 +534,9 @@
                             @if ($user->housing_logo_view == '1')
                             <div class="col-4 col-md-3 mb-3">
                                 <a target="_blank" href="https://nmlsconsumeraccess.org">
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;"
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; border: 1px solid #6ecddb;"
                                         class="img-fluid d-block mb-1" src="{{ asset('assets/img/house.png') }}" alt=""
-                                        width="90" height="90">
+                                        width="75" height="75">
                                     <span>Equal Housing Opportunity</span>
                                 </a>
                             </div>

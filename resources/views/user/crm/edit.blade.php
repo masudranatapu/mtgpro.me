@@ -17,13 +17,14 @@ $tabindex = 1;
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        <a href="{{ route('user.crm.details',[$row->email,$row->id]) }}" class="back_btn"
+                        <a href="{{ route('user.crm.details',[$row->id]) }}" class="back_btn"
                             title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
                         <img src="{{ getProfile('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2"
                             alt="{{ $row->name }}">
                         {{ $row->name }}
                     </h1>
                 </div>
+
             </div>
         </div>
     </div>
@@ -50,6 +51,17 @@ $tabindex = 1;
                                             <input type="file" name="profile_pic" id="profile_pic">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>
+                                    @if($row->query_type == 1)
+                                    <small>Connections</small>
+                                @elseif($row->query_type == 2)
+                                    <small>Credit report authorization</small>
+                                @elseif($row->query_type == 3)
+                                    <small>Quick applications</small>
+                                @endif
+                            </h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -107,7 +119,7 @@ $tabindex = 1;
                                 <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                                 @endif
                             </div>
-                            <a href="{{ route('user.crm.details',[$row->email,$row->id]) }}"
+                            <a href="{{ route('user.crm.details',[$row->id]) }}"
                                 class="btn btn-secondary mr-2">{{ __('Cancel') }}</a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>

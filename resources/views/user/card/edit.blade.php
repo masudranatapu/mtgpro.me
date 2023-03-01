@@ -501,7 +501,7 @@
                                                     border: 1px solid #EEE;">
 
                                                             <input id="nmls_show" name="nmls" class="switcher_"
-                                                                
+
                                                                 type="radio" value="1"
                                                                 @if (Auth::user()->nmls_view == '1') checked @endif>
 
@@ -513,7 +513,7 @@
                                                             <label for="nmls_hide"
                                                                 style="padding-right: 54px !important;">No</label>
                                                             <span class="highlighter"></span>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -701,11 +701,11 @@
                                                             style="display: {{ Auth::user()->housing_logo_view == 0 ? 'none' : 'block' }}">
                                                             <div class="sicon_houseing" style="">
                                                                 <a class="house_link" href="#" target="_blank">
-                                                                    <img style="background:#eead12" class="p-2"
+                                                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; border: 1px solid #6ecddb;" class="p-2"
                                                                         data-bg=""
-                                                                        src="{{ getPhoto('assets/img/icon/house.svg') }}"
-                                                                        alt="" class="social_logo">
-                                                                    <span class="icon_label">Equal Housing logo</span>
+                                                                        src="{{ asset('assets/img/house.png') }}"
+                                                                        alt="" class="social_logo" width="75" height="75">
+                                                                    <span class="icon_label">Equal Housing Opportunity</span>
                                                                 </a>
                                                             </div>
                                                         </div>
