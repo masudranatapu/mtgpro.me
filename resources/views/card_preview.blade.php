@@ -261,6 +261,8 @@
     @if (checkPackageValidity($cardinfo->user_id) == false)
     @include('_plan_expired_error')
     @else
+
+    {{ $errors }}
     <div class="template">
         <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
             <div class="card_cover">
