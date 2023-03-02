@@ -777,13 +777,13 @@ class HomeController extends Controller
             "down_amount"           => "nullable|max:9999999999|integer",
             "property_type"         => "required|string|max:124",
             "location"              => "required|string|max:512",
-            "company"               => "required|string|max:512",
+            // "company"               => "required|string|max:512",
             "agent"                 => "required|string|max:1",
             "occupation"            => "required|string|max:512",
             "current_employer"      => "required|string|max:512",
             "annual_income"         => "required|string|max:512",
             "credit_score"          => "required|string|max:512",
-            "contact_infomation"    => "required|string|max:1024",
+            // "contact_infomation"    => "required|string|max:1024",
 
         ]);
 
@@ -797,13 +797,13 @@ class HomeController extends Controller
             $data['down_amount']        = $request->down_amount;
             $data['property_type']      = $request->property_type;
             $data['location']           = $request->location;
-            $data['company_name']       = $request->company;
+            $data['company_name']       = $request->company ?? null;
             $data['agent']              = $request->agent;
             $data['occupation']         = $request->occupation;
             $data['current_employer']   = $request->current_employer;
             $data['annual_income']      = $request->annual_income;
             $data['credit_score']       = $request->credit_score;
-            $data['contact_infomation'] = $request->contact_infomation;
+            // $data['contact_infomation'] = $request->contact_infomation;
             $data['query_type']         = 3;
 
             $card = BusinessCard::findOrFail($request->card_id);
