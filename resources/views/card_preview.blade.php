@@ -1161,7 +1161,7 @@
                                 <div class="input-group">
                                     <label for="signature_date" class="form-label input-group-text">Date</label>
                                     <input type="text" name="signature_date" id="signature_date"
-                                        class="form-control datepicker" required />
+                                        class="form-control datepicker" required value="{{ date('m/d/Y') }}" />
                                 </div>
                             </div>
 
