@@ -80,15 +80,15 @@
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
     // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-    
+
     if ($diff_in_days > 31) {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 year'));
     } else {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 month'));
     }
-    
+
     $bill_date = date('d', strtotime($user->plan_activation_date));
-    
+
 @endphp
 
 
@@ -184,15 +184,13 @@
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_yearly, 2) }}
                                                                     </h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_yearly, 2) }}
-                                                                        {{ __('per
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    year') }}.
+                                                                        {{ __('peryear') }}.
                                                                     </p>
                                                                 @else
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_monthly, 2) }}
                                                                     </h5>
                                                                     <p>{{ CurrencyFormat($plan->plan_price_monthly, 2) }}
-                                                                        {{ __('per
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    month') }}.
+                                                                        {{ __('permonth') }}.
                                                                     </p>
                                                                 @endif
                                                             @else
@@ -307,8 +305,7 @@
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <a href="{{ route('user.all-invoice.download') }}"
-                                                                        class="btn btn-secondary float-md-right">{{ __('Download
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        all Invoice') }}</a>
+                                                                        class="btn btn-secondary float-md-right">{{ __('Download Invoice') }}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -440,9 +437,8 @@
 
                                                         </div>
                                                         <div class="form-group mt-4">
-
                                                             <label class="form-label" for="user_disclimer">
-                                                                {{ __('User Disclaimer') }}</label>
+                                                                {{ __('Disclaimer') }}</label>
                                                             <textarea required name="user_disclaimer" id="user_disclimer" cols="30" rows="10" class="form-control">{{ old('user_disclimer') ?? $user->user_disclaimer }}
                                                             </textarea>
 
@@ -552,8 +548,7 @@
                         <form method="POST" id="accountDeletionForm" action="{{ route('user.deletion-request') }}">
                             @csrf
                             <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
-                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        This cannot be undone.') }}
+                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted. This cannot be undone.') }}
                             </p>
 
                             <div class="mb-3">
@@ -625,8 +620,6 @@
                     </div>
                     <div class="modal_body p-3">
                         {!! $settings->site_disclimer ?? '' !!}
-
-
                     </div>
                 </div>
             </div>

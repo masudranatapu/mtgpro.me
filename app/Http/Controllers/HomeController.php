@@ -768,8 +768,10 @@ class HomeController extends Controller
 
     public function quickReport(Request $request)
     {
-
         $request->validate([
+            "contact_name"          => "required|max:124|string",
+            "contact_email"         => "required|max:124|string",
+            "contact_phone"         => "required|max:124|string",
             "purpose"               => "required|max:124|string",
             "price"                 => "required|max:9999999999|integer",
             "down_amount"           => "nullable|max:9999999999|integer",
@@ -785,10 +787,11 @@ class HomeController extends Controller
 
         ]);
 
-
         DB::beginTransaction();
         try {
-
+            $data['name']               = $request->contact_name;
+            $data['email']              = trim($request->contact_email);
+            $data['phone']              = $request->contact_phone;
             $data['purpose']            = $request->purpose;
             $data['price']              = $request->price;
             $data['down_amount']        = $request->down_amount;
@@ -803,19 +806,13 @@ class HomeController extends Controller
             $data['contact_infomation'] = $request->contact_infomation;
             $data['query_type']         = 3;
 
-
             $card = BusinessCard::findOrFail($request->card_id);
-
             if (Auth::user() && $card->user_id == Auth::user()->id) {
-
                 Toastr::error(trans('Not possible to send application to your card !'), 'Error', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
-
             } elseif (!empty(Auth::user())) {
                 $data['connect_user_id']    = Auth::user()->id;
                 $data['profile_image']      = Auth::user()->profile_image;
-                $data['email']              = Auth::user()->email;
-                $data['name']               = Auth::user()->name;
             } else {
                 $data['connect_user_id'] = NULL;
             }
