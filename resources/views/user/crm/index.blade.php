@@ -168,7 +168,7 @@ if (!empty($daterange)) {
                                                     <a class="dropdown-item"
                                                         href="{{ route('user.crm.download', $row->id) }}">{{
                                                         _('Save as contact') }}</a>
-                                                    <a class="dropdown-item" href="javascript::void(0)"
+                                                    <a class="dropdown-item send_mail" href="javascript::void(0)" data-email="{{ $row->email }}"
                                                         data-toggle="modal" data-target="#connectMail">{{ _('Send mail')
                                                         }}</a>
                                                 </div>
@@ -300,5 +300,15 @@ if (!empty($daterange)) {
                 }
             });
         });
+
+        $(document).on('click','.send_mail',function(){
+            var email = $(this).data('email');
+            if(email != ''){
+                $('#email').val(email);
+            }else{
+                $('#email').val('');
+            }
+
+        })
 </script>
 @endpush
