@@ -107,8 +107,9 @@ body {
 }
 
 .navbar-brand img {
-    width: 126px;
+    width: 150px;
 }
+
 
 /* ========================= Header =============================== */
 
@@ -753,6 +754,12 @@ body {
 
 .login_form .bottom p a {
     color: var(--primary);
+}
+
+.product_article sup {
+    font-size: 12px;
+    text-decoration: line-through;
+    color: #999;
 }
 
 .product_item {

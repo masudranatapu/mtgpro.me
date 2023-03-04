@@ -34,7 +34,7 @@ $banner = $home_data['banner'];
 <div class="banner section">
     <div class="container">
         <div class="row g-0 align-items-center">
-            <div class="col-lg-5 col-12">
+            <div class="col-lg-5 col-12 mb-4 mb-lg-0">
                 <div class="banner_content text-lg-start text-center" data-aos="zoom-in">
                     <h2>{!! __($banner['banner_title']) !!}</h2>
                     <p>{!! __($banner['banner_description']) !!}</p>

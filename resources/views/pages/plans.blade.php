@@ -31,15 +31,15 @@
 @endsection
 @section('content')
 <!-- ======================= Terms Conditions  =========================== -->
-<div class="termsconditon_sec mt-5 mb-5">
+<div class="pricing pt-5 pb-5">
     <!-- container -->
     <div class="container">
         <div class="page_wrapper">
-            <div class="page_title mb-4">
+            <div class="page_title">
                 <h3>{{ __('Pricing') }}</h3>
             </div>
             <div class="page_content">
-                <div class="pricing section pt-5 pb-5" id="pricing">
+                <div class="section pt-5 mt-0 mb-0" id="pricing">
                     <div class="container">
                         <div class="row">
                             <div class="section_title mb-5 text-center" data-aos="fade-up">
@@ -63,7 +63,7 @@
                             $planfeatures = json_decode($row->features);
                             @endphp
                             <div
-                                class="col-md-3 col-lg-3 col-12 @if($row->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
+                                class="col-md-3 col-lg-3 col-12  mb-3  @if($row->plan_type == 1) solopreneur_and_individuals  @else team_accounts @endif">
                                 <div class="pricing-card card card-md">
                                     <div class="card-body text-center">
                                         <div class="text-capitalize text-dark">
