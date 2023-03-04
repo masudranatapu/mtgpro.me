@@ -6,7 +6,7 @@
     $settings = getSetting();
     ?>
     @if (env('APP_MODE') == 'DEVELOPMENT')
-        <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
     @endif
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=2hgfd') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=5') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     @stack('custom_css')
 
