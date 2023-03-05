@@ -31,7 +31,7 @@ enctype="multipart/form-data">
 </div>
 <div class="form-group">
     <label class="form-label">
-        <span id="content_link">{{ $icon->icon_title }} {{ $type }}</span>
+        <span id="content_link">{{ $icon->icon_title }}</span>
         <span class="text-dark">*</span>
     </label>
     @if ($icon->type=='file')

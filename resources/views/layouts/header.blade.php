@@ -128,6 +128,9 @@ $setting = getSetting();
                                     <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('shop') }}">{{ __('Shop') }}</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('about-us') }}">{{ __('About Us') }}</a>
                                 </li>
                                 <li class="nav-item">
@@ -143,7 +146,7 @@ $setting = getSetting();
                                                 class="nav-link d-flex p-0">
                                                 <span class="avatar">
                                                     @if (Auth::check())
-                                                        <img src="{{ Auth::user()->profile_image }}"
+                                                        <img src="{{ getAvatar(Auth::user()->profile_image) }}"
                                                             class="rounded-circle" width="40"
                                                             alt="{{ auth::user()->name }}">
                                                     @endif
@@ -165,12 +168,6 @@ $setting = getSetting();
                                                 </svg>
                                             </div>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-
-                                                {{-- <li>
-                                                <a class="dropdown-item" href="{{ route('user.card') }}">{{ __('Card')
-                                                    }}</a>
-                                            </li> --}}
-
                                                 @if (Auth::user()->user_type == 1)
                                                     <li><a class="dropdown-item" href="{{ route('dashboard') }}"
                                                             title="{{ __('Dashboard') }}">{{ __('Dashboard') }}</a></li>
@@ -178,7 +175,7 @@ $setting = getSetting();
                                                     <li><a class="dropdown-item" href="{{ route('user.card') }}"
                                                             title="{{ __('Card') }}">{{ __('Card') }}</a></li>
                                                     <li><a class="dropdown-item" href="{{ route('dashboard') }}"
-                                                            title="{{ __('Settings') }}">{{ __('Settings') }}</a></li>
+                                                                title="{{ __('My account') }}">{{ __('My account') }}</a></li>
                                                 @endif
                                                 <li><a class="dropdown-item" href="{{ route('logout') }}"
                                                         onclick="event.preventDefault();
@@ -207,6 +204,16 @@ $setting = getSetting();
                                         </a>
                                     </li>
                                 @endauth
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('cart') }}">
+                                        <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                        @if (session('cart'))
+                                            <span id="cartCounter">({{ count(session('cart')) }})</span>
+                                        @else
+                                            <span id="cartCounter"></span>
+                                        @endif
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -107,7 +107,7 @@ body {
 }
 
 .navbar-brand img {
-    width: 150px;
+    width: 200px;
 }
 
 
@@ -187,6 +187,10 @@ body {
 .banner_content .btn-dark:hover {
     background: var(--black) !important;
     color: var(--white) !important;
+}
+
+.dropdown-item.active, .dropdown-item:active{
+    background-color: #070707 !important;
 }
 
 .dropdown.user_dropdown button {
