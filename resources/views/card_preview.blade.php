@@ -1081,13 +1081,13 @@
                                 <div class="form-group">
                                     <label for="price" class="form-label" id="price_lbl">Purchase Price</label>
                                     <input type="number" name="price" class="form-control" placeholder="Purchase Price"
-                                        required id="price">
+                                         id="price">
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4 purchase_field">
                                 <div class="form-group">
                                     <label for="down_amount" class="form-label down_amount_lbl">Down Payment</label>
-                                    <input type="number" name="down_amount" class="form-control down_amount_input" placeholder="Down Payment" required>
+                                    <input type="number" name="down_amount" class="form-control down_amount_input" placeholder="Down Payment" >
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4 refinance_field" style="display:none;">
