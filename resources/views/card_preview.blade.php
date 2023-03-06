@@ -24,9 +24,10 @@
     } else {
         $title = $user_name;
     }
-    $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-    $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-    $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+    $android    = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
+    $iphone     = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+    $ipad       = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+    $phone_number = $email = null;
 
     ?>
     <meta charset="UTF-8">
@@ -67,179 +68,39 @@
     @if ($cardinfo->theme_color)
     <style>
         .save_contact a {
-            background: {
-                    {
-                    $cardinfo->theme_color
-                }
-            }
+            background: {{$cardinfo->theme_color}}
         }
 
         .offcanvas_btn a {
-            background: {
-                    {
-                    $cardinfo->theme_color
-                }
-            }
+            background: {{$cardinfo->theme_color}}
         }
     </style>
     @endif
+
     <style>
-        table.table-condensed td {
-            padding: 5px 11px;
-            font-size: 13px;
+         table.table-condensed td {padding: 5px 11px;font-size: 13px;}
+         .authorization_modal .modal-content {border: none;border-radius: 0px;}
+         .authorization_modal .modal-header h1 {text-align: center;display: block;width: 100%;font-size: 18px !important;font-weight: 800;text-transform: uppercase;letter-spacing: 1px;}
+         .authorization_modal .modal-header {border: none;display: inherit;margin-bottom: 24px;}
+         .authorization_modal .modal-body p {font-size: 13px;margin-bottom: 15px;line-height: 24px;color: #666;}
+         .authorization_modal .modal-body p {font-size: 13px;margin-bottom: 15px;line-height: 24px;color: #666;}
+         .authorization_modal .input-group-text {border: none !important;padding: 0 !important;background: transparent !important;font-size: 13px;font-weight: 600;margin-right: 5px;text-decoration: underline;margin-bottom: 0;height: 31px;}
+         .authorization_modal .form-control {outline: none !important;box-shadow: none !important;border: none;border-bottom: 2px solid #e4e4e4;border-radius: 0;height: 23px;background: #fff !important;padding: 0;}
+         .authorization_modal h4 {font-size: 15px;margin: 0;font-weight: 600;color: #070707;}
+         .modal-header .btn-close {outline: none !important;box-shadow: none !important;}
+         .authorization_modal .btn-primary {background: #c62f00;color: #fff;padding: 7px 34px;font-size: 16px;font-family: 'Inter', sans-serif;border: none;font-weight: 600;border-radius: 3px;transition: all 0.3s ease;-webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;-ms-transition: all 0.3s ease;box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;}
+         @media screen and (max-width:575px) {.authorization_modal .input-group {display: block;position: inherit;}
+         .authorization_modal .input-group-text {display: block;text-align: left;}
+         .authorization_modal .form-control, .authorization_modal .form-floating, .authorization_modal .form-select {width: 100%;}
+         .authorization_modal .input-group-text {height: 22px;}
+         .authorization_modal .modal-content {padding: 10px !important;}
         }
-
-        /* Authorization Modal  */
-
-        .authorization_modal .modal-content {
-            border: none;
-            border-radius: 0px;
-        }
-
-        .authorization_modal .modal-header h1 {
-            text-align: center;
-            display: block;
-            width: 100%;
-            font-size: 18px !important;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .authorization_modal .modal-header {
-            border: none;
-            display: inherit;
-            margin-bottom: 24px;
-        }
-
-        .authorization_modal .modal-body p {
-            font-size: 13px;
-            margin-bottom: 15px;
-            line-height: 24px;
-            color: #666;
-        }
-
-        .authorization_modal .modal-body p {
-            font-size: 13px;
-            margin-bottom: 15px;
-            line-height: 24px;
-            color: #666;
-        }
-
-        .authorization_modal .input-group-text {
-            border: none !important;
-            padding: 0 !important;
-            background: transparent !important;
-            font-size: 13px;
-            font-weight: 600;
-            margin-right: 5px;
-            text-decoration: underline;
-            margin-bottom: 0;
-            height: 31px;
-        }
-
-        .authorization_modal .form-control {
-            outline: none !important;
-            box-shadow: none !important;
-            border: none;
-            border-bottom: 2px solid #e4e4e4;
-            border-radius: 0;
-            height: 23px;
-            background: #fff !important;
-            padding: 0;
-        }
-
-        .authorization_modal h4 {
-            font-size: 15px;
-            margin: 0;
-            font-weight: 600;
-            color: #070707;
-        }
-
-        .modal-header .btn-close {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-
-        .authorization_modal .btn-primary {
-            background: #c62f00;
-            color: #fff;
-            padding: 7px 34px;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-            border: none;
-            font-weight: 600;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-            -webkit-transition: all 0.3s ease;
-            -moz-transition: all 0.3s ease;
-            -o-transition: all 0.3s ease;
-            -ms-transition: all 0.3s ease;
-            box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
-        }
-
-        @media screen and (max-width:575px) {
-            .authorization_modal .input-group {
-                display: block;
-                position: inherit;
-            }
-
-            .authorization_modal .input-group-text {
-                display: block;
-                text-align: left;
-            }
-
-            .authorization_modal .form-control,
-            .authorization_modal .form-floating,
-            .authorization_modal .form-select {
-                width: 100%;
-            }
-
-            .authorization_modal .input-group-text {
-                height: 22px;
-            }
-
-            .authorization_modal .modal-content {
-                padding: 10px !important;
-            }
-
-
-        }
-
-        /* Loan Application Modal  */
-
-        .form-label {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .custome_modal .form-control::placeholder {
-            color: #BBB;
-            font-size: 14px;
-        }
-
-        .custome_modal .form-check {
-            display: inline-block;
-            margin-right: 21px;
-        }
-
-        .custome_modal .form-check label {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            color: #555;
-        }
-
-        .custome_modal .form-check input {
-            cursor: pointer;
-            box-shadow: none !important;
-        }
-
-        .form-check-input:checked {
-            background-color: #c62f00;
-            border: none !important;
-        }
-
+        .form-label {font-size: 14px;font-weight: 600;}
+         .custome_modal .form-control::placeholder {color: #BBB;font-size: 14px;}
+         .custome_modal .form-check {display: inline-block;margin-right: 21px;}
+         .custome_modal .form-check label {cursor: pointer;font-size: 12px;font-weight: 600;color: #555;}
+         .custome_modal .form-check input {cursor: pointer;box-shadow: none !important;}
+         .form-check-input:checked {background-color: #c62f00;border: none !important;}
 
     </style>
 </head>
@@ -384,41 +245,47 @@
                                         <span>{{ $contact->label }}</span>
                                     </a>
                                 </div>
+                                @php
+                                $email = $contact->content;
+                                @endphp
+
                                 @elseif ($contact->type == 'mobile')
-                                @if ($contact->icon_name == 'facetime')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @else
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="tel:{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @endif
+                                    @if ($contact->icon_name == 'facetime')
+                                        <div class="col-4 col-md-3 mb-3">
+                                            <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
+                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                    class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                                    alt="{{ $contact->label }}" width="75" height="75">
+                                                <span>{{ $contact->label }}</span>
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="col-4 col-md-3 mb-3">
+                                            <a title="{{ $contact->label }}" class="text-decoration-none"
+                                                href="tel:{{ $contact->content }}">
+                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                    class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                                    alt="{{ $contact->label }}" width="75" height="75">
+                                                <span>{{ $contact->label }}</span>
+                                            </a>
+                                        </div>
+                                        @php
+                                        $phone_number = $contact->content;
+                                        @endphp
+                                    @endif
                                 @elseif ($contact->type == 'file')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank"
-                                        href="{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank"
+                                            href="{{ $contact->content }}">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                                alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
                                 @elseif ($contact->type == 'number')
                                 <div class="col-4 col-md-3 mb-3">
-
                                     @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle')
                                     <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
                                         href="javascript:void(0)" data-content="{{ $contact->content }}"
@@ -459,25 +326,25 @@
                                     @endif
                                 </div>
                                 @elseif ($contact->type == 'text')
-                                @if ($contact->icon_name == 'textSection')
-                                <div class="col-12 col-md-12 mb-3">
-
-                                    <div class="text-box">
-                                        <h6>{{ $contact->label }}</h6>
-                                        <p>{!! $contact->content !!}</p>
+                                    @if ($contact->icon_name == 'textSection')
+                                    <div class="col-12 col-md-12 mb-3">
+                                        <div class="text-box">
+                                            <h6>{{ $contact->label }}</h6>
+                                            <p>{!! $contact->content !!}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                @else
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="sms:{{ $contact->content }}" target="_blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @endif
+                                    @else
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a title="{{ $contact->label }}" class="text-decoration-none"
+                                            href="sms:{{ $contact->content }}" target="_blank">
+                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
+                                                alt="{{ $contact->label }}" width="75" height="75">
+                                            <span>{{ $contact->label }}</span>
+                                        </a>
+                                    </div>
+
+                                    @endif
                                 @elseif ($contact->type == 'link' && $contact->icon_name == 'embeddedvideo')
                                 <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
                                     <p>{{ $contact->label }}</p>
@@ -652,21 +519,28 @@
                                                 {{ __('Social Media') }}
                                             </a>
                                         </div>
+
+                                        @if($phone_number != null)
                                         <div class="col-6 col-sm-4 mb-0 mb-sm-3">
-                                            <a href="sms:?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}"
+                                            <a href="sms:{{ $phone_number }}?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}"
                                                 class="download_btn w-100 btn btn-primary mx-1"
                                                 title="{{ __('Text') }}">
                                                 <i class="fa fa-download"></i>{{ __('Text') }}
                                             </a>
                                         </div>
+                                        @endif
+
+                                        @if($email != null)
                                         <div class="col-6 col-sm-4 m-sm-auto">
                                             <a class="btn btn-primary w-100 mx-1" title="{{ __('Email') }}"
-                                                href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}">
+                                                href="mailto:{{ $email }}?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}">
                                                 <img class="img-fluid"
                                                     src="{{ asset('assets/img/icons/connections.svg') }}" alt="">
                                                 {{ __('Email') }}
                                             </a>
                                         </div>
+                                        @endif
+
                                     </div>
                                 </div>
 
