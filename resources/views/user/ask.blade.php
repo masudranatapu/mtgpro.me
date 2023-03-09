@@ -75,7 +75,7 @@
             padding: 20px;
             height: 500px;
             border: 1px solid rgba(32, 33, 35, .5);
-            background-color: rgba(32, 33, 35, .5);
+            background-color: #343541;
             overflow-y: scroll;
         }
 
@@ -93,12 +93,15 @@
             margin-left: 0;
             margin-right: 0;
             margin: 15px;
-            color: #DDD;
+            color: #dddddd;
             border-radius: 3px;
             display: flex;
             align-items: center;
         }
 
+        #message {
+            height: 70px;
+        }
 
 
         .sender {
@@ -107,15 +110,13 @@
             border-radius: 50%;
 
             background-size: cover !important;
-
-
             background: url('{{ isset(auth()->user()->profile_image) ? asset(auth()->user()->profile_image) : asset('assets/img/default-profile.png') }}');
 
 
         }
 
         .chat-received {
-            background-color: rgba(32, 33, 35, .5);
+            background-color: #444654;
             margin-left: 0;
             margin-right: 0;
             margin: 15px;
@@ -177,8 +178,8 @@
                                         <div class="input-group">
 
 
-                                            <textarea type="text" class="form-control" id="message" placeholder="Type your message"
-                                                aria-label="Type your message"></textarea>
+                                            <input type="text" class="form-control" id="message"
+                                                placeholder="Type your message" aria-label="Type your message" />
                                             <button class="btn btn btn-primary" type="submit" id="submitBtn">
                                                 <i class="fa-sharp fa-solid fa-paper-plane"></i></button>
 
@@ -205,22 +206,38 @@
 
 @push('custom_js')
 <script>
+    let i = 0;
+    let j = 0;
     $('#askform').submit(function(e) {
         e.preventDefault();
-
+        i++;
         let message = $('#message').val();
 
 
         html = "";
         html +=
-            `<div class="row p-3 chat-sent"><div class="sender"></div><p class="m-0 ml-2">${message}</p</div>`;
+            `<div class="row p-3 sectionSender_${i} chat-sent"><div class="sender"></div><p class="m-0 ml-2">${message}</p</div>`;
 
 
         $('.chat-container').append(html);
+        var container = $('.chat-container');
+        var element = $('.sectionSender_' + i);
+
+        container.animate({
+            scrollTop: container.scrollTop = container.scrollTop() + element.offset().top - container
+                .offset().top
+        }, {
+            duration: 1000,
+            specialEasing: {
+                width: 'linear',
+                height: 'easeOutBounce'
+            }
+        });
+
         $('#askform')[0].reset();
         let url = "{{ url('/ask') }}" + "/" + message;
 
-        console.log(url);
+
 
         $.ajax({
             url: url,
@@ -232,12 +249,28 @@
                 ).prop('disabled', true);
             },
             success: function(data) {
-                console.log(data);
+                j++;
                 html2 = "";
 
                 html2 +=
-                    `<div class="row p-3 chat-received"><div class="receiver"></div><p class="m-0 ml-2">${data}</p></div>`;
+                    `<div class="row p-3 sectionrecived_${j} chat-received"><div class="receiver"></div><p class="m-0 ml-2">${data}</p></div>`;
                 $('.chat-container').append(html2);
+
+                var container = $('.chat-container');
+                var element = $('.sectionrecived_' + j);
+
+                container.animate({
+                    scrollTop: container.scrollTop = container.scrollTop() + element
+                        .offset().top - container
+                        .offset().top
+                }, {
+                    duration: 1000,
+                    specialEasing: {
+                        width: 'linear',
+                        height: 'easeOutBounce'
+                    }
+                });
+
 
             },
             error: function(error) {
