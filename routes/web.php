@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\DashboardControler;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use OpenAI\Laravel\Facades\OpenAI;
 
 Route::get('clear', function () {
     Artisan::call('cache:clear');
@@ -22,6 +23,22 @@ Route::get('language/{locale}', function ($locale) {
     session()->put('locale', $locale);
     return redirect()->back();
 });
+
+
+Route::get('ask/{question}', function ($question) {
+    $result = OpenAI::completions()->create([
+        'model' => 'text-davinci-003',
+        'prompt' => $question,
+        'max_tokens' => 20,
+        'temperature' => 0,
+        'n' => 2,
+
+    ]);
+
+    return response()->json($result['choices'][0]['text']);
+});
+
+Route::get('/ask-me', [HomeController::class, 'ask'])->name('user.ask');
 
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);

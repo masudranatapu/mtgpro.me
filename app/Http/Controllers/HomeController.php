@@ -839,4 +839,9 @@ class HomeController extends Controller
         Toastr::success(trans('Your loan application send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
+
+    public function ask()
+    {
+        return view('user.ask');
+    }
 }
