@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ConnectRequest;
 use App\Mail\AllMail;
+use App\Mail\CreditReportMail;
+use App\Mail\QuickReportMail;
 use App\Mail\SendCard;
 use App\Models\Config;
 use App\Models\EmailTemplate;
@@ -142,7 +144,6 @@ class HomeController extends Controller
             'status' => 1,
             'msg' => trans('Connection send successfully')
         ]);
-
     }
 
 
@@ -712,7 +713,7 @@ class HomeController extends Controller
 
         DB::beginTransaction();
         try {
-            $data['name']           = $request->name;
+            $data['name']                      = $request->name;
             $data['applicant_name']            = $request->applicant_name;
             $data['social_security_number']    = $request->social_security_number;
             $data['date_of_birth']             = $request->date_of_birth;
@@ -757,12 +758,12 @@ class HomeController extends Controller
         DB::commit();
         $user = DB::table('users')->where('id', $card->user_id)->first();
         if (!empty($connect) && $user->is_notify == 1) {
-           // need to send mail
+
+            Mail::to($user->email)->send(new CreditReportMail($data, $user));
         }
 
         Toastr::success(trans('Credit report authorization send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
-
     }
 
 
@@ -827,24 +828,15 @@ class HomeController extends Controller
             dd($th->getMessage());
             Toastr::error(trans('Something wrong ! please try again'), 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
-
         }
         DB::commit();
-
         $user = DB::table('users')->where('id', $card->user_id)->first();
         // DB::commit();
         if (!empty($connect) && $user->is_notify == 1) {
-           // need to send mail
+            Mail::to($user->email)->send(new QuickReportMail($data, $user));
         }
 
         Toastr::success(trans('Your loan application send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
-
     }
-
-
-
-
-
-
 }
