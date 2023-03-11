@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\MarketingMaterialsController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\EmailTemplateController;
+use App\Http\Controllers\Admin\TutorialCategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\User\PlanController;
 use App\Models\MarketingMaterials;
@@ -52,12 +53,10 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     // Transactions
     Route::get('transactions', 'TransactionsController@indexTransactions')->name('transactions');
     Route::get('transaction-status/{id}/{status}', 'TransactionsController@transactionStatus')->name('trans.status');
-
     /*
     Route::get('offline-transactions', 'TransactionsController@offlineTransactions')->name('offline.transactions');
     Route::get('offline-transaction-status/{id}/{status}', 'TransactionsController@offlineTransactionStatus')->name('offline.trans.status');
     */
-
     Route::get('view-invoice/{id}', 'TransactionsController@viewInvoice')->name('view.invoice');
     // Account Setting
     Route::get('account', 'AccountController@account')->name('account');
@@ -98,7 +97,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('blog/{id}/update', 'BlogController@Update')->name('blog.update');
     Route::get('blog/delete/', 'BlogController@Delete');
     Route::post('ajax/text-editor/image', ['as' => 'ajax.text-editor.image', 'uses' => 'BlogController@textEditorImageUpload']);
-
     // blog
     Route::get('categories', 'CategoryController@Index')->name('category.index');
     Route::get('category/create', 'CategoryController@Create')->name('category.create');
@@ -106,7 +104,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('category/{id}/edit', 'CategoryController@Edit')->name('category.edit');
     Route::post('category/{id}/update', 'CategoryController@Update')->name('category.update');
     Route::get('category/delete/', 'CategoryController@Delete');
-
     // subscriber list
     Route::get('subscribers', 'AdminController@SubscriberList')->name('subscriber.index');
     Route::get('user-guides', 'AdminController@userGuide')->name('user.guide');
@@ -116,7 +113,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('user-guide/edit/{id}', 'AdminController@userGuideEdit')->name('user.guide.edit');
     Route::post('user-guide/update/{id}', 'AdminController@userGuideUpdate')->name('user.guide.update');
     Route::get('user/guide/delete/', 'AdminController@DeleteUserGuide');
-
     // social-icon
     Route::get('social-icon', 'SocialIconController@index')->name('social-icon.index');
     Route::get('social-icon/create', 'SocialIconController@create')->name('social-icon.create');
@@ -124,7 +120,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('social-icon/{id}/edit', 'SocialIconController@edit')->name('social-icon.edit');
     Route::post('social-icon/{id}/update', 'SocialIconController@update')->name('social-icon.update');
     Route::get('social-icon/{id}/delete', 'SocialIconController@destroy')->name('social-icon.destroy');
-
     // faq
     Route::get('faq', ['as' => 'faq.list', 'uses' => 'FaqController@getIndex']);
     Route::get('faq/create', ['as' => 'faq.create', 'uses' => 'FaqController@getCreate']);
@@ -133,7 +128,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('faq/{id}/view', ['as' => 'faq.view', 'uses' => 'FaqController@getView']);
     Route::post('faq/{id}/update', ['as' => 'faq.update', 'uses' => 'FaqController@putUpdate']);
     Route::get('faq/{id}/delete', ['as' => 'faq.delete', 'uses' => 'FaqController@getDelete']);
-
     // cards
     Route::get('cards', 'CardController@index')->name('cards');
     Route::get('card/trash', 'CardController@getTrashList')->name('card.trash');
@@ -141,21 +135,17 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('card/delete/{card_id}', 'CardController@delete')->name('card.delete');
     Route::get('card/change-status/{card_id}', 'CardController@changeStatus')->name('card.change-status');
     Route::get('card/active/{card_id}', 'CardController@activeCard')->name('card.active');
-
     // Email template
     Route::get('email-template', 'EmailTemplateController@index')->name('email.template');
     Route::get('email-template/edit/{id}', 'EmailTemplateController@edit')->name('email.templateedit');
     Route::post('email-template/update/{id}', 'EmailTemplateController@update')->name('email.templateupdate');
     Route::get('email-template/sort-code/doc', 'EmailTemplateController@sortCodeDoc')->name('email.template.sortCodes');
-
-
     // admin users
     Route::get('admin-users', ['as' => 'admin-users', 'uses' => 'AccountController@getAdminUser']);
     Route::get('admin-users/create', ['as' => 'admin-users.create', 'uses' => 'AccountController@getCreate']);
     Route::post('admin-users/store', ['as' => 'admin-users.store', 'uses' => 'AccountController@postStore']);
     Route::get('admin-users/{id}/edit', ['as' => 'admin-users.edit', 'uses' => 'AccountController@getEdit']);
     Route::post('admin-users/{id}/update', ['as' => 'admin-users.update', 'uses' => 'AccountController@putUpdate']);
-
     //Marketing Materials
     Route::get('/marketing-material', ['as' => 'marketing.materials', 'uses' => 'MarketingMaterialsController@index']);
     Route::get('/marketing-material/create', ['as' => 'marketing.material.create', 'uses' => 'MarketingMaterialsController@create']);
@@ -164,8 +154,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('/marketing-material/update/{id}', ['as' => 'marketing.material.update', 'uses' => 'MarketingMaterialsController@update']);
     Route::get('/marketing-material/delete/{id}', ['as' => 'marketing.material.delete', 'uses' => 'MarketingMaterialsController@delete']);
     Route::get('/status-update/{id}/{status}', ['as' => 'marketing.material.status', 'uses' => 'MarketingMaterialsController@status']);
-
-
     // product
     Route::get('product/', ['as' => 'product.index', 'uses' => 'ProductController@index']);
     Route::get('product/create', ['as' => 'product.create', 'uses' => 'ProductController@create']);
@@ -176,15 +164,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('product/images/{product}', ['as' => 'product.images', 'uses' => 'ProductController@images']);
     Route::post('product/images/upload/{product}', ['as' => 'product.images.upload', 'uses' => 'ProductController@imagesUpload']);
     Route::delete('product/images/delete/{productImage}', ['as' => 'product.images.delete', 'uses' => 'ProductController@imagesDelete']);
-
     //Product Orders
     Route::get('orders/', ['as' => 'orders', 'uses' => 'OrdersController@index']);
     Route::get('orders/edit/{id}', ['as' => 'orders.edit', 'uses' => 'OrdersController@edit']);
     Route::post('orders/update/{id}', ['as' => 'orders.update', 'uses' => 'OrdersController@update']);
     Route::get('orders/invoice/{id}', ['as' => 'orders.invoice', 'uses' => 'OrdersController@invoice']);
     Route::post('order/status/change/{order}', ['as' => 'order.status', 'uses' => 'OrdersController@statusChange']);
-
-
     // Coupons
     Route::get('coupon/', ['as' => 'coupon.index', 'uses' => 'CouponController@index']);
     Route::get('coupon/create', ['as' => 'coupon.create', 'uses' => 'CouponController@create']);
@@ -192,4 +177,18 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('coupon/edit/{coupon}', ['as' => 'coupon.edit', 'uses' => 'CouponController@edit']);
     Route::put('coupon/update/{coupon}', ['as' => 'coupon.update', 'uses' => 'CouponController@update']);
     Route::delete('coupon/delete/{coupon}', ['as' => 'coupon.delete', 'uses' => 'CouponController@destroy']);
+
+    // Tutorial Category
+    Route::get('tutorial-category', ['as' => 'tutorialcategory.index', 'uses' => 'TutorialCategoryController@index']);
+    Route::post('tutorial-category/store', ['as' => 'tutorialcategory.store', 'uses' => 'TutorialCategoryController@store']);
+    Route::post('tutorial-category/update/{id}', ['as' => 'tutorialcategory.update', 'uses' => 'TutorialCategoryController@update']);
+    Route::get('tutorial-category/delete/{id}', ['as' => 'tutorialcategory.delete', 'uses' => 'TutorialCategoryController@destroy']);
+    // tutorial
+    Route::get('tutorials', ['as' => 'tutorials.index', 'uses' => 'TutorialController@index']);
+    Route::get('tutorials/create', ['as' => 'tutorials.create', 'uses' => 'TutorialController@create']);
+    Route::post('tutorials/store', ['as' => 'tutorials.store', 'uses' => 'TutorialController@store']);
+    Route::get('tutorials/edit/{id}', ['as' => 'tutorials.edit', 'uses' => 'TutorialController@edit']);
+    Route::post('tutorials/update/{id}', ['as' => 'tutorials.update', 'uses' => 'TutorialController@update']);
+    Route::get('tutorials/delete/{id}', ['as' => 'tutorials.delete', 'uses' => 'TutorialController@destroy']);
+
 });

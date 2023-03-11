@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class StorageHelper
@@ -45,4 +46,5 @@ class StorageHelper
         $photo = '/' . $path . '/' . $image_name;
         return $photo;
     }
+
 }

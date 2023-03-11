@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 if (!function_exists('getSetting')) {
     function getSetting()
@@ -299,4 +300,92 @@ if (!function_exists('getPrice')) {
         }
     }
     # code...
+}
+
+function uploadBlogImage(?object $file, string $path, int $width, int $height, $watermark = false): string
+{
+
+    $blank_img =  Image::canvas($width, $height, '#EBEEF7');
+    $pathCreate = public_path("/uploads/$path/");
+
+    if (!file_exists($pathCreate)) {
+        mkdir($pathCreate, 0755, true);
+    }
+
+    if ($watermark && setting('watermark_status')) {
+
+        $watermark_image = Image::make(setting('watermark_image'));
+        $type = setting('watermark_type');
+        $text = setting('watermark_text');
+
+        $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        $updated_img = Image::make($file);
+        $imageWidth = $updated_img->width();
+        $imageHeight = $updated_img->height();
+
+        if ($type == 'text') {
+
+            $updated_img->text($text, 100, 100, function ($font) {
+                $font->file(public_path('RobotoMono-Bold.ttf'));
+                $font->size(30);
+                $font->color('#e1e1e1');
+                $font->valign('center');
+                $font->align('center');
+            });
+
+        } else {
+
+            $watermarkSize = round(10 * $imageWidth / 50);
+            $watermark_image->resize($watermarkSize, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $updated_img->insert($watermark_image, 'bottom-right', 10, 10);
+        }
+        if ($imageWidth > $width) {
+
+            $updated_img->resize($width, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+        }
+        if ($imageHeight > $height) {
+
+            $updated_img->resize(null, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+
+
+        $blank_img->insert($updated_img, 'center');
+        $blank_img->save(public_path('/uploads/' . $path . '/') . $fileName);
+        return "uploads/$path/" . $fileName;
+
+    } else {
+
+        $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        // $file->move(public_path('/uploads/' . $path . '/'), $fileName);
+        $updated_img = Image::make($file);
+        $imageWidth = $updated_img->width();
+        $imageHeight = $updated_img->height();
+
+        if ($imageWidth > $width) {
+
+            $updated_img->resize($width, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+
+        if ($imageHeight > $height) {
+
+            $updated_img->resize(null, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+
+        $blank_img->insert($updated_img, 'center');
+        $blank_img->save(public_path('/uploads/' . $path . '/') . $fileName);
+        return "uploads/$path/" . $fileName;
+
+    }
+
 }
