@@ -29,6 +29,7 @@ use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\Product;
 use App\Models\Tutorial;
+use App\Models\TutorialCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -602,15 +603,46 @@ class HomeController extends Controller
 
     public function tutorials()
     {
-        $tutorials = Tutorial::where('status', 1)->latest()->paginate(6);
-        return view('pages.tutorials', compact('tutorials'));
+        $categories = TutorialCategory::where('status', 1)->orderBy('title', 'asc')->get();
+
+        $tutorials = Tutorial::where('status', 1)->latest();
+
+        if (request()->has('category')) {
+
+            $category = TutorialCategory::where('slug', request()->category)->first();
+
+            if(request()->category == 'select_all_tutorials') {
+
+                $tutorials->get();
+
+            }else {
+
+                $tutorials->where('category_id', $category->id);
+
+            }
+        } else if(request()->has('tags')){
+
+            $tutorials->whereJsonContains('tags', ['value' => request()->tags]);
+
+        } else {
+
+            $tutorials->get();
+
+        }
+
+        $tutorials = $tutorials->paginate(6);
+
+        return view('pages.tutorials', compact('tutorials', 'categories'));
+
     }
 
-    public function tutorialDetails($slug){
-
+    public function tutorialDetails($slug)
+    {
+        $categories = TutorialCategory::where('status', 1)->orderBy('title', 'asc')->get();
         $tutorials = Tutorial::where('slug', $slug)->first();
-
-        return view('pages.tutorial_details', compact('tutorials'));
+        $recent_tutorials = Tutorial::where('id', '!=', $tutorials->id)->latest()->limit(5)->get();
+        // dd($recent_tutorials);
+        return view('pages.tutorial_details', compact('tutorials', 'recent_tutorials', 'categories'));
     }
 
 

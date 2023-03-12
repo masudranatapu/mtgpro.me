@@ -25,7 +25,7 @@ class TutorialCategoryController extends Controller
 
         $tutorialCategory = new TutorialCategory();
         $tutorialCategory->title = $request->title;
-        $tutorialCategory->slug = str_replace(' ', '-', $request->title);
+        $tutorialCategory->slug = strtolower(str_replace(' ', '-', $request->title));
         $tutorialCategory->status = $request->status;
         $tutorialCategory->save();
 
@@ -44,7 +44,7 @@ class TutorialCategoryController extends Controller
         $tutorialcategory = TutorialCategory::findOrFail($id);
 
         $tutorialcategory->title = $request->title;
-        $tutorialcategory->slug = str_replace(' ', '-', $request->title);
+        $tutorialcategory->slug = strtolower(str_replace(' ', '-', $request->title));
         $tutorialcategory->status = $request->status;
         $tutorialcategory->save();
 

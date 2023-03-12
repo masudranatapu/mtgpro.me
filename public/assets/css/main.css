@@ -1433,7 +1433,7 @@ body {
 
 .blog_sideabr .category_list {
     overflow-y: auto;
-    height: 380px;
+    height: 250px;
 }
 
 .blog_wrap .tags_list ul li a {
