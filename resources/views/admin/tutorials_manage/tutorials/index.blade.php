@@ -49,11 +49,17 @@
                                                             {{ ++$key }}
                                                         </td>
                                                         <td class="text-center">
-                                                            <img src="@if(file_exists($value->banner_image)) {{ asset($value->banner_image) }} @else {{ asset('demoimage/tutorials.jpg') }}  @endif"
-                                                                class="rounded" alt="{{ $value->title }}" width="90">
+                                                            @if($value->file_type == 1)
+                                                                <img src="@if(file_exists($value->file_url)) {{ asset($value->file_url) }} @else {{ asset('demoimage/tutorials.jpg') }}  @endif"
+                                                                    class="rounded" alt="{{ $value->title }}" width="90">
+                                                            @elseif($value->file_type == 2)
+                                                                <a target="_blank" href="{{ asset($value->file_url) }}" title="View tutorials video">Tutorials Video</a>
+                                                            @else
+                                                                <a target="_blank" href="{{ asset($value->file_url) }}" title="View youtube tutorials video">Youtube tutorials video</a>
+                                                            @endif
                                                         </td>
                                                         <td>
-                                                            <a href="" title="Tutorials details">
+                                                            <a href="javascript:void(0)" title="Tutorials details">
                                                                 {{ $value->title }}
                                                             </a>
                                                         </td>

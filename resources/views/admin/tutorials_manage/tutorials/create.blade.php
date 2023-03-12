@@ -34,7 +34,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.tutorials.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('admin.tutorials.store') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -43,7 +44,8 @@
                                                     Enter Tutorial Title
                                                     <span class="text-danger">*</span>
                                                 </label>
-                                                <input type="text" name="title" class="form-control @error('title') border-danger @enderror"
+                                                <input type="text" autocomplete="off" name="title"
+                                                    class="form-control @error('title') border-danger @enderror"
                                                     placeholder="Tutorial title" required value="{{ old('title') }}">
                                                 @error('title')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -56,7 +58,7 @@
                                                     Enter Author Name
                                                     <span class="text-danger">*</span>
                                                 </label>
-                                                <input type="text" name="author" id="blog_author"
+                                                <input type="text" autocomplete="off" name="author" id="blog_author"
                                                     class="form-control @error('author') border-danger @enderror"
                                                     placeholder="Author Name" required
                                                     value="{{ auth()->user()->username }}">
@@ -71,10 +73,9 @@
                                                     Enter Publish Date
                                                     <span class="text-danger">*</span>
                                                 </label>
-                                                <input type="text" name="publish_date" id="datepicker"
+                                                <input type="text" autocomplete="off" name="publish_date" id="datepicker"
                                                     class="form-control @error('publish_date') border-danger @enderror"
                                                     placeholder="Publish Date" required value="{{ old('publish_date') }}">
-
                                                 @error('publish_date')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -119,8 +120,9 @@
                                                     Tutorials File Type
                                                     <span class="text-danger">*</span>
                                                 </label>
-                                                <select name="file_type" class="form-control" id="tutorialsFileType" required >
-                                                    <option value="" disabled selected>Select One</option>
+                                                <select name="file_type" class="form-control" id="tutorialsFileType"
+                                                    required>
+                                                    <option disabled selected>Select One</option>
                                                     <option value="1">Image</option>
                                                     <option value="2">Video</option>
                                                     <option value="3">Youtube video link</option>
@@ -132,36 +134,11 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-md-12 col-xl-8" id="showfile">
 
                                         </div>
-                                        {{-- <div class="col-md-12 col-xl-8">
-                                            <div class="mb-2">
-                                                <label class="form-label">
-                                                    Image
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <input type="file" name="banner_image" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-8" id="showVideoTutorials">
-                                            <div class="mb-2">
-                                                <label class="form-label">
-                                                    Video File
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <input type="file" name="banner_image" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-xl-8" id="showYoutubeVideoLinkTutorials">
-                                            <div class="mb-2">
-                                                <label class="form-label">
-                                                    Youtube Video Link
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <input type="text" name="" class="form-control" required>
-                                            </div>
-                                        </div> --}}
+
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <div class="mb-2">
                                                 <label class="form-label">
@@ -182,7 +159,8 @@
                                                 <label class="form-label">
                                                     Tags
                                                 </label>
-                                                <input type="text" name="tags" class="form-control" value="{{ old('tags') }}">
+                                                <input type="text" autocomplete="off" name="tags" class="form-control"
+                                                    value="{{ old('tags') }}">
                                                 @error('tags')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -215,6 +193,7 @@
 @endsection
 
 @push('scripts')
+
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
@@ -231,28 +210,45 @@
         new Tagify(input);
     </script>
     <script>
+        $("#tutorialsFileType").on('change', function() {
 
-        $("#tutorialsFileType").on('change', function(){
+            var tutorialsfiletypeid = $("#tutorialsFileType").val();
+            // alert(tutorialsfiletypeid);
 
-            var  tutorialsfiletypeid = $("#tutorialsFileType").val();
-            alert(tutorialsfiletypeid);
+            if (tutorialsfiletypeid == 1) {
 
-            if(tutorialsfiletypeid == 1) {
-
-                $("#showImageTutorials").html(`
-
+                $("#showfile").html(`
+                    <div class="mb-2">
+                        <label class="form-label">
+                            Image
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="file" name="file_url" class="form-control" required>
+                    </div>
                 `);
 
-            }else if(tutorialsfiletypeid == 2) {
+            } else if (tutorialsfiletypeid == 2) {
 
-                $("#showImageTutorials").html(`
-
+                $("#showfile").html(`
+                    <div class="mb-2">
+                        <label class="form-label">
+                            Video File
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="file" name="file_url" class="form-control" required>
+                    </div>
                 `);
 
-            }else {
+            } else {
 
-                $("#showImageTutorials").html(`
-
+                $("#showfile").html(`
+                    <div class="mb-2">
+                        <label class="form-label">
+                            Youtube Video Link
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" autocomplete="off" name="file_url" class="form-control" required placeholder="Youtube video link">
+                    </div>
                 `);
 
             }
