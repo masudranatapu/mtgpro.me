@@ -28,6 +28,7 @@ use App\Mail\SendCard;
 use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\Product;
+use App\Models\Tutorial;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -601,13 +602,15 @@ class HomeController extends Controller
 
     public function tutorials()
     {
-        //  $page = DB::table('custom_pages')->where('url_slug', 'tutorials')->first();
-
-        return view('pages.tutorials');
+        $tutorials = Tutorial::where('status', 1)->latest()->paginate(6);
+        return view('pages.tutorials', compact('tutorials'));
     }
 
-    public function tutorialDetails(){
-        return view('pages.tutorial_details');
+    public function tutorialDetails($slug){
+
+        $tutorials = Tutorial::where('slug', $slug)->first();
+
+        return view('pages.tutorial_details', compact('tutorials'));
     }
 
 

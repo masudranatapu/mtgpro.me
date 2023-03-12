@@ -52,7 +52,7 @@ Route::get('contact-us', ['as' => 'contact-us', 'uses' => 'HomeController@getCon
 Route::post('contact', ['as' => 'contact-us.post', 'uses' => 'HomeController@contactUs']);
 Route::get('help', ['as' => 'help', 'uses' => 'HomeController@getHelp']);
 Route::get('tutorials', ['as' => 'tutorials', 'uses' => 'HomeController@tutorials']);
-Route::get('tutorials/details', ['as' => 'tutorials.details', 'uses' => 'HomeController@tutorialDetails']);
+Route::get('tutorials/details/{slug}', ['as' => 'tutorials.details', 'uses' => 'HomeController@tutorialDetails']);
 Route::get('shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'ShopController@details']);
 

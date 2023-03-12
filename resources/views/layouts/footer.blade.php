@@ -89,7 +89,7 @@ $setting  = getSetting();
                     </div>
                     <div class="footer_menu">
                         <ul>
-                            <li><a target="__blank" href="{{ route('tutorials') }}">{{ __('Tutorials') }}</a></li>
+                            <li><a href="{{ route('tutorials') }}">{{ __('Tutorials') }}</a></li>
                             <li><a target="__blank" href="{{ route('disclaimer') }}">{{ __('Disclaimer ') }}</a></li>
                             <li><a target="__blank" href="{{ route('help') }}">{{ __('Help') }}</a></li>
                             @guest

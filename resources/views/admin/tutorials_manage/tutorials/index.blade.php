@@ -59,7 +59,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)" title="Tutorials details">
+                                                            <a href="{{ route('tutorials.details', $value->slug) }}" target="_blank" title="Tutorials details">
                                                                 {{ $value->title }}
                                                             </a>
                                                         </td>
