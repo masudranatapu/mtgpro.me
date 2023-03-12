@@ -302,6 +302,25 @@ if (!function_exists('getPrice')) {
     # code...
 }
 
+function uploadImage(?object $file, string $path, int $width = null, int $height = null): string
+{
+    $updated_img = Image::make($file);
+    $updated_img->resize($width ?? 850, $height, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+    $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+    $fullPath = public_path('upload/' . $path . '/');
+    if (!file_exists($fullPath)) {
+        mkdir($fullPath, 666, true);
+    }
+
+    $updated_img->save($fullPath . $fileName);
+
+    return "upload/$path/" . $fileName;
+}
+
+
 function uploadBlogImage(?object $file, string $path, int $width, int $height, $watermark = false): string
 {
 

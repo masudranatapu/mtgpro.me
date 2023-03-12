@@ -13,7 +13,7 @@ class TutorialCategoryController extends Controller
     //
     public function index()
     {
-        $tutorialcategories = TutorialCategory::latest()->paginate(10);
+        $tutorialcategories = TutorialCategory::orderBy('title', 'asc')->latest()->paginate(10);
         return view('admin.tutorials_manage.category.index', compact('tutorialcategories'));
     }
 
@@ -60,14 +60,14 @@ class TutorialCategoryController extends Controller
 
         if (isset($result) && $result->count() > 0) {
 
-            Toastr::success(trans('Tutorials category already in used delete it first'), 'Success', ["positionClass" => "toast-top-center"]);
+            Toastr::warning(trans('Category already used in tutorial, Please you should delete tutorial first.'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
 
         } else {
 
             $tutorialcategory->delete();
 
-            Toastr::success(trans('Tutorials category delete successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
+            Toastr::error(trans('Tutorials category delete successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
 

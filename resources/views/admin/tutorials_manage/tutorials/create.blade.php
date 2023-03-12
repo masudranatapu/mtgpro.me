@@ -4,6 +4,12 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <style>
+        .note-modal-footer {
+            height: 50px !important;
+            padding: 10px !important;
+        }
+    </style>
 @endpush
 
 @section('title')
@@ -159,8 +165,8 @@
                                                 <label class="form-label">
                                                     Tags
                                                 </label>
-                                                <input type="text" autocomplete="off" name="tags" class="form-control"
-                                                    value="{{ old('tags') }}">
+                                                <input type="text" autocomplete="off" name="tags"
+                                                    class="form-control" value="{{ old('tags') }}">
                                                 @error('tags')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -193,7 +199,6 @@
 @endsection
 
 @push('scripts')
-
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
@@ -221,7 +226,7 @@
                     <div class="mb-2">
                         <label class="form-label">
                             Image
-                            <span class="text-danger">*</span>
+                            <span class="text-danger">* Image size (760 x 500)px </span>
                         </label>
                         <input type="file" name="file_url" class="form-control" required>
                     </div>

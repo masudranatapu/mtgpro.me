@@ -4,6 +4,12 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <style>
+        .note-modal-footer {
+            height: 50px !important;
+            padding: 10px !important;
+        }
+    </style>
 @endpush
 
 @section('title')
@@ -139,21 +145,21 @@
                                             @if($tutorial->file_type == 1)
                                                 <div class="mb-2">
                                                     <label class="form-label">
-                                                        Tutorials Image
+                                                        Tutorials Image <a target="_blank" href="{{ asset($tutorial->file_url) }}">( Show Image )</a>
                                                     </label>
                                                     <input type="file" name="file_url" class="form-control">
                                                 </div>
                                             @elseif ($tutorial->file_type == 2)
                                                 <div class="mb-2">
                                                     <label class="form-label">
-                                                        Tutorials Video
+                                                        Tutorials Video <a target="_blank" href="{{ asset($tutorial->file_url) }}">( Show Video )</a>
                                                     </label>
                                                     <input type="file" name="file_url" class="form-control">
                                                 </div>
                                             @else
                                                 <div class="mb-2">
                                                     <label class="form-label">
-                                                        Youtube Video Link
+                                                        Youtube Video Link <a target="_blank" href="{{ asset($tutorial->file_url) }}">( Show Youtube video )</a>
                                                     </label>
                                                     <input type="text" autocomplete="off" name="file_url" class="form-control" value="{{ $tutorial->file_url }}" placeholder="Youtube video link">
                                                 </div>
@@ -240,7 +246,7 @@
                     <div class="mb-2">
                         <label class="form-label">
                             Image
-                            <span class="text-danger">*</span>
+                            <span class="text-danger">* Image size (760 x 500)px </span>
                         </label>
                         <input type="file" name="file_url" class="form-control" required>
                     </div>

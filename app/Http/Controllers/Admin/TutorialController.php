@@ -14,7 +14,7 @@ class TutorialController extends Controller
     //
     public function index()
     {
-        $tutorials = Tutorial::latest()->paginate(10);
+        $tutorials = Tutorial::orderBy('title', 'asc')->latest()->paginate(10);
         return view('admin.tutorials_manage.tutorials.index', compact('tutorials'));
     }
 
@@ -42,7 +42,6 @@ class TutorialController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'title' => 'required|max:255',
             'author' => 'required|max:255',
@@ -51,6 +50,9 @@ class TutorialController extends Controller
             'category_id' => 'required',
             'discription' => 'required',
             'short_description' => 'required|max:150',
+        ], [
+            'short_description.required' => 'The short description required',
+            'short_description.max' => 'The short description must be less then 150 characters.',
         ]);
 
         $tutorial = new Tutorial();
@@ -89,6 +91,7 @@ class TutorialController extends Controller
         }
 
         $content = $request->discription;
+
         $dom = new \DomDocument();
         $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $imageFile = $dom->getElementsByTagName('img');
@@ -213,26 +216,43 @@ class TutorialController extends Controller
             $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             $imageFile = $dom->getElementsByTagName('img');
             foreach ($imageFile as $item => $image) {
+
                 $data = $image->getAttribute('src');
-                list($type, $data) = explode(';', $data);
-                list(, $data)      = explode(',', $data);
-                $imgeData = base64_decode($data);
-                $image_name = "/upload/" . time() . $item . '.png';
-                $path = public_path() . $image_name;
-                file_put_contents($path, $imgeData);
-                $image->removeAttribute('src');
-                $image->setAttribute('src', $image_name);
+
+                $existimage = explode('//', $data);
+
+                if($existimage[0] == 'http:') {
+
+                    // return 1;
+
+                }else {
+
+                    // return 0;
+
+                    list($type, $data) = explode(';', $data);
+                    list(, $data)      = explode(',', $data);
+
+                    $imgeData = base64_decode($data);
+
+                    $image_name = time() . $item . '.png';
+                    $src = url('uploads/descriptioniamges/' . $image_name);
+                    file_put_contents(public_path('uploads/descriptioniamges/' . $image_name), $imgeData);
+
+                    $image->removeAttribute('src');
+                    $image->setAttribute('src', $src);
+
+                }
             }
         }
 
-        $tutorial->content = $content ?? $tutorial->content;
+        $tutorial->content = $content;
         $tutorial->category_id = $request->category_id;
         $tutorial->status = $request->status;
         $tutorial->tags = $request->tags;
         $tutorial->short_description = $request->short_description;
         $tutorial->save();
 
-        Toastr::success(trans('Tutorial updated successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
+        Toastr::info(trans('Tutorial updated successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.tutorials.index');
 
     }
@@ -246,8 +266,10 @@ class TutorialController extends Controller
         }
 
         $tutorial->delete();
-        Toastr::success(trans('Tutorial deleted successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
+
+        Toastr::error(trans('Tutorial deleted successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.tutorials.index');
     }
+
 
 }
