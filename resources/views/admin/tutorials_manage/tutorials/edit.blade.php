@@ -10,7 +10,7 @@
     Edit Tutorials
 @endsection
 
-@section('tutorials_manage', 'active')
+@section('tutorials', 'active')
 
 @section('content')
     <div class="page-wrapper">
@@ -192,7 +192,7 @@
                                                     Discription
                                                     <span class="text-danger">*</span>
                                                 </label>
-                                                <textarea name="discription" class="form-control summernote" id="discription">{{ $tutorial->content }}</textarea>
+                                                <textarea name="discription" class="form-control summernote" id="discription" required>{{ $tutorial->content }}</textarea>
                                                 @error('discription')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

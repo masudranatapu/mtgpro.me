@@ -166,19 +166,29 @@ class TutorialController extends Controller
         }else if($request->file_type == 2) {
 
             $tutorial_video = $request->file('file_url');
-            $slug = 'tutorialsvideo';
-            $tutorial_video_name = $slug.'-'.uniqid().'.'.$tutorial_video->getClientOriginalExtension();
-            $upload_path = 'uploads/tutorialsvideo/';
-            $tutorial_video->move($upload_path, $tutorial_video_name);
 
-            $oldFileUrl = Tutorial::findOrFail($id);
+            if($tutorial_video) {
 
-            if(file_exists($oldFileUrl->file_url)) {
-                unlink($oldFileUrl->file_url);
+                $slug = 'tutorialsvideo';
+                $tutorial_video_name = $slug.'-'.uniqid().'.'.$tutorial_video->getClientOriginalExtension();
+                $upload_path = 'uploads/tutorialsvideo/';
+                $tutorial_video->move($upload_path, $tutorial_video_name);
+
+                $oldFileUrl = Tutorial::findOrFail($id);
+
+                if(file_exists($oldFileUrl->file_url)) {
+                    unlink($oldFileUrl->file_url);
+                }
+
+                $image_url = $upload_path.$tutorial_video_name;
+                $tutorial->file_url = $image_url ;
+
+            }else {
+
+                $oldFileUrl = Tutorial::findOrFail($id);
+                $tutorial->file_url = $oldFileUrl->file_url ;
+
             }
-
-            $image_url = $upload_path.$tutorial_video_name;
-            $tutorial->file_url = $image_url ;
 
         }else {
 
@@ -193,29 +203,29 @@ class TutorialController extends Controller
         }
 
         $content = $request->discription;
-        $dom = new \DomDocument();
-        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageFile = $dom->getElementsByTagName('img');
-        // dd($imageFile);
-        foreach ($imageFile as $item => $image) {
-            $data = $image->getAttribute('src');
-            if ($data != '') {
+
+        if (str_contains($content, "base64")) {
+            $dom = new \DomDocument();
+            $internalErrors = libxml_use_internal_errors(true);
+            libxml_use_internal_errors($internalErrors);
+            $dom->recover = true;
+            $dom->strictErrorChecking = false;
+            $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $imageFile = $dom->getElementsByTagName('img');
+            foreach ($imageFile as $item => $image) {
+                $data = $image->getAttribute('src');
                 list($type, $data) = explode(';', $data);
                 list(, $data)      = explode(',', $data);
                 $imgeData = base64_decode($data);
-                // dd($imgeData);
-                $image_name = time() . $item . '.png';
-                $src = url('uploads/descriptioniamges/' . $image_name);
-                file_put_contents(public_path('uploads/descriptioniamges/' . $image_name), $imgeData);
-
+                $image_name = "/upload/" . time() . $item . '.png';
+                $path = public_path() . $image_name;
+                file_put_contents($path, $imgeData);
                 $image->removeAttribute('src');
-                $image->setAttribute('src', $src);
+                $image->setAttribute('src', $image_name);
             }
         }
 
-        $content = $dom->saveHTML();
-
-        $tutorial->content = $content;
+        $tutorial->content = $content ?? $tutorial->content;
         $tutorial->category_id = $request->category_id;
         $tutorial->status = $request->status;
         $tutorial->tags = $request->tags;

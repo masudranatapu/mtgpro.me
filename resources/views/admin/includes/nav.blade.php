@@ -154,37 +154,7 @@
                         </a>
                     </li> --}}
 
-                    <li class="nav-item dropdown  @yield('tutorials_manage')">
-                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
-                            aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-businessplan" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <ellipse cx="16" cy="6" rx="5" ry="3"></ellipse>
-                                    <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path>
-                                    <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path>
-                                    <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path>
-                                    <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path>
-                                    <path d="M5 15v1m0 -8v1"></path>
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                {{ __('Tutorials Manage') }}
-                            </span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item @yield('plan')" href="{{ route('admin.tutorialcategory.index') }}">
-                                {{ __('Category') }}
-                            </a>
-                            <a class="dropdown-item @yield('add_plan')" href="{{ route('admin.tutorials.index') }}">
-                                {{ __('Tutorials') }}
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown @yield('settings') @yield('email-template')">
+                    <li class="nav-item dropdown @yield('settings') @yield('email-template') @yield('tutorials_category') @yield('tutorials')">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
                             aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -234,8 +204,18 @@
                                 }}</a>
                             <a href="{{ route('admin.social-icon.index') }}"
                                 class="dropdown-item @yield('social_icon')">{{ __('Social Icon') }}</a>
+
                             <a href="{{ route('admin.tax.setting') }}" class="dropdown-item @yield('invoice')">{{
                                 __('Invoice & Tax') }}</a>
+
+
+                            <a href="{{ route('admin.tutorialcategory.index') }}" class="dropdown-item @yield('tutorials_category')">{{
+                                __('Tutorials Category') }}</a>
+
+
+                            <a href="{{ route('admin.tutorials.index') }}" class="dropdown-item @yield('tutorials')">{{
+                                __('Tutorials') }}</a>
+
                             <a href="{{ route('admin.clear') }}" class="dropdown-item @yield('clear_cache')">{{
                                 __('Clear cache') }}</a>
                             <a href="{{ route('admin.admin-users') }}" class="dropdown-item @yield('admin-users')"><span

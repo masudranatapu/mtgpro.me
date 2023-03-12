@@ -4,7 +4,7 @@
     Tutorials
 @endsection
 
-@section('tutorials_manage', 'active')
+@section('tutorials', 'active')
 
 @section('content')
     <div class="page-wrapper">
