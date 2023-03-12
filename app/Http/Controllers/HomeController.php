@@ -598,11 +598,15 @@ class HomeController extends Controller
         return view('pages.common', compact('page'));
     }
 
-    public function getTutorials()
+    public function tutorials()
     {
-        $page = DB::table('custom_pages')->where('url_slug', 'tutorials')->first();
+        //  $page = DB::table('custom_pages')->where('url_slug', 'tutorials')->first();
 
-        return view('pages.common', compact('page'));
+        return view('pages.tutorials');
+    }
+
+    public function tutorialDetails(){
+        return view('pages.tutorial_details');
     }
 
 
