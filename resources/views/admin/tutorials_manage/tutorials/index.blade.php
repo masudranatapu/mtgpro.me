@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive px-2 py-2">
-                                    <table class="table table-bordered">
+                                    <table id="dataTable" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th style="width: 5%">SL</th>
@@ -85,13 +85,6 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                    </div>
                                 </div>
                             </div>
                         </div>

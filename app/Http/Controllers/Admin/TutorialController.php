@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tutorial;
 use App\Models\TutorialCategory;
 use Brian2694\Toastr\Facades\Toastr;
+use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,7 +15,7 @@ class TutorialController extends Controller
     //
     public function index()
     {
-        $tutorials = Tutorial::orderBy('title', 'asc')->latest()->paginate(10);
+        $tutorials = Tutorial::orderBy('title', 'asc')->latest()->get();
         return view('admin.tutorials_manage.tutorials.index', compact('tutorials'));
     }
 
@@ -70,7 +71,7 @@ class TutorialController extends Controller
 
             if ($request->has('file_url')) {
 
-                $tutorial->file_url = uploadBlogImage($request->file_url, "tutorialsimage", 760, 500);
+                $tutorial->file_url = uploadBlogImage($request->file_url, "tutorialsimage", 500, 250);
             }
 
         }else if($request->file_type == 2) {
@@ -92,23 +93,38 @@ class TutorialController extends Controller
 
         $content = $request->discription;
 
-        $dom = new \DomDocument();
-        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHtml($content);
         $imageFile = $dom->getElementsByTagName('img');
         // dd($imageFile);
         foreach ($imageFile as $item => $image) {
-            $data = $image->getAttribute('src');
-            if ($data != '') {
-                list($type, $data) = explode(';', $data);
-                list(, $data)      = explode(',', $data);
-                $imgeData = base64_decode($data);
-                // dd($imgeData);
-                $image_name = time() . $item . '.png';
-                $src = url('uploads/descriptioniamges/' . $image_name);
-                file_put_contents(public_path('uploads/descriptioniamges/' . $image_name), $imgeData);
 
-                $image->removeAttribute('src');
-                $image->setAttribute('src', $src);
+            $data = $image->getAttribute('src');
+
+            if ($data != '') {
+
+                $existimage = explode('//', $data);
+                // dd($existimage);
+
+                if($existimage[0] == 'https:' || $existimage[0] == 'http:') {
+
+                    // return 1;
+
+                }else {
+
+                    list($type, $data) = explode(';', $data);
+                    list(, $data)      = explode(',', $data);
+                    $imgeData = base64_decode($data);
+                    // dd($imgeData);
+                    $image_name = time() . $item . '.png';
+                    $src = url('uploads/descriptioniamges/' . $image_name);
+                    file_put_contents(public_path('uploads/descriptioniamges/' . $image_name), $imgeData);
+
+                    $image->removeAttribute('src');
+                    $image->setAttribute('src', $src);
+
+                }
             }
         }
 
@@ -155,7 +171,7 @@ class TutorialController extends Controller
 
             if ($request->has('file_url')) {
 
-                $tutorial->file_url = uploadBlogImage($request->file_url, "tutorialsimage", 760, 500);
+                $tutorial->file_url = uploadBlogImage($request->file_url, "tutorialsimage", 500, 250);
 
 
                 $oldFileUrl = Tutorial::findOrFail($id);
@@ -208,7 +224,7 @@ class TutorialController extends Controller
         $content = $request->discription;
 
         if (str_contains($content, "base64")) {
-            $dom = new \DomDocument();
+            $dom = new DomDocument();
             $internalErrors = libxml_use_internal_errors(true);
             libxml_use_internal_errors($internalErrors);
             $dom->recover = true;
@@ -221,7 +237,7 @@ class TutorialController extends Controller
 
                 $existimage = explode('//', $data);
 
-                if($existimage[0] == 'http:') {
+                if($existimage[0] == 'https:' || $existimage[0] == 'http:') {
 
                     // return 1;
 

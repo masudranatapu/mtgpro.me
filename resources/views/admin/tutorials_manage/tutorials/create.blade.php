@@ -226,7 +226,7 @@
                     <div class="mb-2">
                         <label class="form-label">
                             Image
-                            <span class="text-danger">* Image size (760 x 500)px </span>
+                            <span class="text-danger">* Image size (500 x 250)px </span>
                         </label>
                         <input type="file" name="file_url" class="form-control" required>
                     </div>
