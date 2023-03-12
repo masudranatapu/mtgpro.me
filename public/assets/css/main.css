@@ -1242,12 +1242,96 @@ body {
 
 
 
+.tutorials_wrapper .card {
+    border: 1px solid #EEE;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.tutorials_wrapper .card:hover {
+    border-color: #c62f00;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.tutorials_wrapper .card-body {
+    background: #fafafa;
+    border-radius: 6px;
+}
+
+.tutorials_wrapper .card_box {
+    overflow: hidden;
+}
+
+.tutorials_wrapper .card_box img {
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    height: 200px;
+}
+
+.tutorials_wrapper .card:hover .card_box img {
+    transform: rotate(2deg) scale(1.1);
+}
 
 
+.tutorials_wrapper .card_box iframe {
+    border-radius: 4px 4px 0px 0px;
+}
 
+.tutorials_wrapper .card-body h5 a {
+    font-size: 18px;
+    color: #212121;
+    font-family: 'Gilroy-Bold', sans-serif;
+    display: block;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+}
 
+.tutorials_wrapper .card-body h5 a:hover {
+    color: #c62f00;
+}
 
+.tutorials_wrapper .card-body p {
+    font-size: 14px;
+    text-align: justify;
+    line-height: 26px;
+    color: #666;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
 
+.tutorials_details .content h2 {
+    font-size: 18px;
+    color: #212121;
+    font-family: 'Gilroy-Bold', sans-serif;
+    display: block;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+}
+
+.tutorials_details .content p {
+    font-size: 14px;
+    text-align: justify;
+    line-height: 26px;
+    color: #666;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
 
 
 

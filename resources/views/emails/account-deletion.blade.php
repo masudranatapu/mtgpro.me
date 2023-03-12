@@ -8,7 +8,7 @@
     <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
     @php
-        $settings = getSetting();
+    $settings = getSetting();
     @endphp
     <style>
         @media only screen and (max-width: 600px) {
