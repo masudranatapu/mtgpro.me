@@ -69,12 +69,12 @@
                                                             {{ $value->status ? 'Publish' : 'Unpublish' }}
                                                         </td>
                                                         <td style="width: 15%">
-                                                            <a href="{{ route('admin.tutorials.edit', $value->id) }}"
+                                                            <a style="min-width: 55px;" href="{{ route('admin.tutorials.edit', $value->id) }}"
                                                                 class="btn btn-success btn-sm">
                                                                 {{-- <i class="la la-edit"></i> --}}
                                                                 Edit
                                                             </a>
-                                                            <a href="{{ route('admin.tutorials.delete', $value->id) }}"
+                                                            <a style="min-width: 55px;" href="{{ route('admin.tutorials.delete', $value->id) }}"
                                                                 class="btn btn-danger btn-sm"
                                                                 onclick="return confirm('Are you sure!')">
                                                                 Delete

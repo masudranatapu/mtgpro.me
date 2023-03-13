@@ -116,12 +116,12 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <a href="javascript:;" class="btn btn-info btn-sm"
+                                                        <a href="javascript:;" style="min-width: 55px;" class="btn btn-info btn-sm"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#editTutorialsCategory_{{ $categories->id }}">
                                                             Edit
                                                         </a>
-                                                        <a href="{{ route('admin.tutorialcategory.delete', $categories->id) }}"
+                                                        <a style="min-width: 55px;" href="{{ route('admin.tutorialcategory.delete', $categories->id) }}"
                                                             class="btn btn-danger btn-sm"
                                                             onclick="return confirm('Are you sure!')">
                                                             Delete
