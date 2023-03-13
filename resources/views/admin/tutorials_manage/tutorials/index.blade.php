@@ -38,7 +38,7 @@
                                                 <th style="width: 10%">Category</th>
                                                 <th style="width: 15%">Publish Date</th>
                                                 <th style="width: 15%">Status</th>
-                                                <th style="width: 20%">Action</th>
+                                                <th style="width: 15%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -68,7 +68,7 @@
                                                         <td>
                                                             {{ $value->status ? 'Publish' : 'Unpublish' }}
                                                         </td>
-                                                        <td>
+                                                        <td style="width: 15%">
                                                             <a href="{{ route('admin.tutorials.edit', $value->id) }}"
                                                                 class="btn btn-success btn-sm">
                                                                 {{-- <i class="la la-edit"></i> --}}
