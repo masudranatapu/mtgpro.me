@@ -98,7 +98,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">{{ __('SL') }}</th>
-                                                <th class="text-center">{{ __('Title') }}</th>
+                                                <th>{{ __('Title') }}</th>
                                                 <th class="text-center">{{ __('Status') }}</th>
                                                 <th class="text-center">{{ __('Action') }}</th>
                                             </tr>
@@ -107,7 +107,7 @@
                                             @foreach ($tutorialcategories as $key => $categories)
                                                 <tr>
                                                     <td class="text-center">{{ $key + 1 }}</td>
-                                                    <td class="text-center">{{ $categories->title }}</td>
+                                                    <td>{{ $categories->title }}</td>
                                                     <td class="text-center">
                                                         @if ($categories->status == 1)
                                                             <span class="badge bg-success">Active</span>
