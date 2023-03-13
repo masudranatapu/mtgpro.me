@@ -97,26 +97,26 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>{{ __('SL') }}</th>
-                                                <th>{{ __('Title') }}</th>
-                                                <th>{{ __('Status') }}</th>
-                                                <th>{{ __('Action') }}</th>
+                                                <th class="text-center">{{ __('SL') }}</th>
+                                                <th class="text-center">{{ __('Title') }}</th>
+                                                <th class="text-center">{{ __('Status') }}</th>
+                                                <th class="text-center">{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($tutorialcategories as $key => $categories)
                                                 <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $categories->title }}</td>
-                                                    <td>
+                                                    <td class="text-center">{{ $key + 1 }}</td>
+                                                    <td class="text-center">{{ $categories->title }}</td>
+                                                    <td class="text-center">
                                                         @if ($categories->status == 1)
                                                             <span class="badge bg-success">Active</span>
                                                         @else
                                                             <span class="badge bg-info">Inactive</span>
                                                         @endif
                                                     </td>
-                                                    <td>
-                                                        <a href="javascript:;" style="min-width: 55px;" class="btn btn-info btn-sm"
+                                                    <td class="text-center">
+                                                        <a href="javascript:;" style="min-width: 55px;" class="btn btn-info btn-sm mb-1 mb-lg-0"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#editTutorialsCategory_{{ $categories->id }}">
                                                             Edit

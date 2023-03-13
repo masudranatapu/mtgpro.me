@@ -36,9 +36,9 @@
                                                 <th style="width: 15%">Image</th>
                                                 <th style="width: 30%">Blog Title</th>
                                                 <th style="width: 10%">Category</th>
-                                                <th style="width: 15%">Publish Date</th>
-                                                <th style="width: 15%">Status</th>
-                                                <th style="width: 15%">Action</th>
+                                                <th class="text-center" style="width: 15%">Publish Date</th>
+                                                <th class="text-center" style="width: 15%">Status</th>
+                                                <th class="text-center" style="width: 15%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -48,7 +48,7 @@
                                                         <td>
                                                             {{ ++$key }}
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td>
                                                             @if($value->file_type == 1)
                                                                 <img src="@if(file_exists($value->file_url)) {{ asset($value->file_url) }} @else {{ asset('demoimage/tutorials.jpg') }}  @endif"
                                                                     class="rounded" alt="{{ $value->title }}" width="90">
@@ -64,14 +64,13 @@
                                                             </a>
                                                         </td>
                                                         <td>{{ $value->TutorialCategory->title ?? '' }}</td>
-                                                        <td>{{ date('d-m-Y', strtotime($value->publish_date)) }}</td>
-                                                        <td>
+                                                        <td class="text-center">{{ date('d-m-Y', strtotime($value->publish_date)) }}</td>
+                                                        <td class="text-center">
                                                             {{ $value->status ? 'Publish' : 'Unpublish' }}
                                                         </td>
-                                                        <td style="width: 15%">
+                                                        <td class="text-center" style="width: 15%">
                                                             <a style="min-width: 55px;" href="{{ route('admin.tutorials.edit', $value->id) }}"
-                                                                class="btn btn-success btn-sm">
-                                                                {{-- <i class="la la-edit"></i> --}}
+                                                                class="btn btn-success btn-sm mb-1 mb-lg-0">
                                                                 Edit
                                                             </a>
                                                             <a style="min-width: 55px;" href="{{ route('admin.tutorials.delete', $value->id) }}"
