@@ -140,7 +140,7 @@ class UserController extends Controller
     public function ChangeUserPlan(Request $request, $id)
     {
         $user_details = User::where('id', $id)->first();
-        $plans = Plan::where('status')->get();
+        $plans = Plan::latest()->get();
         $settings = Setting::where('status', 1)->first();
         $config = DB::table('config')->get();
         if ($plans == null) {
