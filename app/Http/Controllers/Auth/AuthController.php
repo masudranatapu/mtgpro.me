@@ -326,4 +326,5 @@ class AuthController extends Controller
         }
         return [$content, $mail->subject];
     }
+
 }
