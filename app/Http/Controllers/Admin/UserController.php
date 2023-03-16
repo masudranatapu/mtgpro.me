@@ -252,7 +252,7 @@ class UserController extends Controller
                 dd($e);
             }
             Toastr::success(trans('Plan changed success!'), 'Title', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('admin.offline.transactions');
+            return redirect()->route('admin.users');
 
         } else {
 
