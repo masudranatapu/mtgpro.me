@@ -1,0 +1,131 @@
+/* min width: 1400px */
+
+@media screen and (min-width:1400px) {
+    .setting_tab_contetn {
+        padding: 0px 50px;
+    }
+}
+
+
+@media screen and (max-width:1399px) {
+    .switch-wrapper {
+        width: 30%;
+    }
+}
+
+
+/* min width: 992px  */
+@media screen and (min-width:992px) {
+    .card_step_form {
+        height: 100vh;
+        border-radius: 0px 40px 40px 0px;
+    }
+
+    .sw-theme-basic>.nav .nav-link {
+        margin: 0px 15px;
+    }
+
+    .sw>.tab-content {
+        padding-top: 150px;
+    }
+
+    .content-wrapper>.content {
+        padding: 0 3.5rem;
+    }
+
+    .content-header {
+        padding: 44px 0px 22px 3.5rem !important;
+    }
+
+    nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+        display: none;
+    }
+
+    .add_content_modal .modal-lg {
+        max-width: 880px;
+    }
+
+    .social_add_form {
+        padding: 0px 45px;
+    }
+
+    .about_user #logofile {
+        margin: 0 auto;
+    }
+}
+
+/* max width: 991px  */
+
+@media screen and (max-width:991px) {
+    .card_preview_wrapper {
+        margin: 40px 0px;
+    }
+
+    .setting_tab_contetn {
+        padding: 0px 40px;
+    }
+
+    .add_form_wrap {
+        overflow: hidden;
+        overflow-y: auto;
+        height: 583px;
+    }
+}
+
+/* max width: 767px  */
+@media screen and (max-width: 767px) {
+    .account_setting .nav-tabs.flex-column {
+        border-right: none !important;
+        border-bottom: 1px solid #EEE !important;
+        padding-bottom: 16px;
+    }
+
+    #vert-tabs-tabContent {
+        margin-top: 32px;
+    }
+
+    .setting_tab_contetn {
+        padding: 0px 0px;
+    }
+    .switch-wrapper {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:575px) {
+    .company_group .slim{
+        margin:inherit;
+    }
+    .switch-wrapper {
+        width: 67%;
+    }
+}
+
+
+
+/* max width: 450 */
+
+@media screen and (max-width:450px) {
+    .card_step_form {
+        padding: 50px 10px;
+    }
+
+    #smartwizard .btn.sw-btn-prev.sw-btn {
+        position: inherit;
+    }
+
+    .sw .toolbar>.sw-btn {
+        padding: 8px 42px !important;
+    }
+
+    #smartwizard .nav {
+        position: inherit;
+    }
+
+    .setting_tab_contetn {
+        padding: 0px 0px;
+    }
+    .switch-wrapper {
+        width: 100%;
+    }
+}
