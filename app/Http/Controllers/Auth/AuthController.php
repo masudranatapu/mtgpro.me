@@ -20,9 +20,11 @@ use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Mail\AdminReminderForNewUserMail;
 use App\Mail\AllMail;
 use App\Models\EmailTemplate;
 use Illuminate\Support\Facades\Log;
+
 
 class AuthController extends Controller
 {
@@ -146,10 +148,17 @@ class AuthController extends Controller
 
                 [$content, $subject] = $this->wellcomeMail($user);
                 Mail::to($user->email)->send(new AllMail($content, $subject));
+                $settings = Setting::first('support_email');
+
+                if (isset($settings->support_email)) {
+                    Mail::to($settings->support_email)->send(new AdminReminderForNewUserMail($user));
+                }
+
+
                 // return redirect()->route('user.card');
             }
         } catch (\Exception $e) {
-            dd($e->getMessage());
+
             Toastr::error('Something went wrong ', 'Success', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
@@ -326,5 +335,4 @@ class AuthController extends Controller
         }
         return [$content, $mail->subject];
     }
-
 }
