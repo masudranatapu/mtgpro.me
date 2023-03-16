@@ -84,22 +84,27 @@ if (!function_exists('checkPackageValidity')) {
 }
 
 
-// if (!function_exists('checkCardLimit')) {
-//     function checkCardLimit($user_id)
-//     {
-//         $user = DB::table('users')->where('id', $user_id)->first();
-//         if ($user->plan_details) {
-//             $plan_details = json_decode($user->plan_details, true);
-//             if ($plan_details['no_of_vcards'] != 9999) {
-//                 $user_card = DB::table('business_cards')->where('status', 1)->where('user_id', $user_id)->count();
-//                 if ($plan_details['no_of_vcards'] <=  $user_card) {
-//                     return false;
-//                 }
-//             }
-//         }
-//         return true;
-//     }
-// }
+if (!function_exists('checkCardLimit')) {
+    function checkCardLimit($user_id)
+    {
+        $data['status']     = true;
+        $data['message']    = true;
+
+        $user = DB::table('users')->where('id', $user_id)->first();
+        if ($user->plan_details) {
+            $plan_details = json_decode($user->plan_details, true);
+            if ($plan_details['no_of_vcards'] != 9999) {
+                $user_card = DB::table('business_cards')->where('status', 1)->where('user_id', $user_id)->count();
+                if ($plan_details['no_of_vcards'] <=  $user_card) {
+                    $data['status']     = false;
+                    $data['message']    = 'Your card limit is over please upgrade your package for more card';
+                }
+            }
+        }
+
+        return $data;
+    }
+}
 
 if (!function_exists('getPhoto')) {
     function getPhoto($path)

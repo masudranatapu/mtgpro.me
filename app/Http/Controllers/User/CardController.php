@@ -68,11 +68,11 @@ class CardController extends Controller
             return redirect()->route('user.plans');
         }
 
-        // $check = checkCardLimit($user_id);
-        // if ($check == false) {
-        //     Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
-        //     return redirect()->route('user.plans');
-        // }
+        $check = checkCardLimit($user_id);
+        if ($check == false) {
+            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('user.plans');
+        }
 
         $plan_details = User::where('id', $user_id)->first();
         $user_email = SocialIcon::where('icon_name', 'email')->first();
