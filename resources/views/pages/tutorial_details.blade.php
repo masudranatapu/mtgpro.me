@@ -72,7 +72,7 @@
                                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                                 <circle cx="12" cy="7" r="4"></circle>
                                             </svg>
-                                            <span>Admin</span>
+                                            <span>{{ $tutorials->author }}</span>
                                         </div>
                                         <div class="date">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -81,7 +81,7 @@
                                                 <circle cx="12" cy="12" r="10"></circle>
                                                 <polyline points="12 6 12 12 16 14"></polyline>
                                             </svg>
-                                            <span>02 Feb, 2023</span>
+                                            <span>{{ date('d M Y', strtotime($tutorials->publish_date)) }}</span>
                                         </div>
                                     </div>
                                     <h2>
