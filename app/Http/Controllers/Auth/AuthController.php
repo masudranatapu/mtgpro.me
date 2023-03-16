@@ -90,8 +90,8 @@ class AuthController extends Controller
     public function postRegister(RegistrationRequest $request)
     {
         try {
-            $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
-            $term_days = $plan->validity;
+            $plan = DB::table('plans')->where('is_free', 1)->where('status', 1)->latest()->first();
+
             $checkExist = User::where('email', $request->email)->whereNotNull('email')->first();
             if (!empty($checkExist)) {
                 Toastr::error(trans('Cannot create account an identical account already exists!'), 'Error', ["positionClass" => "toast-top-center"]);
@@ -115,6 +115,7 @@ class AuthController extends Controller
             $user->user_type            = 2;
             // for plan info
             if (!empty($plan)) {
+                $term_days                  = $plan->validity;
                 $user->plan_id              = $plan->id;
                 $user->plan_details         = json_encode($plan);
                 $user->plan_validity        = $this->plan->planValidity($plan->id);

@@ -43,6 +43,15 @@ class CardController extends Controller
         if (count($cards) < 1) {
             return redirect()->route('user.card.init-card');
         }
+
+        $user_id = Auth::id();
+        //validity
+        $validity = checkPackageValidity($user_id);
+        if ($validity['status'] == false) {
+            Toastr::warning(trans($validity['message']), 'Warning', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('user.plans');
+        }
+
         return view('user.dashboard', compact('cards', 'activeCard'));
     }
 
@@ -54,15 +63,17 @@ class CardController extends Controller
         $user_id = Auth::id();
         //validity
         $validity = checkPackageValidity($user_id);
-        if ($validity == false) {
-            Toastr::warning(trans('Your package is expired please upgrade'), 'Warning', ["positionClass" => "toast-top-center"]);
+        if ($validity['status'] == false) {
+            Toastr::warning(trans($validity['message']), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
-        $check = checkCardLimit($user_id);
-        if ($check == false) {
-            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('user.plans');
-        }
+
+        // $check = checkCardLimit($user_id);
+        // if ($check == false) {
+        //     Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
+        //     return redirect()->route('user.plans');
+        // }
+
         $plan_details = User::where('id', $user_id)->first();
         $user_email = SocialIcon::where('icon_name', 'email')->first();
         $user = User::find($user_id);

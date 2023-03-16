@@ -41,11 +41,11 @@
             <div class="col-12 ">
                 <div class="col-10 mx-auto  text-center">
                     <div class="four_zero_four_bg py-4">
-                        <h1 class="text-center ">404</h1>
+                        <h1 class="text-center ">Please check your plan</h1>
                     </div>
                     <div class="contant_box_404">
                         <h3 class="h2">Look like you're lost (-)</h3>
-                        <p>The card you are looking for not avaible!</p>
+
                         <a href="{{ route('home') }}" class="link_404">Go to Home</a>
                         <a href="{{ route('contact-us') }}" class="btn btn-primary">Contact Us</a>
                     </div>
