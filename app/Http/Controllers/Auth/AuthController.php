@@ -249,7 +249,7 @@ class AuthController extends Controller
                     // $user->longitude        = $location->longitude;
                 }
                 // for plan info
-                if (!empty($plan)) {
+                if ($plan) {
                     $term_days = $plan->validity;
                     $user->plan_id              = $plan->id;
                     $user->plan_details         = json_encode($plan);
