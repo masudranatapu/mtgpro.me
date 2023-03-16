@@ -145,7 +145,7 @@ class AuthController extends Controller
 
                 [$content, $subject] = $this->wellcomeMail($user);
                 Mail::to($user->email)->send(new AllMail($content, $subject));
-                return redirect()->route('user.card');
+                // return redirect()->route('user.card');
             }
         } catch (\Exception $e) {
             dd($e->getMessage());

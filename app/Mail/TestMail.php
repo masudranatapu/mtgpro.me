@@ -31,8 +31,8 @@ class TestMail extends Mailable
     public function build()
     {
         return $this
-            ->from('alzamiarafat00@gmail.com')
-            ->to('arafat.aleshasolutions@gmail.com')
+            ->from('noreply@mtgpro.me')
+            ->to('maidul.tech@gmail.com')
             ->subject('test')
             ->view('emails.test-mail');
     }

@@ -41,16 +41,16 @@ class SettingsController extends Controller
         $config = DB::table('config')->get();
         // dd($config[24]);
 
-        $email_configuration = [
-            'driver' => env('MAIL_MAILER', 'smtp'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'address' => env('MAIL_FROM_ADDRESS'),
-            'name' => env('MAIL_FROM_NAME', $settings->site_name),
-        ];
+        // $email_configuration = [
+        //     'driver' => env('MAIL_MAILER', 'smtp'),
+        //     'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+        //     'port' => env('MAIL_PORT', 587),
+        //     'username' => env('MAIL_USERNAME'),
+        //     'password' => env('MAIL_PASSWORD'),
+        //     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+        //     'address' => env('MAIL_FROM_ADDRESS'),
+        //     'name' => env('MAIL_FROM_NAME', $settings->site_name),
+        // ];
 
         $google_configuration = [
             'GOOGLE_ENABLE' => env('GOOGLE_ENABLE', ''),
@@ -69,7 +69,7 @@ class SettingsController extends Controller
             'RECAPTCHA_SECRET_KEY' => env('RECAPTCHA_SECRET_KEY', '')
         ];
 
-        $settings['email_configuration'] = $email_configuration;
+        // $settings['email_configuration'] = $email_configuration;
         $settings['google_configuration'] = $google_configuration;
         $settings['recaptcha_configuration'] = $recaptcha_configuration;
         $settings['image_limit'] = $image_limit;
@@ -101,14 +101,14 @@ class SettingsController extends Controller
             $setting->google_client_secret  = $request->google_client_secret;
             // $setting->facebook_callback_url  = URL::to('/').'/auth/facebook/callback';
             // $setting->google_callback_url  = URL::to('/').'/auth/google/callback';
-            $setting->name              = trim($request->mail_sender, " ");
-            $setting->address           = trim($request->mail_address, " ");
-            $setting->driver            = trim($request->mail_driver, " ");
-            $setting->host              = trim($request->mail_host, " ");
-            $setting->port              = trim($request->mail_port, " ");
-            $setting->encryption        = trim($request->mail_encryption, " ");
-            $setting->username          = trim($request->mail_username, " ");
-            $setting->password          = trim($request->mail_password, " ");
+            $setting->name              = trim($request->mail_sender);
+            $setting->address           = trim($request->mail_address);
+            $setting->driver            = trim($request->mail_driver);
+            $setting->host              = trim($request->mail_host);
+            $setting->port              = trim($request->mail_port);
+            $setting->encryption        = trim($request->mail_encryption);
+            $setting->username          = trim($request->mail_username);
+            $setting->password          = trim($request->mail_password);
             $setting->status            = 1;
             $setting->app_mode          = $request->app_mode;
             $setting->facebook_url      = $request->facebook_url;
