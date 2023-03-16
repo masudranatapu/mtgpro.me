@@ -58,19 +58,16 @@ if (!function_exists('checkPackageValidity')) {
 
         $user = DB::table('users')->where('id', $user_id)->first();
 
+        $today = strtotime("today midnight");
+        $expire = strtotime($user->plan_validity);
+
         if($user->plan_id == null){
             $data['status']     = false;
             $data['message']    = 'Please upgrade your package';
-        }
-
-        $today = strtotime("today midnight");
-        $expire = strtotime($user->plan_validity);
-        if ($today >= $expire) {
+        } elseif ($today >= $expire) {
             $data['status']     = false;
             $data['message']    = 'Your package is expired please upgrade';
-        }
-
-        if ($user->plan_details) {
+        }elseif ($user->plan_details) {
             $plan_details = json_decode($user->plan_details, true);
             if ($plan_details['no_of_vcards'] != 9999) {
                 $user_card = DB::table('business_cards')->where('status', 1)->where('user_id', $user_id)->count();
