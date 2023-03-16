@@ -16,11 +16,14 @@ class AdminNotifyMail extends Mailable
      *
      * @return void
      */
-    public $subject, $content;
-    public function __construct($mailsubject, $mailcontent)
+    public $subject, $content, $plan_details;
+    public function __construct($mailsubject, $mailcontent, $plan_details = null)
     {
         $this->subject = $mailsubject;
         $this->content = $mailcontent;
+        if (isset($plan_details)) {
+            $this->plan_details = $plan_details;
+        }
     }
 
     /**
@@ -31,6 +34,10 @@ class AdminNotifyMail extends Mailable
     public function build()
     {
 
-        return $this->subject($this->subject)->view('emails.admin-notify-mail')->with('content', $this->content);
+        if (isset($this->plan_details)) {
+            return $this->subject($this->subject)->view('emails.admin-notify-mail')->with('content', $this->content)->with('plan_details', $this->plan_details);
+        } else {
+            return $this->subject($this->subject)->view('emails.admin-notify-mail')->with('content', $this->content);
+        }
     }
 }

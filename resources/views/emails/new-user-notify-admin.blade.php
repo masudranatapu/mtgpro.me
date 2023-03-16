@@ -473,10 +473,14 @@ $settings = getSetting();
                                 <tr>
                                     <td class="content-cell">
                                         <div class="f-fallback">
-                                            <h1>{{ $content }}</h1>
-                                            @if (isset($plan_details->plan_name))
-                                                <h4>Plan Name : {{ $plan_details->plan_name }}</h4>
-                                            @endif
+                                            <h1>Hello Admin,</h1>
+                                            <h5>New User has been registered.Here's some of his details.</h5>
+
+                                            <p><Strong>Name : </Strong><span>{{ $user->name }}</span></p>
+                                            <p><Strong>Email : </Strong><span>{{ $user->email }}</span></p>
+                                            <p><Strong>Username : </Strong><span>{{ $user->username }}</span></p>
+
+
                                             <table class="body-sub" role="presentation">
                                                 <tr>
                                                     <td>

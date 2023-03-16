@@ -633,7 +633,13 @@ $invoice_details = json_decode($details->invoice_details);
         <tr>
             <td align="center">
                 <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-
+                    <tr>
+                        <td class="email-masthead">
+                            <a href="{{ url('/') }}" class="f-fallback email-masthead_name">
+                                {{ $details['from_billing_name'] }}
+                            </a>
+                        </td>
+                    </tr>
                     <!-- Email Body -->
                     <tr>
                         <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
@@ -643,9 +649,8 @@ $invoice_details = json_decode($details->invoice_details);
                                 <tr>
                                     <td class="content-cell">
                                         <div class="f-fallback">
-                                            <h1>Hello! {{ $invoice_details->to_billing_name }} thank you for purchasing
-                                                from MTGPRO.ME</h1>
-                                            <p>{{ $details['email_heading'] }}</p>
+                                            <h1>Hi admin,</h1>
+                                            <p>{{ $invoice_details->to_billing_name }} purchase some product</p>
                                             <!-- Action -->
                                             <table class="table table-light"
                                                 style="width: 100%;margin-bottom: 1rem;color: #212529;vertical-align: top;border-color: #dee2e6;border-collapse: collapse;">
@@ -699,9 +704,12 @@ $invoice_details = json_decode($details->invoice_details);
                                                 <thead
                                                     style="vertical-align: bottom;border-color: inherit;border-style: solid;border-width: 0;">
                                                     <tr>
-                                                        <th colspan="4"
+                                                        <th colspan="3"
                                                             style="text-align: left;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">
-                                                            Description</th>
+                                                            Product </th>
+                                                        <th
+                                                            style="text-align: left;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;">
+                                                            Quantity</th>
                                                         <th
                                                             style="width: 10%;border-bottom: 1px solid #ccc;    padding: 0.5rem 0.5rem;text-align: right;">
                                                             Amount</th>
@@ -709,33 +717,62 @@ $invoice_details = json_decode($details->invoice_details);
                                                 </thead>
                                                 <tbody
                                                     style="vertical-align: inherit;border-color: inherit;border-style: solid;border-width: 0;">
-                                                    <tr
-                                                        style="border-color: inherit;border-style: solid;border-width: 0;">
-                                                        <td colspan="4"
-                                                            style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;">
-                                                            {{ $row->desciption }}
-                                                        </td>
-                                                        <td
-                                                            style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;text-align: right;">
-                                                            $ {{ CurrencyFormat($invoice_details->subtotal, 2) }}</td>
-                                                    </tr>
+                                                    @foreach ($products as $product)
+                                                        <tr
+                                                            style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                            <td colspan="3"
+                                                                style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;">
+                                                                {{ $product->product_name }}
+                                                            </td>
+                                                            <td colspan=""
+                                                                style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;">
+                                                                {{ $orderDetails[$loop->index]->quantity }}
+                                                            </td>
+                                                            <td
+                                                                style="border-bottom: 1px solid #ccc;padding: 1rem 0.7rem;text-align: right;">
+                                                                {{ getPrice($orderDetails[$loop->index]->unit_price * $orderDetails[$loop->index]->quantity) }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                     <tr
                                                         style="border-color: inherit;border-style: solid;border-width: 0;">
                                                         <td colspan="4"
                                                             style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">
                                                             Subtotal</td>
                                                         <td style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;"
-                                                            class="text-end">$
-                                                            {{ CurrencyFormat($invoice_details->subtotal, 2) }}</td>
+                                                            class="text-end">
+                                                            {{ getPrice($orders->total_price) }}</td>
+                                                    </tr>
+                                                    @if (isset($orders->coupon_discount))
+                                                        <tr
+                                                            style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                            <td colspan="4"
+                                                                style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">
+                                                                Coupon Discount</td>
+                                                            <td
+                                                                style="width: 23%;border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">
+                                                                {{ getPrice($orders->coupon_discount) }}
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                    <tr
+                                                        style="border-color: inherit;border-style: solid;border-width: 0;">
+                                                        <td colspan="4"
+                                                            style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">
+                                                            Shipping Cost</td>
+                                                        <td
+                                                            style="width: 23%;border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">
+                                                            {{ getPrice($orders->shipping_cost) }}
+                                                        </td>
                                                     </tr>
                                                     <tr
                                                         style="border-color: inherit;border-style: solid;border-width: 0;">
                                                         <td colspan="4"
                                                             style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;">
-                                                            Tax Amount</td>
+                                                            Tax / Vat </td>
                                                         <td
                                                             style="width: 23%;border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">
-                                                            $ {{ CurrencyFormat($invoice_details->tax_amount, 2) }}
+                                                            {{ getPrice($orders->vat) }}
                                                         </td>
                                                     </tr>
                                                     <tr
@@ -745,8 +782,9 @@ $invoice_details = json_decode($details->invoice_details);
                                                             Total</td>
                                                         <td
                                                             style="border-bottom: 1px solid #ccc;padding: 0.5rem 0.5rem;text-align: right;">
-                                                            <strong>$
-                                                                {{ CurrencyFormat($invoice_details->invoice_amount, 2) }}</strong>
+                                                            <strong>
+                                                                {{ getPrice($orders->grand_total) }}
+                                                            </strong>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -754,7 +792,7 @@ $invoice_details = json_decode($details->invoice_details);
 
 
                                             <p>{{ __('If you have any questions about this invoice, simply reply to this email
-                                                                                                                                                                                                                                                                                                                                                                                                                or reach out to our') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    or reach out to our') }}
                                                 <a
                                                     href="mailto:{{ $invoice_details->from_billing_email }}">{{ __('support team') }}</a>
                                                 {{ __('for help.') }}

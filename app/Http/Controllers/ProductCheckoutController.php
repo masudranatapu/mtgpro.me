@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\AdminNotifyMail;
 use App\Mail\AllMail;
+use App\Mail\SendEmailInvoiceAdmin;
 use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\Gateway;
@@ -225,6 +226,8 @@ class ProductCheckoutController extends Controller
         $adminNotifySubject = "Product purchase notification";
         $adminNotifyContent = $request->billing_name . " purchase a product.";
         Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent));
+        Mail::to($settings->support_email)->send(new SendEmailInvoiceAdmin($transaction, $order));
+
 
         return redirect()->route('user.orders.invoice', ['id' => $order->id]);
     }
