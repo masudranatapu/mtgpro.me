@@ -195,7 +195,7 @@ class AuthController extends Controller
     {
         // dd($provider);
         $plan = DB::table('plans')->where('is_free', 1)->latest()->where('status', 1)->first();
-        $term_days = $plan->validity;
+
         $data = Socialite::driver($provider)->stateless()->user();
         $falsemail = trim(str_replace(' ', '_', $data->name)) . '@gmail.com';
         $check_deactive = User::where('email', $data->email)->where('status', 0)->first();
@@ -250,6 +250,7 @@ class AuthController extends Controller
                 }
                 // for plan info
                 if (!empty($plan)) {
+                    $term_days = $plan->validity;
                     $user->plan_id              = $plan->id;
                     $user->plan_details         = json_encode($plan);
                     $user->plan_validity        = $this->plan->planValidity($plan->id);
