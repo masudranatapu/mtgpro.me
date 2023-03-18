@@ -216,7 +216,7 @@ class UserController extends Controller
             $transaction->save();
 
             User::where('id', $user_details->id)->update([
-                'plan_id' => $request->plan_id,
+                'plan_id' => $plan_data->id,
                 'term' => $term_days,
                 'plan_validity' => $plan_validity,
                 'plan_activation_date' => now(),
@@ -339,7 +339,7 @@ class UserController extends Controller
             $transaction->save();
 
             User::where('id', $user_details->id)->update([
-                'plan_id' => $request->plan_id,
+                'plan_id' => $plan_data->id,
                 'term' => $term_days,
                 'plan_validity' => $plan_validity,
                 'plan_activation_date' => now(),
