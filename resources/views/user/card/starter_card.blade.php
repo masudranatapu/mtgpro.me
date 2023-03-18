@@ -94,11 +94,10 @@
                                                         class="form-control cin @error('name') is-invalid @enderror"
                                                         data-preview="preview_name" placeholder="{{ __('Name') }}"
                                                         required tabindex="{{ $tabIndex++ }}">
-                                                    <div class="invalid-feedback" id="msg_name"> {{ __('Enter your
-                                                        name') }}</div>
+                                                    {{-- <div class="invalid-feedback" id="msg_name"> {{ __('Enter your
+                                                        name') }}</div> --}}
                                                     @if($errors->has('name'))
-                                                    <span class="help-block text-danger">{{ $errors->first('name')
-                                                        }}</span>
+                                                    <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
@@ -110,11 +109,9 @@
                                                         data-preview="preview_phone_number"
                                                         placeholder="{{ __('ex:+15162973389') }}" required
                                                         tabindex="{{ $tabIndex++ }}">
-                                                    <div class="invalid-feedback">{{ __('Enter your phone number') }}
-                                                    </div>
+                                                    {{-- <div class="invalid-feedback">{{ __('Enter your phone number') }}</div> --}}
                                                     @if($errors->has('phone_number'))
-                                                    <span class="help-block text-danger">{{
-                                                        $errors->first('phone_number') }}</span>
+                                                    <span class="help-block text-danger">{{ $errors->first('phone_number') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
@@ -135,10 +132,9 @@
                                                         data-preview="desig_comp_show"
                                                         placeholder="{{ __('Designation') }}" required
                                                         tabindex="{{ $tabIndex++ }}">
-                                                    <div class="invalid-feedback">{{ __('Enter your job title') }}</div>
+                                                    {{-- <div class="invalid-feedback">{{ __('Enter your job title') }}</div> --}}
                                                     @if($errors->has('designation'))
-                                                    <span class="help-block text-danger">{{
-                                                        $errors->first('designation') }}</span>
+                                                    <span class="help-block text-danger">{{$errors->first('designation') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
@@ -148,11 +144,9 @@
                                                         class="form-control cin_desig_comp @error('company_name') is-invalid @enderror"
                                                         data-preview="desig_comp_show" placeholder="{{ __('Company') }}"
                                                         required tabindex="{{ $tabIndex++ }}">
-                                                    <div class="invalid-feedback">{{ __('Enter your company name') }}
-                                                    </div>
+                                                    {{-- <div class="invalid-feedback">{{ __('Enter your company name') }} </div> --}}
                                                     @if($errors->has('company_name'))
-                                                    <span class="help-block text-danger">{{
-                                                        $errors->first('company_name') }}</span>
+                                                    <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                                     @endif
                                                 </div>
                                             </div>

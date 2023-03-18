@@ -151,6 +151,10 @@ class PlanController extends Controller
         $plan->is_email_signature = $request->is_email_signature ?? 0;
         $plan->is_qr_code = $request->is_qr_code=='on' ? '1':'0';
         $plan->free_marketing_material = $request->free_marketing_material=='on' ? '1':'0';
+
+        if($request->is_free == 1){
+            $plan->validity = '9999';
+        }
         $plan->save();
 
     } catch (\Exception $e) {
@@ -251,6 +255,11 @@ class PlanController extends Controller
         $plan->is_email_signature       = $request->is_email_signature;
         $plan->is_qr_code               = $request->is_qr_code=='on' ? '1':'0';
         $plan->features                 = json_encode($request->get('feature') ?? []);
+
+        if($request->is_free == 1){
+            $plan->validity = '9999';
+        }
+
         $plan->update();
 
         } catch (\Exception $e) {
