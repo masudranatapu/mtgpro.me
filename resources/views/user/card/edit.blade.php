@@ -29,11 +29,30 @@
          .switch-wrapper [type="radio"]:checked#quick_application_hide+label[for="quick_application_show"]~.highlighter {transform: translateX(100%);}
          .switch-wrapper label {font-size: 14px;z-index: 1;cursor: pointer;border-radius: 20px;transition: color 0.25s ease-in-out;margin: 0;font-family: 'Inter', sans-serif;line-height: 44px;padding: 0px 36px 30px 30px;height: 47px;width: 83px;display: block;text-align: center;}
          .switch-wrapper .highlighter {position: absolute;top: 4px;left: 4px;width: calc(49% - 2px);height: calc(100% - 8px);border-radius: 20px;background: #212121;transition: transform 0.25s ease-in-out;}
+         .sp{min-width: 120px;}
+         .card_preview_wrapper .save_contact a{padding: 9px 0px;}
 
     </style>
+
+@if ($card->theme_color)
+<style>
+    .save_contact a {
+        background: {{$card->theme_color}}
+    }
+
+    .offcanvas_btn a {
+        background: {{$card->theme_color}}
+    }
+</style>
+@endif
+
 @endpush
+
+
 @php
     $icon_group = Config::get('app.icon_group');
+    $settings = getSetting();
+    $icon_bg = '';
 @endphp
 @section('tab_content', 'active')
 @section('content')
@@ -56,7 +75,7 @@
         </div>
         <div class="content">
             <div class="container-fluid">
-                <div class="account_setting create_card_wrapper">
+                <div class="account_setting create_card_wrapper" >
                     <div class="row align-item-center">
                         <div class="col-xl-8">
                             <div class="row">
@@ -602,7 +621,7 @@
                             <!-- card preview -->
                             <div class="card_preview_wrapper">
                                 <div class="card_preview">
-                                    <div class="card_wrapper" id="clrBg">
+                                    <div class="card_wrapper" id="clrBg" style="background: #C6E4D2;">
                                         <div class="card_header text-center">
                                             <div class="card_header_top">
                                                 <!-- icon -->
@@ -665,10 +684,25 @@
                                                     <p id="bio_show">{{ $card->bio }}</p>
                                                 </div>
                                                 <div class="save_contact mt-4 mb-4">
-                                                    <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
+                                                    <a href="javascript:void(0)" class="sp text-decoration-none save-contact d-inline-block">{{ __('Save Contact') }}</a>
+                                                    <a href="javascript:void(0)" class="sp text-decoration-none d-inline-block btn-secondary">
+                                                    {{ __('Share') }}</a>
+
                                                 </div>
                                                 <div class="social_icon">
                                                     <div class="row icon_append">
+
+                                                        <div class="col-4 mb-2">
+                                                            <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                                                data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
+                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $card->theme_color }}"
+                                                                    class="img-fluid d-block mb-1 social_logo"
+                                                                    src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75"
+                                                                    height="75">
+                                                                <span>Mortgage Calculator</span>
+                                                            </a>
+                                                        </div>
+
                                                         @if (isset($card->business_card_fields) && count($card->business_card_fields) > 0)
                                                             @foreach ($card->business_card_fields as $key => $icon)
                                                                 <?php
@@ -701,7 +735,7 @@
                                                             style="display: {{ Auth::user()->housing_logo_view == 0 ? 'none' : 'block' }}">
                                                             <div class="sicon_houseing" style="">
                                                                 <a class="house_link" href="#" target="_blank">
-                                                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; border: 1px solid #6ecddb;" class="p-2"
+                                                                    <img style="border-radius: 15px; margin:0 auto; padding:10px; background:{{ $icon_bg }} " class="p-2"
                                                                         data-bg=""
                                                                         src="{{ asset('assets/img/house.png') }}"
                                                                         alt="" class="social_logo" width="75" height="75">
@@ -713,7 +747,7 @@
                                                             style="display: {{ Auth::user()->disclaimer_view == 0 ? 'none' : 'block' }}">
                                                             <div class="sicon_disclaimer" style="">
                                                                 <a class="house_link" href="#" target="_blank">
-                                                                    <img style="background:#000000" class="p-1"
+                                                                    <img style="background:{{ $icon_bg }}" class="p-1"
                                                                         data-bg=""
                                                                         src="{{ getPhoto('assets/img/icon/notes-note.svg') }}"
                                                                         alt="" class="social_logo">
@@ -725,7 +759,7 @@
                                                             style="display: {{ Auth::user()->credit_authorization == 0 ? 'none' : 'block' }}">
                                                             <div class="sicon_disclaimer" style="">
                                                                 <a class="house_link" href="#" target="_blank">
-                                                                    <img style="background:#a200b8" class="p-1"
+                                                                    <img style="background:{{ $icon_bg }}" class="p-1"
                                                                         data-bg=""
                                                                         src="{{ getPhoto('assets/img/icon/craditauthorization.svg') }}"
                                                                         alt="" class="social_logo">
@@ -737,7 +771,7 @@
                                                             style="display: {{ Auth::user()->quick_application == 0 ? 'none' : 'block' }}">
                                                             <div class="sicon_disclaimer" style="">
                                                                 <a class="house_link" href="#" target="_blank">
-                                                                    <img style="background:#007a74" class="p-1"
+                                                                    <img style="background:{{ $icon_bg }}" class="p-1"
                                                                         data-bg=""
                                                                         src="{{ getPhoto('assets/img/icon/rules.svg') }}"
                                                                         alt="" class="social_logo">
@@ -745,6 +779,16 @@
                                                                 </a>
                                                             </div>
                                                         </div>
+
+                                                        <div class="copyright_article mt-3">
+                                                            <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.</p>
+                                                        </div>
+                                                        @if ($settings->site_disclaimer)
+                                                        <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
+                                                            {!! $settings->site_disclaimer !!}
+                                                        </div>
+                                                        @endif
+
 
                                                     </div>
                                                 </div>
@@ -866,7 +910,7 @@
                                     <div class="live_preview">
                                         <div class="card_preview_wrapper">
                                             <div class="card_preview">
-                                                <div class="card_wrapper">
+                                                <div class="card_wrapper" style="background: #C6E4D2;">
                                                     <div class="card_header text-center">
                                                         <div class="card_header_top">
                                                             <!-- icon -->
@@ -934,7 +978,6 @@
                                                             </div>
                                                             <div class="social_icon">
                                                                 <div class="row icon_append" id="icon_append">
-                                                                    {{-- @dd($card->business_card_fields); --}}
                                                                     @if (isset($card->business_card_fields) && count($card->business_card_fields) > 0)
                                                                         @foreach ($card->business_card_fields as $key => $icon)
                                                                             <div class="col-4 mb-2">
@@ -947,8 +990,7 @@
                                                                                             alt="{{ $icon->icon }}"
                                                                                             class="social_logo"
                                                                                             style="background: {{ $icon->icon_color }}">
-                                                                                        <span
-                                                                                            class="icon_label link_title_show">{{ $icon->label }}</span>
+                                                                                        <span class="icon_label link_title_show">{{ $icon->label }}</span>
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -975,15 +1017,13 @@
 
 @push('custom_js')
     @if ($card->theme_color)
-        <style>
+        {{-- <style>
             .card_preview_wrapper .save_contact a {
                 background: {
-                        {
-                        $card->theme_color
-                    }
+                        { $card->theme_color}
                 }
             }
-        </style>
+        </style> --}}
         <script>
             function hexToRGBA(hex, opacity) {
                 return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length / 3 + '})', 'g')).map(
