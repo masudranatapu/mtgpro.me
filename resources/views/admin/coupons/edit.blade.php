@@ -165,7 +165,7 @@
                                                     <input type="text" name="valid_date_form"
                                                         class="form-control @error('valid_date_form') border-danger @enderror"
                                                         placeholder="{{ __('Valid Date Form') }}"
-                                                        value="{{ old('valid_date_form') ?? date('d-m-Y', strtotime($coupon->valid_from)) }}"
+                                                        value="{{ old('valid_date_form') ?? date('m-d-Y', strtotime($coupon->valid_from)) }}"
                                                         id="valid_date_form" required>
                                                     @error('valid_date_form')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -178,7 +178,7 @@
                                                     <input type="text" name="expired_date"
                                                         class="form-control @error('expired_date') border-danger @enderror"
                                                         placeholder="{{ __('Expired Date') }}"
-                                                        value="{{ old('expired_date') ?? date('d-m-Y', strtotime($coupon->valid_to)) }}"
+                                                        value="{{ old('expired_date') ?? date('m-d-Y', strtotime($coupon->valid_to)) }}"
                                                         id="expired_date" required>
                                                     @error('expired_date')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -262,12 +262,12 @@
             $('#valid_date_form').datepicker({
                 autoclose: true,
                 startDate: new Date(new Date().setDate(new Date().getDate() - 1)),
-                format: "dd-mm-yyyy",
+                format: "mm-dd-yyyy",
             });
             $('#expired_date').datepicker({
                 autoclose: true,
                 startDate: new Date(new Date().setDate(new Date().getDate() - 1)),
-                format: "dd-mm-yyyy",
+                format: "mm-dd-yyyy",
             });
 
             $('#selected_user').select2();
