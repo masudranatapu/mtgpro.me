@@ -69,7 +69,7 @@ class CardController extends Controller
         }
 
         $check = checkCardLimit($user_id);
-        if ($validity['status'] == false) {
+        if ($check['status'] == false) {
             Toastr::warning(trans($validity['message']), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
