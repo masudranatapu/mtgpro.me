@@ -46,8 +46,8 @@
         <div class="content dashboard_item">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-body table-responsive">
-
+                    <div class="card-body">
+                        <div class="table-responsive">
                         <table class="table table-bordered text-center">
                             <thead>
 
@@ -89,6 +89,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
                         <div class="mt-2 d-flex justify-content-center">
                             {{ $histories->links() }}
                         </div>
