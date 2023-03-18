@@ -339,7 +339,7 @@ body {
 
 .page_content {
     background: rgb(255, 255, 255);
-    padding: 30px;
+    padding: 20px;
     border-radius: 16px;
 }
 
@@ -1437,8 +1437,9 @@ body {
 }
 
 .table thead th {
-    border-bottom: 2px solid #dee2e6;
-    padding: 0px 6px 10px 4px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    padding: 8px 0px;
     line-height: 42px;
     vertical-align: middle;
 }
@@ -1647,8 +1648,8 @@ label {
     font-family: 'DM Sans';
 }
 
-.color_link_group .custom-control-input{
-    outline:none !important;
+.color_link_group .custom-control-input {
+    outline: none !important;
     box-shadow: none !important;
 }
 
@@ -1662,94 +1663,111 @@ label {
 li.nav-item .icon {
     color: #bdbdbd;
 }
- .switch-wrapper {
-        position: relative;
-        display: inline-flex;
-        border-radius: 20px;
-        background: white;
-        width:22%;
-    }
 
-    .switch-wrapper [type="radio"] {
-        position: absolute;
-        left: -9999px;
-    }
+.switch-wrapper {
+    position: relative;
+    display: inline-flex;
+    border-radius: 20px;
+    background: white;
+    width: 22%;
+}
 
-    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"],
-    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
-        color: #fff;
-    }
+.switch-wrapper [type="radio"] {
+    position: absolute;
+    left: -9999px;
+}
 
-    .switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"]:hover,
-    .switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"]:hover {
-        background: transparent;
-    }
+.switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"],
+.switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"] {
+    color: #fff;
+}
 
-    .switch-wrapper [type="radio"]:checked#monthly+label[for="yearly"]~.highlighter {
-        transform: none;
-    }
+.switch-wrapper [type="radio"]:checked#monthly~label[for="monthly"]:hover,
+.switch-wrapper [type="radio"]:checked#yearly~label[for="yearly"]:hover {
+    background: transparent;
+}
 
-    .switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
-        transform: translateX(100%);
-    }
+.switch-wrapper [type="radio"]:checked#monthly+label[for="yearly"]~.highlighter {
+    transform: none;
+}
 
-    .switch-wrapper label {
-        font-size: 14px;
-        z-index: 1;
-        cursor: pointer;
-        border-radius: 20px;
-        transition: color 0.25s ease-in-out;
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        line-height: 44px;
-        /* padding: 0px 36px 30px 37px; */
-        width: 100%;
-        display: inline-block;
-        height: 47px;
-    }
+.switch-wrapper [type="radio"]:checked#yearly+label[for="monthly"]~.highlighter {
+    transform: translateX(100%);
+}
 
-    .switch-wrapper .highlighter {
-        position: absolute;
-        top: 4px;
-        left: 8px;
-        width: calc(49% - 4px);
-        height: calc(100% - 8px);
-        border-radius: 20px;
-        background: #212121;
-        transition: transform 0.25s ease-in-out;
-    }
+.switch-wrapper label {
+    font-size: 14px;
+    z-index: 1;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: color 0.25s ease-in-out;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    line-height: 44px;
+    /* padding: 0px 36px 30px 37px; */
+    width: 100%;
+    display: inline-block;
+    height: 47px;
+}
 
-
-    .share_modal .btn-primary {
-        background: #212121;
-        border: none !important;
-        outline: none;
-        box-shadow: none;
-        padding: 12px 32px !important;
-        border-radius: 50px !important;
-        font-size: 13px;
-        margin: 7px;
-    }
+.switch-wrapper .highlighter {
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: calc(49% - 4px);
+    height: calc(100% - 8px);
+    border-radius: 20px;
+    background: #212121;
+    transition: transform 0.25s ease-in-out;
+}
 
 
-    #offcanvasCalculator ::-webkit-scrollbar {
-        width: 2px;
-        height: 2px;
-    }
-
-    #offcanvasCalculator ::-webkit-scrollbar-button {
-        background: #fff;
-    }
-
-    #offcanvasCalculator ::-webkit-scrollbar-track-piece {
-        background: #fff;
-    }
-
-    #offcanvasCalculator ::-webkit-scrollbar-thumb {
-        background: #ccc;
-    }
+.share_modal .btn-primary {
+    background: #212121;
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+    padding: 12px 32px !important;
+    border-radius: 50px !important;
+    font-size: 13px;
+    margin: 7px;
+}
 
 
+#offcanvasCalculator ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+}
+
+#offcanvasCalculator ::-webkit-scrollbar-button {
+    background: #fff;
+}
+
+#offcanvasCalculator ::-webkit-scrollbar-track-piece {
+    background: #fff;
+}
+
+#offcanvasCalculator ::-webkit-scrollbar-thumb {
+    background: #ccc;
+}
 
 
 
+
+
+.invoice_table.table.table-striped {
+    min-width: 796px !important;
+}
+
+.invoice_info strong {
+    font-size: 19px;
+    line-height: 21px;
+}
+
+.invoice_title h2 {
+    font-size: 18px;
+}
+
+.custome_table table {
+    min-width: 1000px;
+}

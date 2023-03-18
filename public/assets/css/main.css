@@ -770,6 +770,11 @@ body {
 .product_item {
     border: 1px solid #f1f1f1;
     border-radius: 5px;
+    width: 100%;
+}
+
+.product_img img {
+    width: 100%;
 }
 
 .product_title h3 a {
@@ -1502,10 +1507,14 @@ body {
     line-height: 26px;
     background: #e9e9e9;
 }
+
 button.contactbtn.btn.btn-primary:hover {
     background: #c62f00 !important;
 }
-.btn:hover{background: #c62f00 !important;}
+
+.btn:hover {
+    background: #c62f00 !important;
+}
 
 
 
