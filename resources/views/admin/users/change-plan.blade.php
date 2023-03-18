@@ -54,7 +54,7 @@
                                                     <option value='' disabled selected>{{ __('Plans') }}</option>
                                                     @foreach ($plans as $plan)
                                                         <option value="{{ $plan->plan_id }}"
-                                                            {{ $plan->plan_id == $user_details->plan_id ? 'selected' : '' }}>
+                                                            {{ $plan->id == $user_details->plan_id ? 'selected' : '' }}>
                                                             @if ($plan->plan_price == '0')
                                                             {{ $plan->plan_name}} ({{ __('Free') }})
                                                             @else
