@@ -1,11 +1,11 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 @push('css')
-    <style>
-        .invoice {
-            border-style: solid;
-            border-width: 10px 0px;
-        }
-    </style>
+<style>
+    .invoice {
+        border-style: solid;
+        border-width: 10px 0px;
+    }
+</style>
 @endpush('css')
 @section('settings', 'active')
 
@@ -14,7 +14,7 @@ $setting = getSetting();
 ?>
 
 @section('content')
-    @section('title') {{ __('Order Invoice') }} @endsection
+@section('title') {{ __('Order Invoice') }} @endsection
 @section('product_ordrs', 'active')
 <div class="page-wrapper">
     <div class="page-body">
@@ -53,25 +53,26 @@ $setting = getSetting();
                             <div class="invoice"
                                 style="border-style: solid;border-width: 2px 0px; padding:2%; border-color:darkgray">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-sm-7">
                                         <div class="invoice_title ">
                                             <h2><strong>INVOICE</strong></h2>
                                             <span>Invoice No.</span>
                                             <strong>{{ $order->order_number }}</strong> <br>
 
                                             <p><b>Date:
-                                                    {{ date('d M Y', strtotime($order->transaction->transaction_date ?? '')) }}</b>
+                                                    {{ date('d M Y', strtotime($order->transaction->transaction_date ??
+                                                    '')) }}</b>
                                             </p>
 
-                                            <p>Status: <strong
-                                                    class="text-success">{{ $order->transaction->payment_status ?? '' }}</strong>
+                                            <p>Status: <strong class="text-success">{{
+                                                    $order->transaction->payment_status ?? '' }}</strong>
                                             </p>
                                         </div>
                                     </div>
                                     @php
-                                        $invoieDetails = json_decode($order->transaction->invoice_details ?? '', true);
+                                    $invoieDetails = json_decode($order->transaction->invoice_details ?? '', true);
                                     @endphp
-                                    <div class="col-4">
+                                    <div class="col-sm-5">
 
                                         <div class="">
                                             <p>SOLD TO:</p>
@@ -101,22 +102,22 @@ $setting = getSetting();
                                     <tbody>
 
                                         @if (isset($order->order_details) && count($order->order_details) > 0)
-                                            @foreach ($order->order_details as $key => $detail)
-                                                <tr>
-                                                    <td>{{ $detail->product->product_name ?? '' }}</td>
-                                                    <td>{{ getPrice($detail->unit_price) ?? 0 }}</td>
-                                                    <td>{{ $detail->quantity ?? 0 }}</td>
-                                                    <td>{{ getPrice($detail->unit_price * $detail->quantity) }} </td>
-                                                </tr>
-                                            @endforeach
+                                        @foreach ($order->order_details as $key => $detail)
+                                        <tr>
+                                            <td>{{ $detail->product->product_name ?? '' }}</td>
+                                            <td>{{ getPrice($detail->unit_price) ?? 0 }}</td>
+                                            <td>{{ $detail->quantity ?? 0 }}</td>
+                                            <td>{{ getPrice($detail->unit_price * $detail->quantity) }} </td>
+                                        </tr>
+                                        @endforeach
                                         @endif
 
                                         @if (isset($order->coupon_id))
-                                            <tr>
-                                                <td colspan="2"></td>
-                                                <td><strong>Coupon Discount:</strong></td>
-                                                <td><strong>{{ getPrice($order->coupon_discount) }}</strong></td>
-                                            </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td><strong>Coupon Discount:</strong></td>
+                                            <td><strong>{{ getPrice($order->coupon_discount) }}</strong></td>
+                                        </tr>
                                         @endif
                                         <tr>
                                             <td colspan="2"></td>
@@ -140,8 +141,8 @@ $setting = getSetting();
                                             <td>{{ getPrice($order->payment_fee) }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Currency: <strong
-                                                    style="text-transform: uppercase;">{{ $order->transaction->transaction_currency ?? '' }}</strong>
+                                            <td>Currency: <strong style="text-transform: uppercase;">{{
+                                                    $order->transaction->transaction_currency ?? '' }}</strong>
                                             </td>
                                             <td colspan="1"></td>
                                             <td><strong>Grand Total:</strong></td>
@@ -157,10 +158,10 @@ $setting = getSetting();
                                                 {{ getPrice($order->transaction->transaction_amount ?? 0) }}</td>
                                         </tr>
                                         {{-- <tr>
-                                                <td colspan="2"></td>
-                                                <td><strong>Balance Due:</strong></td>
-                                                 <td class="text-success"> 0.00 AUD </td>
-                                            </tr> --}}
+                                            <td colspan="2"></td>
+                                            <td><strong>Balance Due:</strong></td>
+                                            <td class="text-success"> 0.00 AUD </td>
+                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
