@@ -278,6 +278,53 @@ class AuthController extends ResponceController
         return $this->sendResponse(200, $message, $user);
         // return response()->json(compact('user'));
     }
+
+
+    public function me()
+    {
+
+        $user = Auth::guard('api')->user();
+        $user_data = [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "username" => $user->username,
+            "gender" => $user->gender,
+            "dob" => $user->dob,
+            "social_id" => $user->social_id,
+            "provider" => $user->provider,
+            "status" => $user->status,
+            "role_id" => $user->role_id,
+            "user_type" => $user->user_type,
+            "plan_id" => (int)$user->plan_id,
+            "plan_details" => json_decode($user->plan_details, true),
+            "plan_validity" => $user->plan_validity,
+            "plan_activation_date" => $user->plan_activation_date,
+            "term" => $user->term,
+            "billing_country" => $user->billing_country,
+            "billing_country_code" => $user->billing_country_code,
+            "billing_state" => $user->billing_state,
+            "billing_city" => $user->billing_city,
+            "billing_zipcode" => $user->billing_zipcode,
+            "updated_at" => $user->updated_at,
+            "created_at" => $user->created_at,
+            "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0,
+            "user_disclaimer" => $user->user_disclaimer,
+            "housing_logo_view" => $user->housing_logo_view,
+            "disclaimer_view" => $user->disclaimer_view,
+            "form_view" => $user->form_view,
+            "credit_authorization" => $user->credit_authorization,
+            "nmls_id" => $user->nmls_id,
+            "nmls_view" => $user->nmls_view,
+            "quick_application" => $user->quick_application,
+
+        ];
+        return $this->sendResponse(200, "user", $user_data, true, "");
+    }
+
+
+
+
     public function checkExistUserName($base_name)
     {
         $base_name   = trim($base_name);
@@ -339,7 +386,15 @@ class AuthController extends ResponceController
             "billing_zipcode" => $user->billing_zipcode,
             "updated_at" => $user->updated_at,
             "created_at" => $user->created_at,
-            "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0
+            "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0,
+            "user_disclaimer" => $user->user_disclaimer,
+            "housing_logo_view" => $user->housing_logo_view,
+            "disclaimer_view" => $user->disclaimer_view,
+            "form_view" => $user->form_view,
+            "credit_authorization" => $user->credit_authorization,
+            "nmls_id" => $user->nmls_id,
+            "nmls_view" => $user->nmls_view,
+            "quick_application" => $user->quick_application,
 
         ];
 

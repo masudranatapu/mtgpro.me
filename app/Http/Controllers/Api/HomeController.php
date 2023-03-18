@@ -7,12 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ConnectRequest;
 use App\Http\Requests\SupportMailRequest;
 use App\Mail\AllMail;
+use App\Mail\CreditReportMail;
+use App\Mail\QuickReportMail;
 use App\Mail\SupportMail;
 use App\Models\BusinessCard;
 use App\Models\Currency;
 use App\Models\Plan;
 use App\Models\SocialIcon;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -423,5 +426,188 @@ class HomeController extends ResponceController
         $countries = CountryHelper::CountryCodes();
 
         return $this->sendResponse(200, "All Country", $countries, true, []);
+    }
+
+
+    public function quickReport(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "card_id"               => "required",
+            "contact_name"          => "required|max:124|string",
+            "contact_email"         => "required|max:124|string",
+            "contact_phone"         => "required|max:124|string",
+            "purpose"               => "required|max:124|string",
+            "price"                 => "required|max:9999999999|integer",
+            "down_amount"           => "nullable|max:9999999999|integer",
+            "property_type"         => "required|string|max:124",
+            "location"              => "required|string|max:512",
+            "company"               => "required_if:purpose,Refinance",
+            "agent"                 => "required|string|max:1",
+            "occupation"            => "required|string|max:512",
+            "current_employer"      => "required|string|max:512",
+            "annual_income"         => "required|string|max:512",
+            "credit_score"          => "required|string|max:512",
+            // "contact_infomation"    => "required|string|max:1024",
+
+        ]);
+
+        $discription = [
+            'purpose' => [
+                'Purchase', 'Refinance'
+            ],
+            'price' => 'Must be integer',
+            'down_amount' => 'Must be integer',
+            'property_type' => [
+                'Single Family House', '2+ Unit House', 'Conodo / Co-Op'
+            ],
+            'location' => "Must be string",
+            'agent' => 'must be 1 or 0',
+            'occupation' => 'must be stringg',
+            'credit_score' => 'must be integer',
+            'contact_name' => 'must be string',
+            'contact_email' => 'must be string',
+            'contact_phone' => 'must be string',
+        ];
+
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error',  $validator->errors()->first(), 200, $discription);
+        }
+
+
+        DB::beginTransaction();
+        try {
+            $data['name']               = $request->contact_name;
+            $data['email']              = trim($request->contact_email);
+            $data['phone']              = $request->contact_phone;
+            $data['purpose']            = $request->purpose;
+            $data['price']              = $request->price;
+            $data['down_amount']        = $request->down_amount;
+            $data['property_type']      = $request->property_type;
+            $data['location']           = $request->location;
+            $data['company_name']       = $request->company ?? null;
+            $data['agent']              = $request->agent;
+            $data['occupation']         = $request->occupation;
+            $data['current_employer']   = $request->current_employer;
+            $data['annual_income']      = $request->annual_income;
+            $data['credit_score']       = $request->credit_score;
+            // $data['contact_infomation'] = $request->contact_infomation;
+            $data['query_type']         = 3;
+
+            $card = BusinessCard::findOrFail($request->card_id);
+            if (Auth::guard('api')->user() && $card->user_id == Auth::guard('api')->user()->id) {
+                $message = trans('Not possible to send application to your card !');
+                return $this->sendError('Invalid Error', $message);
+            } elseif (!empty(Auth::user())) {
+                $data['connect_user_id']    = Auth::guard('api')->user()->id;
+                $data['profile_image']      = Auth::guard('api')->user()->profile_image;
+            } else {
+                $data['connect_user_id'] = NULL;
+            }
+
+            $data['card_id']        = $card->id;
+            $data['created_at']     = now();
+            $data['user_id']        = $card->user_id;
+            $connect = DB::table('connects')->insert($data);
+            $data['card_id'] = $card->card_id;
+        } catch (Exception $th) {
+            DB::rollback();
+
+            $message = trans('Something wrong ! please try again');
+            // return $this->sendError('Exception Error', $message);
+            return $this->sendError('Exception Error', $th->getMessage());
+        }
+        DB::commit();
+        $user = DB::table('users')->where('id', $card->user_id)->first();
+        // DB::commit();
+        if (!empty($connect) && $user->is_notify == 1) {
+            Mail::to($user->email)->send(new QuickReportMail($data, $user));
+        }
+
+        $message = trans('Your loan application send successfully');
+        return $this->sendResponse(200, $message, description: $discription);
+    }
+
+
+    public function creditReport(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "card_id"                   => "required",
+            "name"                      => "required",
+            "applicant_name"            => "required",
+            "social_security_number"    => "required",
+            "date_of_birth"             => "required|date",
+            "current_street"            => "required",
+            "current_city"              => "required",
+            "current_state"             => "required",
+            "current_date"              => "required",
+            "prior_address"             => "required",
+            "prior_city"                => "required",
+            "prior_state"               => "required",
+            "prior_start_date"          => "required|date",
+            "prior_end_date"            => "required|date",
+            "license"                   => "required",
+            "license_state"             => "required",
+            "signature"                 => "required",
+            "signature_date"            => "required|date",
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Exception Error', $validator->errors()->first());
+        }
+
+
+        DB::beginTransaction();
+        try {
+            $data['name']                      = $request->name;
+            $data['applicant_name']            = $request->applicant_name;
+            $data['social_security_number']    = $request->social_security_number;
+            $data['date_of_birth']             = $request->date_of_birth;
+            $data['current_street']            = $request->current_street;
+            $data['current_city']              = $request->current_city;
+            $data['current_state']             = $request->current_state;
+            $data['current_date']              = $request->current_date;
+            $data['prior_address']             = $request->prior_address;
+            $data['prior_city']                = $request->prior_city;
+            $data['prior_state']               = $request->prior_state;
+            $data['prior_start_date']          = $request->prior_start_date;
+            $data['prior_end_date']            = $request->prior_end_date;
+            $data['license']                   = $request->license;
+            $data['license_state']             = $request->license_state;
+            $data['signature']                 = $request->signature;
+            $data['signature_date']            = $request->signature_date;
+            $data['query_type']                = 2;
+
+            $card = BusinessCard::findOrFail($request->card_id);
+            if (Auth::user() && $card->user_id == Auth::user()->id) {
+                $message = trans('Not possible to send message to your card !');
+                return $this->sendError('Invalid Error', $message);
+            } elseif (!empty(Auth::user())) {
+                $data['connect_user_id']    = Auth::user()->id;
+                $data['profile_image']      = Auth::user()->profile_image;
+                $data['email']              = Auth::user()->email;
+            } else {
+                $data['connect_user_id'] = NULL;
+            }
+
+            $data['card_id']        = $card->id;
+            $data['created_at']     = now();
+            $data['user_id']        = $card->user_id;
+            $connect = DB::table('connects')->insert($data);
+            $data['card_id'] = $card->card_id;
+        } catch (Exception $th) {
+            DB::rollback();
+            $message = trans('Something wrong ! please try again');
+            return $this->sendError('Exception Error', $message);
+        }
+        DB::commit();
+        $user = DB::table('users')->where('id', $card->user_id)->first();
+        if (!empty($connect) && $user->is_notify == 1) {
+            Mail::to($user->email)->send(new CreditReportMail($data, $user));
+        }
+
+        $message = ('Credit report authorization send successfully');
+
+        return $this->sendResponse(200, $message);
     }
 }

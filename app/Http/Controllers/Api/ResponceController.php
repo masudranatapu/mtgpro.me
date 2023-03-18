@@ -30,7 +30,7 @@ class ResponceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function sendError($error, $errorMessages = [], $code = 200)
+    function sendError($error, $errorMessages = [], $code = 200, $description = [])
     {
         $response = [
             'success' => false,
@@ -39,6 +39,7 @@ class ResponceController extends Controller
         if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
+        $response['description'] = $description;
         return response()->json($response, $code);
     }
 

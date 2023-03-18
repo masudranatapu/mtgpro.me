@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ConnectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,9 +37,13 @@ Route::get('/get-social-icons', [HomeController::class, 'getSocialIcons']);
 Route::get('/get-plan', [HomeController::class, 'planList']);
 Route::get('/get-country', [HomeController::class, 'clountyList']);
 Route::post('/get-connection', [UserController::class, 'getConnect']);
+Route::post('/quick-report', [HomeController::class, 'quickReport']);
+Route::post('/credit-report', [HomeController::class, 'creditReport']);
 
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::post('me', [AuthController::class, 'me']);
+
     Route::post('/crete-first-card', [CardController::class, 'storefirstCard']);
     Route::get('/my-card', [CardController::class, 'myCard']);
     Route::post('crete-card', [CardController::class, 'postStore']);
@@ -69,6 +74,31 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('stripe-checkout', [StripeController::class, 'stripeCheckout']);
     Route::get('user-invoice', [UserController::class, 'userInvoice']);
+
+
+
+
+    Route::post('/equal-housing-view', [UserController::class, 'equalhousingShow']);
+    Route::post('/user-disclaimer-view', [UserController::class, 'userdisclaimerShow']);
+    Route::post('/user-nmls-view', [UserController::class, 'userNmlsShow']);
+    Route::post('/user-nmls-add', [UserController::class, 'userNmlsAdd']);
+    Route::post('/user-credit-auth-view', [UserController::class, 'usercraditAuthShow']);
+    Route::post('/user-quick-application-view', [UserController::class, 'quickApplication']);
+    Route::get('/my-order', [UserController::class, 'myOrder']);
+
+    Route::get('user/review', [UserController::class, 'getReview']);
+    Route::post('/user/review', [UserController::class, 'storeReview']);
+    Route::post('user/review/update/{id}', [UserController::class, 'updateReview']);
+
+
+
+    Route::get('user/free-marketing-material', [UserController::class, 'getFreeMarketing']);
+
+
+
+    Route::get('/crm', [ConnectionController::class, 'getIndex']);
+    Route::get('/crm/{id}/view', [ConnectionController::class, 'getView']);
+    Route::post('/crm/{id}/update', [ConnectionController::class, 'putUpdate']);
 });
 
 Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);

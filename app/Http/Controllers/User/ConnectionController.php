@@ -74,6 +74,8 @@ class ConnectionController extends Controller
 
         return view('user.crm.view', compact('row'));
     }
+
+    
     public function getEdit(Request $request, $id)
     {
         $row = DB::table('connects')
