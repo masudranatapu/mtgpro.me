@@ -141,7 +141,7 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                         <div class="row">
                                                             <div class="col-md-3 col-sm-6 text-lg-center">
                                                                 <div class="form-group profile_group">
-                                                                    <label class="form-label">{{ __('Profile picture')
+                                                                    <label class="form-label">{{ __('Profile Picture')
                                                                         }}
                                                                         <i class="fa fa-exclamation-circle"
                                                                             aria-hidden="true" data-toggle="tooltip"
@@ -160,7 +160,7 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                             </div>
                                                             <div class="col-md-6 col-sm-6 text-center">
                                                                 <div class="form-group cover_group">
-                                                                    <label class="form-label">{{ __('Cover photo') }}
+                                                                    <label class="form-label">{{ __('Cover Photo') }}
                                                                         <i class="fa fa-exclamation-circle"
                                                                             aria-hidden="true" data-toggle="tooltip"
                                                                             data-placement="right"

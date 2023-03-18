@@ -209,7 +209,7 @@
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <div class="form-group profile_group">
                                                                         <label
-                                                                            class="form-label">{{ __('Profile picture') }}
+                                                                            class="form-label">{{ __('Profile Picture') }}
                                                                             <i class="fa fa-exclamation-circle"
                                                                                 aria-hidden="true" data-toggle="tooltip"
                                                                                 data-placement="right"
@@ -225,7 +225,7 @@
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6 text-center">
                                                                     <div class="form-group cover_group">
-                                                                        <label class="form-label">{{ __('Cover photo') }}
+                                                                        <label class="form-label">{{ __('Cover Photo') }}
                                                                             <i class="fa fa-exclamation-circle"
                                                                                 aria-hidden="true" data-toggle="tooltip"
                                                                                 data-placement="right"
