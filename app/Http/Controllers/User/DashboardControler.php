@@ -87,15 +87,21 @@ class DashboardControler extends Controller
     {
         $user_id = Auth::id();
         $user = User::find($user_id);
+
+        $check = Plan::where('id',$user->plan_id)->first();
+
         $plan = DB::table('plans')
-            // ->select('')
+            ->select('plans.*')
             ->leftJoin('transactions', 'transactions.plan_id', '=', 'plans.id')
             ->where('plans.id', $user->plan_id)
             ->orderBy('transactions.id', 'DESC')
             ->first();
-        if ($plan == null) {
+
+
+        if (($plan == null) && ($check->is_free == 0)) {
             return redirect()->route('user.plans');
         }
+
         $transections =  $this->transection->getTransectionList($request);
         return view('user.setting', compact('user', 'plan', 'transections'));
     }
