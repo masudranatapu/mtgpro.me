@@ -96,8 +96,8 @@ if (!function_exists('checkCardLimit')) {
         if ($user->plan_details) {
             $plan_details = json_decode($user->plan_details, true);
             if ($plan_details['no_of_vcards'] != 9999) {
-                $user_card = DB::table('business_cards')->where('status', 1)->where('user_id', $user_id)->count();
-                if ($plan_details['no_of_vcards'] <=  $user_card) {
+                $user_card = DB::table('business_cards')->where('user_id', $user_id)->count()+1;
+                if ($user_card > $plan_details['no_of_vcards'] ) {
                     $data['status']     = false;
                     $data['message']    = 'Your card limit is over please upgrade your package for more card';
                 }
