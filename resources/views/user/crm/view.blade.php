@@ -46,9 +46,6 @@ $tabindex =1;
                     <img src="{{ asset('assets/img/icon/download.svg') }}" alt="{{ $row->name }}">
                     {{ __('Save as contact') }}
                 </a>
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#connectMail" class="btn btn-secondary">
-                    <img src="{{ asset('assets/img/icon/message.svg') }}" alt="{{ $row->name }}"> {{ __('Email lead') }}
-                </a>
                 <div class="row mt-4">
                     <div class="col-lg-8">
                         <div class="connection_view view-card mt-4">

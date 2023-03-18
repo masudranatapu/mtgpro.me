@@ -46,7 +46,7 @@
         <div class="content dashboard_item">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
 
                         <table class="table table-bordered text-center">
                             <thead>
