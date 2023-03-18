@@ -40,7 +40,7 @@ $tabindex = 1;
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group profile_group">
-                                        <label class="form-label">{{ __('Profile picture') }} <i
+                                        <label class="form-label">{{ __('Profile Picture') }} <i
                                                 class="fa fa-exclamation-circle" aria-hidden="true"
                                                 data-toggle="tooltip" data-placement="right"
                                                 title="Ideal dimensions: 540px * 540px (1:1)"></i></label>

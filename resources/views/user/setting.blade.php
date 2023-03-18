@@ -386,7 +386,7 @@
                                                         id="updateProfile" method="post">
                                                         @csrf
                                                         <div class="form-group profile-pic">
-                                                            <label class="form-label">{{ __('Profile picture') }} <i
+                                                            <label class="form-label">{{ __('Profile Picture') }} <i
                                                                     class="fa fa-exclamation-circle" aria-hidden="true"
                                                                     data-toggle="tooltip" data-placement="top"
                                                                     title="Ideal dimensions: 300px x 300px (1:1)"></i>
