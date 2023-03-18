@@ -821,9 +821,11 @@
                     <!-- modal header -->
                     <div class="modal-header mb-4">
                         <div class="first_modal">
-                            <h5>{{ __('Add content') }}</h5>
-                            <p>{{ __('Select from our wide variety of links and contact info below.') }} <span
-                                    id="filter-count">({{ $icons->count() ?? 0 }})</span> </p>
+                            <h5>{{ __('Add Content') }}</h5>
+                            <p>{{ __('Select from our wide variety of links and contact info below.') }} 
+                                {{-- <span
+                                    id="filter-count">({{ $icons->count() ?? 0 }})</span>  --}}
+                                </p>
                             <form onsubmit="return false;">
                                 <div class="input-group">
                                     <input type="text" name="search" id="filter" class="form-control"
