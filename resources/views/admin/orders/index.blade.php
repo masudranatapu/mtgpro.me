@@ -76,11 +76,11 @@
                                                 </td>
                                                 <td class="text-muted">
                                                     @if ($value->status == 1)
-                                                        <span class="badge bg-red">{{ __('Prossing') }}</span>
+                                                        <span class="badge bg-red">{{ __('Processing') }}</span>
                                                     @elseif ($value->status == 2)
                                                         <span class="badge bg-orange">{{ __('On The Way') }}</span>
                                                     @elseif ($value->status == 3)
-                                                        <span class="badge bg-success">{{ __('Deliverd') }}</span>
+                                                        <span class="badge bg-success">{{ __('Delivered') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>

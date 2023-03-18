@@ -107,7 +107,7 @@ $plan = getPlan(Auth::user()->id);
                             <i class="fa fa-calculator" aria-hidden="true"></i>
                             {{-- <img src="{{ asset('assets/img/icon/settings.svg') }}" alt="{{ __('calculator') }}"> --}}
                         </span>
-                        {{ __('Mortgage calculator') }}
+                        {{ __('Mortgage Calculator') }}
                     </a>
                 </li>
                 <li class="nav-item">

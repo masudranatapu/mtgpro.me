@@ -173,11 +173,6 @@
                                     <span>Mortgage Calculator</span>
                                 </a>
                             </div>
-                            <?php
-                                // $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-                                // $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-                                // $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
-                                ?>
                             {{-- @dd($cardinfo->contacts) --}}
                             @if (!empty($cardinfo->contacts))
                             @foreach ($cardinfo->contacts as $contact)
@@ -190,11 +185,7 @@
                             } else {
                             $icon_color = $contact->icon_color;
                             }
-                            // if($cardinfo->theme_color == null){
-                            // $icon_color = $contact->icon_color;
-                            // }else{
-                            // $icon_color = $cardinfo->theme_color;
-                            // }
+
                             //link,mail,mobile,number,text,username,file,address
                             @endphp
                             {{-- <div class="col-4 col-md-3 mb-3"> --}}

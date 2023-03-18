@@ -24,14 +24,14 @@
                                 <form action="{{ route('admin.review.store') }}" id="reviewForm" method="post">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="display_name" class="form-label">{{ __('Display name') }}</label>
+                                        <label for="display_name" class="form-label">{{ __('Display Name') }}</label>
                                         <input type="text" class="form-control @error('display_name') is-invalid @enderror"  name="display_name" id="display_name" required value="{{ old('display_name') ?? Auth::user()->name }}">
                                         @if($errors->has('display_name'))
                                             <span class="help-block text-danger">{{ $errors->first('display_name') }}</span>
                                         @endif
                                     </div>
                                     <div class="mb-3">
-                                        <label for="display_title" class="form-label">{{ __('Display title') }}</label>
+                                        <label for="display_title" class="form-label">{{ __('Display Title') }}</label>
                                         <input type="text" class="form-control @error('display_title') is-invalid @enderror" name="display_title" id="display_title" required value="{{ old('display_title') ?? Auth::user()->designation }}">
                                         @if($errors->has('display_title'))
                                             <span class="help-block text-danger">{{ $errors->first('display_title') }}</span>

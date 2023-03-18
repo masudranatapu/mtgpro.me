@@ -245,7 +245,7 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
             temp.val(url).select();
             document.execCommand("copy");
             temp.remove();
-            toastr.success('Link copy to clipsboard');
+            toastr.success('Link copied to clipboard');
 
 
         }
