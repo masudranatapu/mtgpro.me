@@ -207,7 +207,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="billing_info_card subs_info">
                                                             <div class="card-header">
-                                                                <h4>{{ __('Billing Infomation') }} <a href="#"
+                                                                <h4>{{ __('Billing Infomations') }} <a href="#"
                                                                         data-toggle="modal" data-target="#billingModal"
                                                                         class="float-right">{{ __('Edit') }}</a>
                                                                 </h4>
@@ -299,7 +299,7 @@
                                                         <div class="header mb-1">
                                                             <div class="row align-items-center">
                                                                 <div class="col-md-7">
-                                                                    <h3>{{ __('Invoice history') }}</h3>
+                                                                    <h3>{{ __('Invoice History') }}</h3>
                                                                     <p>{{ __('Here are your previous invoices and receipts') }}
                                                                     </p>
                                                                 </div>
@@ -417,7 +417,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="connection_title"
-                                                                class="form-label">{{ __('Connection title') }}</label>
+                                                                class="form-label">{{ __('Connection Title') }}</label>
                                                             <input type="text" name="connection_title"
                                                                 id="connection_title"
                                                                 class="form-control @error('connection_title') is-invalid @enderror"
@@ -681,7 +681,7 @@
                                     data-dismiss="modal">{{ __('Cancel') }}</button>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                    <span class="btn-txt">{{ __('Save billing details') }}</span>
+                                    <span class="btn-txt">{{ __('Save Billing Details') }}</span>
                                 </button>
                             </div>
                         </form>
@@ -697,7 +697,7 @@
                 <div class="modal-content">
                     <!-- modal header -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="paymentModalLabel">{{ __('Payment details') }}</h5>
+                        <h5 class="modal-title" id="paymentModalLabel">{{ __('Payment Details') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
