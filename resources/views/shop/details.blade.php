@@ -110,18 +110,19 @@ $cart = session()->get('cart', []);
                         <div class="single_pro_content">
                             <h2>{{ $product->product_name }}</h2>
                             <span>{{ getprice($product->unit_price_regular) }}</span>
-                            <p>
+                            <hr>
+                            {{-- <p>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <span>50 Reviews</span>
-                            </p>
+                            </p> --}}
                             <form action="{{ route('addtocart') }}" method="post" id="quanityForm">
                                 @csrf
                                 <div class="qtyfield mb-4">
-                                    <span>Qty</span>
+                                    <span>Quantity</span>
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-bg-minus qty_number" data-type="minus"

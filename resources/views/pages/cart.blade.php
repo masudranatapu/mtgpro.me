@@ -83,7 +83,7 @@
                                 <td>
     
                                 </td>
-                                <td>
+                                <td colspan="2">
     
                                     <input type="text" class="form-control" @if (session()->has('coupon')) disabled @endif
                                         id="couponCode" value="{{ session('coupon')->coupon_code ?? '' }}"

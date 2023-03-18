@@ -200,7 +200,7 @@
                     <!-- card preview -->
                     <div class="card_preview_wrapper">
                         <div class="header mb-4 text-center">
-                            <h5>{{ __('Profile live preview') }}</h5>
+                            <h5>{{ __('Profile Live Preview') }}</h5>
                         </div>
                         <div class="card_preview">
                             <div class="card_wrapper">

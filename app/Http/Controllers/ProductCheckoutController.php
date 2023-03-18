@@ -224,7 +224,7 @@ class ProductCheckoutController extends Controller
 
 
         $adminNotifySubject = "Product purchase notification";
-        $adminNotifyContent = $request->billing_name . " purchase a product.";
+        $adminNotifyContent = $request->billing_name . " has purchased products.";
         Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent));
         Mail::to($settings->support_email)->send(new SendEmailInvoiceAdmin($transaction, $order));
 

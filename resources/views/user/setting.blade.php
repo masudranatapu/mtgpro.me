@@ -240,7 +240,7 @@
                                                         <div class="payment_method_card subs_info">
                                                             <div class="card-header">
                                                                 <h4>
-                                                                    {{ __('Payment method') }}
+                                                                    {{ __('Payment Method') }}
                                                                     <a href="javascript:void(0)" class="float-right"
                                                                         data-toggle="modal"
                                                                         data-target="#paymentModal">{{ __($user->card_number != '' ? 'Edit' : 'Add') }}</a>

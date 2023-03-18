@@ -19,42 +19,42 @@ $setting  = getSetting();
                         <ul>
                             @if($settings->facebook_url)
                             <li>
-                                <a href="{{ $settings->facebook_url }}">
+                                <a target="_blank" href="{{ $settings->facebook_url }}">
                                     <i class="fab fa-facebook"></i>
                                 </a>
                             </li>
                             @endif
                             @if($settings->twitter_url)
                             <li>
-                                <a href="{{ $settings->twitter_url }}">
+                                <a target="_blank" href="{{ $settings->twitter_url }}">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             </li>
                             @endif
                             @if($settings->linkedin_url)
                             <li>
-                                <a href="{{ $settings->linkedin_url }}">
+                                <a target="_blank" href="{{ $settings->linkedin_url }}">
                                     <i class="fab fa-linkedin"></i>
                                 </a>
                             </li>
                             @endif
                             @if($settings->pinterest_url)
                             <li>
-                                <a href="{{ $settings->pinterest_url }}">
+                                <a target="_blank" href="{{ $settings->pinterest_url }}">
                                     <i class="fab fa-pinterest"></i>
                                 </a>
                             </li>
                             @endif
                             @if($settings->instagram_url)
                             <li>
-                                <a href="{{ $settings->instagram_url }}">
+                                <a target="_blank" href="{{ $settings->instagram_url }}">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             </li>
                             @endif
                             @if($settings->youtube_url)
                             <li>
-                                <a href="{{ $settings->youtube_url }}">
+                                <a target="_blank" href="{{ $settings->youtube_url }}">
                                     <i class="fab fa-youtube"></i>
                                 </a>
                             </li>

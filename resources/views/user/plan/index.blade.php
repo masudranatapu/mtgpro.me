@@ -57,7 +57,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Choose a plan') }}</h1>
+                    <h1 class="m-0">{{ __('Choose a Plan') }}</h1>
                 </div>
             </div>
         </div>
@@ -117,12 +117,12 @@
                                         <a href="javascript:void(0)"
                                             class="current-plan-btn btn-block btn-primary w-100"
                                             data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}"
-                                            title="{{ __('Current plan')}}">{{ __('Choose plan')}}</a>
+                                            title="{{ __('Current Plan')}}">{{ __('Choose Plan')}}</a>
                                         @else
                                         <a href="javascript:void(0)"
                                             class="choose-plan btn btn-primary btn-block btn-primary w-100"
                                             data-href="{{ route('user.checkout') }}" data-id="{{ $plan->id }}"
-                                            title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                                            title="{{ __('Choose Plan')}}">{{ __('Choose Plan')}}</a>
                                         @endif
                                     </div>
                                     <div class="my-3 pb-3">

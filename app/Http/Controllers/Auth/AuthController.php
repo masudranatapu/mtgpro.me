@@ -130,22 +130,13 @@ class AuthController extends Controller
             if ($location) {
                 $user->billing_country  = $location->countryName;
                 $user->billing_country_code = $location->countryCode;
-                // $user->regionCode    = $location->regionCode;
                 $user->billing_state    = $location->regionName;
                 $user->billing_city     = $location->cityName;
                 $user->billing_zipcode  = $location->zipCode;
-                // $user->isoCode          = $location->isoCode;
-                // $user->latitude         = $location->latitude;
-                // $user->longitude        = $location->longitude;
             }
-            // $user->ip_address       = $this->user->getIP();
-            // $user->device           = $this->user->getOS();
-            // $user->browser          = $this->user->getBrowser();
             $user->save();
             if ($user) {
                 Auth::login($user);
-                // Mail::to($user->email)->send(new WelcomeMail($user));
-
                 [$content, $subject] = $this->wellcomeMail($user);
                 Mail::to($user->email)->send(new AllMail($content, $subject));
                 $settings = Setting::first('support_email');
@@ -153,9 +144,6 @@ class AuthController extends Controller
                 if (isset($settings->support_email)) {
                     Mail::to($settings->support_email)->send(new AdminReminderForNewUserMail($user));
                 }
-
-
-                // return redirect()->route('user.card');
             }
         } catch (\Exception $e) {
 

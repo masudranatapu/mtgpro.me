@@ -43,7 +43,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="section_title mb-5 text-center" data-aos="fade-up">
-                                <h4>{{ __('Choose your best plan') }}</h4>
+                                <h4>{{ __('Choose Your Best Plan') }}</h4>
                                 <div class="plan_type switchBtn text-center mb-4 mt-3">
                                     <div class="switch-wrapper">
                                         <input id="monthly" name="planType" value="annual" type="radio" name="switch"
@@ -80,7 +80,7 @@
                                             <a href="{{ route('user.checkout') }}?plan_id={{ $row->id }}&is_yearly=1"
                                                 class="choose-plan btn btn-primary btn-block btn-dark w-100"
                                                 data-href="{{ route('user.checkout') }}" data-id="{{ $row->id }}"
-                                                title="{{ __('Choose plan')}}">{{ __('Choose plan')}}</a>
+                                                title="{{ __('Choose Plan')}}">{{ __('Choose Plan')}}</a>
                                         </div>
                                         @endif
                                         <div class="my-3 pb-3">

@@ -38,7 +38,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">{{ __('Close')}}</button>
-                        <button class="btn btn-primary" type="submit">{{ __('Pay now')}}</button>
+                        <button class="btn btn-primary" type="submit">{{ __('Pay Now')}}</button>
                     </div>
                 </div>
 

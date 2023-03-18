@@ -77,7 +77,7 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                     <h1 class="mb-3 mb-md-0">{{ __('My Cards') }}
                         <a class="create_plus_icon" href="{{ route('user.card.create') }}"><i
                                 class="fab fa-plus"></i></a>
-                        &nbsp; <a href="{{ route('home') }}/{{ Auth::user()->username }}">Live card</a>
+                        &nbsp; <a href="{{ route('home') }}/{{ Auth::user()->username }}">Live Card</a>
 
                     </h1>
                 </div>
