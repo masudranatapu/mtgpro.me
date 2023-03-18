@@ -537,27 +537,9 @@ class HomeController extends Controller
         $data['subject']    = $request->subject;
         $data['your_message'] = $request->your_message;
         Mail::to($this->settings->support_email)->send(new SendContact($data));
-        Toastr::success(trans('Thank you for your feedback'), 'Success', ["positionClass" => "toast-top-center"]);
+        Toastr::success(trans('We have received your query. Our support team will back to you soon.'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
-
-
-    /*
-
-    public function subscribe(Request $request)
-    {
-        $data               = [];
-        $data['email']      = $request->email;
-        DB::table('subscribers')->insert([
-            'email' => $request->email,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-        Mail::to($this->settings->address)->send(new SendContact($data));
-        Toastr::success(trans('You have successfully subscribed!'), 'Success', ["positionClass" => "toast-top-center"]);
-        return redirect()->back();
-    }
-
-    */
 
     public function getBlog()
     {

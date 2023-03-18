@@ -42,11 +42,11 @@
                             </div>
 
                             <div class="forgot_pass text-center">
-                                <a href="{{ route('password.request') }}" title="{{ __('Forgot password') }}" class="text-dark">{{ __('Forgot password') }}?</a>
+                                <a href="{{ route('password.request') }}" title="{{ __('Forgot Password') }}" class="text-dark">{{ __('Forgot Password') }}?</a>
                             </div>
 
                             <div class="bottom text-center">
-                                <p>{{ __("Don't have an account?") }} <a href="{{ route('register') }}" title="{{ __('Sign Up') }}">{{ __('Sign Up') }}</a></p>
+                                <p>{{ __("Don't have an Account?") }} <a href="{{ route('register') }}" title="{{ __('Sign Up') }}">{{ __('Sign Up') }}</a></p>
                             </div>
                         </form>
                     </div>

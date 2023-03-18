@@ -32,7 +32,7 @@ class AdminReminderForNewUserMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Admin Reminder For New User Mail',
+            subject: 'Admin Reminder For New User Registration',
         );
     }
 

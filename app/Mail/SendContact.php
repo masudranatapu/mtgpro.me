@@ -33,7 +33,7 @@ class SendContact extends Mailable
     public function build()
     {
         return $this
-            ->from($this->settings->address)
+            ->from($this->data['email'])
             ->subject('Contact Us')
             ->view('emails.send_contact')->with('data',$this->data);
     }

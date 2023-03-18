@@ -63,7 +63,7 @@
                                     <button type="submit" class="btn btn-primary">{{ __('Sign Up') }}</button>
                                 </div>
                                 <div class="bottom text-center">
-                                    <p>{{ __('Already have an account?') }} <a href="{{ route('login') }}" title="{{ __('Sign In') }}">{{ __('Sign In') }}</a></p>
+                                    <p>{{ __('Already have an Account?') }} <a href="{{ route('login') }}" title="{{ __('Sign In') }}">{{ __('Sign In') }}</a></p>
                                 </div>
                             </form>
                         </div>

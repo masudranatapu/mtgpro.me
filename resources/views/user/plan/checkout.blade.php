@@ -328,7 +328,7 @@
 
                                         <div class="col-12">
                                             <label for="payment_gateway_id"
-                                                class="form-label d-block">{{ __('Payment method') }} <span
+                                                class="form-label d-block">{{ __('Payment Method') }} <span
                                                     class="text-danger">*</span></label>
                                             @if (!empty($gateways) && count($gateways) > 0)
                                                 @foreach ($gateways as $gateway)
@@ -364,7 +364,7 @@
                                             @endif
 
                                             <button type="submit" id="continuePaypalBtn"
-                                                class="btn btn-primary">{{ __('Continue for payment') }}</button>
+                                                class="btn btn-primary">{{ __('Continue for Payment') }}</button>
                                         </div>
 
 

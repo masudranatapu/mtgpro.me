@@ -48,7 +48,7 @@
                             <div class="col-lg-3 col-md-6">
                                 <form action="{{ route('tutorials') }}" method="GET">
                                     <select name="category" class="form-control" onchange="this.form.submit()">
-                                        <option value="" disabled selected>Select category</option>
+                                        <option value="" disabled selected>Select Category</option>
                                         <option value="select_all_tutorials">Select All Tutorials</option>
                                         @foreach ($categories as $cate)
                                             <option value="{{ $cate->slug }}" {{ request()->get('category') ==  $cate->slug ? 'selected' : '' }}>{{ $cate->title }}</option>

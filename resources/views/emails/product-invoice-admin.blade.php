@@ -650,7 +650,7 @@ $invoice_details = json_decode($details->invoice_details);
                                     <td class="content-cell">
                                         <div class="f-fallback">
                                             <h1>Hi admin,</h1>
-                                            <p>{{ $invoice_details->to_billing_name }} purchase some product</p>
+                                            <p>{{ $invoice_details->to_billing_name }} has Purchased Products</p>
                                             <!-- Action -->
                                             <table class="table table-light"
                                                 style="width: 100%;margin-bottom: 1rem;color: #212529;vertical-align: top;border-color: #dee2e6;border-collapse: collapse;">

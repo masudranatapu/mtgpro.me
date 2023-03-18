@@ -14,41 +14,41 @@ $settings = getSetting();
                             <h3>{{ __('Contact Solutions') }}</h3>
                         </div>
                         <div class="footer_article">
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing, elit. Cum aliquid, nam sint voluptates et aliquam</p>
+                            {{-- <p>Lorem ipsum dolor sit, amet consectetur adipisicing, elit. Cum aliquid, nam sint voluptates et aliquam</p> --}}
                         </div>
                         <div class="social_media">
                             <ul>
                                 @if (!empty($settings->facebook_url))
                                 <li>
-                                    <a href="{{ $settings->facebook_url }}" target="__blank">
+                                    <a target="_blank" href="{{ $settings->facebook_url }}" target="__blank">
                                         <i class="fab fa-facebook"></i>
                                     </a>
                                 </li>
                                 @endif
                                 @if (!empty($settings->twitter_url))
                                 <li>
-                                    <a href="{{ $settings->facebook_url }}" target="__blank">
+                                    <a target="_blank" href="{{ $settings->facebook_url }}" target="__blank">
                                         <i class="fab fa-twitter"></i>
                                     </a>
                                 </li>
                                 @endif
                                 @if (!empty($settings->linkedin_url))
                                 <li>
-                                    <a href="{{ $settings->facebook_url }}" target="__blank">
+                                    <a target="_blank" href="{{ $settings->facebook_url }}" target="__blank">
                                         <i class="fab fa-linkedin"></i>
                                     </a>
                                 </li>
                                 @endif
                                 @if (!empty($settings->pinterest_url))
                                 <li>
-                                    <a href="{{ $settings->facebook_url }}" target="__blank">
+                                    <a target="_blank" href="{{ $settings->facebook_url }}" target="__blank">
                                         <i class="fab fa-pinterest"></i>
                                     </a>
                                 </li>
                                 @endif
                                 @if (!empty($settings->instagram_url))
                                 <li>
-                                    <a href="{{ $settings->facebook_url }}" target="__blank">
+                                    <a target="_blank" href="{{ $settings->facebook_url }}" target="__blank">
                                         <i class="fab fa-instagram"></i>
                                     </a>
                                 </li>
