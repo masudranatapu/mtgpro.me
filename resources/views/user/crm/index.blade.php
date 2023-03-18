@@ -168,17 +168,15 @@ if (!empty($daterange)) {
                                                                     alt="{{ _('Export') }}">
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                                {{-- <a class="dropdown-item" href="#">{{ _('Export to csv') }}</a>
-                                                    --}}
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('user.crm.details', [$row->id]) }}">{{ _('View Connection') }}</a>
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('user.crm.download', $row->id) }}">{{ _('Save as contact') }}</a>
+                                                                    href="{{ route('user.crm.download', $row->id) }}">{{ _('Save as Contact') }}</a>
 
                                                                 <a class="dropdown-item send_mail"
                                                                     href="javascript::void(0)"
                                                                     data-email="{{ $row->email }}" data-toggle="modal"
-                                                                    data-target="#connectMail_{{ $row->id }}">{{ _('Send mail') }}</a>
+                                                                    data-target="#connectMail_{{ $row->id }}">{{ _('Send Mail') }}</a>
 
                                                             </div>
                                                         </div>
