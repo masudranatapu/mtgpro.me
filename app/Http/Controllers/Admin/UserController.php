@@ -204,7 +204,7 @@ class UserController extends Controller
             $transaction->transaction_date = now();
             $transaction->transaction_id = "";
             $transaction->user_id = $user_details->id;
-            $transaction->plan_id = $plan_data->plan_id;
+            $transaction->plan_id = $plan_data->id;
             $transaction->desciption = $plan_data->plan_price . " Plan";
             $transaction->payment_gateway_name = "Offline";
             $transaction->transaction_amount = $amountToBePaid;
@@ -327,7 +327,7 @@ class UserController extends Controller
             $transaction->transaction_date = now();
             $transaction->transaction_id = "";
             $transaction->user_id = $user_details->id;
-            $transaction->plan_id = $plan_data->plan_id;
+            $transaction->plan_id = $plan_data->id;
             $transaction->desciption = $plan_data->plan_name . " Plan";
             $transaction->payment_gateway_name = "Offline";
             $transaction->transaction_amount = $amountToBePaid;
