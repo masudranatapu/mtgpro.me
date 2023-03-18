@@ -93,7 +93,7 @@ if (!empty($daterange)) {
                                                     </label>
                                                     {{ _('Connection') }}
                                                 </th>
-                                                <th>{{ __('Call to action') }}</th>
+                                                <th>{{ __('Call to Action') }}</th>
                                                 <th>{{ _('Connected with') }}</th>
                                                 <th>{{ _('Date') }}</th>
                                                 <th>{{ _('Action') }}</th>
@@ -121,13 +121,13 @@ if (!empty($daterange)) {
                                                                         <h6 class="m-0">{{ $row->name }}</h6>
                                                                         <span>{{ $row->email }}</span>
 
-                                                                        @if ($row->query_type == 1)
+                                                                        (@if ($row->query_type == 1)
                                                                             <span>Connections</span>
                                                                         @elseif($row->query_type == 2)
                                                                             <span>Credit report authorization</span>
                                                                         @elseif($row->query_type == 3)
                                                                             <span>Quick applications</span>
-                                                                        @endif
+                                                                        @endif)
 
                                                                     </div>
                                                                 </div>
