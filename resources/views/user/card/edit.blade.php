@@ -780,6 +780,9 @@
                                                             </div>
                                                         </div>
 
+
+                                                    </div>
+                                                    <div class="row">
                                                         <div class="copyright_article mt-3">
                                                             <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.</p>
                                                         </div>
@@ -788,8 +791,6 @@
                                                             {!! $settings->site_disclaimer !!}
                                                         </div>
                                                         @endif
-
-
                                                     </div>
                                                 </div>
                                             </div>

@@ -134,8 +134,7 @@
                             <div class="setting_tab_contetn">
                                     <div class="heading mb-4">
                                         <h3>{{ __('Suggest a Feature') }}</h3>
-                                        <p>{{ __('Do you have an idea for a feature that would make better for
-                                            you? Let us know!') }}</p>
+                                        <p>{{ __('Do you have a suggest for a new feature? Let us know how!') }}</p>
                                     </div>
                                     <div class="setting_form">
                                         <form action="{{ route('user.support.feature-request') }}"
