@@ -33,11 +33,11 @@ $rows = $data ?? [];
                                     {{ __('Custome Pages') }}
                                 </div>
                             </div>
-                            <div class="col">
+                            {{-- <div class="col">
                                 <div class="float-end">
                                     <a href="{{route('admin.custom-page.create')}}" class="btn btn-primary">{{ __('Add New')}}</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body">
                             <div class="table-responsive px-2 py-2">
@@ -47,7 +47,7 @@ $rows = $data ?? [];
                                             <th>{{ __('SL')}}</th>
                                             <th>{{ __('Title')}}</th>
                                             <th>{{ __('Link')}}</th>
-                                            <th>{{ __('Position')}}</th>
+                                            {{-- <th>{{ __('Position')}}</th> --}}
                                             <th>{{ __('Is active')}}</th>
                                             <th>{{ __('Order Id')}}</th>
                                             <th>{{ __('Action')}}</th>
@@ -60,7 +60,7 @@ $rows = $data ?? [];
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{ $row->title }}</td>
                                             <td>{{ $row->url_slug }}</td>
-                                            <td>{{ Str::ucfirst($row->position)  }}</td>
+                                            {{-- <td>{{ Str::ucfirst($row->position)  }}</td> --}}
                                             <td>
                                                 @if ($row->is_active)
                                                 {{ __('Yes')}}
