@@ -69,8 +69,8 @@ class CardController extends Controller
         }
 
         $check = checkCardLimit($user_id);
-        if ($check == false) {
-            Toastr::warning(trans('Your card limit is over please upgrade your package for more card'), 'Warning', ["positionClass" => "toast-top-center"]);
+        if ($validity['status'] == false) {
+            Toastr::warning(trans($validity['message']), 'Warning', ["positionClass" => "toast-top-center"]);
             return redirect()->route('user.plans');
         }
 
