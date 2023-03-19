@@ -87,15 +87,21 @@
     .setting_tab_contetn {
         padding: 0px 0px;
     }
+
     .switch-wrapper {
         width: 50%;
+    }
+
+    .content-wrapper>.content {
+        padding: 0 1rem;
     }
 }
 
 @media screen and (max-width:575px) {
-    .company_group .slim{
-        margin:inherit;
+    .company_group .slim {
+        margin: inherit;
     }
+
     .switch-wrapper {
         width: 67%;
     }
@@ -125,7 +131,15 @@
     .setting_tab_contetn {
         padding: 0px 0px;
     }
+
     .switch-wrapper {
         width: 100%;
+    }
+}
+
+
+@media screen and (max-width:350px) {
+    .btn-primary {
+        padding: 9px 30px !important;
     }
 }

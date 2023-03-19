@@ -17,8 +17,8 @@ $tabindex = 1;
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        <a href="{{ route('user.crm.details',[$row->id]) }}" class="back_btn"
-                            title="Tooltip on top"><i class="fa fa-angle-left"></i></a>
+                        <a href="{{ route('user.crm.details',[$row->id]) }}" class="back_btn" title="Tooltip on top"><i
+                                class="fa fa-angle-left"></i></a>
                         <img src="{{ getProfile('assets/img/user2.jpg') }}" width="50" class="img-circle mr-2"
                             alt="{{ $row->name }}">
                         {{ $row->name }}
@@ -30,11 +30,10 @@ $tabindex = 1;
     </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="account_setting create_card_wrapper p-5">
+            <div class="account_setting create_card_wrapper p-3 p-md-5">
                 <div class="row d-flex justify-content-center align-item-center">
                     <div class="col-xl-8">
-                        <form action="{{route('user.crm.update',$row->id)}}" id="connectionUpdate"
-                            method="post">
+                        <form action="{{route('user.crm.update',$row->id)}}" id="connectionUpdate" method="post">
                             @csrf
                             <input type="hidden" name="card_id" id="card_id" value="{{$row->card_id}}" />
                             <div class="row">
@@ -54,14 +53,14 @@ $tabindex = 1;
                                 </div>
                                 <div class="col-md-4">
                                     <h3>
-                                    @if($row->query_type == 1)
-                                    <small>Connections</small>
-                                @elseif($row->query_type == 2)
-                                    <small>Credit report authorization</small>
-                                @elseif($row->query_type == 3)
-                                    <small>Quick applications</small>
-                                @endif
-                            </h3>
+                                        @if($row->query_type == 1)
+                                        <small>Connections</small>
+                                        @elseif($row->query_type == 2)
+                                        <small>Credit report authorization</small>
+                                        @elseif($row->query_type == 3)
+                                        <small>Quick applications</small>
+                                        @endif
+                                    </h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -119,8 +118,8 @@ $tabindex = 1;
                                 <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                                 @endif
                             </div>
-                            <a href="{{ route('user.crm.details',[$row->id]) }}"
-                                class="btn btn-secondary mr-2">{{ __('Cancel') }}</a>
+                            <a href="{{ route('user.crm.details',[$row->id]) }}" class="btn btn-secondary mr-2">{{
+                                __('Cancel') }}</a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
                                 <span class="btn-txt">{{ __('Update') }}</span>
