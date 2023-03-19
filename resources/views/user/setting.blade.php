@@ -157,9 +157,10 @@
                                         <!-- my subscription -->
                                         <div class="tab-pane fade active show" id="vert-tabs-subscription" role="tabpanel"
                                             aria-labelledby="vert-tabs-subscription-tab">
+
                                             <div class="setting_tab_contetn">
                                                 <div class="subscription_info mb-4">
-                                                    <div class="card">
+                                                    <div class="card p-0">
                                                         <div class="card-header">
                                                             <h3>
                                                                 <span
@@ -178,7 +179,7 @@
                                                             @endif
                                                         </div>
 
-                                                        <div class="card-body">
+                                                        <div class="card-body p-0 pt-3">
                                                             @if (checkPackage() && $plan->is_free == 0)
                                                                 @if ($diff_in_days > 31)
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_yearly, 2) }}
@@ -203,6 +204,7 @@
 
                                                     </div>
                                                 </div>
+
                                                 <div class="row mb-4">
                                                     <div class="col-md-6 col-lg-12 col-xl-6 mb-4">
                                                         <div class="billing_info_card subs_info">
@@ -391,7 +393,7 @@
                                             @csrf
                                             <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
                                             <p>{{ __('All contacts and other data associated with this account will be permanently deleted.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        This cannot be undone.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        This cannot be undone.') }}
                                             </p>
 
                                             <div class="mb-3">

@@ -521,6 +521,7 @@ body {
 .create_card_wrapper {
     background: rgb(255, 255, 255);
     border-radius: 16px;
+    margin-bottom: 20px;
 }
 
 .create_card_wrapper .tab-content {
@@ -1357,7 +1358,7 @@ body {
 .btn-secondary:not(:disabled):not(.disabled).active,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show>.btn-secondary.dropdown-toggle {
-    color: #545b62 !important;
+    color: #fff !important;
     background-color: 545b62;
     border-color: #4e555b;
 }

@@ -7,15 +7,16 @@ $plan = getPlan(Auth::user()->id);
     <a href="{{ route('user.card') }}" class="brand-link">
         <span class="brand-text font-weight-light">
             @if (!empty($settings->site_logo))
-            <img src="{{ asset($settings->site_logo) }}" width="150" alt="logo">
+                <img src="{{ asset($settings->site_logo) }}" width="150" alt="logo">
             @else
-            <img src="{{ asset('assets/img/logo.png') }}" width="150" alt="logo">
+                <img src="{{ asset('assets/img/logo.png') }}" width="150" alt="logo">
             @endif
         </span>
     </a>
     <div class="sidebar">
         <nav class="mt-4">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ url('/') }}" target="_blank" class="nav-link">
                         <span class="icon">
@@ -44,8 +45,8 @@ $plan = getPlan(Auth::user()->id);
                     <a href="{{ route('user.crm') }}" class="nav-link @yield('crm')">
                         <span class="icon">
                             <svg width="16" height="16" fill="none" viewBox="0 0 16 15">
-                                <rect x="1.5" y="3.58136" width="13" height="10.0437" rx="2" stroke="#BDBDBD"
-                                    stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1.5" y="3.58136" width="13" height="10.0437" rx="2"
+                                    stroke="#BDBDBD" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
                                 </rect>
                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                     d="M12.9511 1.72704H2.58203V1.375C2.58203 0.822715 3.02975 0.375 3.58203 0.375H11.9511C12.5034 0.375 12.9511 0.822715 12.9511 1.375V1.72704Z"
@@ -81,16 +82,16 @@ $plan = getPlan(Auth::user()->id);
                 </li>
                 {{-- @if (isAnnualPlan(Auth::user()->id)) --}}
                 @if ($plan->free_marketing_material == '1')
-                <li class="nav-item">
-                    <a href="{{ route('user.free-marketing-material') }}"
-                        class="nav-link @yield('marketing_metarials')">
-                        <span class="icon">
-                            <img src="{{ asset('assets/img/icon/insights.svg') }}"
-                                alt="{{ __('Free Marketing Material') }}">
-                        </span>
-                        {{ __('Free Marketing Material') }}
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('user.free-marketing-material') }}" class="nav-link @yield('marketing_metarials')">
+                            <span class="icon">
+                                {{-- <img src="{{ asset('assets/img/icon/insights.svg') }}"
+                                    alt="{{ __('Free Marketing Material') }}"> --}}
+                                <i class="fa fa-bullhorn"></i>
+                            </span>
+                            {{ __('Free Marketing Material') }}
+                        </a>
+                    </li>
                 @endif
 
                 <li class="nav-item">
@@ -138,8 +139,8 @@ $plan = getPlan(Auth::user()->id);
                 </a>
             </div>
             <div class="info">
-                <a href="{{ route('user.setting') }}" class="d-block" title="{{ Auth::user()->name }}">{{
-                    Auth::user()->name }}</a>
+                <a href="{{ route('user.setting') }}" class="d-block"
+                    title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</a>
                 <span>{{ __('User') }}</span>
             </div>
         </div>
