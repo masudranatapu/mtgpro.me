@@ -817,7 +817,7 @@
                                                             <a href="javascript:void(0)" data-bs-toggle="offcanvas"
                                                                 data-bs-target="#offcanvasCalculator"
                                                                 aria-controls="offcanvasCalculator">
-                                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $card->theme_color }}"
+                                                                <img style="border-radius: 15px; margin:0 auto; @if ($card->color_link == 1) background:{{ $card->theme_color }} @else background:#A93998  @endif"
                                                                     class="img-fluid d-block mb-1 social_logo"
                                                                     src="{{ asset('assets/img/icon/calendar-symbol.svg') }}"
                                                                     alt="" width="75" height="75">
