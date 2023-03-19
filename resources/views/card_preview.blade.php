@@ -29,14 +29,6 @@
     $ipad       = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
     $phone_number = $email = null;
 
-
-    if ($cardinfo->color_link == 1) {
-        $icon_color = $cardinfo->theme_color;
-    } else {
-        $icon_color = $contact->icon_color;
-    }
-
-
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -189,9 +181,15 @@
                             @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
 
                             @else
+                                @php
+                                if ($cardinfo->color_link == 1) {
+                                $icon_color = $cardinfo->theme_color;
+                                } else {
+                                $icon_color = $contact->icon_color;
+                                }
 
-
-                                {{-- link,mail,mobile,number,text,username,file,address --}}
+                                //link,mail,mobile,number,text,username,file,address
+                                @endphp
 
                                 @if ($contact->type == 'address')
                                 <div class="col-4 col-md-3 mb-3">
