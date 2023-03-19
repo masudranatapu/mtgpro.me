@@ -36,6 +36,8 @@ class CardController extends Controller
 
     public function getIndex(Request $request)
     {
+
+
         $this->resp = $this->businessCard->getPaginatedList($request);
         $cards = $this->resp->data;
         $activeCard = $this->businessCard->where('user_id', Auth::id())->first();

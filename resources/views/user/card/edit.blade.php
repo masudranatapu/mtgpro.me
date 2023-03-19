@@ -142,12 +142,15 @@
         background: #212121;
         transition: transform 0.25s ease-in-out;
     }
+    .card_preview_wrapper .save_contact a{padding: 9px 0px;}
+    .sp{padding: 10px 20px; min-width: 100px;}
 </style>
 @endpush
 
 
 @php
 $icon_group = Config::get('app.icon_group');
+$settings = getSetting();
 @endphp
 @section('tab_content', 'active')
 @section('content')
@@ -778,10 +781,27 @@ $icon_group = Config::get('app.icon_group');
                                                 <p id="bio_show">{{ $card->bio }}</p>
                                             </div>
                                             <div class="save_contact mt-4 mb-4">
-                                                <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
+                                                <a href="javascript:void(0)" class="sp text-decoration-none d-inline-block btn-secondary">{{ __('Save Contact') }}</a>
+                                                <a href="javascript:void(0)" class="sp text-decoration-none d-inline-block btn-secondary" >
+                                                    {{ __('Share') }}
+                                                </a>
+
                                             </div>
                                             <div class="social_icon">
+
+
                                                 <div class="row icon_append">
+                                                    <div class="col-4 mb-2">
+                                                        <a href="javascript:void(0)" data-bs-toggle="offcanvas"
+                                                            data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
+                                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $card->theme_color }}"
+                                                                class="img-fluid d-block mb-1"
+                                                                src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75"
+                                                                height="75">
+                                                            <span>Mortgage Calculator</span>
+                                                        </a>
+                                                    </div>
+
                                                     @if (isset($card->business_card_fields) &&
                                                     count($card->business_card_fields) > 0)
                                                     @foreach ($card->business_card_fields as $key => $icon)
@@ -808,54 +828,66 @@ $icon_group = Config::get('app.icon_group');
                                                     @endforeach
                                                     @endif
 
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col-4 mb-2" id="icon_houseing"
-                                                        style="display: {{ Auth::user()->housing_logo_view == 0 ? 'none' : 'block' }}">
-                                                        <div class="sicon_houseing" style="">
-                                                            <a class="house_link" href="#" target="_blank">
-                                                                <img style="border-radius: 15px; margin:0 auto; padding:10px; border: 1px solid #6ecddb;"
-                                                                    class="p-2" data-bg=""
-                                                                    src="{{ asset('assets/img/house.png') }}" alt=""
-                                                                    class="social_logo" width="75" height="75">
-                                                                <span class="icon_label">Equal Housing
-                                                                    Opportunity</span>
-                                                            </a>
-                                                        </div>
+                                                    style="display: {{ Auth::user()->housing_logo_view == 0 ? 'none' : 'block' }}">
+                                                    <div class="sicon_houseing" style="">
+                                                        <a class="house_link" href="#" target="_blank">
+                                                            <img style="border-radius: 15px; margin:0 auto; padding:10px; border: 1px solid #6ecddb; background:{{ $icon_bg }}"
+                                                                class="p-2" data-bg=""
+                                                                src="{{ asset('assets/img/house.png') }}" alt=""
+                                                                class="social_logo" width="75" height="75">
+                                                            <span class="icon_label">Equal Housing
+                                                                Opportunity</span>
+                                                        </a>
                                                     </div>
-                                                    <div class="col-4 mb-2" id="icon_disclaimer"
-                                                        style="display: {{ Auth::user()->disclaimer_view == 0 ? 'none' : 'block' }}">
-                                                        <div class="sicon_disclaimer" style="">
-                                                            <a class="house_link" href="#" target="_blank">
-                                                                <img style="background:#000000" class="p-1" data-bg=""
-                                                                    src="{{ getPhoto('assets/img/icon/notes-note.svg') }}"
-                                                                    alt="" class="social_logo">
-                                                                <span class="icon_label">User Disclaimer</span>
-                                                            </a>
-                                                        </div>
+                                                </div>
+                                                <div class="col-4 mb-2" id="icon_disclaimer"
+                                                    style="display: {{ Auth::user()->disclaimer_view == 0 ? 'none' : 'block' }}">
+                                                    <div class="sicon_disclaimer" style="">
+                                                        <a class="house_link" href="#" target="_blank">
+                                                            <img style="background:{{ $icon_bg }}" class="p-1" data-bg=""
+                                                                src="{{ getPhoto('assets/img/icon/notes-note.svg') }}"
+                                                                alt="" class="social_logo">
+                                                            <span class="icon_label">User Disclaimer</span>
+                                                        </a>
                                                     </div>
-                                                    <div class="col-4 mb-2" id="icon_credit_auth"
-                                                        style="display: {{ Auth::user()->credit_authorization == 0 ? 'none' : 'block' }}">
-                                                        <div class="sicon_disclaimer" style="">
-                                                            <a class="house_link" href="#" target="_blank">
-                                                                <img style="background:#a200b8" class="p-1" data-bg=""
-                                                                    src="{{ getPhoto('assets/img/icon/craditauthorization.svg') }}"
-                                                                    alt="" class="social_logo">
-                                                                <span class="icon_label">Credit Authorization</span>
-                                                            </a>
-                                                        </div>
+                                                </div>
+                                                <div class="col-4 mb-2" id="icon_credit_auth"
+                                                    style="display: {{ Auth::user()->credit_authorization == 0 ? 'none' : 'block' }}">
+                                                    <div class="sicon_disclaimer" style="">
+                                                        <a class="house_link" href="#" target="_blank">
+                                                            <img style="background:{{ $icon_bg }}" class="p-1" data-bg=""
+                                                                src="{{ getPhoto('assets/img/icon/craditauthorization.svg') }}"
+                                                                alt="" class="social_logo">
+                                                            <span class="icon_label">Credit Authorization</span>
+                                                        </a>
                                                     </div>
-                                                    <div class="col-4 mb-2" id="icon_quick_application"
-                                                        style="display: {{ Auth::user()->quick_application == 0 ? 'none' : 'block' }}">
-                                                        <div class="sicon_disclaimer" style="">
-                                                            <a class="house_link" href="#" target="_blank">
-                                                                <img style="background:#007a74" class="p-1" data-bg=""
-                                                                    src="{{ getPhoto('assets/img/icon/rules.svg') }}"
-                                                                    alt="" class="social_logo">
-                                                                <span class="icon_label">Quick Applications</span>
-                                                            </a>
-                                                        </div>
+                                                </div>
+                                                <div class="col-4 mb-2" id="icon_quick_application"
+                                                    style="display: {{ Auth::user()->quick_application == 0 ? 'none' : 'block' }}">
+                                                    <div class="sicon_disclaimer" style="">
+                                                        <a class="house_link" href="#" target="_blank">
+                                                            <img style="background:{{ $icon_bg }}" class="p-1" data-bg=""
+                                                                src="{{ getPhoto('assets/img/icon/rules.svg') }}"
+                                                                alt="" class="social_logo">
+                                                            <span class="icon_label">Quick Applications</span>
+                                                        </a>
                                                     </div>
+                                                </div>
+                                                <div class="copyright_article col-12 mb-2">
+                                                    <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved. </p>
+                                                </div>
+                                                @if ($settings->site_disclaimer)
+                                                <div class="site_disclaimer col-12 mb-2 " style="border: 1px solid #222;">
+                                                    {!! $settings->site_disclaimer !!}
+                                                </div>
+                                                @endif
 
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -1031,7 +1063,10 @@ $icon_group = Config::get('app.icon_group');
                                                             <p>{{ $card->bio }}</p>
                                                         </div>
                                                         <div class="save_contact mt-4 mb-4">
-                                                            <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
+                                                            <a href="javascript:void(0)" class="sp text-decoration-none d-inline-block btn-secondary">{{ __('Save Contact') }}</a>
+                                                            <a href="javascript:void(0)" class="sp text-decoration-none d-inline-block btn-secondary" >
+                                                                {{ __('Share') }}
+                                                            </a>
                                                         </div>
                                                         <div class="social_icon">
                                                             <div class="row icon_append" id="icon_append">
@@ -1079,11 +1114,7 @@ $icon_group = Config::get('app.icon_group');
 @if ($card->theme_color)
 <style>
     .card_preview_wrapper .save_contact a {
-        background: {
-                {
-                $card->theme_color
-            }
-        }
+        background-color: {{ $card->theme_color }}
     }
 </style>
 <script>
@@ -1107,9 +1138,7 @@ $icon_group = Config::get('app.icon_group');
         background-color: #fff;
     }
 </style>
-@endif
-
-@if ($card->theme_color == '#000')
+@elseif ($card->theme_color == '#000')
 <style>
     .card_preview_wrapper .save_contact a {
         color: #fff;
@@ -1118,6 +1147,7 @@ $icon_group = Config::get('app.icon_group');
     }
 </style>
 @endif
+
 <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
