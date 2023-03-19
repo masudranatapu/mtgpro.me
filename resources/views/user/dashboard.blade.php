@@ -172,7 +172,7 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
 
                                     <?php
 
-                                    if ($card->status == 1) {
+                                    if ($card->id == Auth::user()->active_card_id) {
                                         $url = Auth::user()->username;
                                     } else {
                                         $url = $card->card_url;
