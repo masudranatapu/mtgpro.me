@@ -758,7 +758,7 @@
                     <img class="" src="{{ getProfile($cardinfo->profile) }}"
                         style="width: 100px ;height:100px;border-radius: 5%;" alt="image" /> &emsp;
                     <span class="ml-3">
-                        <h2 class="fw-bolder">Welcome to {{ $cardinfo->title }} {{ $cardinfo->title2 }}'s mortgage.
+                        <h2 class="fw-bolder">Welcome to {{ $cardinfo->title }} {{ $cardinfo->title2 }}'s Mortgage.
                         </h2>
                     </span>
                 </div>

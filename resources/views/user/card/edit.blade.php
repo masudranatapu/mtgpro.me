@@ -818,7 +818,7 @@
                                                                 data-bs-target="#offcanvasCalculator"
                                                                 aria-controls="offcanvasCalculator">
                                                                 <img style="border-radius: 15px; margin:0 auto; background:{{ $card->theme_color }}"
-                                                                    class="img-fluid d-block mb-1"
+                                                                    class="img-fluid d-block mb-1 social_logo"
                                                                     src="{{ asset('assets/img/icon/calendar-symbol.svg') }}"
                                                                     alt="" width="75" height="75">
                                                                 <span>Mortgage Calculator</span>
@@ -861,9 +861,9 @@
                                                             <div class="sicon_houseing" style="">
                                                                 <a class="house_link" href="#" target="_blank">
                                                                     <img style="border-radius: 15px; margin:0 auto; padding:10px; border: 1px solid #6ecddb; background:{{ $icon_bg }}"
-                                                                        class="p-2" data-bg=""
+                                                                        class="p-2 social_logo" data-bg=""
                                                                         src="{{ asset('assets/img/house.png') }}"
-                                                                        alt="" class="social_logo" width="75"
+                                                                        alt=""  width="75"
                                                                         height="75">
                                                                     <span class="icon_label">Equal Housing
                                                                         Opportunity</span>
@@ -875,9 +875,9 @@
                                                             <div class="sicon_disclaimer" style="">
                                                                 <a class="house_link" href="#" target="_blank">
                                                                     <img style="background:{{ $icon_bg }}"
-                                                                        class="p-1" data-bg=""
+                                                                        class="p-1 social_logo" data-bg=""
                                                                         src="{{ getPhoto('assets/img/icon/notes-note.svg') }}"
-                                                                        alt="" class="social_logo">
+                                                                        alt="">
                                                                     <span class="icon_label">User Disclaimer</span>
                                                                 </a>
                                                             </div>
@@ -887,9 +887,9 @@
                                                             <div class="sicon_disclaimer" style="">
                                                                 <a class="house_link" href="#" target="_blank">
                                                                     <img style="background:{{ $icon_bg }}"
-                                                                        class="p-1" data-bg=""
+                                                                        class="p-1 social_logo" data-bg=""
                                                                         src="{{ getPhoto('assets/img/icon/craditauthorization.svg') }}"
-                                                                        alt="" class="social_logo">
+                                                                        alt="">
                                                                     <span class="icon_label">Credit Authorization</span>
                                                                 </a>
                                                             </div>
@@ -899,9 +899,9 @@
                                                             <div class="sicon_disclaimer" style="">
                                                                 <a class="house_link" href="#" target="_blank">
                                                                     <img style="background:{{ $icon_bg }}"
-                                                                        class="p-1" data-bg=""
+                                                                        class="p-1 social_logo" data-bg=""
                                                                         src="{{ getPhoto('assets/img/icon/rules.svg') }}"
-                                                                        alt="" class="social_logo">
+                                                                        alt="" >
                                                                     <span class="icon_label">Quick Applications</span>
                                                                 </a>
                                                             </div>

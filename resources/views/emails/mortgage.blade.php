@@ -474,7 +474,7 @@ $settings = getSetting();
                                     <td class="content-cell">
                                         <div class="f-fallback">
                                             <h1>Hello {{ $data['reciver']->name }} </h1>
-                                            <h2>Some one like your mortgage .Here some of his details.</h2>
+                                            <h2>You have a query from mortgage calculator form.</h2>
                                             <table>
                                                 <tr>
                                                     <th>Name :</th>
