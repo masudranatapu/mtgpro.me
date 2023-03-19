@@ -1963,16 +1963,16 @@ pre code {
 
 .table {
     width: 100%;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     color: #212529;
     background-color: transparent
 }
 
 .table td,
 .table th {
-    padding: .75rem;
+    padding: 0.75rem;
     vertical-align: top;
-    border-top: 1px solid #dee2e6
+    border-bottom: 1px solid #dee2e6;
 }
 
 .table thead th {
@@ -55963,4 +55963,13 @@ body:not(.layout-fixed) .main-sidebar {
 a:hover {
     color: #C73305;
     text-decoration: none;
+}
+
+.marketing_table table {
+    min-width: 642px !important;
+}
+
+
+.card_view_table table {
+    min-width: 960px;
 }

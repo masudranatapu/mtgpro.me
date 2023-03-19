@@ -46,53 +46,56 @@
         <div class="content dashboard_item">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body card_view_table">
                         <div class="table-responsive">
-                        <table class="table table-bordered text-center">
-                            <thead>
+                            <table class="table table-bordered text-center">
+                                <thead>
 
-                                <tr>
-                                    <th>{{ __('Sl') }}</th>
-                                    <th>{{ __('Card Title') }}</th>
-                                    <th>{{ __('Number Of Visits') }}</th>
-                                    <th>{{ __('Device Id') }}</th>
-                                    <th>
-                                        {{-- {{ __('Ip Address') }} --}}
-                                        TimeZone
-
-                                    </th>
-                                    <th>{{ __('User Agent') }}</th>
-                                    <th>{{ __('Address') }}</th>
-                                    {{-- <th>{{ __('Number Of Visits') }}</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($histories as $history)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $history->hasCard->card_for ?? '' }}</td>
-                                        <td>{{ $history->counter }}</td>
-                                        <td>{{ $history->device_id ?? '' }}</td>
-                                        <td>
-                                            <span class="d-block">{{ $history->timezone}}</span>
-                                            @if (!empty($history->updated_at))
-                                            <span class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->updated_at)) }}</span>
-                                            @else
-                                            <span class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->created_at)) }}</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $history->user_agent ?? '' }}</td>
-                                        <td>{{ $history->city ? $history->city . ' ,' : '' }}
-                                            {{ $history->country_name ?? '' }}
-                                        </td>
+                                        <th style="width:5%">{{ __('Sl') }}</th>
+                                        <th style="width:15%">{{ __('Card Title') }}</th>
+                                        <th style="width:15%">{{ __('Number Of Visits') }}</th>
+                                        <th style="width:15%">{{ __('Device Id') }}</th>
+                                        <th style="width:15%">
+                                            {{-- {{ __('Ip Address') }} --}}
+                                            TimeZone
+                                        </th>
+                                        <th style="width:15%">{{ __('User Agent') }}</th>
+                                        <th style="width:20%">{{ __('Address') }}</th>
+                                        {{-- <th>{{ __('Number Of Visits') }}</th> --}}
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    @foreach ($histories as $history)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $history->hasCard->card_for ?? '' }}</td>
+                                            <td>{{ $history->counter }}</td>
+                                            <td>{{ $history->device_id ?? '' }}</td>
+                                            <td>
+                                                <span class="d-block">{{ $history->timezone }}</span>
+                                                @if (!empty($history->updated_at))
+                                                    <span
+                                                        class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->updated_at)) }}</span>
+                                                @else
+                                                    <span
+                                                        class="d-block">{{ date('Y-m-d H:i:s', strtotime($history->created_at)) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $history->user_agent ?? '' }}</td>
+                                            <td>{{ $history->city ? $history->city . ' ,' : '' }}
+                                                {{ $history->country_name ?? '' }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="mt-2 d-flex justify-content-center">
                             {{ $histories->links() }}
                         </div>
+
                     </div>
                 </div>
             </div>

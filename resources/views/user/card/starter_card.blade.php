@@ -3,7 +3,7 @@
 
 <head>
     <?php
-        $settings  = getSetting();
+    $settings = getSetting();
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/smart_wizard.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css?v=1') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css?v=1') }}">
     {{--
@@ -42,8 +42,8 @@
     <script type="text/javascript" src="{{ asset('assets/js/card.js') }}"></script>
 </head>
 <?php
-      $tabIndex = 1;
-      ?>
+$tabIndex = 1;
+?>
 
 <body style="background-image: url({{ asset('assets/img/site-bg.jpg') }});">
     <div class="card_starter_wrapper">
@@ -88,7 +88,8 @@
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="name" class="form-label">{{ __('Name') }}</label>
+                                                    <label for="name"
+                                                        class="form-label">{{ __('Name') }}</label>
                                                     <input type="text" name="name" id="name"
                                                         value="{{ Auth::user()->name }}"
                                                         class="form-control cin @error('name') is-invalid @enderror"
@@ -96,13 +97,14 @@
                                                         required tabindex="{{ $tabIndex++ }}">
                                                     {{-- <div class="invalid-feedback" id="msg_name"> {{ __('Enter your
                                                         name') }}</div> --}}
-                                                    @if($errors->has('name'))
-                                                    <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                                                    @if ($errors->has('name'))
+                                                        <span
+                                                            class="help-block text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="phone_number" class="form-label">{{ __('Phone Number')
-                                                        }}</label>
+                                                    <label for="phone_number"
+                                                        class="form-label">{{ __('Phone Number') }}</label>
                                                     <input type="number" name="phone_number" id="phone_number"
                                                         value="{{ Auth::user()->billing_phone }}"
                                                         class="form-control cin @error('phone_number') is-invalid @enderror"
@@ -110,13 +112,14 @@
                                                         placeholder="{{ __('ex:+15162973389') }}" required
                                                         tabindex="{{ $tabIndex++ }}">
                                                     {{-- <div class="invalid-feedback">{{ __('Enter your phone number') }}</div> --}}
-                                                    @if($errors->has('phone_number'))
-                                                    <span class="help-block text-danger">{{ $errors->first('phone_number') }}</span>
+                                                    @if ($errors->has('phone_number'))
+                                                        <span
+                                                            class="help-block text-danger">{{ $errors->first('phone_number') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
                                                     <span>{{ __('Adding a phone number allows people to connect with you
-                                                        by text message or phone call') }}</span>
+                                                                                                                                                                by text message or phone call') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,27 +129,31 @@
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="designation" class="form-label">{{ __('Job') }}</label>
+                                                    <label for="designation"
+                                                        class="form-label">{{ __('Job') }}</label>
                                                     <input type="text" name="designation" id="designation"
                                                         class="form-control cin_desig_comp @error('designation') is-invalid @enderror"
                                                         data-preview="desig_comp_show"
                                                         placeholder="{{ __('Designation') }}" required
                                                         tabindex="{{ $tabIndex++ }}">
                                                     {{-- <div class="invalid-feedback">{{ __('Enter your job title') }}</div> --}}
-                                                    @if($errors->has('designation'))
-                                                    <span class="help-block text-danger">{{$errors->first('designation') }}</span>
+                                                    @if ($errors->has('designation'))
+                                                        <span
+                                                            class="help-block text-danger">{{ $errors->first('designation') }}</span>
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="company_name" class="form-label">{{ __('Company')
-                                                        }}</label>
+                                                    <label for="company_name"
+                                                        class="form-label">{{ __('Company') }}</label>
                                                     <input type="text" name="company_name" id="company_name"
                                                         class="form-control cin_desig_comp @error('company_name') is-invalid @enderror"
-                                                        data-preview="desig_comp_show" placeholder="{{ __('Company') }}"
-                                                        required tabindex="{{ $tabIndex++ }}">
+                                                        data-preview="desig_comp_show"
+                                                        placeholder="{{ __('Company') }}" required
+                                                        tabindex="{{ $tabIndex++ }}">
                                                     {{-- <div class="invalid-feedback">{{ __('Enter your company name') }} </div> --}}
-                                                    @if($errors->has('company_name'))
-                                                    <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
+                                                    @if ($errors->has('company_name'))
+                                                        <span
+                                                            class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -167,7 +174,8 @@
                                                     </div>
                                                     <div class="upload_photo_text">
                                                         <p>{{ __('Make your card more personalized by adding a profile
-                                                            picture') }}</p>
+                                                                                                                                                                            picture') }}
+                                                        </p>
                                                         {{-- <input type="file" class="d-none"
                                                             onchange="loadFile(event)" name="photo" id="photo" required
                                                             tabindex="{{ $tabIndex++ }}"> --}}
@@ -224,7 +232,8 @@
                                             </svg>
                                             <svg width="17" height="8" fill="none">
                                                 <rect opacity="0.35" x="1.15117" y="1.07939" width="14.2241"
-                                                    height="6.99918" rx="1.46757" stroke="black" stroke-width="0.67734">
+                                                    height="6.99918" rx="1.46757" stroke="black"
+                                                    stroke-width="0.67734">
                                                 </rect>
                                                 <path opacity="0.4"
                                                     d="M16.3906 3.22412V5.93348C16.9357 5.70401 17.2902 5.17021 17.2902 4.5788C17.2902 3.98739 16.9357 3.45359 16.3906 3.22412Z"
@@ -236,26 +245,28 @@
                                     </div>
                                 </div>
                                 <!-- banner -->
-                                <div class="card_banner mt-3 mb-5" style="background-image: url({{ getCover()}})">
+                                <div class="card_banner mt-3 mb-5"
+                                    style="background-image: url({{ getCover() }})">
                                     <div class="profile_image">
-                                        <img src="{{ getProfile() }}" class="profile_image_src" width="100" height="100"
-                                            alt="image">
+                                        <img src="{{ getProfile() }}" class="profile_image_src" width="100"
+                                            height="100" alt="image">
                                     </div>
                                 </div>
                                 <div class="card_content text-center">
                                     <div class="profile_name mt-2">
                                         <h3 id="preview_name">{{ Auth::user()->name ?? 'Rabin Mia' }}</h3>
-                                        <h5 id="desig_comp_show">{{ __('Manager at Arobil')}}</h5>
+                                        <h5 id="desig_comp_show">{{ __('Manager at Arobil') }}</h5>
                                     </div>
                                     <div class="save_contact mt-4 mb-4">
-                                        <a href="javascript:void(0)">{{ __('Save Contact')}}</a>
+                                        <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
                                     </div>
                                     <div class="social_icon">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-4">
                                                 <a href="mailto:rabin1@gmail.com" target="_blank">
-                                                    <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <svg class="icon-shadow" width="54" height="54"
+                                                        viewBox="0 0 80 80" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
                                                         <g filter="url(#filterc9)">
                                                             <path
                                                                 d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z"
@@ -274,10 +285,12 @@
                                                                 fill="white"></path>
                                                         </g>
                                                         <defs>
-                                                            <filter id="filterc9" x="0" y="-1" width="80" height="81"
+                                                            <filter id="filterc9" x="0" y="-1"
+                                                                width="80" height="81"
                                                                 filterUnits="userSpaceOnUse"
                                                                 color-interpolation-filters="sRGB">
-                                                                <feFlood flood-opacity="0" result="BackgroundImageFix">
+                                                                <feFlood flood-opacity="0"
+                                                                    result="BackgroundImageFix">
                                                                 </feFlood>
                                                                 <feBlend mode="normal" in="SourceGraphic"
                                                                     in2="BackgroundImageFix" result="shape"></feBlend>
@@ -294,20 +307,22 @@
                                                                 <feBlend mode="normal" in2="shape"
                                                                     result="effect1_innerShadow"></feBlend>
                                                             </filter>
-                                                            <linearGradient id="paint0_linearc9" x1="40" y1="0" x2="40"
-                                                                y2="80" gradientUnits="userSpaceOnUse">
+                                                            <linearGradient id="paint0_linearc9" x1="40"
+                                                                y1="0" x2="40" y2="80"
+                                                                gradientUnits="userSpaceOnUse">
                                                                 <stop stop-color="#1E51EE"></stop>
                                                                 <stop offset="1" stop-color="#19E4FF"></stop>
                                                             </linearGradient>
                                                         </defs>
                                                     </svg>
-                                                    <span>{{ __('Email')}}</span>
+                                                    <span>{{ __('Email') }}</span>
                                                 </a>
                                             </div>
                                             <div class="col-4">
                                                 <a href="javascript:void(0)" target="_blank">
-                                                    <svg class="icon-shadow" width="54" height="54" viewBox="0 0 80 80"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <svg class="icon-shadow" width="54" height="54"
+                                                        viewBox="0 0 80 80" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
                                                         <g filter="url(#filterc8)">
                                                             <path
                                                                 d="M18.0952 0H61.9048C71.9048 0 80 8.09524 80 18.0952V61.9048C80 71.9048 71.9048 80 61.9048 80H18.0952C8.09524 80 0 71.9048 0 61.9048V18.0952C0 8.09524 8.09524 0 18.0952 0Z"
@@ -317,10 +332,12 @@
                                                                 fill="white"></path>
                                                         </g>
                                                         <defs>
-                                                            <filter id="filterc8" x="0" y="-1" width="80" height="81"
+                                                            <filter id="filterc8" x="0" y="-1"
+                                                                width="80" height="81"
                                                                 filterUnits="userSpaceOnUse"
                                                                 color-interpolation-filters="sRGB">
-                                                                <feFlood flood-opacity="0" result="BackgroundImageFix">
+                                                                <feFlood flood-opacity="0"
+                                                                    result="BackgroundImageFix">
                                                                 </feFlood>
                                                                 <feBlend mode="normal" in="SourceGraphic"
                                                                     in2="BackgroundImageFix" result="shape"></feBlend>
@@ -337,14 +354,15 @@
                                                                 <feBlend mode="normal" in2="shape"
                                                                     result="effect1_innerShadow"></feBlend>
                                                             </filter>
-                                                            <linearGradient id="paint0_linearc8" x1="40" y1="0" x2="40"
-                                                                y2="80" gradientUnits="userSpaceOnUse">
+                                                            <linearGradient id="paint0_linearc8" x1="40"
+                                                                y1="0" x2="40" y2="80"
+                                                                gradientUnits="userSpaceOnUse">
                                                                 <stop stop-color="#8BFB6B"></stop>
                                                                 <stop offset="1" stop-color="#19DB1C"></stop>
                                                             </linearGradient>
                                                         </defs>
                                                     </svg>
-                                                    <span>{{ __('Phone')}}</span>
+                                                    <span>{{ __('Phone') }}</span>
                                                 </a>
                                             </div>
                                         </div>
@@ -358,220 +376,245 @@
             </div>
         </div>
     </div>
-    <script src="{{asset('assets/js/toastr.js')}}"></script>
+    <script src="{{ asset('assets/js/toastr.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
     <script>
         $.ajaxSetup({
-             headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-             }
-         });
-           $(function() {
-                 // Smart Wizard
-                 $('#smartwizard').smartWizard({
-                     onLeaveStep:leaveAStepCallback,
-                     onFinish:onFinishCallback,
-                     enableFinishButton:true,
-                      transition: {
-                           animation: 'slideSwing',
-                       },
-                       toolbar: {
-                        //    showNextButton: true, // show/hide a Next button
-                        //    showPreviousButton: true, // show/hide a Previous button
-                        //    position: 'bottom', // none/ top/ both bottom
-                           extraHtml: `<button class="btn btn-success sw-btn d-none" id="btnFinish" disabled>{{ __('Finish') }}</button>`
-                    }
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(function() {
+            // Smart Wizard
+            $('#smartwizard').smartWizard({
+                onLeaveStep: leaveAStepCallback,
+                onFinish: onFinishCallback,
+                enableFinishButton: true,
+                transition: {
+                    animation: 'slideSwing',
+                },
+                toolbar: {
+                    //    showNextButton: true, // show/hide a Next button
+                    //    showPreviousButton: true, // show/hide a Previous button
+                    //    position: 'bottom', // none/ top/ both bottom
+                    extraHtml: `<button class="btn btn-success sw-btn d-none" id="btnFinish" disabled>{{ __('Finish') }}</button>`
+                }
             });
 
 
-              // Step show event
-             $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
+            // Step show event
+            $("#smartwizard").on("showStep", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
                 // console.log(stepDirection);
                 // console.log(stepPosition);
-                 $("#prev-btn").removeClass('disabled').prop('disabled', false);
-                 $("#next-btn").removeClass('disabled').prop('disabled', false);
+                $("#prev-btn").removeClass('disabled').prop('disabled', false);
+                $("#next-btn").removeClass('disabled').prop('disabled', false);
 
-                 if(stepDirection === 'forward'){
-                 }
-                 if(stepDirection === 'backward'){
+                if (stepDirection === 'forward') {}
+                if (stepDirection === 'backward') {
                     $("#btnFinish").addClass('d-none');
-                 }
-                 if(stepPosition === 'first') {
-                     $("#prev-btn").addClass('disabled').prop('disabled', true);
-                 } else if(stepPosition === 'last') {
-                     $("#next-btn").addClass('disabled').prop('disabled', true);
+                }
+                if (stepPosition === 'first') {
+                    $("#prev-btn").addClass('disabled').prop('disabled', true);
+                } else if (stepPosition === 'last') {
+                    $("#next-btn").addClass('disabled').prop('disabled', true);
 
-                 } else {
-                     $("#prev-btn").removeClass('disabled').prop('disabled', false);
-                     $("#next-btn").removeClass('disabled').prop('disabled', false);
-                 }
-                  // Get step info from Smart Wizard
+                } else {
+                    $("#prev-btn").removeClass('disabled').prop('disabled', false);
+                    $("#next-btn").removeClass('disabled').prop('disabled', false);
+                }
+                // Get step info from Smart Wizard
                 //  let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
                 //  $("#sw-current-step").text(stepInfo.currentStep + 1);
                 //  $("#sw-total-step").text(stepInfo.totalSteps);
 
-                 if (stepPosition == 'last') {
-                     //   showConfirm();
+                if (stepPosition == 'last') {
+                    //   showConfirm();
                     //  $(".sw-btn-next").addClass('d-none');
-                     $("#btnFinish").removeClass('d-none');
-                     $("#btnFinish").prop('disabled', false);
-                 } else {
-                     $("#btnFinish").prop('disabled', true);
-                 }
-                         // Focus first name
-                     if (stepIndex == 1) {
-                         setTimeout(() => {
-                             $('#name').focus();
-                         }, 0);
-                     }
+                    $("#btnFinish").removeClass('d-none');
+                    $("#btnFinish").prop('disabled', false);
+                } else {
+                    $("#btnFinish").prop('disabled', true);
+                }
+                // Focus first name
+                if (stepIndex == 1) {
+                    setTimeout(() => {
+                        $('#name').focus();
+                    }, 0);
+                }
             });
-               function leaveAStepCallback(obj){
-                 var step_num= obj.attr('rel');
-                 console.log(step_num);
-                 return validateSteps(step_num);
-               }
 
-               function onFinishCallback(){
-                    if(validateAllSteps()){
-                     $('#cerate-first-card').submit();
-                    }
+            function leaveAStepCallback(obj) {
+                var step_num = obj.attr('rel');
+                console.log(step_num);
+                return validateSteps(step_num);
+            }
+
+            function onFinishCallback() {
+                if (validateAllSteps()) {
+                    $('#cerate-first-card').submit();
                 }
+            }
 
-         		});
+        });
 
-             function validateAllSteps(){
-                var isStepValid = true;
+        function validateAllSteps() {
+            var isStepValid = true;
 
-                if(validateStep1() == false){
-                  isStepValid = false;
-                  $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:true});
-                }else{
-                  $('#smartwizard').smartWizard('setError',{stepnum:1,iserror:false});
+            if (validateStep1() == false) {
+                isStepValid = false;
+                $('#smartwizard').smartWizard('setError', {
+                    stepnum: 1,
+                    iserror: true
+                });
+            } else {
+                $('#smartwizard').smartWizard('setError', {
+                    stepnum: 1,
+                    iserror: false
+                });
+            }
+            if (validateStep2() == false) {
+                isStepValid = false;
+                $('#smartwizard').smartWizard('setError', {
+                    stepnum: 2,
+                    iserror: true
+                });
+            } else {
+                $('#smartwizard').smartWizard('setError', {
+                    stepnum: 2,
+                    iserror: false
+                });
+            }
+            if (!isStepValid) {
+                $('#smartwizard').smartWizard('showMessage', 'Please correct the errors in the steps and continue');
+            }
+
+            return isStepValid;
+        }
+
+        function validateSteps(step) {
+            var isStepValid = true;
+            // validate step 1
+            if (step == 1) {
+                if (validateStep1() == false) {
+                    isStepValid = false;
+                    $('#smartwizard').smartWizard('showMessage', 'Please correct the errors in step' + step +
+                        ' and click next.');
+                    $('#smartwizard').smartWizard('setError', {
+                        stepnum: step,
+                        iserror: true
+                    });
+                } else {
+                    $('#smartwizard').smartWizard('hideMessage');
+                    $('#smartwizard').smartWizard('setError', {
+                        stepnum: step,
+                        iserror: false
+                    });
                 }
-                if(validateStep2() == false){
-                  isStepValid = false;
-                  $('#smartwizard').smartWizard('setError',{stepnum:2,iserror:true});
-                }else{
-                  $('#smartwizard').smartWizard('setError',{stepnum:2,iserror:false});
+            }
+
+            // validate step2
+            if (step == 2) {
+                if (validateStep2() == false) {
+                    isStepValid = false;
+                    $('#smartwizard').smartWizard('showMessage', 'Please correct the errors in step' + step +
+                        ' and click next.');
+                    $('#smartwizard').smartWizard('setError', {
+                        stepnum: step,
+                        iserror: true
+                    });
+                } else {
+                    $('#smartwizard').smartWizard('hideMessage');
+                    $('#smartwizard').smartWizard('setError', {
+                        stepnum: step,
+                        iserror: false
+                    });
                 }
-                if(!isStepValid){
-                   $('#smartwizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
-                }
+            }
 
-                return isStepValid;
-             }
+            return isStepValid;
+        }
 
-         		function validateSteps(step){
-         		  var isStepValid = true;
-               // validate step 1
-               if(step == 1){
-                 if(validateStep1() == false ){
-                   isStepValid = false;
-                   $('#smartwizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
-                   $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:true});
-                 }else{
-                   $('#smartwizard').smartWizard('hideMessage');
-                   $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:false});
-                 }
-               }
+        function validateStep1() {
+            var isValid = true;
+            // Validate Username
+            var name = $('#name').val();
+            if (!name && name.length <= 0) {
+                isValid = false;
+                $('#msg_name').html('Please fill name').show();
+            } else {
+                $('#msg_name').html('').hide();
+            }
+            var pw = $('#phone_number').val();
+            if (!pw && pw.length <= 0) {
+                isValid = false;
+                $('#msg_phone_number').html('Please fill phone number').show();
+            } else {
+                $('#msg_phone_number').html('').hide();
+            }
+            return isValid;
+        }
 
-               // validate step2
-               if(step == 2){
-                 if(validateStep2() == false ){
-                   isStepValid = false;
-                   $('#smartwizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
-                   $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:true});
-                 }else{
-                   $('#smartwizard').smartWizard('hideMessage');
-                   $('#smartwizard').smartWizard('setError',{stepnum:step,iserror:false});
-                 }
-               }
+        function validateStep2() {
+            var isValid = true;
+            var designation = $('#designation').val();
+            if (!designation && designation.length <= 0) {
+                isValid = false;
+                $('#msg_name').html('Please fill name').show();
+            } else {
+                $('#msg_name').html('').hide();
+            }
+            var company_name = $('#company_name').val();
+            if (!company_name && company_name.length <= 0) {
+                isValid = false;
+                $('#msg_company_name').html('Please fill company name').show();
+            } else {
+                $('#msg_company_name').html('').hide();
+            }
+            return isValid;
+        }
 
-               return isStepValid;
-             }
-
-         		function validateStep1(){
-                var isValid = true;
-                // Validate Username
-                var name = $('#name').val();
-                if(!name && name.length <= 0){
-                  isValid = false;
-                  $('#msg_name').html('Please fill name').show();
-                }else{
-                  $('#msg_name').html('').hide();
-                }
-                var pw = $('#phone_number').val();
-                if(!pw && pw.length <= 0){
-                  isValid = false;
-                  $('#msg_phone_number').html('Please fill phone number').show();
-                }else{
-                  $('#msg_phone_number').html('').hide();
-                }
-                return isValid;
-             }
-
-             function validateStep2(){
-               var isValid = true;
-               var designation = $('#designation').val();
-               if(!designation && designation.length <= 0){
-                  isValid = false;
-                  $('#msg_name').html('Please fill name').show();
-                }else{
-                  $('#msg_name').html('').hide();
-                }
-                var company_name = $('#company_name').val();
-                if(!company_name && company_name.length <= 0){
-                  isValid = false;
-                  $('#msg_company_name').html('Please fill company name').show();
-                }else{
-                  $('#msg_company_name').html('').hide();
-                }
-               return isValid;
-             }
-
-             var cropper = new Slim(document.getElementById('photo'), {
-                ratio: '1:1',
-                minSize: {
-                    width: 20,
-                    height: 20,
-                },
-                size: {
-                    width: 600,
-                    height: 600,
-                },
-                willSave: function(data, ready) {
-                    $('#preview').attr('src',data.output.image);
-                    $('.profile_image_src').attr('src',data.output.image);
-                ready(data);
-                },
-                meta: {
-                    viewid:1
+        var cropper = new Slim(document.getElementById('photo'), {
+            ratio: '1:1',
+            minSize: {
+                width: 20,
+                height: 20,
             },
-                download: false,
-                instantEdit: true,
-                label: 'Click here or drag an image onto it',
-                // buttonConfirmLabel: 'Crop',
-                // buttonConfirmTitle: 'Crop',
-                // buttonCancelLabel: 'Cancel',
-                // buttonCancelTitle: 'Cancel',
-                // buttonEditTitle: 'Edit',
-                // buttonRemoveTitle: 'Remove',
-                // buttonDownloadTitle: 'Download',
-                // buttonRotateTitle: 'Rotate',
-                // buttonUploadTitle: 'Upload',
-                statusImageTooSmall:'This photo is too small. The minimum size is 360 * 240 pixels.'
-            });
-
+            size: {
+                width: 600,
+                height: 600,
+            },
+            willSave: function(data, ready) {
+                $('#preview').attr('src', data.output.image);
+                $('.profile_image_src').attr('src', data.output.image);
+                ready(data);
+            },
+            meta: {
+                viewid: 1
+            },
+            download: false,
+            instantEdit: true,
+            label: 'Click here or drag an image onto it',
+            // buttonConfirmLabel: 'Crop',
+            // buttonConfirmTitle: 'Crop',
+            // buttonCancelLabel: 'Cancel',
+            // buttonCancelTitle: 'Cancel',
+            // buttonEditTitle: 'Edit',
+            // buttonRemoveTitle: 'Remove',
+            // buttonDownloadTitle: 'Download',
+            // buttonRotateTitle: 'Rotate',
+            // buttonUploadTitle: 'Upload',
+            statusImageTooSmall: 'This photo is too small. The minimum size is 360 * 240 pixels.'
+        });
     </script>
     {!! Toastr::message() !!}
     <script>
-        @if($errors->any())
-             @foreach($errors->all() as $error)
-                 toastr.error('{{ $error }}','Error',{
-                     closeButton:true,
-                     progressBar:true,
-                 });
-             @endforeach
-         @endif
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error('{{ $error }}', 'Error', {
+                    closeButton: true,
+                    progressBar: true,
+                });
+            @endforeach
+        @endif
     </script>
 </body>
