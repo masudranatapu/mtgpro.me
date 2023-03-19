@@ -3,10 +3,9 @@
 
 <head>
     @php
-        $settings = DB::table('settings')
-            ->latest()
-            ->first();
+        $settings = getSetting();
     @endphp
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -34,7 +33,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
-    @yield('css')
+
     @stack('css')
     <style>
         .card-header a.active {
@@ -85,7 +84,7 @@
             @endforeach
         @endif
     </script>
-    @yield('scripts')
+
     @stack('scripts')
     <script>
         function deleteContactMsg(parameter) {

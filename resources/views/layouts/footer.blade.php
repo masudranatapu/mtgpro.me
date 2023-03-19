@@ -1,5 +1,7 @@
 <?php
 $setting  = getSetting();
+$pages = DB::table('custom_pages')->whereNotIn('url_slug', ['home','privacy-policy','terms-and-conditions','about','pricing','contact-us','help','tutorials','disclaimer','data-deletion-instructions','free-marketing-material'])->get();
+
 ?>
 <!-- ======================= Footer  =========================== -->
 <footer class="footer">
@@ -92,6 +94,11 @@ $setting  = getSetting();
                             <li><a href="{{ route('tutorials') }}">{{ __('Tutorials') }}</a></li>
                             <li><a target="__blank" href="{{ route('disclaimer') }}">{{ __('Disclaimer ') }}</a></li>
                             <li><a target="__blank" href="{{ route('help') }}">{{ __('Help') }}</a></li>
+                            @if(isset($pages) && count($pages)>0)
+                                @foreach ($pages as $item)
+                                <li><a target="__blank" href="{{ route('page',$item->url_slug) }}">{{ __($item->title) }}</a></li>
+                                @endforeach
+                            @endif
                             @guest
                             <li><a href="{{ route('login') }}">{{ __('User Login') }}</a></li>
                             @endguest

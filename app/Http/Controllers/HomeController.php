@@ -56,6 +56,8 @@ class HomeController extends Controller
         $reviews = Review::where('status', 1)->orderBy('order_id', 'DESC')->get();
         $home_page = DB::table('pages')->where('page_name', 'home')->get();
 
+
+
         // dd($home_page);
         $home_data = [];
         if ($home_page) {
@@ -704,6 +706,12 @@ class HomeController extends Controller
             $mailcontent = preg_replace("/{{site_title}}/", $setting->config_value, $mailcontent);
         }
         return [$mailcontent, $mailMesssage->subject];
+    }
+
+    public function getAllpage($slug){
+
+
+
     }
 
 

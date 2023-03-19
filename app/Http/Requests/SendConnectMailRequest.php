@@ -21,7 +21,6 @@ class SendConnectMailRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            '_token'      => 'required',
             'email'     => 'required|email|max:124',
             'subject'        => 'required|string|max:124',
             'message'        => 'required|string|max:1024',

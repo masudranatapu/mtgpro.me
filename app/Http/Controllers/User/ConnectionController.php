@@ -153,16 +153,20 @@ class ConnectionController extends Controller
 
     public function sendConnectReplyEmail(SendConnectMailRequest $request, $id)
     {
+
         try {
             $connection   = Connection::findOrFail($id);
             $data['subject'] = $request->subject;
             $data['message'] = $request->message;
 
-            if (isset($connection->email)) {
-                Mail::to($connection->email)->send(new SendConnectMail($data));
-            } else {
-                Mail::to($request->email)->send(new SendConnectMail($data));
-            }
+            // if (isset($connection->email)) {
+            //     Mail::to($connection->email)->send(new SendConnectMail($data));
+            // } else {
+            //     Mail::to($request->email)->send(new SendConnectMail($data));
+            // }
+
+            Mail::to($request->email)->send(new SendConnectMail($data));
+
         } catch (\Exception $e) {
 
 

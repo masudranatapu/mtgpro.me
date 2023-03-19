@@ -159,22 +159,26 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                                     <a href="{{ route('user.card.edit', $card->id) }}" class="btn-sm btn-secondary"
                                         title="Edit card">{{ __('Edit') }}</a>
                                     @if (checkPackage())
+
                                     <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
-                                        class="btn-sm btn-secondary changeTrg change-status {{ $card->status == 0 ? 'inactive' : '' }} "
-                                        data-id="{{ $card->id }}" data-status="{{ $card->status }}">
+                                        class="btn-sm btn-secondary {{ $card->id != Auth::user()->active_card_id ? 'changeTrg' : '' }}  change-status "
+                                        data-id="{{ $card->id }}"
+                                        data-status="{{ $card->status }}">
                                         <i class="fa fa-check" style="@if ($card->id != Auth::user()->active_card_id) display:none; @endif"
                                             title="Live Card"></i>
 
                                         {{ __('Live') }}
                                     </a>
+
                                     <?php
 
-                                                    if ($card->status == 1) {
-                                                        $url = Auth::user()->username;
-                                                    } else {
-                                                        $url = $card->card_url;
-                                                    }
-                                                    ?>
+                                    if ($card->status == 1) {
+                                        $url = Auth::user()->username;
+                                    } else {
+                                        $url = $card->card_url;
+                                    }
+
+                                    ?>
                                     <a target="_blank" href="{{ route('card.preview', $url) }}"
                                         class="btn-sm btn-secondary" title="Card Preview">
                                         {{ __('Preview') }}</a>
@@ -219,14 +223,15 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                     success: function(data) {
                         if (data.status == true) {
                             toastr.success(data.msg);
-                            $('.change-status').addClass('inactive');
-                            $('.change-status').addClass('changeTrg');
-                            $('.change-status').attr('data-status', 0);
-                            $('.change-status i').hide();
-                            $('#change_status_' + card_id).attr('data-status', 1);
-                            $('#change_status_' + card_id).removeClass('inactive');
-                            $('#change_status_' + card_id).removeClass('changeTrg');
-                            $('#change_status_' + card_id + ' i').show();
+                            location.reload();
+                            // $('.change-status').addClass('inactive');
+                            // $('.change-status').addClass('changeTrg');
+                            // $('.change-status').attr('data-status', 0);
+                            // $('.change-status i').hide();
+                            // $('#change_status_' + card_id).attr('data-status', 1);
+                            // $('#change_status_' + card_id).removeClass('inactive');
+                            // $('#change_status_' + card_id).removeClass('changeTrg');
+                            // $('#change_status_' + card_id + ' i').show();
 
                         } else {
                             toastr.warning(data.msg);

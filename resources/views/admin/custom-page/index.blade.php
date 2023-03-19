@@ -33,11 +33,11 @@ $rows = $data ?? [];
                                     {{ __('Custome Pages') }}
                                 </div>
                             </div>
-                            {{-- <div class="col">
+                            <div class="col">
                                 <div class="float-end">
                                     <a href="{{route('admin.custom-page.create')}}" class="btn btn-primary">{{ __('Add New')}}</a>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive px-2 py-2">

@@ -1,11 +1,13 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 @section('title') {{ __('Settings') }} @endsection
-@section('settings', 'active')
+
 @section('setting', 'active')
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}">
+@endpush
+
 @section('content')
-    @push('css')
-        <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}">
-    @endpush
     <div class="page-wrapper">
         {{--     <div class="container-xl">
         <!-- Page title -->

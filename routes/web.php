@@ -44,6 +44,7 @@ Route::get('/ask-me', [HomeController::class, 'ask'])->name('user.ask');
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
 Route::get('/qr/{id}', ['as' => 'qr', 'uses' => 'HomeController@getQRImage']);
 Route::get('/rss/rss.xml', ['as' => 'rss', 'uses' => 'HomeController@rss']);
+
 Route::get('privacy-policy', ['as' => 'privacy-policy', 'uses' => 'HomeController@getPrivacyPolicy']);
 Route::get('terms-conditions', ['as' => 'terms-conditions', 'uses' => 'HomeController@getTermsCondition']);
 Route::get('about-us', ['as' => 'about-us', 'uses' => 'HomeController@getAboutUs']);
@@ -52,13 +53,17 @@ Route::get('contact-us', ['as' => 'contact-us', 'uses' => 'HomeController@getCon
 Route::post('contact', ['as' => 'contact-us.post', 'uses' => 'HomeController@contactUs']);
 Route::get('help', ['as' => 'help', 'uses' => 'HomeController@getHelp']);
 Route::get('tutorials', ['as' => 'tutorials', 'uses' => 'HomeController@tutorials']);
+Route::get('disclaimer', ['as' => 'disclaimer', 'uses' => 'HomeController@getDisclaimer']);
+
+Route::get('page/{slug}', ['as' => 'page', 'uses' => 'HomeController@getPage']);
+// Route::get('page-details/{slug}', ['as' => 'page-details', 'uses' => 'HomeController@getPageDetails']);
+
 Route::get('tutorials/details/{slug}', ['as' => 'tutorials.details', 'uses' => 'HomeController@tutorialDetails']);
 Route::get('shop', ['as' => 'shop', 'uses' => 'ShopController@index']);
 Route::get('shop/details/{product:product_slug}', ['as' => 'product.details', 'uses' => 'ShopController@details']);
 
 
 
-Route::get('disclaimer', ['as' => 'disclaimer', 'uses' => 'HomeController@getDisclaimer']);
 Route::get('cart', ['as' => 'cart', 'uses' => 'ProductController@cart']);
 Route::get('add-to-cart/{id}', ['as' => 'add.to.cart', 'uses' => 'ProductController@addToCart']);
 Route::post('add-to-cart/', ['as' => 'addtocart', 'uses' => 'ProductController@addToCartPost']);
