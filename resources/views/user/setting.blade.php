@@ -80,15 +80,15 @@
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
     // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-    
+
     if ($diff_in_days > 31) {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 year'));
     } else {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 month'));
     }
-    
+
     $bill_date = date('d', strtotime($user->plan_activation_date));
-    
+
 @endphp
 
 
@@ -162,8 +162,7 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3>
-                                                                <span
-                                                                    class="text-uppercase">{{ __($plan->plan_name) }}</span>
+                                                                <span class="text-uppercase">{{ __($plan->plan_name) }}</span>
                                                                 @if ($duration > 0 && $plan->is_free == 0)
                                                                     <span class="float-right">{{ __($duration) }}
                                                                         {{ __(Str::plural('day', $duration)) }}
