@@ -265,7 +265,7 @@ class HomeController extends Controller
                     return redirect()->route('home');
                 }
             }
-            return view('card_preview', compact('cardinfo', 'user'));
+            return view('card_preview', compact('cardinfo', 'user', 'cardurl'));
         } else {
 
             Toastr::warning('This card is not available please create your desired card');

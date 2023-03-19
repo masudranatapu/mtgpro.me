@@ -483,7 +483,7 @@
                                         </svg>
                                     </div>
                                     <div class="qr-code">
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardinfo->card_url))
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardurl))
                                         !!}
                                     </div>
                                 </div>
