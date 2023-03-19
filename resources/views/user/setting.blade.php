@@ -1,5 +1,7 @@
 @extends('user.layouts.app')
 @section('title') {{ __('Settings') }} @endsection
+@section('settings', 'active')
+
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}">
@@ -70,6 +72,7 @@
     </style>
 @endpush
 
+
 @php
     $settings = getSetting();
     $countries = \App\Helpers\CountryHelper::CountryCodes();
@@ -80,25 +83,26 @@
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
     // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-    
+
     if ($diff_in_days > 31) {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 year'));
     } else {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 month'));
     }
-    
+
     $bill_date = date('d', strtotime($user->plan_activation_date));
-    
+
 @endphp
 
 
-@section('settings', 'active')
+
 @section('content')
     <!-- main content -->
     <div class="content-wrapper">
         <div class="content">
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
+
                     <div class="col-xl-12">
                         <div class="page_content account_setting mt-5">
                             <div class="row">
@@ -369,444 +373,446 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Account delete modal -->
-                    <div class="delete_modal">
-                        <div class="modal fade" id="deleteAccount" data-backdrop="static" data-keyboard="false"
-                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <!-- modal header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                            {{ __('Confirm Account Deletion') }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account delete modal -->
+    <div class="delete_modal">
+        <div class="modal fade" id="deleteAccount" data-backdrop="static" data-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            {{ __('Confirm Account Deletion') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal_body">
+                        <form method="POST" id="accountDeletionForm"
+                            action="{{ route('user.deletion-request') }}">
+                            @csrf
+                            <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
+                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted.This cannot be undone.') }}
+                            </p>
+                            <div class="mb-3">
+                                <input type="text" name="confirm" id="confirm"
+                                    class="form-control @error('confirm') is-invalid @enderror"
+                                    placeholder="Type 'delete' to delete your account." required>
+                                @if ($errors->has('confirm'))
+                                    <span
+                                        class="help-block text-danger">{{ $errors->first('confirm') }}</span>
+                                @endif
+                            </div>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger"
+                                    data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                    <span class="btn-txt">{{ __('Delete Account') }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account delete modal -->
+    <div class="reset_password_modal">
+        <div class="modal fade" id="reset_password" data-backdrop="static" data-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Reset Password') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <!-- modal body -->
+                    <div class="modal_body">
+                        <div class="modal-footer pb-3">
+                            <button type="button" class="btn btn-danger"
+                                data-dismiss="modal">{{ __('Cancel') }}</button>
+                            <a href="{{ route('user.password.reset') }}"
+                                title="{{ __('Reset Your Password') }}"
+                                class="btn btn-primary reset_password_request mb-2">
+                                <i class="loading-spinner reset-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                <span class="btn-txt">{{ __('Send Link') }}</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- disclimer Modal --}}
+    <div class="disclimer_modal">
+        <div class="modal fade" id="disclimerModal" data-keyboard="false" tabindex="-1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header mb-0">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            {{ __('Site Disclimer') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal_body p-3">
+                        {!! $settings->site_disclimer ?? '' !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Billing Address Modal -->
+    <div class="billing_modal">
+        <div class="modal fade" id="billingModal" data-keyboard="false" tabindex="-1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            {{ __('Billing details') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal_body">
+                        <form action="{{ route('user.billing-info.update') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="billing_email" class="form-label">{{ __('Email') }}</label>
+                                <input type="text" name="billing_email" id="billing_email"
+                                    class="form-control @error('billing_email') is-invalid @enderror"
+                                    value="{{ $user->billing_email }}" required>
+                                @if ($errors->has('billing_email'))
+                                    <span
+                                        class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="billing_country"
+                                    class="form-label">{{ _('Country / Region') }}</label>
+                                <select name="billing_country" id="billing_country"
+                                    class="form-control @error('billing_country') is-invalid @enderror">
+                                    <option value="" class="d-none">--
+                                        {{ __('Choose') }} --
+                                    </option>
+                                    @foreach ($countries as $key => $country)
+                                        <option value="{{ $country }}"
+                                            {{ $user->billing_country == $country ? 'selected' : '' }}>
+                                            {{ $country }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('billing_country'))
+                                    <span
+                                        class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="billing_zipcode"
+                                    class="form-label">{{ __('Zip Code') }}</label>
+                                <input type="number" name="billing_zipcode" id="billing_zipcode"
+                                    class="form-control @error('billing_zipcode') is-invalid @enderror"
+                                    value="{{ $user->billing_zipcode }}" required>
+                                @if ($errors->has('billing_zipcode'))
+                                    <span
+                                        class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
+                                @endif
+                            </div>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger"
+                                    data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                    <span class="btn-txt">{{ __('Save Billing Details') }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Details -->
+    <div class="payment_modal">
+        <div class="modal fade" id="paymentModal" data-keyboard="false" tabindex="-1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">
+                            {{ __('Payment Details') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal_body">
+                        <form action="{{ route('user.payment-info.update') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="card_number"
+                                    class="form-label">{{ __('Credit card number') }}</label>
+                                <input type="text" name="card_number" id="card_number"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    value="{{ $user->card_number }}" required autocomplete="cc-number"
+                                    autocorrect="off" spellcheck="false" type="text"
+                                    aria-label="Credit or debit card number"
+                                    placeholder="1234 1234 1234 1234" aria-invalid="false"
+                                    tabindex="1">
+                                @if ($errors->has('card_number'))
+                                    <span
+                                        class="help-block text-danger">{{ $errors->first('card_number') }}</span>
+                                @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="card_expiration_date"
+                                            class="form-label">{{ __('Expiration date') }}</label>
+                                        <input autocomplete="cc-exp" autocorrect="off" spellcheck="false"
+                                            type="text" name="card_expiration_date"
+                                            id="card_expiration_date"
+                                            class="form-control @error('card_expiration_date') is-invalid @enderror"
+                                            required aria-label="Credit or debit card expiration date"
+                                            placeholder="MM / YY" aria-invalid="false" tabindex="2"
+                                            value="{{ $user->card_expiration_date }}">
+                                        @if ($errors->has('card_expiration_date'))
+                                            <span
+                                                class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
+                                        @endif
                                     </div>
-
-                                    <!-- modal body -->
-                                    <div class="modal_body">
-                                        <form method="POST" id="accountDeletionForm"
-                                            action="{{ route('user.deletion-request') }}">
-                                            @csrf
-                                            <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
-                                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        This cannot be undone.') }}
-                                            </p>
-
-                                            <div class="mb-3">
-                                                <input type="text" name="confirm" id="confirm"
-                                                    class="form-control @error('confirm') is-invalid @enderror"
-                                                    placeholder="Type 'delete' to delete your account." required>
-                                                @if ($errors->has('confirm'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('confirm') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer pb-3">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">{{ __('Cancel') }}</button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                    <span class="btn-txt">{{ __('Delete Account') }}</span>
-                                                </button>
-                                            </div>
-                                        </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="card_cvc"
+                                            class="form-label">{{ __('CVC') }}</label>
+                                        <input class="form-control @error('card_cvc') is-invalid @enderror"
+                                            autocomplete="cc-csc" autocorrect="off" spellcheck="false"
+                                            type="text" name="card_cvc" inputmode="numeric"
+                                            aria-label="Credit or debit card CVC/CVV" placeholder="CVC"
+                                            aria-invalid="false" tabindex="3"
+                                            value="{{ $user->card_cvc }}">
+                                        @if ($errors->has('card_cvc'))
+                                            <span
+                                                class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Account delete modal -->
-                    <div class="reset_password_modal">
-                        <div class="modal fade" id="reset_password" data-backdrop="static" data-keyboard="false"
-                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <!-- modal header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Reset Password') }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <!-- modal body -->
-                                    <div class="modal_body">
-                                        <div class="modal-footer pb-3">
-                                            <button type="button" class="btn btn-danger"
-                                                data-dismiss="modal">{{ __('Cancel') }}</button>
-                                            <a href="{{ route('user.password.reset') }}"
-                                                title="{{ __('Reset Your Password') }}"
-                                                class="btn btn-primary reset_password_request mb-2">
-                                                <i class="loading-spinner reset-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                <span class="btn-txt">{{ __('Send Link') }}</span>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label for="name_on_card"
+                                    class="form-label">{{ __('Name on the card') }}</label>
+                                <input type="text" name="name_on_card" id="name_on_card"
+                                    class="form-control @error('name_on_card') is-invalid @enderror"
+                                    value="{{ $user->name_on_card }}" required autocomplete="cc-number"
+                                    autocorrect="off" spellcheck="false" type="text"
+                                    aria-label="Credit or debit card number" placeholder="John wick"
+                                    aria-invalid="false" tabindex="4">
+                                @if ($errors->has('name_on_card'))
+                                    <span
+                                        class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
+                                @endif
                             </div>
-                        </div>
-                    </div>
-
-                    {{-- disclimer Modal --}}
-
-                    <div class="disclimer_modal">
-                        <div class="modal fade" id="disclimerModal" data-keyboard="false" tabindex="-1"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">
-                                    <!-- modal header -->
-                                    <div class="modal-header mb-0">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                            {{ __('Site Disclimer') }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal_body p-3">
-                                        {!! $settings->site_disclimer ?? '' !!}
-                                    </div>
-                                </div>
+                            <div class="modal-footer pb-3">
+                                <button type="button" class="btn btn-danger"
+                                    data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                    <span class="btn-txt">{{ __('Save payment method') }}</span>
+                                </button>
                             </div>
-                        </div>
+
+                        </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
 
-                    <!-- Billing Address Modal -->
 
-                    <div class="billing_modal">
-                        <div class="modal fade" id="billingModal" data-keyboard="false" tabindex="-1"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <!-- modal header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                            {{ __('Billing details') }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal_body">
-                                        <form action="{{ route('user.billing-info.update') }}" method="post">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label for="billing_email" class="form-label">{{ __('Email') }}</label>
-                                                <input type="text" name="billing_email" id="billing_email"
-                                                    class="form-control @error('billing_email') is-invalid @enderror"
-                                                    value="{{ $user->billing_email }}" required>
-                                                @if ($errors->has('billing_email'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="billing_country"
-                                                    class="form-label">{{ _('Country / Region') }}</label>
-                                                <select name="billing_country" id="billing_country"
-                                                    class="form-control @error('billing_country') is-invalid @enderror">
-                                                    <option value="" class="d-none">--
-                                                        {{ __('Choose') }} --
-                                                    </option>
-                                                    @foreach ($countries as $key => $country)
-                                                        <option value="{{ $country }}"
-                                                            {{ $user->billing_country == $country ? 'selected' : '' }}>
-                                                            {{ $country }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('billing_country'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="billing_zipcode"
-                                                    class="form-label">{{ __('Zip Code') }}</label>
-                                                <input type="number" name="billing_zipcode" id="billing_zipcode"
-                                                    class="form-control @error('billing_zipcode') is-invalid @enderror"
-                                                    value="{{ $user->billing_zipcode }}" required>
-                                                @if ($errors->has('billing_zipcode'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer pb-3">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">{{ __('Cancel') }}</button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                    <span class="btn-txt">{{ __('Save Billing Details') }}</span>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Payment Details -->
-                    <div class="payment_modal">
-                        <div class="modal fade" id="paymentModal" data-keyboard="false" tabindex="-1"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <!-- modal header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="paymentModalLabel">
-                                            {{ __('Payment Details') }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal_body">
-                                        <form action="{{ route('user.payment-info.update') }}" method="post">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label for="card_number"
-                                                    class="form-label">{{ __('Credit card number') }}</label>
-                                                <input type="text" name="card_number" id="card_number"
-                                                    class="form-control @error('name') is-invalid @enderror"
-                                                    value="{{ $user->card_number }}" required autocomplete="cc-number"
-                                                    autocorrect="off" spellcheck="false" type="text"
-                                                    aria-label="Credit or debit card number"
-                                                    placeholder="1234 1234 1234 1234" aria-invalid="false"
-                                                    tabindex="1">
-                                                @if ($errors->has('card_number'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('card_number') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label for="card_expiration_date"
-                                                            class="form-label">{{ __('Expiration date') }}</label>
-                                                        <input autocomplete="cc-exp" autocorrect="off" spellcheck="false"
-                                                            type="text" name="card_expiration_date"
-                                                            id="card_expiration_date"
-                                                            class="form-control @error('card_expiration_date') is-invalid @enderror"
-                                                            required aria-label="Credit or debit card expiration date"
-                                                            placeholder="MM / YY" aria-invalid="false" tabindex="2"
-                                                            value="{{ $user->card_expiration_date }}">
-                                                        @if ($errors->has('card_expiration_date'))
-                                                            <span
-                                                                class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label for="card_cvc"
-                                                            class="form-label">{{ __('CVC') }}</label>
-                                                        <input class="form-control @error('card_cvc') is-invalid @enderror"
-                                                            autocomplete="cc-csc" autocorrect="off" spellcheck="false"
-                                                            type="text" name="card_cvc" inputmode="numeric"
-                                                            aria-label="Credit or debit card CVC/CVV" placeholder="CVC"
-                                                            aria-invalid="false" tabindex="3"
-                                                            value="{{ $user->card_cvc }}">
-                                                        @if ($errors->has('card_cvc'))
-                                                            <span
-                                                                class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="name_on_card"
-                                                    class="form-label">{{ __('Name on the card') }}</label>
-                                                <input type="text" name="name_on_card" id="name_on_card"
-                                                    class="form-control @error('name_on_card') is-invalid @enderror"
-                                                    value="{{ $user->name_on_card }}" required autocomplete="cc-number"
-                                                    autocorrect="off" spellcheck="false" type="text"
-                                                    aria-label="Credit or debit card number" placeholder="John wick"
-                                                    aria-invalid="false" tabindex="4">
-                                                @if ($errors->has('name_on_card'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('name_on_card') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer pb-3">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">{{ __('Cancel') }}</button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                    <span class="btn-txt">{{ __('Save payment method') }}</span>
-                                                </button>
-                                            </div>
+@push('custom_js')
+    <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
+    <script src="{{ asset('assets/js/summernote.js') }}"></script>
 
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endsection
-                @push('custom_js')
-                    <script type="text/javascript" src="{{ asset('assets/js/slim.kickstart.min.js') }}"></script>
-                    <script src="{{ asset('assets/js/summernote.js') }}"></script>
-
-                    <script>
-                        // $(this).find(":submit").prop('disabled', true);
-                        $("#supportmailForm").submit(function() {
-                            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
-                            $(this).find(":submit").attr("disabled", true);
-                            $(this).find(":submit").children(".btn-txt").text("Processing");
-                            $("*").css("cursor", "wait");
-                        });
-                        // $("#featureRequest").submit(function () {
-                        //     $(this).find(":submit").children(".loading-spinner").toggleClass('active');
-                        //     $(this).find(":submit").attr("disabled", true);
-                        //     $(this).find(":submit").children(".btn-txt").text("Processing");
-                        //     $("*").css("cursor", "wait");
-                        // });
-                        $("#updateProfile").submit(function() {
-                            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
-                            $(this).find(":submit").attr("disabled", true);
-                            $(this).find(":submit").children(".btn-txt").text("Processing");
-                            $("*").css("cursor", "wait");
-                        });
+    <script>
+        // $(this).find(":submit").prop('disabled', true);
+        $("#supportmailForm").submit(function() {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
+        // $("#featureRequest").submit(function () {
+        //     $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+        //     $(this).find(":submit").attr("disabled", true);
+        //     $(this).find(":submit").children(".btn-txt").text("Processing");
+        //     $("*").css("cursor", "wait");
+        // });
+        $("#updateProfile").submit(function() {
+            $(this).find(":submit").children(".loading-spinner").toggleClass('active');
+            $(this).find(":submit").attr("disabled", true);
+            $(this).find(":submit").children(".btn-txt").text("Processing");
+            $("*").css("cursor", "wait");
+        });
 
 
 
-                        $(document).on('submit', "#accountDeletionForm", function(e) {
-                            e.preventDefault();
-                            var form = $("#accountDeletionForm");
-                            var _this = $(this).find(":submit");
-                            $.ajax({
-                                type: 'post',
-                                data: form.serialize(),
-                                url: form.attr('action'),
-                                async: true,
-                                beforeSend: function() {
-                                    $("body").css("cursor", "progress");
-                                    $(_this).children(".loading-spinner").toggleClass('active');
-                                    $(_this).attr("disabled", true);
-                                    $(_this).children(".btn-txt").text("Processing");
-                                },
-                                success: function(response) {
-                                    if (response.status == 1) {
-                                        toastr.success(response.message);
-                                        $('#accountDeleteModal').modal('hide');
-                                        location.reload();
-                                    } else {
-                                        toastr.error(response.message);
-                                    }
-                                    $(_this).attr("disabled", false);
-                                    $(_this).children(".loading-spinner").removeClass('active');
-                                    $(_this).children(".btn-txt").text("Delete Account");
-                                },
-                                error: function(jqXHR, exception) {
-                                    toastr.error('Something wrong');
-                                    $(_this).attr("disabled", false);
-                                    $(_this).children(".loading-spinner").removeClass('active');
-                                    $(_this).children(".btn-txt").text("Delete Account");
-                                },
-                                complete: function(response) {
-                                    $("body").css("cursor", "default");
-                                }
-                            });
-                        });
-                        $(document).on('click', ".reset_password_request", function(e) {
-                            e.preventDefault();
-                            var route = $(this).attr('href');
-                            var _this = this;
-                            $.ajax({
-                                type: 'get',
-                                url: route,
-                                async: true,
-                                beforeSend: function() {
-                                    $("body").css("cursor", "progress");
-                                    $(_this).children(".loading-spinner").toggleClass('active');
-                                    $(_this).attr("disabled", true);
-                                    $(_this).children(".btn-txt").text("Processing");
-                                },
-                                success: function(response) {
-                                    if (response.status == 1) {
-                                        toastr.success(response.message);
-                                    } else {
-                                        toastr.error(response.message);
-                                    }
-                                    $(_this).attr("disabled", false);
-                                    $(_this).children(".loading-spinner").removeClass('active');
-                                    $(_this).children(".btn-txt").text("Reset Your Password");
-                                },
-                                error: function(jqXHR, exception) {
-                                    toastr.error('Something wrong');
-                                    $(_this).attr("disabled", false);
-                                    $(_this).children(".loading-spinner").removeClass('active');
-                                    $(_this).children(".btn-txt").text("Reset Your Password");
+        $(document).on('submit', "#accountDeletionForm", function(e) {
+            e.preventDefault();
+            var form = $("#accountDeletionForm");
+            var _this = $(this).find(":submit");
+            $.ajax({
+                type: 'post',
+                data: form.serialize(),
+                url: form.attr('action'),
+                async: true,
+                beforeSend: function() {
+                    $("body").css("cursor", "progress");
+                    $(_this).children(".loading-spinner").toggleClass('active');
+                    $(_this).attr("disabled", true);
+                    $(_this).children(".btn-txt").text("Processing");
+                },
+                success: function(response) {
+                    if (response.status == 1) {
+                        toastr.success(response.message);
+                        $('#accountDeleteModal').modal('hide');
+                        location.reload();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                    $(_this).attr("disabled", false);
+                    $(_this).children(".loading-spinner").removeClass('active');
+                    $(_this).children(".btn-txt").text("Delete Account");
+                },
+                error: function(jqXHR, exception) {
+                    toastr.error('Something wrong');
+                    $(_this).attr("disabled", false);
+                    $(_this).children(".loading-spinner").removeClass('active');
+                    $(_this).children(".btn-txt").text("Delete Account");
+                },
+                complete: function(response) {
+                    $("body").css("cursor", "default");
+                }
+            });
+        });
+        $(document).on('click', ".reset_password_request", function(e) {
+            e.preventDefault();
+            var route = $(this).attr('href');
+            var _this = this;
+            $.ajax({
+                type: 'get',
+                url: route,
+                async: true,
+                beforeSend: function() {
+                    $("body").css("cursor", "progress");
+                    $(_this).children(".loading-spinner").toggleClass('active');
+                    $(_this).attr("disabled", true);
+                    $(_this).children(".btn-txt").text("Processing");
+                },
+                success: function(response) {
+                    if (response.status == 1) {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                    $(_this).attr("disabled", false);
+                    $(_this).children(".loading-spinner").removeClass('active');
+                    $(_this).children(".btn-txt").text("Reset Your Password");
+                },
+                error: function(jqXHR, exception) {
+                    toastr.error('Something wrong');
+                    $(_this).attr("disabled", false);
+                    $(_this).children(".loading-spinner").removeClass('active');
+                    $(_this).children(".btn-txt").text("Reset Your Password");
 
-                                },
-                                complete: function(response) {
-                                    $("body").css("cursor", "default");
-                                    $('#reset_password').modal('hide');
-                                }
-                            });
+                },
+                complete: function(response) {
+                    $("body").css("cursor", "default");
+                    $('#reset_password').modal('hide');
+                }
+            });
 
-                        });
+        });
 
 
-                        $(document).on('change', '.switcher_', function(e) {
-                            var checked = $(this).is(':checked');
-                            console.log(checked);
-                            if (checked == true) {
-                                var current_val = $('input[name="notification"]:checked').val();
-                                $.ajax({
-                                    url: `{{ route('user.notification-status') }}`,
-                                    type: "get",
-                                    data: {
-                                        "current_val": current_val
-                                    },
-                                    beforeSend: function() {
-                                        $("body").css("cursor", "progress");
-                                    },
-                                    success: function(response) {
-                                        if (response.status == 1) {
-                                            toastr.success(response.message);
-                                        } else {
-                                            toastr.error(response.message);
-                                        }
-                                    },
-                                    error: function(jqXHR, exception) {
-                                        toastr.error('Something wrong');
-                                    },
-                                    complete: function(response) {
-                                        $("body").css("cursor", "default");
-                                    }
-                                });
-                            }
-                        })
-                        $(document).ready(function() {
-                            $('#site_disclaimer').summernote({
+        $(document).on('change', '.switcher_', function(e) {
+            var checked = $(this).is(':checked');
+            console.log(checked);
+            if (checked == true) {
+                var current_val = $('input[name="notification"]:checked').val();
+                $.ajax({
+                    url: `{{ route('user.notification-status') }}`,
+                    type: "get",
+                    data: {
+                        "current_val": current_val
+                    },
+                    beforeSend: function() {
+                        $("body").css("cursor", "progress");
+                    },
+                    success: function(response) {
+                        if (response.status == 1) {
+                            toastr.success(response.message);
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(jqXHR, exception) {
+                        toastr.error('Something wrong');
+                    },
+                    complete: function(response) {
+                        $("body").css("cursor", "default");
+                    }
+                });
+            }
+        })
+        $(document).ready(function() {
+            $('#site_disclaimer').summernote({
 
-                                height: 150,
-                                toolbar: [
-                                    ['style', ['bold', 'underline', 'italic', 'clear']],
-                                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                                    ['fontsize', ['fontsize']],
-                                    ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['table', ['table']],
-                                ],
+                height: 150,
+                toolbar: [
+                    ['style', ['bold', 'underline', 'italic', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                ],
 
-                            });
-                        });
-                        $(document).ready(function() {
-                            $('#user_disclimer').summernote({
+            });
+        });
+        $(document).ready(function() {
+            $('#user_disclimer').summernote({
 
-                                height: 150,
-                                toolbar: [
-                                    ['style', ['bold', 'underline', 'italic', 'clear']],
-                                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                                    ['fontsize', ['fontsize']],
-                                    ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['table', ['table']],
-                                ],
+                height: 150,
+                toolbar: [
+                    ['style', ['bold', 'underline', 'italic', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                ],
 
-                            });
-                        });
-                    </script>
-                @endpush
+            });
+        });
+    </script>
+@endpush
