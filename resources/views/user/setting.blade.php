@@ -100,7 +100,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="page_content account_setting mt-5">
+                        <div class="page_content account_setting mt-0 mt-lg-5">
                             <div class="row">
                                 <div class="col-lg-4 col-xl-3">
                                     <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
@@ -309,34 +309,36 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <table class="table table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>{{ __('Date') }}</th>
-                                                                    <th>{{ __('Invoice ID') }}</th>
-                                                                    <th>{{ __('Description') }}</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($transections as $row)
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>{{ date('M d, Y', strtotime($row->transaction_date)) }}
-                                                                        </td>
-                                                                        <td>{{ $row->invoice_number }}</td>
-                                                                        <td>{!! $row->desciption !!}</td>
-                                                                        <td class="text-right download_invoice">
-                                                                            <a
-                                                                                href="{{ route('user.invoice.download', $row->invoice_number) }}">
-                                                                                {{ __('Download') }}
-                                                                                <img src="{{ asset('assets/img/icon/download.svg') }}"
-                                                                                    alt="">
-                                                                            </a>
-                                                                        </td>
+                                                                        <th>{{ __('Date') }}</th>
+                                                                        <th>{{ __('Invoice ID') }}</th>
+                                                                        <th>{{ __('Description') }}</th>
+                                                                        <th></th>
                                                                     </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($transections as $row)
+                                                                        <tr>
+                                                                            <td>{{ date('M d, Y', strtotime($row->transaction_date)) }}
+                                                                            </td>
+                                                                            <td>{{ $row->invoice_number }}</td>
+                                                                            <td>{!! $row->desciption !!}</td>
+                                                                            <td class="text-right download_invoice">
+                                                                                <a
+                                                                                    href="{{ route('user.invoice.download', $row->invoice_number) }}">
+                                                                                    {{ __('Download') }}
+                                                                                    <img src="{{ asset('assets/img/icon/download.svg') }}"
+                                                                                        alt="">
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
 
                                                         @if ($transections->total() > $transections->perPage())
                                                             <a
@@ -445,21 +447,18 @@
                                                         </div>
 
 
-                                                        <div class="float-right">
-                                                            <button type="submit" class="btn btn-primary mb-2">
+                                                        <div class="float-right setting_btn">
+                                                            <button type="submit" class="btn btn-primary mr-3">
                                                                 <i
                                                                     class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
                                                                 <span class="btn-txt">{{ __('Save') }}</span>
                                                             </button>
 
-
-
-
-                                                            <a href="javascript:void(0)" class="btn btn-primary mb-2"
+                                                            <a href="javascript:void(0)" class="btn btn-primary mr-3"
                                                                 data-toggle="modal"
-                                                                data-target="#reset_password">{{ __('Reset Your Password') }}</a>
+                                                                data-target="#reset_password">{{ __('Reset Password') }}</a>
 
-                                                            <a href="javascript:void(0)" class="btn btn-danger mb-2"
+                                                            <a href="javascript:void(0)" class="btn btn-danger"
                                                                 data-toggle="modal"
                                                                 data-target="#deleteAccount">{{ __('Delete Account') }}</a>
                                                         </div>

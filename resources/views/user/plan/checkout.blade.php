@@ -126,10 +126,10 @@
 ?>
 @section('content')
     <div class="content-wrapper checkout-wrapper py-4">
-        <div class="content mt-5">
+        <div class="content">
             <div class="container-fluid">
                 <div class="row g-4">
-                    <div class="col-lg-4">
+                    <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">{{ __('Upgrade Plan') }}</h6>
@@ -153,22 +153,22 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-bold"> $ @if ($plan->is_yearly)
-                                                        {{ number_format($plan->plan_price_yearly,2) }}
+                                                        {{ number_format($plan->plan_price_yearly, 2) }}
                                                     @else
-                                                        {{ number_format($plan->plan_price_monthly,2) }}
+                                                        {{ number_format($plan->plan_price_monthly, 2) }}
                                                     @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Tax</td>
-                                                <td>{{ ($config[26]->config_value) }}</td>
+                                                <td>{{ $config[26]->config_value }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="h6 text-bold">{{ __('Total Payable') }}</td>
                                                 <td class="w-1 text-bold h6"> $ @if ($plan->is_yearly)
-                                                        {{ number_format($plan->plan_price_yearly,2) }}
+                                                        {{ number_format($plan->plan_price_yearly, 2) }}
                                                     @else
-                                                        {{ number_format($plan->plan_price_monthly,2) }}
+                                                        {{ number_format($plan->plan_price_monthly, 2) }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-12">
+                    <div class="col-xl-8 col-12">
                         <form action="{{ route('user.checkout.post-transection') }}" id="order-form" method="post">
                             @csrf
                             <input type="hidden" name="plan_id" value="{{ $plan->id }}">

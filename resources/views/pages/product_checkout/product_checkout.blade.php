@@ -126,7 +126,7 @@
 ?>
 @section('content')
     <div class="content-wrapper checkout-wrapper py-4">
-        <div class="content mt-5">
+        <div class="content">
             <div class="container">
                 <div class="row g-4">
                     <div class="col-lg-5">

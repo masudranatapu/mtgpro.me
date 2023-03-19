@@ -525,7 +525,7 @@ body {
 }
 
 .create_card_wrapper .tab-content {
-    height: 660px;
+    max-height: 660px;
     padding: 30px;
     overflow: hidden;
     overflow-y: auto;
@@ -1438,9 +1438,9 @@ body {
 
 .table thead th {
     text-align: center;
-    border-bottom: 1px solid #dee2e6;
-    padding: 8px 0px;
-    line-height: 22px;
+    border: 1px solid #dee2e6 !important;
+    padding: 13px 12px;
+    line-height: 26px;
     vertical-align: middle;
 }
 
@@ -1516,7 +1516,7 @@ label {
 
 .checkout-wrapper .table td,
 .checkout-wrapper .table th {
-    padding: 15px 0px;
+    padding: 15px 12 px;
     vertical-align: top;
     border-top: 1px solid #dee2e6;
     color: #666;
@@ -1751,8 +1751,12 @@ li.nav-item .icon {
     background: #ccc;
 }
 
-
-
+.setting_btn .btn {
+    width: 148px;
+    padding: 11px 10px !important;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
 
 
 .invoice_table.table.table-striped {
@@ -1770,4 +1774,50 @@ li.nav-item .icon {
 
 .custome_table table {
     min-width: 1000px;
+}
+
+.nav-sidebar>.nav-item {
+    margin-bottom: 3px;
+}
+
+.content-header {
+    padding: 22px 0px 22px 14px;
+}
+
+
+.content-header h1 {
+    font-size: 17px;
+    color: #111;
+    font-family: 'Inter';
+}
+
+.navbar-white {
+    background-color: #F7F7F7;
+}
+
+.content-header h1 .create_plus_icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #e4e4e4;
+    text-align: center;
+    border-radius: 50px;
+    color: #111;
+    line-height: 30px;
+    margin-left: 4px;
+    font-size: 15px;
+}
+
+a:hover {
+    color: #C73305;
+    text-decoration: none;
+}
+
+.marketing_table table {
+    min-width: 650px !important;
+}
+
+
+.card_view_table table {
+    min-width: 960px;
 }
