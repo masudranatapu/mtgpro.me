@@ -29,6 +29,14 @@
     $ipad       = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
     $phone_number = $email = null;
 
+
+    if ($cardinfo->color_link == 1) {
+        $icon_color = $cardinfo->theme_color;
+    } else {
+        $icon_color = $contact->icon_color;
+    }
+
+
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -173,22 +181,18 @@
                                     <span>Mortgage Calculator</span>
                                 </a>
                             </div>
-                            {{-- @dd($cardinfo->contacts) --}}
+
                             @if (!empty($cardinfo->contacts))
                             @foreach ($cardinfo->contacts as $contact)
                             @if ($contact)
-                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
-                            @else
-                            @php
-                            if ($cardinfo->color_link == 1) {
-                            $icon_color = $cardinfo->theme_color;
-                            } else {
-                            $icon_color = $contact->icon_color;
-                            }
 
-                            //link,mail,mobile,number,text,username,file,address
-                            @endphp
-                            {{-- <div class="col-4 col-md-3 mb-3"> --}}
+                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
+
+                            @else
+
+
+                                {{-- link,mail,mobile,number,text,username,file,address --}}
+
                                 @if ($contact->type == 'address')
                                 <div class="col-4 col-md-3 mb-3">
                                     <a title="{{ $contact->label }}" class="text-decoration-none"
@@ -354,8 +358,7 @@
                                     </a>
                                 </div>
                                 @endif
-                                {{--
-                            </div> --}}
+
                             @endif
                             @endif
                             @endforeach
