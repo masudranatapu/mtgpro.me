@@ -80,15 +80,15 @@
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
     // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-
+    
     if ($diff_in_days > 31) {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 year'));
     } else {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 month'));
     }
-
+    
     $bill_date = date('d', strtotime($user->plan_activation_date));
-
+    
 @endphp
 
 
@@ -98,8 +98,8 @@
     <div class="content-wrapper">
         <div class="content">
             <div class="container-fluid">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-xl-9">
+                <div class="row">
+                    <div class="col-12">
                         <div class="page_content account_setting mt-5">
                             <div class="row">
                                 <div class="col-lg-4 col-xl-3">
@@ -204,7 +204,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
-                                                    <div class="col-lg-6 mb-4">
+                                                    <div class="col-md-6 col-lg-12 col-xl-6 mb-4 mb-4">
                                                         <div class="billing_info_card subs_info">
                                                             <div class="card-header">
                                                                 <h4>{{ __('Billing Infomation') }} <a href="#"
@@ -236,7 +236,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-md-6 col-lg-12 col-xl-6 mb-4">
                                                         <div class="payment_method_card subs_info">
                                                             <div class="card-header">
                                                                 <h4>
