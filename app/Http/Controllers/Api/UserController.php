@@ -9,6 +9,7 @@ use App\Models\BusinessField;
 use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\MarketingMaterials;
+use App\Models\Review;
 use App\Models\Transaction;
 use App\Models\User;
 use Exception;
@@ -665,8 +666,12 @@ class UserController extends ResponceController
             ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
             ->where('user_id', $user_id)
             ->first();
+        if (isset($review) > 0) {
 
-        return $this->sendResponse(200, "My Review", $review, 200, []);
+            return $this->sendResponse(200, "My Review", $review, 1, []);
+        } else {
+            return $this->sendError("My Review", "No data Found", 200, 0, []);
+        }
     }
 
 
@@ -683,28 +688,30 @@ class UserController extends ResponceController
             ]);
 
             if ($validator->fails()) {
-                return $this->sendError(200, $validator->errors()->first());
+                return $this->sendError("Validation Error", $validator->errors()->first());
             }
 
-            DB::table('reviews')->insert([
-                'user_id' => Auth::guard('api')->user()->id,
-                'order_id' => 0,
-                'display_title' => $request->display_title,
-                'display_name' => $request->display_name,
-                'details' => $request->details,
-                'status' => 0,
-                'created_at' => Carbon::now(),
-                'created_by' => Auth::guard('api')->user()->id,
-            ]);
+
+            $data = new Review();
+            $data->order_id = 0;
+            $data->display_title = $request->display_title;
+            $data->display_name = $request->display_name;
+            $data->details = $request->details;
+            $data->status = 0;
+            $data->user_id = Auth::guard('api')->user()->id;
+            $data->created_at = Carbon::now();
+            $data->created_by = Auth::guard('api')->user()->id;
+            $data->save();
         } catch (\Exception $e) {
 
             DB::rollback();
+            // $message = $e->getMessage();
             $message = 'Something wrong! Please try again';
             return $this->sendError(200, $message);
         }
         DB::commit();
         $message = 'Review submitted successfully';
-        return $this->sendResponse(200, $message);
+        return $this->sendResponse(200, $message, $data);
     }
 
     public function updateReview(Request $request, $id)
@@ -724,15 +731,14 @@ class UserController extends ResponceController
             if ($validator->fails()) {
                 return $this->sendError(200, $validator->errors()->first());
             }
-            DB::table('reviews')
-                ->where('id', $id)
-                ->update([
-                    'order_id' => 0,
-                    'display_title' => $request->display_title,
-                    'display_name' => $request->display_name,
-                    'details' => $request->details,
-                    'status' => 0,
-                ]);
+            $data = Review::where('id', $id)->first();
+
+            $data->order_id = 0;
+            $data->display_title = $request->display_title;
+            $data->display_name = $request->display_name;
+            $data->details = $request->details;
+            $data->status = 0;
+            $data->save();
         } catch (\Exception $e) {
             DB::rollback();
             $message = 'Something wrong! Please try again';
@@ -740,7 +746,7 @@ class UserController extends ResponceController
         }
         DB::commit();
         $message = trans('Review submitted successfully');
-        return $this->sendResponse(200, $message);
+        return $this->sendResponse(200, $message, $data);
     }
 
     public function getFreeMarketing(Request $request)

@@ -42,7 +42,7 @@ Route::post('/credit-report', [HomeController::class, 'creditReport']);
 
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::post('me', [AuthController::class, 'me']);
+    Route::get('me', [AuthController::class, 'me']);
 
     Route::post('/crete-first-card', [CardController::class, 'storefirstCard']);
     Route::get('/my-card', [CardController::class, 'myCard']);

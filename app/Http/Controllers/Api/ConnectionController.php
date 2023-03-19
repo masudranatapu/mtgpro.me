@@ -22,6 +22,9 @@ class ConnectionController extends ResponceController
     }
     public function getIndex(Request $request)
     {
+
+        $paginate = isset($request->paginate) ? $request->paginate : 10;
+
         $form_date      = '';
         $to_date        = '';
         if (!empty($request->daterange)) {
@@ -61,7 +64,7 @@ class ConnectionController extends ResponceController
                 $data = $data->whereBetween('connects.created_at', [$form_date, $to_date]);
             }
         }
-        $data = $data->paginate(20)->withQueryString();
+        $data = $data->paginate($paginate)->withQueryString();
         return $this->sendResponse(200, "CRM", $data, true, $discroption);
     }
 
