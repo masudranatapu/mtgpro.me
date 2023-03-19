@@ -80,15 +80,15 @@
     $diff_in_days = $subscription_start->diffInDays($subscription_end);
     // dd($diff_in_days);
     $duration = now()->diffInDays(\Carbon\Carbon::parse($user->plan_validity));
-
+    
     if ($diff_in_days > 31) {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 year'));
     } else {
         $next_bill_date = date('F d, Y', strtotime($user->plan_activation_date . ' +1 month'));
     }
-
+    
     $bill_date = date('d', strtotime($user->plan_activation_date));
-
+    
 @endphp
 
 
@@ -98,8 +98,8 @@
     <div class="content-wrapper">
         <div class="content">
             <div class="container-fluid">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-xl-9">
+                <div class="row">
+                    <div class="col-12">
                         <div class="page_content account_setting mt-5">
                             <div class="row">
                                 <div class="col-lg-4 col-xl-3">
@@ -157,10 +157,9 @@
                                         <!-- my subscription -->
                                         <div class="tab-pane fade active show" id="vert-tabs-subscription" role="tabpanel"
                                             aria-labelledby="vert-tabs-subscription-tab">
-
                                             <div class="setting_tab_contetn">
                                                 <div class="subscription_info mb-4">
-                                                    <div class="card p-0">
+                                                    <div class="card">
                                                         <div class="card-header">
                                                             <h3>
                                                                 <span
@@ -179,7 +178,7 @@
                                                             @endif
                                                         </div>
 
-                                                        <div class="card-body p-0 pt-3">
+                                                        <div class="card-body">
                                                             @if (checkPackage() && $plan->is_free == 0)
                                                                 @if ($diff_in_days > 31)
                                                                     <h5>${{ CurrencyFormat($plan->plan_price_yearly, 2) }}
@@ -204,9 +203,8 @@
 
                                                     </div>
                                                 </div>
-
                                                 <div class="row mb-4">
-                                                    <div class="col-lg-6 mb-4">
+                                                    <div class="col-md-6 col-lg-12 col-xl-6 mb-4 mb-4">
                                                         <div class="billing_info_card subs_info">
                                                             <div class="card-header">
                                                                 <h4>{{ __('Billing Infomation') }} <a href="#"
@@ -238,7 +236,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-md-6 col-lg-12 col-xl-6 mb-4">
                                                         <div class="payment_method_card subs_info">
                                                             <div class="card-header">
                                                                 <h4>
@@ -735,7 +733,6 @@
                                                 class="help-block text-danger">{{ $errors->first('card_expiration_date') }}</span>
                                         @endif
                                     </div>
-<<<<<<< HEAD
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -748,37 +745,6 @@
                                         @if ($errors->has('card_cvc'))
                                             <span class="help-block text-danger">{{ $errors->first('card_cvc') }}</span>
                                         @endif
-=======
-
-                                    <!-- modal body -->
-                                    <div class="modal_body">
-                                        <form method="POST" id="accountDeletionForm"
-                                            action="{{ route('user.deletion-request') }}">
-                                            @csrf
-                                            <h5>{{ __("Type 'delete' to delete your account.") }}</h5>
-                                            <p>{{ __('All contacts and other data associated with this account will be permanently deleted.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        This cannot be undone.') }}
-                                            </p>
-
-                                            <div class="mb-3">
-                                                <input type="text" name="confirm" id="confirm"
-                                                    class="form-control @error('confirm') is-invalid @enderror"
-                                                    placeholder="Type 'delete' to delete your account." required>
-                                                @if ($errors->has('confirm'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('confirm') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer pb-3">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">{{ __('Cancel') }}</button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="loading-spinner fa-lg fas fa-spinner fa-spin"></i>
-                                                    <span class="btn-txt">{{ __('Delete Account') }}</span>
-                                                </button>
-                                            </div>
-                                        </form>
->>>>>>> rabin_dev
                                     </div>
                                 </div>
                             </div>
@@ -945,6 +911,7 @@
                 });
             }
         })
+
         // $(document).ready(function() {
         //     $('#site_disclaimer').summernote({
 
@@ -960,20 +927,21 @@
 
         //     });
         // });
-        // $(document).ready(function() {
-        //     $('#user_disclimer').summernote({
 
-        //         height: 150,
-        //         toolbar: [
-        //             ['style', ['bold', 'underline', 'italic', 'clear']],
-        //             ['font', ['strikethrough', 'superscript', 'subscript']],
-        //             ['fontsize', ['fontsize']],
-        //             ['color', ['color']],
-        //             ['para', ['ul', 'ol', 'paragraph']],
-        //             ['table', ['table']],
-        //         ],
+        $(document).ready(function() {
+            $('#user_disclimer').summernote({
 
-        //     });
-        // });
+                height: 150,
+                toolbar: [
+                    ['style', ['bold', 'underline', 'italic', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                ],
+
+            });
+        });
     </script>
 @endpush
