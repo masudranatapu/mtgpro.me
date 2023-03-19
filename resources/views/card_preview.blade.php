@@ -391,7 +391,7 @@
                             @if ($user->housing_logo_view == '1')
                             <div class="col-4 col-md-3 mb-3">
                                 <a target="_blank" href="https://nmlsconsumeraccess.org">
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_color }}"
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
                                         class="img-fluid d-block mb-1" src="{{ asset('assets/img/house.png') }}" alt=""
                                         width="75" height="75">
                                     <span>Equal Housing Opportunity</span>
@@ -402,7 +402,7 @@
                             <div class="col-4 col-md-3 mb-3">
                                 <a target="_blank" href="javascript:void(0)" data-bs-toggle="modal"
                                     data-bs-target="#craditAuthorization">
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_color }}"
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
                                         class="img-fluid d-block mb-1"
                                         src="{{ asset('assets/img/icon/craditauthorization.svg') }}" alt="" width="75"
                                         height="75">
@@ -414,7 +414,7 @@
                             <div class="col-4 col-md-3 mb-3">
                                 <a target="_blank" href="javascript:void(0)" data-bs-toggle="modal"
                                 data-bs-target="#quickApplication" >
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_color }}"
+                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
                                         class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/rules.svg') }}"
                                         alt="" width="75" height="75">
                                     <span>Quick Applications</span>
