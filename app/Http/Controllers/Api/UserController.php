@@ -8,10 +8,13 @@ use App\Models\BusinessCard;
 use App\Models\BusinessField;
 use App\Models\Config;
 use App\Models\EmailTemplate;
+use App\Models\MarketingMaterials;
+use App\Models\Review;
 use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -299,7 +302,7 @@ class UserController extends ResponceController
         }
 
 
-        $user = User::find(Auth::id());
+        $user = User::find(Auth::guard('api')->id());
 
         $user->billing_zipcode = $request->billing_zipcode;
         $user->billing_country = $request->billing_country;
@@ -547,5 +550,208 @@ class UserController extends ResponceController
         $transaction = Transaction::where('user_id', Auth::guard('api')->user()->id)->orderBy('id', 'DESC')->paginate($paginate);
 
         return $this->sendResponse(200, "User Invoice", $transaction, true, []);
+    }
+
+    public function equalhousingShow(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+
+        $user = User::find(Auth::guard('api')->id());
+        $user->housing_logo_view = $request->status;
+        $user->save();
+
+        return $this->sendResponse(200, $request->status ? "Housing logo view showed" : "Housing logo view hide");
+    }
+
+    public function userdisclaimerShow(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+        $user = User::find(Auth::guard('api')->id());
+        $user->disclaimer_view = $request->status;
+        $user->save();
+
+        return $this->sendResponse(200, $request->status ? "Disclaimer view showed" : "Disclaimer view hide");
+    }
+    public function userNmlsShow(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+        $user = User::find(Auth::guard('api')->id());
+        $user->nmls_view = $request->status;
+        $user->save();
+        return $this->sendResponse(200, $request->status ? "Nmls view showd" : "Nmls view hide");
+    }
+    public function userNmlsAdd(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nmls_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+
+        $user = User::find(Auth::guard('api')->id());
+        $user->nmls_id = $request->nmls_id;
+        $user->save();
+        $message = 'User NMLS-ID save successfully ';
+        return $this->sendResponse(200, $message);
+    }
+    public function userCraditAuthShow(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+
+        $user = User::find(Auth::guard('api')->id());
+        $user->credit_authorization = $request->status;
+        $user->save();
+        return $this->sendResponse(200, $request->status ? "Credit authorization showed" : "Credit authorization hide");
+    }
+    public function quickApplication(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+
+        $user = User::find(Auth::guard('api')->id());
+        $user->quick_application = $request->status;
+        $user->save();
+        return $this->sendResponse(200, $request->status ? "Quick application showed" : "Quick application hide");
+    }
+
+    public function myOrder()
+    {
+        $productOrders = DB::table('orders')
+            ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->select('orders.*', 'users.name as user_name')
+            ->where('user_id', auth::guard('api')->id())
+            ->orderBy('id', 'desc')->get();
+
+        return $this->sendResponse(200, "My Orders", $productOrders, 200, []);
+    }
+
+
+    public function getReview()
+    {
+
+        $user_id = Auth::guard('api')->id();
+        $review = DB::table('reviews')
+            ->select('reviews.*', 'users.name as user_name', 'users.profile_image as user_image')
+            ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
+            ->where('user_id', $user_id)
+            ->first();
+        if (isset($review) > 0) {
+
+            return $this->sendResponse(200, "My Review", $review, 1, []);
+        } else {
+            return $this->sendError("My Review", "No data Found", 200, 0, []);
+        }
+    }
+
+
+
+    public function storeReview(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'display_name' => 'required|string|max:50',
+                'display_title' => 'required|string|max:50',
+                'details' => 'required|string|min:10|max:250',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendError("Validation Error", $validator->errors()->first());
+            }
+
+
+            $data = new Review();
+            $data->order_id = 0;
+            $data->display_title = $request->display_title;
+            $data->display_name = $request->display_name;
+            $data->details = $request->details;
+            $data->status = 0;
+            $data->user_id = Auth::guard('api')->user()->id;
+            $data->created_at = Carbon::now();
+            $data->created_by = Auth::guard('api')->user()->id;
+            $data->save();
+        } catch (\Exception $e) {
+
+            DB::rollback();
+            // $message = $e->getMessage();
+            $message = 'Something wrong! Please try again';
+            return $this->sendError(200, $message);
+        }
+        DB::commit();
+        $message = 'Review submitted successfully';
+        return $this->sendResponse(200, $message, $data);
+    }
+
+    public function updateReview(Request $request, $id)
+    {
+        if (!isset($id)) {
+            return $this->sendError(200, "The id field is required.");
+        }
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make($request->all(), [
+
+                'display_name' => 'required|string|max:50',
+                'display_title' => 'required|string|max:50',
+                'details' => 'required|string|min:10|max:250',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendError(200, $validator->errors()->first());
+            }
+            $data = Review::where('id', $id)->first();
+
+            $data->order_id = 0;
+            $data->display_title = $request->display_title;
+            $data->display_name = $request->display_name;
+            $data->details = $request->details;
+            $data->status = 0;
+            $data->save();
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = 'Something wrong! Please try again';
+            return $this->sendError(200, $message);
+        }
+        DB::commit();
+        $message = trans('Review submitted successfully');
+        return $this->sendResponse(200, $message, $data);
+    }
+
+    public function getFreeMarketing(Request $request)
+    {
+        $marketing_materials = MarketingMaterials::orderBy('order_id', 'asc')->paginate(6);
+        return $this->sendResponse(200, "Free Marketing Materials", $marketing_materials, 200, []);
     }
 }
