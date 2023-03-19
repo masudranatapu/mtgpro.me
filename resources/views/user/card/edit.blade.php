@@ -855,6 +855,15 @@
 
                                                     </div>
 
+                                                    <?php
+                                                    if ($card->color_link == 1) {
+                                                        $icon_bg = $card->theme_color;
+                                                    } else {
+                                                        $icon_bg = '#A93998';
+                                                    }
+                                                    ?>
+
+
                                                     <div class="row">
                                                         <div class="col-4 mb-2" id="icon_houseing"
                                                             style="display: {{ Auth::user()->housing_logo_view == 0 ? 'none' : 'block' }}">

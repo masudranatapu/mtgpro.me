@@ -363,12 +363,21 @@
                             @endif
 
 
+                            <?php
+                            if ($cardinfo->color_link == 1) {
+                                $icon_bg = $cardinfo->theme_color;
+                            } else {
+                                $icon_bg = '#A93998';
+                            }
+                            ?>
+
+
                             @if (isset($user->user_disclaimer))
                             @if ($user->disclaimer_view == '1')
                             <div class="col-4 col-md-3 mb-3">
                                 <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#disclaimerModal"
                                     aria-controls="false">
-                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $cardinfo->theme_color }}"
+                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_bg }}"
                                         class="img-fluid d-block mb-1"
                                         src="{{ asset('assets/img/icon/notes-note.svg') }}" alt="" width="70"
                                         height="70">
