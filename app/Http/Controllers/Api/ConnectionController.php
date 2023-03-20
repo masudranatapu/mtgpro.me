@@ -104,9 +104,9 @@ class ConnectionController extends ResponceController
             $connection   = Connection::find($id);
             if ($request->has('profile_pic') && !empty($request->profile_pic)) {
 
-                $image_name =  $this->uploadBase64FileToPublic($request->profile_pic, 'profilePic', 'jpg');
+                $image_name =  $this->uploadBase64FileToPublic($request->profile_pic, 'crm');
+                $connection->profile_image  = $image_name;
             }
-            $connection->profile_image  = asset($image_name);
 
             $connection->name       = $request->name;
             $connection->email      = $request->email;
@@ -116,7 +116,7 @@ class ConnectionController extends ResponceController
             $connection->message    = $request->message;
             $connection->updated_at = date("Y-m-d H:i:s");
             $connection->updated_by = Auth::guard('api')->user()->id;
-            $connection->update();
+            $connection->save();
         } catch (\Exception $e) {
 
             DB::rollback();
