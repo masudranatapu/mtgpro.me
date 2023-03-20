@@ -174,7 +174,8 @@ $setting = getSetting();
     @include('admin.includes.footer')
 </div>
 @endsection
-@section('scripts')
+
+@push('scripts')
 <script>
     function printDiv(printableArea) {
         var printContents = document.getElementById(printableArea).innerHTML;
@@ -187,4 +188,5 @@ $setting = getSetting();
         document.body.innerHTML = originalContents;
     }
 </script>
-@endsection
+@endpush
+

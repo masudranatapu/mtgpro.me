@@ -86,7 +86,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 
     <script src="{{ asset('assets/js/summernote.js') }}"></script>
     <script>
@@ -109,4 +109,4 @@
         });
     </script>
 
-@endsection
+@endpush

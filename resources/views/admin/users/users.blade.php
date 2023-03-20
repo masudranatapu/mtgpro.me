@@ -81,7 +81,8 @@
                                                         @endif
                                                     </td>
                                                     <td class="text-muted">
-                                                        {{ date('d-m-Y h:m A', strtotime($user->created_at)) }}
+
+                                                        {{ $user->created_at->format('M d, Y h:i:s A') }}
                                                     </td>
                                                     <td class="text-muted">
                                                         @if ($user->status == 0)
@@ -172,7 +173,7 @@
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js"
     integrity="sha512-XmZS54be9JGMZjf+zk61JZaLZyjTRgs41JLSmx5QlIP5F+sSGIyzD2eJyxD4K6kGGr7AsVhaitzZ2WTfzpsQzg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -186,4 +187,4 @@
     })
 </script>
 
-@endsection
+@endpush

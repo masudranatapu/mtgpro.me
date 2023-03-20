@@ -78,5 +78,5 @@
     @include('admin.includes.footer')
 </div>
 @endsection
-@section('scripts')
-@endsection
+@push('scripts')
+@endpush

@@ -204,11 +204,11 @@
     @include('admin.includes.footer')
 </div>
 @endsection
-@section('scripts')
+@push('scripts')
 <script>
     function couponDelete(id) {
         console.log(id);
         $('#delete_' + id).submit()
     }
 </script>
-@endsection
+@endpush

@@ -153,17 +153,20 @@ class HomeController extends Controller
 
     public function getPreview($cardurl)
     {
-        $user = DB::table('users')->where('username', $cardurl)->first();
+        $user = DB::table('users')->where('status',1)->where('username', $cardurl)->first();
 
         if ($user == null) {
             $cardinfo = BusinessCard::select('business_cards.*', 'plans.plan_name', 'plans.hide_branding', 'users.connection_title')
                 ->where('business_cards.card_url', $cardurl)
+                ->where('users.status',1)
                 ->leftJoin('users', 'users.id', 'business_cards.user_id')
                 ->leftJoin('plans', 'plans.id', 'users.plan_id')
                 ->first();
-            if ($cardinfo == null) {
-                return redirect()->route('user.card.create');
-            }
+
+            // if ($cardinfo == null) {
+            //     return redirect()->route('user.card.create');
+            // }
+
         } else {
             //by username
             $cardinfo = BusinessCard::select('business_cards.*', 'plans.plan_name', 'plans.hide_branding', 'users.connection_title')
@@ -172,9 +175,7 @@ class HomeController extends Controller
                 ->leftJoin('plans', 'plans.id', 'users.plan_id')
                 ->first();
 
-            $location                   = $this->user->getLocation();
-
-            // dd($location);
+            $location = $this->user->getLocation();
 
             //browsing history
             if ($cardinfo) {
@@ -269,7 +270,8 @@ class HomeController extends Controller
         } else {
 
             Toastr::warning('This card is not available please create your desired card');
-            return redirect()->route('user.card.create');
+            // return redirect()->route('user.card.create');
+            abort(404);
         }
     }
 

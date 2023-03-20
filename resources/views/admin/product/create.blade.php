@@ -40,8 +40,7 @@
                                                     style="display: none">
                                             </div>
                                             <label class="form-label" for="images">Thumbnail Images <small>(Preferred size
-                                                    600X600
-                                                    px)</small> </label>
+                                                    600X600 px)</small> </label>
                                         </div>
                                         <div class="col-12 col-sm-12 col-ml-6 col-lg-6 col-xl-6">
                                             <div class="form-group m-1">
@@ -57,7 +56,7 @@
                                         <div class="col-12 col-sm-12 col-ml-6 col-lg-6 col-xl-6">
                                             <div class="form-group m-1">
                                                 <label class="form-label" for="price">{{ __('Unit Price') }}</label>
-                                                <input required type="number" name="price" id="price"
+                                                <input required type="number" name="price" id="price" step="any"
                                                     class="form-control @error('price') border-danger @enderror"
                                                     value="{{ old('price') }}" />
                                                 @error('price')
@@ -69,7 +68,7 @@
                                             <div class="form-group m-1">
                                                 <label class="form-label"
                                                     for="regular_price">{{ __('Regular Price') }}</label>
-                                                <input required type="number" name="regular_price" id="regular_price"
+                                                <input required type="number" name="regular_price" id="regular_price" step="any"
                                                     class="form-control @error('regular_price') border-danger @enderror"
                                                     value="{{ old('regular_price') }}" />
                                                 @error('regular_price')
@@ -120,7 +119,7 @@
                                                     for="product_status">{{ __('Shipping Cost') }}</label>
                                                 <input required type="number" name="shipping_cost" id="shipping_cost"
                                                     class="form-control @error('shipping_cost') border-danger @enderror"
-                                                    value="{{ old('shipping_cost') ?? $setting->shipping_cost }}" />
+                                                    value="{{ old('shipping_cost') ?? $setting->shipping_cost }}" step="any" />
                                                 @error('shipping_cost')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

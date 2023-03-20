@@ -77,7 +77,7 @@ $rows = $data ?? [];
                                                 <label for="price">{{ __('Unit Price') }}</label>
                                                 <input required type="number" name="price" id="price"
                                                     class="form-control @error('price') border-danger @enderror"
-                                                    value="{{ old('price') ?? $product->unit_price }}" />
+                                                    value="{{ old('price') ?? $product->unit_price }}" step="any" />
                                                 @error('price')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -88,7 +88,7 @@ $rows = $data ?? [];
                                                 <label for="regular_price">{{ __('Regular Price') }}</label>
                                                 <input required type="number" name="regular_price" id="regular_price"
                                                     class="form-control @error('regular_price') border-danger @enderror"
-                                                    value="{{ old('regular_price') ?? $product->unit_price_regular }}" />
+                                                    value="{{ old('regular_price') ?? $product->unit_price_regular }}" step="any" />
                                                 @error('regular_price')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -140,7 +140,7 @@ $rows = $data ?? [];
                                                     for="product_status">{{ __('Shipping Cost') }}</label>
                                                 <input required type="number" name="shipping_cost" id="shipping_cost"
                                                     class="form-control @error('shipping_cost') border-danger @enderror"
-                                                    value="{{ old('shipping_cost') ?? $product->shipping_cost }}" />
+                                                    value="{{ old('shipping_cost') ?? $product->shipping_cost }}" step="any" />
                                                 @error('shipping_cost')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

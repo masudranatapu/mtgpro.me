@@ -1,10 +1,12 @@
 @extends('user.layouts.app')
 @section('user_transactions', 'active')
 @section('title') {{ __('Contact') }} @endsection
+
 @push('custom_css')
     <style>
     </style>
 @endpush
+
 @php
     $rows = $transaction ?? [];
 @endphp
@@ -35,7 +37,7 @@
                                                 <th>{{ __('Payment Mode') }}</th>
                                                 <th>{{ __('Amount') }}</th>
                                                 <th>{{ __('Status') }}</th>
-                                                <th>{{ __('Actions') }}</th>
+                                                {{-- <th>{{ __('Actions') }}</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -43,7 +45,9 @@
                                                 @foreach ($rows as $key => $row)
                                                     <tr>
                                                         <td>{{ $key + 1 }}</td>
-                                                        <td>{{ date('M d, Y', strtotime($row->transaction_date)) }}</td>
+                                                        <td>
+                                                            {{ $row->transaction_date->format('M d, Y h:i:s A') }}
+                                                        </td>
                                                         <td>{{ $row->invoice_number }}</td>
                                                         <td>{{ $row->desciption }}</td>
                                                         <td class="text-right">
@@ -51,7 +55,7 @@
                                                         </td>
                                                         <td><span class="badge text-bg-success">{{ __('Paid') }}</span>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <a class="btn btn-primary btn-sm text-white" target="_blank"
                                                                 href="{{ route('user.planinvoice', $row->invoice_number) }}"
                                                                 title="{{ __('Invoice') }}">
@@ -63,7 +67,7 @@
                                                                 <img src="{{ asset('assets/img/icon/download.svg') }}"
                                                                     alt="">
                                                             </a>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                 @endforeach
                                             @else

@@ -100,7 +100,7 @@
 
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script>
 $(document).on('click','.edit_theme',function(e){
     var id = $(this).data('id');
@@ -122,4 +122,4 @@ $(document).on('click','.edit_theme',function(e){
 })
 </script>
 
-@endsection
+@endpush

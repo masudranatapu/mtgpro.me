@@ -26,14 +26,14 @@
                                     <th>{{ __('Gateway Name') }}</th>
                                     <th>{{ __('Amount') }}</th>
                                     <th>{{ __('Status') }}</th>
-                                    <th>{{ __('Actions') }}</th>
+                                    {{-- <th>{{ __('Actions') }}</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (!empty($transactions) && $transactions->count())
                                 @foreach ($transactions as $row)
                                 <tr>
-                                    <td>{{ $row->created_at->format('d-m-Y H:i:s A') }}</td>
+                                    <td>{{ $row->created_at->format('M d, Y h:i:s A') }}</td>
                                     <td><span class="text-muted">{{ $row->invoice_number}}</span></td>
                                     <td>{{ $row->transaction_id }}</td>
                                     <td><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->userName }}</a></td>
@@ -54,7 +54,7 @@
                                         <span class="badge bg-orange">{{ __('Pending') }}</span>
                                         @endif
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="btn-list flex-nowrap">
                                             @if ($row->payment_status == "SUCCESS")
                                             <a class="btn btn-primary btn-sm" target="_blank"
@@ -73,7 +73,7 @@
                                             href="{{ route('admin.trans.status', ['id' => $row->id, 'status' => 'FAILED'])}}">{{ __('Failed') }}</a>
                                             @endif
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                                 @else

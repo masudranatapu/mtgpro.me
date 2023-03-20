@@ -197,7 +197,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         function copyUrl(id) {
             /* Get the text field */
@@ -218,4 +218,4 @@
             // console.log("Copied the text: " + copyText.value);
         }
     </script>
-@endsection
+@endpush

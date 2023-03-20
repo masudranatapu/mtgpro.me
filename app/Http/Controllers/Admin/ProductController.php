@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\StorageHelper;
-use App\Helpers\StringHelper;
-use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\ProductImage;
-use Brian2694\Toastr\Facades\Toastr;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 use Illuminate\Support\Str;
+use App\Models\OrderDetails;
+use App\Models\ProductImage;
+use Illuminate\Http\Request;
+use App\Helpers\StringHelper;
+use App\Helpers\StorageHelper;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -36,13 +37,13 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'regular_price' => 'required|integer',
-            'price' => 'required|integer|lt:regular_price',
+            'regular_price' => 'required|float',
+            'price' => 'required|float|lt:regular_price',
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
             'images' => 'required',
-            'shipping_cost' => 'required|integer'
+            'shipping_cost' => 'required|float'
         ]);
 
 
@@ -95,12 +96,12 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'regular_price' => 'required|integer',
-            'price' => 'required|integer|lt:regular_price',
+            'regular_price' => 'required|float',
+            'price' => 'required|float|lt:regular_price',
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
-            'shipping_cost' => 'required|integer'
+            'shipping_cost' => 'required|float'
 
         ]);
 
@@ -145,8 +146,14 @@ class ProductController extends Controller
 
     public function delete(Product $product)
     {
-        $product->delete();
-        Toastr::error('Product delete successfully');
+        $check_to_sell  = OrderDetails::where('product_id',$product->id)->first();
+        if($check_to_sell){
+            Toastr::error('Product not deleted because this product already sold');
+        }else{
+            Toastr::success('Product not deleted successfully');
+            $product->delete();
+        }
+
         return redirect()->route('admin.product.index');
     }
 

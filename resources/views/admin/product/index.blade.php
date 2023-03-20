@@ -9,20 +9,7 @@ $rows = $data ?? [];
 
 @section('content')
     <div class="page-wrapper">
-        {{--     <div class="container-xl">
-        <div class="page-header d-print-none mt-2">
-            <div class="row align-items-center">
-                <div class="col">
-                    <div class="page-pretitle">
-                        {{ __('Overview') }}
-                    </div>
-                    <h2 class="page-title">
-                        {{ __('Faqs') }}
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+
 
         <div class="page-body">
             <div class="container-xl">
@@ -106,8 +93,7 @@ $rows = $data ?? [];
                                                                 onclick="productDelete({{ $row->id }})"
                                                                 href="javascript:void(0)">{{ __('Delete') }}</a>
 
-                                                            <form
-                                                                action="{{ route('admin.product.delete', ['product' => $row->id]) }}"
+                                                            <form action="{{ route('admin.product.delete', ['product' => $row->id]) }}"
                                                                 id="delete_{{ $row->id }}" method="post">
                                                                 @method('DELETE')
                                                                 @csrf
@@ -138,8 +124,11 @@ $rows = $data ?? [];
     @push('scripts')
         <script>
             function productDelete(id) {
-                console.log(id);
-                $('#delete_' + id).submit()
+                if (confirm("Are you sure?")) {
+                    $('#delete_' + id).submit()
+                }
+                return false;
+
             }
         </script>
     @endpush
