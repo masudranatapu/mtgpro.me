@@ -235,7 +235,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-12 col-xl-6 mb-4">
+                                                    {{-- <div class="col-md-6 col-lg-12 col-xl-6 mb-4">
                                                         <div class="payment_method_card subs_info">
                                                             <div class="card-header">
                                                                 <h4>
@@ -291,7 +291,7 @@
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 @if (!empty($transections) && count($transections) > 0)
                                                     <div class="invoice_table">
