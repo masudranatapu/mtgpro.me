@@ -15,8 +15,6 @@
                             <div class="col">
                                 <div class="float-left">
                                     {{ __('Coupons') }}
-
-
                                 </div>
                             </div>
                             <div class="col">
@@ -24,8 +22,8 @@
                                     Coupons</a>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="px-2 py-2">
+                        <div class="card-body coupon_table">
+                            <div class="px-2 py-2 table-responsive">
                                 <table id="dataTable" class="table table-vcenter card-table" id="table-plan">
                                     <thead>
                                         <tr>

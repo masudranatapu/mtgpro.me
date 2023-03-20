@@ -24,16 +24,14 @@
                             <div class="col">
                                 <div class="float-left">
                                     {{ __('Product Orders') }}
-
-
                                 </div>
                             </div>
                             <div class="col">
 
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="px-2 py-2">
+                        <div class="card-body order_table">
+                            <div class="px-2 py-2 table-responsive">
                                 <table id="dataTable" class="table table-vcenter card-table" id="table-plan">
                                     <thead>
                                         <tr>

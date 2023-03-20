@@ -1,5 +1,5 @@
 .admin-avatar {
-    background-image: url("../backend/static/avatars/000m.jpg") !important ;
+    background-image: url("../backend/static/avatars/000m.jpg") !important;
 }
 
 .logout {
@@ -55,3 +55,14 @@
 /* .card-body {
     padding: 12px 5px;
 } */
+.review_table table {
+    min-width: 1000px;
+}
+
+.order_table table {
+    min-width: 945px;
+}
+
+.coupon_table table {
+    min-width: 1200px;
+}
