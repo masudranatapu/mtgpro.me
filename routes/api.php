@@ -93,12 +93,14 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     Route::get('user/free-marketing-material', [UserController::class, 'getFreeMarketing']);
+    Route::get('user/invoice/download/{transection_id}', [UserController::class, 'getInvoicePDF']);
 
 
 
     Route::get('/crm', [ConnectionController::class, 'getIndex']);
     Route::get('/crm/{id}/view', [ConnectionController::class, 'getView']);
     Route::post('/crm/{id}/update', [ConnectionController::class, 'putUpdate']);
+    Route::post('/suggest-feature', [UserController::class, 'sendRequestToFeature']);
 });
 
 Route::get('/qr/{id}', [HomeController::class, 'getQRImage']);
