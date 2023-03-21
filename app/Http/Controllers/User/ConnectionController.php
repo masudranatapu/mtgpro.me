@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
 class ConnectionController extends Controller
 {
 
-    protected $businessCard;
+    protected $businessCard, $settings;
     public function __construct(
         BusinessCard $businessCard
     ) {
@@ -75,7 +75,7 @@ class ConnectionController extends Controller
         return view('user.crm.view', compact('row'));
     }
 
-    
+
     public function getEdit(Request $request, $id)
     {
         $row = DB::table('connects')
@@ -168,7 +168,6 @@ class ConnectionController extends Controller
             // }
 
             Mail::to($request->email)->send(new SendConnectMail($data));
-
         } catch (\Exception $e) {
 
 
