@@ -36,6 +36,13 @@
                                         {{ __('Settings') }}
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="float-end">
+                                        <a href="{{ route('dashboard') }}" class="btn btn-primary">
+                                            {{ __('Back') }}
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('admin.change.settings') }}" method="post"

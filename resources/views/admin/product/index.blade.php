@@ -93,7 +93,8 @@ $rows = $data ?? [];
                                                                 onclick="productDelete({{ $row->id }})"
                                                                 href="javascript:void(0)">{{ __('Delete') }}</a>
 
-                                                            <form action="{{ route('admin.product.delete', ['product' => $row->id]) }}"
+                                                            <form
+                                                                action="{{ route('admin.product.delete', ['product' => $row->id]) }}"
                                                                 id="delete_{{ $row->id }}" method="post">
                                                                 @method('DELETE')
                                                                 @csrf

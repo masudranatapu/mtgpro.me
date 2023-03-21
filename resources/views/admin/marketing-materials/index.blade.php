@@ -11,6 +11,7 @@
     </style>
 @endpush('css')
 @section('settings', 'active')
+
 @section('content')
     @section('title') {{ __('Marketing Materials List') }} @endsection
 @section('marketing_materials_list', 'active')
@@ -62,7 +63,9 @@
                                                     </td>
                                                     <td>
                                                        @if ($value->file)
-                                                           <a  href="{{$value->file}}" target="_blank" download><span class="text-success"> <i class="fa fa-download"></i> Download</a>
+                                                           <a  href="{{$value->file}}" target="_blank" download class="btn btn-success">
+                                                                <i class="fa fa-download"></i>
+                                                            </a>
                                                        @endif
                                                     </td>
                                                     <td class="text-muted">
@@ -96,7 +99,7 @@
                                                                     <a href="{{ route('admin.marketing.material.status', [$value->id, 0]) }}"
                                                                         class="dropdown-item btn-sm">{{ __('Deactivate') }}</a>
                                                                 @endif
-                                                                <a href="{{ route('admin.marketing.material.delete', $value->id) }}"
+                                                                <a onclick="return confirm('Are you sure?')" href="{{ route('admin.marketing.material.delete', $value->id) }}"
                                                                     class="dropdown-item btn-sm">{{ __('Delete') }}</a>
                                                             </div>
                                                         </div>

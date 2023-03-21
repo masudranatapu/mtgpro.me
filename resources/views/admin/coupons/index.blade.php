@@ -18,8 +18,9 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <a href="{{ route('admin.coupon.create') }}" class="btn btn-primary float-end">Add
-                                    Coupons</a>
+                                <a href="{{ route('admin.coupon.create') }}" class="btn btn-primary float-end">
+                                    Add Coupons
+                                </a>
                             </div>
                         </div>
                         <div class="card-body coupon_table">

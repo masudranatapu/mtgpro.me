@@ -25,6 +25,11 @@
                 <div class="col-sm-12 col-lg-12">
                     <form action="{{ route('admin.update.account') }}" method="post" enctype="multipart/form-data" class="card">
                         @csrf
+                        <div class="card-header" style="flex-direction: row-reverse">
+                            <div class="float-right">
+                                <a href="{{ route('admin.account') }}" class="btn btn-primary">Back</a>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-10">

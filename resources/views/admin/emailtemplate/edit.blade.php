@@ -23,6 +23,11 @@
                                         {{ __('Edit Email Template') }}
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="float-end">
+                                        <a href="{{route('admin.email.template')}}" class="btn btn-primary">Back</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered">

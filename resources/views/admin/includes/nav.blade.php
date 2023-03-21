@@ -74,7 +74,7 @@
                         </div>
                     </li>
 
-                    <li class="nav-item @yield('users')">
+                    <li class="nav-item @yield('users') @yield('user_list')">
                         <a class="nav-link" href="{{ route('admin.users') }}">
                             <i class="fa fa-user-alt"></i> &nbsp;
                             <span class="nav-link-title">
@@ -154,7 +154,7 @@
                         </a>
                     </li> --}}
 
-                    <li class="nav-item dropdown @yield('settings') @yield('email-template') @yield('tutorials_category') @yield('tutorials')">
+                    <li class="nav-item dropdown @yield('settings') @yield('email-template') @yield('tutorials_category') @yield('tutorials') @yield('setting') ">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" role="button"
                             aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -177,7 +177,7 @@
                             <a href="{{ route('admin.orders') }}" class="dropdown-item @yield('product_ordrs')">
                                 {{ __('Orders') }}
                             </a>
-                            <a href="{{ route('admin.coupon.index') }}" class="dropdown-item @yield('coupon')">
+                            <a href="{{ route('admin.coupon.index') }}" class="dropdown-item @yield('coupons')">
                                 {{ __('Coupon') }}
                             </a>
 
@@ -190,7 +190,7 @@
                             <a href="{{ route('admin.transactions') }}" class="dropdown-item @yield('transaction')">
                                 {{ __('Transactions') }}
                             </a>
-                            <a class="dropdown-item @yield('marketing_materials_listn')"
+                            <a class="dropdown-item @yield('marketing_materials_list')"
                                 href="{{ route('admin.marketing.materials') }}">
                                 {{ __('Marketing Materials') }}
                             </a>
