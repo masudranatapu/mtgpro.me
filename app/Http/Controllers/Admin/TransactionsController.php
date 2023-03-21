@@ -24,12 +24,12 @@ class TransactionsController extends Controller
             $transactions->whereDate('transactions.created_at','=',date('Y-m-d', strtotime($request->date)));
         }
 
-        $transactions =  $transactions->orderBy('transactions.created_at','desc')->paginate(20);
+        // $transactions =  $transactions->orderBy('transactions.created_at','desc')->paginate(20);
 
-        // $transactions =  $transactions->orderBy('transactions.created_at','desc')->get();
-        // foreach ($transactions as $key => $value) {
-        //     Transaction::where('id',$value->id)->update(['created_by' => $value->user_id]);
-        // }
+        $transactions =  $transactions->orderBy('transactions.created_at','desc')->get();
+        foreach ($transactions as $key => $value) {
+            Transaction::where('id',$value->id)->update(['created_by' => $value->user_id]);
+        }
 
         $settings = Setting::where('status', 1)->first();
         $currencies = Currency::get();
