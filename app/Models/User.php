@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
         'plan_id',
         'username',
     ];
-    protected $appends = ['plan_duration', 'remainng_days'];
+    protected $appends = ['plan_duration', 'remainng_days', 'profile_image_url'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,6 +50,13 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function getProfileImageUrlAttribute()
+    {
+        return getPhoto($this->profile_image);
+    }
 
 
     public function userPlan()

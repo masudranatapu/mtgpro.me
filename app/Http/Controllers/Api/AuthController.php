@@ -199,7 +199,9 @@ class AuthController extends ResponceController
                 "billing_zipcode" => $user->billing_zipcode,
                 "updated_at" => $user->updated_at,
                 "created_at" => $user->created_at,
-                "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0
+                "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0,
+                "profile_image_url" => getPhoto($user->profile_image)
+
 
             ];
             $message = "User registered";
@@ -317,6 +319,8 @@ class AuthController extends ResponceController
             "nmls_id" => $user->nmls_id,
             "nmls_view" => $user->nmls_view,
             "quick_application" => $user->quick_application,
+            "profile_image_url" => getPhoto($user->profile_image)
+
 
         ];
         return $this->sendResponse(200, "user", $user_data, true, "");
@@ -395,6 +399,8 @@ class AuthController extends ResponceController
             "nmls_id" => $user->nmls_id,
             "nmls_view" => $user->nmls_view,
             "quick_application" => $user->quick_application,
+            "profile_image_url" => getPhoto($user->profile_image)
+
 
         ];
 

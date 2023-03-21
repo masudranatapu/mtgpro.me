@@ -42,10 +42,8 @@ class ConnectionController extends ResponceController
             ]
         ];
         $keyword = $request->search;
-        $data = DB::table('connects')
-            ->select('connects.*', 'users.profile_image as user_image')
-            ->orderBy('connects.id', 'desc')
-            ->leftJoin('users', 'users.id', '=', 'connects.user_id')
+        $data = Connection::orderBy('connects.id', 'desc')
+
             ->where('connects.user_id', Auth::guard('api')->user()->id);
         if (isset($keyword)) {
             $data->where(function ($query) use ($keyword) {
@@ -70,10 +68,8 @@ class ConnectionController extends ResponceController
 
     public function getView($id)
     {
-        $row = DB::table('connects')
-            ->select('connects.*', 'users.profile_image')
+        $row =  Connection::select('connects.*')
             ->where('connects.id', $id)
-            ->leftJoin('users', 'users.id', '=', 'connects.user_id')
             ->first();
 
         return $this->sendResponse(200, "CRM Details", $row, true);
@@ -125,6 +121,6 @@ class ConnectionController extends ResponceController
         }
         DB::commit();
         $message = 'Information updated';
-        return $this->sendResponse(200, $message);
+        return $this->sendResponse(200, $message, $connection);
     }
 }

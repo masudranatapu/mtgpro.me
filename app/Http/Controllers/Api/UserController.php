@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AllMail;
+use App\Mail\SupportMail;
 use App\Models\BusinessCard;
 use App\Models\BusinessField;
 use App\Models\Config;
@@ -12,6 +13,7 @@ use App\Models\MarketingMaterials;
 use App\Models\Review;
 use App\Models\Transaction;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -647,13 +649,18 @@ class UserController extends ResponceController
 
     public function myOrder()
     {
+        $disctiption = [
+            "1" => "Prossing",
+            "2" => "On The Way",
+            "3" => "Deliverd",
+        ];
         $productOrders = DB::table('orders')
             ->leftJoin('users', 'users.id', '=', 'orders.user_id')
             ->select('orders.*', 'users.name as user_name')
             ->where('user_id', auth::guard('api')->id())
             ->orderBy('id', 'desc')->get();
 
-        return $this->sendResponse(200, "My Orders", $productOrders, 200, []);
+        return $this->sendResponse(200, "My Orders", $productOrders, 200, $disctiption);
     }
 
 
@@ -707,7 +714,7 @@ class UserController extends ResponceController
             DB::rollback();
             // $message = $e->getMessage();
             $message = 'Something wrong! Please try again';
-            return $this->sendError(200, $message);
+            return $this->sendError("Exception Error", $message);
         }
         DB::commit();
         $message = 'Review submitted successfully';
@@ -742,7 +749,7 @@ class UserController extends ResponceController
         } catch (\Exception $e) {
             DB::rollback();
             $message = 'Something wrong! Please try again';
-            return $this->sendError(200, $message);
+            return $this->sendError("Exception Error", $message);
         }
         DB::commit();
         $message = trans('Review submitted successfully');
@@ -753,5 +760,68 @@ class UserController extends ResponceController
     {
         $marketing_materials = MarketingMaterials::orderBy('order_id', 'asc')->paginate(6);
         return $this->sendResponse(200, "Free Marketing Materials", $marketing_materials, 200, []);
+    }
+
+
+    public function sendRequestToFeature(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make($request->all(), [
+                'message' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return parent::sendError("Validation Error", $validator->errors()->first());
+            }
+
+            $settings =  getSetting();
+            $data = [];
+            $data['subject'] = 'Request a Feature';
+            $data['message'] = $request->request_message;
+            $data['email'] = Auth::guard('api')->user()->email;
+            $data['username'] = Auth::guard('api')->user()->name;
+            Mail::to($settings->support_email)->send(new SupportMail($data));
+            $userId = User::find(Auth::id());
+            [$content, $subject] = $this->suggestFeatureMail($userId);
+            Mail::to(Auth::guard('api')->user()->email)->send(new AllMail($content, $subject));
+        } catch (\Exception $e) {
+
+            DB::rollback();
+            $message = 'Something wrong! Please try again';
+            // $message = $e->getMessage();
+            return parent::sendError("Exception Error", $message);
+        }
+        DB::commit();
+        $message = 'Thank you for your feedback';
+        return parent::sendResponse(200, $message, []);
+    }
+    public function suggestFeatureMail(User $user)
+    {
+
+        $mailTemplate = EmailTemplate::where('slug', 'request-features-to-subscriber-mail')->first();
+        $content = $mailTemplate->body;
+
+        $setting = Config::first();
+
+
+        if (isset($user)) {
+
+            $content = preg_replace("/{{user_name}}/", $user->name, $content);
+        }
+
+        $content = preg_replace("/{{site_title}}/", $setting->config_value, $content);
+
+
+        return [$content, $mailTemplate->subject];
+    }
+    public function getInvoicePDF(Request $request, $id)
+    {
+        $data = [];
+        $data['transaction'] = Transaction::where('invoice_number', $id)->first();
+        $name = $data['transaction']->invoice_number;
+        $pdf = Pdf::loadView('pdf.invoice', compact('data'));
+        return $pdf->download('invoice' . "_" . $name . '.pdf');
+        //  return view('pdf.invoice',compact('data'));
     }
 }
