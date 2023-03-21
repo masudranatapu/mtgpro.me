@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin_app', ['header' => true, 'nav' => true, 'demo' => true])
 @section('content')
-    @section('title') {{ __('User List') }} @endsection
+@section('title') {{ __('User List') }} @endsection
 @section('user_list', 'active')
 
 <div class="page-wrapper">

@@ -87,7 +87,7 @@
                                                                     <a href="{{ route('admin.review.status-update', ['id' => $review->id, 'status' => 0]) }}"
                                                                         class="dropdown-item btn-sm">{{ __('Deactivate') }}</a>
                                                                 @endif
-                                                                <a href="{{ route('admin.review.delete', ['id' => $review->id]) }}"
+                                                                <a onclick="return confirm('Are you sure ?')" href="{{ route('admin.review.delete', ['id' => $review->id]) }}"
                                                                     class="dropdown-item btn-sm">{{ __('Delete') }}</a>
                                                             </div>
                                                         </div>

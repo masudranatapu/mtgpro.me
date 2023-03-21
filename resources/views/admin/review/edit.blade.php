@@ -16,6 +16,10 @@
                                 </div>
                             </div>
                             <div class="col">
+                                <div class="float-end">
+                                    <a href="{{ route('admin.review.index') }}"
+                                        class="btn btn-primary">{{ __('Back') }}</a>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">

@@ -32,7 +32,8 @@ class UserController extends Controller
      * Create a new controller instance.
      *
      * @return void
-     */
+    */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -42,9 +43,8 @@ class UserController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
-     */
+    */
 
-    // All Users
     public function users(Request $request)
     {
         $users = User::where('user_type', '2')->orderBy('created_at', 'desc')->where('status', '!=', 2);
