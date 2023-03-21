@@ -100,6 +100,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/crm', [ConnectionController::class, 'getIndex']);
     Route::get('/crm/{id}/view', [ConnectionController::class, 'getView']);
     Route::post('/crm/{id}/update', [ConnectionController::class, 'putUpdate']);
+    Route::post('/crm-send-mail', [ConnectionController::class, 'sendMail']);
+
+
+
+
     Route::post('/suggest-feature', [UserController::class, 'sendRequestToFeature']);
 });
 
