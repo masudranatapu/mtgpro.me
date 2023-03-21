@@ -37,13 +37,13 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'regular_price' => 'required|float',
-            'price' => 'required|float|lt:regular_price',
+            'regular_price' => 'required|integer',
+            'price' => 'required|integer|lt:regular_price',
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
             'images' => 'required',
-            'shipping_cost' => 'required|float'
+            'shipping_cost' => 'required|integer'
         ]);
 
 
@@ -96,12 +96,12 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'regular_price' => 'required|float',
-            'price' => 'required|float|lt:regular_price',
+            'regular_price' => 'required|integer',
+            'price' => 'required|integer|lt:regular_price',
             'product_type' => 'required',
             'product_status' => 'required',
             'details' => 'required',
-            'shipping_cost' => 'required|float'
+            'shipping_cost' => 'required|integer'
 
         ]);
 
