@@ -17,8 +17,8 @@ class TransactionsController extends Controller
     public function indexTransactions(Request $request)
     {
         $transactions = Transaction::select('transactions.*','users.name as userName','users.id as userId')
-        ->leftJoin('users','users.id','transactions.user_id');
-        // ->where('transactions.payment_gateway_name', '!=' ,'Offline');
+        ->leftJoin('users','users.id','transactions.user_id')
+        ->where('transactions.payment_gateway_name', '!=' ,'Offline');
 
         if($request->date){
             $transactions->whereDate('transactions.created_at','=',date('Y-m-d', strtotime($request->date)));
