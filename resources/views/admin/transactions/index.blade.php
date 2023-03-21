@@ -20,7 +20,6 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('Transaction Date') }}</th>
-                                    <th class="w-1">{{ __('Trans ID') }}</th>
                                     <th>{{ __('Payment Trans ID') }}</th>
                                     <th>{{ __('Customer Name') }}</th>
                                     <th>{{ __('Gateway Name') }}</th>
@@ -34,9 +33,21 @@
                                 @foreach ($transactions as $row)
                                 <tr>
                                     <td>{{ $row->created_at->format('M d, Y h:i:s A') }}</td>
-                                    <td><span class="text-muted">{{ $row->invoice_number}}</span></td>
-                                    <td>{{ $row->transaction_id }}</td>
-                                    <td><a href="{{ route('admin.view.user', $row->user_id)}}">{{ $row->userName }}</a></td>
+
+                                    <td>
+                                        @if($row->user_id != $row->created_by)
+                                        By Admin
+                                        @else
+                                        {{ $row->transaction_id }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.view.user', $row->user_id)}}">
+                                            {{ $row->userName }}
+                                        </a>
+
+
+                                    </td>
                                     <td>
                                         {{ $row->payment_gateway_name }}
                                     </td>
@@ -84,6 +95,12 @@
                             </tbody>
                         </table>
                     </div>
+                    @if (!empty($transactions) && $transactions->count())
+
+                    {{ $transactions->links() }}
+
+                    @endif
+
                 </div>
             </div>
         </div>
