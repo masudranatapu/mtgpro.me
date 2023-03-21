@@ -95,11 +95,7 @@
                             </tbody>
                         </table>
                     </div>
-                    @if (!empty($transactions) && $transactions->count())
 
-                    {{ $transactions->links() }}
-
-                    @endif
 
                 </div>
             </div>
