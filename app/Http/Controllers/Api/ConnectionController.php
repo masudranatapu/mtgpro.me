@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Requests\ConnectRequest;
+use App\Mail\SendConnectMail;
 use App\Models\BusinessCard;
 use App\Models\Connection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ConnectionController extends ResponceController
@@ -122,5 +124,44 @@ class ConnectionController extends ResponceController
         DB::commit();
         $message = 'Information updated';
         return $this->sendResponse(200, $message, $connection);
+    }
+
+    public function sendMail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'subject' => 'required|max:60',
+            'message' => 'required',
+            'email' => 'required|email',
+        ]);
+
+
+        if ($validator->fails()) {
+            return $this->sendError(200, $validator->errors()->first());
+        }
+
+
+        try {
+            $connection   = Connection::findOrFail($request->id);
+            $data['subject'] = $request->subject;
+            $data['message'] = $request->message;
+
+            // if (isset($connection->email)) {
+            //     Mail::to($connection->email)->send(new SendConnectMail($data));
+            // } else {
+            //     Mail::to($request->email)->send(new SendConnectMail($data));
+            // }
+
+            Mail::to($request->email)->send(new SendConnectMail($data));
+        } catch (\Exception $e) {
+
+
+            $message = 'Something wrong! Please try again';
+
+            return $this->sendError("Exception Error", $message);
+        }
+        $message = 'Email successfully sent';
+        // return redirect()->back();
+        return $this->sendResponse(200, $message, []);
     }
 }
