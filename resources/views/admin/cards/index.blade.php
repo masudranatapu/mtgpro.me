@@ -108,7 +108,7 @@
                                                         @else
                                                             <a href="{{ route('admin.card.change-status',$row->id) }}" class="dropdown-item btn-sm">{{ __('Deactivate') }}</a>
                                                         @endif --}}
-                                                        <a class="dropdown-item btn-sm" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="{{ route('admin.card.delete',$row->id) }}"class="dropdown-item btn-sm">{{ __('Delete') }}</a>
+                                                        <a class="dropdown-item btn-sm" onclick="if (confirm('Are you sure ?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="{{ route('admin.card.delete',$row->id) }}"class="dropdown-item btn-sm">{{ __('Delete') }}</a>
                                                     </div>
                                                 </div>
                                             </td>
