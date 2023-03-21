@@ -52,10 +52,10 @@ class DashboardController extends Controller
 
             // dd($today_users);
             // $themes = Theme::where('status', 1)->count();
-            $plans = Plan::where('status', 1)->count();
+            $plans = Plan::count();
             $gateways = Gateway::where('status', 1)->count();
             $whatsapp_stores = BusinessCard::where('card_type', 'store')->count();
-            $card_count  = BusinessCard::where('status', 1)->count();
+            $card_count  = BusinessCard::where('card_type', 'vcard')->count();
             // $signatures = TemplateContent::count();
 
 

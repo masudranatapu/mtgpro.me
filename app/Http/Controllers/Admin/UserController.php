@@ -213,6 +213,7 @@ class UserController extends Controller
             $transaction->transaction_currency = $config[1]->config_value;
             $transaction->invoice_details = json_encode($invoice_details);
             $transaction->payment_status = "SUCCESS";
+            $transaction->created_at = Auth::id();
             $transaction->save();
 
             User::where('id', $user_details->id)->update([
@@ -336,6 +337,7 @@ class UserController extends Controller
             $transaction->transaction_currency = $config[1]->config_value;
             $transaction->invoice_details = json_encode($invoice_details);
             $transaction->payment_status = "SUCCESS";
+            $transaction->created_at = Auth::id();
             $transaction->save();
 
             User::where('id', $user_details->id)->update([

@@ -240,6 +240,7 @@ class StripeController extends ResponceController
             $transaction->transaction_currency = $subscription->currency;
             $transaction->invoice_details       = json_encode($invoice_details);
             $transaction->payment_status        = "Success";
+            $transaction->created_at = Auth::id();
             $transaction->save();
             //update user
             DB::table('users')->where('id', $userData->id)->update([
