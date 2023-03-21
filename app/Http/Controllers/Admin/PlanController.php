@@ -153,7 +153,7 @@ class PlanController extends Controller
         $plan->free_marketing_material = $request->free_marketing_material=='on' ? '1':'0';
 
         if($request->is_free == 1){
-            $plan->validity = '9999';
+            $plan->validity = '366';
         }
         $plan->save();
 
@@ -257,7 +257,7 @@ class PlanController extends Controller
         $plan->features                 = json_encode($request->get('feature') ?? []);
 
         if($request->is_free == 1){
-            $plan->validity = '9999';
+            $plan->validity = '366';
         }
 
         $plan->update();
