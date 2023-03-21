@@ -25,7 +25,7 @@
                             </div>
                             <div class="col">
                                 <div class="float-end">
-                                    <a href="{{route('admin.users')}}" class="btn btn-primary">{{ __('Back')}}</a>
+                                    <a href="{{route('admin.admin-users')}}" class="btn btn-primary">{{ __('Back')}}</a>
                                 </div>
                             </div>
                         </div>

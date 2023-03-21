@@ -102,8 +102,7 @@
                                                 <select required name="product_status"
                                                     class="form-control @error('product_status') border-danger @enderror"
                                                     id="product_status">
-                                                    <option class="d-none" value="">Select Product status</option>
-                                                    <option value="1">Publish</option>
+                                                    <option value="1" selected>Publish</option>
                                                     <option value="0">Draft</option>
 
                                                 </select>

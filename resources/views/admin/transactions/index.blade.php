@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive px-2 py-2">
-                        <table class="table card-table table-vcenter text-nowrap datatable" id="table">
+                        <table class="table card-table table-vcenter text-nowrap datatable" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>{{ __('Transaction Date') }}</th>

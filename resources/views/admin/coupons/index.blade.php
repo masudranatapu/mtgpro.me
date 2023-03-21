@@ -130,8 +130,7 @@
                                                                 onclick="couponDelete({{ $value->id }})"
                                                                 href="javascript:void(0)">{{ __('Delete') }}</a>
 
-                                                            <form
-                                                                action="{{ route('admin.coupon.delete', ['coupon' => $value->id]) }}"
+                                                            <form action="{{ route('admin.coupon.delete', ['coupon' => $value->id]) }}"
                                                                 id="delete_{{ $value->id }}" method="post">
                                                                 @method('DELETE')
                                                                 @csrf
@@ -208,6 +207,7 @@
 <script>
     function couponDelete(id) {
         console.log(id);
+        return confirm('are you sure?');
         $('#delete_' + id).submit()
     }
 </script>
