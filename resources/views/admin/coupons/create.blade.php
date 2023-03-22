@@ -3,9 +3,7 @@
 @section('coupon', 'active')
 @section('title') {{ __('Coupon Add') }} @endsection
 @section('page-name') {{ __('Coupon Add') }} @endsection
-<?php
 
-?>
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/select2.css') }}">

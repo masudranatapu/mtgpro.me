@@ -10,9 +10,9 @@ class Coupon extends Model
 {
     use HasFactory;
 
-
     public function hasUser(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
 }

@@ -73,18 +73,18 @@ class CouponController extends Controller
         }
         $coupon->status = $request->status;
 
-        $arr1 = explode("-",$request->valid_date_form);
-        $valid_date_form = $arr1[1].'-'.$arr1[0].'-'.$arr1[2];
+        // $arr1 = explode("-",$request->valid_date_form);
+        // $valid_date_form = $arr1[1].'-'.$arr1[0].'-'.$arr1[2];
 
-        $arr2 = explode("-",$request->expired_date);
-        $expired_date = $arr2[1].'-'.$arr2[0].'-'.$arr2[2];
+        // $arr2 = explode("-",$request->expired_date);
+        // $expired_date = $arr2[1].'-'.$arr2[0].'-'.$arr2[2];
 
 
-        $coupon->valid_from = date('Y-m-d', strtotime($valid_date_form));
-        $coupon->valid_to = date('Y-m-d', strtotime($expired_date));
+        // $coupon->valid_from = date('Y-m-d', strtotime($valid_date_form));
+        // $coupon->valid_to = date('Y-m-d', strtotime($expired_date));
 
-        // $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
-        // $coupon->valid_to = date('Y-m-d', strtotime($request->expired_date));
+        $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
+        $coupon->valid_to = date('Y-m-d', strtotime($request->expired_date));
 
         $coupon->coupon_for = $request->coupon_for;
         if ($request->has('selected_user') && $request->coupon_for == "for_specific_user") {
