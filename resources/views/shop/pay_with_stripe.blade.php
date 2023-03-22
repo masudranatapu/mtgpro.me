@@ -7,6 +7,7 @@
                 <input type="hidden" name="billing_email" value="" id="stp_billing_email">
                 <input type="hidden" name="billing_phone" value="" id="stp_billing_phone">
                 <input type="hidden" name="billing_address" value="" id="stp_billing_address">
+                <input type="hidden" name="billing_address_two" value="" id="billing_address_two">
                 <input type="hidden" name="billing_city" value="" id="stp_billing_city">
                 <input type="hidden" name="billing_state" value="" id="stp_billing_state">
                 <input type="hidden" name="billing_zipcode" value="" id="stp_billing_zipcode">
@@ -15,7 +16,6 @@
                 <div class="modal-header">
                     <h6 class="modal-title" id="paymentStripeLabel"> {{ __('Card Information') }}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
                 </div>
                 <div class="modal-body">
                     <div class="pb-3">

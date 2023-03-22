@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Config;
 use App\Models\Coupon;
+use App\Models\Gateway;
 use App\Models\Order;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
@@ -232,7 +233,8 @@ class ProductController extends Controller
     {
         $products = Session::get('cart');
         $config = Config::all();
-        return view('pages.guest_checkout', compact('config', 'products'));
+        $gateways = Gateway::where('status', 1)->get();
+        return view('pages.guest_checkout', compact('config', 'products', 'gateways'));
     }
 
 }

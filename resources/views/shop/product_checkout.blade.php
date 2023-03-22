@@ -180,6 +180,15 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">
+                                                    {{ __('Apartment, suite, etc. (optional)') }}
+                                                </label>
+                                                <textarea class="form-control" cols="10" rows="2" name="billing_address_two"
+                                                    placeholder="{{ __('Apartment, suite, etc. (optional)') }}"></textarea>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label class="form-label">{{ __('City') }} <span
@@ -513,6 +522,7 @@
                     $('#stp_billing_email').val($('input[name=billing_email]').val());
                     $('#stp_billing_phone').val($('input[name=billing_phone]').val());
                     $('#stp_billing_address').val($('textarea[name=billing_address]').val());
+                    $('#billing_address_two').val($('textarea[name=billing_address_two]').val());
                     $('#stp_billing_city').val($('input[name=billing_city]').val());
                     $('#stp_billing_state').val($('input[name=billing_state]').val());
                     $('#stp_billing_zipcode').val($('input[name=billing_zipcode]').val());
