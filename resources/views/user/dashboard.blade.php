@@ -59,6 +59,7 @@
             padding: 12px 27px !important;
         }
     }
+    .act-btn{min-width: 160px; text-align: center;}
 </style>
 @endpush
 
@@ -84,20 +85,24 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                 <div class="col-md-8">
                     <div class="d-sm-flex justify-content-between">
 
-                        <a class="btn-sm btn-primary btn-sm mb-1" href="javascript:void(0)" onclick="copy(this)"
+                        <a class="btn-sm btn-primary btn-sm mb-1 act-btn" href="javascript:void(0)" onclick="copy(this)"
                             data-url="{{ route('home') }}/{{ auth()->user()->username }}">{{ __('Link To Copy') }}</a>
-                        <a class="btn-sm btn-primary btn-sm mb-1"
+                        <a class="btn-sm btn-primary btn-sm mb-1 act-btn"
                             href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Email') }}</a>
 
                         @if ( $ipad == false || $iphone == false)
-
-                        <a class="btn-sm btn-primary btn-sm mb-1"
+                        <a class="btn-sm btn-primary btn-sm mb-1 act-btn"
                             href="sms:+?&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{
                             __('Text') }}</a>
                         @endif
 
-
+                        @if(count(session('cart')) > 0 )
+                        <a class="btn-sm btn-primary btn-sm mb-1" href="{{ route('cart') }}" >
+                            <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                ({{ count(session('cart')) }})
+                        </a>
+                        @endif
 
                     </div>
                 </div>

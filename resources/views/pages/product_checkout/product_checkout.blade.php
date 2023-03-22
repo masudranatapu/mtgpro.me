@@ -416,7 +416,7 @@
                                                 class="form-label d-block">{{ __('Payment method') }} <span
                                                     class="text-danger">*</span></label>
                                             @if (!empty($gateways) && count($gateways) > 0)
-                                                @foreach ($gateways as $gateway)
+                                                @foreach ($gateways as $key =>  $gateway)
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <div
@@ -425,7 +425,7 @@
                                                                     <input type="radio" name="payment_gateway_id"
                                                                         id="payment_gateway_id"
                                                                         value="{{ $gateway->id }}"
-                                                                        class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror">
+                                                                        class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror" {{ $key == 0 ? 'checked' : '' }} >
                                                                     <div
                                                                         class="form-selectgroup-label d-flex align-items-center p-3">
                                                                         <div class="me-3">
