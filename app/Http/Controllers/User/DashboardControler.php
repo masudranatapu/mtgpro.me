@@ -23,7 +23,7 @@ class DashboardControler extends Controller
 
 
     protected $plan;
-    protected $transection;
+    protected $transection, $settings, $resp;
 
     public function __construct(
         Plan $plan,
