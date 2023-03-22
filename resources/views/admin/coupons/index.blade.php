@@ -82,13 +82,11 @@
                                                             Free Shippong
                                                         </p>
                                                     @endif
-
-
-
                                                 </td>
                                                 <td>
                                                     <span class="badge bg-orange">&nbsp;Form&nbsp;</span> :
                                                     {{ date('d-M-Y', strtotime($value->valid_from)) }}
+                                                    <br>
                                                     <span class="badge bg-danger">&emsp;To&emsp;</span> :
                                                     {{ date('d-M-Y', strtotime($value->valid_to)) }}
                                                 </td>
@@ -101,18 +99,13 @@
                                                         <p>User: {{ $value->hasUser->name ?? '' }}
                                                         </p>
                                                     @endif
-
-
-
                                                 <td class="text-muted">
-
                                                     @if ($value->status)
                                                         <span class="badge bg-success">{{ __('Active') }}</span>
                                                     @else
                                                         <span class="badge bg-red">{{ __('Inactive') }}</span>
                                                     @endif
                                                 </td>
-
                                                 <td>
                                                     <div class="dropdown @yield('settings')">
                                                         <a class="btn btn-primary dropdown-toggle" href="#navbar-extra"
