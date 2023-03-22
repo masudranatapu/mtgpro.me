@@ -97,7 +97,7 @@ $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
                             __('Text') }}</a>
                         @endif
 
-                        @if(count(session('cart')) > 0 )
+                        @if( (session('cart')) && (count(session('cart')) > 0 ) )
                         <a class="btn-sm btn-primary btn-sm mb-1" href="{{ route('cart') }}" >
                             <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                                 ({{ count(session('cart')) }})
