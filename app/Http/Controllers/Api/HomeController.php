@@ -262,11 +262,13 @@ class HomeController extends ResponceController
     public function getInsights(Request $request)
     {
         $user_id = Auth::guard('api')->id();
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
+
         $data = [];
         $data['total_connect'] = DB::table('connects')->where('user_id', $user_id)->count();
-        $data['total_card_view'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_hit');
-        $data['total_contact_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_vcf_download');
-        $data['total_qrcode_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_qr_download');
+        $data['total_card_view'] = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->count();
+        $data['total_contact_download'] = HistoryCardDownload::whereIn('card_id', $userCards)->count();
+        $data['total_qrcode_download'] = HistoryQrDownload::whereIn('card_id', $userCards)->count();
         $data['total_card'] = DB::table('business_cards')->where('user_id', $user_id)->count();
         $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans', 'users.plan_id', '=', 'plans.id')->where('users.id', Auth::user()->id)->first();
 
@@ -277,14 +279,14 @@ class HomeController extends ResponceController
     public function viewHistory()
     {
 
-        $userCards = BusinessCard::where('user_id', Auth::guard()->id())->where('status', 1)->pluck('id')->toArray();
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
         $histories = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->paginate(10);
         return $this->sendResponse(200, "User Insights View History", $histories, true, []);
     }
 
     public function downloadHistory()
     {
-        $userCards = BusinessCard::where('user_id', Auth::guard()->id())->where('status', 1)->pluck('id')->toArray();
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
         $histories = HistoryCardDownload::whereIn('card_id', $userCards)->paginate(10);
         return $this->sendResponse(200, "User Insights Download History", $histories, true, []);
     }
@@ -292,7 +294,7 @@ class HomeController extends ResponceController
 
     public function qrdownloadHistory()
     {
-        $userCards = BusinessCard::where('user_id', Auth::guard()->id())->where('status', 1)->pluck('id')->toArray();
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
         $histories = HistoryQrDownload::whereIn('card_id', $userCards)->paginate(10);
         return $this->sendResponse(200, "User Insights Qr-Code Download History", $histories, true, []);
     }
