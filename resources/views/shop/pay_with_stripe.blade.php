@@ -3,7 +3,6 @@
         <div class="modal-content">
             <form action="{{ route('product.orderCheckout') }}" method="post" id="payment-form">
                 @csrf
-
                 <input type="hidden" name="billing_name" value="" id="stp_billing_name">
                 <input type="hidden" name="billing_email" value="" id="stp_billing_email">
                 <input type="hidden" name="billing_phone" value="" id="stp_billing_phone">

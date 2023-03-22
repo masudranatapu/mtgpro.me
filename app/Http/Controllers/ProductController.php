@@ -27,10 +27,8 @@ class ProductController extends Controller
      */
     public function cart()
     {
-
         $config = Config::where('config_key', 'tax_value')->first();
-
-        return view('pages.cart', compact('config'));
+        return view('shop.cart', compact('config'));
     }
     /**
      * Write code on Method

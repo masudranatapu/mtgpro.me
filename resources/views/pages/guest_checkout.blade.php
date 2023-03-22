@@ -274,7 +274,7 @@
             </div>
         </div>
     </div>
-    @include('pages.product_checkout.pay_with_stripe')
+    @include('shop.pay_with_stripe')
 @endsection
 
 @push('custom_js')

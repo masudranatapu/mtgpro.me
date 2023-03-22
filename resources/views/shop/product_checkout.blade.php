@@ -129,10 +129,205 @@
         <div class="content">
             <div class="container">
                 <div class="row g-4">
+
+                    <div class="col-lg-7 col-12">
+                        <form action="{{ route('product.orderCheckout') }}" id="order-form" method="post">
+                            @csrf
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="card-title mb-3">{{ __('Billing/Shipping Details') }}</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('Name') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('billing_name') is-invalid @enderror"
+                                                    name="billing_name" placeholder="{{ __('Name') }}..." required
+                                                    value="{{ $user->billing_name ?? $user->name }}">
+                                                @if ($errors->has('billing_name'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_name') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('Email') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="email"
+                                                    class="form-control validated @error('billing_email') is-invalid @enderror"
+                                                    name="billing_email" placeholder="{{ __('Email') }}..." required
+                                                    value="{{ $user->email }}"
+                                                    data-validation-required-message="Please enter your address" required>
+                                                @if ($errors->has('billing_email'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('Address') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <textarea class="form-control validated @error('billing_address') is-invalid @enderror" name="billing_address"
+                                                    cols="10" rows="2" placeholder="{{ __('Billing Address') }}..." required>{{ $user->billing_address }}</textarea>
+                                                @if ($errors->has('billing_address'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_address') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('City') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('billing_city') is-invalid @enderror"
+                                                    name="billing_city" placeholder="{{ __('Billing City') }}..."
+                                                    value="{{ $user->billing_city }}" required>
+                                                @if ($errors->has('billing_city'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_city') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('State') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('billing_state') is-invalid @enderror"
+                                                    name="billing_state"
+                                                    placeholder="{{ __('Billing State/Province') }}..."
+                                                    value="{{ $user->billing_state }}" required>
+                                                @if ($errors->has('billing_state'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_state') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('Zip Code') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text"
+                                                    class="form-control @error('billing_zipcode') is-invalid @enderror"
+                                                    name="billing_zipcode" placeholder="{{ __('Billing Zip Code') }}..."
+                                                    value="{{ $user->billing_zipcode }}" required>
+                                                @if ($errors->has('billing_zipcode'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('Country') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="form-item">
+                                                    <input id="country_selector" name="billing_country"
+                                                        class="form-control" type="text"
+                                                        value="{{ Auth::user()->billing_country }}">
+                                                    <label for="country_selector" style="display:none;">Select a country
+                                                        here...</label>
+                                                </div>
+                                                <div class="form-item" style="display:none;">
+                                                    <input type="text" id="country_selector_code"
+                                                        name="country_selector_code" data-countrycodeinput="1"
+                                                        readonly="readonly"
+                                                        placeholder="Selected country code will appear here" />
+                                                    <label for="country_selector_code">...and the selected country code
+                                                        will be updated here</label>
+                                                </div>
+                                                @if ($errors->has('billing_country'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-4 col-xl-4">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label">{{ __('Type') }} <span
+                                                        class="text-danger">*</span></label>
+                                                <select name="type" id="type"
+                                                    class="form-control @error('type') is-invalid @enderror">
+                                                    <option value="personal"
+                                                        {{ Auth::user()->type == 'personal' ? 'selected' : '' }}>
+                                                        {{ __('Personal') }}</option>
+                                                    <option value="business"
+                                                        {{ Auth::user()->type == 'personal' ? 'selected' : '' }}>
+                                                        {{ __('Business') }}</option>
+                                                </select>
+                                                @if ($errors->has('type'))
+                                                    <span
+                                                        class="help-block text-danger">{{ $errors->first('type') }}</span>
+                                                @endif
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
+                                                    <span class="text-danger">*</span></label>
+                                                <input id="billing_phone" name="billing_phone" class="form-control"
+                                                    type="tel" required value="{{ Auth::user()->billing_phone }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="payment_gateway_id"
+                                                class="form-label d-block">{{ __('Payment method') }} <span
+                                                    class="text-danger">*</span></label>
+                                            @if (!empty($gateways) && count($gateways) > 0)
+                                                @foreach ($gateways as $key =>  $gateway)
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <div
+                                                                class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
+                                                                <label class="form-selectgroup-item flex-fill">
+                                                                    <input type="radio" name="payment_gateway_id"
+                                                                        id="payment_gateway_id"
+                                                                        value="{{ $gateway->id }}"
+                                                                        class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror" {{ $key == 0 ? 'checked' : '' }} >
+                                                                    <div
+                                                                        class="form-selectgroup-label d-flex align-items-center p-3">
+                                                                        <div class="me-3">
+                                                                            <span class="form-selectgroup-check"></span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span
+                                                                                class="payment payment-provider-{{ $gateway->payment_gateway_name == 'Paypal' ? 'paypal' : 'visa' }} payment-xs me-2">
+                                                                                <img width="36"
+                                                                                    src="{{ asset($gateway->payment_gateway_logo) }}"
+                                                                                    alt="{{ $gateway->display_name }}">
+                                                                            </span>
+                                                                            {{ $gateway->display_name }} <strong></strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+
+                                            <button type="submit" id="continuePaypalBtn"
+                                                class="btn btn-primary">{{ __('Continue for payment') }}</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="col-lg-5">
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="card-title">{{ __('Product Purchese') }}</h6>
+                                <h6 class="card-title">{{ __('Cart Details') }}</h6>
                                 <div class="card-table">
                                     <table class="table">
                                         <thead class="bg-white">
@@ -263,207 +458,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-12">
-                        <form action="{{ route('product.orderCheckout') }}" id="order-form" method="post">
-                            @csrf
 
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <h6 class="card-title mb-3">{{ __('Billing Details') }}</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Name') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text"
-                                                    class="form-control @error('billing_name') is-invalid @enderror"
-                                                    name="billing_name" placeholder="{{ __('Name') }}..." required
-                                                    value="{{ $user->billing_name ?? $user->name }}">
-                                                @if ($errors->has('billing_name'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_name') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Email') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="email"
-                                                    class="form-control validated @error('billing_email') is-invalid @enderror"
-                                                    name="billing_email" placeholder="{{ __('Email') }}..." required
-                                                    value="{{ $user->email }}"
-                                                    data-validation-required-message="Please enter your address" required>
-                                                @if ($errors->has('billing_email'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_email') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Billing Address') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <textarea class="form-control validated @error('billing_address') is-invalid @enderror" name="billing_address"
-                                                    cols="10" rows="3" placeholder="{{ __('Billing Address') }}..." required>{{ $user->billing_address }}</textarea>
-                                                @if ($errors->has('billing_address'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_address') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Billing City') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text"
-                                                    class="form-control @error('billing_city') is-invalid @enderror"
-                                                    name="billing_city" placeholder="{{ __('Billing City') }}..."
-                                                    value="{{ $user->billing_city }}" required>
-                                                @if ($errors->has('billing_city'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_city') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Billing State') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text"
-                                                    class="form-control @error('billing_state') is-invalid @enderror"
-                                                    name="billing_state"
-                                                    placeholder="{{ __('Billing State/Province') }}..."
-                                                    value="{{ $user->billing_state }}" required>
-                                                @if ($errors->has('billing_state'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_state') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Billing Zip Code') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text"
-                                                    class="form-control @error('billing_zipcode') is-invalid @enderror"
-                                                    name="billing_zipcode" placeholder="{{ __('Billing Zip Code') }}..."
-                                                    value="{{ $user->billing_zipcode }}" required>
-                                                @if ($errors->has('billing_zipcode'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_zipcode') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Billing Country') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <div class="form-item">
-                                                    <input id="country_selector" name="billing_country"
-                                                        class="form-control" type="text"
-                                                        value="{{ Auth::user()->billing_country }}">
-                                                    <label for="country_selector" style="display:none;">Select a country
-                                                        here...</label>
-                                                </div>
-                                                <div class="form-item" style="display:none;">
-                                                    <input type="text" id="country_selector_code"
-                                                        name="country_selector_code" data-countrycodeinput="1"
-                                                        readonly="readonly"
-                                                        placeholder="Selected country code will appear here" />
-                                                    <label for="country_selector_code">...and the selected country code
-                                                        will be updated here</label>
-                                                </div>
-                                                @if ($errors->has('billing_country'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('billing_country') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label">{{ __('Type') }} <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="type" id="type"
-                                                    class="form-control @error('type') is-invalid @enderror">
-                                                    <option value="personal"
-                                                        {{ Auth::user()->type == 'personal' ? 'selected' : '' }}>
-                                                        {{ __('Personal') }}</option>
-                                                    <option value="business"
-                                                        {{ Auth::user()->type == 'personal' ? 'selected' : '' }}>
-                                                        {{ __('Business') }}</option>
-                                                </select>
-                                                @if ($errors->has('type'))
-                                                    <span
-                                                        class="help-block text-danger">{{ $errors->first('type') }}</span>
-                                                @endif
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-4 col-xl-4">
-                                            <div class="mb-3 form-group">
-                                                <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
-                                                    <span class="text-danger">*</span></label>
-                                                <input id="billing_phone" name="billing_phone" class="form-control"
-                                                    type="tel" required value="{{ Auth::user()->billing_phone }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label for="payment_gateway_id"
-                                                class="form-label d-block">{{ __('Payment method') }} <span
-                                                    class="text-danger">*</span></label>
-                                            @if (!empty($gateways) && count($gateways) > 0)
-                                                @foreach ($gateways as $key =>  $gateway)
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <div
-                                                                class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
-                                                                <label class="form-selectgroup-item flex-fill">
-                                                                    <input type="radio" name="payment_gateway_id"
-                                                                        id="payment_gateway_id"
-                                                                        value="{{ $gateway->id }}"
-                                                                        class="form-selectgroup-input @error('payment_gateway_id') is-invalid @enderror" {{ $key == 0 ? 'checked' : '' }} >
-                                                                    <div
-                                                                        class="form-selectgroup-label d-flex align-items-center p-3">
-                                                                        <div class="me-3">
-                                                                            <span class="form-selectgroup-check"></span>
-                                                                        </div>
-                                                                        <div>
-                                                                            <span
-                                                                                class="payment payment-provider-{{ $gateway->payment_gateway_name == 'Paypal' ? 'paypal' : 'visa' }} payment-xs me-2">
-                                                                                <img width="36"
-                                                                                    src="{{ asset($gateway->payment_gateway_logo) }}"
-                                                                                    alt="{{ $gateway->display_name }}">
-                                                                            </span>
-                                                                            {{ $gateway->display_name }} <strong></strong>
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-
-                                            <button type="submit" id="continuePaypalBtn"
-                                                class="btn btn-primary">{{ __('Continue for payment') }}</button>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @include('pages.product_checkout.pay_with_stripe')
+    @include('shop.pay_with_stripe')
 @endsection
 {{-- @dd($config[9]->config_value) --}}
 @push('custom_js')
