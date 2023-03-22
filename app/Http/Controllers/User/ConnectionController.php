@@ -211,9 +211,9 @@ class ConnectionController extends Controller
         $data = [];
         if (!empty($connects)) {
             foreach ($connects as $connect) {
-                $data['Name']  = $connect->name;
-                $data['Email']    = $connect->email;
-                $data['Phone']    = $connect->phone;
+                $data['Name']   = $connect->name;
+                $data['Email']  = $connect->email;
+                $data['Phone']  = $connect->phone;
                 $data['Title']  = $connect->title;
                 $data['Image']  = $connect->profile_image;
                 $data['Company Name']  = $connect->company_name;

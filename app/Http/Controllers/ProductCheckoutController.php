@@ -87,22 +87,16 @@ class ProductCheckoutController extends Controller
 
 
                 // $stripe = new StripeClient($config[10]->config_value);
-                Stripe::setApiKey("sk_test_51LtUkeIH2i6FoGaEZ3Y90HVXatZKimap3Wsnbw72syI5PFoV9KtEAwGf6788R5LuLnfpCXXq9DOSo7REOtqjG8Vp00FIBEPP38");
-                $stripe = new StripeClient($request->stripeToken);
+                Stripe::setApiKey($config[10]->config_value);
+                // $stripe = new StripeClient($request->stripeToken);
                 $charge = Charge::create([
-                    "amount" =>  $totalPrice + $shipingTotal + $vat,
-                    "currency" => $config[1]->config_value,
-                    "source" => "tok_visa",
-                    "description" => env('APP_NAME'),
+                    "amount"        =>  $totalPrice + $shipingTotal + $vat,
+                    "currency"      => $config[1]->config_value,
+                    "source"        => "tok_visa",
+                    "description"   => env('APP_NAME'),
                 ]);
 
-                $order_Number = 1000;
-                $previous_order_Number = Order::orderBy('order_number', 'desc')->first();
-
-                if (isset($previous_order_Number)) {
-                    $order_Number = $previous_order_Number->order_number + 1;
-                }
-
+                $order_Number = uniqid();
 
                 $order = new Order();
                 $order->order_number = $order_Number;
