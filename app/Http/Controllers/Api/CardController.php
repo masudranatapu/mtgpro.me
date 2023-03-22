@@ -499,42 +499,27 @@ class CardController extends ResponceController
 
 
 
+
+
     public function getChangeCardStatus(Request $request)
     {
         DB::beginTransaction();
         try {
-            if (checkPackageValidity(Auth::user()->id)) {
+            if (checkPackageValidity(Auth::guard('api')->user()->id)) {
                 $card = BusinessCard::findOrFail($request->id);
-                $card->status = 1;
-                $card->save();
-                // BusinessCard::where('id', $request->id)->update(['status' => 1]);
+                BusinessCard::where('id', $request->id)->update(['status' => 1]);
                 BusinessCard::where('id', '<>', $request->id)->update(['status' => 0]);
                 User::where('id', $card->user_id)->update(['active_card_id' => $request->id]);
             } else {
-                return $this->sendError(
-                    'Warning',
-                    'Your package is expired please update the first',
-                );
+                return $this->sendError('Warning', 'Your package is expired please update the first');
             }
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->sendError(
-                'Exception Error',
-                'Something wrong! Please try again',
-
-            );
+            return $this->sendError('Exception Error', 'Something wrong! Please try again',);
         }
         DB::commit();
-        return $this->sendResponse(
-            200,
-            'Card status successfully updated',
-            $card,
-            true,
-            []
-        );
+        return $this->sendResponse(200, 'Card status successfully updated', $card, true, []);
     }
-
-
 
 
 
