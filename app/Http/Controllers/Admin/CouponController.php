@@ -71,20 +71,21 @@ class CouponController extends Controller
         } else {
             $coupon->amount = $request->amount;
         }
+
         $coupon->status = $request->status;
 
-        $arr1 = explode("-",$request->valid_date_form);
-        $valid_date_form = $arr1[1].'-'.$arr1[0].'-'.$arr1[2];
+        // $arr1 = explode("-",$request->valid_date_form);
+        // $valid_date_form = $arr1[1].'-'.$arr1[0].'-'.$arr1[2];
 
-        $arr2 = explode("-",$request->expired_date);
-        $expired_date = $arr2[1].'-'.$arr2[0].'-'.$arr2[2];
+        // $arr2 = explode("-",$request->expired_date);
+        // $expired_date = $arr2[1].'-'.$arr2[0].'-'.$arr2[2];
 
 
-        $coupon->valid_from = date('Y-m-d', strtotime($valid_date_form));
-        $coupon->valid_to = date('Y-m-d', strtotime($expired_date));
+        // $coupon->valid_from = date('Y-m-d', strtotime($valid_date_form));
+        // $coupon->valid_to = date('Y-m-d', strtotime($expired_date));
 
-        // $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
-        // $coupon->valid_to = date('Y-m-d', strtotime($request->expired_date));
+        $coupon->valid_from = date('Y-m-d', strtotime($request->valid_date_form));
+        $coupon->valid_to = date('Y-m-d', strtotime($request->expired_date));
 
         $coupon->coupon_for = $request->coupon_for;
         if ($request->has('selected_user') && $request->coupon_for == "for_specific_user") {
@@ -98,8 +99,6 @@ class CouponController extends Controller
         Toastr::success('Coupon code save successfully');
         return redirect()->route('admin.coupon.index');
     }
-
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -127,7 +126,7 @@ class CouponController extends Controller
             "name" => 'required',
             "coupon_code" => 'required|min:5',
             "discount_type" => 'required',
-            "amount" => 'required|numeric',
+            // "amount" => 'required|numeric',
             "status" => 'required',
             "valid_date_form" => 'required',
             "expired_date" => 'required',
@@ -148,6 +147,7 @@ class CouponController extends Controller
         } else {
             $coupon->amount = $request->amount;
         }
+
         $coupon->status = $request->status;
 
         $arr1 = explode("-",$request->valid_date_form);
@@ -155,7 +155,6 @@ class CouponController extends Controller
 
         $arr2 = explode("-",$request->expired_date);
         $expired_date = $arr2[1].'-'.$arr2[0].'-'.$arr2[2];
-
 
         $coupon->valid_from = date('Y-m-d', strtotime($valid_date_form));
         $coupon->valid_to = date('Y-m-d', strtotime($expired_date));
@@ -166,11 +165,14 @@ class CouponController extends Controller
         } else {
             $coupon->user_id = null;
         }
+
         $coupon->created_by = Auth::id();
         $coupon->updated_by = Auth::id();
         $coupon->save();
+
         Toastr::success('Coupon code save successfully');
         return redirect()->route('admin.coupon.index');
+
     }
 
     /**
