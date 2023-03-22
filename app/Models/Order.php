@@ -16,7 +16,7 @@ class Order extends Model
 
     public function order_details()
     {
-        return $this->hasMany(OrderDetails::class, 'order_id')->orderBy('id', 'asc');
+        return $this->hasMany(OrderDetails::class, 'order_id')->orderBy('id', 'asc')->with('product');
     }
 
     public function transaction()

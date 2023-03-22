@@ -12,6 +12,9 @@ use App\Mail\QuickReportMail;
 use App\Mail\SupportMail;
 use App\Models\BusinessCard;
 use App\Models\Currency;
+use App\Models\HistoryCardBrowsing;
+use App\Models\HistoryCardDownload;
+use App\Models\HistoryQrDownload;
 use App\Models\Plan;
 use App\Models\SocialIcon;
 use App\Models\User;
@@ -259,17 +262,41 @@ class HomeController extends ResponceController
     public function getInsights(Request $request)
     {
         $user_id = Auth::guard('api')->id();
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
+
         $data = [];
         $data['total_connect'] = DB::table('connects')->where('user_id', $user_id)->count();
-        $data['total_card_view'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_hit');
-        $data['total_contact_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_vcf_download');
-        $data['total_qrcode_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_qr_download');
+        $data['total_card_view'] = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->count();
+        $data['total_contact_download'] = HistoryCardDownload::whereIn('card_id', $userCards)->count();
+        $data['total_qrcode_download'] = HistoryQrDownload::whereIn('card_id', $userCards)->count();
         $data['total_card'] = DB::table('business_cards')->where('user_id', $user_id)->count();
         $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans', 'users.plan_id', '=', 'plans.id')->where('users.id', Auth::user()->id)->first();
 
         $total_card_share = 0;
 
         return $this->sendResponse(200, "User Insights", $data, true, []);
+    }
+    public function viewHistory()
+    {
+
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
+        $histories = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->paginate(10);
+        return $this->sendResponse(200, "User Insights View History", $histories, true, []);
+    }
+
+    public function downloadHistory()
+    {
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
+        $histories = HistoryCardDownload::whereIn('card_id', $userCards)->paginate(10);
+        return $this->sendResponse(200, "User Insights Download History", $histories, true, []);
+    }
+
+
+    public function qrdownloadHistory()
+    {
+        $userCards = BusinessCard::where('user_id', Auth::guard('api')->id())->pluck('id')->toArray();
+        $histories = HistoryQrDownload::whereIn('card_id', $userCards)->paginate(10);
+        return $this->sendResponse(200, "User Insights Qr-Code Download History", $histories, true, []);
     }
 
     public function sendSupportMail(Request $request)
