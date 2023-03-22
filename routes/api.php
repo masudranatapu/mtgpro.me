@@ -57,6 +57,14 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     Route::get('/insights', [HomeController::class, 'getInsights']);
+    Route::get('card/view/history', [HomeController::class, 'viewHistory']);
+    Route::get('card/download/history', [HomeController::class, 'downloadHistory']);
+    Route::get('qr/download/history', [HomeController::class, 'qrdownloadHistory']);
+
+
+
+
+
     Route::post('/support-mail-send', [HomeController::class, 'sendSupportMail']);
     Route::get('/user-plan', [UserController::class, 'userplan']);
     Route::get('/billing-info', [UserController::class, 'userBillingInfo']);
