@@ -475,7 +475,7 @@ class UserController extends ResponceController
             $user->updated_at   = date("Y-m-d H:i:s");
             $user->user_disclaimer   = $request->user_disclaimer;
 
-            // dd($user);
+            
             $user->save();
         } catch (\Exception $e) {
             DB::rollback();
