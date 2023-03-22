@@ -270,7 +270,7 @@ class HomeController extends ResponceController
         $data['total_contact_download'] = HistoryCardDownload::whereIn('card_id', $userCards)->count();
         $data['total_qrcode_download'] = HistoryQrDownload::whereIn('card_id', $userCards)->count();
         $data['total_card'] = DB::table('business_cards')->where('user_id', $user_id)->count();
-        $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans', 'users.plan_id', '=', 'plans.id')->where('users.id', Auth::user()->id)->first();
+        $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans', 'users.plan_id', '=', 'plans.id')->where('users.id', Auth::guard('api')->id())->first();
 
         $total_card_share = 0;
 

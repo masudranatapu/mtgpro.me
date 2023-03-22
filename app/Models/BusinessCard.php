@@ -20,7 +20,7 @@ class BusinessCard extends Model
 {
     use RepoResponse;
     use ApiResponse;
-    protected $appends = ['profile_pic_url', 'cover_pic_url', 'company_logo_url'];
+    protected $appends = ['profile_pic_url', 'cover_pic_url', 'company_logo_url', 'is_live_card'];
 
     public function getProfilePicUrlAttribute()
     {
@@ -676,5 +676,14 @@ class BusinessCard extends Model
         }
         $video_file = 'https://www.youtube.com/embed/' . $video_id;
         return $video_file;
+    }
+
+    public function getIsLiveCardAttribute()
+    {
+        if ($this->id == Auth::guard('api')->user()->active_card_id) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
