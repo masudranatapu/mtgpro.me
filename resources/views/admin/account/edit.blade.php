@@ -48,6 +48,14 @@
                                                 </div>
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
+                                                        <label class="form-label required">{{ __('Username') }}</label>
+                                                        <input type="text" class="form-control" value="{{ $user->username }}" name="username"
+                                                            placeholder="{{ __('Username') }}" required>
+                                                        {!! $errors->first('username', '<label class="help-block text-danger">:message</label>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-xl-4">
+                                                    <div class="mb-3">
                                                         <label class="form-label required">{{ __('Email') }} </label>
                                                         <input type="text" class="form-control" name="email"
                                                             placeholder="{{ __('Email') }}"
@@ -67,7 +75,7 @@
                                                 <div class="col-md-4 col-xl-4">
                                                     <div class="mb-3">
                                                         <label class="form-label" id="phone">{{ __('Phone') }} </label>
-                                                        <input type="text" class="form-control" name="phone" placeholder="{{ __('Phone') }}"
+                                                        <input type="number" min="0" class="form-control" name="phone" placeholder="{{ __('Phone') }}"
                                                             value="{{ $user->phone }}">
                                                         {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>

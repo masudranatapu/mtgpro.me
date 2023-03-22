@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Auth;
-use Validator;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -85,40 +86,30 @@ class AccountController extends Controller
     public function updatePassword(Request $request)
     {
 
-        try
-        {
+        try {
             $validator = Validator::make($request->all(), [
                 'current_password'  => 'required',
                 'new_password'      =>  'required|same:confirm_password|min:6',
                 'confirm_password'  => 'required|min:8',
-                ]);
+            ]);
 
-            if ($validator->fails())
-            {
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-            if (Hash::check($request->current_password, Auth::User()->password))
-            {
-                if($request->new_password == $request->confirm_password)
-                {
+            if (Hash::check($request->current_password, Auth::User()->password)) {
+                if ($request->new_password == $request->confirm_password) {
                     $user = User::where('id', '=', Auth::User()->id)->first();
                     $user->password = bcrypt($request->new_password);
                     $user->save();
                     Toastr::success('Your password has been updated successfully.');
-                }
-                else
-                {
+                } else {
                     Toastr::error('Password do not match. Try again.', 'Success');
                 }
-            }
-            else
-            {
+            } else {
                 Toastr::error('Current password does not match our record. Try again.');
             }
             return redirect()->back();
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             Toastr::error('Error occured in changing password. Please try again.. !');
             return redirect()->back();
         }
@@ -136,7 +127,7 @@ class AccountController extends Controller
         $settings = DB::table('settings')->where('status', 1)->first();
         return view('admin.account.create', compact('settings'));
     }
-    public function getEdit(Request $request,$id)
+    public function getEdit(Request $request, $id)
     {
         $user = User::where('id', $id)->where('user_type', 1)->first();
         $settings = DB::table('settings')->where('status', 1)->first();
@@ -145,88 +136,98 @@ class AccountController extends Controller
 
     public function postStore(Request $request)
     {
-        DB::beginTransaction();
-        try {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required',
-            'email' => 'required|email|unique:users,email'
+            'email' => 'required|email|unique:users,email',
+            'username' => 'required|unique:users,username'
         ]);
 
-        if ($validator->fails())
-        {
-          return redirect()->back()->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = new User();
-        $user->email = $request->email;
-        $user->name = $request->full_name;
-        $user->designation = $request->designation;
-        if(!empty($request->password)){
-            $user->password = Hash::make($request->password);
-        }
-        $user->phone = $request->phone;
-        if ($request->hasFile('profile_image')) {
-            $image = $request->file('profile_image');
-            $name  = time() . '.' . $image->getClientOriginalExtension();
-            $image->move('assets/uploads/profile/', $name);
-            $user->profile_image = asset('assets/uploads/profile/' . $name);
-         }
-        $user->status = $request->status;
-        $user->user_type = $request->user_type;
-        $user->save();
+        DB::beginTransaction();
 
-    } catch (\Exception $e) {
-        DB::rollback();
-        Toastr::error(trans('User not Created !'), 'Error', ["positionClass" => "toast-top-center"]);
-        return redirect()->route('admin.admin-users');
-    }
+            try {
+                $user = new User();
+                $user->email = $request->email;
+                $user->name = $request->full_name;
+                $user->username = $request->username;
+                $user->designation = $request->designation;
+                if (!empty($request->password)) {
+                    $user->password = Hash::make($request->password);
+                }
+                $user->phone = $request->phone;
+                if ($request->hasFile('profile_image')) {
+                    $image = $request->file('profile_image');
+                    $name  = time() . '.' . $image->getClientOriginalExtension();
+                    $image->move('assets/uploads/profile/', $name);
+                    $user->profile_image = asset('assets/uploads/profile/' . $name);
+                }
+                $user->status = $request->status;
+                $user->user_type = $request->user_type;
+                $user->save();
+            } catch (\Exception $e) {
+                DB::rollback();
+                Toastr::error(trans('User not Created !'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->route('admin.admin-users');
+            }
+
         DB::commit();
+
         Toastr::success(trans('User Successfully Created !'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.admin-users');
+
     }
 
 
-    public function putUpdate(Request $request,$id)
+    public function putUpdate(Request $request, $id)
     {
-        DB::beginTransaction();
-        try {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required',
-            'email'     => 'required'
+            'email'     => 'required',
+            'username'     => 'required'
         ]);
-        if ($validator->fails())
-        {
-          return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $user = User::findOrFail($id);
-        $user->email = $request->email;
-        $user->name = $request->full_name;
-        $user->designation = $request->designation;
-        if(!empty($request->password)){
-            $user->password = Hash::make($request->password);
-        }
-        $user->phone = $request->phone;
-        if ($request->hasFile('profile_image')) {
-            $image = $request->file('profile_image');
-            $name  = time() . '.' . $image->getClientOriginalExtension();
-            $image->move('assets/uploads/profile/', $name);
-            $user->profile_image = asset('assets/uploads/profile/' . $name);
-         }
-        $user->status = $request->status;
-        $user->user_type = $request->user_type;
-        $user->update();
 
-    } catch (\Exception $e) {
-        DB::rollback();
-        Toastr::error(trans('User not updated!'), 'Error', ["positionClass" => "toast-top-center"]);
-        return redirect()->route('admin.admin-users');
-    }
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        DB::beginTransaction();
+
+            try {
+                $user = User::findOrFail($id);
+                $user->email = $request->email;
+                $user->name = $request->full_name;
+                $user->username = $request->username;
+                $user->designation = $request->designation;
+
+                if (!empty($request->password)) {
+                    $user->password = Hash::make($request->password);
+                }
+
+                if ($request->hasFile('profile_image')) {
+                    $image = $request->file('profile_image');
+                    $name  = time() . '.' . $image->getClientOriginalExtension();
+                    $image->move('assets/uploads/profile/', $name);
+                    $user->profile_image = asset('assets/uploads/profile/' . $name);
+                }
+
+                $user->phone = $request->phone;
+                $user->status = $request->status;
+                $user->user_type = $request->user_type;
+                $user->update();
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                Toastr::error(trans('User not updated!'), 'Error', ["positionClass" => "toast-top-center"]);
+                return redirect()->route('admin.admin-users');
+            }
+
         DB::commit();
+
         Toastr::success(trans('User updated Successfully!'), 'Success', ["positionClass" => "toast-top-center"]);
         return redirect()->route('admin.admin-users');
+
     }
-
-
-
-
 }

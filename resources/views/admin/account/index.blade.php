@@ -44,6 +44,7 @@
                                         <tr>
                                             <th>{{ __('SL.No') }}</th>
                                             <th>{{ __('Full Name') }}</th>
+                                            <th>{{ __('Username') }}</th>
                                             <th>{{ __('Email') }}</th>
                                             <th>{{ __('Joined') }}</th>
                                             <th>{{ __('Photo') }}</th>
@@ -58,6 +59,9 @@
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td><a
                                                     href="{{ route('admin.view.user', $user->id)}}">{{ $user->name }}</a>
+                                            </td>
+                                            <td class="text-muted">
+                                                {{ $user->username }}
                                             </td>
                                             <td class="text-muted">
                                                 {{ $user->email }}
