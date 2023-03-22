@@ -3,7 +3,13 @@
 @section('email-template', 'active')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/summernote.css') }}"> --}}
+    <style>
+        .note-modal-footer {
+            height: 56px;
+        }
+    </style>
 @endpush
 
 @section('title')
@@ -25,7 +31,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="float-end">
-                                        <a href="{{route('admin.email.template')}}" class="btn btn-primary">Back</a>
+                                        <a href="{{ route('admin.email.template') }}" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +78,7 @@
                                     <div class="row mb-3">
                                         <div class="col-md-12">
                                             <label>Body</label>
-                                            <textarea name="body" class="form-control" cols="30" rows="10" id="mail_body">{{ $emailtemplates->body }}</textarea>
+                                            <textarea name="body" class="form-control summernote" cols="30" rows="10">{{ $emailtemplates->body }}</textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -92,11 +98,11 @@
 @endsection
 
 @push('scripts')
-
-    <script src="{{ asset('assets/js/summernote.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    {{-- <script src="{{ asset('assets/js/summernote.js') }}"></script> --}}
     <script>
         $(document).ready(function() {
-            $('#mail_body').summernote({
+            $('.summernote').summernote({
 
                 height: 300,
                 toolbar: [
@@ -113,5 +119,4 @@
             });
         });
     </script>
-
 @endpush
