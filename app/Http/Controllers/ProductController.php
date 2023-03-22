@@ -229,4 +229,12 @@ class ProductController extends Controller
         }
         return $total;
     }
+
+    public function guestCheckout()
+    {
+        $products = Session::get('cart');
+        $config = Config::all();
+        return view('pages.guest_checkout', compact('config', 'products'));
+    }
+
 }
