@@ -46,11 +46,13 @@ class DashboardControler extends Controller
     public function getInsights(Request $request)
     {
         $user_id = Auth::id();
+        $userCards = BusinessCard::where('user_id', Auth::id())->pluck('id')->toArray();
+
         $data = [];
         $data['total_connect'] = DB::table('connects')->where('user_id', $user_id)->count();
-        $data['total_card_view'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_hit');
-        $data['total_contact_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_vcf_download');
-        $data['total_qrcode_download'] = DB::table('business_cards')->where('user_id', $user_id)->sum('total_qr_download');
+        $data['total_card_view'] = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->count();
+        $data['total_contact_download'] = HistoryCardDownload::whereIn('card_id', $userCards)->count();
+        $data['total_qrcode_download'] = HistoryQrDownload::whereIn('card_id', $userCards)->count();
         $data['total_card'] = DB::table('business_cards')->where('user_id', $user_id)->count();
         $data['current_plan'] = DB::table('users')->select('plans.plan_name')->join('plans', 'users.plan_id', '=', 'plans.id')->where('users.id', Auth::user()->id)->first();
 
@@ -63,14 +65,14 @@ class DashboardControler extends Controller
     public function viewHistory(Request $request)
     {
 
-        $userCards = BusinessCard::where('user_id', Auth::id())->where('status', 1)->pluck('id')->toArray();
+        $userCards = BusinessCard::where('user_id', Auth::id())->pluck('id')->toArray();
         $histories = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->paginate(10);
         return view('user.card_view_history', compact('histories'));
     }
 
     public function downloadHistory(Request $request)
     {
-        $userCards = BusinessCard::where('user_id', Auth::id())->where('status', 1)->pluck('id')->toArray();
+        $userCards = BusinessCard::where('user_id', Auth::id())->pluck('id')->toArray();
         $histories = HistoryCardDownload::whereIn('card_id', $userCards)->paginate(10);
         return view('user.card_download_history', compact('histories'));
     }
@@ -78,7 +80,7 @@ class DashboardControler extends Controller
 
     public function qrdownloadHistory()
     {
-        $userCards = BusinessCard::where('user_id', Auth::id())->where('status', 1)->pluck('id')->toArray();
+        $userCards = BusinessCard::where('user_id', Auth::id())->pluck('id')->toArray();
         $histories = HistoryQrDownload::whereIn('card_id', $userCards)->paginate(10);
         return view('user.qr_download_history', compact('histories'));
     }
@@ -88,7 +90,7 @@ class DashboardControler extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
 
-        $check = Plan::where('id',$user->plan_id)->first();
+        $check = Plan::where('id', $user->plan_id)->first();
 
         $plan = DB::table('plans')
             ->select('plans.*')
@@ -151,7 +153,7 @@ class DashboardControler extends Controller
         $order = Order::with('hasCoupon')->find($id);
         $config = Config::all();
 
-        return view('user.user-invoice', compact('order','config'));
+        return view('user.user-invoice', compact('order', 'config'));
     }
 
     public function suggestFeature()

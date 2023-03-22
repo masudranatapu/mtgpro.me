@@ -10,6 +10,7 @@ use App\Models\BusinessField;
 use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\MarketingMaterials;
+use App\Models\Order;
 use App\Models\Review;
 use App\Models\Transaction;
 use App\Models\User;
@@ -654,8 +655,7 @@ class UserController extends ResponceController
             "2" => "On The Way",
             "3" => "Deliverd",
         ];
-        $productOrders = DB::table('orders')
-            ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+        $productOrders = Order::with('order_details')->leftJoin('users', 'users.id', '=', 'orders.user_id')
             ->select('orders.*', 'users.name as user_name')
             ->where('user_id', auth::guard('api')->id())
             ->orderBy('id', 'desc')->get();
@@ -712,8 +712,8 @@ class UserController extends ResponceController
         } catch (\Exception $e) {
 
             DB::rollback();
-            // $message = $e->getMessage();
-            $message = 'Something wrong! Please try again';
+            $message = $e->getMessage();
+            // $message = 'Something wrong! Please try again';
             return $this->sendError("Exception Error", $message);
         }
         DB::commit();
