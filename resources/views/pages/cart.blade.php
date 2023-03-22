@@ -121,7 +121,6 @@
                                     @php
                                         $total = $total + ($total * $config->config_value) / 100;
                                     @endphp
-
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-end">
@@ -134,10 +133,8 @@
                                     @php
                                         $total = $total + $shipingTotal;
                                     @endphp
-
                                 </tr>
                                 <tr>
-
                                     <td colspan="4" class="text-end">
                                         <h5><strong>Grand Total : </strong></h5>
                                     </td>
@@ -167,36 +164,32 @@
                                     </td>
                                     <td>
                                     </td>
-
                                 </tr>
-
                                 <tr>
-
                                     <td class="text-end" colspan="5">
-
-
-                                        <a href="{{ route('shop') }}" class="text-left btn btn-primary"><i
-                                                class="fa fa-angle-left"></i>
-                                            Continue
-                                            Shopping</a>
-
-                                        <a href="{{ route('product.checkout') }}" class="btn btn-primary">Checkout</a>
-
+                                        <a href="{{ route('shop') }}" class="text-left btn btn-primary">
+                                            <i class="fa fa-angle-left"></i>
+                                            Continue Shopping
+                                        </a>
+                                        @auth
+                                            <a href="{{ route('product.checkout') }}" class="btn btn-primary">
+                                                Checkout
+                                            </a>
+                                        @else
+                                            <a href="{{ route('guest.checkout') }}" class="btn btn-primary">
+                                                Checkout
+                                            </a>
+                                        @endauth
                                     </td>
-
                                 </tr>
-
                             </tfoot>
                         @endif
                     </table>
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
-
-
 
 @push('custom_js')
     <script type="text/javascript">
