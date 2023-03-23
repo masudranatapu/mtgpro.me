@@ -234,7 +234,13 @@ class ProductController extends Controller
         $products = Session::get('cart');
         $config = Config::all();
         $gateways = Gateway::where('status', 1)->get();
-        return view('pages.guest_checkout', compact('config', 'products', 'gateways'));
+
+        if($products) {
+            return view('pages.guest_checkout', compact('config', 'products', 'gateways'));
+        }else {
+            return redirect()->route('shop');
+        }
+
     }
 
 
