@@ -93,8 +93,6 @@ class ProductCheckoutController extends Controller
                     "description"   => env('APP_NAME'),
                 ]);
 
-
-
                 if($userData) {
                     DB::table('users')->where('id', $userData->id)->update([
                         'billing_name'          => $request->billing_name,
@@ -110,11 +108,10 @@ class ProductCheckoutController extends Controller
 
                     $plan = DB::table('plans')->where('is_free', 1)->where('status', 1)->latest()->first();
 
-                    $username =  uniqid().$request->billing_name;
+                    $username                   = uniqid().$request->billing_name;
                     $term_days                  = $plan->validity;
 
                     $newuser = DB::table('users')->insertGetId([
-
                         'name'                  => $request->billing_name,
                         'email'                 => $request->billing_email,
                         'username'              => $username,
@@ -129,7 +126,6 @@ class ProductCheckoutController extends Controller
                         'billing_country'       => $request->billing_country,
                         'billing_phone'         => $request->billing_phone,
                         'billing_email'         => $request->billing_email,
-
                         'plan_id'               => $plan->id,
                         'plan_details'          => json_encode($plan),
                         'plan_validity'         => Carbon::now()->addDays($plan->validity),
