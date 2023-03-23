@@ -243,7 +243,6 @@ class ProductController extends Controller
 
     }
 
-
     public function guestOrdersInvoice($id)
     {
         $order = Order::with('hasCoupon')->find($id);

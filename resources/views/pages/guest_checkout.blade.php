@@ -152,8 +152,8 @@
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <input type="email" required name="billing_email"
-                                                    class="form-control @error('email') is-invalid @enderror"
-                                                    placeholder="{{ __('Email address') }}" autocomplete="off">
+                                                    class="form-control @error('billing_email') is-invalid @enderror"
+                                                    placeholder="{{ __('Email address') }}" autocomplete="off" value="{{ old('billing_email') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-12 my-3">
@@ -166,17 +166,17 @@
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <input type="text"
-                                                    class="form-control @error('first_name') is-invalid @enderror"
+                                                    class="form-control @error('billing_name') is-invalid @enderror"
                                                     placeholder="{{ __('Full name') }}" required name="billing_name"
-                                                    autocomplete="off">
+                                                    autocomplete="off" value="{{ old('billing_name') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="mb-3 form-group">
                                                 <label class="form-label">{{ __('Address') }} <span
                                                         class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('address') is-invalid @enderror" required name="billing_address" cols="10"
-                                                    rows="2" placeholder="{{ __('Address') }}" autocomplete="off"></textarea>
+                                                <textarea class="form-control @error('billing_address') is-invalid @enderror" required name="billing_address" cols="10"
+                                                    rows="2" placeholder="{{ __('Address') }}" autocomplete="off">{{ old('billing_address') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -185,7 +185,7 @@
                                                     {{ __('Apartment, suite, etc. (optional)') }}
                                                 </label>
                                                 <textarea class="form-control" cols="10" rows="2" name="billing_address_two"
-                                                    placeholder="{{ __('Apartment, suite, etc. (optional)') }}"></textarea>
+                                                    placeholder="{{ __('Apartment, suite, etc. (optional)') }}">{{ old('billing_address_two') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-xl-6">
@@ -193,9 +193,9 @@
                                                 <label class="form-label">{{ __('City') }} <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text"
-                                                    class="form-control @error('city') is-invalid @enderror" required
+                                                    class="form-control @error('billing_city') is-invalid @enderror" required
                                                     name="billing_city" placeholder="{{ __('City') }}"
-                                                    autocomplete="off">
+                                                    autocomplete="off" value="{{ old('billing_city') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-xl-6">
@@ -204,9 +204,9 @@
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <input type="text"
-                                                    class="form-control @error('state') is-invalid @enderror" required
+                                                    class="form-control @error('billing_state') is-invalid @enderror" required
                                                     name="billing_state" placeholder="{{ __('State') }}"
-                                                    autocomplete="off">
+                                                    autocomplete="off" value="{{ old('billing_state') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-xl-6">
@@ -215,7 +215,7 @@
                                                     {{ __('Postal code') }}
                                                 </label>
                                                 <input type="text" class="form-control" name="billing_zipcode"
-                                                    placeholder="{{ __('Postal code') }}">
+                                                    placeholder="{{ __('Postal code') }}" value="{{ old('billing_zipcode') }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-12">
@@ -226,7 +226,7 @@
                                                 </label>
                                                 <div class="form-item">
                                                     <input id="country_selector" required name="billing_country"
-                                                        class="form-control">
+                                                        class="form-control" value="{{ old('billing_country') }}">
                                                     <label for="country_selector" style="display:none;">
                                                         Select a country here
                                                     </label>
@@ -238,7 +238,7 @@
                                                 <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
                                                     <span class="text-danger">*</span></label>
                                                 <input id="billing_phone" required name="billing_phone"
-                                                    class="form-control" type="tel" required value="">
+                                                    class="form-control" type="tel" required value="{{ old('billing_phone') }}">
                                             </div>
                                         </div>
                                     </div>

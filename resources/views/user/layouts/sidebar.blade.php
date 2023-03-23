@@ -178,9 +178,9 @@
                     </li>
                 </ul>
             </nav>
-            <div class="plan_upgrade text-center mb-5">
+            {{-- <div class="plan_upgrade text-center mb-5">
                 <a href="{{ route('user.plans') }}">{{ __('Upgrade Now') }}</a>
-            </div>
+            </div> --}}
         </div>
     </aside>
 @endauth

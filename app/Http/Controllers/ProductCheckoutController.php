@@ -105,23 +105,30 @@ class ProductCheckoutController extends Controller
                         'billing_email'         => $request->billing_email,
                     ]);
                 }else {
-                    $username                   = uniqid().$request->billing_name;
-                    $newuser = DB::table('users')->insertGetId([
-                        'name'                  => $request->billing_name,
-                        'email'                 => $request->billing_email,
-                        'username'              => $username,
-                        'role_id'               => 2,
-                        'user_type'             => 2,
-                        'password'              => Hash::make('password'),
-                        'billing_name'          => $request->billing_name,
-                        'billing_address'       => $request->billing_address,
-                        'billing_city'          => $request->billing_city,
-                        'billing_state'         => $request->billing_state,
-                        'billing_zipcode'       => $request->billing_zipcode,
-                        'billing_country'       => $request->billing_country,
-                        'billing_phone'         => $request->billing_phone,
-                        'billing_email'         => $request->billing_email,
-                    ]);
+
+                    $guestUserExists = DB::table('users')->where('email', $request->billing_email)->first();
+
+                    if($guestUserExists) {
+                        $newuser = $guestUserExists->id;
+                    }else {
+                        $username                   = uniqid().$request->billing_name;
+                        $newuser = DB::table('users')->insertGetId([
+                            'name'                  => $request->billing_name,
+                            'email'                 => $request->billing_email,
+                            'username'              => $username,
+                            'role_id'               => 2,
+                            'user_type'             => 2,
+                            'password'              => Hash::make('password'),
+                            'billing_name'          => $request->billing_name,
+                            'billing_address'       => $request->billing_address,
+                            'billing_city'          => $request->billing_city,
+                            'billing_state'         => $request->billing_state,
+                            'billing_zipcode'       => $request->billing_zipcode,
+                            'billing_country'       => $request->billing_country,
+                            'billing_phone'         => $request->billing_phone,
+                            'billing_email'         => $request->billing_email,
+                        ]);
+                    }
                 }
 
                 $order_Number = uniqid();
