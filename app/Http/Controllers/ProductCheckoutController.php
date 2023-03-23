@@ -105,12 +105,7 @@ class ProductCheckoutController extends Controller
                         'billing_email'         => $request->billing_email,
                     ]);
                 }else {
-
-                    $plan = DB::table('plans')->where('is_free', 1)->where('status', 1)->latest()->first();
-
                     $username                   = uniqid().$request->billing_name;
-                    $term_days                  = $plan->validity;
-
                     $newuser = DB::table('users')->insertGetId([
                         'name'                  => $request->billing_name,
                         'email'                 => $request->billing_email,
@@ -126,14 +121,7 @@ class ProductCheckoutController extends Controller
                         'billing_country'       => $request->billing_country,
                         'billing_phone'         => $request->billing_phone,
                         'billing_email'         => $request->billing_email,
-                        'plan_id'               => $plan->id,
-                        'plan_details'          => json_encode($plan),
-                        'plan_validity'         => Carbon::now()->addDays($plan->validity),
-                        'plan_activation_date'  => Carbon::now(),
-                        'term'                  => $term_days,
-
                     ]);
-
                 }
 
                 $order_Number = uniqid();
@@ -237,7 +225,7 @@ class ProductCheckoutController extends Controller
                 return redirect()->route('home');
             }
         } catch (Exception $error) {
-            dd($error);
+            // dd($error);
             Toastr::error(trans('"Something went wrong!'));
             return redirect()->back();
         }
