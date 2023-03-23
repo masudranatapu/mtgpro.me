@@ -237,4 +237,13 @@ class ProductController extends Controller
         return view('pages.guest_checkout', compact('config', 'products', 'gateways'));
     }
 
+
+    public function guestOrdersInvoice($id)
+    {
+        $order = Order::with('hasCoupon')->find($id);
+        $config = Config::all();
+
+        return view('user.guest-user-invoice', compact('order', 'config'));
+    }
+
 }

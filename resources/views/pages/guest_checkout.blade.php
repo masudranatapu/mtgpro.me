@@ -10,6 +10,7 @@
             box-shadow: rgb(35 46 60 / 4%) 0 2px 4px 0;
             border: 1px solid rgba(101, 109, 119, .16);
         }
+
         .card {
             position: relative;
             display: flex;
@@ -174,8 +175,8 @@
                                             <div class="mb-3 form-group">
                                                 <label class="form-label">{{ __('Address') }} <span
                                                         class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('address') is-invalid @enderror" required name="billing_address" cols="10" rows="2"
-                                                    placeholder="{{ __('Address') }}" autocomplete="off"></textarea>
+                                                <textarea class="form-control @error('address') is-invalid @enderror" required name="billing_address" cols="10"
+                                                    rows="2" placeholder="{{ __('Address') }}" autocomplete="off"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -192,8 +193,9 @@
                                                 <label class="form-label">{{ __('City') }} <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text"
-                                                    class="form-control @error('city') is-invalid @enderror" required name="billing_city"
-                                                    placeholder="{{ __('City') }}" autocomplete="off">
+                                                    class="form-control @error('city') is-invalid @enderror" required
+                                                    name="billing_city" placeholder="{{ __('City') }}"
+                                                    autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-xl-6">
@@ -202,8 +204,9 @@
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <input type="text"
-                                                    class="form-control @error('state') is-invalid @enderror" required name="billing_state"
-                                                    placeholder="{{ __('State') }}" autocomplete="off">
+                                                    class="form-control @error('state') is-invalid @enderror" required
+                                                    name="billing_state" placeholder="{{ __('State') }}"
+                                                    autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-xl-6">
@@ -222,7 +225,8 @@
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="form-item">
-                                                    <input id="country_selector" required name="billing_country" class="form-control">
+                                                    <input id="country_selector" required name="billing_country"
+                                                        class="form-control">
                                                     <label for="country_selector" style="display:none;">
                                                         Select a country here
                                                     </label>
@@ -233,8 +237,8 @@
                                             <div class="mb-3 form-group">
                                                 <label for="billing_phone" class="form-label d-block">{{ __('Phone') }}
                                                     <span class="text-danger">*</span></label>
-                                                <input id="billing_phone" required name="billing_phone" class="form-control"
-                                                    type="tel" required value="">
+                                                <input id="billing_phone" required name="billing_phone"
+                                                    class="form-control" type="tel" required value="">
                                             </div>
                                         </div>
                                     </div>
@@ -428,7 +432,6 @@
     <script src="{{ asset('assets/js/intlTelInput.js') }}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-
         var input = document.querySelector("#billing_phone");
         window.intlTelInput(input, {
             // allowDropdown: false,
@@ -469,6 +472,7 @@
                     $('#stp_billing_email').val($('input[name=billing_email]').val());
                     $('#stp_billing_phone').val($('input[name=billing_phone]').val());
                     $('#stp_billing_address').val($('textarea[name=billing_address]').val());
+                    $('#billing_address_two').val($('textarea[name=billing_address_two]').val());
                     $('#stp_billing_city').val($('input[name=billing_city]').val());
                     $('#stp_billing_state').val($('input[name=billing_state]').val());
                     $('#stp_billing_zipcode').val($('input[name=billing_zipcode]').val());

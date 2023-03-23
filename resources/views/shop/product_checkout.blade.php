@@ -129,7 +129,6 @@
         <div class="content">
             <div class="container">
                 <div class="row g-4">
-
                     <div class="col-lg-7 col-12">
                         <form action="{{ route('product.orderCheckout') }}" id="order-form" method="post">
                             @csrf
@@ -145,7 +144,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="text"
                                                     class="form-control @error('billing_name') is-invalid @enderror"
-                                                    name="billing_name" placeholder="{{ __('Name') }}..." required
+                                                    name="billing_name" placeholder="{{ __('Name') }}" required
                                                     value="{{ $user->billing_name ?? $user->name }}">
                                                 @if ($errors->has('billing_name'))
                                                     <span
@@ -159,7 +158,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="email"
                                                     class="form-control validated @error('billing_email') is-invalid @enderror"
-                                                    name="billing_email" placeholder="{{ __('Email') }}..." required
+                                                    name="billing_email" placeholder="{{ __('Email') }}" required
                                                     value="{{ $user->email }}"
                                                     data-validation-required-message="Please enter your address" required>
                                                 @if ($errors->has('billing_email'))
@@ -173,7 +172,7 @@
                                                 <label class="form-label">{{ __('Address') }} <span
                                                         class="text-danger">*</span></label>
                                                 <textarea class="form-control validated @error('billing_address') is-invalid @enderror" name="billing_address"
-                                                    cols="10" rows="2" placeholder="{{ __('Billing Address') }}..." required>{{ $user->billing_address }}</textarea>
+                                                    cols="10" rows="2" placeholder="{{ __('Address') }}" required>{{ $user->billing_address }}</textarea>
                                                 @if ($errors->has('billing_address'))
                                                     <span
                                                         class="help-block text-danger">{{ $errors->first('billing_address') }}</span>
@@ -195,7 +194,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="text"
                                                     class="form-control @error('billing_city') is-invalid @enderror"
-                                                    name="billing_city" placeholder="{{ __('Billing City') }}..."
+                                                    name="billing_city" placeholder="{{ __('City') }}"
                                                     value="{{ $user->billing_city }}" required>
                                                 @if ($errors->has('billing_city'))
                                                     <span
@@ -210,7 +209,7 @@
                                                 <input type="text"
                                                     class="form-control @error('billing_state') is-invalid @enderror"
                                                     name="billing_state"
-                                                    placeholder="{{ __('Billing State/Province') }}..."
+                                                    placeholder="{{ __('State') }}"
                                                     value="{{ $user->billing_state }}" required>
                                                 @if ($errors->has('billing_state'))
                                                     <span
@@ -224,7 +223,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="text"
                                                     class="form-control @error('billing_zipcode') is-invalid @enderror"
-                                                    name="billing_zipcode" placeholder="{{ __('Billing Zip Code') }}..."
+                                                    name="billing_zipcode" placeholder="{{ __('Zip Code') }}"
                                                     value="{{ $user->billing_zipcode }}" required>
                                                 @if ($errors->has('billing_zipcode'))
                                                     <span
@@ -284,7 +283,6 @@
                                                     type="tel" required value="{{ Auth::user()->billing_phone }}">
                                             </div>
                                         </div>
-
                                         <div class="col-12">
                                             <label for="payment_gateway_id"
                                                 class="form-label d-block">{{ __('Payment method') }} <span
@@ -325,8 +323,6 @@
                                             <button type="submit" id="continuePaypalBtn"
                                                 class="btn btn-primary">{{ __('Continue for payment') }}</button>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -453,27 +449,21 @@
                                                             {{ getprice($total) }}
                                                         </h5>
                                                     @endif
-
                                                 </td>
-
-
                                             </tr>
-
-
                                         </tfoot>
-
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
     @include('shop.pay_with_stripe')
+
 @endsection
 {{-- @dd($config[9]->config_value) --}}
 @push('custom_js')

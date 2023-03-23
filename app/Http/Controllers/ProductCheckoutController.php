@@ -50,6 +50,7 @@ class ProductCheckoutController extends Controller
     {
         try {
 
+
             $config = DB::table('config')->get();
 
             $userData = Auth::user();
@@ -92,6 +93,53 @@ class ProductCheckoutController extends Controller
                     "description"   => env('APP_NAME'),
                 ]);
 
+
+
+                if($userData) {
+                    DB::table('users')->where('id', $userData->id)->update([
+                        'billing_name'          => $request->billing_name,
+                        'billing_address'       => $request->billing_address,
+                        'billing_city'          => $request->billing_city,
+                        'billing_state'         => $request->billing_state,
+                        'billing_zipcode'       => $request->billing_zipcode,
+                        'billing_country'       => $request->billing_country,
+                        'billing_phone'         => $request->billing_phone,
+                        'billing_email'         => $request->billing_email,
+                    ]);
+                }else {
+
+                    $plan = DB::table('plans')->where('is_free', 1)->where('status', 1)->latest()->first();
+
+                    $username =  uniqid().$request->billing_name;
+                    $term_days                  = $plan->validity;
+
+                    $newuser = DB::table('users')->insertGetId([
+
+                        'name'                  => $request->billing_name,
+                        'email'                 => $request->billing_email,
+                        'username'              => $username,
+                        'role_id'               => 2,
+                        'user_type'             => 2,
+                        'password'              => Hash::make('password'),
+                        'billing_name'          => $request->billing_name,
+                        'billing_address'       => $request->billing_address,
+                        'billing_city'          => $request->billing_city,
+                        'billing_state'         => $request->billing_state,
+                        'billing_zipcode'       => $request->billing_zipcode,
+                        'billing_country'       => $request->billing_country,
+                        'billing_phone'         => $request->billing_phone,
+                        'billing_email'         => $request->billing_email,
+
+                        'plan_id'               => $plan->id,
+                        'plan_details'          => json_encode($plan),
+                        'plan_validity'         => Carbon::now()->addDays($plan->validity),
+                        'plan_activation_date'  => Carbon::now(),
+                        'term'                  => $term_days,
+
+                    ]);
+
+                }
+
                 $order_Number = uniqid();
 
                 $order = new Order();
@@ -111,6 +159,7 @@ class ProductCheckoutController extends Controller
                 $order->vat = $vat;
                 $order->shipping_cost = $shipingTotal;
                 $order->grand_total = $totalPrice + $shipingTotal + $vat;
+
                 if (session()->has('coupon')) {
                     if (session('coupon')->discount_type == '1') {
                         $order->discount_percentage = session('coupon')->amount;
@@ -119,7 +168,8 @@ class ProductCheckoutController extends Controller
                         $order->discount = session('coupon')->amount;
                     }
                 }
-                $order->user_id = Auth::id() ?? null;
+
+                $order->user_id = $userData->id ?? $newuser;
                 $order->order_date = now();
                 $order->payment_method = "Stripe";
                 $order->payment_status = $charge->status == "succeeded" ? true : false;
@@ -135,7 +185,7 @@ class ProductCheckoutController extends Controller
                     $prderProducts->quantity = $details['quantity'];
                     $prderProducts->unit_price = $details['price'];
                     $prderProducts->free_credit = 0;
-                    $prderProducts->created_by = Auth::id() ?? null ;
+                    $prderProducts->created_by = $userData->id ?? $newuser;
                     $prderProducts->updated_at = now();
                     $prderProducts->save();
                 }
@@ -154,7 +204,7 @@ class ProductCheckoutController extends Controller
 
                 $invoice_details['to_billing_name']             = $request->billing_name;
                 $invoice_details['to_billing_address']          = $request->billing_address;
-                $invoice_details['billing_address_two']          = $request->billing_address_two;
+                $invoice_details['billing_address_two']         = $request->billing_address_two;
                 $invoice_details['to_billing_city']             = $request->billing_city;
                 $invoice_details['to_billing_state']            = $request->billing_state;
                 $invoice_details['to_billing_zipcode']          = $request->billing_zipcode;
@@ -171,51 +221,19 @@ class ProductCheckoutController extends Controller
                 $invoice_details['subtotal']                    = $charge->balance_transaction;
                 $invoice_details['tax_amount']                  = 0;
 
-                if($userData) {
-                    DB::table('users')->where('id', $userData->id)->update([
-                        'billing_name'          => $request->billing_name,
-                        'billing_address'       => $request->billing_address,
-                        'billing_city'          => $request->billing_city,
-                        'billing_state'         => $request->billing_state,
-                        'billing_zipcode'       => $request->billing_zipcode,
-                        'billing_country'       => $request->billing_country,
-                        'billing_phone'         => $request->billing_phone,
-                        'billing_email'         => $request->billing_email,
-                    ]);
-                }else {
-                    $username =  uniqid().$request->billing_name;
-                    $newuser = DB::table('users')->insertGetId([
-                        'name'                  => $request->billing_name,
-                        'email'                 => $request->billing_email,
-                        'username'              => $username,
-                        'role_id'               => 2,
-                        'user_type'             => 2,
-                        'password'              => Hash::make('password'),
-                        'plan_id'               => 1,
-                        'billing_name'          => $request->billing_name,
-                        'billing_address'       => $request->billing_address,
-                        'billing_city'          => $request->billing_city,
-                        'billing_state'         => $request->billing_state,
-                        'billing_zipcode'       => $request->billing_zipcode,
-                        'billing_country'       => $request->billing_country,
-                        'billing_phone'         => $request->billing_phone,
-                        'billing_email'         => $request->billing_email,
-                    ]);
-                }
-
                 $transaction = new Transaction();
                 $transaction->invoice_number        = uniqid();
                 $transaction->transaction_date      = date('Y-m-d H:i:s');
                 $transaction->transaction_id        = $charge->balance_transaction;
-                $transaction->user_id               = Auth::user()->id ?? $newuser;
-                $transaction->order_id               = $order->id;
+                $transaction->user_id               = $userData->id ?? $newuser;
+                $transaction->order_id              = $order->id;
                 $transaction->desciption            = "from order " . $order->id;
                 $transaction->payment_gateway_name  = "Stripe";
                 $transaction->transaction_amount    = $charge->amount;
                 $transaction->transaction_currency  = $charge->currency;
                 $transaction->invoice_details       = json_encode($invoice_details);
                 $transaction->payment_status        = "Success";
-                $transaction->created_at = Carbon::now();
+                $transaction->created_at            = Carbon::now();
                 $transaction->save();
                 //update user
             } else {
@@ -227,11 +245,13 @@ class ProductCheckoutController extends Controller
             Toastr::error(trans('"Something went wrong!'));
             return redirect()->back();
         }
+
         Toastr::success(trans('Product purchase successfully done!'));
         Session::forget('cart');
         if (session()->has('coupon')) {
             Session::forget('coupon');
         }
+
         Mail::to($request->billing_email)->send(new \App\Mail\ProductOrderInvoice($transaction, $order));
         [$content, $subject] = $this->productPurchaseMail($transaction);
         Mail::to($request->billing_email)->send(new AllMail($content, $subject));
@@ -239,11 +259,15 @@ class ProductCheckoutController extends Controller
 
         $adminNotifySubject = "Product purchase notification";
         $adminNotifyContent = $request->billing_name . " has purchased products.";
+
         Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent));
         Mail::to($settings->support_email)->send(new SendEmailInvoiceAdmin($transaction, $order));
 
-
-        return redirect()->route('user.orders.invoice', ['id' => $order->id]);
+        if($userData) {
+            return redirect()->route('user.orders.invoice', ['id' => $order->id]);
+        }else {
+            return redirect()->route('guest.orders.invoice', ['id' => $order->id]);
+        }
     }
 
 

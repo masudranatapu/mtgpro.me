@@ -65,6 +65,7 @@ Route::post('check/coupon', ['as' => 'check.coupon', 'uses' => 'ProductControlle
 Route::post('remove/coupon', ['as' => 'remove.coupon', 'uses' => 'ProductController@removeCoupon']);
 // guestcheckout
 Route::get('guest/checkout', ['as' => 'guest.checkout', 'uses' => 'ProductController@guestCheckout']);
+Route::get('guest/orders/invoice/{id}', ['as' => 'guest.orders.invoice', 'uses' => 'ProductController@guestOrdersInvoice']);
 // auth checkout
 Route::get('products/checkout', ['as' => 'product.checkout', 'uses' => 'ProductCheckoutController@checkout']);
 Route::post('products/transection', ['as' => 'product.orderCheckout', 'uses' => 'ProductCheckoutController@orderCheckout']);

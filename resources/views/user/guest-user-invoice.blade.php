@@ -59,8 +59,6 @@
             height: 80px;
         }
 
-
-
         .content-header {
             padding: 0px 1.5rem 22px 1.5rem !important;
         }
@@ -96,7 +94,6 @@
                 <div class="row" id="default">
                     <div class="col-12">
                         <div class="card invoice_wrap" id="printableArea">
-
                             <div class="card-body" style="padding-left: 5%; padding-right:5%">
                                 <div class="row mb-3">
                                     <div class="col-6">
@@ -118,38 +115,40 @@
                                     $invoieDetails = json_decode($order->transaction->invoice_details, true);
                                     // dd($invoieDetails);
                                 @endphp
-                                <div class="invoice"
-                                    style="border-style: solid;border-width: 2px 0px; padding:2%; border-color:darkgray">
+                                <div class="invoice" style="border-style: solid;border-width: 2px 0px; padding:2%; border-color:darkgray">
                                     <div class="row">
                                         <div class="col-7">
                                             <div class="invoice_title">
                                                 <h2><strong>INVOICE</strong></h2>
                                                 <span>Invoice No.</span>
                                                 <strong>{{ $order->order_number }}</strong> <br>
-
-                                                <p><b>Date:
-                                                        {{ date('d M Y', strtotime($order->transaction->transaction_date)) }}</b>
+                                                <p>
+                                                    <b>
+                                                        Date:
+                                                        {{ date('d M Y', strtotime($order->transaction->transaction_date)) }}
+                                                    </b>
                                                 </p>
-
-                                                <p>Status: <strong
-                                                        class="text-success">{{ $order->transaction->payment_status }}</strong>
+                                                <p>
+                                                    Status:
+                                                    <strong class="text-success">
+                                                        {{ $order->transaction->payment_status }}
+                                                    </strong>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="col-5" style="text-align: right;">
                                             <div class="invoice_info">
-                                                <p>SOLD TO:</p>
+                                                <p>Sold to:</p>
                                                 <span class="h4">
                                                     <strong>
-                                                        Modern Contact Solutions For Today's Mortgage Professional
+                                                        {{ $invoieDetails['to_billing_name'] }}
                                                     </strong>
                                                 </span>
                                                 <address>
-                                                    {{ $invoieDetails['from_billing_name'] }}</br>
-                                                    {{ $invoieDetails['from_billing_email'] }}</br>
-                                                    {{ $invoieDetails['from_billing_address'] }}</br>
-                                                    {{ $invoieDetails['from_billing_state'] }}</br>
-                                                    {{ $invoieDetails['from_billing_phone'] }}</br>
+                                                    {{ $invoieDetails['to_billing_email'] }}</br>
+                                                    {{ $invoieDetails['to_billing_phone'] }}</br>
+                                                    {{ $invoieDetails['to_billing_address'] }}</br>
+                                                    {{ $invoieDetails['to_billing_state'] }}</br>
                                                 </address>
                                             </div>
                                         </div>
@@ -166,7 +165,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @if (isset($order->order_details) && count($order->order_details) > 0)
                                                 @foreach ($order->order_details as $key => $detail)
                                                     <tr>
@@ -178,7 +176,6 @@
                                                     </tr>
                                                 @endforeach
                                             @endif
-
                                             @if (isset($order->coupon_id))
                                                 <tr>
                                                     <td colspan="2"></td>
@@ -194,7 +191,8 @@
                                                             @else
                                                                 0
                                                             @endif
-                                                        </strong></td>
+                                                        </strong>
+                                                    </td>
                                                 </tr>
                                             @endif
                                             <tr>
@@ -247,10 +245,10 @@
                                                 </td>
                                             </tr>
                                             {{-- <tr>
-                                            <td colspan="2"></td>
-                                            <td><strong>Balance Due:</strong></td>
-                                            <td class="text-success"> 0.00 AUD </td>
-                                        </tr> --}}
+                                                <td colspan="2"></td>
+                                                <td><strong>Balance Due:</strong></td>
+                                                <td class="text-success"> 0.00 AUD </td>
+                                            </tr> --}}
                                         </tbody>
                                     </table>
                                 </div>

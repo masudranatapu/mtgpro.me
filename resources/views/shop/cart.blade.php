@@ -73,43 +73,41 @@
                                     <td class="text-center">{{ getPrice($total) }}</td>
                                     <td></td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        @if (session()->has('coupon'))
-                                            <p>Remove coupon</p>
-                                        @else
-                                            <p>Apply coupon</p>
-                                        @endif
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td colspan="2">
-
-                                        <input type="text" class="form-control"
-                                            @if (session()->has('coupon')) disabled @endif id="couponCode"
-                                            value="{{ session('coupon')->coupon_code ?? '' }}"
-                                            placeholder="Enter coupon code">
-
-                                    </td>
-
-                                    <td id="cupponPrice" class="text-center">
-                                        @if (session()->has('coupon'))
-                                            @if (session('coupon')->discount_type == '0')
-                                                - {{ getPrice(session('coupon')->amount) }}
-                                            @elseif (session('coupon')->discount_type == '1')
-                                                - {{ getPrice(($total * session('coupon')->amount) / 100) }}
+                                @auth
+                                    <tr>
+                                        <td colspan="2">
+                                            @if (session()->has('coupon'))
+                                                <p>Remove coupon</p>
+                                            @else
+                                                <p>Apply coupon</p>
                                             @endif
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if (session()->has('coupon'))
-                                            <button type="button" class="btn btn-primary" id="couponRemove">Remove</button>
-                                        @else
-                                            <button type="button" class="btn btn-primary" id="couponApply">Apply</button>
-                                        @endif
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">
+                                            <input type="text" class="form-control"
+                                                @if (session()->has('coupon')) disabled @endif id="couponCode"
+                                                value="{{ session('coupon')->coupon_code ?? '' }}"
+                                                placeholder="Enter coupon code">
+
+                                        </td>
+                                        <td id="cupponPrice" class="text-center">
+                                            @if (session()->has('coupon'))
+                                                @if (session('coupon')->discount_type == '0')
+                                                    - {{ getPrice(session('coupon')->amount) }}
+                                                @elseif (session('coupon')->discount_type == '1')
+                                                    - {{ getPrice(($total * session('coupon')->amount) / 100) }}
+                                                @endif
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (session()->has('coupon'))
+                                                <button type="button" class="btn btn-primary" id="couponRemove">Remove</button>
+                                            @else
+                                                <button type="button" class="btn btn-primary" id="couponApply">Apply</button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endauth
                                 <tr>
                                     <td colspan="4" class="text-end">
                                         <h5><strong>Vat : </strong></h5>
