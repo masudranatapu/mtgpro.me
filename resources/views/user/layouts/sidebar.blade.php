@@ -167,11 +167,13 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="{{ url('/') }}" target="_blank" class="nav-link">
-                            <span class="icon">
-                                <img src="{{ asset('assets/img/icon/website.svg') }}" alt="{{ __('WebSite') }}">
-                            </span>
+                        <a href="{{ url('/') }}" class="nav-link">
                             {{ __('WebSite') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('shop') }}" class="nav-link">
+                            {{ __('Shop') }}
                         </a>
                     </li>
                 </ul>
