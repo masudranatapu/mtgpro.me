@@ -184,8 +184,10 @@ float: right;
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('user.orders.invoice', $value->id) }}"
-                                            class="btn btn-sm btn-success">Invoice<a>
+                                        <a href="{{ route('user.orders.invoice', $value->order_number) }}"
+                                            class="btn btn-sm btn-success">
+                                            Invoice
+                                        <a>
                                     </td>
                                 </tr>
                                 @empty

@@ -16,6 +16,7 @@ use App\Models\Config;
 use App\Models\HistoryCardBrowsing;
 use App\Models\HistoryCardDownload;
 use App\Models\HistoryQrDownload;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardControler extends Controller
@@ -150,10 +151,14 @@ class DashboardControler extends Controller
 
     public function invoice($id)
     {
-        $order = Order::with('hasCoupon')->find($id);
+        $order = Order::with('hasCoupon')->where('order_number', $id)->first();
         $config = Config::all();
-
-        return view('user.user-invoice', compact('order', 'config'));
+        if($order) {
+            return view('user.user-invoice', compact('order', 'config'));
+        }else {
+            Toastr::error('Order info not defind!');
+            return redirect()->route('user.card');
+        }
     }
 
     public function suggestFeature()

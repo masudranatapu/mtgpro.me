@@ -257,9 +257,9 @@ class ProductCheckoutController extends Controller
         Mail::to($settings->support_email)->send(new SendEmailInvoiceAdmin($transaction, $order));
 
         if($userData) {
-            return redirect()->route('user.orders.invoice', ['id' => $order->id]);
+            return redirect()->route('user.orders.invoice', ['id' => $order->order_number]);
         }else {
-            return redirect()->route('guest.orders.invoice', ['id' => $order->id]);
+            return redirect()->route('guest.orders.invoice', ['id' => $order->order_number]);
         }
     }
 

@@ -245,10 +245,14 @@ class ProductController extends Controller
 
     public function guestOrdersInvoice($id)
     {
-        $order = Order::with('hasCoupon')->find($id);
+        $order = Order::with('hasCoupon')->where('order_number', $id)->first();
         $config = Config::all();
-
-        return view('user.guest-user-invoice', compact('order', 'config'));
+        if($order) {
+            return view('user.guest-user-invoice', compact('order', 'config'));
+        }else {
+            Toastr::error('Order info not defind!');
+            return redirect()->route('home');
+        }
     }
 
 }
