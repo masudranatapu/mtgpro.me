@@ -383,7 +383,7 @@ class CardController extends ResponceController
 
             // $contact->type == 'link') &&  ($contact->icon_name == 'embeddedvideo')
             if (($social_icon->type == 'link')  &&  ($social_icon->icon_name == 'embeddedvideo')) {
-                $icon->content =  $this->getYoutubeEmbad($request->content);
+                $icon->content =  $this->businessCard->getYoutubeEmbad($request->content);
             } elseif ($request->hasFile('content')) {
 
                 $icons = $this->uploadBase64FileToPublic($request->content, "/cardContent");
