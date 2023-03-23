@@ -147,7 +147,8 @@ class ProductCheckoutController extends Controller
                 $order->quantity = $totalQuantity;
 
                 if (session()->has('coupon')) {
-                    $order->coupon_discount = session('coupon')->amount;
+                    // dd(session('coupon'));
+                    $order->coupon_discount = session('coupon')->amount ?? 0;
                     $order->coupon_id = session('coupon')->id;
                 } else {
                     $order->coupon_discount = 0;
@@ -188,8 +189,8 @@ class ProductCheckoutController extends Controller
                     $prderProducts->created_by = $userData->id ?? $newuser;
                     $prderProducts->updated_at = now();
                     $prderProducts->save();
-                }
 
+                }
 
                 $invoice_details['from_billing_name']           = $config[16]->config_value;
                 $invoice_details['from_billing_address']        = $config[19]->config_value;
@@ -200,7 +201,6 @@ class ProductCheckoutController extends Controller
                 $invoice_details['from_vat_number']             = $config[26]->config_value;
                 $invoice_details['from_billing_phone']          = $config[18]->config_value;
                 $invoice_details['from_billing_email']          = $config[17]->config_value;
-
 
                 $invoice_details['to_billing_name']             = $request->billing_name;
                 $invoice_details['to_billing_address']          = $request->billing_address;
@@ -247,7 +247,9 @@ class ProductCheckoutController extends Controller
         }
 
         Toastr::success(trans('Product purchase successfully done!'));
+
         Session::forget('cart');
+
         if (session()->has('coupon')) {
             Session::forget('coupon');
         }
