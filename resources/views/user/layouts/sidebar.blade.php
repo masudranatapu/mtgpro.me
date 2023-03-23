@@ -178,7 +178,6 @@
                     </li>
                 </ul>
             </nav>
-            <!-- upgrade plan -->
             <div class="plan_upgrade text-center mb-5">
                 <a href="{{ route('user.plans') }}">{{ __('Upgrade Now') }}</a>
             </div>
