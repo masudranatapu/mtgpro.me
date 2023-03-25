@@ -52,7 +52,8 @@ class UserController extends ResponceController
             $check->is_token_active     = 1;
             $check->token_expire_at    = \Carbon\Carbon::now()->addMinute(60)->format('Y-m-d H:i:s');
             $check->save();
-            $link = URL::to('/') . '/user/password/password-reset/' . $token . '?email=' . Auth::guard('api')->user()->email;
+            $link = URL::to('/') . '/password/reset/' . $token . '?email=' . Auth::guard('api')->user()->email;
+            Log::alert($link);
             $data['subject'] = 'Reset Password Notification from ' . $this->settings->site_name;
             $data['user'] = $check;
             $data['link'] = $link;
@@ -165,6 +166,7 @@ class UserController extends ResponceController
         $validate = Validator::make($request->all(), [
             'current_val' => 'required'
         ]);
+        Log::alert($request->all());
 
         if ($validate->fails()) {
             return $this->sendError('Validation Error', $validate->errors()->first(), 200);
@@ -173,7 +175,7 @@ class UserController extends ResponceController
 
         DB::beginTransaction();
         try {
-            DB::table('users')->where('id', Auth::guard('api')->user()->id)->update(['is_notify' => $request->current_val]);
+            DB::table('users')->where('id', Auth::guard('api')->user()->id)->update(['is_notify' => $request->current_val == "true" ? true : false]);
         } catch (\Throwable $th) {
             DB::rollback();
             return $this->sendError('Excepton Error', 'Something wrong! Please try again', 200);
@@ -440,7 +442,7 @@ class UserController extends ResponceController
 
     public function profileUpdate(Request $request)
     {
-
+        Log::alert($request->all());
         $validator = Validator::make($request->all(), [
             "profile_pic" => 'sometimes',
             "email" => 'required|email',
@@ -475,7 +477,7 @@ class UserController extends ResponceController
             $user->updated_at   = date("Y-m-d H:i:s");
             $user->user_disclaimer   = $request->user_disclaimer;
 
-            
+
             $user->save();
         } catch (\Exception $e) {
             DB::rollback();
