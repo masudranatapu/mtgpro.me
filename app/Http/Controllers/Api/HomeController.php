@@ -155,20 +155,13 @@ class HomeController extends ResponceController
 
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);
-            if (Auth::guard('api')->user() && ($cardinfo->user_id == Auth::guard('api')->id())) {
-
-                // if($cardinfo->status == 0){
-                //     Toastr::warning('This card is not active now');
-                //     return redirect()->route('home');
-                // }
-                if ($cardinfo->status == 2) {
-
-                    return $this->sendError('Exception Error', 'This card is not available');
-                }
+            if ($cardinfo->status == 2) {
+                //deleted
+                return $this->sendError('Exception Error', 'This card is not available');
             }
+
             return $this->sendResponse(200, "User Card Revirw", $cardinfo, true, []);
         } else {
-
 
             return $this->sendError('Exception Error', 'This card is not available please create your desired card');
         }

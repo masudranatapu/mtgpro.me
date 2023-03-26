@@ -237,11 +237,7 @@ class HomeController extends Controller
 
         if ($cardinfo) {
 
-            // if(checkPackageValidity($cardinfo->user_id) == false){
 
-            //     dd(checkPackageValidity($cardinfo->user_id));
-
-            // }
             $cardinfo->contacts = DB::table('business_fields')
                 ->leftJoin('social_icon as si', 'si.id', '=', 'business_fields.icon_id')
                 ->select('business_fields.*', 'si.icon_title', 'si.icon_name', 'si.icon_color', 'si.main_link', 'si.is_paid')
@@ -251,25 +247,19 @@ class HomeController extends Controller
                 ->get();
 
 
-
-
             $user = User::find($cardinfo->user_id);
             $url = url($cardinfo->card_url);
-            if (Auth::user() && ($cardinfo->user_id == Auth::id())) {
-            } else {
-                // if($cardinfo->status == 0){
-                //     Toastr::warning('This card is not active now');
-                //     return redirect()->route('home');
-                // }
-                if ($cardinfo->status == 2) {
-                    Toastr::warning('This card is not available');
-                    return redirect()->route('home');
-                }
+
+            if ($cardinfo->status == 2) {
+                //deleted
+                // Toastr::warning('This card is not available');
+                return redirect()->route('home');
             }
+
             return view('card_preview', compact('cardinfo', 'user', 'cardurl'));
         } else {
 
-            Toastr::warning('This card is not available please create your desired card');
+            // Toastr::warning('This card is not available please create your desired card.');
             // return redirect()->route('user.card.create');
             abort(404);
         }
