@@ -402,7 +402,8 @@ class AuthController extends ResponceController
             "nmls_id" => $user->nmls_id,
             "nmls_view" => $user->nmls_view,
             "quick_application" => $user->quick_application,
-            "profile_image_url" => asset('assets/img/default-profile.png'),
+            "profile_image_url" => $user->profile_image ?? asset('assets/img/default-profile.png')
+
 
 
         ];
@@ -419,13 +420,7 @@ class AuthController extends ResponceController
 
         $message = "Successfully Login";
         return $this->sendResponse(200, $message, $data);
-        // return response()->json([
-        //     'access_token' => $token,
-        //     'user' => $this->authApiGuard->user(),
-        //     'token_type' => 'bearer',
-        //     'expires_in' => $this->authApiGuard->factory()->getTTL() * 60 * 24 * 30
-        //     'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
-        // ]);
+        
     }
 
     public function socialLogin(Request $request)
@@ -515,7 +510,7 @@ class AuthController extends ResponceController
 
     public function passwordReset(Request $request)
     {
-        $validate = Validator::make($request->email, [
+        $validate = Validator::make($request->all(), [
 
             'email' => "required|string|max:100|email|",
 
