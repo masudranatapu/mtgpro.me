@@ -30,6 +30,7 @@ Route::group([
 
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register',  [AuthController::class, 'register']);
+    Route::post('reset-password',  [AuthController::class, 'passwordReset']);
 });
 
 Route::get('/general-settings', [HomeController::class, 'getSettings']);

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -30,6 +31,7 @@ class AuthController extends ResponceController
     public $authApiGuard;
     protected $user;
     protected $plan;
+    protected $settings;
     protected $businessCard;
     public function __construct(
         User            $user,
@@ -37,9 +39,10 @@ class AuthController extends ResponceController
         BusinessCard    $businessCard
     ) {
         $this->user     = $user;
+        $this->settings = getSetting();
         $this->plan     = $plan;
         $this->businessCard = $businessCard;
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'socialLogin']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'socialLogin', 'passwordReset']]);
         $this->authApiGuard = auth()->guard('api');
 
         $link = Setting::first();
@@ -200,7 +203,7 @@ class AuthController extends ResponceController
                 "updated_at" => $user->updated_at,
                 "created_at" => $user->created_at,
                 "card_count" => count($user->hasCards) > 0 ? count($user->hasCards) : 0,
-                "profile_image_url" => getPhoto($user->profile_image)
+                "profile_image_url" => $user->profile_image ?? asset('assets/img/default-profile.png'),
 
 
             ];
@@ -319,7 +322,7 @@ class AuthController extends ResponceController
             "nmls_id" => $user->nmls_id,
             "nmls_view" => $user->nmls_view,
             "quick_application" => $user->quick_application,
-            "profile_image_url" => getPhoto($user->profile_image)
+            "profile_image_url" => $user->profile_image ?? asset('assets/img/default-profile.png')
 
 
         ];
@@ -399,7 +402,7 @@ class AuthController extends ResponceController
             "nmls_id" => $user->nmls_id,
             "nmls_view" => $user->nmls_view,
             "quick_application" => $user->quick_application,
-            "profile_image_url" => getPhoto($user->profile_image)
+            "profile_image_url" => asset('assets/img/default-profile.png'),
 
 
         ];
@@ -508,5 +511,69 @@ class AuthController extends ResponceController
             }
         }
         return [$content, $mail->subject];
+    }
+
+    public function passwordReset(Request $request)
+    {
+        $validate = Validator::make($request->email, [
+
+            'email' => "required|string|max:100|email|",
+
+        ]);
+
+
+        if ($validate->fails()) {
+
+
+            return $this->sendError("Validation Error", $validate->errors()->first());
+        }
+
+
+        $data = [];
+        DB::begintransaction();
+        try {
+            $token = Str::random(60);
+            $check = User::where('email', $request->email)->first();
+            if (empty($check) || $check->count() == 0) {
+                return response()->json(['status' => 0, 'message' => 'User account not found ! !'], 401);
+            }
+            $check->token               = $token;
+            $check->is_token_active     = 1;
+            $check->token_expire_at    = \Carbon\Carbon::now()->addMinute(60)->format('Y-m-d H:i:s');
+            $check->save();
+            $link = URL::to('/') . '/password/reset/' . $token . '?email=' . $request->email;
+            Log::alert($link);
+            $data['subject'] = 'Reset Password Notification from ' . $this->settings->site_name;
+            $data['user'] = $check;
+            $data['link'] = $link;
+            // Mail::to($request->email)->send(new ResetEmail($data));
+            [$content, $subject] = $this->passwordResetMail($check, $link);
+
+            Mail::to($request->email)->send(new AllMail($content, $subject));
+        } catch (Exception $e) {
+
+            DB::rollback();
+            return $this->sendError('Excepton Error', 'Something went wrong please try again !', 200);
+        }
+        DB::commit();
+        return $this->sendResponse(200, 'We have e-mailed your password reset link!', [], true, []);
+    }
+
+    public function passwordResetMail(User $user, $link)
+    {
+        $mailTemplate = EmailTemplate::where('slug', 'password-reset')->first();
+        $content = $mailTemplate->body;
+
+
+        if (isset($user)) {
+
+            $content = preg_replace("/{{name}}/", $user->name, $content);
+        }
+        if (isset($link)) {
+
+            $content = preg_replace("/{{link}}/", $link, $content);
+        }
+
+        return [$content, $mailTemplate->subject];
     }
 }
