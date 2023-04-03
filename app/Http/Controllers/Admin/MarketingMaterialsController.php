@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use File;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Models\MarketingMaterials;
 use Illuminate\Support\Facades\DB;

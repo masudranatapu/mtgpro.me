@@ -52,7 +52,7 @@
                                         <th style="width:10%">{{ __('Sl') }}</th>
                                         <th style="width:20%">{{ __('Card Title') }}</th>
                                         <th style="width:15%">{{ __('Number Of Visits') }}</th>
-                                        <th style="width:10%">{{ __('Device Id') }}</th>
+                                        {{-- <th style="width:10%">{{ __('Device Id') }}</th> --}}
                                         <th style="width:15%">{{ __('Ip Address') }}</th>
                                         <th style="width:10%">{{ __('User Agent') }}</th>
                                         <th style="width:20%">{{ __('Address') }}</th>
@@ -65,7 +65,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $history->hasCard->card_for ?? '' }}</td>
                                             <td>{{ $history->counter }}</td>
-                                            <td>{{ $history->device_id ?? '' }}</td>
+                                            {{-- <td>{{ $history->device_id ?? '' }}</td> --}}
                                             <td>{{ $history->ip_address ?? '' }}</td>
                                             <td>{{ $history->user_agent ?? '' }}</td>
                                             <td>{{ $history->city ? $history->city . ' ,' : '' }}

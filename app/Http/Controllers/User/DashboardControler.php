@@ -67,6 +67,7 @@ class DashboardControler extends Controller
     {
 
         $userCards = BusinessCard::where('user_id', Auth::id())->pluck('id')->toArray();
+
         $histories = HistoryCardBrowsing::with('hasCard')->whereIn('card_id', $userCards)->paginate(10);
         return view('user.card_view_history', compact('histories'));
     }
@@ -153,9 +154,9 @@ class DashboardControler extends Controller
     {
         $order = Order::with('hasCoupon')->where('order_number', $id)->first();
         $config = Config::all();
-        if($order) {
+        if ($order) {
             return view('user.user-invoice', compact('order', 'config'));
-        }else {
+        } else {
             Toastr::error('Order info not defind!');
             return redirect()->route('user.card');
         }

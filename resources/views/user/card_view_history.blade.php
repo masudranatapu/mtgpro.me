@@ -13,8 +13,6 @@
             color: #bdbdbd;
             background-color: #fff;
             border: 1px solid #dee2e6;
-
-
         }
 
         .pagination .page-item.active .page-link {
@@ -38,7 +36,7 @@
 
                     <div class="col-sm-12 d-flex justify-content-between">
                         <h1 class="m-0">{{ __('Card View History') }}</h1>
-                        <a href="{{ route('user.insights') }}" class="btn btn-primary">Back</a>
+                        <a class="btn btn-primary" href="{{ route('user.insights') }}">Back</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +53,7 @@
                                         <th style="width:5%">{{ __('Sl') }}</th>
                                         <th style="width:15%">{{ __('Card Title') }}</th>
                                         <th style="width:15%">{{ __('Number Of Visits') }}</th>
-                                        <th style="width:15%">{{ __('Device Id') }}</th>
+                                        {{-- <th style="width:15%">{{ __('Device Id') }}</th> --}}
                                         <th style="width:15%">
                                             {{-- {{ __('Ip Address') }} --}}
                                             TimeZone
@@ -71,7 +69,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $history->hasCard->card_for ?? '' }}</td>
                                             <td>{{ $history->counter }}</td>
-                                            <td>{{ $history->device_id ?? '' }}</td>
+                                            {{-- <td>{{ $history->device_id ?? '' }}</td> --}}
                                             <td>
                                                 <span class="d-block">{{ $history->timezone }}</span>
                                                 @if (!empty($history->updated_at))

@@ -153,12 +153,12 @@ class HomeController extends Controller
 
     public function getPreview($cardurl)
     {
-        $user = DB::table('users')->where('status',1)->where('username', $cardurl)->first();
+        $user = DB::table('users')->where('status', 1)->where('username', $cardurl)->first();
 
         if ($user == null) {
             $cardinfo = BusinessCard::select('business_cards.*', 'plans.plan_name', 'plans.hide_branding', 'users.connection_title')
                 ->where('business_cards.card_url', $cardurl)
-                ->where('users.status',1)
+                ->where('users.status', 1)
                 ->leftJoin('users', 'users.id', 'business_cards.user_id')
                 ->leftJoin('plans', 'plans.id', 'users.plan_id')
                 ->first();
@@ -179,21 +179,26 @@ class HomeController extends Controller
 
             //browsing history
             if ($cardinfo) {
-                // $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
 
-                $runfile = 'http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR'];
+                $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
+                // $brwInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=178.128.209.222'));
 
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $runfile);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                $brwInfo = curl_exec($ch);
-                curl_close($ch);
+
+                // // $runfile = 'http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR'];
+                // $runfile = 'http://www.geoplugin.net/php.gp?ip=178.128.209.222';
+
+                // $ch = curl_init();
+                // curl_setopt($ch, CURLOPT_URL, $runfile);
+                // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                // $brwInfo = curl_exec($ch);
+                // curl_close($ch);
+                dd($brwInfo);
 
 
                 $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $new_history['user_agent'] = $this->user->getBrowser();
-                // dd($location->timezone);
                 if ($brwInfo) {
+
 
                     $new_history['city']            = $brwInfo['geoplugin_city'] ?? "";
                     $new_history['region']          = $brwInfo['geoplugin_region'] ?? "";
@@ -219,7 +224,7 @@ class HomeController extends Controller
                     ->where(['card_id' => $cardinfo->id, 'ip_address' => $_SERVER['REMOTE_ADDR']])
                     ->first();
 
-                if ($history) {
+                if (isset($history)) {
                     $counter = $history->counter + 1;
                     DB::table('history_card_browsing')->where('id', $history->id)->update(
                         [
@@ -395,7 +400,7 @@ class HomeController extends Controller
                     $new_history['country_name']    = $brwInfo['geoplugin_countryName'];
                     $new_history['continent_name']  = $brwInfo['geoplugin_continentName'];
                     $new_history['timezone']        = $brwInfo['geoplugin_timezone'];
-                    $new_history['created_at']      = $brwInfo['geoplugin_timezone'];
+                    $new_history['created_at']      =  now();
                 }
                 $new_history['card_id'] = $card->id;
                 if (Auth::guard('web')->user()) {
@@ -587,29 +592,24 @@ class HomeController extends Controller
 
             $category = TutorialCategory::where('slug', request()->category)->first();
 
-            if(request()->category == 'select_all_tutorials') {
+            if (request()->category == 'select_all_tutorials') {
 
                 $tutorials->get();
-
-            }else {
+            } else {
 
                 $tutorials->where('category_id', $category->id);
-
             }
-        } else if(request()->has('tags')){
+        } else if (request()->has('tags')) {
 
             $tutorials->whereJsonContains('tags', ['value' => request()->tags]);
-
         } else {
 
             $tutorials->get();
-
         }
 
         $tutorials = $tutorials->paginate(6);
 
         return view('pages.tutorials', compact('tutorials', 'categories'));
-
     }
 
     public function tutorialDetails($slug)
@@ -700,10 +700,8 @@ class HomeController extends Controller
         return [$mailcontent, $mailMesssage->subject];
     }
 
-    public function getAllpage($slug){
-
-
-
+    public function getAllpage($slug)
+    {
     }
 
 
