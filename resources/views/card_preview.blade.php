@@ -18,25 +18,25 @@
     if ($cardinfo->profile) {
         $settings->favicon = $cardinfo->profile;
     }
-
+    
     if (isFreePlan($cardinfo->user_id)) {
         $title = $user_name . ' - ' . $settings->site_name;
     } else {
         $title = $user_name;
     }
-    $android    = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
-    $iphone     = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
-    $ipad       = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
+    $android = stripos($_SERVER['HTTP_USER_AGENT'], 'android');
+    $iphone = stripos($_SERVER['HTTP_USER_AGENT'], 'iphone');
+    $ipad = stripos($_SERVER['HTTP_USER_AGENT'], 'ipad');
     $phone_number = $email = null;
-
+    
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }} </title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
+    <link type="image/png" href="{{ asset($settings->favicon) }}" rel="icon" sizes="32x32">
     @if (!empty($twitter_id))
-    <meta name="twitter:site" content="{{ '@' . $twitter_id }}" />
-    <meta name="twitter:creator" content="{{ '@' . $twitter_id }}" />
+        <meta name="twitter:site" content="{{ '@' . $twitter_id }}" />
+        <meta name="twitter:creator" content="{{ '@' . $twitter_id }}" />
     @endif
     <meta name="description" content="{{ $description }}" />
     <meta property="og:title" content="{{ $user_name }}" />
@@ -48,7 +48,7 @@
     <meta property="og:type" content="profile" />
     <meta property="profile:first_name" content="{{ $cardinfo->title }}" />
     @if (!empty($cardinfo->title2))
-    <meta property="profile:last_name" content="{{ $cardinfo->title2 }}" />
+        <meta property="profile:last_name" content="{{ $cardinfo->title2 }}" />
     @endif
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -58,50 +58,175 @@
     <meta name="twitter:image:alt" content="{{ $user_name }}'s profile picture" />
     <meta property="twitter:url" content="{{ Request::url() }}" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/card-style.css') }}?v=2">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+    <link href="{{ asset('assets/css/toastr.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/card-style.css') }}?v=2" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+        rel="stylesheet" />
     @if ($cardinfo->theme_color)
-    <style>
-        .save_contact a {
-            background: {{$cardinfo->theme_color}}
-        }
+        <style>
+            .save_contact a {
+                background: {{ $cardinfo->theme_color }}
+            }
 
-        .offcanvas_btn a {
-            background: {{$cardinfo->theme_color}}
-        }
-    </style>
+            .offcanvas_btn a {
+                background: {{ $cardinfo->theme_color }}
+            }
+        </style>
     @endif
 
     <style>
-         table.table-condensed td {padding: 5px 11px;font-size: 13px;}
-         .authorization_modal .modal-content {border: none;border-radius: 0px;}
-         .authorization_modal .modal-header h1 {text-align: center;display: block;width: 100%;font-size: 18px !important;font-weight: 800;text-transform: uppercase;letter-spacing: 1px;}
-         .authorization_modal .modal-header {border: none;display: inherit;margin-bottom: 24px;}
-         .authorization_modal .modal-body p {font-size: 13px;margin-bottom: 15px;line-height: 24px;color: #666;}
-         .authorization_modal .modal-body p {font-size: 13px;margin-bottom: 15px;line-height: 24px;color: #666;}
-         .authorization_modal .input-group-text {border: none !important;padding: 0 !important;background: transparent !important;font-size: 13px;font-weight: 600;margin-right: 5px;text-decoration: underline;margin-bottom: 0;height: 31px;}
-         .authorization_modal .form-control {outline: none !important;box-shadow: none !important;border: none;border-bottom: 2px solid #e4e4e4;border-radius: 0;height: 23px;background: #fff !important;padding: 0;}
-         .authorization_modal h4 {font-size: 15px;margin: 0;font-weight: 600;color: #070707;}
-         .modal-header .btn-close {outline: none !important;box-shadow: none !important;}
-         .authorization_modal .btn-primary {background: #c62f00;color: #fff;padding: 7px 34px;font-size: 16px;font-family: 'Inter', sans-serif;border: none;font-weight: 600;border-radius: 3px;transition: all 0.3s ease;-webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;-ms-transition: all 0.3s ease;box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;}
-         @media screen and (max-width:575px) {.authorization_modal .input-group {display: block;position: inherit;}
-         .authorization_modal .input-group-text {display: block;text-align: left;}
-         .authorization_modal .form-control, .authorization_modal .form-floating, .authorization_modal .form-select {width: 100%;}
-         .authorization_modal .input-group-text {height: 22px;}
-         .authorization_modal .modal-content {padding: 10px !important;}
+        table.table-condensed td {
+            padding: 5px 11px;
+            font-size: 13px;
         }
-        .form-label {font-size: 14px;font-weight: 600;}
-         .custome_modal .form-control::placeholder {color: #BBB;font-size: 14px;}
-         .custome_modal .form-check {display: inline-block;margin-right: 21px;}
-         .custome_modal .form-check label {cursor: pointer;font-size: 12px;font-weight: 600;color: #555;}
-         .custome_modal .form-check input {cursor: pointer;box-shadow: none !important;}
-         .form-check-input:checked {background-color: #c62f00;border: none !important;}
 
+        .authorization_modal .modal-content {
+            border: none;
+            border-radius: 0px;
+        }
+
+        .authorization_modal .modal-header h1 {
+            text-align: center;
+            display: block;
+            width: 100%;
+            font-size: 18px !important;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .authorization_modal .modal-header {
+            border: none;
+            display: inherit;
+            margin-bottom: 24px;
+        }
+
+        .authorization_modal .modal-body p {
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 24px;
+            color: #666;
+        }
+
+        .authorization_modal .modal-body p {
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 24px;
+            color: #666;
+        }
+
+        .authorization_modal .input-group-text {
+            border: none !important;
+            padding: 0 !important;
+            background: transparent !important;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 5px;
+            text-decoration: underline;
+            margin-bottom: 0;
+            height: 31px;
+        }
+
+        .authorization_modal .form-control {
+            outline: none !important;
+            box-shadow: none !important;
+            border: none;
+            border-bottom: 2px solid #e4e4e4;
+            border-radius: 0;
+            height: 23px;
+            background: #fff !important;
+            padding: 0;
+        }
+
+        .authorization_modal h4 {
+            font-size: 15px;
+            margin: 0;
+            font-weight: 600;
+            color: #070707;
+        }
+
+        .modal-header .btn-close {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .authorization_modal .btn-primary {
+            background: #c62f00;
+            color: #fff;
+            padding: 7px 34px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            font-weight: 600;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        }
+
+        @media screen and (max-width:575px) {
+            .authorization_modal .input-group {
+                display: block;
+                position: inherit;
+            }
+
+            .authorization_modal .input-group-text {
+                display: block;
+                text-align: left;
+            }
+
+            .authorization_modal .form-control,
+            .authorization_modal .form-floating,
+            .authorization_modal .form-select {
+                width: 100%;
+            }
+
+            .authorization_modal .input-group-text {
+                height: 22px;
+            }
+
+            .authorization_modal .modal-content {
+                padding: 10px !important;
+            }
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .custome_modal .form-control::placeholder {
+            color: #BBB;
+            font-size: 14px;
+        }
+
+        .custome_modal .form-check {
+            display: inline-block;
+            margin-right: 21px;
+        }
+
+        .custome_modal .form-check label {
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .custome_modal .form-check input {
+            cursor: pointer;
+            box-shadow: none !important;
+        }
+
+        .form-check-input:checked {
+            background-color: #c62f00;
+            border: none !important;
+        }
     </style>
 </head>
 
@@ -120,344 +245,383 @@
     </script>
 
     @if (checkPackageValidity($cardinfo->user_id) == false)
-    @include('_plan_expired_error')
+        @include('_plan_expired_error')
     @else
-
-    <div class="template">
-        <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
-            <div class="card_cover">
-                <div class="cover_img" data-aos="zoom-in">
-                    <img src="{{ getCover($cardinfo->cover) }}" alt="image">
-                </div>
-                <div class="card_profile" data-aos="zoom-in">
-                    <img class="profile_pic" src="{{ getProfile($cardinfo->profile) }}" alt="image">
-                    <img class="logo" src="{{ getLogo($cardinfo->logo) }}" alt="image">
-                </div>
-            </div>
-            <div class="card_view_body">
-                <div class="content text-center">
-                    <div class="profile_info mt-4">
-                        <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
-                        <h4>{{ $cardinfo->designation }} at {{ $cardinfo->company_name }}</h4>
-                        @if (!empty($cardinfo->location))
-                        <h6>{{ $cardinfo->location }}</h6>
-                        @endif
-                        @if (!empty($cardinfo->bio))
-                        <p>{{ $cardinfo->bio }}</p>
-                        @endif
-                        @if (isset($user->nmls_id))
-                        @if ($user->nmls_view == '1')
-                        <p>{{ __('NMLS ID') }} : {{ $user->nmls_id }}</p>
-                        @endif
-                        @endif
+        <div class="template">
+            <div class="card_view_wrapper" style="background: #C6E4D2; min-height: 936px;">
+                <div class="card_cover">
+                    <div class="cover_img" data-aos="zoom-in">
+                        <img src="{{ getCover($cardinfo->cover) }}" alt="image">
                     </div>
-                    <div class="save_contact mt-5 mb-5">
-                        <a href="{{ route('download.vCard', $cardinfo->card_id) }}"
-                            class="text-decoration-none save-contact d-inline-block">{{ __('Save Contact') }}</a>
-
-                        <a href="javascript:void(0)" class="text-decoration-none d-inline-block btn-secondary"
-                            data-bs-toggle="modal" data-bs-target="#shareModal">
-                            {{ __('Share') }}
-                        </a>
+                    <div class="card_profile" data-aos="zoom-in">
+                        <img class="profile_pic" src="{{ getProfile($cardinfo->profile) }}" alt="image">
+                        <img class="logo" src="{{ getLogo($cardinfo->logo) }}" alt="image">
                     </div>
-                    <div class="social_media">
-                        <div class="row justify-content-center">
+                </div>
+                <div class="card_view_body">
+                    <div class="content text-center">
+                        <div class="profile_info mt-4">
+                            <h2>{{ $cardinfo->title }} {{ $cardinfo->title2 }}</h2>
 
-                            <div class="col-4 col-md-3 mb-3">
-                                <a href="javascript:void(0)" data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasCalculator" aria-controls="offcanvasCalculator">
-                                    <img style="border-radius: 15px; margin:0 auto; @if ($cardinfo->color_link == 1) background:{{ $cardinfo->theme_color }} @else background:#A93998  @endif "
-                                        class="img-fluid d-block mb-1"
-                                        src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt="" width="75"
-                                        height="75">
-                                    <span>Mortgage Calculator</span>
-                                </a>
-                            </div>
+                            <h4>{{ $cardinfo->designation ?? 'Manager' }} at
+                                {{ $cardinfo->company_name ?? 'MTGPRO.ME' }}</h4>
 
-                            @if (!empty($cardinfo->contacts))
-                            @foreach ($cardinfo->contacts as $contact)
-                            @if ($contact)
-
-                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
-
-                            @else
-                                @php
-                                if ($cardinfo->color_link == 1) {
-                                $icon_color = $cardinfo->theme_color;
-                                } else {
-                                $icon_color = $contact->icon_color;
-                                }
-
-                                //link,mail,mobile,number,text,username,file,address
-                                @endphp
-
-                                @if ($contact->type == 'address')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
-                                        target="_blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @elseif ($contact->type == 'username')
-                                @php
-                                $make_link = $contact->main_link . $contact->content;
-                                @endphp
-
-                                @if ($contact->icon_name == 'snapchat')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="{{ $contact->main_link }}add/{{ $contact->content }}" target="__blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @else
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="{{ makeUrl($make_link) }}" target="__blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
+                            @if (!empty($cardinfo->location))
+                                <h6>{{ $cardinfo->location }}</h6>
+                            @endif
+                            @if (!empty($cardinfo->bio))
+                                <p>{{ $cardinfo->bio }}</p>
+                            @endif
+                            @if (isset($user->nmls_id))
+                                @if ($user->nmls_view == '1')
+                                    <p>{{ __('NMLS ID') }} : {{ $user->nmls_id }}</p>
                                 @endif
-                                @elseif ($contact->type == 'mail')
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="mailto:{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @php
-                                $email = $contact->content;
-                                @endphp
-
-                                @elseif ($contact->type == 'mobile')
-                                    @if ($contact->icon_name == 'facetime')
-                                        <div class="col-4 col-md-3 mb-3">
-                                            <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                href="facetime:{{ $contact->content }}" data="{{ $contact->content }}">
-                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                    class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                                    alt="{{ $contact->label }}" width="75" height="75">
-                                                <span>{{ $contact->label }}</span>
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="col-4 col-md-3 mb-3">
-                                            <a title="{{ $contact->label }}" class="text-decoration-none"
-                                                href="tel:{{ $contact->content }}">
-                                                <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                    class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                                    alt="{{ $contact->label }}" width="75" height="75">
-                                                <span>{{ $contact->label }}</span>
-                                            </a>
-                                        </div>
-                                        @php
-                                        $phone_number = $contact->content;
-                                        @endphp
-                                    @endif
-                                @elseif ($contact->type == 'file')
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a title="{{ $contact->label }}" class="text-decoration-none" target="__blank"
-                                            href="{{ $contact->content }}">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                                alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
-                                    </div>
-                                @elseif ($contact->type == 'number')
-                                <div class="col-4 col-md-3 mb-3">
-                                    @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle')
-                                    <a title="{{ $contact->label }}" class="text-decoration-none copy_btn"
-                                        href="javascript:void(0)" data-content="{{ $contact->content }}"
-                                        data-icon_name="{{ $contact->icon_name }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                    @elseif ($contact->icon == 'whatsapp')
-                                    @if ($android !== false || $ipad !== false || $iphone !== false)
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="https://api.whatsapp.com/send?phone={{ $contact->content }}"
-                                        target="__blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                    @else
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="https://web.whatsapp.com/send?phone={{ $contact->content }}"
-                                        target="__blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                    @endif
-                                    @else
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="tel:{{ $contact->content }}">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                    @endif
-                                </div>
-                                @elseif ($contact->type == 'text')
-                                    @if ($contact->icon_name == 'textSection')
-                                    <div class="col-12 col-md-12 mb-3">
-                                        <div class="text-box">
-                                            <h6>{{ $contact->label }}</h6>
-                                            <p>{!! $contact->content !!}</p>
-                                        </div>
-                                    </div>
-                                    @else
-                                    <div class="col-4 col-md-3 mb-3">
-                                        <a title="{{ $contact->label }}" class="text-decoration-none"
-                                            href="sms:{{ $contact->content }}" target="_blank">
-                                            <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                                class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                                alt="{{ $contact->label }}" width="75" height="75">
-                                            <span>{{ $contact->label }}</span>
-                                        </a>
-                                    </div>
-
-                                    @endif
-                                @elseif ($contact->type == 'link' && $contact->icon_name == 'embeddedvideo')
-                                <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
-                                    <p>{{ $contact->label }}</p>
-                                    <iframe src="{{ $contact->content }}" title="{{ $contact->label }}" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen style="left:5%; width:90%;"></iframe>
-                                </div>
-                                @else
-                                <div class="col-4 col-md-3 mb-3">
-                                    <a title="{{ $contact->label }}" class="text-decoration-none"
-                                        href="{{ makeUrl($contact->content) }}" target="_blank">
-                                        <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
-                                            class="img-fluid d-block mb-1" src="{{ getIcon($contact->icon_image) }}"
-                                            alt="{{ $contact->label }}" width="75" height="75">
-                                        <span>{{ $contact->label }}</span>
-                                    </a>
-                                </div>
-                                @endif
-
                             @endif
-                            @endif
-                            @endforeach
-                            @endif
-
-
-                            <?php
-                            if ($cardinfo->color_link == 1) {
-                                $icon_bg = $cardinfo->theme_color;
-                            } else {
-                                $icon_bg = '#A93998';
-                            }
-                            ?>
-
-
-                            @if (isset($user->user_disclaimer))
-                            @if ($user->disclaimer_view == '1')
-                            <div class="col-4 col-md-3 mb-3">
-                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#disclaimerModal"
-                                    aria-controls="false">
-                                    <img style="border-radius: 15px; margin:0 auto; background:{{ $icon_bg }}"
-                                        class="img-fluid d-block mb-1"
-                                        src="{{ asset('assets/img/icon/notes-note.svg') }}" alt="" width="70"
-                                        height="70">
-                                    <span>Disclaimer</span>
-                                </a>
-                            </div>
-                            @endif
-                            @endif
-
-
-                            @if ($user->housing_logo_view == '1')
-                            <div class="col-4 col-md-3 mb-3">
-                                <a target="_blank" href="https://nmlsconsumeraccess.org">
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
-                                        class="img-fluid d-block mb-1" src="{{ asset('assets/img/house.png') }}" alt=""
-                                        width="75" height="75">
-                                    <span>Equal Housing Opportunity</span>
-                                </a>
-                            </div>
-                            @endif
-                            @if ($user->credit_authorization == '1')
-                            <div class="col-4 col-md-3 mb-3">
-                                <a target="_blank" href="javascript:void(0)" data-bs-toggle="modal"
-                                    data-bs-target="#craditAuthorization">
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
-                                        class="img-fluid d-block mb-1"
-                                        src="{{ asset('assets/img/icon/craditauthorization.svg') }}" alt="" width="75"
-                                        height="75">
-                                    <span>Credit Authorization</span>
-                                </a>
-                            </div>
-                            @endif
-                            @if ($user->quick_application == '1')
-                            <div class="col-4 col-md-3 mb-3">
-                                <a target="_blank" href="javascript:void(0)" data-bs-toggle="modal"
-                                data-bs-target="#quickApplication" >
-                                    <img style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
-                                        class="img-fluid d-block mb-1" src="{{ asset('assets/img/icon/rules.svg') }}"
-                                        alt="" width="75" height="75">
-                                    <span>Quick Applications</span>
-                                </a>
-                            </div>
-                            @endif
-
                         </div>
-                    </div>
+                        <div class="save_contact mt-5 mb-5">
+                            <a class="text-decoration-none save-contact d-inline-block"
+                                href="{{ route('download.vCard', $cardinfo->card_id) }}">{{ __('Save Contact') }}</a>
 
-                    <div class="copyright_article">
-                        <p> @ {{ date('Y') }} <a href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved. </p>
-                    </div>
-                    @if ($settings->site_disclaimer)
-                    <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
-                        {!! $settings->site_disclaimer !!}
-                    </div>
-                    @endif
+                            <a class="text-decoration-none d-inline-block btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#shareModal" href="javascript:void(0)">
+                                {{ __('Share') }}
+                            </a>
+                        </div>
+                        <div class="social_media">
+                            <div class="row justify-content-center">
 
+                                <div class="col-4 col-md-3 mb-3">
+                                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasCalculator"
+                                        href="javascript:void(0)" aria-controls="offcanvasCalculator">
+                                        <img class="img-fluid d-block mb-1"
+                                            src="{{ asset('assets/img/icon/calendar-symbol.svg') }}" alt=""
+                                            style="border-radius: 15px; margin:0 auto; @if ($cardinfo->color_link == 1) background:{{ $cardinfo->theme_color }} @else background:#A93998 @endif "
+                                            width="75" height="75">
+                                        <span>Mortgage Calculator</span>
+                                    </a>
+                                </div>
+
+                                @if (!empty($cardinfo->contacts))
+                                    @foreach ($cardinfo->contacts as $contact)
+                                        @if ($contact)
+                                            @if (isset($user->userPlan) && $user->userPlan->is_free == 1 && $contact->is_paid == 1)
+                                            @else
+                                                @php
+                                                    if ($cardinfo->color_link == 1) {
+                                                        $icon_color = $cardinfo->theme_color;
+                                                    } else {
+                                                        $icon_color = $contact->icon_color;
+                                                    }
+                                                    
+                                                    //link,mail,mobile,number,text,username,file,address
+                                                    
+                                                @endphp
+
+                                                @if ($contact->type == 'address')
+                                                    <div class="col-4 col-md-3 mb-3">
+                                                        <a class="text-decoration-none"
+                                                            href="{{ 'https://www.google.com/maps?q=' . $contact->content }}"
+                                                            title="{{ $contact->label }}" target="_blank">
+                                                            <img class="img-fluid d-block mb-1"
+                                                                src="{{ getIcon($contact->icon_image) }}"
+                                                                alt="{{ $contact->label }}"
+                                                                style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                width="75" height="75">
+                                                            <span>{{ $contact->label }}</span>
+                                                        </a>
+                                                    </div>
+                                                @elseif ($contact->type == 'username')
+                                                    @php
+                                                        $make_link = $contact->main_link . $contact->content;
+                                                    @endphp
+
+                                                    @if ($contact->icon_name == 'snapchat')
+                                                        <div class="col-4 col-md-3 mb-3">
+                                                            <a class="text-decoration-none"
+                                                                href="{{ $contact->main_link }}add/{{ $contact->content }}"
+                                                                title="{{ $contact->label }}" target="__blank">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-4 col-md-3 mb-3">
+                                                            <a class="text-decoration-none"
+                                                                href="{{ makeUrl($make_link) }}"
+                                                                title="{{ $contact->label }}" target="__blank">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                @elseif ($contact->type == 'mail')
+                                                    <div class="col-4 col-md-3 mb-3">
+                                                        <a class="text-decoration-none"
+                                                            href="mailto:{{ $contact->content }}"
+                                                            title="{{ $contact->label }}">
+                                                            <img class="img-fluid d-block mb-1"
+                                                                src="{{ getIcon($contact->icon_image) }}"
+                                                                alt="{{ $contact->label }}"
+                                                                style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                width="75" height="75">
+                                                            <span>{{ $contact->label }}</span>
+                                                        </a>
+                                                    </div>
+                                                    @php
+                                                        $email = $contact->content;
+                                                    @endphp
+                                                @elseif ($contact->type == 'mobile')
+                                                    @if ($contact->icon_name == 'facetime')
+                                                        <div class="col-4 col-md-3 mb-3">
+                                                            <a class="text-decoration-none"
+                                                                href="facetime:{{ $contact->content }}"
+                                                                title="{{ $contact->label }}"
+                                                                data="{{ $contact->content }}">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-4 col-md-3 mb-3">
+                                                            <a class="text-decoration-none"
+                                                                href="tel:{{ $contact->content }}"
+                                                                title="{{ $contact->label }}">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        </div>
+                                                        @php
+                                                            $phone_number = $contact->content;
+                                                        @endphp
+                                                    @endif
+                                                @elseif ($contact->type == 'file')
+                                                    <div class="col-4 col-md-3 mb-3">
+                                                        <a class="text-decoration-none"
+                                                            href="{{ $contact->content }}"
+                                                            title="{{ $contact->label }}" target="__blank">
+                                                            <img class="img-fluid d-block mb-1"
+                                                                src="{{ getIcon($contact->icon_image) }}"
+                                                                alt="{{ $contact->label }}"
+                                                                style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                width="75" height="75">
+                                                            <span>{{ $contact->label }}</span>
+                                                        </a>
+                                                    </div>
+                                                @elseif ($contact->type == 'number')
+                                                    <div class="col-4 col-md-3 mb-3">
+                                                        @if ($contact->icon_name == 'wechat' || $contact->icon_name == 'zelle')
+                                                            <a class="text-decoration-none copy_btn"
+                                                                data-content="{{ $contact->content }}"
+                                                                data-icon_name="{{ $contact->icon_name }}"
+                                                                href="javascript:void(0)"
+                                                                title="{{ $contact->label }}">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        @elseif ($contact->icon == 'whatsapp')
+                                                            @if ($android !== false || $ipad !== false || $iphone !== false)
+                                                                <a class="text-decoration-none"
+                                                                    href="https://api.whatsapp.com/send?phone={{ $contact->content }}"
+                                                                    title="{{ $contact->label }}" target="__blank">
+                                                                    <img class="img-fluid d-block mb-1"
+                                                                        src="{{ getIcon($contact->icon_image) }}"
+                                                                        alt="{{ $contact->label }}"
+                                                                        style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                        width="75" height="75">
+                                                                    <span>{{ $contact->label }}</span>
+                                                                </a>
+                                                            @else
+                                                                <a class="text-decoration-none"
+                                                                    href="https://web.whatsapp.com/send?phone={{ $contact->content }}"
+                                                                    title="{{ $contact->label }}" target="__blank">
+                                                                    <img class="img-fluid d-block mb-1"
+                                                                        src="{{ getIcon($contact->icon_image) }}"
+                                                                        alt="{{ $contact->label }}"
+                                                                        style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                        width="75" height="75">
+                                                                    <span>{{ $contact->label }}</span>
+                                                                </a>
+                                                            @endif
+                                                        @else
+                                                            <a class="text-decoration-none"
+                                                                href="tel:{{ $contact->content }}"
+                                                                title="{{ $contact->label }}">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                                @elseif ($contact->type == 'text')
+                                                    @if ($contact->icon_name == 'textSection')
+                                                        <div class="col-12 col-md-12 mb-3">
+                                                            <div class="text-box">
+                                                                <h6>{{ $contact->label }}</h6>
+                                                                <p>{!! $contact->content !!}</p>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-4 col-md-3 mb-3">
+                                                            <a class="text-decoration-none"
+                                                                href="sms:{{ $contact->content }}"
+                                                                title="{{ $contact->label }}" target="_blank">
+                                                                <img class="img-fluid d-block mb-1"
+                                                                    src="{{ getIcon($contact->icon_image) }}"
+                                                                    alt="{{ $contact->label }}"
+                                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                    width="75" height="75">
+                                                                <span>{{ $contact->label }}</span>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                @elseif ($contact->type == 'link' && $contact->icon_name == 'embeddedvideo')
+                                                    <div class="col-12 col-md-8 mb-3 ratio ratio-16x9 mx-auto">
+                                                        <p>{{ $contact->label }}</p>
+                                                        <iframe src="{{ $contact->content }}"
+                                                            title="{{ $contact->label }}"
+                                                            style="left:5%; width:90%;" frameborder="0"
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                            allowfullscreen></iframe>
+                                                    </div>
+                                                @else
+                                                    <div class="col-4 col-md-3 mb-3">
+                                                        <a class="text-decoration-none"
+                                                            href="{{ makeUrl($contact->content) }}"
+                                                            title="{{ $contact->label }}" target="_blank">
+                                                            <img class="img-fluid d-block mb-1"
+                                                                src="{{ getIcon($contact->icon_image) }}"
+                                                                alt="{{ $contact->label }}"
+                                                                style="border-radius: 15px; margin:0 auto; background:{{ $icon_color }}"
+                                                                width="75" height="75">
+                                                            <span>{{ $contact->label }}</span>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                @endif
+
+                                <?php
+                                if ($cardinfo->color_link == 1) {
+                                    $icon_bg = $cardinfo->theme_color;
+                                } else {
+                                    $icon_bg = '#A93998';
+                                }
+                                ?>
+
+                                @if (isset($user->user_disclaimer))
+                                    @if ($user->disclaimer_view == '1')
+                                        <div class="col-4 col-md-3 mb-3">
+                                            <a data-bs-toggle="modal" data-bs-target="#disclaimerModal"
+                                                href="javascript:void(0)" aria-controls="false">
+                                                <img class="img-fluid d-block mb-1"
+                                                    src="{{ asset('assets/img/icon/notes-note.svg') }}"
+                                                    alt=""
+                                                    style="border-radius: 15px; margin:0 auto; background:{{ $icon_bg }}"
+                                                    width="70" height="70">
+                                                <span>Disclaimer</span>
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if ($user->housing_logo_view == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a href="https://nmlsconsumeraccess.org" target="_blank">
+                                            <img class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/house.png') }}" alt=""
+                                                style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
+                                                width="75" height="75">
+                                            <span>Equal Housing Opportunity</span>
+                                        </a>
+                                    </div>
+                                @endif
+                                @if ($user->credit_authorization == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#craditAuthorization"
+                                            href="javascript:void(0)" target="_blank">
+                                            <img class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/icon/craditauthorization.svg') }}"
+                                                alt=""
+                                                style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
+                                                width="75" height="75">
+                                            <span>Credit Authorization</span>
+                                        </a>
+                                    </div>
+                                @endif
+                                @if ($user->quick_application == '1')
+                                    <div class="col-4 col-md-3 mb-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#quickApplication"
+                                            href="javascript:void(0)" target="_blank">
+                                            <img class="img-fluid d-block mb-1"
+                                                src="{{ asset('assets/img/icon/rules.svg') }}" alt=""
+                                                style="border-radius: 15px; margin:0 auto; padding:10px;  background:{{ $icon_bg }}"
+                                                width="75" height="75">
+                                            <span>Quick Applications</span>
+                                        </a>
+                                    </div>
+                                @endif
+
+                            </div>
+                        </div>
+
+                        <div class="copyright_article">
+                            <p> @ {{ date('Y') }} <a
+                                    href="{{ route('home') }}">{{ $settings->site_name }}</a>All rights reserved.
+                            </p>
+                        </div>
+                        @if ($settings->site_disclaimer)
+                            <div class="site_disclaimer" style="padding: 8px; margin: 8px; border: 1px solid #222;">
+                                {!! $settings->site_disclaimer !!}
+                            </div>
+                        @endif
+
+                    </div>
                 </div>
+                <!-- offcanvas contact button -->
+                <div class="offcanvas_btn">
+                    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
+                        aria-controls="offcanvasContact">
+                        {{ __('Connect with Me') }}
+                    </a>
+                </div>
+                <!-- offcanvas contact button -->
             </div>
-            <!-- offcanvas contact button -->
-            <div class="offcanvas_btn">
-                <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasContact" role="button"
-                    aria-controls="offcanvasContact">
-                    {{ __('Connect with Me') }}
-                </a>
-            </div>
-            <!-- offcanvas contact button -->
         </div>
-    </div>
     @endif
-
-
 
     <!-- Share modal -->
     <div class="share_modal modal_one">
-        <div class="modal fade" id="shareModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="shareModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <button class="close" data-bs-dismiss="modal" type="button" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -483,8 +647,7 @@
                                         </svg>
                                     </div>
                                     <div class="qr-code">
-                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardurl))
-                                        !!}
+                                        {!! QrCode::size(200)->color(74, 74, 74, 80)->generate(url($cardurl)) !!}
                                     </div>
                                 </div>
 
@@ -492,40 +655,44 @@
 
                                     <div class="row g-3">
                                         <div class="col-6 col-sm-4">
-                                            <a href="{{ route('qr', $cardinfo->card_id) }}"
-                                                class="download_btn w-100 btn btn-primary mx-1"
+                                            <a class="download_btn w-100 btn btn-primary mx-1"
+                                                href="{{ route('qr', $cardinfo->card_id) }}"
                                                 title="{{ __('Download QR code') }}">
                                                 <i class="fa fa-download"></i>{{ __('Download QR code') }}
                                             </a>
                                         </div>
                                         <div class="col-6 col-sm-4">
-                                            <a class="btn btn-primary w-100 mx-1" title="{{ __('Social Media') }}"
-                                                href="#" data-bs-toggle="modal" data-bs-target="#SocialModal">
+                                            <a class="btn btn-primary w-100 mx-1" data-bs-toggle="modal"
+                                                data-bs-target="#SocialModal" href="#"
+                                                title="{{ __('Social Media') }}">
                                                 <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/connections.svg') }}" alt="">
+                                                    src="{{ asset('assets/img/icons/connections.svg') }}"
+                                                    alt="">
                                                 {{ __('Social Media') }}
                                             </a>
                                         </div>
 
-                                        @if($phone_number != null)
-                                        <div class="col-6 col-sm-4 mb-0 mb-sm-3">
-                                            <a href="sms:{{ $phone_number }}?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}"
-                                                class="download_btn w-100 btn btn-primary mx-1"
-                                                title="{{ __('Text') }}">
-                                                <i class="fa fa-download"></i>{{ __('Text') }}
-                                            </a>
-                                        </div>
+                                        @if ($phone_number != null)
+                                            <div class="col-6 col-sm-4 mb-0 mb-sm-3">
+                                                <a class="download_btn w-100 btn btn-primary mx-1"
+                                                    href="sms:{{ $phone_number }}?body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}"
+                                                    title="{{ __('Text') }}">
+                                                    <i class="fa fa-download"></i>{{ __('Text') }}
+                                                </a>
+                                            </div>
                                         @endif
 
-                                        @if($email != null)
-                                        <div class="col-6 col-sm-4 m-sm-auto">
-                                            <a class="btn btn-primary w-100 mx-1" title="{{ __('Email') }}"
-                                                href="mailto:{{ $email }}?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/connections.svg') }}" alt="">
-                                                {{ __('Email') }}
-                                            </a>
-                                        </div>
+                                        @if ($email != null)
+                                            <div class="col-6 col-sm-4 m-sm-auto">
+                                                <a class="btn btn-primary w-100 mx-1"
+                                                    href="mailto:{{ $email }}?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ $user->username }}"
+                                                    title="{{ __('Email') }}">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('assets/img/icons/connections.svg') }}"
+                                                        alt="">
+                                                    {{ __('Email') }}
+                                                </a>
+                                            </div>
                                         @endif
 
                                     </div>
@@ -540,13 +707,13 @@
     </div>
     <!-- Disclaimer modal -->
     <div class="disclaimer_modal modal_one">
-        <div class="modal fade" id="disclaimerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="disclaimerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true" tabindex="-1">
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Disclaimer</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <button class="close" data-bs-dismiss="modal" type="button" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -559,13 +726,13 @@
     </div>
     <!-- Disclaimer modal -->
     <div class="nmls_modal modal_one">
-        <div class="modal fade" id="nmlsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="nmlsModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">User Nmls ID</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <button class="close" data-bs-dismiss="modal" type="button" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -579,18 +746,17 @@
     </div>
     <!-- Disclaimer modal -->
     <div class="nmls_modal modal_one">
-        <div class="modal fade" id="equalHouse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="equalHouse" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">User Equal House</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <button class="close" data-bs-dismiss="modal" type="button" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
-
 
                     </div>
                 </div>
@@ -600,12 +766,12 @@
 
     <!-- Social Modal modal -->
     <div class="share_modal email_modal">
-        <div class="modal animate__animated animate__fadeIn" id="SocialModal" tabindex="-1" data-bs-backdrop="static"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal animate__animated animate__fadeIn" id="SocialModal" data-bs-backdrop="static"
+            aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <button class="close" data-bs-dismiss="modal" type="button" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -616,48 +782,54 @@
                                 <div class="col-12 col-sm-12">
                                     <ul class="text-center">
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0)" class="social_share"
+                                            <a class="social_share"
                                                 data-url="https://www.facebook.com/sharer/sharer.php?u={{ Request::url() }}"
-                                                title="{{ __('Share on Facebook') }}">
+                                                href="javascript:void(0)" title="{{ __('Share on Facebook') }}">
                                                 <img class="img-fluid"
                                                     src="{{ asset('assets/img/icons/facebook.svg') }}"
                                                     alt="{{ __('Share on facebook') }}">
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0)" class="social_share" data-url="https://twitter.com/intent/tweet?text=Hello%21+This+is+my+vCard.&amp;url={{ Request::url() }}
-                                            " title="{{ __('Share on Twitter') }}">
-                                                <img class="img-fluid" src="{{ asset('assets/img/icons/twitter.svg') }}"
+                                            <a class="social_share"
+                                                data-url="https://twitter.com/intent/tweet?text=Hello%21+This+is+my+vCard.&amp;url={{ Request::url() }}
+                                            "
+                                                href="javascript:void(0)" title="{{ __('Share on Twitter') }}">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('assets/img/icons/twitter.svg') }}"
                                                     alt="">
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
-                                            <a href="javascript:void(0)" class="social_share"
+                                            <a class="social_share"
                                                 data-url="https://telegram.me/share/url?url={{ Request::url() }}&text="
-                                                title="{{ __('Share on Telegram') }}">
+                                                href="javascript:void(0)" title="{{ __('Share on Telegram') }}">
                                                 <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/telegram.svg') }}" alt="">
+                                                    src="{{ asset('assets/img/icons/telegram.svg') }}"
+                                                    alt="">
                                             </a>
                                         </li>
 
                                         @if ($android !== false || $ipad !== false || $iphone !== false)
-                                        <li class="list-inline-item">
-                                            <a href="whatsapp://send?text={{ Request::url() }}" class="whatsapp"
-                                                title="{{ __('Share on Whatsapp') }}"
-                                                data-action="share/whatsapp/share">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="">
-                                            </a>
-                                        </li>
+                                            <li class="list-inline-item">
+                                                <a class="whatsapp" data-action="share/whatsapp/share"
+                                                    href="whatsapp://send?text={{ Request::url() }}"
+                                                    title="{{ __('Share on Whatsapp') }}">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('assets/img/icons/whatsapp.svg') }}"
+                                                        alt="">
+                                                </a>
+                                            </li>
                                         @else
-                                        <li class="list-inline-item">
-                                            <a href="https://web.whatsapp.com/send?text={{ Request::url() }}"
-                                                target="__blank" class="whatsapp" title="{{ __('Share on Whatsapp') }}"
-                                                data-action="share/whatsapp/share">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('assets/img/icons/whatsapp.svg') }}" alt="">
-                                            </a>
-                                        </li>
+                                            <li class="list-inline-item">
+                                                <a class="whatsapp" data-action="share/whatsapp/share"
+                                                    href="https://web.whatsapp.com/send?text={{ Request::url() }}"
+                                                    title="{{ __('Share on Whatsapp') }}" target="__blank">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('assets/img/icons/whatsapp.svg') }}"
+                                                        alt="">
+                                                </a>
+                                            </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -669,15 +841,15 @@
         </div>
     </div>
 
-
     <!-- Contact Offcanvas form -->
-    <div class="contact_modal offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasContact"
-        aria-labelledby="offcanvasContactLabel">
+    <div class="contact_modal offcanvas offcanvas-bottom" id="offcanvasContact"
+        aria-labelledby="offcanvasContactLabel" tabindex="-1">
         <div class="offcanvas-header">
-            <button type="button" id="offcanvas_close" data-bs-dismiss="offcanvas" aria-label="Close">
+            <button id="offcanvas_close" data-bs-dismiss="offcanvas" type="button" aria-label="Close">
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                        stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+                        fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="bevel">
                         <path d="M12 5v13M5 12l7 7 7-7"></path>
                     </svg>
                 </span>
@@ -686,67 +858,66 @@
         <div class="offcanvas-body">
 
             <div class="contact_body">
-                <form action="{{ route('getConnect') }}" id="connect-form" method="post">
+                <form id="connect-form" action="{{ route('getConnect') }}" method="post">
                     @csrf
-                    <input type="hidden" name="card_id" id="card_id" value="{{ $cardinfo->id }}" />
+                    <input id="card_id" name="card_id" type="hidden" value="{{ $cardinfo->id }}" />
                     <div class="heading mb-4 text-center">
                         @if ($cardinfo->connection_title)
-                        <h4>{{ $cardinfo->connection_title }}</h4>
+                            <h4>{{ $cardinfo->connection_title }}</h4>
                         @else
-                        <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
+                            <h4>{{ __('Share your info back with') }} {{ $cardinfo->title }}</h4>
                         @endif
 
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
-                            required tabindex="{{ $tabindex++ }}">
+                        <input class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                            type="text" value="{{ old('name') }}" tabindex="{{ $tabindex++ }}"
+                            placeholder="{{ __('Name') }}" required>
                         @if ($errors->has('name'))
-                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
+                            <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="email" name="email" id="email" value="{{ old('email') }}"
-                            class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}"
-                            required tabindex="{{ $tabindex++ }}">
+                        <input class="form-control @error('email') is-invalid @enderror" id="email"
+                            name="email" type="email" value="{{ old('email') }}"
+                            tabindex="{{ $tabindex++ }}" placeholder="{{ __('Email') }}" required>
                         @if ($errors->has('email'))
-                        <span class="help-block text-danger">{{ $errors->first('email') }}</span>
+                            <span class="help-block text-danger">{{ $errors->first('email') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
-                            class="form-control @error('phone') is-invalid @enderror"
-                            placeholder="{{ __('Phone Number') }}" required tabindex="{{ $tabindex++ }}">
+                        <input class="form-control @error('phone') is-invalid @enderror" id="phone"
+                            name="phone" type="tel" value="{{ old('phone') }}"
+                            tabindex="{{ $tabindex++ }}" placeholder="{{ __('Phone Number') }}" required>
                         @if ($errors->has('phone'))
-                        <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
+                            <span class="help-block text-danger">{{ $errors->first('phone') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="title" id="job_title" value="{{ old('title') }}"
-                            class="form-control @error('title') is-invalid @enderror"
-                            placeholder="{{ __('Job Title (Optional)') }}" tabindex="{{ $tabindex++ }}">
+                        <input class="form-control @error('title') is-invalid @enderror" id="job_title"
+                            name="title" type="text" value="{{ old('title') }}"
+                            tabindex="{{ $tabindex++ }}" placeholder="{{ __('Job Title (Optional)') }}">
                         @if ($errors->has('title'))
-                        <span class="help-block text-danger">{{ $errors->first('title') }}</span>
+                            <span class="help-block text-danger">{{ $errors->first('title') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}"
-                            class="form-control @error('company_name') is-invalid @enderror"
-                            placeholder="{{ __('Company (Optional)') }}" tabindex="{{ $tabindex++ }}">
+                        <input class="form-control @error('company_name') is-invalid @enderror" id="company_name"
+                            name="company_name" type="text" value="{{ old('company_name') }}"
+                            tabindex="{{ $tabindex++ }}" placeholder="{{ __('Company (Optional)') }}">
                         @if ($errors->has('company_name'))
-                        <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
+                            <span class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
-                        <textarea name="message" id="message" cols="30" rows="5" value="{{ old('message') }}"
-                            class="form-control @error('message') is-invalid @enderror"
-                            placeholder="{{ __('Questions, Comments or Important Details') }}"
-                            tabindex="{{ $tabindex++ }}" required style="height:80px;"></textarea>
+                        <textarea class="form-control @error('message') is-invalid @enderror" id="message" name="message"
+                            value="{{ old('message') }}" tabindex="{{ $tabindex++ }}" style="height:80px;" cols="30"
+                            rows="5" placeholder="{{ __('Questions, Comments or Important Details') }}" required></textarea>
                         @if ($errors->has('message'))
-                        <span class="help-block text-danger">{{ $errors->first('message') }}</span>
+                            <span class="help-block text-danger">{{ $errors->first('message') }}</span>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">
+                    <button class="btn btn-primary w-100" type="submit">
                         <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
                         <span class="btn-txt">{{ __('Connect') }}</span>
                     </button>
@@ -755,18 +926,18 @@
         </div>
     </div>
 
-
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasCalculator"
-        aria-labelledby="offcanvasCalculatorLabel">
+    <div class="offcanvas offcanvas-bottom" id="offcanvasCalculator" aria-labelledby="offcanvasCalculatorLabel"
+        tabindex="-1">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasCalculator"></h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"
+                aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <div class="container">
                 <div class="d-flex justify-content-start align-items-center">
-                    <img class="" src="{{ getProfile($cardinfo->profile) }}"
-                        style="width: 100px ;height:100px;border-radius: 5%;" alt="image" /> &emsp;
+                    <img class="" src="{{ getProfile($cardinfo->profile) }}" alt="image"
+                        style="width: 100px ;height:100px;border-radius: 5%;" /> &emsp;
                     <span class="ml-3">
                         <h2 class="fw-bolder">Welcome to {{ $cardinfo->title }} {{ $cardinfo->title2 }}'s Mortgage.
                         </h2>
@@ -784,64 +955,63 @@
                     <div class="row">
 
                         @csrf
-                        <input type="hidden" name="reciver" id="" value="{{ $user->email }}">
+                        <input id="" name="reciver" type="hidden" value="{{ $user->email }}">
                         <div class="mb-3 col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 ">
-                            <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}"
-                                required>
+                            <input class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" type="text" value="{{ old('name') }}"
+                                placeholder="{{ __('Name') }}" required>
 
                             @if ($errors->has('name'))
-                            <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
+                                <span class=" help-block text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
-                            <input type="email" name="email" id="email" value="{{ old('email') }}"
-                                class="form-control @error('email') is-invalid @enderror"
+                            <input class="form-control @error('email') is-invalid @enderror" id="email"
+                                name="email" type="email" value="{{ old('email') }}"
                                 placeholder="{{ __('Email') }}" required>
 
                             @if ($errors->has('email'))
-                            <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
+                                <span class=" help-block text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
-                            <input type="tel" name="phone" id="phone" value="{{ old('phone') }}"
-                                class="form-control @error('phone') is-invalid @enderror"
+                            <input class="form-control @error('phone') is-invalid @enderror" id="phone"
+                                name="phone" type="tel" value="{{ old('phone') }}"
                                 placeholder="{{ __('Phone Number') }}" required>
 
                             @if ($errors->has('phone'))
-                            <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
+                                <span class=" help-block text-danger">{{ $errors->first('phone') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
-                            <input type="text" name="company" id="company" value="{{ old('company') }}"
-                                class="form-control @error('company') is-invalid @enderror"
+                            <input class="form-control @error('company') is-invalid @enderror" id="company"
+                                name="company" type="text" value="{{ old('company') }}"
                                 placeholder="{{ __('Company') }}" required>
 
                             @if ($errors->has('company'))
-                            <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
+                                <span class=" help-block text-danger">{{ $errors->first('company') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
-                            <input type="text" name="job_title" id="job_title" value="{{ old('job_title') }}"
-                                class="form-control @error('job_title') is-invalid @enderror"
+                            <input class="form-control @error('job_title') is-invalid @enderror" id="job_title"
+                                name="job_title" type="text" value="{{ old('job_title') }}"
                                 placeholder="{{ __('Job Title') }}" required>
 
                             @if ($errors->has('job_title'))
-                            <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
+                                <span class=" help-block text-danger">{{ $errors->first('job_title') }}</span>
                             @endif
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
-                            <textarea type="text" name="message" id="message"
-                                class="form-control @error('message') is-invalid @enderror"
+                            <textarea class="form-control @error('message') is-invalid @enderror" id="message" name="message" type="text"
                                 placeholder="{{ __('Message') }}" required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
-                            <span class=" help-block text-danger">{{ $errors->first('message') }}</span>
+                                <span class=" help-block text-danger">{{ $errors->first('message') }}</span>
                             @endif
                         </div>
 
                         <div class="text-center">
 
-                            <button type="submit" class="btn btn-primary w-25">
+                            <button class="btn btn-primary w-25" type="submit">
                                 <i class="loading-spinner contact-spinner fa-lg fas fa-spinner fa-spin"></i>
                                 <span class="btn-txt">{{ __('Send Message') }}</span>
                             </button>
@@ -853,36 +1023,35 @@
         </div>
     </div>
 
-
-
-
     <!-- Credit Report Authorization Form -->
-    <div class="authorization_modal modal fade" id="craditAuthorization" tabindex="-1"
-        aria-labelledby="craditAuthorizationLabel" aria-hidden="true">
+    <div class="authorization_modal modal fade" id="craditAuthorization" aria-labelledby="craditAuthorizationLabel"
+        aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="craditAuthorizationLabel">
                         Credit Report Authorization Form
                     </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('credit-report') }}" method="post">
                         @csrf
-                        <input type="hidden" value="{{ $cardinfo->id }}" name="card_id" />
+                        <input name="card_id" type="hidden" value="{{ $cardinfo->id }}" />
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <div class="row">
                                     <div class="col-lg-3">
-                                        <label for="" class="form-label">By my signature below I,</label>
+                                        <label class="form-label" for="">By my signature below I,</label>
                                     </div>
                                     <div class="col-lg-5">
-                                        <input type="text" name="name" class="form-control" autocomplete="off" required
-                                            value="@if(Auth::user() && ($user->id != Auth::id()) ){{ Auth::user()->name }} @endif" >
+                                        <input class="form-control" name="name" type="text"
+                                            value="@if (Auth::user() && $user->id != Auth::id()) {{ Auth::user()->name }} @endif"
+                                            autocomplete="off" required>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label for="" class="form-label">Authorize {{ $user->name }}</label>
+                                        <label class="form-label" for="">Authorize
+                                            {{ $user->name }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -906,27 +1075,27 @@
                             </div>
                             <div class="col-12 mb-4">
                                 <div class="input-group">
-                                    <label for="applicant_name" class="form-label input-group-text">Applicant's
+                                    <label class="form-label input-group-text" for="applicant_name">Applicant's
                                         Name:</label>
-                                    <input type="text" name="applicant_name" id="applicant_name" class="form-control"
-                                        required />
+                                    <input class="form-control" id="applicant_name" name="applicant_name"
+                                        type="text" required />
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4">
                                 <div class="input-group">
-                                    <label for="social_security_number" class="form-label input-group-text">Social
+                                    <label class="form-label input-group-text" for="social_security_number">Social
                                         Security
                                         Number:</label>
-                                    <input type="text" name="social_security_number" id="social_security_number"
-                                        class="form-control" required>
+                                    <input class="form-control" id="social_security_number"
+                                        name="social_security_number" type="text" required>
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4">
                                 <div class="input-group">
-                                    <label for="date_of_birth" class="form-label input-group-text">Date of
+                                    <label class="form-label input-group-text" for="date_of_birth">Date of
                                         Birth:</label>
-                                    <input type="text" name="date_of_birth" id="date_of_birth"
-                                        class="form-control datepicker" required>
+                                    <input class="form-control datepicker" id="date_of_birth" name="date_of_birth"
+                                        type="text" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-4">
@@ -934,100 +1103,104 @@
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="current_street" class="form-label input-group-text">Current Street
+                                    <label class="form-label input-group-text" for="current_street">Current Street
                                         Addresss:</label>
-                                    <input type="text" name="current_street" id="current_street" class="form-control"
-                                        required />
+                                    <input class="form-control" id="current_street" name="current_street"
+                                        type="text" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="current_city" class="form-label input-group-text">City:</label>
-                                    <input type="text" name="current_city" id="current_city" class="form-control"
+                                    <label class="form-label input-group-text" for="current_city">City:</label>
+                                    <input class="form-control" id="current_city" name="current_city" type="text"
                                         required />
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
-                                    <label for="current_state" class="form-label input-group-text">State:</label>
-                                    <input type="text" name="current_state" id="current_state" class="form-control"
-                                        required />
+                                    <label class="form-label input-group-text" for="current_state">State:</label>
+                                    <input class="form-control" id="current_state" name="current_state"
+                                        type="text" required />
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="input-group">
-                                    <label for="current_date" class="form-label input-group-text">Move In Date:</label>
-                                    <input type="text" name="current_date" id="current_date"
-                                        class="form-control datepicker" required />
+                                    <label class="form-label input-group-text" for="current_date">Move In
+                                        Date:</label>
+                                    <input class="form-control datepicker" id="current_date" name="current_date"
+                                        type="text" required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="prior_address" class="form-label input-group-text">Prior Street
+                                    <label class="form-label input-group-text" for="prior_address">Prior Street
                                         Address:</label>
-                                    <input type="text" name="prior_address" id="prior_address" class="form-control"
+                                    <input class="form-control" id="prior_address" name="prior_address"
+                                        type="text" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="input-group">
+                                    <label class="form-label input-group-text" for="prior_city">City:</label>
+                                    <input class="form-control" id="prior_city" name="prior_city" type="text"
                                         required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="prior_city" class="form-label input-group-text">City:</label>
-                                    <input type="text" name="prior_city" id="prior_city" class="form-control"
+                                    <label class="form-label input-group-text" for="prior_state">State:</label>
+                                    <input class="form-control" id="prior_state" name="prior_state" type="text"
                                         required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="prior_state" class="form-label input-group-text">State:</label>
-                                    <input type="text" name="prior_state" id="prior_state" class="form-control"
-                                        required />
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-4">
-                                <div class="input-group">
-                                    <label for="prior_start_date" class="form-label input-group-text">Move In
+                                    <label class="form-label input-group-text" for="prior_start_date">Move In
                                         Date:</label>
-                                    <input type="text" name="prior_start_date" id="prior_start_date"
-                                        class="form-control datepicker" required />
+                                    <input class="form-control datepicker" id="prior_start_date"
+                                        name="prior_start_date" type="text" required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="prior_end_date" class="form-label input-group-text">Move Out
+                                    <label class="form-label input-group-text" for="prior_end_date">Move Out
                                         Date:</label>
-                                    <input type="text" name="prior_end_date" id="prior_end_date"
-                                        class="form-control datepicker" required />
+                                    <input class="form-control datepicker" id="prior_end_date" name="prior_end_date"
+                                        type="text" required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="license" class="form-label input-group-text">Driver's License#</label>
-                                    <input type="text" name="license" id="license" class="form-control " required />
+                                    <label class="form-label input-group-text" for="license">Driver's
+                                        License#</label>
+                                    <input class="form-control " id="license" name="license" type="text"
+                                        required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="license_state" class="form-label input-group-text">State</label>
-                                    <input type="text" name="license_state" id="license_state" class="form-control"
-                                        required />
+                                    <label class="form-label input-group-text" for="license_state">State</label>
+                                    <input class="form-control" id="license_state" name="license_state"
+                                        type="text" required />
                                 </div>
                             </div>
                             <div class="col-lg-8 mb-4">
                                 <div class="input-group">
-                                    <label for="signature" class="form-label input-group-text">Signature</label>
-                                    <input type="text" name="signature" id="signature" class="form-control" required />
+                                    <label class="form-label input-group-text" for="signature">Signature</label>
+                                    <input class="form-control" id="signature" name="signature" type="text"
+                                        required />
                                 </div>
                             </div>
                             <div class="col-lg-4 mb-4">
                                 <div class="input-group">
-                                    <label for="signature_date" class="form-label input-group-text">Date</label>
-                                    <input type="text" name="signature_date" id="signature_date"
-                                        class="form-control datepicker" required value="{{ date('m/d/Y') }}" />
+                                    <label class="form-label input-group-text" for="signature_date">Date</label>
+                                    <input class="form-control datepicker" id="signature_date" name="signature_date"
+                                        type="text" value="{{ date('m/d/Y') }}" required />
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
 
                         </div>
@@ -1037,37 +1210,38 @@
         </div>
     </div>
 
-
     {{-- Quick from  --}}
 
-    <div class="authorization_modal modal fade custome_modal " id="quickApplication" tabindex="-1"
-        aria-labelledby="quickApplicationLabel" aria-hidden="true" >
+    <div class="authorization_modal modal fade custome_modal " id="quickApplication"
+        aria-labelledby="quickApplicationLabel" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="loadApplicationModalLabel">
                         Your Loan Application
                     </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('quick-report') }}" method="post">
                         @csrf
-                        <input type="hidden" value="{{ $cardinfo->id }}" name="card_id" />
+                        <input name="card_id" type="hidden" value="{{ $cardinfo->id }}" />
 
                         <div class="row">
                             <div class="col-12 mb-4">
                                 <div class="mb-0">
-                                    <label for="" class="form-label">Purpose of Mortgage or Loan</label>
+                                    <label class="form-label" for="">Purpose of Mortgage or Loan</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input qa_purpose" type="radio" name="purpose" id="purpose_id" checked value="Purchase">
+                                    <input class="form-check-input qa_purpose" id="purpose_id" name="purpose"
+                                        type="radio" value="Purchase" checked>
                                     <label class="form-check-label" for="purpose_id">
                                         Purchase
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input qa_purpose" type="radio" name="purpose" id="refinance_id" value="Refinance">
+                                    <input class="form-check-input qa_purpose" id="refinance_id" name="purpose"
+                                        type="radio" value="Refinance">
                                     <label class="form-check-label" for="refinance_id">
                                         Refinance
                                     </label>
@@ -1078,21 +1252,23 @@
                         <div class="row">
                             <div class="col-lg-6 mb-4">
                                 <div class="form-group">
-                                    <label for="price" class="form-label" id="price_lbl">Purchase Price</label>
-                                    <input type="number" name="price" class="form-control" placeholder="Purchase Price"
-                                         id="price">
+                                    <label class="form-label" id="price_lbl" for="price">Purchase Price</label>
+                                    <input class="form-control" id="price" name="price" type="number"
+                                        placeholder="Purchase Price">
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4 purchase_field">
                                 <div class="form-group">
-                                    <label for="down_amount" class="form-label down_amount_lbl">Down Payment</label>
-                                    <input type="number" name="down_amount" class="form-control down_amount_input" placeholder="Down Payment" >
+                                    <label class="form-label down_amount_lbl" for="down_amount">Down Payment</label>
+                                    <input class="form-control down_amount_input" name="down_amount" type="number"
+                                        placeholder="Down Payment">
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4 refinance_field" style="display:none;">
                                 <div class="form-group">
-                                    <label for="estimated_value" class="form-label">Estimated Value</label>
-                                    <input type="number" name="estimated_value" class="form-control" placeholder="Estimated Value">
+                                    <label class="form-label" for="estimated_value">Estimated Value</label>
+                                    <input class="form-control" name="estimated_value" type="number"
+                                        placeholder="Estimated Value">
                                 </div>
                             </div>
                         </div>
@@ -1100,45 +1276,52 @@
                         <div class="row">
                             <div class="col-lg-12 mb-4">
                                 <div class="form-group">
-                                    <label for="amount" class="form-label d-block">Type of Property</label>
+                                    <label class="form-label d-block" for="amount">Type of Property</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="property_type" id="property_1" value="Single Family House" checked>
-                                        <label class="form-check-label" for="property_1" >Single Family House</label>
+                                        <input class="form-check-input" id="property_1" name="property_type"
+                                            type="radio" value="Single Family House" checked>
+                                        <label class="form-check-label" for="property_1">Single Family House</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="property_type" id="property_2" value="2+ Unit House">
+                                        <input class="form-check-input" id="property_2" name="property_type"
+                                            type="radio" value="2+ Unit House">
                                         <label class="form-check-label" for="property_2">2+ Unit House</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="property_type" id="property_3" value="Conodo / Co-Op">
+                                        <input class="form-check-input" id="property_3" name="property_type"
+                                            type="radio" value="Conodo / Co-Op">
                                         <label class="form-check-label" for="property_3">Conodo / Co-Op</label>
                                     </div>
                                 </div>
                             </div>
 
-
                             <div class="col-lg-12 mb-4">
                                 <div class="form-group">
-                                    <label for="location" class="form-label">Property Location</label>
-                                    <input type="text" name="location" class="form-control" placeholder="location" required>
+                                    <label class="form-label" for="location">Property Location</label>
+                                    <input class="form-control" name="location" type="text"
+                                        placeholder="location" required>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4 refinance_field" style="display:none;">
                                 <div class="form-group">
-                                    <label for="company" class="form-label">Current Mortgage Company</label>
-                                    <input type="text" name="company" class="form-control" placeholder="Mortgage Company">
+                                    <label class="form-label" for="company">Current Mortgage Company</label>
+                                    <input class="form-control" name="company" type="text"
+                                        placeholder="Mortgage Company">
                                 </div>
                             </div>
 
                             <div class="col-lg-12 mb-4 purchase_field">
                                 <div class="form-group">
-                                    <label for="amount" class="form-label">Would you like a Referral to a Real Estate Agent?</label>
+                                    <label class="form-label" for="amount">Would you like a Referral to a Real
+                                        Estate Agent?</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="agent" id="agent_1" checked value="1">
+                                        <input class="form-check-input" id="agent_1" name="agent" type="radio"
+                                            value="1" checked>
                                         <label class="form-check-label" for="agent_1">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="agent" id="agent_2" value="0">
+                                        <input class="form-check-input" id="agent_2" name="agent" type="radio"
+                                            value="0">
                                         <label class="form-check-label" for="agent_2"> No</label>
                                     </div>
                                 </div>
@@ -1146,54 +1329,60 @@
 
                             <div class="col-lg-12 mb-4">
                                 <div class="form-group">
-                                    <label for="occupation" class="form-label">Occupation</label>
-                                    <input type="text" name="occupation" class="form-control" placeholder="Occupation" required>
+                                    <label class="form-label" for="occupation">Occupation</label>
+                                    <input class="form-control" name="occupation" type="text"
+                                        placeholder="Occupation" required>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <div class="form-group">
-                                    <label for="current_employer" class="form-label">How long have your been employed by your current emmployer?</label>
-                                    <input type="text" name="current_employer" class="form-control" placeholder="ex: 90 Days" required>
+                                    <label class="form-label" for="current_employer">How long have your been employed
+                                        by your current emmployer?</label>
+                                    <input class="form-control" name="current_employer" type="text"
+                                        placeholder="ex: 90 Days" required>
                                 </div>
                             </div>
 
                             <div class="col-lg-6 mb-4">
                                 <div class="form-group">
-                                    <label for="annual_income" class="form-label">Annual Income</label>
-                                    <input type="number" name="annual_income" class="form-control"
+                                    <label class="form-label" for="annual_income">Annual Income</label>
+                                    <input class="form-control" name="annual_income" type="number"
                                         placeholder="Annual Income" required>
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-4">
                                 <div class="form-group">
-                                    <label for="credit_score" class="form-label">Credit Score</label>
-                                    <input type="number" name="credit_score" class="form-control"
+                                    <label class="form-label" for="credit_score">Credit Score</label>
+                                    <input class="form-control" name="credit_score" type="number"
                                         placeholder="Credit Score" required>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-4">
                                 <div class="form-group">
-                                    <label for="contact_name" class="form-label">Name</label>
-                                    <input type="text" name="contact_name" id="contact_name" class="form-control" required />
+                                    <label class="form-label" for="contact_name">Name</label>
+                                    <input class="form-control" id="contact_name" name="contact_name" type="text"
+                                        required />
                                 </div>
                             </div>
 
                             <div class="col-md-4 mb-4">
                                 <div class="form-group">
-                                    <label for="contact_email" class="form-label">Email</label>
-                                    <input type="email" name="contact_email" id="contact_email" class="form-control" required />
+                                    <label class="form-label" for="contact_email">Email</label>
+                                    <input class="form-control" id="contact_email" name="contact_email"
+                                        type="email" required />
                                 </div>
                             </div>
 
                             <div class="col-md-4 mb-4">
                                 <div class="form-group">
-                                    <label for="contact_phone" class="form-label">Phone</label>
-                                    <input type="text" name="contact_phone" id="contact_phone" class="form-control" required />
+                                    <label class="form-label" for="contact_phone">Phone</label>
+                                    <input class="form-control" id="contact_phone" name="contact_phone"
+                                        type="text" required />
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -1205,8 +1394,7 @@
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ asset('assets/js/toastr.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
         AOS.init();
@@ -1301,8 +1489,8 @@
     {!! Toastr::message() !!}
 
     @if ($cardinfo->theme_color)
-    <script>
-        function hexToRGBA(hex, opacity) {
+        <script>
+            function hexToRGBA(hex, opacity) {
                 return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length / 3 + '})', 'g')).map(
                     function(l) {
                         return parseInt(hex.length % 2 ? l + l : l, 16)
@@ -1310,56 +1498,50 @@
             }
             var bg = hexToRGBA('{{ $cardinfo->theme_color }}', 0.1);
             $('.card_view_wrapper').css('background', bg);
-    </script>
+        </script>
     @endif
 
-
     <script>
-        $( function() {
-        $('.datepicker').datepicker({
-            dateFormat: 'dd-mm-yy',
-            changeMonth: true,
-            changeYear: true,
-            numberOfMonths: 1,
-            onSelect: function(selectedDate) {
-                 // we can write code here
-             }
-      });
-    } );
+        $(function() {
+            $('.datepicker').datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                numberOfMonths: 1,
+                onSelect: function(selectedDate) {
+                    // we can write code here
+                }
+            });
+        });
     </script>
 
     <script>
         //Quick from
         // var purpose = $('input[name="purpose"]:checked').val();
-
-
-
-
-
     </script>
 
-<script>
-    $( function() {
-        $('.qa_purpose').change(function () {
-            var purpose = $('input[name="purpose"]:checked').val();
-            if (purpose == 'Purchase' ) {
-                $('#price').attr('placeholder','Purchase price');
-                $('#price_lbl').text('Price');
-                $('.refinance_field').hide();
-                $('.purchase_field').show();
+    <script>
+        $(function() {
+            $('.qa_purpose').change(function() {
+                var purpose = $('input[name="purpose"]:checked').val();
+                if (purpose == 'Purchase') {
+                    $('#price').attr('placeholder', 'Purchase price');
+                    $('#price_lbl').text('Price');
+                    $('.refinance_field').hide();
+                    $('.purchase_field').show();
 
-            }else{
-                $('#price').attr('placeholder','Loan Amount');
-                $('#price_lbl').text('Loan Amount');
-                $('.purchase_field').hide();
-                $('.refinance_field').show();
+                } else {
+                    $('#price').attr('placeholder', 'Loan Amount');
+                    $('#price_lbl').text('Loan Amount');
+                    $('.purchase_field').hide();
+                    $('.refinance_field').show();
 
-            }
+                }
+            });
+
+
         });
-
-
-    });
-</script>
+    </script>
 
 </body>
 

@@ -1,15 +1,17 @@
 @extends('user.layouts.app')
 @section('content')
-@section('title') {{ __('Create Card') }} @endsection
-@push('custom_css')
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
-@endpush
+    @section('title') {{ __('Create Card') }} @endsection
+    @push('custom_css')
+        <link type="text/css" href="{{ asset('assets/css/slim.min.css') }}" rel="stylesheet" />
+    @endpush
 
-@php
-$icon_group = Config::get('app.icon_group');
-$tabindex = 1;
-$email = DB::table('social_icon')->where('icon_name','email')->first();
-@endphp
+    @php
+        $icon_group = Config::get('app.icon_group');
+        $tabindex = 1;
+        $email = DB::table('social_icon')
+            ->where('icon_name', 'email')
+            ->first();
+    @endphp
 
 @section('card', 'active')
 <!-- main content -->
@@ -19,9 +21,9 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        <a href="{{ route('user.card') }}" class="back_btn"><i class="fa fa-angle-left"></i></a>
-                        <img src="{{ getProfile($user->profile_image) }}" width="50" class="img-circle mr-2"
-                            alt="image">
+                        <a class="back_btn" href="{{ route('user.card') }}"><i class="fa fa-angle-left"></i></a>
+                        <img class="img-circle mr-2" src="{{ getProfile($user->profile_image) }}" alt="image"
+                            width="50">
                         <span id="card_for_show">{{ __('Card Name') }}</span>
                     </h1>
                 </div>
@@ -70,8 +72,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                             </div>
                                             <!-- add link button -->
                                             <div class="add_link mb-4 float-right">
-                                                <a href="#" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#socialMedia">
+                                                <a class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#socialMedia" href="#">
                                                     <i class="fa fa-plus"></i> {{ __('Add Links and Contact Info') }}
                                                 </a>
                                             </div>
@@ -80,25 +82,25 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                 <div class="edit_social_form add_form_wrap" style="padding-top:14px;">
                                                     <div
                                                         class="single_list media position-relative sicon_single_list_{{ $user_email->id }}">
-                                                        <a href="javascript:void(0)" class="editLink"
-                                                            data-id="{{ $user_email->id }}">
+                                                        <a class="editLink" data-id="{{ $user_email->id }}"
+                                                            href="javascript:void(0)">
                                                             <div class="drag_drap">
                                                                 <img src="{{ asset('assets/img/icon/bar-2.svg') }}"
                                                                     alt="icon">
                                                             </div>
                                                             <div class="social_media_name">
                                                                 <img src="{{ getIcon($user_email->icon_image) }}"
-                                                                    alt="{{ $user_email->icon }}" style="background: {{ $email->icon_color }}">
+                                                                    alt="{{ $user_email->icon }}"
+                                                                    style="background: {{ $email->icon_color }}">
                                                                 <span>{{ $user_email->label }}</span>
                                                             </div>
                                                         </a>
                                                         <div class="media_btn float-right">
                                                             <div class="custom-control custom-switch d-inline">
-                                                                <input type="checkbox"
-                                                                    class="custom-control-input sicon_control"
+                                                                <input class="custom-control-input sicon_control"
                                                                     id="{{ $user_email->icon . '_' . $user_email->id }}"
-                                                                    value="{{ $user_email->id }}" {{ $user_email->status
-                                                                == 1 ? 'checked' : '' }}>
+                                                                    type="checkbox" value="{{ $user_email->id }}"
+                                                                    {{ $user_email->status == 1 ? 'checked' : '' }}>
                                                                 <label class="custom-control-label"
                                                                     for="{{ $user_email->icon . '_' . $user_email->id }}"></label>
                                                             </div>
@@ -107,33 +109,34 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                 </div>
                                             </div>
 
-
                                         </div>
                                     </div>
                                     <!-- about -->
                                     <div class="tab-pane fade active show" id="vert-tabs-profile" role="tabpanel"
                                         aria-labelledby="vert-tabs-profile-tab">
                                         <div class="tab_body about_user">
-                                            <form action="{{ route('user.card.store') }}" method="post" id="cardCreate"
-                                                enctype="multipart/form-data" novalidate="novalidate"
-                                                class="card_validation">
+                                            <form class="card_validation" id="cardCreate"
+                                                action="{{ route('user.card.store') }}" method="post"
+                                                enctype="multipart/form-data" novalidate="novalidate">
                                                 @csrf
-                                                <input type="hidden" name="mode" value="create" />
-                                                <input type="hidden" name="id" value="0" />
+                                                <input name="mode" type="hidden" value="create" />
+                                                <input name="id" type="hidden" value="0" />
                                                 <div class="row">
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
-                                                            <label for="card_title" class="form-label">{{ __('Card
-                                                                Title') }}</label>
-                                                            <input type="text" name="card_for" id="card_title"
+                                                            <label class="form-label"
+                                                                for="card_title">{{ __('Card
+                                                                                                                                                                                                                                                                                                                                                                                                Title') }}</label>
+                                                            <input
                                                                 class="form-control @error('card_title') is-invalid @enderror cin"
-                                                                placeholder="{{ __('Card Title') }}" required
-                                                                data-preview="card_for_show"
+                                                                id="card_title" name="card_for"
+                                                                data-preview="card_for_show" type="text"
+                                                                value="{{ old('card_for') }}"
                                                                 tabindex="{{ $tabindex++ }}"
-                                                                value="{{ old('card_for') }}">
+                                                                placeholder="{{ __('Card Title') }}" required>
                                                             @if ($errors->has('card_for'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('card_for') }}</span>
+                                                                <span
+                                                                    class="help-block text-danger">{{ $errors->first('card_for') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -141,20 +144,22 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                         <div class="row">
                                                             <div class="col-md-3 col-sm-6 text-lg-center">
                                                                 <div class="form-group profile_group">
-                                                                    <label class="form-label">{{ __('Profile Picture')
-                                                                        }}
+                                                                    <label
+                                                                        class="form-label">{{ __('Profile Picture') }}
                                                                         <i class="fa fa-exclamation-circle"
-                                                                            aria-hidden="true" data-toggle="tooltip"
+                                                                            data-toggle="tooltip"
                                                                             data-placement="right"
-                                                                            title="Ideal dimensions: 540px x 540px (1:1)"></i>
+                                                                            title="Ideal dimensions: 540px x 540px (1:1)"
+                                                                            aria-hidden="true"></i>
                                                                     </label>
-                                                                    <input type="file" onchange="profileloadFile(event)"
-                                                                        hidden name="profile_pic" id="profile_pic"
+                                                                    <input id="profile_pic" name="profile_pic"
+                                                                        type="file"
                                                                         value="{{ old('profile_pic') }}"
-                                                                        tabindex="{{ $tabindex++ }}">
+                                                                        tabindex="{{ $tabindex++ }}"
+                                                                        onchange="profileloadFile(event)" hidden>
                                                                     @if ($errors->has('profile_pic'))
-                                                                    <span class="help-block text-danger">{{
-                                                                        $errors->first('profile_pic') }}</span>
+                                                                        <span
+                                                                            class="help-block text-danger">{{ $errors->first('profile_pic') }}</span>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -162,33 +167,35 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                                 <div class="form-group cover_group">
                                                                     <label class="form-label">{{ __('Cover Photo') }}
                                                                         <i class="fa fa-exclamation-circle"
-                                                                            aria-hidden="true" data-toggle="tooltip"
+                                                                            data-toggle="tooltip"
                                                                             data-placement="right"
-                                                                            title="Ideal dimensions: 780px x 300px (2.6:1)"></i></label><br />
-                                                                    <input type="file" onchange="coverFile(event)"
-                                                                        name="cover_pic" id="cover_pic" hidden
-                                                                        value="{{ old('cover_pic') }}"
-                                                                        tabindex="{{ $tabindex++ }}">
+                                                                            title="Ideal dimensions: 780px x 300px (2.6:1)"
+                                                                            aria-hidden="true"></i></label><br />
+                                                                    <input id="cover_pic" name="cover_pic"
+                                                                        type="file" value="{{ old('cover_pic') }}"
+                                                                        tabindex="{{ $tabindex++ }}"
+                                                                        onchange="coverFile(event)" hidden>
                                                                     @if ($errors->has('cover_pic'))
-                                                                    <span class="help-block text-danger">{{
-                                                                        $errors->first('cover_pic') }}</span>
+                                                                        <span
+                                                                            class="help-block text-danger">{{ $errors->first('cover_pic') }}</span>
                                                                     @endif
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-3 col-sm-6 text-lg-center company_group">
+                                                            <div
+                                                                class="col-md-3 col-sm-6 text-lg-center company_group">
                                                                 <label class="form-label">{{ __('Company Logo') }} <i
                                                                         class="fa fa-exclamation-circle"
-                                                                        aria-hidden="true" data-toggle="tooltip"
-                                                                        data-placement="right"
-                                                                        title="Ideal dimensions: 440px x 440px (1:1)"></i>
+                                                                        data-toggle="tooltip" data-placement="right"
+                                                                        title="Ideal dimensions: 440px x 440px (1:1)"
+                                                                        aria-hidden="true"></i>
                                                                 </label>
-                                                                <input type="file" onchange="companyloadFile(event)"
-                                                                    hidden name="company_logo" id="company_logo"
-                                                                    value="{{ old('company_logo') }}"
-                                                                    tabindex="{{ $tabindex++ }}">
+                                                                <input id="company_logo" name="company_logo"
+                                                                    type="file" value="{{ old('company_logo') }}"
+                                                                    tabindex="{{ $tabindex++ }}"
+                                                                    onchange="companyloadFile(event)" hidden>
                                                                 @if ($errors->has('company_logo'))
-                                                                <span class="help-block text-danger">{{
-                                                                    $errors->first('company_logo') }}</span>
+                                                                    <span
+                                                                        class="help-block text-danger">{{ $errors->first('company_logo') }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -196,8 +203,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                     <div class="col-12 color_group">
                                                         <div class="form-group colorform">
                                                             <div class="bg_btn">
-                                                                <label class="form-label">{{ __('Card Color')
-                                                                    }}</label><br />
+                                                                <label
+                                                                    class="form-label">{{ __('Card Color') }}</label><br />
                                                                 {{-- <label for="color" class="colorcode">
                                                                     <img src="{{ asset('assets/img/icon/color.svg') }}"
                                                                         alt="svg">
@@ -206,60 +213,52 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                                 </label> --}}
                                                                 <!-- color -->
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" checked id="color1"
-                                                                        onclick="changeColor('white','#fff')"
-                                                                        value="#fff">
-                                                                    <label for="color1" class="colorOne"></label>
+                                                                    <input class="form-check-input" id="color1"
+                                                                        name="bgcolor" type="radio" value="#fff"
+                                                                        checked onclick="changeColor('white','#fff')">
+                                                                    <label class="colorOne" for="color1"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color2"
-                                                                        onclick="changeColor('rgb(0, 0, 0)','#000')"
-                                                                        value="#000">
-                                                                    <label for="color2" class="colorTwo"></label>
+                                                                    <input class="form-check-input" id="color2"
+                                                                        name="bgcolor" type="radio" value="#000"
+                                                                        onclick="changeColor('rgb(0, 0, 0)','#000')">
+                                                                    <label class="colorTwo" for="color2"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color3"
-                                                                        onclick="changeColor('rgba(235, 87, 87, 0.1)','#EB5757')"
-                                                                        value="#EB5757">
-                                                                    <label for="color3" class="colorThree"></label>
+                                                                    <input class="form-check-input" id="color3"
+                                                                        name="bgcolor" type="radio" value="#EB5757"
+                                                                        onclick="changeColor('rgba(235, 87, 87, 0.1)','#EB5757')">
+                                                                    <label class="colorThree" for="color3"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color4"
-                                                                        onclick="changeColor('rgba(242, 153, 74, 0.1)','#F2994A')"
-                                                                        value="#F2994A">
-                                                                    <label for="color4" class="colorFour"></label>
+                                                                    <input class="form-check-input" id="color4"
+                                                                        name="bgcolor" type="radio" value="#F2994A"
+                                                                        onclick="changeColor('rgba(242, 153, 74, 0.1)','#F2994A')">
+                                                                    <label class="colorFour" for="color4"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color5"
-                                                                        onclick="changeColor('rgba(242, 201, 76, 0.1)','#F2C94C')"
-                                                                        value="#F2C94C">
-                                                                    <label for="color5" class="colorFive"></label>
+                                                                    <input class="form-check-input" id="color5"
+                                                                        name="bgcolor" type="radio" value="#F2C94C"
+                                                                        onclick="changeColor('rgba(242, 201, 76, 0.1)','#F2C94C')">
+                                                                    <label class="colorFive" for="color5"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color6"
-                                                                        onclick="changeColor('rgba(33, 150, 83, 0.1)','#219653')"
-                                                                        value="#219653">
-                                                                    <label for="color6" class="colorSix"></label>
+                                                                    <input class="form-check-input" id="color6"
+                                                                        name="bgcolor" type="radio" value="#219653"
+                                                                        onclick="changeColor('rgba(33, 150, 83, 0.1)','#219653')">
+                                                                    <label class="colorSix" for="color6"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color7"
-                                                                        onclick="changeColor('rgba(47, 128, 237, 0.1)','#2F80ED')"
-                                                                        value="#2F80ED">
-                                                                    <label for="color7" class="colorSeven"></label>
+                                                                    <input class="form-check-input" id="color7"
+                                                                        name="bgcolor" type="radio" value="#2F80ED"
+                                                                        onclick="changeColor('rgba(47, 128, 237, 0.1)','#2F80ED')">
+                                                                    <label class="colorSeven" for="color7"></label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="bgcolor" id="color8"
-                                                                        onclick="changeColor('rgba(155, 81, 224, 0.1)','#9B51E0')"
-                                                                        value="#9B51E0">
-                                                                    <label for="color8" class="colorEight"></label>
+                                                                    <input class="form-check-input" id="color8"
+                                                                        name="bgcolor" type="radio" value="#9B51E0"
+                                                                        onclick="changeColor('rgba(155, 81, 224, 0.1)','#9B51E0')">
+                                                                    <label class="colorEight" for="color8"></label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -281,9 +280,10 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                                 <div class="col-6">
                                                                     <div
                                                                         class="custom-control custom-switch d-inline float-right">
-                                                                        <input type="checkbox"
+                                                                        <input
                                                                             class="custom-control-input sicon_control"
-                                                                            id="color_link_icon" value="">
+                                                                            id="color_link_icon" type="checkbox"
+                                                                            value="">
                                                                         <label class="custom-control-label"
                                                                             for="color_link_icon"></label>
                                                                     </div>
@@ -293,78 +293,82 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="name" class="form-label">{{ __('Name')
-                                                                }}</label>
-                                                            <input type="text" name="name"
+                                                            <label class="form-label"
+                                                                for="name">{{ __('Name') }}</label>
+                                                            <input
                                                                 class="form-control @error('email') is-invalid @enderror cin"
+                                                                name="name" data-preview="name_show"
+                                                                type="text" value="{{ old('name') }}"
+                                                                tabindex="{{ $tabindex++ }}"
                                                                 placeholder="{{ __('name') }}" required
-                                                                data-preview="name_show" value="{{ old('name') }}"
-                                                                maxlength="50" tabindex="{{ $tabindex++ }}">
+                                                                maxlength="50">
                                                             @if ($errors->has('name'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('name') }}</span>
+                                                                <span
+                                                                    class="help-block text-danger">{{ $errors->first('name') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="location" class="form-label">{{ __('Location')
-                                                                }}</label>
-                                                            <input type="text" name="location"
+                                                            <label class="form-label"
+                                                                for="location">{{ __('Location') }}</label>
+                                                            <input
                                                                 class="form-control @error('email') is-invalid @enderror cin"
-                                                                placeholder="{{ __('location') }}"
-                                                                data-preview="location_show"
-                                                                value="{{ old('location') }}" maxlength="50"
-                                                                tabindex="{{ $tabindex++ }}">
+                                                                name="location" data-preview="location_show"
+                                                                type="text" value="{{ old('location') }}"
+                                                                tabindex="{{ $tabindex++ }}"
+                                                                placeholder="{{ __('location') }}" maxlength="50">
                                                             @if ($errors->has('location'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('location') }}</span>
+                                                                <span
+                                                                    class="help-block text-danger">{{ $errors->first('location') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="designation" class="form-label">{{ __('Job
-                                                                Title') }}</label>
-                                                            <input type="text" name="designation"
+                                                            <label class="form-label"
+                                                                for="designation">{{ __('Job
+                                                                                                                                                                                                                                                                                                                                                                                                Title') }}</label>
+                                                            <input
                                                                 class="form-control @error('designation') is-invalid @enderror cin_desig_comp"
+                                                                name="designation" data-preview="desig_comp_show"
+                                                                type="text" value="{{ old('designation') }}"
+                                                                tabindex="{{ $tabindex++ }}"
                                                                 placeholder="{{ __('job') }}" required
-                                                                data-preview="desig_comp_show"
-                                                                value="{{ old('designation') }}" maxlength="50"
-                                                                tabindex="{{ $tabindex++ }}">
+                                                                maxlength="50">
                                                             @if ($errors->has('designation'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('designation') }}</span>
+                                                                <span
+                                                                    class="help-block text-danger">{{ $errors->first('designation') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="company_name" class="form-label">{{
-                                                                __('Company') }}</label>
-                                                            <input type="text" name="company_name"
+                                                            <label class="form-label"
+                                                                for="company_name">{{ __('Company') }}</label>
+                                                            <input
                                                                 class="form-control @error('company_name') is-invalid @enderror cin_desig_comp"
+                                                                name="company_name" data-preview="desig_comp_show"
+                                                                type="text" value="{{ old('company_name') }}"
+                                                                tabindex="{{ $tabindex++ }}"
                                                                 placeholder="{{ __('company') }}" required
-                                                                data-preview="desig_comp_show"
-                                                                value="{{ old('company_name') }}" maxlength="50"
-                                                                tabindex="{{ $tabindex++ }}">
+                                                                maxlength="50">
                                                             @if ($errors->has('company_name'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('company_name') }}</span>
+                                                                <span
+                                                                    class="help-block text-danger">{{ $errors->first('company_name') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="bio" class="form-label">{{ __('Bio') }}</label>
-                                                            <textarea name="bio" cols="30" rows="10"
-                                                                class="form-control @error('bio') is-invalid @enderror cin"
-                                                                placeholder="{{ __('Bio') }}" data-preview="bio_show"
-                                                                maxlength="150"
-                                                                tabindex="{{ $tabindex++ }}">{{ old('bio') }}</textarea>
+                                                            <label class="form-label"
+                                                                for="bio">{{ __('Bio') }}</label>
+                                                            <textarea class="form-control @error('bio') is-invalid @enderror cin" name="bio" data-preview="bio_show"
+                                                                tabindex="{{ $tabindex++ }}" cols="30" rows="10" placeholder="{{ __('Bio') }}"
+                                                                maxlength="150">{{ old('bio') }}</textarea>
                                                             @if ($errors->has('bio'))
-                                                            <span class="help-block text-danger">{{
-                                                                $errors->first('bio') }}</span>
+                                                                <span
+                                                                    class="help-block text-danger">{{ $errors->first('bio') }}</span>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -395,8 +399,9 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                     </div> --}}
                                                     <div class="col-12">
                                                         <div class="float-right">
-                                                            <button type="submit" class="btn btn-primary save-card">
-                                                                <i class="loading-spinner save-card-spinner fa-lg fas fa-spinner fa-spin"></i>
+                                                            <button class="btn btn-primary save-card" type="submit">
+                                                                <i
+                                                                    class="loading-spinner save-card-spinner fa-lg fas fa-spinner fa-spin"></i>
                                                                 <span class="btn-txt">{{ __('Save') }}</span>
                                                             </button>
                                                         </div>
@@ -418,7 +423,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                         <div class="card_header_top">
                                             <!-- icon -->
                                             <div class="shape_icon">
-                                                <svg width="145" height="20" fill="none" viewBox="0 0 145 20">
+                                                <svg width="145" height="20" fill="none"
+                                                    viewBox="0 0 145 20">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                                         d="M144.516 0H0C2.49419 0 4.51613 2.02194 4.51613 4.51613C4.17977 13.0429 10.8623 19.8833 19.5482 20L20 20H124.516L124.962 20C133.526 19.8833 140.211 13.0429 140 4.51613C140 2.02194 142.022 0 144.516 0Z"
                                                         fill="#E0E0E0"></path>
@@ -428,7 +434,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                             <div class="clock">{{ date('H:i') }}</div>
                                             <!-- mobile icon -->
                                             <div class="mobile_icon">
-                                                <svg width="16" height="9" fill="none" viewBox="0 0 12 9">
+                                                <svg width="16" height="9" fill="none"
+                                                    viewBox="0 0 12 9">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                                         d="M10.9742 0.966309H10.2968C9.92273 0.966309 9.61948 1.26956 9.61948 1.64365V7.51393C9.61948 7.88801 9.92273 8.19127 10.2968 8.19127H10.9742C11.3482 8.19127 11.6515 7.88801 11.6515 7.51393V1.64365C11.6515 1.26956 11.3482 0.966309 10.9742 0.966309ZM7.13634 2.54688H7.81368C8.18776 2.54688 8.49102 2.85013 8.49102 3.22422V7.51404C8.49102 7.88812 8.18776 8.19138 7.81368 8.19138H7.13634C6.76225 8.19138 6.459 7.88812 6.459 7.51404V3.22422C6.459 2.85013 6.76225 2.54688 7.13634 2.54688ZM4.65188 4.12712H3.97454C3.60045 4.12712 3.2972 4.43037 3.2972 4.80446V7.51382C3.2972 7.8879 3.60045 8.19116 3.97454 8.19116H4.65188C5.02596 8.19116 5.32922 7.8879 5.32922 7.51382V4.80446C5.32922 4.43037 5.02596 4.12712 4.65188 4.12712ZM1.4914 5.4818H0.814059C0.439974 5.4818 0.136719 5.78505 0.136719 6.15914V7.51382C0.136719 7.8879 0.439974 8.19116 0.814059 8.19116H1.4914C1.86548 8.19116 2.16874 7.8879 2.16874 7.51382V6.15914C2.16874 5.78505 1.86548 5.4818 1.4914 5.4818Z"
                                                         fill="black"></path>
@@ -439,35 +446,36 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                         fill="black"></path>
                                                 </svg>
                                                 <svg width="17" height="8" fill="none">
-                                                    <rect opacity="0.35" x="1.15117" y="1.07939" width="14.2241"
-                                                        height="6.99918" rx="1.46757" stroke="black"
-                                                        stroke-width="0.67734"></rect>
+                                                    <rect opacity="0.35" x="1.15117" y="1.07939"
+                                                        width="14.2241" height="6.99918" rx="1.46757"
+                                                        stroke="black" stroke-width="0.67734"></rect>
                                                     <path opacity="0.4"
                                                         d="M16.3906 3.22412V5.93348C16.9357 5.70401 17.2902 5.17021 17.2902 4.5788C17.2902 3.98739 16.9357 3.45359 16.3906 3.22412Z"
                                                         fill="black"></path>
-                                                    <rect x="2.16797" y="2.09521" width="12.1921" height="4.96716"
-                                                        rx="0.90312" fill="black"></rect>
+                                                    <rect x="2.16797" y="2.09521" width="12.1921"
+                                                        height="4.96716" rx="0.90312" fill="black"></rect>
                                                 </svg>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card_overflow">
                                         <!-- cover image -->
-                                        <div class="card_banner mb-5" style="background-image: url('{{ getCover() }}');"
-                                            id="coverpic_2">
+                                        <div class="card_banner mb-5" id="coverpic_2"
+                                            style="background-image: url('{{ getCover() }}');">
                                             <!-- profile image -->
                                             <div class="profile_image">
-                                                <img src="{{ getProfile() }}" width="100" height="100" alt="image"
-                                                    id="profilePic_2">
+                                                <img id="profilePic_2" src="{{ getProfile() }}" alt="image"
+                                                    width="100" height="100">
                                                 <!-- logo -->
-                                                <img class="logo" src="{{ getlogo() }}" alt="image" id="showlogo_2">
+                                                <img class="logo" id="showlogo_2" src="{{ getlogo() }}"
+                                                    alt="image">
                                             </div>
                                         </div>
                                         <div class="card_content text-center">
                                             <div class="profile_name mt-2">
-                                                <h3 id="name_show">Rabin Mia</h3>
-                                                <h5 id="desig_comp_show">Developer at Arobil</h5>
-                                                <h6 id="location_show">Dhaka</h6>
+                                                <h3 id="name_show">Jone Doye</h3>
+                                                <h5 id="desig_comp_show">Manager at MTGPRO.ME</h5>
+                                                <h6 id="location_show">Address</h6>
                                                 <p id="bio_show">Lorem ipsum, dolor sit, amet consectetur adipisicing
                                                     elit.</p>
                                             </div>
@@ -479,7 +487,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                     <li>
                                                         <a href="mailto:{{ Auth::user()->email }}" target="_blank">
                                                             <img src="{{ asset('assets/img/icon/email.svg') }}"
-                                                                alt="email" style="background: {{ $email->icon_color }}">
+                                                                alt="email"
+                                                                style="background: {{ $email->icon_color }}">
                                                             <span>Email</span>
                                                         </a>
                                                     </li>
@@ -506,8 +515,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
 
 <!-- Add content social media modal -->
 <div class="add_content_modal">
-    <div class="modal fade" id="socialMedia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="socialMedia" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <!-- modal header -->
@@ -518,18 +527,18 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                 id="filter-count">({{ $icons->count() ?? 0 }})</span> </p>
                         <form onsubmit="return false;">
                             <div class="input-group">
-                                <input type="text" name="search" id="filter" class="form-control"
+                                <input class="form-control" id="filter" name="search" type="text"
                                     placeholder="Search Content" required>
-                                <button type="submit" class="input-type-text btn btn-dark"><i
+                                <button class="input-type-text btn btn-dark" type="submit"><i
                                         class="fa fa-search"></i></button>
                             </div>
                         </form>
                     </div>
                     <div class="second_modal d-none">
-                        <h5><a href="#" class="backfirstModal"><i class="fa fa-angle-left"></i>
+                        <h5><a class="backfirstModal" href="#"><i class="fa fa-angle-left"></i>
                                 {{ __('Back') }}</a></h5>
                     </div>
-                    <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close">
+                    <button class="close modalClose" data-dismiss="modal" type="button" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -538,34 +547,38 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                     <div class="add_list_wrap first_modal">
 
                         @if (isset($icon_group) && count($icon_group) > 0)
-                        @foreach ($icon_group as $key => $igroup)
-                        <div class="heading mb-3">
-                            <h3>{{ $igroup }}</h3>
-                        </div>
-                        <div class="row align-item-center">
-                            @if (isset($icons) && count($icons) > 0)
-                            @foreach ($icons as $key2 => $icon)
-                            @if ($icon->icon_group == $igroup)
-                            <div class="col-sm-6 col-lg-4 icon_each" data-name="{{ $icon->icon_name }}">
-                                <a href="javascript:void(0)" class="onclickIcon" data-name="{{ $icon->icon_name }}"
-                                    data-title="{{ $icon->icon_title }}" data-image="{{ getIcon($icon->icon_image) }}"
-                                    data-type="{{ $icon->type }}">
-                                    <div class="icon_wrap media position-relative mb-3">
-                                        <div class="icon_info">
-                                            <img src="{{ getIcon($icon->icon_image) }}" style="background: {{ $icon->icon_color }}" alt="{{ $icon->icon_title }}">
-                                            <span>{{ $icon->icon_title }}</span>
-                                        </div>
-                                        <div class="icon float-right">
-                                            <i class="fa fa-plus"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            @endif
+                            @foreach ($icon_group as $key => $igroup)
+                                <div class="heading mb-3">
+                                    <h3>{{ $igroup }}</h3>
+                                </div>
+                                <div class="row align-item-center">
+                                    @if (isset($icons) && count($icons) > 0)
+                                        @foreach ($icons as $key2 => $icon)
+                                            @if ($icon->icon_group == $igroup)
+                                                <div class="col-sm-6 col-lg-4 icon_each"
+                                                    data-name="{{ $icon->icon_name }}">
+                                                    <a class="onclickIcon" data-name="{{ $icon->icon_name }}"
+                                                        data-title="{{ $icon->icon_title }}"
+                                                        data-image="{{ getIcon($icon->icon_image) }}"
+                                                        data-type="{{ $icon->type }}" href="javascript:void(0)">
+                                                        <div class="icon_wrap media position-relative mb-3">
+                                                            <div class="icon_info">
+                                                                <img src="{{ getIcon($icon->icon_image) }}"
+                                                                    alt="{{ $icon->icon_title }}"
+                                                                    style="background: {{ $icon->icon_color }}">
+                                                                <span>{{ $icon->icon_title }}</span>
+                                                            </div>
+                                                            <div class="icon float-right">
+                                                                <i class="fa fa-plus"></i>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
                             @endforeach
-                            @endif
-                        </div>
-                        @endforeach
                         @endif
                     </div>
                     <!-- add content form -->
@@ -573,11 +586,11 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                         <div class="row no-gutters">
                             <div class="col-lg-8">
                                 <div class="social_add_form">
-                                    <form method="post" id="icon_create_form">
+                                    <form id="icon_create_form" method="post">
                                         <div class="form-group">
                                             <label class="imgLabel" for="logo">
                                                 <img id="content_icon" src="{{ getIcon() }}" alt="">
-                                                <input type="file" name="logo" id="logo" hidden>
+                                                <input id="logo" name="logo" type="file" hidden>
                                                 {{-- <span>Select photo here or drag and drop <br /> one in place of
                                                     current</span> --}}
                                             </label>
@@ -585,19 +598,20 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                         <div class="form-group">
                                             <label class="form-label"><span id="content_link"></span> <span
                                                     class="text-dark">*</span></label>
-                                            <input type="text" name="content" class="form-control" placeholder="link"
-                                                required>
+                                            <input class="form-control" name="content" type="text"
+                                                placeholder="link" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="title" class="form-label">{{ __('Link title') }}</label>
-                                            <input type="text" name="title" class="form-control" placeholder="Title"
-                                                required id="content_title">
+                                            <label class="form-label" for="title">{{ __('Link title') }}</label>
+                                            <input class="form-control" id="content_title" name="title"
+                                                type="text" placeholder="Title" required>
                                         </div>
 
                                         <div class="form-group text-center float-lg-right">
-                                            <button type="button" class="btn btn-secondary backfirstModal mr-2">{{
-                                                __('Cancel') }}</button>
-                                            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                            <button class="btn btn-secondary backfirstModal mr-2"
+                                                type="button">{{ __('Cancel') }}</button>
+                                            <button class="btn btn-primary"
+                                                type="submit">{{ __('Save') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -623,7 +637,8 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                         <div class="clock">{{ date('h:i') }}</div>
                                                         <!-- mobile icon -->
                                                         <div class="mobile_icon">
-                                                            <svg width="16" height="9" fill="none" viewBox="0 0 12 9">
+                                                            <svg width="16" height="9" fill="none"
+                                                                viewBox="0 0 12 9">
                                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                                     d="M10.9742 0.966309H10.2968C9.92273 0.966309 9.61948 1.26956 9.61948 1.64365V7.51393C9.61948 7.88801 9.92273 8.19127 10.2968 8.19127H10.9742C11.3482 8.19127 11.6515 7.88801 11.6515 7.51393V1.64365C11.6515 1.26956 11.3482 0.966309 10.9742 0.966309ZM7.13634 2.54688H7.81368C8.18776 2.54688 8.49102 2.85013 8.49102 3.22422V7.51404C8.49102 7.88812 8.18776 8.19138 7.81368 8.19138H7.13634C6.76225 8.19138 6.459 7.88812 6.459 7.51404V3.22422C6.459 2.85013 6.76225 2.54688 7.13634 2.54688ZM4.65188 4.12712H3.97454C3.60045 4.12712 3.2972 4.43037 3.2972 4.80446V7.51382C3.2972 7.8879 3.60045 8.19116 3.97454 8.19116H4.65188C5.02596 8.19116 5.32922 7.8879 5.32922 7.51382V4.80446C5.32922 4.43037 5.02596 4.12712 4.65188 4.12712ZM1.4914 5.4818H0.814059C0.439974 5.4818 0.136719 5.78505 0.136719 6.15914V7.51382C0.136719 7.8879 0.439974 8.19116 0.814059 8.19116H1.4914C1.86548 8.19116 2.16874 7.8879 2.16874 7.51382V6.15914C2.16874 5.78505 1.86548 5.4818 1.4914 5.4818Z"
                                                                     fill="black"></path>
@@ -653,16 +668,17 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
                                                         style="background-image: url('{{ asset('') }}assets/img/card-banner.png');">
                                                         <!-- profile image -->
                                                         <div class="profile_image">
-                                                            <img src="{{ getProfile() }}" width="100" height="100"
-                                                                alt="image">
+                                                            <img src="{{ getProfile() }}" alt="image"
+                                                                width="100" height="100">
                                                             <!-- logo -->
-                                                            <img class="logo" src="{{ getLogo() }}" alt="image">
+                                                            <img class="logo" src="{{ getLogo() }}"
+                                                                alt="image">
                                                         </div>
                                                     </div>
                                                     <div class="card_content text-center">
                                                         <div class="profile_name mt-2">
                                                             <h3>Rabin Mia</h3>
-                                                            <h5>Developer at Arobil</h5>
+                                                            <h5>Manager at MTGPRO.ME</h5>
                                                             <h6>Dhaka</h6>
                                                             <p>Lorem ipsum, dolor sit, amet consectetur adipisicing
                                                                 elit.</p>
@@ -747,9 +763,9 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
         element.css("background-color", bgcolor);
         $('.save_contact a').css("background-color", color);
         $('#color_link_icon').prop('checked', true);
-        if($('#color_link_icon').is(':checked')){
+        if ($('#color_link_icon').is(':checked')) {
             $('#color_link_icon').val('1');
-        }else{
+        } else {
             $('#color_link_icon').val('0');
         }
         // .save_contact a
@@ -797,7 +813,7 @@ $email = DB::table('social_icon')->where('icon_name','email')->first();
         willSave: function(data, ready) {
             var cover2 = document.getElementById('coverpic_2');
             var cover2_url = data.output.image;
-            cover2.style.backgroundImage = "url("+ cover2_url + ")";
+            cover2.style.backgroundImage = "url(" + cover2_url + ")";
             // console.log(data);
             ready(data);
         },

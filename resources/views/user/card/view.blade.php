@@ -19,14 +19,14 @@
                 <div class="content text-center">
                     <div class="profile_info mt-4">
                         <h2>{{ __('Rabin') }}</h2>
-                        <h4>{{ __('Developer at Arobil') }}</h4>
+                        <h4>{{ __('Manager at MTGPRO.ME') }}</h4>
                         <h6>{{ __('Dhaka') }}</h6>
                         <p>{{ __('Lorem ipsum, dolor sit amet, consectetur adipisicing elit. Asperiores iusto, nulla. Voluptatibus dolores ab culpa molestiae sunt ipsam deserunt perferendis, eius nam quia laboriosam assumenda officia exercitationem nihil? Veritatis, voluptas.') }}
                         </p>
                     </div>
                     <div class="save_contact mt-5 mb-5">
-                        <a href="javascript:void(0)" data-toggle="modal"
-                            data-target="#contactModal">{{ __('Save Contact') }}</a>
+                        <a data-toggle="modal" data-target="#contactModal"
+                            href="javascript:void(0)">{{ __('Save Contact') }}</a>
                     </div>
                     <div class="social_media">
                         <ul>
@@ -53,14 +53,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -88,14 +90,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -127,14 +131,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -165,14 +171,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -200,14 +208,17 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix"
                                                     result="shape"></feBlend>
-                                                <feColorMatrix in="SourceAlpha" type="matrix"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix type="matrix"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
                                                 <feColorMatrix type="matrix"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
                                                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
                                                 <feBlend mode="normal" in2="shape" result="effect1_innerShadow">
                                                 </feBlend>
@@ -250,14 +261,17 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix"
                                                     result="shape"></feBlend>
-                                                <feColorMatrix in="SourceAlpha" type="matrix"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix type="matrix"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
                                                 <feColorMatrix type="matrix"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
                                                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"></feColorMatrix>
                                                 <feBlend mode="normal" in2="shape" result="effect1_innerShadow">
                                                 </feBlend>
@@ -295,14 +309,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -330,14 +346,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -369,14 +387,16 @@
                                                 <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
                                                 <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape">
                                                 </feBlend>
-                                                <feColorMatrix in="SourceAlpha"
-                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                                <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" in="SourceAlpha"
+                                                    result="hardAlpha">
                                                 </feColorMatrix>
                                                 <feOffset dy="-1"></feOffset>
                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                 <feComposite in2="hardAlpha" operator="arithmetic" k2="-1"
                                                     k3="1"></feComposite>
-                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
+                                                <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0"
+                                                    values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0">
                                                 </feColorMatrix>
                                                 <feBlend in2="shape" result="effect1_innerShadow"></feBlend>
                                             </filter>
@@ -392,11 +412,9 @@
         </div>
     </div>
 
-
-
     <!-- Contact Modal -->
-    <div class="contact_modal modal fade" id="contactModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="contact_modal modal fade" id="contactModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -410,30 +428,30 @@
                             <h4>{{ __('Share your info back with rabin') }}</h4>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="name" id="name" class="form-control"
+                            <input class="form-control" id="name" name="name" type="text"
                                 placeholder="{{ __('Name') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="email" id="email" class="form-control"
+                            <input class="form-control" id="email" name="email" type="text"
                                 placeholder="{{ __('Email') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="tel" name="phone" id="phone" class="form-control"
+                            <input class="form-control" id="phone" name="phone" type="tel"
                                 placeholder="{{ __('Phone Number') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="job_title" id="job_title" class="form-control"
+                            <input class="form-control" id="job_title" name="job_title" type="text"
                                 placeholder="{{ __('Job Title') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="company" id="company" class="form-control"
+                            <input class="form-control" id="company" name="company" type="text"
                                 placeholder="{{ __('Company') }}" required>
                         </div>
                         <div class="form-group">
-                            <textarea name="note" id="note" cols="30" rows="5" class="form-control"
+                            <textarea class="form-control" id="note" name="note" cols="30" rows="5"
                                 placeholder="{{ __('Notes on this interaction') }}"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100"
+                        <button class="btn btn-primary w-100" type="submit"
                             style="background: #111 !important;">{{ __('Connect') }}</button>
                     </form>
                 </div>
