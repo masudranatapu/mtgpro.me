@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class FirstCardRequest extends FormRequest
@@ -26,8 +28,8 @@ class FirstCardRequest extends FormRequest
         $rules = [
             'name'            => 'required|string|max:124',
             'phone_number'    => 'required|string|max:20',
-            'designation'     => 'required|max:124',
-            'company_name'    => 'required|string|max:124',
+            'designation'     => 'nullable|max:124',
+            'company_name'    => 'nullable|string|max:124',
         ];
         return $rules;
     }

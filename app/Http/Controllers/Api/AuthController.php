@@ -420,7 +420,7 @@ class AuthController extends ResponceController
 
         $message = "Successfully Login";
         return $this->sendResponse(200, $message, $data);
-        
+
     }
 
     public function socialLogin(Request $request)
@@ -558,7 +558,7 @@ class AuthController extends ResponceController
     {
         $mailTemplate = EmailTemplate::where('slug', 'password-reset')->first();
         $content = $mailTemplate->body;
-
+        
 
         if (isset($user)) {
 

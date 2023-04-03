@@ -8,16 +8,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $settings->site_name }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ asset('assets/css/smart_wizard.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-style.css?v=1') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-responsive.css?v=1') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
+    <link href="{{ asset('assets/css/smart_wizard.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/adminlte.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/toastr.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/dashboard-style.css?v=1') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/dashboard-responsive.css?v=1') }}" rel="stylesheet">
     {{--
     <link rel="stylesheet" href="{{ asset('assets/css/croppie.css') }}" /> --}}
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($settings->favicon) }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slim.min.css') }}" />
+    <link type="image/png" href="{{ asset($settings->favicon) }}" rel="icon" sizes="32x32">
+    <link type="text/css" href="{{ asset('assets/css/slim.min.css') }}" rel="stylesheet" />
 
     <style>
         .loading-spinner {
@@ -77,24 +77,24 @@ $tabIndex = 1;
                                 </li>
                                 --}}
                             </ul>
-                            <form id="cerate-first-card" class="needs-validation mt-md-5 pt-md-5"
-                                action="{{ route('user.card.store-first-card') }}" id="cardCreateFrom" method="POST"
+                            <form class="needs-validation mt-md-5 pt-md-5" id="cerate-first-card" id="cardCreateFrom"
+                                action="{{ route('user.card.store-first-card') }}" method="POST"
                                 enctype="multipart/form-data" novalidate="novalidate">
                                 @csrf
-                                <input type='hidden' name="issubmit" value="1">
+                                <input name="issubmit" type='hidden' value="1">
                                 <div class="tab-content">
                                     <!-- step 1 -->
-                                    <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                                    <div class="tab-pane" id="step-1" role="tabpanel" aria-labelledby="step-1">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="name"
-                                                        class="form-label">{{ __('Name') }}</label>
-                                                    <input type="text" name="name" id="name"
-                                                        value="{{ Auth::user()->name }}"
-                                                        class="form-control cin @error('name') is-invalid @enderror"
-                                                        data-preview="preview_name" placeholder="{{ __('Name') }}"
-                                                        required tabindex="{{ $tabIndex++ }}">
+                                                    <label class="form-label"
+                                                        for="name">{{ __('Name') }}</label>
+                                                    <input class="form-control cin @error('name') is-invalid @enderror"
+                                                        id="name" name="name" data-preview="preview_name"
+                                                        type="text" value="{{ Auth::user()->name }}"
+                                                        tabindex="{{ $tabIndex++ }}"
+                                                        placeholder="{{ __('Name') }}" required>
                                                     {{-- <div class="invalid-feedback" id="msg_name"> {{ __('Enter your
                                                         name') }}</div> --}}
                                                     @if ($errors->has('name'))
@@ -103,14 +103,15 @@ $tabIndex = 1;
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="phone_number"
-                                                        class="form-label">{{ __('Phone Number') }}</label>
-                                                    <input type="number" name="phone_number" id="phone_number"
-                                                        value="{{ Auth::user()->billing_phone }}"
+                                                    <label class="form-label"
+                                                        for="phone_number">{{ __('Phone Number') }}</label>
+                                                    <input
                                                         class="form-control cin @error('phone_number') is-invalid @enderror"
-                                                        data-preview="preview_phone_number"
-                                                        placeholder="{{ __('ex:+15162973389') }}" required
-                                                        tabindex="{{ $tabIndex++ }}">
+                                                        id="phone_number" name="phone_number"
+                                                        data-preview="preview_phone_number" type="number"
+                                                        value="{{ Auth::user()->billing_phone }}"
+                                                        tabindex="{{ $tabIndex++ }}"
+                                                        placeholder="{{ __('ex:+15162973389') }}" required>
                                                     {{-- <div class="invalid-feedback">{{ __('Enter your phone number') }}</div> --}}
                                                     @if ($errors->has('phone_number'))
                                                         <span
@@ -119,23 +120,24 @@ $tabIndex = 1;
                                                 </div>
                                                 <div class="form-group">
                                                     <span>{{ __('Adding a phone number allows people to connect with you
-                                                                                                                                                                by text message or phone call') }}</span>
+                                                                                                                                                                                                                                                                        by text message or phone call') }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- step 2 -->
-                                    <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                                    <div class="tab-pane" id="step-2" role="tabpanel" aria-labelledby="step-2">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="form-group">
-                                                    <label for="designation"
-                                                        class="form-label">{{ __('Job') }}</label>
-                                                    <input type="text" name="designation" id="designation"
+                                                    <label class="form-label"
+                                                        for="designation">{{ __('Job') }}</label>
+                                                    <input
                                                         class="form-control cin_desig_comp @error('designation') is-invalid @enderror"
-                                                        data-preview="desig_comp_show"
-                                                        placeholder="{{ __('Designation') }}" required
-                                                        tabindex="{{ $tabIndex++ }}">
+                                                        id="designation" name="designation"
+                                                        data-preview="desig_comp_show" type="text"
+                                                        tabindex="{{ $tabIndex++ }}"
+                                                        placeholder="{{ __('Designation') }}">
                                                     {{-- <div class="invalid-feedback">{{ __('Enter your job title') }}</div> --}}
                                                     @if ($errors->has('designation'))
                                                         <span
@@ -143,13 +145,14 @@ $tabIndex = 1;
                                                     @endif
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="company_name"
-                                                        class="form-label">{{ __('Company') }}</label>
-                                                    <input type="text" name="company_name" id="company_name"
+                                                    <label class="form-label"
+                                                        for="company_name">{{ __('Company') }}</label>
+                                                    <input
                                                         class="form-control cin_desig_comp @error('company_name') is-invalid @enderror"
-                                                        data-preview="desig_comp_show"
-                                                        placeholder="{{ __('Company') }}" required
-                                                        tabindex="{{ $tabIndex++ }}">
+                                                        id="company_name" name="company_name"
+                                                        data-preview="desig_comp_show" type="text"
+                                                        tabindex="{{ $tabIndex++ }}"
+                                                        placeholder="{{ __('Company') }}">
                                                     {{-- <div class="invalid-feedback">{{ __('Enter your company name') }} </div> --}}
                                                     @if ($errors->has('company_name'))
                                                         <span
@@ -160,13 +163,13 @@ $tabIndex = 1;
                                         </div>
                                     </div>
                                     <!-- step 3 -->
-                                    <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                                    <div class="tab-pane" id="step-3" role="tabpanel" aria-labelledby="step-3">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-8 col-lg-12 col-xl-8">
                                                 <div class="text-center">
                                                     <div class="upload_photo">
                                                         <div class="preview_logo_div">
-                                                            <input type="file" name="photo" id="photo">
+                                                            <input id="photo" name="photo" type="file">
                                                             {{-- <img id="preview"
                                                                 src="{{ asset('assets/img/default.png') }}"
                                                                 alt="preview image"> --}}
@@ -174,7 +177,7 @@ $tabIndex = 1;
                                                     </div>
                                                     <div class="upload_photo_text">
                                                         <p>{{ __('Make your card more personalized by adding a profile
-                                                                                                                                                                            picture') }}
+                                                                                                                                                                                                                                                                                            picture') }}
                                                         </p>
                                                         {{-- <input type="file" class="d-none"
                                                             onchange="loadFile(event)" name="photo" id="photo" required
@@ -248,14 +251,14 @@ $tabIndex = 1;
                                 <div class="card_banner mt-3 mb-5"
                                     style="background-image: url({{ getCover() }})">
                                     <div class="profile_image">
-                                        <img src="{{ getProfile() }}" class="profile_image_src" width="100"
-                                            height="100" alt="image">
+                                        <img class="profile_image_src" src="{{ getProfile() }}" alt="image"
+                                            width="100" height="100">
                                     </div>
                                 </div>
                                 <div class="card_content text-center">
                                     <div class="profile_name mt-2">
                                         <h3 id="preview_name">{{ Auth::user()->name ?? 'Rabin Mia' }}</h3>
-                                        <h5 id="desig_comp_show">{{ __('Manager at Arobil') }}</h5>
+                                        <h5 id="desig_comp_show">{{ __('Manager at MtgPro') }}</h5>
                                     </div>
                                     <div class="save_contact mt-4 mb-4">
                                         <a href="javascript:void(0)">{{ __('Save Contact') }}</a>
@@ -294,14 +297,21 @@ $tabIndex = 1;
                                                                 </feFlood>
                                                                 <feBlend mode="normal" in="SourceGraphic"
                                                                     in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                <feColorMatrix in="SourceAlpha" type="matrix"
+                                                                <feColorMatrix type="matrix"
                                                                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                                                                    result="hardAlpha"></feColorMatrix>
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                                    in="SourceAlpha" result="hardAlpha">
+                                                                </feColorMatrix>
                                                                 <feOffset dy="-1"></feOffset>
                                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                                 <feComposite in2="hardAlpha" operator="arithmetic"
                                                                     k2="-1" k3="1"></feComposite>
                                                                 <feColorMatrix type="matrix"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
                                                                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0">
                                                                 </feColorMatrix>
                                                                 <feBlend mode="normal" in2="shape"
@@ -341,14 +351,21 @@ $tabIndex = 1;
                                                                 </feFlood>
                                                                 <feBlend mode="normal" in="SourceGraphic"
                                                                     in2="BackgroundImageFix" result="shape"></feBlend>
-                                                                <feColorMatrix in="SourceAlpha" type="matrix"
+                                                                <feColorMatrix type="matrix"
                                                                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                                                                    result="hardAlpha"></feColorMatrix>
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                                                    in="SourceAlpha" result="hardAlpha">
+                                                                </feColorMatrix>
                                                                 <feOffset dy="-1"></feOffset>
                                                                 <feGaussianBlur stdDeviation="0.5"></feGaussianBlur>
                                                                 <feComposite in2="hardAlpha" operator="arithmetic"
                                                                     k2="-1" k3="1"></feComposite>
                                                                 <feColorMatrix type="matrix"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
+                                                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
                                                                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0">
                                                                 </feColorMatrix>
                                                                 <feBlend mode="normal" in2="shape"

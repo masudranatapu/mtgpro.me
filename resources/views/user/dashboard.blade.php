@@ -88,8 +88,9 @@
                     <div class="col-md-8">
                         <div class="d-sm-flex justify-content-between">
 
-                            <a class="btn-sm btn-primary btn-sm mb-1 act-btn" href="javascript:void(0)" onclick="copy(this)"
-                                data-url="{{ route('home') }}/{{ auth()->user()->username }}">{{ __('Link To Copy') }}</a>
+                            <a class="btn-sm btn-primary btn-sm mb-1 act-btn"
+                                data-url="{{ route('home') }}/{{ auth()->user()->username }}" href="javascript:void(0)"
+                                onclick="copy(this)">{{ __('Link To Copy') }}</a>
                             <a class="btn-sm btn-primary btn-sm mb-1 act-btn"
                                 href="mailto:?subject=&body=Hi there! Please click this link to check out my professional business card {{ route('home') }}/{{ auth()->user()->username }}">{{ __('Email') }}</a>
 
@@ -139,14 +140,14 @@
                                         <div class="card_cover_bg">
                                             <!-- cover image -->
                                             <div class="cover_photo">
-                                                <img src="{{ getCover($card->cover) }}" class="img-fluid"
+                                                <img class="img-fluid" src="{{ getCover($card->cover) }}"
                                                     alt="{{ $card->title }} {{ $card->title2 }}">
                                             </div>
                                             <div class="user_card_profile text-center">
                                                 <div class="profile_image">
                                                     <!-- profile image -->
                                                     <div class="profile_photo">
-                                                        <img src="{{ getProfile($card->profile) }}" class="img-fluid"
+                                                        <img class="img-fluid" src="{{ getProfile($card->profile) }}"
                                                             alt="{{ $card->title }} {{ $card->title2 }}">
                                                     </div>
                                                     <!-- logo -->
@@ -161,38 +162,44 @@
                                         <div class="card_info mt-4 text-center">
                                             <div class="profile_name">
                                                 <h3>{{ $card->title }} {{ $card->title2 }}</h3>
-                                                <h5>{{ $card->designation }} {{ __('at') }}
-                                                    {{ $card->company_name }}</h5>
+                                                @if (isset($card->designation) && isset($card->company_name))
+                                                    <h5>{{ $card->designation }} {{ __('at') }}
+                                                        {{ $card->company_name }}</h5>
+                                                @else
+                                                    {{ __('Manager at MTGPRO.ME') }}
+                                                @endif
                                             </div>
                                             <div class="card_btn mt-3 mb-4">
-                                                <a href="{{ route('user.card.edit', $card->id) }}"
-                                                    class="btn-sm btn-secondary" title="Edit card">{{ __('Edit') }}</a>
+                                                <a class="btn-sm btn-secondary"
+                                                    href="{{ route('user.card.edit', $card->id) }}"
+                                                    title="Edit card">{{ __('Edit') }}</a>
                                                 @if (checkPackage())
-                                                    <a href="javascript:void(0)" id="change_status_{{ $card->id }}"
-                                                        class="btn-sm btn-secondary {{ $card->id != Auth::user()->active_card_id ? 'changeTrg' : '' }}  change-status "
-                                                        data-id="{{ $card->id }}" data-status="{{ $card->status }}">
-                                                        <i class="fa fa-check"
-                                                            style="@if ($card->id != Auth::user()->active_card_id) display:none; @endif"
-                                                            title="Live Card"></i>
+                                                    <a class="btn-sm btn-secondary {{ $card->id != Auth::user()->active_card_id ? 'changeTrg' : '' }}  change-status "
+                                                        id="change_status_{{ $card->id }}"
+                                                        data-id="{{ $card->id }}" data-status="{{ $card->status }}"
+                                                        href="javascript:void(0)">
+                                                        <i class="fa fa-check" title="Live Card"
+                                                            style="@if ($card->id != Auth::user()->active_card_id) display:none; @endif"></i>
 
                                                         {{ __('Live') }}
                                                     </a>
 
                                                     <?php
-
+                                                    
                                                     if ($card->id == Auth::user()->active_card_id) {
                                                         $url = Auth::user()->username;
                                                     } else {
                                                         $url = $card->card_url;
                                                     }
-
+                                                    
                                                     ?>
-                                                    <a target="_blank" href="{{ route('card.preview', $url) }}"
-                                                        class="btn-sm btn-secondary" title="Card Preview">
+                                                    <a class="btn-sm btn-secondary"
+                                                        href="{{ route('card.preview', $url) }}" title="Card Preview"
+                                                        target="_blank">
                                                         {{ __('Preview') }}</a>
 
-                                                    <a href="{{ route('qr', $card->card_id) }}"
-                                                        class="download_btn btn-sm btn-secondary"
+                                                    <a class="download_btn btn-sm btn-secondary"
+                                                        href="{{ route('qr', $card->card_id) }}"
                                                         title="{{ __('Download QR code') }}">
                                                         {{ __('QR') }}
                                                     </a>

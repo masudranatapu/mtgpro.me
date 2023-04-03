@@ -15,6 +15,7 @@ use App\Models\Order;
 use App\Models\ProductOrders;
 use App\Models\Setting;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
@@ -147,6 +148,7 @@ class OrdersController extends Controller
         $user = User::find($order->user_id);
 
         [$content, $subject] = $this->orderStatusChangeMail($order);
+        Log::alert($content);
         Mail::to($user->email)->send(new AllMail($content, $subject));
         return redirect()->back();
     }
@@ -156,7 +158,7 @@ class OrdersController extends Controller
     {
         $order->load('transaction');
         $status = "";
-        $setting = Config::first();
+
         if (isset($order)) {
             if ($order->status = 1) {
                 $status = "on The Way";
@@ -170,7 +172,24 @@ class OrdersController extends Controller
 
             $content = $tempete->body;
 
-            $content = preg_replace("/{{site_title}}/", $setting->config_value, $content);
+            $setting = Config::first();
+
+            $genarelSetting = Setting::first();
+
+            $imagePath = public_path($genarelSetting->site_logo);
+            $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+            $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+            $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+            $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:100px; height:100px" ></a>';
+            $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+            $content = preg_replace("/{{site_name}}/", $siteTitle, $content);
+            $content = preg_replace("/{{site_logo}}/", $imageBase, $content);
 
 
             if (isset($user->username)) {

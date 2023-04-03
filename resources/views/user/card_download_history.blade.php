@@ -35,7 +35,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-12 d-flex justify-content-between align-items-center">
                         <h1 class="m-0">{{ __('Card Download History') }}</h1>
-                        <a href="{{ route('user.insights') }}" class="btn btn-primary">Back</a>
+                        <a class="btn btn-primary" href="{{ route('user.insights') }}">Back</a>
                     </div>
                 </div>
             </div>
@@ -57,6 +57,7 @@
                                         <th style="width:10%">{{ __('User Agent') }}</th>
                                         <th style="width:20%">{{ __('Address') }}</th>
                                         {{-- <th>{{ __('Number Of Visits') }}</th> --}}
+
                                     </tr>
                                 </thead>
                                 <tbody>
