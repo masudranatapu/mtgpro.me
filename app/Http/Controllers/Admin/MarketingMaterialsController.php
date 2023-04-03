@@ -117,7 +117,7 @@ class MarketingMaterialsController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error(trans('Data not Updated !'), 'Error', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('admin.marketing.material.edit');
+            return redirect()->route('admin.marketing.material.edit', ['id' => $id]);
         }
         DB::commit();
         Toastr::success(trans('Data Successfully Updated !'), 'Success', ["positionClass" => "toast-top-center"]);
