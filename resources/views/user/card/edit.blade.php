@@ -988,7 +988,7 @@
                                                     } else {
                                                         $icon_color = $card->theme_color;
                                                     }
-                                                    
+
                                                 @endphp
 
                                                 @if ($icon->icon_group == $igroup)
@@ -1121,7 +1121,7 @@
                                                         </div>
                                                         <div class="social_icon">
                                                             <div class="row icon_append" id="icon_append">
-                                                                {{-- @dd($card->business_card_fields); --}}
+
                                                                 @if (isset($card->business_card_fields) && count($card->business_card_fields) > 0)
                                                                     @foreach ($card->business_card_fields as $key => $icon)
                                                                         <div class="col-4 mb-2">
