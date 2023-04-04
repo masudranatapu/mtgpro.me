@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\CountryHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\AdminNotifyMail;
 use App\Mail\AllMail;
@@ -9,6 +10,7 @@ use App\Models\BusinessCard;
 use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\Plan;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
 use Exception;
@@ -270,9 +272,12 @@ class StripeController extends ResponceController
 
 
 
+
+
         $adminNotifySubject = "Plan purchase notification";
         $adminNotifyContent = $request->billing_name . " purchase a plan.";
-        Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent));
+        $plan = Plan::find($transaction->plan_id);
+        Mail::to($settings->support_email)->send(new AdminNotifyMail($adminNotifySubject, $adminNotifyContent, $transaction));
 
 
         return $this->sendResponse(200, trans('Plan subscription successfully done!'), $transaction, true, []);
@@ -283,12 +288,71 @@ class StripeController extends ResponceController
         $user = User::find($transaction->user_id);
         $setting = Config::first();
 
+        $plan = Plan::find($transaction->plan_id);
+        $palnFeatures = json_decode($plan->features);
+        $config = Config::where('config_key', 'currency')->first('config_value');
+        $symbles = CountryHelper::CurrencySymbol();
+        $symble = $symbles[$config->config_value];
+
+        $html = "<ol>";
+        for ($i = 0; $i < count($palnFeatures); $i++) {
+
+            $palnFeature = $palnFeatures[$i];
+            $html .= "<li>" . $palnFeature . "</li>";
+        }
+        $html .= "</ol>";
+
+
 
         $tempete = EmailTemplate::where('slug', 'plan-purchase')->first();
 
         $content = $tempete->body;
+        $genarelSetting = Setting::first();
 
-        $content = preg_replace("/{{site_title}}/", $setting->config_value, $content);
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:30%" ></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $content = preg_replace("/{{site_title}}/", $siteTitle, $content);
+        $content = preg_replace("/{{site_logo}}/", $imageBase, $content);
+
+
+        if (isset($plan->plan_name)) {
+            $content = preg_replace("/{{plan_name}}/", $plan->plan_name, $content);
+        }
+        if (isset($plan->plan_description)) {
+            $content = preg_replace("/{{plan_description}}/", $plan->plan_description, $content);
+        }
+
+
+        if (isset($plan->plan_price_monthly) || isset($plan->plan_price_yearly)) {
+
+            $content = preg_replace("/{{currency}}/", $symble, $content);
+        }
+        if (isset($plan->plan_price_monthly)) {
+
+            $content = preg_replace("/{{plan_price_monthly}}/", $plan->plan_price_monthly, $content);
+        }
+
+        if (isset($plan->plan_price_yearly)) {
+
+            $content = preg_replace("/{{plan_price_yearly}}/", $plan->plan_price_yearly, $content);
+        }
+
+        if (isset($plan->no_of_vcards)) {
+            $content = preg_replace("/{{number_of_cards}}/", $plan->no_of_vcards, $content);
+        }
+        if (isset($plan->features)) {
+            $content = preg_replace("/{{plan_feature}}/", $html, $content);
+        }
 
 
         if (isset($user->username)) {
@@ -307,6 +371,7 @@ class StripeController extends ResponceController
 
             $content = preg_replace("/{{order_status}}/", $transaction->payment_status, $content);
         }
+
         return [$content, $tempete->subject];
     }
 }

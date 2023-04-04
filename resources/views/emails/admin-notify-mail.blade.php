@@ -465,13 +465,30 @@
                                             @if (isset($plan_details->plan_name))
                                                 <h4>Plan Name : {{ $plan_details->plan_name }}</h4>
                                             @endif
+                                            @if (isset($transaction->transaction_amount))
+                                                <h4>Purchase Amount : {{ $transaction->transaction_amount }}</h4>
+                                            @endif
+                                            @if (isset($transaction->transaction_amount))
+                                                <h4>Invoice Number : {{ $transaction->invoice_number }}</h4>
+                                            @endif
+                                            @if (isset($transaction->transaction_amount))
+                                                <h4>Plan Details :</h4>
+                                                @for ($i = 0; $i < count($palnFeatures); $i++)
+                                                    <span>{{ $i + 1 }}. {{ $palnFeatures[$i] }}.</span><br>
+                                                @endfor
+                                            @endif
                                             <table class="body-sub" role="presentation">
                                                 <tr>
                                                     <td>
+                                                        <a href="{{ route('home') }}"><img src="{{ $base64 }}"
+                                                                alt=""></a>
                                                         <p
                                                             style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #b0adc5; font-size: 12px; text-align: center;">
-                                                            © {{ date('Y') }} {{ $settings->site_name }}. All rights
-                                                            reserved.</p>
+                                                            © {{ date('Y') }} {{ $settings->site_name }}. All
+                                                            rights
+                                                            reserved.
+
+                                                        </p>
                                                     </td>
                                                 </tr>
                                             </table>

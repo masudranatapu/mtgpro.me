@@ -140,7 +140,7 @@ class HomeController extends Controller
             [$message, $subject] = $this->getConnectMail($card, $request->all());
             Mail::to($card->card_email)->send(new AllMail($message, $subject));
 
-            [$message, $subject] = $this->getConnectMailCC($request->all());
+            [$message, $subject] = $this->getConnectMailCC($user, $request->all());
             Mail::to(trim($request->email))->send(new AllMail($message, $subject));
         }
         // Toastr::success(trans('Connection send successfully'), 'Success', ["positionClass" => "toast-top-right"]);
@@ -705,10 +705,11 @@ class HomeController extends Controller
         return [$mailcontent, $mailMesssage->subject];
     }
 
-    public function getConnectMailCC($senderData)
+    public function getConnectMailCC($ownderData, $senderData)
     {
+        Log::alert($ownderData->name);
         $mailMesssage = EmailTemplate::where('slug', 'send-connect-to-visitors-cc-subscriber')->first();
-        Log::alert($mailMesssage);
+
         $mailcontent =     $mailMesssage->body;
         $setting = Config::first();
 
@@ -735,6 +736,35 @@ class HomeController extends Controller
         if ($senderData) {
             $mailcontent = preg_replace("/{{site_title}}/", $setting->config_value, $mailcontent);
         }
+        if ($ownderData->name) {
+
+            $mailcontent = preg_replace("/{{send_to}}/", $ownderData->name, $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{name}}/", $senderData['name'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{email}}/", $senderData['email'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{phone}}/", $senderData['phone'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{title}}/", $senderData['title'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{company_name}}/", $senderData['company_name'], $mailcontent);
+        }
+
+        if ($senderData) {
+            $mailcontent = preg_replace("/{{message}}/", $senderData['message'], $mailcontent);
+        }
+        return [$mailcontent, $mailMesssage->subject];
         return [$mailcontent, $mailMesssage->subject];
     }
 

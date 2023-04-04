@@ -634,6 +634,25 @@ class UserController extends Controller
 
         $setting = Config::first();
 
+        $genarelSetting = Setting::first();
+
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:30%" ></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $content = preg_replace("/{{site_title}}/", $siteTitle, $content);
+        $content = preg_replace("/{{site_logo}}/", $imageBase, $content);
+
+
+
 
         if (isset($user)) {
 
