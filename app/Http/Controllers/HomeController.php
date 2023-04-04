@@ -248,7 +248,7 @@ class HomeController extends Controller
                 ->select('business_fields.*', 'si.icon_title', 'si.icon_name', 'si.icon_color', 'si.main_link', 'si.is_paid')
                 ->where('business_fields.card_id', $cardinfo->id)
                 ->where('business_fields.status', 1)
-                ->orderBy('business_fields.position', 'ASC')
+                ->orderBy('business_fields.position', 'DESC')
                 ->get();
 
 
