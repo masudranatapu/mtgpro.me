@@ -244,12 +244,10 @@ class HomeController extends Controller
         if ($cardinfo) {
 
 
-            $cardinfo->contacts = DB::table('business_fields')
-                ->leftJoin('social_icon as si', 'si.id', '=', 'business_fields.icon_id')
-                ->select('business_fields.*', 'si.icon_title', 'si.icon_name', 'si.icon_color', 'si.main_link', 'si.is_paid')
+            $cardinfo->contacts = DB::table('business_fields')->select('business_fields.*', 'si.icon_title', 'si.icon_name', 'si.icon_color', 'si.main_link', 'si.is_paid')->leftJoin('social_icon as si', 'si.id', '=', 'business_fields.icon_id')
                 ->where('business_fields.card_id', $cardinfo->id)
                 ->where('business_fields.status', 1)
-                ->orderBy('business_fields.position', 'ASC')
+                ->orderBy('business_fields.position', 'DESC')
                 ->get();
 
 
