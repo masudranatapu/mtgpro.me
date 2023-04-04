@@ -192,7 +192,7 @@ class HomeController extends Controller
                 // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 // $brwInfo = curl_exec($ch);
                 // curl_close($ch);
-                dd($brwInfo);
+
 
 
                 $new_history['ip_address'] = $_SERVER['REMOTE_ADDR'];
