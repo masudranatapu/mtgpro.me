@@ -184,7 +184,7 @@ class OrdersController extends Controller
             $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
 
 
-            $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:100px; height:100px" ></a>';
+            $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:30%;" ></a>';
             $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
 
 

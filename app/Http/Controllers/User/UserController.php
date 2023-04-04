@@ -30,6 +30,7 @@ use App\Mail\AllMail;
 use App\Mail\MortgageMail;
 use App\Models\Config;
 use App\Models\EmailTemplate;
+use App\Models\Setting;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
@@ -254,6 +255,8 @@ class UserController extends Controller
     {
         $config = DB::table('config')->get();
 
+
+
         DB::beginTransaction();
         try {
             $data = [];
@@ -310,11 +313,12 @@ class UserController extends Controller
                 $user->deleted_by  = Auth::user()->id;
 
                 $user->save();
-                Auth::logout();
-                // Mail::to($user_email)->send(new AccountDeletion($data));
                 [$content, $subject] = $this->accountDeletionMail();
 
                 Mail::to($user_email)->send(new AllMail($content, $subject));
+                Auth::logout();
+                // Mail::to($user_email)->send(new AccountDeletion($data));
+
             } else {
                 return response()->json(['status' => 0, 'message' => 'Please type `delete` for account deletion'], 200);
             }
@@ -563,6 +567,26 @@ class UserController extends Controller
         $mailTemplate = EmailTemplate::where('slug', 'password-reset')->first();
         $content = $mailTemplate->body;
 
+        $setting = Config::first();
+
+        $genarelSetting = Setting::first();
+
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:30%;"></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $content = preg_replace("/{{site_name}}/", $siteTitle, $content);
+        $content = preg_replace("/{{site_logo}}/", $imageBase, $content);
+
+
 
         if (isset($user)) {
 
@@ -578,8 +602,29 @@ class UserController extends Controller
 
     public function accountDeletionMail()
     {
-        $mailTemplate = EmailTemplate::where('slug', 'account-delatation')->first();
-        return [$mailTemplate->body, $mailTemplate->subject];
+        $mailTemplate = EmailTemplate::where('slug', 'account-deactivation')->first();
+        $setting = Config::first();
+
+        $content = $mailTemplate->body;
+
+        $genarelSetting = Setting::first();
+
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:100px; height:100px" ></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $content = preg_replace("/{{site_title}}/", $siteTitle, $content);
+        $content = preg_replace("/{{site_logo}}/", $imageBase, $content);
+
+        return [$content, $mailTemplate->subject];
     }
     public function suggestFeatureMail(User $user)
     {

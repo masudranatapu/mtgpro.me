@@ -32,7 +32,7 @@ class UserController extends Controller
      * Create a new controller instance.
      *
      * @return void
-    */
+     */
 
     public function __construct()
     {
@@ -43,7 +43,7 @@ class UserController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
-    */
+     */
 
     public function users(Request $request)
     {
@@ -254,7 +254,6 @@ class UserController extends Controller
             }
             Toastr::success(trans('Plan changed success!'), 'Title', ["positionClass" => "toast-top-center"]);
             return redirect()->route('admin.users');
-
         } else {
 
             $message = "";
@@ -512,6 +511,27 @@ class UserController extends Controller
 
         $maitemplate = EmailTemplate::where('slug', "admin-plan-change")->first();
         $content = $maitemplate->body;
+
+        $setting = Config::first();
+
+
+
+        $genarelSetting = Setting::first();
+
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:30%" ></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $content = preg_replace("/{{site_title}}/", $siteTitle, $content);
+        $content = preg_replace("/{{site_logo}}/", $imageBase, $content);
 
 
         if (isset($user)) {

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
-<?php
-$settings = getSetting();
-?>
 
 <head>
+    @php
+        $settings = getSetting();
+    @endphp
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="x-apple-disable-message-reformatting" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="color-scheme" content="light dark" />
     <meta name="supported-color-schemes" content="light dark" />
-    <title></title>
+    <title>Welcome to {{ $settings->site_name }}</title>
     <style>
         /* Base ------------------------------ */
-
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
         body {
@@ -48,7 +47,6 @@ $settings = getSetting();
         }
 
         /* Type ------------------------------ */
-
         body,
         td,
         th {
@@ -98,7 +96,6 @@ $settings = getSetting();
         }
 
         /* Utilities ------------------------------ */
-
         .align-right {
             text-align: right;
         }
@@ -112,7 +109,6 @@ $settings = getSetting();
         }
 
         /* Buttons ------------------------------ */
-
         .button {
             background-color: #3869d4;
             border-top: 10px solid #3869d4;
@@ -152,7 +148,6 @@ $settings = getSetting();
         }
 
         /* Attribute list ------------------------------ */
-
         .attributes {
             margin: 0 0 21px;
         }
@@ -167,7 +162,6 @@ $settings = getSetting();
         }
 
         /* Related Items ------------------------------ */
-
         .related {
             width: 100%;
             margin: 0;
@@ -201,7 +195,6 @@ $settings = getSetting();
         }
 
         /* Discount Code ------------------------------ */
-
         .discount {
             width: 100%;
             margin: 0;
@@ -223,7 +216,6 @@ $settings = getSetting();
         }
 
         /* Social Icons ------------------------------ */
-
         .social {
             width: auto;
         }
@@ -240,7 +232,6 @@ $settings = getSetting();
         }
 
         /* Data table ------------------------------ */
-
         .purchase {
             width: 100%;
             margin: 0;
@@ -317,7 +308,7 @@ $settings = getSetting();
         }
 
         .email-content {
-            width: 100%;
+            width: fit-content;
             margin: 0;
             padding: 0;
             -premailer-width: 100%;
@@ -326,7 +317,6 @@ $settings = getSetting();
         }
 
         /* Masthead ----------------------- */
-
         .email-masthead {
             padding: 25px 0;
             text-align: center;
@@ -345,7 +335,6 @@ $settings = getSetting();
         }
 
         /* Body ------------------------------ */
-
         .email-body {
             width: 100%;
             margin: 0;
@@ -401,7 +390,6 @@ $settings = getSetting();
         }
 
         /*Media Queries ------------------------------ */
-
         @media only screen and (max-width: 600px) {
 
             .email-body_inner,
@@ -453,13 +441,13 @@ $settings = getSetting();
 </head>
 
 <body>
-    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <table class="email-wrapper" role="presentation" width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td align="center">
-                <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                <table class="email-content" role="presentation" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="email-masthead">
-                            <a href="{{ url('/') }}" class="f-fallback email-masthead_name">
+                            <a class="f-fallback email-masthead_name" href="{{ URL::to('/') }}">
                                 {{ $settings->site_name }}
                             </a>
                         </td>
@@ -467,8 +455,8 @@ $settings = getSetting();
                     <!-- Email Body -->
                     <tr>
                         <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
-                            <table class="email-body_inner" align="center" width="570" cellpadding="0"
-                                cellspacing="0" role="presentation">
+                            <table class="email-body_inner" role="presentation" align="center" width="570"
+                                cellpadding="0" cellspacing="0">
                                 <!-- Body content -->
                                 <tr>
                                     <td class="content-cell">

@@ -28,6 +28,7 @@ use App\Mail\SendCard;
 use App\Models\Config;
 use App\Models\EmailTemplate;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Tutorial;
 use App\Models\TutorialCategory;
 use App\Models\User;
@@ -654,6 +655,27 @@ class HomeController extends Controller
         $mailMesssage = EmailTemplate::where('slug', 'contact-query-mail-to-card-owner')->first();
         $mailcontent =     $mailMesssage->body;
 
+        $setting = Config::first();
+
+
+
+        $genarelSetting = Setting::first();
+
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:100px; height:100px" ></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $mailcontent = preg_replace("/{{site_name}}/", $siteTitle, $mailcontent);
+        $mailcontent = preg_replace("/{{site_logo}}/", $imageBase, $mailcontent);
+
         if (isset($owner)) {
             $user = User::find($owner->user_id);
             $mailcontent = preg_replace("/{{owner}}/", $user->name, $mailcontent);
@@ -688,8 +710,26 @@ class HomeController extends Controller
     public function getConnectMailCC($senderData)
     {
         $mailMesssage = EmailTemplate::where('slug', 'send-connect-to-visitors-cc-subscriber')->first();
+        Log::alert($mailMesssage);
         $mailcontent =     $mailMesssage->body;
         $setting = Config::first();
+
+        $genarelSetting = Setting::first();
+
+        $imagePath = public_path($genarelSetting->site_logo);
+        $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+        $imgbinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+
+        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($imgbinary);
+
+
+        $imageBase = '<a href="' . route('home') . '"><img src="' . $base64 . '" alt="mtgprto" style="width:100px; height:100px" ></a>';
+        $siteTitle = '<a href="' . route('home') . '">' . $setting->config_value . '</a>';
+
+
+        $mailcontent = preg_replace("/{{site_name}}/", $siteTitle, $mailcontent);
+        $mailcontent = preg_replace("/{{site_logo}}/", $imageBase, $mailcontent);
 
         if ($senderData) {
             $mailcontent = preg_replace("/{{user_name}}/", $senderData['name'], $mailcontent);
